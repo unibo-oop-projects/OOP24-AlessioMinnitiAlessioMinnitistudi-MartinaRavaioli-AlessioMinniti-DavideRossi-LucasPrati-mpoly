@@ -1,5 +1,5 @@
 package it.unibo.model.Effect.impl;
 
-import model.*;
+import it.unibo.model.Effect.API.Effect;
 
 public class EffectImpl implements Effect {}
