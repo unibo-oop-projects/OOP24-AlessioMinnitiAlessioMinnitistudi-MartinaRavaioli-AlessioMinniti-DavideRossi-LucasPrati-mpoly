@@ -1,6 +1,6 @@
 package it.unibo.model.BankAccount.impl;
 
-import model.*;
+import it.unibo.model.BankAccount.API.BankAccount;
 
 public class BankAccountImpl implements BankAccount {
     public void deposit(int amount) {}
