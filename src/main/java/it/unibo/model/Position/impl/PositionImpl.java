@@ -1,5 +1,5 @@
 package it.unibo.model.Position.impl;
 
-import model.*;
+import it.unibo.model.Position.API.Position;
 
 public class PositionImpl implements Position {}
