@@ -1,7 +1,7 @@
-package it.unibo.model.Property.impl;
+package it.unibo.model.gameBoard.impl;
 
 import it.unibo.model.Player.API.Player;
-import it.unibo.model.Property.API.Property;
+import it.unibo.model.gameBoard.api.Property;
 
 public class PropertyImpl implements Property {
     public void setOwner(Player owner) {}

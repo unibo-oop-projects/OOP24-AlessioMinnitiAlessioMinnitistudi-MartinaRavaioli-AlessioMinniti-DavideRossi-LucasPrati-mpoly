@@ -2,9 +2,9 @@ package it.unibo.model.gameBoard.impl;
 
 import it.unibo.model.Player.API.Player;
 import it.unibo.model.Position.API.Position;
-import it.unibo.model.Property.API.Property;
 import it.unibo.model.gameBoard.api.Board;
 import it.unibo.model.gameBoard.api.Card;
+import it.unibo.model.gameBoard.api.Property;
 
 public class BoardImpl implements Board {
     public void sellHouse(Property prop) {}
