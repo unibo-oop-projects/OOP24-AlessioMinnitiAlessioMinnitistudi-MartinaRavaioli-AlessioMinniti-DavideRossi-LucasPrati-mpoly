@@ -1,4 +1,4 @@
-package model.Turnation.api;
+package it.unibo.monopoly.model.Turnation.api;
 
 import common.Pair;
 

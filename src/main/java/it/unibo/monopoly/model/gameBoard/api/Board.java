@@ -1,7 +1,7 @@
-package model.gameBoard.api;
+package it.unibo.monopoly.model.gameBoard.api;
 
-import model.Turnation.api.Player;
-import model.Turnation.api.Position;
+import it.unibo.monopoly.model.Turnation.api.Player;
+import it.unibo.monopoly.model.Turnation.api.Position;
 
 public interface Board {
     void sellHouse(Property prop);

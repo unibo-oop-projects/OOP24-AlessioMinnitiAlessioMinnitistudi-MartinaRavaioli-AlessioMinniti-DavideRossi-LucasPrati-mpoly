@@ -1,7 +1,7 @@
-package model.Turnation.impl;
+package it.unibo.monopoly.model.Turnation.impl;
 
-import model.Turnation.api.Player;
-import model.Turnation.api.Position;
+import it.unibo.monopoly.model.Turnation.api.Player;
+import it.unibo.monopoly.model.Turnation.api.Position;
 
 public class PlayerImpl implements Player {
     public Position getPosition() { return null; }
