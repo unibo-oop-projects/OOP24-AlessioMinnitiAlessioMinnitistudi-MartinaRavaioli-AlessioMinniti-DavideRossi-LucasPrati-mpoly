@@ -1,6 +1,6 @@
 package it.unibo.monopoly.model.Transactions.impl;
 
-import it.unibo.monopoly.model.TransactionManager.API.TransactionManager;
+import it.unibo.monopoly.model.Transactions.api.TransactionManager;
 import it.unibo.monopoly.model.Turnation.api.Player;
 
 public class TransactionManagerImpl implements TransactionManager {
