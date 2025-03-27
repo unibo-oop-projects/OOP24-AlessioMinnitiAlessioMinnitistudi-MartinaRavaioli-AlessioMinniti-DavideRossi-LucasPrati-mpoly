@@ -1,4 +1,4 @@
-package it.unibo.model.Board.API;
+package it.unibo.model.gameBoard.api;
 
 import it.unibo.model.Card.API.Card;
 import it.unibo.model.Player.API.Player;
