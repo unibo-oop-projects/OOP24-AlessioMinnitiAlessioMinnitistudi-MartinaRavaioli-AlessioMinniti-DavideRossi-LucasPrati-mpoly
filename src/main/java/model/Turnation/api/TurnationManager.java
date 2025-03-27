@@ -1,6 +1,6 @@
 package model.Turnation.api;
 
-import it.unibo.common.Pair;
+import common.Pair;
 
 public interface TurnationManager {
     boolean isOver();

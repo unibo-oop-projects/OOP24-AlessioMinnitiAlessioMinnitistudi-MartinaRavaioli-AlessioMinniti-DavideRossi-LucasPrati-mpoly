@@ -1,6 +1,6 @@
 package model.Turnation.impl;
 
-import it.unibo.common.Pair;
+import common.Pair;
 import model.Turnation.api.Player;
 import model.Turnation.api.TurnationManager;
 
