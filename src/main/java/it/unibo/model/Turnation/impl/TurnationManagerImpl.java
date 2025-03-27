@@ -1,7 +1,7 @@
 package it.unibo.model.Turnation.impl;
 
 import it.unibo.common.Pair;
-import it.unibo.model.Player.API.Player;
+import it.unibo.model.Turnation.api.Player;
 import it.unibo.model.Turnation.api.TurnationManager;
 
 public class TurnationManagerImpl implements TurnationManager {

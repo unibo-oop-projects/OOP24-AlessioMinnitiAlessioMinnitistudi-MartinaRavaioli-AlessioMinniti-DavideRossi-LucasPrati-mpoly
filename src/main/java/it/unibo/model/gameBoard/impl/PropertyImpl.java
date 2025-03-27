@@ -1,6 +1,6 @@
 package it.unibo.model.gameBoard.impl;
 
-import it.unibo.model.Player.API.Player;
+import it.unibo.model.Turnation.api.Player;
 import it.unibo.model.gameBoard.api.Property;
 
 public class PropertyImpl implements Property {
