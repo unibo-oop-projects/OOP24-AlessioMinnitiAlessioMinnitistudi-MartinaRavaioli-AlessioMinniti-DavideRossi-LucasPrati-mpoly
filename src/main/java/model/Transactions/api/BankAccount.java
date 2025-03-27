@@ -1,4 +1,4 @@
-package it.unibo.model.BankAccount.API;
+package model.Transactions.api;
 
 public interface BankAccount {
     void deposit(int amount);

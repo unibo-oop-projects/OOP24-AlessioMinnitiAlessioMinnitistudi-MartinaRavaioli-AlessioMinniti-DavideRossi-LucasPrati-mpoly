@@ -1,6 +1,6 @@
-package it.unibo.model.TransactionManager.API;
+package model.Transactions.api;
 
-import it.unibo.model.Turnation.api.Player;
+import model.Turnation.api.Player;
 
 public interface TransactionManager {
     void pay(Player from, Player to, int amount);

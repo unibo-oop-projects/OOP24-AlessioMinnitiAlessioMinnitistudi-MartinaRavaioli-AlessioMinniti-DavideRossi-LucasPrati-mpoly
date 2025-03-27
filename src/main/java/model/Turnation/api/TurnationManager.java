@@ -1,4 +1,4 @@
-package it.unibo.model.Turnation.api;
+package model.Turnation.api;
 
 import it.unibo.common.Pair;
 

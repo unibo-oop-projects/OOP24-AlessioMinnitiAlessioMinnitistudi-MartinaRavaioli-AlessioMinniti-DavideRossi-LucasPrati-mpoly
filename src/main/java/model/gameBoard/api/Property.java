@@ -1,6 +1,6 @@
-package it.unibo.model.gameBoard.api;
+package model.gameBoard.api;
 
-import it.unibo.model.Turnation.api.Player;
+import model.Turnation.api.Player;
 
 public interface Property extends Card {
     void setOwner(Player owner);

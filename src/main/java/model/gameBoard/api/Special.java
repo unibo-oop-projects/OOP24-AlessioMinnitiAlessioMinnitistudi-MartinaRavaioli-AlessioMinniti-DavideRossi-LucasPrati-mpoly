@@ -1,4 +1,4 @@
-package it.unibo.model.gameBoard.api;
+package model.gameBoard.api;
 
 public interface Special extends Card {
     Effect getEffect();

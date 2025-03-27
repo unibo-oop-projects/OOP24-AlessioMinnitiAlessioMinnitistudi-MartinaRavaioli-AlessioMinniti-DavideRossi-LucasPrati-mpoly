@@ -1,8 +1,8 @@
-package it.unibo.model.Turnation.impl;
+package model.Turnation.impl;
 
 import it.unibo.common.Pair;
-import it.unibo.model.Turnation.api.Player;
-import it.unibo.model.Turnation.api.TurnationManager;
+import model.Turnation.api.Player;
+import model.Turnation.api.TurnationManager;
 
 public class TurnationManagerImpl implements TurnationManager {
     public boolean isOver() { return false; }
