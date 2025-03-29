@@ -4,7 +4,7 @@ import it.unibo.monopoly.model.gameboard.api.Property;
 import it.unibo.monopoly.model.turnation.api.Player;
 
 //property implementation
-public class PropertyImpl implements Property {
+public final class PropertyImpl implements Property {
     //constructor
     /**
      * 
