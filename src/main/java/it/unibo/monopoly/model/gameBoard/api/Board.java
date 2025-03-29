@@ -3,7 +3,9 @@ package it.unibo.monopoly.model.gameboard.api;
 import it.unibo.monopoly.model.turnation.api.Player;
 import it.unibo.monopoly.model.turnation.api.Position;
 
-//Board interface, it's used to manage the gameboard of the game, where will be the tiles and pawns
+/**
+ * board interface.
+ */
 public interface Board {
     //call to sell an house
     /**
@@ -18,7 +20,7 @@ public interface Board {
     //call to return a tile
     /**
      * @param pos
-     * @return
+     * @return return a tile
      */
     Tile getTile(Position pos);
     //call to buy a property
