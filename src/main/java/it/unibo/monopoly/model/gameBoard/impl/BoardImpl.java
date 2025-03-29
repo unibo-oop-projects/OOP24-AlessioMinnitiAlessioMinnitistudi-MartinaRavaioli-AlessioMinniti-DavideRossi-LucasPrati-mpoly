@@ -13,17 +13,17 @@ public class BoardImpl implements Board {
     @SuppressWarnings("unused")
     private List<Tile> tiles;
     //constructor
-    public BoardImpl(){}
+    public BoardImpl() { }
     //sell an house
     @Override
-    public void sellHouse(Property prop) {}
+    public void sellHouse(final Property prop) { }
     //sell the entire proprierty
     @Override
-    public void sellProperty(Property prop) {}
+    public void sellProperty(final Property prop) { }
     //get a tile
     @Override
-    public Tile getTile(Position pos) { return null; }
+    public Tile getTile(final Position pos) { return null; }
     //buy a proprierty
     @Override
-    public void buyProperty(Property prop, Player owner) {}
+    public void buyProperty(final Property prop, final Player owner) { }
 }
