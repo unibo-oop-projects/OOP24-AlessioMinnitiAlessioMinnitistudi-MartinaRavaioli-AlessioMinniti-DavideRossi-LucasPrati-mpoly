@@ -41,6 +41,11 @@ dependencies {
     // when dependencies share the same version, grouping in a val helps to keep them in sync
     testImplementation("org.junit.jupiter:junit-jupiter-api:$jUnitVersion")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:$jUnitVersion")
+
+    // Apache commons lang3
+    val commonsLangVersion = "3.17.0"
+    implementation ("org.apache.commons:commons-lang3:$commonsLangVersion")
+
 }
 
 application {
