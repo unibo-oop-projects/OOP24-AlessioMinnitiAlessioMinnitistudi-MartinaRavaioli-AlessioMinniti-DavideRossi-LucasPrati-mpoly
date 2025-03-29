@@ -42,7 +42,11 @@ public class BankAccountTest {
 
     @Test
     public void withdrawNegativeAmount() {
-
+        final IllegalArgumentException negativeAmountException = assertThrows(
+            IllegalArgumentException.class,
+            ()-> bankAccount.withdraw(AMOUNT),
+            "Withdrawing a negative amount of money should have thrown an error");
+        testException(negativeAmountException);
     }
 
     @Test
