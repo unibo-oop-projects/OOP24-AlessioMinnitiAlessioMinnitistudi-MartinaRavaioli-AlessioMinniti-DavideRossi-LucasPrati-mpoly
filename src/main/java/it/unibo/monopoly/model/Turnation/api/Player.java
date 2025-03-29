@@ -1,8 +1,11 @@
 package it.unibo.monopoly.model.turnation.api;
 
+/**
+ * player interface.
+*/
 public interface Player {
     /**
-     * @return
+     * @return the own position
      */
     Position getPosition();
     /**
@@ -10,7 +13,7 @@ public interface Player {
      */
     void makeMove(int steps);
     /**
-     * @return
+     * @return if is alive
      */
     boolean isAlive();
 }
