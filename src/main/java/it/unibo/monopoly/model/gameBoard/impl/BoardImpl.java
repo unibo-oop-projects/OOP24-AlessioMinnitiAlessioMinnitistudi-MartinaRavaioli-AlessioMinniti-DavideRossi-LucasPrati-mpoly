@@ -1,5 +1,6 @@
 package it.unibo.monopoly.model.gameboard.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import it.unibo.monopoly.model.gameboard.api.Board;
@@ -16,8 +17,16 @@ public class BoardImpl implements Board {
     private List<Tile> tiles;
     /**
      * constructor.
-     */
-    public BoardImpl() { }
+    */
+    public BoardImpl() {
+        this.tiles = new ArrayList<>();
+    }
+    /**
+     * constructor.
+    */
+    public BoardImpl(List<Tile> tiles) {
+        this.tiles = tiles;
+    }
     //sell an house
     @Override
     public void sellHouse(final Property prop) { }

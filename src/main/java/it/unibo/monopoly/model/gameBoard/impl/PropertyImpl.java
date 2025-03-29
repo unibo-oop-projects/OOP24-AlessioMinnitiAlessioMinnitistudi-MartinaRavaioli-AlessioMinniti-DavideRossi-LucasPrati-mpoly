@@ -7,11 +7,16 @@ import it.unibo.monopoly.model.turnation.api.Player;
  * property implementation.
 */
 public class PropertyImpl implements Property {
+    private Player owner;
+    private int price;
     //constructor
     /**
      * 
      */
-    public PropertyImpl() { }
+    public PropertyImpl(Player owner, int price) { 
+        this.owner = owner;
+        this.price = price;
+    }
     //set the owner
     @Override 
     public void setOwner(final Player owner) { }
