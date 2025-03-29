@@ -1,6 +1,6 @@
 package it.unibo.monopoly.model.turnation.api;
 
-import common.Pair;
+import org.apache.commons.lang3.tuple.Pair;
 
 public interface TurnationManager {
     boolean isOver();
