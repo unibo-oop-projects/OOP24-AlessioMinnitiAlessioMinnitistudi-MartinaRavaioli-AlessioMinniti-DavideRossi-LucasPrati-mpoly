@@ -10,17 +10,13 @@ import it.unibo.monopoly.model.turnation.api.Position;
 
 public class BoardImpl implements Board {
     @SuppressWarnings("unused")
-    List<Tile> tiles;
+    private List<Tile> tiles;
 
-    public BoardImpl(){
-        
-    }
+    public BoardImpl(){}
     @Override
-    public void sellHouse(Property prop) {
-    }
+    public void sellHouse(Property prop) {}
     @Override
-    public void sellProperty(Property prop) {
-    }
+    public void sellProperty(Property prop) {}
     @Override
     public Tile getTile(Position pos) { return null; }
     @Override
