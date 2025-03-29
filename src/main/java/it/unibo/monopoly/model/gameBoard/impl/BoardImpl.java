@@ -14,7 +14,7 @@ import it.unibo.monopoly.model.turnation.api.Position;
 */
 public class BoardImpl implements Board {
     @SuppressWarnings("unused")
-    private List<Tile> tiles;
+    private final List<Tile> tiles;
     /**
      * constructor.
     */
@@ -23,8 +23,9 @@ public class BoardImpl implements Board {
     }
     /**
      * constructor.
+     * @param tiles
     */
-    public BoardImpl(List<Tile> tiles) {
+    public BoardImpl(final List<Tile> tiles) {
         this.tiles = tiles;
     }
     //sell an house
