@@ -1,5 +1,8 @@
 package it.unibo.monopoly.model.transactions.api;
 
+/**
+ * bank account interface.
+*/
 public interface BankAccount {
     /**
      * @param amount

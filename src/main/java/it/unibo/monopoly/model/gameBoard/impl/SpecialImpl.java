@@ -8,7 +8,7 @@ import it.unibo.monopoly.model.gameboard.api.Special;
 */
 public class SpecialImpl implements Special {
     @Override
-    final public Effect getEffect() { 
+    public final Effect getEffect() { 
         return null; 
     }
 }

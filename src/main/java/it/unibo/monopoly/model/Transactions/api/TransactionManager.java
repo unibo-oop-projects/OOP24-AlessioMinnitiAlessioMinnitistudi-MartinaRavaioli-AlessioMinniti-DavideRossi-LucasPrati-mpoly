@@ -2,6 +2,9 @@ package it.unibo.monopoly.model.transactions.api;
 
 import it.unibo.monopoly.model.turnation.api.Player;
 
+/**
+ * transaction manager interface.
+*/
 public interface TransactionManager {
     /**
      * @param from
