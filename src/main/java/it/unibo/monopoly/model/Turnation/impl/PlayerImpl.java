@@ -3,11 +3,18 @@ package it.unibo.monopoly.model.turnation.impl;
 import it.unibo.monopoly.model.turnation.api.Player;
 import it.unibo.monopoly.model.turnation.api.Position;
 
+/**
+ * player implementation.
+*/
 public class PlayerImpl implements Player {
     @Override
-    public Position getPosition() { return null; }
+    public final Position getPosition() { 
+        return null; 
+    }
     @Override
     public void makeMove(final int steps) { }
     @Override
-    public boolean isAlive() { return false; }
+    public final boolean isAlive() { 
+        return false; 
+    }
 }
