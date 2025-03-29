@@ -1,10 +1,16 @@
-package it.unibo.monopoly.model.Transactions.impl;
+package it.unibo.monopoly.model.transactions.impl;
 
-import it.unibo.monopoly.model.Transactions.api.TransactionManager;
-import it.unibo.monopoly.model.Turnation.api.Player;
+import it.unibo.monopoly.model.transactions.api.TransactionManager;
+import it.unibo.monopoly.model.turnation.api.Player;
 
+/**
+ * transaction manager implementation.
+*/
 public class TransactionManagerImpl implements TransactionManager {
-    public void pay(Player from, Player to, int amount) {}
-    public void sell(Player owner, int amount) {}
-    public void buy(Player owner, int amount) {}
+    @Override
+    public void pay(final Player from, final Player to, final int amount) { }
+    @Override
+    public void sell(final Player owner, final int amount) { }
+    @Override
+    public void buy(final Player owner, final int amount) { }
 }

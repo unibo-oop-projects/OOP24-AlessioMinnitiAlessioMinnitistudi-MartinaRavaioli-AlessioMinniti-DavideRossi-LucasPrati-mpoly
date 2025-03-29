@@ -1,11 +1,32 @@
-package it.unibo.monopoly.model.gameBoard.api;
+package it.unibo.monopoly.model.gameboard.api;
 
-import it.unibo.monopoly.model.Turnation.api.Player;
-import it.unibo.monopoly.model.Turnation.api.Position;
+import it.unibo.monopoly.model.turnation.api.Player;
+import it.unibo.monopoly.model.turnation.api.Position;
 
+/**
+ * board interface.
+ */
 public interface Board {
+    //call to sell an house
+    /**
+     * @param prop
+     */
     void sellHouse(Property prop);
+    //call to sell a property
+    /**
+     * @param prop
+     */
     void sellProperty(Property prop);
-    Card getCard(Position pos);
+    //call to return a tile
+    /**
+     * @param pos
+     * @return return a tile
+     */
+    Tile getTile(Position pos);
+    //call to buy a property
+    /**
+     * @param prop
+     * @param owner
+     */
     void buyProperty(Property prop, Player owner);
 }

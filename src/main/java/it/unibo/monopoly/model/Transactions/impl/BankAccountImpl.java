@@ -1,8 +1,13 @@
-package it.unibo.monopoly.model.Transactions.impl;
+package it.unibo.monopoly.model.transactions.impl;
 
-import it.unibo.monopoly.model.Transactions.api.BankAccount;
+import it.unibo.monopoly.model.transactions.api.BankAccount;
 
+/**
+ * bank account implementation.
+*/
 public class BankAccountImpl implements BankAccount {
-    public void deposit(int amount) {}
-    public void withdraw(int amount) {}
+    @Override
+    public void deposit(final int amount) { }
+    @Override
+    public void withdraw(final int amount) { }
 }

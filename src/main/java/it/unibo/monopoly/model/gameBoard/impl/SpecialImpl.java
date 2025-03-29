@@ -1,8 +1,14 @@
-package it.unibo.monopoly.model.gameBoard.impl;
+package it.unibo.monopoly.model.gameboard.impl;
 
-import it.unibo.monopoly.model.gameBoard.api.Effect;
-import it.unibo.monopoly.model.gameBoard.api.Special;
+import it.unibo.monopoly.model.gameboard.api.Effect;
+import it.unibo.monopoly.model.gameboard.api.Special;
 
+/**
+ * special tile implementation.
+*/
 public class SpecialImpl implements Special {
-    public Effect getEffect() { return null; }
+    @Override
+    public final Effect getEffect() { 
+        return null; 
+    }
 }
