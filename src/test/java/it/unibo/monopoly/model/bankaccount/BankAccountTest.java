@@ -54,7 +54,10 @@ public class BankAccountTest {
 
     @Test
     public void withdrawSufficientBalance() {
-        
+        bankAccount.deposit(AMOUNT * 2);
+        final int previousBalance = bankAccount.getBalance();
+        bankAccount.withdraw(AMOUNT);
+        assertEquals(bankAccount.getBalance(), previousBalance - AMOUNT);
     }
 
     @Test 
