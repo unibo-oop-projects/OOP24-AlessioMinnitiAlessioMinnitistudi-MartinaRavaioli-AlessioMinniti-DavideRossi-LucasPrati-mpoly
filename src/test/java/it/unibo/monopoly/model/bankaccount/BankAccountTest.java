@@ -37,9 +37,7 @@ public class BankAccountTest {
             IllegalArgumentException.class,
             ()-> bankAccount.deposit(AMOUNT),
             "Depositing a negative amount of money should have thrown an error");
-
-        assertNotNull(negativeAmountException.getMessage());
-        assertFalse(negativeAmountException.getMessage().isBlank());
+        testException(negativeAmountException);
     }
 
     @Test
@@ -53,8 +51,13 @@ public class BankAccountTest {
     }
 
     @Test 
-    public void withdrawWithInsufficientBalance(){
+    public void withdrawWithInsufficientBalance() {
 
+    }
+
+    private void testException(Exception exception) {
+        assertNotNull(exception.getMessage());
+        assertFalse(exception.getMessage().isBlank());
     }
 
 }
