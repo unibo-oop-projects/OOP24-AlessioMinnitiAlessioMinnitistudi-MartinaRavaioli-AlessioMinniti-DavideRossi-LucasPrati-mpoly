@@ -1,6 +1,8 @@
 package it.unibo.monopoly.model.Turnation.impl;
 
-import common.Pair;
+
+import org.apache.commons.lang3.tuple.Pair;
+
 import it.unibo.monopoly.model.Turnation.api.Player;
 import it.unibo.monopoly.model.Turnation.api.TurnationManager;
 
