@@ -8,13 +8,14 @@ import it.unibo.monopoly.model.gameboard.api.Tile;
 import it.unibo.monopoly.model.turnation.api.Player;
 import it.unibo.monopoly.model.turnation.api.Position;
 
-//implementation of the board
+/**
+ * board implementation.
+*/
 public class BoardImpl implements Board {
     @SuppressWarnings("unused")
     private List<Tile> tiles;
-    //constructor
     /**
-     * 
+     * constructor.
      */
     public BoardImpl() { }
     //sell an house
@@ -25,7 +26,9 @@ public class BoardImpl implements Board {
     public void sellProperty(final Property prop) { }
     //get a tile
     @Override
-    public Tile getTile(final Position pos) { return null; }
+    public final Tile getTile(final Position pos) { 
+        return null; 
+    }
     //buy a proprierty
     @Override
     public void buyProperty(final Property prop, final Player owner) { }
