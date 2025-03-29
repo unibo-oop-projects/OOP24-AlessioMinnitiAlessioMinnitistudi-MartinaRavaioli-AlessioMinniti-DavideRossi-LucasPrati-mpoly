@@ -13,6 +13,9 @@ public class BoardImpl implements Board {
     @SuppressWarnings("unused")
     private List<Tile> tiles;
     //constructor
+    /**
+     * 
+     */
     public BoardImpl() { }
     //sell an house
     @Override
