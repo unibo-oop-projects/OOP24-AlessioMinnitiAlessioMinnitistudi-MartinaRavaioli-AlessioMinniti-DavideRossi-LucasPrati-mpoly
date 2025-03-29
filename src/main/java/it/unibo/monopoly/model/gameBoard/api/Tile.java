@@ -1,4 +1,6 @@
 package it.unibo.monopoly.model.gameboard.api;
 
-//interface for the tiles in the board
+/**
+ * tile interface.
+ */
 public interface Tile { }
