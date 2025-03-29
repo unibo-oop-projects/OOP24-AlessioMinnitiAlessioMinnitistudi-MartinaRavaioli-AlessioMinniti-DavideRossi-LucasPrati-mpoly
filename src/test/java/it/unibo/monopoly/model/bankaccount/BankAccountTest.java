@@ -1,5 +1,6 @@
 package it.unibo.monopoly.model.bankaccount;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -23,11 +24,14 @@ public class BankAccountTest {
 
     @Test
     public void checkInitialBalance() {
+        assertEquals(bankAccount.getBalance(), BALANCE);
     }
 
     @Test
     public void depositPositiveAmount(){
-
+        final int previousBalance = bankAccount.getBalance();
+        bankAccount.deposit(AMOUNT);
+        assertEquals(bankAccount.getBalance(), previousBalance + AMOUNT);
     }
 
     @Test 
