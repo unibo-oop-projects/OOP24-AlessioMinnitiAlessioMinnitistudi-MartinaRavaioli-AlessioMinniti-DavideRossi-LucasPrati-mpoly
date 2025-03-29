@@ -1,6 +1,5 @@
 package it.unibo.monopoly.model.bankaccount;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -35,7 +34,7 @@ public class BankAccountTest {
     public void depositNegativeAmount() {
         final IllegalArgumentException negativeAmountException = assertThrows(
             IllegalArgumentException.class,
-            ()-> bankAccount.deposit(AMOUNT),
+            ()-> bankAccount.deposit(-AMOUNT),
             "Depositing a negative amount of money should have thrown an error");
         testException(negativeAmountException);
     }
@@ -44,19 +43,23 @@ public class BankAccountTest {
     public void withdrawNegativeAmount() {
         final IllegalArgumentException negativeAmountException = assertThrows(
             IllegalArgumentException.class,
-            ()-> bankAccount.withdraw(AMOUNT),
+            ()-> bankAccount.withdraw(-AMOUNT),
             "Withdrawing a negative amount of money should have thrown an error");
         testException(negativeAmountException);
     }
 
     @Test
     public void withdrawSufficientBalance() {
-
+        
     }
 
     @Test 
     public void withdrawWithInsufficientBalance() {
-
+        final IllegalStateException insufficientBalanceException = assertThrows(
+            IllegalStateException.class,
+            ()-> bankAccount.withdraw(AMOUNT * 100),
+            "Withdrawing without having enough money should have thrown an error");
+        testException(insufficientBalanceException);
     }
 
     private void testException(Exception exception) {
