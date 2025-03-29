@@ -5,9 +5,9 @@ import it.unibo.monopoly.model.turnation.api.Player;
 
 public class TransactionManagerImpl implements TransactionManager {
     @Override
-    public void pay(Player from, Player to, int amount) { }
+    public void pay(final Player from, final Player to, final int amount) { }
     @Override
-    public void sell(Player owner, int amount) { }
+    public void sell(final Player owner, final int amount) { }
     @Override
-    public void buy(Player owner, int amount) { }
+    public void buy(final Player owner, final int amount) { }
 }
