@@ -1,5 +1,10 @@
 package it.unibo.monopoly.model.bankaccount;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -9,7 +14,8 @@ import it.unibo.monopoly.model.Transactions.impl.BankAccountImpl;
 public class BankAccountTest {
 
     private BankAccount bankAccount;
-
+    private static final int BALANCE = 0;
+    private static final int AMOUNT = 100;
 
     @BeforeEach
     public void setUp(){
@@ -18,7 +24,6 @@ public class BankAccountTest {
 
     @Test
     public void checkInitialBalance() {
-        
     }
 
     @Test
@@ -28,7 +33,13 @@ public class BankAccountTest {
 
     @Test 
     public void depositNegativeAmount() {
+        final IllegalArgumentException negativeAmountException = assertThrows(
+            IllegalArgumentException.class,
+            ()-> bankAccount.deposit(AMOUNT),
+            "Depositing a negative amount of money should have thrown an error");
 
+        assertNotNull(negativeAmountException.getMessage());
+        assertFalse(negativeAmountException.getMessage().isBlank());
     }
 
     @Test
