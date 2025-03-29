@@ -1,3 +1,3 @@
-package it.unibo.monopoly.model.Turnation.api;
+package it.unibo.monopoly.model.turnation.api;
 
 public interface Position {}

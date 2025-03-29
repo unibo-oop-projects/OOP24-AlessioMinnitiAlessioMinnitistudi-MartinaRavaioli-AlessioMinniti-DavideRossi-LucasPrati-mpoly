@@ -1,8 +1,8 @@
-package it.unibo.monopoly.model.Turnation.impl;
+package it.unibo.monopoly.model.turnation.impl;
 
 import common.Pair;
-import it.unibo.monopoly.model.Turnation.api.Player;
-import it.unibo.monopoly.model.Turnation.api.TurnationManager;
+import it.unibo.monopoly.model.turnation.api.Player;
+import it.unibo.monopoly.model.turnation.api.TurnationManager;
 
 public class TurnationManagerImpl implements TurnationManager {
     public boolean isOver() { return false; }

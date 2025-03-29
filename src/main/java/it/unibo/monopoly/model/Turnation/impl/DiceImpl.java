@@ -1,6 +1,6 @@
-package it.unibo.monopoly.model.Turnation.impl;
+package it.unibo.monopoly.model.turnation.impl;
 
-import it.unibo.monopoly.model.Turnation.api.Dice;
+import it.unibo.monopoly.model.turnation.api.Dice;
 
 public class DiceImpl implements Dice {
     public int throwDice() { return 0; }
