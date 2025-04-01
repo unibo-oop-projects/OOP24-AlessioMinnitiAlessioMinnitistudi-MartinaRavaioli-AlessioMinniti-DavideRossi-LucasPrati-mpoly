@@ -5,11 +5,13 @@ package it.unibo.monopoly.model.transactions.api;
 */
 public interface BankAccount {
     /**
-     * @param amount
+     * Increases the current amount of money in the account
+     * @param amount the amount of money to add to the account
      */
     void deposit(int amount);
-    /**
-     * @param amount
+    /** 
+     * Decreases the current amount of money in the account
+     * @param amount the amount of money to pull from the account
      */
     void withdraw(int amount);
 
