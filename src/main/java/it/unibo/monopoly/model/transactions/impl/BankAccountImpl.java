@@ -33,8 +33,10 @@ public class BankAccountImpl implements BankAccount {
         }
 
         if(amount > balance) {
-            throw new IllegalArgumentException("Cannot withdraw an amount of money that exceeds current available money");
+            throw new IllegalStateException("Cannot withdraw an amount of money that exceeds current available money");
         }
+
+        this.balance-=amount;
     }
     @Override
     public int getBalance() {
