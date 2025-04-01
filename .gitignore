@@ -18,3 +18,9 @@ bin/
 
 # Ignore VSCode folder
 .vscode/
+
+#Ignore pdflatex output files
+report/*.aux
+report/*.out
+report/*.log
+report/*.toc
