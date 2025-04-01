@@ -8,8 +8,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import it.unibo.monopoly.model.Transactions.api.BankAccount;
-import it.unibo.monopoly.model.Transactions.impl.BankAccountImpl;
+import it.unibo.monopoly.model.transactions.api.BankAccount;
+import it.unibo.monopoly.model.transactions.impl.BankAccountImpl;
 
 public class BankAccountTest {
 
