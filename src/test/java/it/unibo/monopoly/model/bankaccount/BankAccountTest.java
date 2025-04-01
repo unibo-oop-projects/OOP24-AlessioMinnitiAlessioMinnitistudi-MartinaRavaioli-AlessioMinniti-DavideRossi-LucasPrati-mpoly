@@ -11,20 +11,21 @@ import org.junit.jupiter.api.Test;
 import it.unibo.monopoly.model.transactions.api.BankAccount;
 import it.unibo.monopoly.model.transactions.impl.BankAccountImpl;
 
+
 public class BankAccountTest {
 
     private BankAccount bankAccount;
-    private static final int BALANCE = 0;
+    private static final int INITIAL_BALANCE = 0;
     private static final int AMOUNT = 100;
 
     @BeforeEach
     public void setUp(){
-        bankAccount = new BankAccountImpl();
+        bankAccount = new BankAccountImpl(INITIAL_BALANCE);
     }
 
     @Test
     public void checkInitialBalance() {
-        assertEquals(bankAccount.getBalance(), BALANCE);
+        assertEquals(bankAccount.getBalance(), INITIAL_BALANCE);
     }
 
     @Test
