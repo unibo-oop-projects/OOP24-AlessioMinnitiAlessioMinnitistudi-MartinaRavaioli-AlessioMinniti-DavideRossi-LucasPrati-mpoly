@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (MiKTeX 22.1) (preloaded format=pdflatex 2025.4.1)  1 APR 2025 11:27
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (MiKTeX 22.1) (preloaded format=pdflatex 2025.4.1)  1 APR 2025 12:17
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -276,11 +276,11 @@ Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
 )
 (/Users/daviderossi/Library/Application Support/MiKTeX/texmfs/install/tex/gener
 ic/babel/babel.sty
-Package: babel 2025/03/10 v25.5 The multilingual framework for pdfLaTeX, LuaLaT
+Package: babel 2025/03/27 v25.6 The multilingual framework for pdfLaTeX, LuaLaT
 eX and XeLaTeX
 \babel@savecnt=\count287
 \U@D=\dimen148
-\l@unhyphenated=\language1
+\l@unhyphenated=\language79
 
 (/Users/daviderossi/Library/Application Support/MiKTeX/texmfs/install/tex/gener
 ic/babel/txtbabel.def)
@@ -299,14 +299,6 @@ File: bblopts.cfg 2005/09/08 v0.1 add Arabic and Farsi to "declared" options of
 (/Users/daviderossi/Library/Application Support/MiKTeX/texmfs/install/tex/latex
 /babel-italian/italian.ldf
 Language: italian 2024/10/10 v.1.5.01 Italian support for the babel system
-
-
-Package babel Warning: No hyphenation patterns were preloaded for
-(babel)                the language 'Italian' into the format.
-(babel)                Please, configure your TeX system to add them and
-(babel)                rebuild the format. Now I will use the patterns
-(babel)                preloaded for \language=0 instead on input line 21.
-
 \it@lettering=\count289
 \it@doublequoteactive=\count290
 \it@ISOcompliance=\count291
@@ -316,4 +308,132 @@ ic/babel/locale/it/babel-italian.tex
 Package babel Info: Importing font and identification data for italian
 (babel)             from babel-it.ini. Reported on input line 11.
 )
-(/Users/daviderossi/Library/Application Support/MiKTeX/texmfs/install/tex/l
+(/Users/daviderossi/Library/Application Support/MiKTeX/texmfs/install/tex/latex
+/cleveref/cleveref.sty
+Package: cleveref 2018/03/27 v0.21.4 Intelligent cross-referencing
+Package cleveref Info: `hyperref' support loaded on input line 2370.
+LaTeX Info: Redefining \cref on input line 2370.
+LaTeX Info: Redefining \Cref on input line 2370.
+LaTeX Info: Redefining \crefrange on input line 2370.
+LaTeX Info: Redefining \Crefrange on input line 2370.
+LaTeX Info: Redefining \cpageref on input line 2370.
+LaTeX Info: Redefining \Cpageref on input line 2370.
+LaTeX Info: Redefining \cpagerefrange on input line 2370.
+LaTeX Info: Redefining \Cpagerefrange on input line 2370.
+LaTeX Info: Redefining \labelcref on input line 2370.
+LaTeX Info: Redefining \labelcpageref on input line 2370.
+)
+(/Users/daviderossi/Library/Application Support/MiKTeX/texmfs/install/tex/latex
+/l3backend/l3backend-pdftex.def
+File: l3backend-pdftex.def 2024-05-08 L3 backend support: PDF output (pdfTeX)
+\l__color_backend_stack_int=\count292
+\l__pdf_internal_box=\box55
+) (report.aux)
+\openout1 = `report.aux'.
+
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 21.
+LaTeX Font Info:    ... okay on input line 21.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 21.
+LaTeX Font Info:    ... okay on input line 21.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 21.
+LaTeX Font Info:    ... okay on input line 21.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 21.
+LaTeX Font Info:    ... okay on input line 21.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 21.
+LaTeX Font Info:    ... okay on input line 21.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 21.
+LaTeX Font Info:    ... okay on input line 21.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 21.
+LaTeX Font Info:    ... okay on input line 21.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 21.
+LaTeX Font Info:    ... okay on input line 21.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 21.
+LaTeX Font Info:    ... okay on input line 21.
+
+(/Users/daviderossi/Library/Application Support/MiKTeX/texmfs/install/tex/conte
+xt/base/mkii/supp-pdf.mkii
+[Loading MPS to PDF converter (version 2006.09.02).]
+\scratchcounter=\count293
+\scratchdimen=\dimen149
+\scratchbox=\box56
+\nofMPsegments=\count294
+\nofMParguments=\count295
+\everyMPshowfont=\toks22
+\MPscratchCnt=\count296
+\MPscratchDim=\dimen150
+\MPnumerator=\count297
+\makeMPintoPDFobject=\count298
+\everyMPtoPDFconversion=\toks23
+)
+(/Users/daviderossi/Library/Application Support/MiKTeX/texmfs/install/tex/latex
+/epstopdf-pkg/epstopdf-base.sty
+Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
+
+(/Users/daviderossi/Library/Application Support/MiKTeX/texmfs/install/tex/latex
+/grfext/grfext.sty
+Package: grfext 2019/12/03 v1.3 Manage graphics extensions (HO)
+)
+Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
+85.
+Package grfext Info: Graphics extension search list:
+(grfext)             [.pdf,.png,.jpg,.mps,.jpeg,.jbig2,.jb2,.PDF,.PNG,.JPG,.JPE
+G,.JBIG2,.JB2,.eps]
+(grfext)             \AppendGraphicsExtensions on input line 504.
+
+(/Users/daviderossi/Library/Application Support/MiKTeX/texmfs/install/tex/latex
+/00miktex/epstopdf-sys.cfg
+File: epstopdf-sys.cfg 2021/03/18 v2.0 Configuration of epstopdf for MiKTeX
+))
+Package hyperref Info: Link coloring OFF on input line 21.
+ (report.out) (report.out)
+\@outlinefile=\write4
+\openout4 = `report.out'.
+
+LaTeX Info: Redefining \it@ocap on input line 21.
+LaTeX Info: Redefining \it@ccap on input line 21.
+
+
+File italian.ldf warning: 
+italian.ldf    With OT1 encoding guillemets are poorly faked
+italian.ldf    Use T1 encoding
+italian.ldf    or specify a font with command \CaporaliFrom
+italian.ldf    See the documentation concerning the babel-italian typesetting
+italian.ldf    on input line 21.
+
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <14.4> on input line 24.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <7> on input line 24.
+
+
+[1
+
+{/Users/daviderossi/Library/Application Support/MiKTeX/texmfs/data/fonts/map/pd
+ftex/pdftex.map}] (report.aux
+Package cleveref Info: loaded `italian' language definitions on input line 7.
+Package cleveref Info: loaded `italian' language definitions on input line 8.
+)
+ ***********
+LaTeX2e <2024-11-01> patch level 2
+L3 programming layer <2025-01-18>
+ ***********
+Package rerunfilecheck Info: File `report.out' has not changed.
+(rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
+ ) 
+Here is how much of TeX's memory you used:
+ 12280 strings out of 473530
+ 212022 string characters out of 5703216
+ 669472 words of memory out of 5000000
+ 35390 multiletter control sequences out of 15000+600000
+ 560347 words of font info for 41 fonts, out of 8000000 for 9000
+ 1141 hyphenation exceptions out of 8191
+ 75i,6n,79p,250b,468s stack positions out of 10000i,1000n,20000p,200000b,200000s
+</Users/daviderossi/Library/Application Support/MiKTeX/texmfs/install/fonts/t
+ype1/public/amsfonts/cm/cmr12.pfb></Users/daviderossi/Library/Application Suppo
+rt/MiKTeX/texmfs/install/fonts/type1/public/amsfonts/cm/cmr17.pfb>
+Output written on report.pdf (1 page, 24119 bytes).
+PDF statistics:
+ 21 PDF objects out of 1000 (max. 8388607)
+ 2 named destinations out of 1000 (max. 500000)
+ 1 words of extra memory for PDF output out of 10000 (max. 10000000)
+
