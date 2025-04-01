@@ -7,8 +7,8 @@ import it.unibo.monopoly.model.transactions.api.BankAccount;
 */
 public class BankAccountImpl implements BankAccount {
 
-    private static final int DEFAULT_BALANCE=0;
-    private int balance = DEFAULT_BALANCE;
+    private static final int DEFAULT_BALANCE=1000;
+    private int balance = 0;
 
     public BankAccountImpl(final int initialBalance) {
         deposit(initialBalance);
@@ -24,7 +24,15 @@ public class BankAccountImpl implements BankAccount {
         this.balance+=amount;
     }
     @Override
-    public void withdraw(final int amount) { }
+    public void withdraw(final int amount) {
+        if(amount < 0) {
+            throw new IllegalArgumentException("Cannot withdraw a negative amount of money");
+        }
+
+        if(amount > balance) {
+            throw new IllegalArgumentException("Cannot withdraw an amount of money that exceeds current available money");
+        }
+    }
     @Override
     public int getBalance() {
         return this.balance;
