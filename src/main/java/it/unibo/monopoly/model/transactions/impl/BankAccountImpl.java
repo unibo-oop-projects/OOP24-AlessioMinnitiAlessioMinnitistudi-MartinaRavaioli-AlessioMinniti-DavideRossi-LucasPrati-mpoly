@@ -14,6 +14,9 @@ public class BankAccountImpl implements BankAccount {
         deposit(initialBalance);
     }
 
+    public BankAccountImpl() {
+        this.balance=DEFAULT_BALANCE;
+    }
 
     @Override
     public void deposit(final int amount) {
