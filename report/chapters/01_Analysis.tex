@@ -48,16 +48,16 @@ stesso terminale.
 \section{Modello del dominio}
 Il sistema (TurnationManager) deve gestire l’avvicendarsi dei vari turni dei giocatori. 
 A ogni giocatore (Player) viene concesso periodicamente il proprio turno d’azione sulla base di una rotazione ciclica. 
-Durante il turno il giocatore tira i dadi e muove sul tabellone (Board) la propria pedina finendo sempre su una casella (Tile).
+Durante il turno il giocatore tira i dadi e muove sul tabellone (Board) la propria pedina (Pawn) finendo sempre su una casella (Tile).
 Questa casella può essere una proprietà (Property) oppure una casella speciale (Special), 
 e sulla base di ciò cambia radicalmente l’interazione dell’utente. 
 Se la pedina capita su una proprietà che non è ancora posseduta da alcun giocatore allora 
-il giocatore può decidere di acquistarla pagando dei soldi alla banca (Bank). 
+il giocatore può chiedere alla banca (Bank) di acquistarla pagando dei soldi. 
 Se invece la proprietà era già stata comprata in precedenza da un altro giocatore allora si 
 deve pagare l'affitto al proprietario. 
-Se il proprietario è il giocatore che sta attualmente svolgendo il proprio turno 
-può decidere se migliorare la sua proprietà aggiungendo case e pagando dei soldi alla banca. 
-Oppure se desidera vendere la proprietà, in tal caso riceverà dei soldi dalla banca e la proprietà ritornerà
+Se la pedina del giocatore capita su una sua proprietà  
+può decidere se migliorarla aggiungendo case e pagando dei soldi alla banca. 
+Oppure se desidera può vendere la proprietà, in tal caso riceverà dei soldi dalla banca e la proprietà ritornerà
 disponibile all'acquisto.
 Se capita su una casella speciale invece si attiverà un effetto caratteristico della casella (Effect)
 che avrà ripercussioni sullo svolgimento del gioco 
