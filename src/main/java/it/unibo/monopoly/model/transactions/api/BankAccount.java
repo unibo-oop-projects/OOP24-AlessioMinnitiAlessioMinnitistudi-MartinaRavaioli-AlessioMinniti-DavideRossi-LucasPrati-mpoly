@@ -19,4 +19,20 @@ public interface BankAccount {
      * @return the current balance of the account
      */
     int getBalance();
+
+    /**
+     * Checks if the account of the player is in a state 
+     * valid to continue playing.
+     * @return true if it can continue playing, false if the account is in a state 
+     * that doesn't allow the continuation of the game 
+     */
+    boolean isAccountValid(); 
+
+    /**
+     * Checks if the player has officially gone 
+     * bankrupt. Therefore its account is in an 
+     * irreparable state and the player has lost
+     * @return the result of the check operation
+     */
+    boolean isBankrupt();
 }
