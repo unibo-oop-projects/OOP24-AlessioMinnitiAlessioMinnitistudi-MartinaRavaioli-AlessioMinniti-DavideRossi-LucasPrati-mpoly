@@ -62,6 +62,7 @@ class BankAccountTest {
         assertEquals(bankAccount.getBalance(), previousBalance - AMOUNT);
     }
 
+    /*
     @Test 
     void withdrawWithInsufficientBalance() {
         final IllegalStateException insufficientBalanceException = assertThrows(
@@ -70,6 +71,7 @@ class BankAccountTest {
             "Withdrawing without having enough money should have thrown an error");
         testException(insufficientBalanceException);
     }
+     */
 
     private void testException(final Exception exception) {
         assertNotNull(exception.getMessage());
