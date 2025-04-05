@@ -93,16 +93,16 @@ class BankAccountTest {
     @Test
     void checkAccountInvalidAfterInsufficientDeposit() {
         bankAccount.withdraw(bankAccount.getBalance() + AMOUNT);
-        bankAccount.deposit((AMOUNT / 2));
-        assertEquals(bankAccount.getBalance(),-AMOUNT + (AMOUNT / 2));
+        bankAccount.deposit(AMOUNT / 2);
+        assertEquals(bankAccount.getBalance(), -AMOUNT + (AMOUNT / 2));
         assertFalse(bankAccount.isAccountValid());
     }
-    
+
     @Test
     void checkAccountInvalidAfterSufficientDeposit() {
         bankAccount.withdraw(bankAccount.getBalance() + AMOUNT);
         bankAccount.deposit(AMOUNT * 2);
-        assertEquals(bankAccount.getBalance(),-AMOUNT + AMOUNT * 2);
+        assertEquals(bankAccount.getBalance(), -AMOUNT + AMOUNT * 2);
         assertTrue(bankAccount.isAccountValid());
     }
 

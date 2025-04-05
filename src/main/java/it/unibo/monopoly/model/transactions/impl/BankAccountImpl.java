@@ -16,7 +16,7 @@ public final class BankAccountImpl implements BankAccount {
      * @param initialBalance The initial amount of money
      */
     public BankAccountImpl(final int initialBalance) {
-        if(initialBalance < 0) {
+        if (initialBalance < 0) {
             throw new IllegalArgumentException("The initial balance of the account cannot be negative");
         }
 
