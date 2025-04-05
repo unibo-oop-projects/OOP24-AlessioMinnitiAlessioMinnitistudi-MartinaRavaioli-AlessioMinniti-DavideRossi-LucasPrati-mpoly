@@ -16,6 +16,10 @@ public final class BankAccountImpl implements BankAccount {
      * @param initialBalance The initial amount of money
      */
     public BankAccountImpl(final int initialBalance) {
+        if(initialBalance < 0) {
+            throw new IllegalArgumentException("The initial balance of the account cannot be negative");
+        }
+
         this.balance += initialBalance;
     }
 
@@ -23,7 +27,7 @@ public final class BankAccountImpl implements BankAccount {
      * Creates a BankAccount with a default, positive and non-zero amount of money.
      */
     public BankAccountImpl() {
-        this.balance = DEFAULT_BALANCE;
+        this(DEFAULT_BALANCE);
     }
 
     @Override
@@ -34,20 +38,28 @@ public final class BankAccountImpl implements BankAccount {
 
         this.balance += amount;
     }
+
     @Override
     public void withdraw(final int amount) {
         if (amount < 0) {
             throw new IllegalArgumentException("Cannot withdraw a negative amount of money");
         }
 
-        if (amount > balance) {
-            throw new IllegalStateException("Cannot withdraw an amount of money that exceeds current available money");
-        }
-
         this.balance -= amount;
     }
+
     @Override
     public int getBalance() {
         return this.balance;
+    }
+
+    @Override
+    public boolean isAccountValid() {
+        return balance > 0;
+    }
+
+    @Override
+    public boolean isBankrupt() {
+        return false;
     }
 }
