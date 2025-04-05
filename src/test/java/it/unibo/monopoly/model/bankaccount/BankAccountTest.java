@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -25,15 +26,24 @@ class BankAccountTest {
     }
 
     @Test
+    void createAccountWithNegativeBalance() {
+        final IllegalArgumentException negativeAmountException = assertThrows(
+            IllegalArgumentException.class,
+            () -> bankAccount = new BankAccountImpl(-(INITIAL_BALANCE + 1)),
+            "Creating a bankAccount with a negative balance should have thrown an error");
+        testExceptionFormat(negativeAmountException);
+    }
+
+    @Test
     void checkInitialBalance() {
         assertEquals(bankAccount.getBalance(), INITIAL_BALANCE);
     }
 
     @Test
     void depositPositiveAmount() {
-        final int previousBalance = bankAccount.getBalance();
         bankAccount.deposit(AMOUNT);
-        assertEquals(bankAccount.getBalance(), previousBalance + AMOUNT);
+        assertEquals(bankAccount.getBalance(), INITIAL_BALANCE + AMOUNT);
+        assertTrue(bankAccount.isAccountValid());
     }
 
     @Test 
@@ -42,7 +52,7 @@ class BankAccountTest {
             IllegalArgumentException.class,
             () -> bankAccount.deposit(-AMOUNT),
             "Depositing a negative amount of money should have thrown an error");
-        testException(negativeAmountException);
+        testExceptionFormat(negativeAmountException);
     }
 
     @Test
@@ -51,29 +61,52 @@ class BankAccountTest {
             IllegalArgumentException.class,
             () -> bankAccount.withdraw(-AMOUNT),
             "Withdrawing a negative amount of money should have thrown an error");
-        testException(negativeAmountException);
+        testExceptionFormat(negativeAmountException);
     }
 
     @Test
-    void withdrawSufficientBalance() {
+    void withdrawLessThanBalance() {
         bankAccount.deposit(AMOUNT * 2);
         final int previousBalance = bankAccount.getBalance();
         bankAccount.withdraw(AMOUNT);
         assertEquals(bankAccount.getBalance(), previousBalance - AMOUNT);
+        assertTrue(bankAccount.isAccountValid());
     }
 
-    /*
+    @Test
+    void withdrawMoreThanBalance() {
+        final int withdrawAmount = bankAccount.getBalance() + 1;
+        bankAccount.withdraw(withdrawAmount);
+        assertEquals(bankAccount.getBalance(), INITIAL_BALANCE - withdrawAmount);
+        assertFalse(bankAccount.isAccountValid());
+    }
+
     @Test 
-    void withdrawWithInsufficientBalance() {
-        final IllegalStateException insufficientBalanceException = assertThrows(
-            IllegalStateException.class,
-            () -> bankAccount.withdraw(AMOUNT * 100),
-            "Withdrawing without having enough money should have thrown an error");
-        testException(insufficientBalanceException);
+    void withdrawEqualToBalance() {
+        bankAccount.deposit(AMOUNT);
+        bankAccount.withdraw(bankAccount.getBalance());
+        assertEquals(bankAccount.getBalance(), 0);
+        assertFalse(bankAccount.isAccountValid());
     }
-     */
 
-    private void testException(final Exception exception) {
+
+    @Test
+    void checkAccountInvalidAfterInsufficientDeposit() {
+        bankAccount.withdraw(bankAccount.getBalance() + AMOUNT);
+        bankAccount.deposit((AMOUNT / 2));
+        assertEquals(bankAccount.getBalance(),-AMOUNT + (AMOUNT / 2));
+        assertFalse(bankAccount.isAccountValid());
+    }
+    
+    @Test
+    void checkAccountInvalidAfterSufficientDeposit() {
+        bankAccount.withdraw(bankAccount.getBalance() + AMOUNT);
+        bankAccount.deposit(AMOUNT * 2);
+        assertEquals(bankAccount.getBalance(),-AMOUNT + AMOUNT * 2);
+        assertTrue(bankAccount.isAccountValid());
+    }
+
+    private void testExceptionFormat(final Exception exception) {
         assertNotNull(exception.getMessage());
         assertFalse(exception.getMessage().isBlank());
     }
