@@ -30,7 +30,7 @@ public interface Board {
      */
     void buyProperty(Property prop, Player owner);
 
-    Tile getTileForPawn(Player p);
+    Tile getTileForPawn(Pawn p);
 
     void movePawn(Player player);
 }
