@@ -1,20 +1,33 @@
 package it.unibo.monopoly.model.turnation.impl;
 
+import java.awt.Color;
+
 import it.unibo.monopoly.model.turnation.api.Player;
-import it.unibo.monopoly.model.turnation.api.Position;
 
 /**
- * player implementation.
+ * Player implementation.
 */
 public class PlayerImpl implements Player {
-    @Override
-    public final Position getPosition() { 
-        return null; 
+
+    private final String name;
+    private final Color color;
+
+    /**
+     * Creates a new Player with a name and a color that represents him.
+     * @param name The nickname chosen by the player for himself
+     * @param color The color of the player
+     */
+    public PlayerImpl(final String name, final Color color) {
+        this.name = name;
+        this.color = color;
     }
-    @Override
-    public void makeMove(final int steps) { }
-    @Override
-    public final boolean isAlive() { 
-        return false; 
+
+    public String getName() {
+        return name;
     }
+
+    public Color getColor() {
+        return color;
+    }
+    
 }

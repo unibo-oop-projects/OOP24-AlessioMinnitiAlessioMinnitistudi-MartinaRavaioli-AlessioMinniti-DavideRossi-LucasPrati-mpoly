@@ -1,19 +1,18 @@
 package it.unibo.monopoly.model.turnation.api;
 
+import java.awt.Color;
+
 /**
  * player interface.
 */
 public interface Player {
     /**
-     * @return the own position
+     * @return the player's nickname
      */
-    Position getPosition();
+    String getName();
+
     /**
-     * @param steps
+     * @return the player's color
      */
-    void makeMove(int steps);
-    /**
-     * @return if is alive
-     */
-    boolean isAlive();
+    Color getColor();
 }
