@@ -6,17 +6,16 @@ import it.unibo.monopoly.model.turnation.api.Position;
  * position implementation.
 */
 public class PositionImpl implements Position {
+    private int pos;
 
     @Override
     public int getPos() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getPos'");
+        return this.pos;
     }
 
     @Override
     public void setPos(int value) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'setPos'");
+        this.pos=value;
     } 
     
 }
