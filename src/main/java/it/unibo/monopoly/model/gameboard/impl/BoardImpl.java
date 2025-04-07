@@ -1,5 +1,8 @@
 package it.unibo.monopoly.model.gameboard.impl;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import it.unibo.monopoly.model.gameboard.api.Board;
 import it.unibo.monopoly.model.gameboard.api.Property;
 import it.unibo.monopoly.model.gameboard.api.Tile;
@@ -10,20 +13,20 @@ import it.unibo.monopoly.model.turnation.api.Position;
  * board implementation.
 */
 public class BoardImpl implements Board {
-    // private final List<Tile> tiles;
+    private final List<Tile> tiles;
     /**
      * constructor.
     */
-    // public BoardImpl() {
-    //     this.tiles = new ArrayList<>();
-    // }
-    // /**
-    //  * constructor.
-    //  * @param tiles
-    // */
-    // public BoardImpl(final List<Tile> tiles) {
-    //     this.tiles = new ArrayList<>(tiles);
-    // }
+    public BoardImpl() {
+        this.tiles = new ArrayList<>();
+    }
+    /**
+     * constructor.
+     * @param tiles
+    */
+    public BoardImpl(final List<Tile> tiles) {
+        this.tiles = tiles;
+    }
     //sell an house
     @Override
     public void sellHouse(final Property prop) { }
