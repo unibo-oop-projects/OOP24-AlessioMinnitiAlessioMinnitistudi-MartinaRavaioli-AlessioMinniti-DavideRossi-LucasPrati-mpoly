@@ -5,4 +5,6 @@ import it.unibo.monopoly.model.turnation.api.Position;
 /**
  * position implementation.
 */
-public class PositionImpl implements Position { }
+public class PositionImpl implements Position { 
+    
+}

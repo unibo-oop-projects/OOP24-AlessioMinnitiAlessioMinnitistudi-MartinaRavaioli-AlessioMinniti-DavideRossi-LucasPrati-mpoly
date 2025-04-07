@@ -44,8 +44,7 @@ public class BoardImpl implements Board {
     public void buyProperty(final Property prop, final Player owner) { }
     @Override
     public Tile getTileForPawn(Pawn p) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getTileForPawn'");
+        // return tiles.get(p.Position.)
     }
     @Override
     public void movePawn(Player player) {
