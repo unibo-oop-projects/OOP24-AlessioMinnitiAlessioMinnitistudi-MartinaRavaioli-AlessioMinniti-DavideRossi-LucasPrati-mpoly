@@ -13,12 +13,6 @@ public class PawnImpl implements Pawn {
     }
 
     @Override
-    public void makeMove(int steps) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'makeMove'");
-    }
-    
-    @Override
     public void move(int steps) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'move'");
