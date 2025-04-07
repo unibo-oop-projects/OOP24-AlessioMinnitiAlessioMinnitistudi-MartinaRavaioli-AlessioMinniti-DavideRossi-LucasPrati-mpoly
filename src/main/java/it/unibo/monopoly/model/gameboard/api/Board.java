@@ -32,5 +32,5 @@ public interface Board {
 
     Tile getTileForPawn(Pawn p);
 
-    void movePawn(Player player);
+    void movePawn(Pawn player);
 }

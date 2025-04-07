@@ -58,7 +58,7 @@ public class BoardImpl implements Board {
     }
 
     @Override
-    public void movePawn(Player player) {
+    public void movePawn(Pawn player) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'movePawn'");
     }
