@@ -15,37 +15,48 @@ import it.unibo.monopoly.model.turnation.api.Position;
 */
 public class BoardImpl implements Board {
     private final List<Tile> tiles;
+    private final List<Pawn> pawns;
     /**
      * constructor.
     */
     public BoardImpl() {
         this.tiles = new ArrayList<>();
+        this.pawns = new ArrayList<>();
     }
     /**
      * constructor.
      * @param tiles
     */
-    public BoardImpl(final List<Tile> tiles) {
+    public BoardImpl(final List<Tile> tiles, final List<Pawn> pawns) {
         this.tiles = tiles;
+        this.pawns = pawns;
     }
+
     //sell an house
     @Override
     public void sellHouse(final Property prop) { }
     //sell the entire proprierty
+
     @Override
     public void sellProperty(final Property prop) { }
     //get a tile
+
     @Override
     public final Tile getTile(final Position pos) { 
-        return null; 
+        return tiles.get(pos.getPos());
     }
+
     //buy a proprierty
     @Override
-    public void buyProperty(final Property prop, final Player owner) { }
+    public void buyProperty(final Property prop, final Player owner) {
+
+    }
+
     @Override
     public Tile getTileForPawn(Pawn p) {
-        // return tiles.get(p.Position.)
+        return tiles.get(p.getPosition().getPos());
     }
+
     @Override
     public void movePawn(Player player) {
         // TODO Auto-generated method stub
