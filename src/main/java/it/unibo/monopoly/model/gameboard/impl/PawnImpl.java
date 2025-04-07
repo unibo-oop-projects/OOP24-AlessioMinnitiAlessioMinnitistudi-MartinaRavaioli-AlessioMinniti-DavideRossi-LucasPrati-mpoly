@@ -9,8 +9,7 @@ public class PawnImpl implements Pawn {
 
     @Override
     public Position getPosition() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getPosition'");
+        return this.pos;
     }
 
     @Override
@@ -18,13 +17,7 @@ public class PawnImpl implements Pawn {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'makeMove'");
     }
-
-    @Override
-    public boolean isAlive() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'isAlive'");
-    }
-
+    
     @Override
     public void move(int steps) {
         // TODO Auto-generated method stub
