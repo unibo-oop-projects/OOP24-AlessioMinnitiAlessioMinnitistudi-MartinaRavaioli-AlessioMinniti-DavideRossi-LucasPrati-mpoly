@@ -29,4 +29,8 @@ public interface Board {
      * @param owner
      */
     void buyProperty(Property prop, Player owner);
+
+    Tile getTileForPawn(Player p);
+
+    void movePawn(Player player);
 }
