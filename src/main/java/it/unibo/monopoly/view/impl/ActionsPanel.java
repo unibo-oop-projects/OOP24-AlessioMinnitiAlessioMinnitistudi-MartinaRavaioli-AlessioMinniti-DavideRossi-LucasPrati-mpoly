@@ -78,7 +78,7 @@ public class ActionsPanel extends JFrame{
 
         final GridBagConstraints balanceLabelConstraints = new GridBagConstraints();
         final JButton balanceLabel = new JButton("234563256");
-        balanceLabelConstraints.gridwidth = GridBagConstraints.REMAINDER;
+        balanceLabelConstraints.gridwidth = 2;
         balanceLabelConstraints.weightx = 1.0;
         balanceLabelConstraints.fill = GridBagConstraints.HORIZONTAL;
         gridBagLayout.setConstraints(balanceLabel, balanceLabelConstraints);
@@ -88,16 +88,35 @@ public class ActionsPanel extends JFrame{
         final JButton rulesButton = new JButton("?");
         rulesButtonConstraints.gridwidth = 1;
         rulesButtonConstraints.weightx = 0.0;
+        rulesButtonConstraints.gridy = 1;
         gridBagLayout.setConstraints(rulesButton, rulesButtonConstraints);
         southControlArea.add(rulesButton);
 
         final GridBagConstraints endTurnButtonConstraints = new GridBagConstraints();
-        endTurnButtonConstraints.gridwidth = GridBagConstraints.REMAINDER;
+        endTurnButtonConstraints.gridwidth = 2;
         endTurnButtonConstraints.weightx = 1.0;
+        endTurnButtonConstraints.gridy = 1;
         endTurnButtonConstraints.fill = GridBagConstraints.HORIZONTAL;
-        JButton endTurnButton = new JButton("Termina turno");
+        final JButton endTurnButton = new JButton("Termina turno");
         gridBagLayout.setConstraints(endTurnButton, endTurnButtonConstraints);
         southControlArea.add(endTurnButton);
+
+
+        final GridBagConstraints throwDicesButtonConstraints = new GridBagConstraints();
+        throwDicesButtonConstraints.weightx = 1.0;
+        throwDicesButtonConstraints.gridwidth = 2;
+        throwDicesButtonConstraints.fill = GridBagConstraints.HORIZONTAL;
+        throwDicesButtonConstraints.gridy = 2;
+        final JButton throwDicesButton = new JButton("Lancia i dadi");
+        gridBagLayout.setConstraints(throwDicesButton, throwDicesButtonConstraints);
+        southControlArea.add(throwDicesButton);
+
+        final GridBagConstraints dicesResulConstraints = new GridBagConstraints();
+        dicesResulConstraints.fill = GridBagConstraints.NONE;
+        dicesResulConstraints.gridy = 2;
+        final JButton dicesResultJLabel = new JButton("Risultato dadi");
+        gridBagLayout.setConstraints(dicesResultJLabel, dicesResulConstraints);
+        southControlArea.add(dicesResultJLabel);
 
         return southControlArea;
     }
