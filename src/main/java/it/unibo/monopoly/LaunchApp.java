@@ -7,7 +7,7 @@ import it.unibo.monopoly.controller.MainMenuLogicImpl;
 import it.unibo.monopoly.view.MainMenuGUI;
 
 /**
- * LaunchApp (Entry point)
+ * LaunchApp (Entry point).
  */
 final class LaunchApp {
     public static void main(final String[] args) {

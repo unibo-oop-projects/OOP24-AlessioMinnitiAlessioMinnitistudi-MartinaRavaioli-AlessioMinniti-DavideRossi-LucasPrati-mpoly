@@ -33,6 +33,18 @@ public class MainMenuGUI extends JFrame {
     private static final int MIN_GIOCATORI = 2;
     private static final int MAX_GIOCATORI = 4;
     private static final String ERROR_COLOR = "Il numero dei colori è inferiore al numero massimo di player";
+    private static final int BIG_FONT = 24;
+    private static final int SMALL_FONT = 16;
+
+    private static final int ZERO = 0;
+    private static final int TWO = 2;
+    private static final int THREE = 3;
+    private static final int TEN = 10;
+    private static final int TWENTY = 20;
+    private static final int FOURTY = 40;
+    private static final int FIFTY = 50;
+    private static final int FOUR_HUNDRED = 400;
+    private static final int FIVE_HUNDRED = 500;
 
     private int numGiocatori = MIN_GIOCATORI;
     private JButton menoButton, piuButton;
@@ -43,11 +55,14 @@ public class MainMenuGUI extends JFrame {
     private final Map<JTextField, Color> usernamePlayers = new HashMap<>();
     
 
-
+    /**
+     * Creates a new MainMenuGUI with his logic.
+     * @param logic the logic of the GUI
+     */
     public MainMenuGUI(final MainMenuLogic logic) {
         this.logic = logic;
         setTitle("Monopoly - Menu");
-        setSize(500, 400);
+        setSize(FIVE_HUNDRED, FOUR_HUNDRED);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setResizable(true);
@@ -57,20 +72,19 @@ public class MainMenuGUI extends JFrame {
     }
 
 
-    
     private void mostraMenuIniziale() {
         mainPanel.removeAll();
 
         final JLabel titolo = new JLabel("Monopoly", SwingConstants.CENTER);
-        titolo.setFont(new Font("Arial", Font.BOLD, 24));
+        titolo.setFont(new Font("Arial", Font.BOLD, BIG_FONT));
         titolo.setForeground(Color.RED);
         mainPanel.add(titolo, BorderLayout.NORTH);
 
-        final JPanel menuPanel = new JPanel(new GridLayout(3, 2, 10, 10));
-        menuPanel.setBorder(BorderFactory.createEmptyBorder(20, 50, 20, 50));
+        final JPanel menuPanel = new JPanel(new GridLayout(THREE, TWO, TEN, TEN));
+        menuPanel.setBorder(BorderFactory.createEmptyBorder(TWENTY, FIFTY, TWENTY, FIFTY));
 
         giocatoriLabel.setText(String.valueOf(numGiocatori));
-        giocatoriLabel.setFont(new Font("Arial", Font.BOLD, 16));
+        giocatoriLabel.setFont(new Font("Arial", Font.BOLD, SMALL_FONT));
         giocatoriLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
         menoButton = new JButton("-");
@@ -112,39 +126,37 @@ public class MainMenuGUI extends JFrame {
     }
 
 
-
     private void mostraSchermataGiocatori() {
         mainPanel.removeAll();
 
         final JLabel titolo = new JLabel("Inserisci nomi giocatori", SwingConstants.CENTER);
-        titolo.setFont(new Font("Arial", Font.BOLD, 24));
+        titolo.setFont(new Font("Arial", Font.BOLD, BIG_FONT));
         mainPanel.add(titolo, BorderLayout.NORTH);
 
         final JPanel giocatoriPanel = new JPanel();
         giocatoriPanel.setLayout(new BoxLayout(giocatoriPanel, BoxLayout.Y_AXIS));
-        giocatoriPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+        giocatoriPanel.setBorder(BorderFactory.createEmptyBorder(TWENTY, TWENTY, TWENTY, TWENTY));
         
         if (colors.length < MAX_GIOCATORI) {
             throw new IllegalStateException(ERROR_COLOR);
         }
 
         for (int i = 0; i < numGiocatori; i++) {
-            final JPanel riga = new JPanel(new BorderLayout(10, 0));
+            final JPanel riga = new JPanel(new BorderLayout(TEN, ZERO));
 
             final JLabel colorBox = new JLabel();
             colorBox.setOpaque(true);
             colorBox.setBackground(colors[i]);
-            colorBox.setPreferredSize(new Dimension(40, 40));
+            colorBox.setPreferredSize(new Dimension(FOURTY, FOURTY));
 
             final JTextField textField = new JTextField("Player " + (i + 1));
-            usernamePlayers.put(textField, colorBox.getBackground());    // passo il colore come stringa così da non passare componenti grafici o di view, lo ricreeerò dall'altra parte
+            usernamePlayers.put(textField, colorBox.getBackground());    
 
             riga.add(colorBox, BorderLayout.WEST);
             riga.add(textField, BorderLayout.CENTER);
 
             giocatoriPanel.add(riga);
-            giocatoriPanel.add(Box.createVerticalStrut(10));
-
+            giocatoriPanel.add(Box.createVerticalStrut(TEN));
         }
 
         final JScrollPane scrollPane = new JScrollPane(giocatoriPanel);
@@ -156,7 +168,7 @@ public class MainMenuGUI extends JFrame {
 
         final JPanel southPanel = new JPanel();
         southPanel.setLayout(new BoxLayout(southPanel, BoxLayout.X_AXIS));
-        southPanel.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
+        southPanel.setBorder(BorderFactory.createEmptyBorder(TEN, TWENTY, TEN, TWENTY));
         southPanel.add(Box.createHorizontalGlue());
         southPanel.add(startGameButton);
 
@@ -164,7 +176,6 @@ public class MainMenuGUI extends JFrame {
 
         refresh();
     }
-
 
 
     private void initializePlayers() {
@@ -183,8 +194,7 @@ public class MainMenuGUI extends JFrame {
     }
 
 
-
-    private void refresh(){
+    private void refresh() {
         revalidate();
         repaint();
     }
