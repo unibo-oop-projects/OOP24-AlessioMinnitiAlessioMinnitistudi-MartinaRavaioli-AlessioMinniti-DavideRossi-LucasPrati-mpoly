@@ -13,7 +13,7 @@ import java.util.Map;
 
 import javax.swing.*;
 
-import it.unibo.monopoly.controller.MainMenuLogic;
+import it.unibo.monopoly.controller.api.MainMenuLogic;
 import it.unibo.monopoly.utils.PlayerSetup;
 
 public class MainMenuGUI extends JFrame {
