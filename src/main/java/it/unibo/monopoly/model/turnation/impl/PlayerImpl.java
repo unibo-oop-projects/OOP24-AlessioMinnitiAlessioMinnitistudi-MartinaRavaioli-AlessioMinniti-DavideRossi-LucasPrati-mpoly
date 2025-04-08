@@ -32,6 +32,4 @@ public class PlayerImpl implements Player {
         return name;
     }
 
-    
-    
 }
