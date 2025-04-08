@@ -66,3 +66,8 @@ sourceSets {
         resources.srcDirs("src/main/resources")
     }
 }
+
+tasks.processResources {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+}
+
