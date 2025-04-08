@@ -22,14 +22,14 @@ public class PlayerImpl implements Player {
         this.color = color;
     }
 
-    @Override
-    public Color getColor() {
+   
+    public final Color getColor() {
         return color;
     }
 
-    @Override
-    public String getName() {
+
+    public final String getName() {
         return name;
     }
-
+    
 }

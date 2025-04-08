@@ -12,7 +12,7 @@ import it.unibo.monopoly.view.RulesWindow;
  */
 public class MainMenuLogicImpl implements MainMenuLogic {
 
-    public void onClickStart(final List<PlayerSetup> players) {
+    public final void onClickStart(final List<PlayerSetup> players) {
         for (final PlayerSetup p : players) {
             System.out.println("Creazione: " + p.name() + " " + p.color());
             // Player player = PlayerFactory.createPlayer(p.name(), p.color());
@@ -22,7 +22,8 @@ public class MainMenuLogicImpl implements MainMenuLogic {
         System.out.println("Gioco pronto! (da implementare)");
     }
 
-    public void onClickShowRules() {
+
+    public final void onClickShowRules() {
         new RulesWindow();
     }
 }

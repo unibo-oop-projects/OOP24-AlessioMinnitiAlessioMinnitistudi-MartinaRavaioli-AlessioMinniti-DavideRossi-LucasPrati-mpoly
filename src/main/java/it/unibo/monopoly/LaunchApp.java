@@ -7,12 +7,17 @@ import it.unibo.monopoly.controller.MainMenuLogicImpl;
 import it.unibo.monopoly.view.MainMenuGUI;
 
 /**
- * LaunchApp (Entry point).
+ * App entry class.
  */
 public final class LaunchApp {
 
     private LaunchApp() { }
 
+    /**
+     * App entry point.
+     * 
+     * @param args launch arguments
+     */
     public static void main(final String[] args) {
 
         SwingUtilities.invokeLater(() -> {
