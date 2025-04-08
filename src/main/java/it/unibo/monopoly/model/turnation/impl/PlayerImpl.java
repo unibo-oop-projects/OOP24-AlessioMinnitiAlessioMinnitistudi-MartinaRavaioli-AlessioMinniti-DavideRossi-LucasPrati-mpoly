@@ -5,10 +5,10 @@ import it.unibo.monopoly.model.turnation.api.Player;
 /**
  * player implementation.
 */
-public class PlayerImpl implements Player {
-    
-    @Override
-    public final boolean isAlive() { 
-        return false; 
+public abstract class PlayerImpl implements Player {
+    private int id;
+
+    public PlayerImpl(int id){
+        this.id=id;
     }
 }

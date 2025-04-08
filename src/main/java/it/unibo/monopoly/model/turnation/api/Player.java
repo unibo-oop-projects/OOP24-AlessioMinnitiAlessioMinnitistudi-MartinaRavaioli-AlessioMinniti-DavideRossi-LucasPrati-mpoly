@@ -8,5 +8,5 @@ public interface Player {
     /**
      * @return if is alive
      */
-    boolean isAlive();
+    // boolean isAlive();
 }
