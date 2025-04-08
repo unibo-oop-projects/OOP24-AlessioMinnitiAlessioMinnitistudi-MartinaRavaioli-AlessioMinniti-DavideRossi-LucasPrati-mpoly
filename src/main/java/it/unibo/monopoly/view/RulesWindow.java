@@ -16,18 +16,18 @@ public class RulesWindow extends JFrame {
         setLocationRelativeTo(null);
         setLayout(new BorderLayout());
 
-        JLabel titleLabel = new JLabel("Rules", SwingConstants.CENTER);
+        final JLabel titleLabel = new JLabel("Rules", SwingConstants.CENTER);
         titleLabel.setFont(new Font("Arial", Font.BOLD, 24));
         titleLabel.setForeground(Color.RED);
         add(titleLabel, BorderLayout.NORTH);
 
-        JTextArea rulesTextArea = new JTextArea();
+        final JTextArea rulesTextArea = new JTextArea();
         rulesTextArea.setEditable(false);
         rulesTextArea.setFont(new Font("Arial", Font.PLAIN, 14));
-        JScrollPane scrollPane = new JScrollPane(rulesTextArea);
+        final JScrollPane scrollPane = new JScrollPane(rulesTextArea);
         add(scrollPane, BorderLayout.CENTER);
 
-        JButton exitButton = new JButton("Exit");
+        final JButton exitButton = new JButton("Exit");
         exitButton.addActionListener(e -> dispose());
         add(exitButton, BorderLayout.SOUTH);
 
@@ -35,17 +35,17 @@ public class RulesWindow extends JFrame {
         updateView();
     }
 
-    private void loadRulesFromFile(JTextArea textArea) {
+    private void loadRulesFromFile(final JTextArea textArea) {
         try (InputStream is = getClass().getResourceAsStream("/rules.txt")) {
             if (is == null) {
                 textArea.setText("Impossibile trovare il file delle regole.");
             } else {
                 try (BufferedReader reader = new BufferedReader(new InputStreamReader(is))) {
-                    String rules = reader.lines().collect(Collectors.joining("\n"));
+                    final String rules = reader.lines().collect(Collectors.joining("\n"));
                     textArea.setText(rules);
                 }
             }
-        } catch (Exception e) {
+        } catch (final Exception e) {
             textArea.setText("Errore durante la lettura del file delle regole.");
         }
     }

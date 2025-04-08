@@ -7,10 +7,10 @@ import it.unibo.monopoly.controller.MainMenuLogicImpl;
 import it.unibo.monopoly.view.MainMenuGUI;
 
 final class LaunchApp {
-    public static void main(String[] args) {
+    public static void main(final String[] args) {
 
         SwingUtilities.invokeLater(() -> {
-            MainMenuLogic logic = new MainMenuLogicImpl();
+            final MainMenuLogic logic = new MainMenuLogicImpl();
             new MainMenuGUI(logic);
         });
     }

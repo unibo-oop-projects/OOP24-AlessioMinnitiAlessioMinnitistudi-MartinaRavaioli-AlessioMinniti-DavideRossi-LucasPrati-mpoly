@@ -9,8 +9,8 @@ import it.unibo.monopoly.view.RulesWindow;
 
 public class MainMenuLogicImpl implements MainMenuLogic {
 
-    public void onClickStart(List<PlayerSetup> players) {
-        for (PlayerSetup p : players) {
+    public void onClickStart(final List<PlayerSetup> players) {
+        for (final PlayerSetup p : players) {
             System.out.println("Creazione: " + p.name() + " " + p.color());
             // Player player = PlayerFactory.createPlayer(p.name(), p.color());
             // System.out.println("Creato: " + player);
