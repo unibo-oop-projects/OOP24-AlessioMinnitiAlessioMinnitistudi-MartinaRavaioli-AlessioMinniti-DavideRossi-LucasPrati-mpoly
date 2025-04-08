@@ -1,8 +1,6 @@
 package it.unibo.monopoly.model.turnation.api;
 
-import java.util.Map;
-
-import org.apache.commons.lang3.tuple.Pair;
+import java.util.Collection;
 
 /**
  * dice interface.
@@ -11,5 +9,5 @@ public interface Dice {
     /**
      * @return dices' result
      */
-    int throwDice();
+    Collection<Integer> throwDices();
 }
