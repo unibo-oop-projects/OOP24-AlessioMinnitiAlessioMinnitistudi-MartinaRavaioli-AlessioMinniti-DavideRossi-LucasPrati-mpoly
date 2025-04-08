@@ -11,11 +11,23 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.swing.*;
+import javax.swing.BorderFactory;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 
 import it.unibo.monopoly.controller.api.MainMenuLogic;
 import it.unibo.monopoly.utils.PlayerSetup;
 
+/**
+ * MainMenuGUI view.
+ */
 public class MainMenuGUI extends JFrame {
 
     private static final int MIN_GIOCATORI = 2;
@@ -112,7 +124,7 @@ public class MainMenuGUI extends JFrame {
         giocatoriPanel.setLayout(new BoxLayout(giocatoriPanel, BoxLayout.Y_AXIS));
         giocatoriPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
         
-        if (colors.length < MAX_GIOCATORI){
+        if (colors.length < MAX_GIOCATORI) {
             throw new IllegalStateException(ERROR_COLOR);
         }
 
@@ -155,7 +167,7 @@ public class MainMenuGUI extends JFrame {
 
 
 
-    private void initializePlayers(){
+    private void initializePlayers() {
         final List<PlayerSetup> players = new ArrayList<>();
             for (final var player : usernamePlayers.entrySet()) {
                 players.add(new PlayerSetup(player.getKey().getText(), player.getValue()));

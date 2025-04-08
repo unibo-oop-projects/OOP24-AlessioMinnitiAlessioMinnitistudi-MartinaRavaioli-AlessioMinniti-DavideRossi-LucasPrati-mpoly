@@ -7,6 +7,9 @@ import it.unibo.monopoly.controller.api.MainMenuLogic;
 import it.unibo.monopoly.utils.PlayerSetup;
 import it.unibo.monopoly.view.RulesWindow;
 
+/**
+ * MainMenuLogic implementation.
+ */
 public class MainMenuLogicImpl implements MainMenuLogic {
 
     public void onClickStart(final List<PlayerSetup> players) {

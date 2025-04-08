@@ -4,6 +4,9 @@ package it.unibo.monopoly.controller.api;
 import java.util.List;
 import it.unibo.monopoly.utils.PlayerSetup;
 
+/**
+ * MainMenuLogic interface.
+ */
 public interface MainMenuLogic {
     /**
      * @implSpec must create players according the factory template with PlayerFactoryImpl, based on the { @param players } 
