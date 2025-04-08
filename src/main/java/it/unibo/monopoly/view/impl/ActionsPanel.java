@@ -16,7 +16,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-public class ActionsPanel extends JFrame{
+class ActionsPanel extends JFrame{
 
     public ActionsPanel() {
         buildUI();
@@ -130,7 +130,7 @@ public class ActionsPanel extends JFrame{
         return southControlArea;
     }
 
-    public void start() {
+    private void start() {
         this.setVisible(true);
     }
 
