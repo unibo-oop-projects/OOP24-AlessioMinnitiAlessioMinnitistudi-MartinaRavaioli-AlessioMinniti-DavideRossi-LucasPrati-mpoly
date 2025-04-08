@@ -9,7 +9,10 @@ import it.unibo.monopoly.view.MainMenuGUI;
 /**
  * LaunchApp (Entry point).
  */
-final class LaunchApp {
+public final class LaunchApp {
+
+    private LaunchApp() { }
+
     public static void main(final String[] args) {
 
         SwingUtilities.invokeLater(() -> {
