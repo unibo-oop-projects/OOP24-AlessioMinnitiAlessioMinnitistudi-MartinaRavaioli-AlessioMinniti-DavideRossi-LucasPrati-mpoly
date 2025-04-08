@@ -53,7 +53,6 @@ public class MainMenuGUI extends JFrame {
     private final MainMenuLogic logic;
     private final Color[] colors = {Color.BLUE, Color.RED, Color.GREEN.darker(), Color.ORANGE, Color.MAGENTA, Color.LIGHT_GRAY};
     private final Map<JTextField, Color> usernamePlayers = new HashMap<>();
-    
 
     /**
      * Creates a new MainMenuGUI with his logic.
@@ -136,7 +135,7 @@ public class MainMenuGUI extends JFrame {
         final JPanel giocatoriPanel = new JPanel();
         giocatoriPanel.setLayout(new BoxLayout(giocatoriPanel, BoxLayout.Y_AXIS));
         giocatoriPanel.setBorder(BorderFactory.createEmptyBorder(TWENTY, TWENTY, TWENTY, TWENTY));
-        
+
         if (colors.length < MAX_GIOCATORI) {
             throw new IllegalStateException(ERROR_COLOR);
         }
@@ -150,7 +149,7 @@ public class MainMenuGUI extends JFrame {
             colorBox.setPreferredSize(new Dimension(FOURTY, FOURTY));
 
             final JTextField textField = new JTextField("Player " + (i + 1));
-            usernamePlayers.put(textField, colorBox.getBackground());    
+            usernamePlayers.put(textField, colorBox.getBackground());
 
             riga.add(colorBox, BorderLayout.WEST);
             riga.add(textField, BorderLayout.CENTER);

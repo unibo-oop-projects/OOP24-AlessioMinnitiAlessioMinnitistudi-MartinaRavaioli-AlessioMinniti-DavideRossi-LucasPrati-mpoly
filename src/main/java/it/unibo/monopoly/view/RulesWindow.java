@@ -21,21 +21,30 @@ import javax.swing.SwingConstants;
  */
 public class RulesWindow extends JFrame {
 
+    private static final int HEIGHT = 400;
+    private static final int WIDTH = 500;
+
+    private static final int BIG_FONT = 24;
+    private static final int SMALL_FONT = 14;
+
+    /**
+     * Create a view with the game rules, importing them from a file.
+     */
     public RulesWindow() {
         setTitle("Rules");
-        setSize(500, 400);
+        setSize(WIDTH, HEIGHT);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
         setLayout(new BorderLayout());
 
         final JLabel titleLabel = new JLabel("Rules", SwingConstants.CENTER);
-        titleLabel.setFont(new Font("Arial", Font.BOLD, 24));
+        titleLabel.setFont(new Font("Arial", Font.BOLD, BIG_FONT));
         titleLabel.setForeground(Color.RED);
         add(titleLabel, BorderLayout.NORTH);
 
         final JTextArea rulesTextArea = new JTextArea();
         rulesTextArea.setEditable(false);
-        rulesTextArea.setFont(new Font("Arial", Font.PLAIN, 14));
+        rulesTextArea.setFont(new Font("Arial", Font.PLAIN, SMALL_FONT));
         final JScrollPane scrollPane = new JScrollPane(rulesTextArea);
         add(scrollPane, BorderLayout.CENTER);
 
