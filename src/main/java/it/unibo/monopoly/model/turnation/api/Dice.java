@@ -10,4 +10,6 @@ public interface Dice {
      * @return dices' result
      */
     Collection<Integer> throwDices();
+    
+    int getNDices();
 }

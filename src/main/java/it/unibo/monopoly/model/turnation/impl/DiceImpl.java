@@ -1,9 +1,9 @@
 package it.unibo.monopoly.model.turnation.impl;
 
+import java.util.Collection;
 import java.util.Random;
 
 import it.unibo.monopoly.model.turnation.api.Dice;
-import org.apache.commons.lang3.tuple.Pair;
 
 
 /**
@@ -11,11 +11,19 @@ import org.apache.commons.lang3.tuple.Pair;
 */
 public class DiceImpl implements Dice {
     Random rand = new Random();
-    Pair<Integer,Integer>  result;
+    int nDices;
+    
+    @Override
+    public Collection<Integer> throwDices() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'throwDices'");
+    }
 
     @Override
-    public final int throwDice() { 
-        return 0;
+    public int getNDices() {
+        return this.nDices;
     }
+
+    
 
 }
