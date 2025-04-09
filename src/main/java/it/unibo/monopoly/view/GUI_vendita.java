@@ -15,7 +15,7 @@ public class GUI_vendita extends JFrame {
     private final List<Proprieta> properties = new ArrayList<>();
     private final Vendita_Logic logic;
 
-    public GUI_vendita(List<Proprieta> player_properties){
+    public GUI_vendita(final List<Proprieta> player_properties){
         Border b = BorderFactory.createLineBorder(Color.black);
         logic = new Vendita_LogicImpl();
         this.properties.addAll(player_properties);

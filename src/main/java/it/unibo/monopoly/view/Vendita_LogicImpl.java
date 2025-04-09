@@ -30,10 +30,10 @@ public class Vendita_LogicImpl implements Vendita_Logic {
         properties.remove(selectedProperty);                   
         return true;
     }
-    
+
 
     public Proprieta getProperty(List<Proprieta> properties, Object selectedValue) {
-        Optional<Proprieta> selectedPropertyO = properties.stream().filter(p->p.name()==selectedValue).findAny();
+        Optional<Proprieta> selectedPropertyO = properties.stream().filter(p->p.name().equals(selectedValue)).findAny();
         Proprieta selectedProperty=new Proprieta(Color.BLACK, "", 88, 0, 0, 0); 
         if (selectedPropertyO.isPresent()) {
             selectedProperty=selectedPropertyO.get();
@@ -42,7 +42,7 @@ public class Vendita_LogicImpl implements Vendita_Logic {
     }
 
     private int getPropertyIndex(List<Proprieta> properties, Object selectedValue) {
-        Optional<Proprieta> selectedPropertyO = properties.stream().filter(p->p.name()==selectedValue).findAny();
+        Optional<Proprieta> selectedPropertyO = properties.stream().filter(p->p.name().equals(selectedValue)).findAny();
         Proprieta selectedProperty=new Proprieta(Color.BLACK, "", 88, 0, 0, 0); 
         if (selectedPropertyO.isPresent()) {
             selectedProperty=selectedPropertyO.get();
