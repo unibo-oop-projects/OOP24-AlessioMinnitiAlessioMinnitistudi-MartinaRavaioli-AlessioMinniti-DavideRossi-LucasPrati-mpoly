@@ -8,7 +8,10 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import it.unibo.monopoly.model.gameboard.api.Property;
 import it.unibo.monopoly.model.transactions.api.Bank;
+import it.unibo.monopoly.model.transactions.api.BankAccount;
+import it.unibo.monopoly.model.transactions.impl.BankAccountImpl;
 import it.unibo.monopoly.model.transactions.impl.BankImpl;
 
 /*
@@ -17,11 +20,16 @@ import it.unibo.monopoly.model.transactions.impl.BankImpl;
  */
 final class BankTest {
 
+    private static final int ARBITRARY_AMOUNT = 100;
     private static final String INEXSISTENT = "";
     private static final String PLAYER1_NAME = "Alice";
-    private static final String PLAYER2_NAME = "Bob";
+    private static final BankAccount PLAYER1_ACCOUNT = new BankAccountImpl(ARBITRARY_AMOUNT);
     private static final String PROPERTY_NAME = "Vicolo corto";
-    private static final int ARBITRARY_AMOUNT = 100;
+    
+
+    //rimepire con property valide
+    private static final Property VALID_PROPERTY = null;
+    private static final Property INEXISTENT_PROPERTY = null;
     private Bank bank;
 
 
@@ -30,47 +38,51 @@ final class BankTest {
         bank = new BankImpl();
     }
 
-    @Test
-    void paymentWithInexistentSender() {
-        final IllegalArgumentException inexistentSenderException = assertThrows(
+    @Test 
+    void payRentInexistentPlayer() {
+        final IllegalArgumentException inexistentPropertyException = assertThrows(
             IllegalArgumentException.class,
-            () -> bank.executePayment(INEXSISTENT, PLAYER2_NAME, ARBITRARY_AMOUNT)); 
-        testExceptionFormat(inexistentSenderException);
+            () -> bank.payRent(INEXSISTENT, VALID_PROPERTY)
+        );
+        testExceptionFormat(inexistentPropertyException);   
+    }
+
+    @Test
+    void payRentInexistentProperty() {
+        final IllegalArgumentException inexistentPropertyException = assertThrows(
+            IllegalArgumentException.class,
+            () -> bank.payRent(PLAYER1_NAME, INEXISTENT_PROPERTY)
+        );
+        testExceptionFormat(inexistentPropertyException); 
+    }
+
+    @Test
+    void payRentOfPropertyWithNoOwner() {
+        final IllegalArgumentException inexistentPropertyException = assertThrows(
+            IllegalArgumentException.class,
+            () -> bank.payRent(PLAYER1_NAME, VALID_PROPERTY)
+        );
+        testExceptionFormat(inexistentPropertyException); 
+    }
+
+    @Test
+    void payRentForPropertyPossessedByThePayer() {
+        bank.buyProperty(PROPERTY_NAME, PLAYER1_NAME);
+        final IllegalArgumentException inexistentPropertyException = assertThrows(
+            IllegalArgumentException.class,
+            () -> bank.payRent(PLAYER1_NAME, VALID_PROPERTY)
+        );
+        testExceptionFormat(inexistentPropertyException); 
     }
 
     @Test 
-    void paymentWithInexistentReceiver() {
-        final IllegalArgumentException inexistentReceiverException = assertThrows(
-            IllegalArgumentException.class,
-            () -> bank.executePayment(PLAYER1_NAME, INEXSISTENT, ARBITRARY_AMOUNT));
-        testExceptionFormat(inexistentReceiverException);
+    void payRentViolatesWithdrawConditionsOfThePayerBankAccount() {
+        throw new UnsupportedOperationException("payRentViolatesWithdrawConditionsOfThePayerBankAccount test not yet implemented");
     }
 
     @Test
-    void paymentWithZeroOrNegativeAmount() {
-        final IllegalArgumentException negativeOrZeroAmountException = assertThrows(
-            IllegalArgumentException.class,
-            () -> bank.executePayment(PLAYER1_NAME, PLAYER2_NAME, 0));
-        testExceptionFormat(negativeOrZeroAmountException);
-    }
-
-    @Test
-    void paymentViolatesSenderWithdrawConditions() {
-        throw new UnsupportedOperationException("paymentViolatesSenderWithdrawConditions test not written");
-    }
-
-    @Test
-    void paymentSuccessful() {
-        final int player1InitialBalance = bank.getBankAccount(PLAYER1_NAME).getBalance();
-        final int player2InitialBalance = bank.getBankAccount(PLAYER2_NAME).getBalance();
-
-        bank.executePayment(PLAYER1_NAME, PLAYER2_NAME, ARBITRARY_AMOUNT);
-
-        final int player1FinalBalance = bank.getBankAccount(PLAYER1_NAME).getBalance();
-        final int player2FinalBalance = bank.getBankAccount(PLAYER2_NAME).getBalance();
-
-        assertEquals(player1InitialBalance - ARBITRARY_AMOUNT, player1FinalBalance);
-        assertEquals(player2InitialBalance + ARBITRARY_AMOUNT, player2FinalBalance);
+    void payRentSuccessful() {
+        throw new UnsupportedOperationException("payRentViolatesWithdrawConditionsOfThePayerBankAccount test not yet implemented");
     }
 
     @Test
@@ -128,6 +140,21 @@ final class BankTest {
     @Test
     void sellPropertySuccessful() {
         throw new UnsupportedOperationException("sellPropertySuccessful test not yet implemented");
+    }
+
+    @Test
+    void getBankAccountOfInexistentPlayer() {
+        final IllegalArgumentException inexistentPlayerException = assertThrows(
+            IllegalArgumentException.class,
+            () -> bank.getBankAccount(INEXSISTENT)
+        );
+        testExceptionFormat(inexistentPlayerException);
+    }
+
+    @Test
+    void getBankAccountOfPlayer() {
+        final BankAccount account = bank.getBankAccount(PLAYER1_NAME);
+        assertEquals(PLAYER1_ACCOUNT, account);
     }
 
     private void testExceptionFormat(final Exception exception) {
