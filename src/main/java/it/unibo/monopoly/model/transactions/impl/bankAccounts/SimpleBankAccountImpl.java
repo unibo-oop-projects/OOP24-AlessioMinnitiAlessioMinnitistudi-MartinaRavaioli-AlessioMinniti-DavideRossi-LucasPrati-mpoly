@@ -5,7 +5,7 @@ import it.unibo.monopoly.model.transactions.api.BankAccount;
 /**
  * Simple implementation of the bank account interface methods.
 */
-public final class BankAccountImpl implements BankAccount {
+public final class SimpleBankAccountImpl implements BankAccount {
 
     private static final int DEFAULT_BALANCE = 1000;
     private int balance;
@@ -16,7 +16,7 @@ public final class BankAccountImpl implements BankAccount {
      * Creates a new BankAccount with an initial amount of money.
      * @param initialBalance The initial amount of money
      */
-    public BankAccountImpl(final int initialBalance, final String owner) {
+    public SimpleBankAccountImpl(final int initialBalance, final String owner) {
         if (initialBalance < 0) {
             throw new IllegalArgumentException("The initial balance of the account cannot be negative");
         }
@@ -28,7 +28,7 @@ public final class BankAccountImpl implements BankAccount {
     /**
      * Creates a BankAccount with a default, positive and non-zero amount of money.
      */
-    public BankAccountImpl(final String owner) {
+    public SimpleBankAccountImpl(final String owner) {
         this(DEFAULT_BALANCE,owner);
     }
 

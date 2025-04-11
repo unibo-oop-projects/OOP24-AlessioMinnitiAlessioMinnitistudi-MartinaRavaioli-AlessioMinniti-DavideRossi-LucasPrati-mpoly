@@ -10,7 +10,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import it.unibo.monopoly.model.transactions.api.BankAccount;
-import it.unibo.monopoly.model.transactions.impl.bankAccounts.BankAccountImpl;
+import it.unibo.monopoly.model.transactions.impl.bankAccounts.SimpleBankAccountImpl;
 
 
 class BankAccountTest {
@@ -22,14 +22,14 @@ class BankAccountTest {
 
     @BeforeEach
     void setUp() {
-        bankAccount = new BankAccountImpl(INITIAL_BALANCE);
+        bankAccount = new SimpleBankAccountImpl(INITIAL_BALANCE);
     }
 
     @Test
     void createAccountWithNegativeBalance() {
         final IllegalArgumentException negativeAmountException = assertThrows(
             IllegalArgumentException.class,
-            () -> bankAccount = new BankAccountImpl(-(INITIAL_BALANCE + 1)),
+            () -> bankAccount = new SimpleBankAccountImpl(-(INITIAL_BALANCE + 1)),
             "Creating a bankAccount with a negative balance should have thrown an error");
         testExceptionFormat(negativeAmountException);
     }
