@@ -54,7 +54,7 @@ public final class BankAccountImpl implements BankAccount {
     }
 
     @Override
-    public boolean isAccountValid() {
+    public boolean canContinue() {
         return balance > 0;
     }
 

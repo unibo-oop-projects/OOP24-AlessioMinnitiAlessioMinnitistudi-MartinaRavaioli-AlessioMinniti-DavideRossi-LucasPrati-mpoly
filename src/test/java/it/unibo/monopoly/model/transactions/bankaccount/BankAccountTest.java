@@ -43,7 +43,7 @@ class BankAccountTest {
     void depositPositiveAmount() {
         bankAccount.deposit(AMOUNT);
         assertEquals(bankAccount.getBalance(), INITIAL_BALANCE + AMOUNT);
-        assertTrue(bankAccount.isAccountValid());
+        assertTrue(bankAccount.canContinue());
     }
 
     @Test 
@@ -70,7 +70,7 @@ class BankAccountTest {
         final int previousBalance = bankAccount.getBalance();
         bankAccount.withdraw(AMOUNT);
         assertEquals(bankAccount.getBalance(), previousBalance - AMOUNT);
-        assertTrue(bankAccount.isAccountValid());
+        assertTrue(bankAccount.canContinue());
     }
 
     @Test
@@ -78,7 +78,7 @@ class BankAccountTest {
         final int withdrawAmount = bankAccount.getBalance() + 1;
         bankAccount.withdraw(withdrawAmount);
         assertEquals(bankAccount.getBalance(), INITIAL_BALANCE - withdrawAmount);
-        assertFalse(bankAccount.isAccountValid());
+        assertFalse(bankAccount.canContinue());
     }
 
     @Test 
@@ -86,7 +86,7 @@ class BankAccountTest {
         bankAccount.deposit(AMOUNT);
         bankAccount.withdraw(bankAccount.getBalance());
         assertEquals(bankAccount.getBalance(), 0);
-        assertFalse(bankAccount.isAccountValid());
+        assertFalse(bankAccount.canContinue());
     }
 
 
@@ -95,7 +95,7 @@ class BankAccountTest {
         bankAccount.withdraw(bankAccount.getBalance() + AMOUNT);
         bankAccount.deposit(AMOUNT / 2);
         assertEquals(bankAccount.getBalance(), -AMOUNT + (AMOUNT / 2));
-        assertFalse(bankAccount.isAccountValid());
+        assertFalse(bankAccount.canContinue());
     }
 
     @Test
@@ -103,7 +103,7 @@ class BankAccountTest {
         bankAccount.withdraw(bankAccount.getBalance() + AMOUNT);
         bankAccount.deposit(AMOUNT * 2);
         assertEquals(bankAccount.getBalance(), -AMOUNT + AMOUNT * 2);
-        assertTrue(bankAccount.isAccountValid());
+        assertTrue(bankAccount.canContinue());
     }
 
     private void testExceptionFormat(final Exception exception) {
