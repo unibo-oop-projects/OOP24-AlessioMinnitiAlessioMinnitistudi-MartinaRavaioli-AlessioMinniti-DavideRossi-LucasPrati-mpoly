@@ -29,7 +29,8 @@ public interface BankAccount {
     boolean canContinue(); 
 
     /**
-     * @return
+     * Get the name of the player associated with the BankAccount
+     * @return the name of the player
      */
     String getOwner();
 }
