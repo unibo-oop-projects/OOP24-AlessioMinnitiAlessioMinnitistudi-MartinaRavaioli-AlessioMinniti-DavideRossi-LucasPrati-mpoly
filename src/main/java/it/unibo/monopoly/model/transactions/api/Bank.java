@@ -19,17 +19,27 @@ public interface Bank {
     /**
      * Purchase a property contract for a specifc {@link BankAccount}
      * @param propertyName the name of the property contract to be purchased 
-     * @param newOwner the newOwner of the property
+     * @param playerName the newOwner of the property
      */
-    void buyProperty(String propertyName, Player newOwner);     
+    void buyProperty(String propertyName, String playerName);     
 
     /**
-     * Trade an amount of money from a player's {@link BankAccount} to another.
-     * @param sender the name of the player whose {@link BankAccount} sends the money
-     * @param receiver the name of player whose {@link BankAccount} receives the money
-     * @param amount the amount of money that is exchanged
+     * Pay the rent for stepping on a property possessed
+     * by another player.
+     * @param playerName the name associated to the {@link BankAccount}
+     * of the player that has to pay the rent
+     * @param property the {@link Property} whose rent has to be paid,
+     * based on the state of the property the amount of money
+     * due to pay will vary as described in the {@link TitleDeed} of 
+     * the respective {@link Property}
      */
-    void executePayment(String sender, String receiver, int amount);
+    void payRent(String playerName, Property property);
 
-    
+
+    /**
+     * Get a copy of a {@link BankAccount} of a specific player. 
+     * @param playerName The name of the owner of the account
+     * @return {@link BankAccount} of the specified player
+     */
+    BankAccount getBankAccount(String playerName);
 }
