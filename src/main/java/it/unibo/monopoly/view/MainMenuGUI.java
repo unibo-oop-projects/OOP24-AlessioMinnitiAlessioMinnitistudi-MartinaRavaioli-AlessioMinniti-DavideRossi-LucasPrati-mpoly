@@ -43,8 +43,8 @@ public class MainMenuGUI extends JFrame {
     private static final int TWENTY = 20;
     private static final int FOURTY = 40;
     private static final int FIFTY = 50;
-    private static final int FOUR_HUNDRED = 400;
-    private static final int FIVE_HUNDRED = 500;
+    private static final int HEIGHT = 400;
+    private static final int WIDTH = 500;
 
     private int numGiocatori = MIN_GIOCATORI;
     private JButton menoButton, piuButton;
@@ -61,7 +61,7 @@ public class MainMenuGUI extends JFrame {
     public MainMenuGUI(final MainMenuLogic logic) {
         this.logic = logic;
         setTitle("Monopoly - Menu");
-        setSize(FIVE_HUNDRED, FOUR_HUNDRED);
+        setSize(WIDTH, HEIGHT);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setResizable(true);
