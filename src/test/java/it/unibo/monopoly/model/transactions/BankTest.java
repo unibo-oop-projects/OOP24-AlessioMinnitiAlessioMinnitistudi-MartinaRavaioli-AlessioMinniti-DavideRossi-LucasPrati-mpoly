@@ -11,8 +11,8 @@ import org.junit.jupiter.api.Test;
 import it.unibo.monopoly.model.gameboard.api.Property;
 import it.unibo.monopoly.model.transactions.api.Bank;
 import it.unibo.monopoly.model.transactions.api.BankAccount;
-import it.unibo.monopoly.model.transactions.impl.BankAccountImpl;
 import it.unibo.monopoly.model.transactions.impl.BankImpl;
+import it.unibo.monopoly.model.transactions.impl.bankAccounts.BankAccountImpl;
 
 /*
  * Tests to verify correct functionality of

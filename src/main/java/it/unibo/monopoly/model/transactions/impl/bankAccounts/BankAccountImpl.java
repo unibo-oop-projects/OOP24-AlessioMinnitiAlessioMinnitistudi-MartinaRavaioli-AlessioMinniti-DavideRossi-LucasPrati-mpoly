@@ -1,4 +1,4 @@
-package it.unibo.monopoly.model.transactions.impl;
+package it.unibo.monopoly.model.transactions.impl.bankAccounts;
 
 import it.unibo.monopoly.model.transactions.api.BankAccount;
 
@@ -59,7 +59,8 @@ public final class BankAccountImpl implements BankAccount {
     }
 
     @Override
-    public boolean isBankrupt() {
-        return false;
+    public String getOwner() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getOwner'");
     }
 }

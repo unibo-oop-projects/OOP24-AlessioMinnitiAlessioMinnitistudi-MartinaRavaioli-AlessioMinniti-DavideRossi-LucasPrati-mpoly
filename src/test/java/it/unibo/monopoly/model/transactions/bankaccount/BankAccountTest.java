@@ -10,7 +10,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import it.unibo.monopoly.model.transactions.api.BankAccount;
-import it.unibo.monopoly.model.transactions.impl.BankAccountImpl;
+import it.unibo.monopoly.model.transactions.impl.bankAccounts.BankAccountImpl;
 
 
 class BankAccountTest {
