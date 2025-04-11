@@ -9,25 +9,27 @@ public final class BankAccountImpl implements BankAccount {
 
     private static final int DEFAULT_BALANCE = 1000;
     private int balance;
+    private final String ownerName;
 
 
     /**
      * Creates a new BankAccount with an initial amount of money.
      * @param initialBalance The initial amount of money
      */
-    public BankAccountImpl(final int initialBalance) {
+    public BankAccountImpl(final int initialBalance, final String owner) {
         if (initialBalance < 0) {
             throw new IllegalArgumentException("The initial balance of the account cannot be negative");
         }
 
         this.balance += initialBalance;
+        this.ownerName = owner;
     }
 
     /**
      * Creates a BankAccount with a default, positive and non-zero amount of money.
      */
-    public BankAccountImpl() {
-        this(DEFAULT_BALANCE);
+    public BankAccountImpl(final String owner) {
+        this(DEFAULT_BALANCE,owner);
     }
 
     @Override
@@ -55,12 +57,11 @@ public final class BankAccountImpl implements BankAccount {
 
     @Override
     public boolean canContinue() {
-        return balance > 0;
+        return true;
     }
 
     @Override
     public String getOwner() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getOwner'");
+        return this.ownerName;
     }
 }
