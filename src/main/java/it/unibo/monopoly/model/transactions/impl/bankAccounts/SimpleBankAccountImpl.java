@@ -3,7 +3,7 @@ package it.unibo.monopoly.model.transactions.impl.bankAccounts;
 import it.unibo.monopoly.model.transactions.api.BankAccount;
 
 /**
- * Simple implementation of the bank account interface methods.
+ * Simple implementation of the {@link BankAccount} interface.
 */
 public final class SimpleBankAccountImpl implements BankAccount {
 

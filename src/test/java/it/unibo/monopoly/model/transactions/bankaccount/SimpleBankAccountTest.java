@@ -13,25 +13,40 @@ import it.unibo.monopoly.model.transactions.api.BankAccount;
 import it.unibo.monopoly.model.transactions.impl.bankAccounts.SimpleBankAccountImpl;
 
 
-class BankAccountTest {
+class SimpleBankAccountTest {
 
     private static final int INITIAL_BALANCE = 0;
     private static final int AMOUNT = 100;
+    private static final String PLAYER_NAME = "Bob";
     private BankAccount bankAccount;
 
 
     @BeforeEach
     void setUp() {
-        bankAccount = new SimpleBankAccountImpl(INITIAL_BALANCE);
+        bankAccount = new SimpleBankAccountImpl(INITIAL_BALANCE, PLAYER_NAME);
     }
 
     @Test
     void createAccountWithNegativeBalance() {
         final IllegalArgumentException negativeAmountException = assertThrows(
             IllegalArgumentException.class,
-            () -> bankAccount = new SimpleBankAccountImpl(-(INITIAL_BALANCE + 1)),
+            () -> bankAccount = new SimpleBankAccountImpl(-(INITIAL_BALANCE + 1), PLAYER_NAME),
             "Creating a bankAccount with a negative balance should have thrown an error");
         testExceptionFormat(negativeAmountException);
+    }
+
+    @Test
+    void createAccountWithNoOwner() {
+        final IllegalArgumentException negativeAmountException = assertThrows(
+            IllegalArgumentException.class,
+            () -> bankAccount = new SimpleBankAccountImpl(-(INITIAL_BALANCE + 1), ""),
+            "Creating a bankAccount with no owner should have thrown an error");
+        testExceptionFormat(negativeAmountException);
+    }
+
+    @Test
+    void getOwnerName() {
+        assertEquals(bankAccount.getOwner(), PLAYER_NAME);
     }
 
     @Test
