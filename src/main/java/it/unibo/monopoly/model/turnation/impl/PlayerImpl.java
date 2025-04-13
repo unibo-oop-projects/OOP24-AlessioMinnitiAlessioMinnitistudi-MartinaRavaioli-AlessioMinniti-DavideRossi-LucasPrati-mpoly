@@ -13,11 +13,13 @@ public abstract class PlayerImpl implements Player,Identifiable<Integer> {
         this.id=id;
     }
 
+    @Override
     public Integer getID(){
         return this.id;
     }
 
-    public void setID(int value){
+    @Override
+    public void setID(Integer value){
         this.id=value;
     }
 }

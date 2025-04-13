@@ -23,5 +23,6 @@ public class PawnImpl extends PlayerImpl implements Pawn {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'move'");
     }
-    
+
+ 
 }
