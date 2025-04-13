@@ -1,4 +1,4 @@
-package it.unibo.monopoly.model.transactions.impl.bankAccounts;
+package it.unibo.monopoly.model.transactions.impl.bankaccount;
 
 import it.unibo.monopoly.model.transactions.api.BankAccount;
 
@@ -15,6 +15,7 @@ public final class SimpleBankAccountImpl implements BankAccount {
     /**
      * Creates a new BankAccount with an initial amount of money.
      * @param initialBalance The initial amount of money
+     * @param owner the name of the player taht owns the {@link BankAccount} 
      */
     public SimpleBankAccountImpl(final int initialBalance, final String owner) {
         if (initialBalance < 0) {
@@ -27,9 +28,10 @@ public final class SimpleBankAccountImpl implements BankAccount {
 
     /**
      * Creates a BankAccount with a default, positive and non-zero amount of money.
+     * @param owner the name of the player taht owns the {@link BankAccount}
      */
     public SimpleBankAccountImpl(final String owner) {
-        this(DEFAULT_BALANCE,owner);
+        this(DEFAULT_BALANCE, owner);
     }
 
     @Override
