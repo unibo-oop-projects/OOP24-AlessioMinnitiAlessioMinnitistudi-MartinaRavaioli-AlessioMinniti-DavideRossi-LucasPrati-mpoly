@@ -49,7 +49,6 @@ public class BoardImpl implements Board {
     //buy a proprierty
     @Override
     public void buyProperty(final Property prop, final Player owner) {
-
     }
 
     @Override

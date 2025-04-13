@@ -12,9 +12,9 @@ import it.unibo.monopoly.model.turnation.api.Dice;
  * dice implementation.
 */
 public class DiceImpl implements Dice {
-    private Random rand = new Random();
+    private final Random rand = new Random();
     private int nDices;
-    private int dices[];
+    private final int[] dices;
 
     public DiceImpl(int n){
         setNDices(n);

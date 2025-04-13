@@ -20,8 +20,7 @@ public class PawnImpl extends PlayerImpl implements Pawn {
 
     @Override
     public void move(int steps) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'move'");
+        this.pos.setPos(steps);
     }
 
  
