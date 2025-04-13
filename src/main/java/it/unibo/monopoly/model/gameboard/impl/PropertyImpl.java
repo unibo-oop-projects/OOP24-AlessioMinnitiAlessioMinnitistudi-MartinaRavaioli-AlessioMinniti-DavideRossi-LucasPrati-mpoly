@@ -10,7 +10,6 @@ public class PropertyImpl implements Property {
     private static final int MAX_HOUSES=4;
     private int price;
     private boolean isOwned;
-    private int rent;
     private int housePrice;
     private int hotelPrice;
     private int nHouses;
@@ -19,18 +18,13 @@ public class PropertyImpl implements Property {
     /**
      * @param price
      */
-    public PropertyImpl(final int price,final int rent,final int housePrice,final int hotelPrice) { 
+    public PropertyImpl(final int price,final int housePrice,final int hotelPrice) { 
         this.nHouses=0;
         this.hotel=false;
         this.isOwned=false;
         setPrice(price);
-        setRent(rent);
         setHousePrice(housePrice);
         setHotelPrice(hotelPrice);
-    }
-
-    private void setRent(int rent){
-        this.rent = rent;
     }
 
     private void setPrice(int price){
@@ -53,7 +47,7 @@ public class PropertyImpl implements Property {
     //get the price of the property
     @Override
     public final int getRent() { 
-        return this.rent; 
+        return this.price + this.housePrice * this.nHouses + (this.hotel ? this.hotelPrice : 0);
     }
 
     public int getNHouses(){
@@ -86,5 +80,9 @@ public class PropertyImpl implements Property {
             return true;
         }
         return false;
+    }
+
+    public boolean hasHotel(){
+        return this.hotel;
     }
 }
