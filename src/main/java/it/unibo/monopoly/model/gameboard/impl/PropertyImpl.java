@@ -61,8 +61,12 @@ public class PropertyImpl implements Property {
     }
 
     @Override
-    public void buildHouse() {
-        
+    public boolean buildHouse() {
+        if(this.getNHouses() < MAX_HOUSES){
+            this.nHouses++;
+            return true;
+        }
+        return false;
     }
 
     @Override
@@ -73,5 +77,11 @@ public class PropertyImpl implements Property {
     @Override
     public int getHotelPrice() {
         return this.hotelPrice;
+    }
+
+    @Override
+    public boolean buildHotel() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'buildHotel'");
     }
 }
