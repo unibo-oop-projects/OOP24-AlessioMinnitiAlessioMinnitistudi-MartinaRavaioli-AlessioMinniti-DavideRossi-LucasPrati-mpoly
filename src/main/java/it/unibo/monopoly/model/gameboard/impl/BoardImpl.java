@@ -1,7 +1,6 @@
 package it.unibo.monopoly.model.gameboard.impl;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import it.unibo.monopoly.model.gameboard.api.Board;
@@ -34,7 +33,7 @@ public class BoardImpl implements Board {
     }
 
     public void sortTiles(){
-        this.tiles.sort((a, b) -> a.compareTo(b));
+        this.tiles.sort((a, b) -> ((TileImpl)a).compareTo((TileImpl)b));
     }
 
     //sell an house
