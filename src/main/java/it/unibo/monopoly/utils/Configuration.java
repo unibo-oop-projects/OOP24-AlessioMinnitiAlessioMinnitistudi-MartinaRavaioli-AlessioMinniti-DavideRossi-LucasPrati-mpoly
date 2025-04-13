@@ -21,7 +21,8 @@ public final class Configuration {
     private final List<Color> playerColors;
 
 
-    private Configuration(final int maxPlayer, final int minPlayer, final int windowHeight, final int windowWidth, final List<Color> playerColors) {
+    private Configuration(final int maxPlayer, final int minPlayer, final int windowHeight,
+                          final int windowWidth, final List<Color> playerColors) {
         this.maxPlayer = maxPlayer;
         this.minPlayer = minPlayer;
         this.windowHeight = windowHeight;
@@ -72,7 +73,7 @@ public final class Configuration {
     }
 
 
-    private static Color parseColor(String name) {
+    private static Color parseColor(final String name) {
         return switch (name.toUpperCase()) {
             case "BLACK" -> Color.BLACK;
             case "BLUE" -> Color.BLUE;
@@ -122,7 +123,7 @@ public final class Configuration {
                         case "WINDOW_WIDTH" -> configurationBuilder.setWidth(Integer.parseInt(value));
                         case "WINDOW_HEIGHT" -> configurationBuilder.setHeight(Integer.parseInt(value));
                         case "COLORS" -> {
-                            List<Color> colors = Arrays.stream(value.split(","))
+                            final List<Color> colors = Arrays.stream(value.split(","))
                                 .map(String::trim)
                                 .map(Configuration::parseColor)
                                 .collect(Collectors.toList());
@@ -131,7 +132,7 @@ public final class Configuration {
                         }
                         default -> System.err.println("[CONFIG] Unknown key: " + key);
                     }
-                } catch (IllegalArgumentException e) {
+                } catch (final IllegalArgumentException e) {
                     System.err.println("[CONFIG] Error parsing value for key '" + key + "': " + e.getMessage());
                 }
             }
@@ -196,10 +197,10 @@ public final class Configuration {
         private int windowHeight = WINDOW_HEIGHT;
         private int windowWidth = WINDOW_WIDTH;
         private List<Color> playerColors = List.copyOf(PLAYER_COLORS);
-        private boolean consumed = false;
+        private boolean consumed;   // false di default
 
         /**
-         * @param min the minimum number of players
+         * @param minPlayer the minimum number of players
          * @return this builder, for method chaining
          */
         public Builder setMin(final int minPlayer) {
@@ -208,7 +209,7 @@ public final class Configuration {
         }
 
         /**
-         * @param max the maximum number of players
+         * @param maxPlayer the maximum number of players
          * @return this builder, for method chaining
          */
         public Builder setMax(final int maxPlayer) {
