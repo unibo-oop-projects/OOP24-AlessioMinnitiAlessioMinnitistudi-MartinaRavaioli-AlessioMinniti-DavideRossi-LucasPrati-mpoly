@@ -7,7 +7,7 @@ import it.unibo.monopoly.utils.PlayerSetup;
 /**
  * MainMenuLogic interface.
  */
-public interface MainMenuLogic {
+public interface MainMenuController {
     /**
      * @implSpec must create players according the factory template with PlayerFactoryImpl, based on the { @param players } 
      * @param players the list of player data, create players according to this

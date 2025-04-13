@@ -4,10 +4,10 @@ import java.io.FileNotFoundException;
 
 import javax.swing.SwingUtilities;
 
-import it.unibo.monopoly.controller.api.MainMenuLogic;
+import it.unibo.monopoly.controller.api.MainMenuController;
 import it.unibo.monopoly.utils.Configuration;
-import it.unibo.monopoly.controller.MainMenuLogicImpl;
-import it.unibo.monopoly.view.MainMenuGUI;
+import it.unibo.monopoly.controller.MainMenuControllerImpl;
+import it.unibo.monopoly.view.MainMenuView;
 
 /**
  * App entry class.
@@ -24,14 +24,15 @@ public final class LaunchApp {
      */
     public static void main(final String[] args) throws FileNotFoundException{
         // Configuration config = Configuration.fromYaml("config.yml");
-        // MainMenuLogic controller = new MainMenuLogicImpl(config);
-        // MainMenuGUI view = new MainMenuGUI(controller, config);
+        // MainMenuController controller = new MainMenuControllerImpl(config);
+        // MainMenuView view = new MainMenuView(controller, config);
         
         // view.start();
         ///////////////////////
+        // final Configuration.Builder configurationBuilder = Configuration.fromYam;
         SwingUtilities.invokeLater(() -> {
-            final MainMenuLogic logic = new MainMenuLogicImpl();
-            new MainMenuGUI(logic);
+            final MainMenuController logic = new MainMenuControllerImpl();
+            new MainMenuView(logic);
         });
     }
 }

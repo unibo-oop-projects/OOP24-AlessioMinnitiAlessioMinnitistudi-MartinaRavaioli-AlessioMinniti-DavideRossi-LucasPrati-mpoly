@@ -19,7 +19,7 @@ import javax.swing.SwingConstants;
 /**
  * RulesWindow view.
  */
-public class RulesWindow extends JFrame {
+public class RulesWindowView extends JFrame {
 
     private static final int HEIGHT = 400;
     private static final int WIDTH = 500;
@@ -30,7 +30,7 @@ public class RulesWindow extends JFrame {
     /**
      * Create a view with the game rules, importing them from a file.
      */
-    public RulesWindow() {
+    public RulesWindowView() {
         setTitle("Rules");
         setSize(WIDTH, HEIGHT);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

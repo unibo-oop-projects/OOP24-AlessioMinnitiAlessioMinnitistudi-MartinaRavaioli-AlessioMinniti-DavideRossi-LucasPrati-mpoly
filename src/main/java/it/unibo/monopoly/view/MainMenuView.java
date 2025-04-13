@@ -22,13 +22,13 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
-import it.unibo.monopoly.controller.api.MainMenuLogic;
+import it.unibo.monopoly.controller.api.MainMenuController;
 import it.unibo.monopoly.utils.PlayerSetup;
 
 /**
  * MainMenuGUI view.
  */
-public class MainMenuGUI extends JFrame {
+public class MainMenuView extends JFrame {
 
     private static final int MIN_GIOCATORI = 2;
     private static final int MAX_GIOCATORI = 4;
@@ -50,7 +50,7 @@ public class MainMenuGUI extends JFrame {
     private JButton menoButton, piuButton;
     private final JLabel giocatoriLabel = new JLabel();
     private final JPanel mainPanel = new JPanel(new BorderLayout());
-    private final MainMenuLogic logic;
+    private final MainMenuController logic;
     private final Color[] colors = {Color.BLUE, Color.RED, Color.GREEN.darker(), Color.ORANGE, Color.MAGENTA, Color.LIGHT_GRAY};
     private final Map<JTextField, Color> usernamePlayers = new HashMap<>();
 
@@ -58,7 +58,7 @@ public class MainMenuGUI extends JFrame {
      * Creates a new MainMenuGUI with his logic.
      * @param logic the logic of the GUI
      */
-    public MainMenuGUI(final MainMenuLogic logic) {
+    public MainMenuView(final MainMenuController logic) {
         this.logic = logic;
         setTitle("Monopoly - Menu");
         setSize(WIDTH, HEIGHT);
