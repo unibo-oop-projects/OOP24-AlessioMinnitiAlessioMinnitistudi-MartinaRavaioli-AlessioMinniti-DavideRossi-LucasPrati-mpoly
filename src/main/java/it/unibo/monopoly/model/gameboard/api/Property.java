@@ -11,9 +11,9 @@ public interface Property extends Tile {
      */
     int getRent();
 
-    boolean buildHouse();
+    void buildHouse() throws Exception;
 
-    boolean buildHotel();
+    void buildHotel() throws Exception;
 
     int getPrice();
 

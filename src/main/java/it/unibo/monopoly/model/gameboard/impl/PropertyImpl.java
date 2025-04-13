@@ -55,12 +55,13 @@ public class PropertyImpl implements Property {
     }
 
     @Override
-    public boolean buildHouse() {
+    public void buildHouse() throws Exception {
         if(this.getNHouses() < MAX_HOUSES){
             this.nHouses++;
-            return true;
         }
-        return false;
+        else{
+            throw new Exception("max num houses reached");
+        }
     }
 
     @Override
@@ -74,12 +75,13 @@ public class PropertyImpl implements Property {
     }
 
     @Override
-    public boolean buildHotel() {
+    public void buildHotel() throws Exception {
         if(this.hotel == false){
             this.hotel=true;
-            return true;
         }
-        return false;
+        else{
+            throw new Exception("hotel already exists");
+        }
     }
 
     public boolean hasHotel(){
