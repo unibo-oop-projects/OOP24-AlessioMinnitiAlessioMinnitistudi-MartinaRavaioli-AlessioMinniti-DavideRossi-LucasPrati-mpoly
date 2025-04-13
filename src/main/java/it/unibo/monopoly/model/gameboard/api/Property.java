@@ -10,4 +10,12 @@ public interface Property extends Tile {
      * @return price
      */
     int getRent();
+
+    void buildHouse();
+
+    int getPrice();
+
+    int getHousePrice();
+
+    int getHotelPrice();
 }
