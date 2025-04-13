@@ -23,6 +23,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 import it.unibo.monopoly.controller.api.MainMenuController;
+import it.unibo.monopoly.utils.Configuration;
 import it.unibo.monopoly.utils.PlayerSetup;
 
 /**
@@ -30,9 +31,14 @@ import it.unibo.monopoly.utils.PlayerSetup;
  */
 public class MainMenuView extends JFrame {
 
-    private static final int MIN_GIOCATORI = 2;
-    private static final int MAX_GIOCATORI = 4;
-    private static final String ERROR_COLOR = "Il numero dei colori è inferiore al numero massimo di player";
+    private final int min_players;
+    private final int max_players;
+    private final int height;
+    private final int width;
+    private final MainMenuController controller;
+    private final List<Color> colors;
+    private final Map<JTextField, Color> nicknamePlayers = new HashMap<>();
+
     private static final int BIG_FONT = 24;
     private static final int SMALL_FONT = 16;
 
@@ -43,118 +49,118 @@ public class MainMenuView extends JFrame {
     private static final int TWENTY = 20;
     private static final int FOURTY = 40;
     private static final int FIFTY = 50;
-    private static final int HEIGHT = 400;
-    private static final int WIDTH = 500;
 
-    private int numGiocatori = MIN_GIOCATORI;
-    private JButton menoButton, piuButton;
-    private final JLabel giocatoriLabel = new JLabel();
+    private int numPlayers;
+    private JButton decreaseButton, increaseButton;
+    private final JLabel playersLabel = new JLabel();
     private final JPanel mainPanel = new JPanel(new BorderLayout());
-    private final MainMenuController logic;
-    private final Color[] colors = {Color.BLUE, Color.RED, Color.GREEN.darker(), Color.ORANGE, Color.MAGENTA, Color.LIGHT_GRAY};
-    private final Map<JTextField, Color> usernamePlayers = new HashMap<>();
+
 
     /**
-     * Creates a new MainMenuGUI with his logic.
-     * @param logic the logic of the GUI
+     * Creates a new MainMenuGUI with his controller.
+     * @param controller the controller of the GUI
      */
-    public MainMenuView(final MainMenuController logic) {
-        this.logic = logic;
+    public MainMenuView(final Configuration config, final MainMenuController controller) {
+        this.min_players = config.getMinPlayer();
+        this.max_players = config.getMaxPlayer();
+        this.width = config.getWindowWidth();
+        this.height = config.getWindowHeight();
+        this.colors = config.getPlayerColors();
+        this.controller = controller;
+        this.numPlayers = min_players;
+
         setTitle("Monopoly - Menu");
-        setSize(WIDTH, HEIGHT);
+        setSize(width, height);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setResizable(true);
         add(mainPanel);
-        mostraMenuIniziale();
+        showMainMenu();
         setVisible(true);
     }
 
 
-    private void mostraMenuIniziale() {
+    private void showMainMenu() {
         mainPanel.removeAll();
 
-        final JLabel titolo = new JLabel("Monopoly", SwingConstants.CENTER);
-        titolo.setFont(new Font("Arial", Font.BOLD, BIG_FONT));
-        titolo.setForeground(Color.RED);
-        mainPanel.add(titolo, BorderLayout.NORTH);
+        final JLabel title = new JLabel("Monopoly", SwingConstants.CENTER);
+        title.setFont(new Font("Arial", Font.BOLD, BIG_FONT));
+        title.setForeground(Color.RED);
+        mainPanel.add(title, BorderLayout.NORTH);
 
         final JPanel menuPanel = new JPanel(new GridLayout(THREE, TWO, TEN, TEN));
         menuPanel.setBorder(BorderFactory.createEmptyBorder(TWENTY, FIFTY, TWENTY, FIFTY));
 
-        giocatoriLabel.setText(String.valueOf(numGiocatori));
-        giocatoriLabel.setFont(new Font("Arial", Font.BOLD, SMALL_FONT));
-        giocatoriLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        playersLabel.setText(String.valueOf(numPlayers));
+        playersLabel.setFont(new Font("Arial", Font.BOLD, SMALL_FONT));
+        playersLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
-        menoButton = new JButton("-");
-        piuButton = new JButton("+"); 
+        decreaseButton = new JButton("-");
+        increaseButton = new JButton("+"); 
 
-        menoButton.addActionListener(e -> {
-            if (numGiocatori > MIN_GIOCATORI) {
-                numGiocatori--;
-                aggiornaGUI();
+        decreaseButton.addActionListener(e -> {
+            if (numPlayers > min_players) {
+                numPlayers--;
+                updateGUI();
             }
         });
 
-        piuButton.addActionListener(e -> {
-            if (numGiocatori < MAX_GIOCATORI) {
-                numGiocatori++;
-                aggiornaGUI();
+        increaseButton.addActionListener(e -> {
+            if (numPlayers < max_players) {
+                numPlayers++;
+                updateGUI();
             }
         });
 
         final JButton continueButton = new JButton("Continue");
-        continueButton.addActionListener(e -> mostraSchermataGiocatori());
+        continueButton.addActionListener(e -> showPlayerSetupScreen());
 
         final JButton rulesButton = new JButton("?");
-        rulesButton.addActionListener(e -> logic.onClickShowRules());
+        rulesButton.addActionListener(e -> controller.onClickShowRules());
 
-        menuPanel.add(new JLabel("Giocatori:"));
-        menuPanel.add(giocatoriLabel);
-        menuPanel.add(menoButton);
-        menuPanel.add(piuButton);
+        menuPanel.add(new JLabel("Players:"));
+        menuPanel.add(playersLabel);
+        menuPanel.add(decreaseButton);
+        menuPanel.add(increaseButton);
         menuPanel.add(continueButton);
         menuPanel.add(rulesButton);
 
         mainPanel.add(menuPanel, BorderLayout.CENTER);
 
         // partendo dal numero di giocatori minimo, disabilito in partenza la possibilità di decrementarlo
-        menoButton.setEnabled(false);
+        decreaseButton.setEnabled(false);
 
         refresh();
     }
 
 
-    private void mostraSchermataGiocatori() {
+    private void showPlayerSetupScreen() {
         mainPanel.removeAll();
 
-        final JLabel titolo = new JLabel("Inserisci nomi giocatori", SwingConstants.CENTER);
-        titolo.setFont(new Font("Arial", Font.BOLD, BIG_FONT));
-        mainPanel.add(titolo, BorderLayout.NORTH);
+        final JLabel title = new JLabel("Set player nicknames", SwingConstants.CENTER);
+        title.setFont(new Font("Arial", Font.BOLD, BIG_FONT));
+        mainPanel.add(title, BorderLayout.NORTH);
 
         final JPanel giocatoriPanel = new JPanel();
         giocatoriPanel.setLayout(new BoxLayout(giocatoriPanel, BoxLayout.Y_AXIS));
         giocatoriPanel.setBorder(BorderFactory.createEmptyBorder(TWENTY, TWENTY, TWENTY, TWENTY));
 
-        if (colors.length < MAX_GIOCATORI) {
-            throw new IllegalStateException(ERROR_COLOR);
-        }
 
-        for (int i = 0; i < numGiocatori; i++) {
-            final JPanel riga = new JPanel(new BorderLayout(TEN, ZERO));
+        for (int i = 0; i < numPlayers; i++) {
+            final JPanel row = new JPanel(new BorderLayout(TEN, ZERO));
 
             final JLabel colorBox = new JLabel();
             colorBox.setOpaque(true);
-            colorBox.setBackground(colors[i]);
+            colorBox.setBackground(colors.get(i));
             colorBox.setPreferredSize(new Dimension(FOURTY, FOURTY));
 
             final JTextField textField = new JTextField("Player " + (i + 1));
-            usernamePlayers.put(textField, colorBox.getBackground());
+            nicknamePlayers.put(textField, colorBox.getBackground());
 
-            riga.add(colorBox, BorderLayout.WEST);
-            riga.add(textField, BorderLayout.CENTER);
+            row.add(colorBox, BorderLayout.WEST);
+            row.add(textField, BorderLayout.CENTER);
 
-            giocatoriPanel.add(riga);
+            giocatoriPanel.add(row);
             giocatoriPanel.add(Box.createVerticalStrut(TEN));
         }
 
@@ -179,17 +185,17 @@ public class MainMenuView extends JFrame {
 
     private void initializePlayers() {
         final List<PlayerSetup> players = new ArrayList<>();
-            for (final var player : usernamePlayers.entrySet()) {
+            for (final var player : nicknamePlayers.entrySet()) {
                 players.add(new PlayerSetup(player.getKey().getText(), player.getValue()));
             }
-            logic.onClickStart(players);
+            controller.onClickStart(players);
     }
 
 
-    private void aggiornaGUI() {
-        giocatoriLabel.setText(String.valueOf(numGiocatori));
-        menoButton.setEnabled(numGiocatori > MIN_GIOCATORI);
-        piuButton.setEnabled(numGiocatori < MAX_GIOCATORI);
+    private void updateGUI() {
+        playersLabel.setText(String.valueOf(numPlayers));
+        decreaseButton.setEnabled(numPlayers > min_players);
+        increaseButton.setEnabled(numPlayers < max_players);
     }
 
 

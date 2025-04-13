@@ -27,11 +27,9 @@ public final class LaunchApp {
     public static void main(final String[] args) throws FileNotFoundException{
         
         Configuration config = Configuration.configureFromFile(CONFIG_FILE);
-        System.out.println(config);
-        ///////////////////////
         SwingUtilities.invokeLater(() -> {
-            final MainMenuController logic = new MainMenuControllerImpl();
-            new MainMenuView(logic);
+            final MainMenuController controller = new MainMenuControllerImpl();
+            new MainMenuView(config, controller);
         });
     }
 }
