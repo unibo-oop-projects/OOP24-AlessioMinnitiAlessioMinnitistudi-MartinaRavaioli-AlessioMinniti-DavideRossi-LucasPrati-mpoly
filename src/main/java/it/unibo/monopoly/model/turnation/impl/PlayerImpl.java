@@ -7,17 +7,15 @@ import it.unibo.monopoly.model.turnation.api.Player;
 /**
  * Player implementation.
 */
-public class PlayerImpl implements Player {
+public final class PlayerImpl implements Player {
 
     private final String name;
     private final Color color;
 
     /**
-     * Creates a new Player with a name and a color that represents him.
-     * @param name The nickname chosen by the player for himself
-     * @param color The color of the player
+     * Private constructor. Use {@link #of(String, Color)} to create instances.
      */
-    public PlayerImpl(final String name, final Color color) {
+    private PlayerImpl(final String name, final Color color) {
         this.name = name;
         this.color = color;
     }
@@ -30,6 +28,28 @@ public class PlayerImpl implements Player {
     @Override
     public final String getName() {
         return name;
+    }
+
+
+    /**
+     * Static factory method for creating a new {@link PlayerImpl} instance.
+     * <p>
+     * This method applies the Factory Method pattern (static variant),
+     * allowing centralized creation logic and possible future extensions.
+     *
+     * @param name the nickname chosen by the player
+     * @param color the color representing the player
+     * @return a new {@link Player} instance
+     * @throws IllegalArgumentException if name is null/empty or color is null
+     */
+    public static Player of(final String name, final Color color) {
+        if (name == null || name.isBlank()) {
+            throw new IllegalArgumentException("Player name cannot be null or empty.");
+        }
+        if (color == null) {
+            throw new IllegalArgumentException("Player color cannot be null.");
+        }
+        return new PlayerImpl(name, color);
     }
 
 }
