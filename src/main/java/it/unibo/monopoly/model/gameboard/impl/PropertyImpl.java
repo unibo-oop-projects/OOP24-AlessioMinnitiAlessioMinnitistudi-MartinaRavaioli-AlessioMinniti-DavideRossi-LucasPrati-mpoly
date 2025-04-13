@@ -18,14 +18,7 @@ public class PropertyImpl implements Property {
         this.owner = owner;
         this.price = price;
     }
-    //set the owner
-    @Override 
-    public void setOwner(final Player owner) { }
-    //get the owner
-    @Override
-    public final Player getOwner() { 
-        return this.owner; 
-    }
+
     //get the price of the property
     @Override
     public final int getRent() { 
