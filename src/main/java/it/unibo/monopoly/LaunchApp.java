@@ -24,9 +24,9 @@ public final class LaunchApp {
      * @param args unused
      * @throws FileNotFoundException 
      */
-    public static void main(final String[] args) throws FileNotFoundException{
-        
-        Configuration config = Configuration.configureFromFile(CONFIG_FILE);
+    public static void main(final String[] args) throws FileNotFoundException {
+
+        final Configuration config = Configuration.configureFromFile(CONFIG_FILE);
         SwingUtilities.invokeLater(() -> {
             final MainMenuController controller = new MainMenuControllerImpl();
             new MainMenuView(config, controller);
