@@ -16,7 +16,7 @@ public final class Configuration {
     private final List<Color> playerColors;
 
 
-    private Configuration(int maxPlayer, int minPlayer, int windowHeight, int windowWidth, List<Color> playerColors) {
+    private Configuration(final int maxPlayer, final int minPlayer, final int windowHeight, final int windowWidth, final List<Color> playerColors) {
         this.maxPlayer = maxPlayer;
         this.minPlayer = minPlayer;
         this.windowHeight = windowHeight;
