@@ -14,4 +14,6 @@ enum Type{
     BLACK
 }
 
-public interface Tile { }
+public interface Tile {
+
+}
