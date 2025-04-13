@@ -81,7 +81,10 @@ public class PropertyImpl implements Property {
 
     @Override
     public boolean buildHotel() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'buildHotel'");
+        if(this.hotel == false){
+            this.hotel=true;
+            return true;
+        }
+        return false;
     }
 }
