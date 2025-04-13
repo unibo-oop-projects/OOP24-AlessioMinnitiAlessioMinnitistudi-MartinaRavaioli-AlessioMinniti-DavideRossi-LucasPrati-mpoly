@@ -136,7 +136,7 @@ public final class Configuration {
                     System.err.println("[CONFIG] Error parsing value for key '" + key + "': " + e.getMessage());
                 }
             }
-        
+
         } catch (IOException | NumberFormatException err) {
             System.err.println("[CONFIG] Error reading config file: " + err.getMessage());
         }
