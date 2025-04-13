@@ -6,12 +6,12 @@ import it.unibo.monopoly.model.turnation.impl.PlayerImpl;
 import it.unibo.monopoly.model.turnation.impl.PositionImpl;
 
 public class PawnImpl extends PlayerImpl implements Pawn {
+    private PositionImpl pos;
     
     public PawnImpl(int id) {
         super(id);
+        this.pos.setPos(0);
     }
-
-    private PositionImpl pos;
 
     @Override
     public Position getPosition() {
