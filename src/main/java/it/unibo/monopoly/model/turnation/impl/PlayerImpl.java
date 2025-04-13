@@ -13,7 +13,10 @@ public final class PlayerImpl implements Player {
     private final Color color;
 
     /**
-     * Private constructor. Use {@link #of(String, Color)} to create instances.
+     * Private constructor used internally by the static factory method {@link #of(String, Color)}.
+     *
+     * @param name  the name chosen by the player
+     * @param color the color representing the player
      */
     private PlayerImpl(final String name, final Color color) {
         this.name = name;
@@ -21,12 +24,12 @@ public final class PlayerImpl implements Player {
     }
 
     @Override
-    public final Color getColor() {
+    public Color getColor() {
         return color;
     }
 
     @Override
-    public final String getName() {
+    public String getName() {
         return name;
     }
 
