@@ -14,22 +14,21 @@ import it.unibo.monopoly.view.MainMenuView;
  */
 public final class LaunchApp {
 
+    private static final String CONFIG_FILE = "config.yml";
+
     private LaunchApp() { }
 
     /**
      * App entry point.
      * 
-     * @param args launch arguments
+     * @param args unused
      * @throws FileNotFoundException 
      */
     public static void main(final String[] args) throws FileNotFoundException{
-        // Configuration config = Configuration.fromYaml("config.yml");
-        // MainMenuController controller = new MainMenuControllerImpl(config);
-        // MainMenuView view = new MainMenuView(controller, config);
         
-        // view.start();
+        Configuration config = Configuration.configureFromFile(CONFIG_FILE);
+        System.out.println(config);
         ///////////////////////
-        // final Configuration.Builder configurationBuilder = Configuration.fromYam;
         SwingUtilities.invokeLater(() -> {
             final MainMenuController logic = new MainMenuControllerImpl();
             new MainMenuView(logic);

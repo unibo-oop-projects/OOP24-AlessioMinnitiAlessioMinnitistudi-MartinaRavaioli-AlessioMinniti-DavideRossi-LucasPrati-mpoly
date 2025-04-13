@@ -1,7 +1,12 @@
 package it.unibo.monopoly.utils;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.awt.Color;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 
 /**
  * Represents the game's configuration parameters,
@@ -65,6 +70,86 @@ public final class Configuration {
     public boolean isConsistent() {
         return playerColors.size() >= maxPlayer && minPlayer < maxPlayer && windowHeight <= windowWidth;
     }
+
+
+    private static Color parseColor(String name) {
+        return switch (name.toUpperCase()) {
+            case "BLACK" -> Color.BLACK;
+            case "BLUE" -> Color.BLUE;
+            case "CYAN" -> Color.CYAN;
+            case "DARK_GRAY" -> Color.DARK_GRAY;
+            case "GRAY" -> Color.GRAY;
+            case "GREEN" -> Color.GREEN;
+            case "LIGHT_GRAY" -> Color.LIGHT_GRAY;
+            case "MAGENTA" -> Color.MAGENTA;
+            case "ORANGE" -> Color.ORANGE;
+            case "PINK" -> Color.PINK;
+            case "RED" -> Color.RED;
+            case "WHITE" -> Color.WHITE;
+            case "YELLOW" -> Color.YELLOW;
+            default -> throw new IllegalArgumentException("Unknown color: " + name);
+        };
+    }
+
+
+    /**
+     * @param configFile the name of the configuration file
+     * @return a configuration according to { @param configFile } if consistent, otherwise a default configuration
+     */
+    public static Configuration configureFromFile(final String configFile) {
+
+        final Configuration.Builder configurationBuilder = new Configuration.Builder();
+        try (var contents = new BufferedReader(
+                new InputStreamReader(ClassLoader.getSystemResourceAsStream(configFile)))) {
+
+            for (String configLine = contents.readLine(); configLine != null; configLine = contents.readLine()) {
+                if (configLine.isBlank() || configLine.startsWith("#")) {
+                    continue;   // Skip empty lines and comments
+                }
+
+                final String[] lineElements = configLine.split(":", 2);
+                if (lineElements.length != 2) {
+                    System.err.println("[CONFIG] Invalid line: " + configLine);
+                    continue;
+                }
+
+                final String key = lineElements[0].trim().toUpperCase();
+                final String value = lineElements[1].trim();
+                try {
+                    switch (key) {
+                        case "MIN_PLAYERS" -> configurationBuilder.setMin(Integer.parseInt(value));
+                        case "MAX_PLAYERS" -> configurationBuilder.setMax(Integer.parseInt(value));
+                        case "WINDOW_WIDTH" -> configurationBuilder.setWidth(Integer.parseInt(value));
+                        case "WINDOW_HEIGHT" -> configurationBuilder.setHeight(Integer.parseInt(value));
+                        case "COLORS" -> {
+                            List<Color> colors = Arrays.stream(value.split(","))
+                                .map(String::trim)
+                                .map(Configuration::parseColor)
+                                .collect(Collectors.toList());
+
+                            configurationBuilder.setColors(colors);
+                        }
+                        default -> System.err.println("[CONFIG] Unknown key: " + key);
+                    }
+                } catch (IllegalArgumentException e) {
+                    System.err.println("[CONFIG] Error parsing value for key '" + key + "': " + e.getMessage());
+                }
+            }
+        
+        } catch (IOException | NumberFormatException err) {
+            System.err.println("[CONFIG] Error reading config file: " + err.getMessage());
+        }
+
+        final Configuration configuration = configurationBuilder.build();
+
+        if (!configuration.isConsistent()) {
+            return new Configuration.Builder().build();
+        }
+
+        return configuration;
+    }
+
+
 
     /**
      * Pattern builder: used here because:
@@ -157,7 +242,6 @@ public final class Configuration {
             this.playerColors = List.copyOf(playerColors);
             return this;
         }
-
 
 
         /**
