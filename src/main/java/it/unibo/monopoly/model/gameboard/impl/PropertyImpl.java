@@ -5,20 +5,22 @@ import it.unibo.monopoly.model.gameboard.api.Property;
 /**
  * property implementation.
 */
+
 public class PropertyImpl implements Property {
+    private static final int MAX_HOUSES=4;
     private int price;
     private boolean isOwned;
     private int rent;
     private int housePrice;
     private int hotelPrice;
-    private int houses;
+    private int nHouses;
     private boolean hotel;
     //constructor
     /**
      * @param price
      */
     public PropertyImpl(final int price,final int rent,final int housePrice,final int hotelPrice) { 
-        this.houses=0;
+        this.nHouses=0;
         this.hotel=false;
         this.isOwned=false;
         setPrice(price);
@@ -54,10 +56,13 @@ public class PropertyImpl implements Property {
         return this.rent; 
     }
 
+    public int getNHouses(){
+        return this.nHouses;
+    }
+
     @Override
     public void buildHouse() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'buildHouse'");
+        
     }
 
     @Override
