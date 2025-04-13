@@ -1,13 +1,11 @@
 package it.unibo.monopoly.model.transactions.api;
 
 import it.unibo.monopoly.model.gameboard.api.Property;
-import it.unibo.monopoly.model.turnation.api.Player;
 
 /**
  * transaction manager interface.
 */
-public interface Bank {
-    
+public interface Bank { 
     /**
      * Sells a property contract associated with a specific
      * {@link BankAccount}.
@@ -17,11 +15,11 @@ public interface Bank {
      */
     void sellProperty(String propertyName);
     /**
-     * Purchase a property contract for a specifc {@link BankAccount}
+     * Purchase a property contract for a specifc {@link BankAccount}.
      * @param propertyName the name of the property contract to be purchased 
      * @param playerName the newOwner of the property
      */
-    void buyProperty(String propertyName, String playerName);     
+    void buyProperty(String propertyName, String playerName);
 
     /**
      * Pay the rent for stepping on a property possessed
