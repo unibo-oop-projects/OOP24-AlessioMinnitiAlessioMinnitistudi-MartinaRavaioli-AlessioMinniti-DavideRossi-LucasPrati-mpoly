@@ -31,14 +31,6 @@ import it.unibo.monopoly.utils.PlayerSetup;
  */
 public class MainMenuView extends JFrame {
 
-    private final int min_players;
-    private final int max_players;
-    private final int height;
-    private final int width;
-    private final MainMenuController controller;
-    private final List<Color> colors;
-    private final Map<JTextField, Color> nicknamePlayers = new HashMap<>();
-
     private static final int BIG_FONT = 24;
     private static final int SMALL_FONT = 16;
 
@@ -50,6 +42,14 @@ public class MainMenuView extends JFrame {
     private static final int FOURTY = 40;
     private static final int FIFTY = 50;
 
+    private final int minPlayers;
+    private final int maxPlayers;
+    private final int height;
+    private final int width;
+    private final MainMenuController controller;
+    private final List<Color> colors;
+    private final Map<JTextField, Color> nicknamePlayers = new HashMap<>();
+
     private int numPlayers;
     private JButton decreaseButton, increaseButton;
     private final JLabel playersLabel = new JLabel();
@@ -58,16 +58,17 @@ public class MainMenuView extends JFrame {
 
     /**
      * Creates a new MainMenuGUI with his controller.
+     * @param config a consistent configuration for initialise fields 
      * @param controller the controller of the GUI
      */
     public MainMenuView(final Configuration config, final MainMenuController controller) {
-        this.min_players = config.getMinPlayer();
-        this.max_players = config.getMaxPlayer();
+        this.minPlayers = config.getMinPlayer();
+        this.maxPlayers = config.getMaxPlayer();
         this.width = config.getWindowWidth();
         this.height = config.getWindowHeight();
         this.colors = config.getPlayerColors();
         this.controller = controller;
-        this.numPlayers = min_players;
+        this.numPlayers = minPlayers;
 
         setTitle("Monopoly - Menu");
         setSize(width, height);
@@ -99,14 +100,14 @@ public class MainMenuView extends JFrame {
         increaseButton = new JButton("+"); 
 
         decreaseButton.addActionListener(e -> {
-            if (numPlayers > min_players) {
+            if (numPlayers > minPlayers) {
                 numPlayers--;
                 updateGUI();
             }
         });
 
         increaseButton.addActionListener(e -> {
-            if (numPlayers < max_players) {
+            if (numPlayers < maxPlayers) {
                 numPlayers++;
                 updateGUI();
             }
@@ -194,8 +195,8 @@ public class MainMenuView extends JFrame {
 
     private void updateGUI() {
         playersLabel.setText(String.valueOf(numPlayers));
-        decreaseButton.setEnabled(numPlayers > min_players);
-        increaseButton.setEnabled(numPlayers < max_players);
+        decreaseButton.setEnabled(numPlayers > minPlayers);
+        increaseButton.setEnabled(numPlayers < maxPlayers);
     }
 
 
