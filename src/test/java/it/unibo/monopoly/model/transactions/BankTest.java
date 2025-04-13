@@ -12,7 +12,7 @@ import it.unibo.monopoly.model.gameboard.api.Property;
 import it.unibo.monopoly.model.transactions.api.Bank;
 import it.unibo.monopoly.model.transactions.api.BankAccount;
 import it.unibo.monopoly.model.transactions.impl.BankImpl;
-import it.unibo.monopoly.model.transactions.impl.bankAccounts.SimpleBankAccountImpl;
+import it.unibo.monopoly.model.transactions.impl.bankaccount.SimpleBankAccountImpl;
 
 /*
  * Tests to verify correct functionality of
@@ -23,7 +23,7 @@ final class BankTest {
     private static final int ARBITRARY_AMOUNT = 100;
     private static final String INEXSISTENT = "";
     private static final String PLAYER1_NAME = "Alice";
-    private static final BankAccount PLAYER1_ACCOUNT = new SimpleBankAccountImpl(ARBITRARY_AMOUNT);
+    private static final BankAccount PLAYER1_ACCOUNT = new SimpleBankAccountImpl(ARBITRARY_AMOUNT, PLAYER1_NAME);
     private static final String PROPERTY_NAME = "Vicolo corto";
     
 
@@ -143,7 +143,7 @@ final class BankTest {
     }
 
     @Test
-    void getBankAccountOfInexistentPlayer() {
+    void checkGetBankAccountOfInexistentPlayerThrowsException() {
         final IllegalArgumentException inexistentPlayerException = assertThrows(
             IllegalArgumentException.class,
             () -> bank.getBankAccount(INEXSISTENT)
@@ -152,7 +152,7 @@ final class BankTest {
     }
 
     @Test
-    void getBankAccountOfPlayer() {
+    void checkGetBankAccountOfPlayerGivesCorrectAccount() {
         final BankAccount account = bank.getBankAccount(PLAYER1_NAME);
         assertEquals(PLAYER1_ACCOUNT, account);
     }

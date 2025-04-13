@@ -10,7 +10,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import it.unibo.monopoly.model.transactions.api.BankAccount;
-import it.unibo.monopoly.model.transactions.impl.bankAccounts.SimpleBankAccountImpl;
+import it.unibo.monopoly.model.transactions.impl.bankaccount.SimpleBankAccountImpl;
 
 
 class SimpleBankAccountTest {
@@ -45,7 +45,7 @@ class SimpleBankAccountTest {
     }
 
     @Test
-    void getOwnerName() {
+    void checkOwnerNameIsCorrect() {
         assertEquals(bankAccount.getOwner(), PLAYER_NAME);
     }
 
