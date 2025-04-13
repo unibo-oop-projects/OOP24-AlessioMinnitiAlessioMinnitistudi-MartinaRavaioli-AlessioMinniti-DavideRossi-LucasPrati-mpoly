@@ -10,6 +10,7 @@ public abstract class TileImpl implements Tile,Identifiable<Position>,Comparable
     protected TileImpl(Position pos){
         setID(pos);
     }
+    
     @Override
     public Position getID() {
         return this.id;
@@ -22,6 +23,6 @@ public abstract class TileImpl implements Tile,Identifiable<Position>,Comparable
     
     @Override
     public int compareTo(TileImpl o){
-        return 0;
+        return Integer.compare(this.getID().getPos(),o.getID().getPos());
     }
 }
