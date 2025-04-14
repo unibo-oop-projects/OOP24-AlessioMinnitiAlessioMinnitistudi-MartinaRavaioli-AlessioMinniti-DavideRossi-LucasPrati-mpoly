@@ -1,8 +1,9 @@
 package it.unibo.monopoly.controller.api;
 
 
-import java.util.List;
-import it.unibo.monopoly.utils.PlayerSetup;
+import java.awt.Color;
+import java.util.Map;
+
 
 /**
  * MainMenuLogic interface.
@@ -12,10 +13,36 @@ public interface MainMenuController {
      * @implSpec must create players according the factory template with PlayerFactoryImpl, based on the { @param players } 
      * @param players the list of player data, create players according to this
      */
-    void onClickStart(List<PlayerSetup> players);
+    void onClickStart(final Map<Color, String> playersSetup);
+
 
     /**
-     * @implSpec must create a new RulesWindow to display the game rules 
+     * 
      */
-    void onClickShowRules();
+    void decreaseNumPlayer();
+
+
+    /**
+     * 
+     */
+    void increaseNumPlayer();
+
+
+    /**
+     * 
+     */
+    int getNumPlayers();
+
+
+    /**
+     * 
+     */
+    boolean AlreadyMinPlayers();
+
+
+    /**
+     * 
+     */
+    boolean AlreadyMaxPlayers();
+
 }

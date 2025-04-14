@@ -1,15 +1,13 @@
 package it.unibo.monopoly.view;
 
-
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -23,8 +21,8 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 import it.unibo.monopoly.controller.api.MainMenuController;
+import it.unibo.monopoly.model.turnation.impl.PlayerImpl;
 import it.unibo.monopoly.utils.Configuration;
-import it.unibo.monopoly.utils.PlayerSetup;
 
 /**
  * MainMenuGUI view.
@@ -42,16 +40,12 @@ public class MainMenuView extends JFrame {
     private static final int FOURTY = 40;
     private static final int FIFTY = 50;
 
-    private final int minPlayers;
-    private final int maxPlayers;
-    private final int height;
-    private final int width;
     private final MainMenuController controller;
-    private final List<Color> colors;
-    private final Map<JTextField, Color> nicknamePlayers = new HashMap<>();
+    private final Configuration config;
+    private final Map<Color, JTextField> nicknamePlayers = new HashMap<>();
 
-    private int numPlayers;
-    private JButton decreaseButton, increaseButton;
+    private JButton decreaseButton;
+    private JButton increaseButton;
     private final JLabel playersLabel = new JLabel();
     private final JPanel mainPanel = new JPanel(new BorderLayout());
 
@@ -62,16 +56,11 @@ public class MainMenuView extends JFrame {
      * @param controller the controller of the GUI
      */
     public MainMenuView(final Configuration config, final MainMenuController controller) {
-        this.minPlayers = config.getMinPlayer();
-        this.maxPlayers = config.getMaxPlayer();
-        this.width = config.getWindowWidth();
-        this.height = config.getWindowHeight();
-        this.colors = config.getPlayerColors();
+        this.config = config;
         this.controller = controller;
-        this.numPlayers = minPlayers;
 
         setTitle("Monopoly - Menu");
-        setSize(width, height);
+        setSize(this.config.getWindowWidth(), this.config.getWindowHeight());
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setResizable(true);
@@ -92,7 +81,6 @@ public class MainMenuView extends JFrame {
         final JPanel menuPanel = new JPanel(new GridLayout(THREE, TWO, TEN, TEN));
         menuPanel.setBorder(BorderFactory.createEmptyBorder(TWENTY, FIFTY, TWENTY, FIFTY));
 
-        playersLabel.setText(String.valueOf(numPlayers));
         playersLabel.setFont(new Font("Arial", Font.BOLD, SMALL_FONT));
         playersLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
@@ -100,24 +88,20 @@ public class MainMenuView extends JFrame {
         increaseButton = new JButton("+"); 
 
         decreaseButton.addActionListener(e -> {
-            if (numPlayers > minPlayers) {
-                numPlayers--;
-                updateGUI();
-            }
+            controller.decreaseNumPlayer();
+            updateGUI();
         });
 
         increaseButton.addActionListener(e -> {
-            if (numPlayers < maxPlayers) {
-                numPlayers++;
-                updateGUI();
-            }
+            controller.increaseNumPlayer();
+            updateGUI();
         });
 
         final JButton continueButton = new JButton("Continue");
         continueButton.addActionListener(e -> showPlayerSetupScreen());
 
         final JButton rulesButton = new JButton("?");
-        rulesButton.addActionListener(e -> controller.onClickShowRules());
+        rulesButton.addActionListener(e -> new RulesWindowView(config.getWindowHeight(), config.getWindowWidth()));
 
         menuPanel.add(new JLabel("Players:"));
         menuPanel.add(playersLabel);
@@ -128,8 +112,7 @@ public class MainMenuView extends JFrame {
 
         mainPanel.add(menuPanel, BorderLayout.CENTER);
 
-        // partendo dal numero di giocatori minimo, disabilito in partenza la possibilità di decrementarlo
-        decreaseButton.setEnabled(false);
+        updateGUI();
 
         refresh();
     }
@@ -147,16 +130,16 @@ public class MainMenuView extends JFrame {
         giocatoriPanel.setBorder(BorderFactory.createEmptyBorder(TWENTY, TWENTY, TWENTY, TWENTY));
 
 
-        for (int i = 0; i < numPlayers; i++) {
+        for (int i = 0; i < controller.getNumPlayers(); i++) {
             final JPanel row = new JPanel(new BorderLayout(TEN, ZERO));
 
             final JLabel colorBox = new JLabel();
             colorBox.setOpaque(true);
-            colorBox.setBackground(colors.get(i));
+            colorBox.setBackground(config.getPlayerColors().get(i));
             colorBox.setPreferredSize(new Dimension(FOURTY, FOURTY));
 
             final JTextField textField = new JTextField("Player " + (i + 1));
-            nicknamePlayers.put(textField, colorBox.getBackground());
+            nicknamePlayers.put(colorBox.getBackground(), textField);
 
             row.add(colorBox, BorderLayout.WEST);
             row.add(textField, BorderLayout.CENTER);
@@ -184,19 +167,28 @@ public class MainMenuView extends JFrame {
     }
 
 
+    /**
+     * Initializes the players according to the preferences entered by the users.
+     * 
+     * It collects the text from each {@link JTextField} in the {@code nicknamePlayers} map,
+     * trims the inputs, and creates a new map of {@link Color} to {@link String}.
+     * This map is then passed to the controller, which creates the {@link PlayerImpl} instances.
+     */
     private void initializePlayers() {
-        final List<PlayerSetup> players = new ArrayList<>();
-            for (final var player : nicknamePlayers.entrySet()) {
-                players.add(new PlayerSetup(player.getKey().getText(), player.getValue()));
-            }
-            controller.onClickStart(players);
+        Map<Color, String> playersSetup = nicknamePlayers.entrySet().stream()
+            .collect(Collectors.toMap(
+                Map.Entry::getKey,                      // chiave: Color
+                e -> e.getValue().getText().trim()      // valore: testo dal JTextField pulito con trim()
+            ));
+
+        controller.onClickStart(playersSetup);
     }
 
 
     private void updateGUI() {
-        playersLabel.setText(String.valueOf(numPlayers));
-        decreaseButton.setEnabled(numPlayers > minPlayers);
-        increaseButton.setEnabled(numPlayers < maxPlayers);
+        playersLabel.setText(String.valueOf(controller.getNumPlayers()));
+        decreaseButton.setEnabled(!controller.AlreadyMinPlayers());
+        increaseButton.setEnabled(!controller.AlreadyMaxPlayers());
     }
 
 

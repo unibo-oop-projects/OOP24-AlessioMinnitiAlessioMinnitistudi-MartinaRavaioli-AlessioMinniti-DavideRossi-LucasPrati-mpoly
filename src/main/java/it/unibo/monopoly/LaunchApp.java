@@ -28,7 +28,7 @@ public final class LaunchApp {
 
         final Configuration config = Configuration.configureFromFile(CONFIG_FILE);
         SwingUtilities.invokeLater(() -> {
-            final MainMenuController controller = new MainMenuControllerImpl();
+            final MainMenuController controller = new MainMenuControllerImpl(config);
             new MainMenuView(config, controller);
         });
     }

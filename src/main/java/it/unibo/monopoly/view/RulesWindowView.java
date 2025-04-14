@@ -16,13 +16,11 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
 
+
 /**
  * RulesWindow view.
  */
 public class RulesWindowView extends JFrame {
-
-    private static final int HEIGHT = 400;
-    private static final int WIDTH = 500;
 
     private static final int BIG_FONT = 24;
     private static final int SMALL_FONT = 14;
@@ -30,9 +28,10 @@ public class RulesWindowView extends JFrame {
     /**
      * Create a view with the game rules, importing them from a file.
      */
-    public RulesWindowView() {
+    public RulesWindowView(final int height, final int width) {
+        
         setTitle("Rules");
-        setSize(WIDTH, HEIGHT);
+        setSize(width, height);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
         setLayout(new BorderLayout());

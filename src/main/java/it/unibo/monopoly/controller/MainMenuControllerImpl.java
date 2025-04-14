@@ -1,21 +1,48 @@
 package it.unibo.monopoly.controller;
 
 
-import java.util.List;
+import java.awt.Color;
+import java.util.Map;
 
 import it.unibo.monopoly.controller.api.MainMenuController;
-import it.unibo.monopoly.utils.PlayerSetup;
-import it.unibo.monopoly.view.RulesWindowView;
+import it.unibo.monopoly.utils.Configuration;
 
 /**
  * MainMenuLogic implementation.
  */
 public class MainMenuControllerImpl implements MainMenuController {
 
+    private int numPlayers;
+    private final int minPlayers;
+    private final int maxPlayers;
+
+    public MainMenuControllerImpl(final Configuration config) {
+        this.maxPlayers = config.getMaxPlayer();
+        this.minPlayers = config.getMinPlayer();
+        this.numPlayers = minPlayers;
+    }
+ 
+
     @Override
-    public final void onClickStart(final List<PlayerSetup> players) {
-        for (final PlayerSetup p : players) {
-            System.out.println("Creazione: " + p.name() + " " + p.color());
+    public void decreaseNumPlayer() {
+        if (numPlayers > minPlayers) {
+            numPlayers--;
+        }
+    }
+
+
+    @Override
+    public void increaseNumPlayer() {
+        if (numPlayers < maxPlayers) {
+            numPlayers++;
+        }
+    }
+
+
+    @Override
+    public void onClickStart(Map<Color, String> playersSetup) {
+        for (final var p : playersSetup.entrySet()) {
+            System.out.println("Creazione: " + p.getValue() + " " + p.getKey());
             // Player player = PlayerFactory.createPlayer(p.name(), p.color());
             // System.out.println("Creato: " + player);
 
@@ -23,8 +50,21 @@ public class MainMenuControllerImpl implements MainMenuController {
         System.out.println("Gioco pronto! (da implementare)");
     }
 
+
     @Override
-    public final void onClickShowRules() {
-        new RulesWindowView();
+    public int getNumPlayers() {
+        return numPlayers;
+    }
+
+
+    @Override
+    public boolean AlreadyMinPlayers() {
+        return numPlayers == minPlayers;
+    }
+
+
+    @Override
+    public boolean AlreadyMaxPlayers() {
+        return numPlayers == maxPlayers;
     }
 }
