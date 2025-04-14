@@ -30,7 +30,7 @@ public class RulesWindowView extends JFrame {
     public RulesWindowView(final Configuration config) {
         
         setTitle("Rules");
-        setSize(config.getWindowWidth(), config.getWindowWidth());
+        setSize(config.getWindowWidth(), config.getWindowHeight());
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
         setLayout(new BorderLayout());
