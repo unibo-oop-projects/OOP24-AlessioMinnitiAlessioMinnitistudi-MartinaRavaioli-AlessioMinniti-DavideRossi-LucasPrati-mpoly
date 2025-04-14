@@ -7,9 +7,18 @@ import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
-public class Payment_Dialog extends JDialog{
+/**
+ * this class draws a Dialog panel that informs the player wether the payment has been succesful or not.
+ */
 
-    public Payment_Dialog (final int paidImport, final boolean succesfull){
+public class PaymentDialog extends JDialog {
+
+    /**
+     * the constuctor build the frame with all the elements
+     * @param paidImport the import that has been deposited in the players banck account
+     * @param succesfull wether the payment has succeded or not
+     */
+    public PaymentDialog (final int paidImport, final boolean succesfull){
         this.setSize(200, 150);
         this.setLocation(150, 200);
         String state = "";
