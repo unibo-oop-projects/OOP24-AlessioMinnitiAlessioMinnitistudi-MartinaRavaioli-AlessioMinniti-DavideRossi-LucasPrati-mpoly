@@ -21,11 +21,22 @@ import javax.swing.JScrollPane;
 import javax.swing.border.Border;
 import javax.swing.event.ListSelectionListener;
 
+/**
+ * the class presents the property manager frame of the game.
+ * where you can look up the values of each of your property 
+ * and then decide wether you wwant to sell it or not 
+ */
 
 public class GUIVendita extends JFrame {
     private final List<Proprieta> properties = new ArrayList<>();
     private final Vendita_Logic logic;
 
+    /**
+     * in this constructor the whole GUI is built with all the action listener.
+     * @param playerProperties a list of the property possesed by the player 
+     * @param width the initial width of the frame
+     * @param heigth the initial heigth of the frame
+     */
     public GUIVendita(final List<Proprieta> playerProperties, final int width, final int heigth) {
         final Border b = BorderFactory.createLineBorder(Color.black);
         logic = new Vendita_LogicImpl();
@@ -131,13 +142,13 @@ public class GUIVendita extends JFrame {
         sellHouse.addActionListener(sellHouseListener);
         sellProperty.addActionListener(sellPropertyListener);
 
-        c.gridx=1;
-        c.gridy=1;
-        c.insets=new Insets(10,0,0,0);
+        c.gridx = 1;
+        c.gridy = 1;
+        c.insets = new Insets(10, 0, 0, 0);
         listPane.add(propertiesScrollPane, c);
-        c.gridx=1;
-        c.gridy=0;
-        c.insets=new Insets(0,0,10,0);
+        c.gridx = 1;
+        c.gridy = 0;
+        c.insets = new Insets(0, 0, 10, 0);
         listPane.add(selectProperty, c);
 
         infoPane.add(housesNum);
