@@ -29,9 +29,6 @@ import it.unibo.monopoly.utils.Configuration;
  */
 public class MainMenuView extends JFrame {
 
-    private static final int BIG_FONT = 24;
-    private static final int SMALL_FONT = 16;
-
     private static final int ZERO = 0;
     private static final int TWO = 2;
     private static final int THREE = 3;
@@ -40,8 +37,8 @@ public class MainMenuView extends JFrame {
     private static final int FOURTY = 40;
     private static final int FIFTY = 50;
 
-    private final MainMenuController controller;
     private final Configuration config;
+    private final MainMenuController controller;
     private final Map<Color, JTextField> nicknamePlayers = new HashMap<>();
 
     private JButton decreaseButton;
@@ -74,14 +71,14 @@ public class MainMenuView extends JFrame {
         mainPanel.removeAll();
 
         final JLabel title = new JLabel("Monopoly", SwingConstants.CENTER);
-        title.setFont(new Font("Arial", Font.BOLD, BIG_FONT));
+        title.setFont(new Font("Arial", Font.BOLD, config.getBigFont()));
         title.setForeground(Color.RED);
         mainPanel.add(title, BorderLayout.NORTH);
 
         final JPanel menuPanel = new JPanel(new GridLayout(THREE, TWO, TEN, TEN));
         menuPanel.setBorder(BorderFactory.createEmptyBorder(TWENTY, FIFTY, TWENTY, FIFTY));
 
-        playersLabel.setFont(new Font("Arial", Font.BOLD, SMALL_FONT));
+        playersLabel.setFont(new Font("Arial", Font.BOLD, config.getSmallFont()));
         playersLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
         decreaseButton = new JButton("-");
@@ -101,7 +98,7 @@ public class MainMenuView extends JFrame {
         continueButton.addActionListener(e -> showPlayerSetupScreen());
 
         final JButton rulesButton = new JButton("?");
-        rulesButton.addActionListener(e -> new RulesWindowView(config.getWindowHeight(), config.getWindowWidth()));
+        rulesButton.addActionListener(e -> new RulesWindowView(config));
 
         menuPanel.add(new JLabel("Players:"));
         menuPanel.add(playersLabel);
@@ -113,7 +110,6 @@ public class MainMenuView extends JFrame {
         mainPanel.add(menuPanel, BorderLayout.CENTER);
 
         updateGUI();
-
         refresh();
     }
 
@@ -122,7 +118,7 @@ public class MainMenuView extends JFrame {
         mainPanel.removeAll();
 
         final JLabel title = new JLabel("Set player nicknames", SwingConstants.CENTER);
-        title.setFont(new Font("Arial", Font.BOLD, BIG_FONT));
+        title.setFont(new Font("Arial", Font.BOLD, config.getBigFont()));
         mainPanel.add(title, BorderLayout.NORTH);
 
         final JPanel giocatoriPanel = new JPanel();

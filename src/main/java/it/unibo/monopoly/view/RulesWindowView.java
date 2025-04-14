@@ -16,34 +16,33 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
 
+import it.unibo.monopoly.utils.Configuration;
+
 
 /**
  * RulesWindow view.
  */
 public class RulesWindowView extends JFrame {
 
-    private static final int BIG_FONT = 24;
-    private static final int SMALL_FONT = 14;
-
     /**
      * Create a view with the game rules, importing them from a file.
      */
-    public RulesWindowView(final int height, final int width) {
+    public RulesWindowView(final Configuration config) {
         
         setTitle("Rules");
-        setSize(width, height);
+        setSize(config.getWindowWidth(), config.getWindowWidth());
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
         setLayout(new BorderLayout());
 
         final JLabel titleLabel = new JLabel("Rules", SwingConstants.CENTER);
-        titleLabel.setFont(new Font("Arial", Font.BOLD, BIG_FONT));
+        titleLabel.setFont(new Font("Arial", Font.BOLD, config.getBigFont()));
         titleLabel.setForeground(Color.RED);
         add(titleLabel, BorderLayout.NORTH);
 
         final JTextArea rulesTextArea = new JTextArea();
         rulesTextArea.setEditable(false);
-        rulesTextArea.setFont(new Font("Arial", Font.PLAIN, SMALL_FONT));
+        rulesTextArea.setFont(new Font("Arial", Font.PLAIN, config.getSmallFont()));
         final JScrollPane scrollPane = new JScrollPane(rulesTextArea);
         add(scrollPane, BorderLayout.CENTER);
 

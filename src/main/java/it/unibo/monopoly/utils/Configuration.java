@@ -16,15 +16,19 @@ public final class Configuration {
 
     private final int maxPlayer; 
     private final int minPlayer;
+    private final int smallFont;
+    private final int bigFont;
     private final int windowHeight;
     private final int windowWidth;
     private final List<Color> playerColors;
 
 
-    private Configuration(final int maxPlayer, final int minPlayer, final int windowHeight,
-                          final int windowWidth, final List<Color> playerColors) {
+    private Configuration(final int maxPlayer, final int minPlayer, final int smallFont, final int bigFont,
+                          final int windowHeight, final int windowWidth, final List<Color> playerColors) {
         this.maxPlayer = maxPlayer;
         this.minPlayer = minPlayer;
+        this.smallFont = smallFont;
+        this.bigFont = bigFont;
         this.windowHeight = windowHeight;
         this.windowWidth = windowWidth;
         this.playerColors = playerColors;
@@ -42,6 +46,20 @@ public final class Configuration {
      */
     public int getMinPlayer() {
         return minPlayer;
+    }
+
+    /**
+     * @return the minimum size of the font
+     */
+    public int getSmallFont() {
+        return smallFont;
+    }
+
+    /**
+     * @return the maximum size of the font
+     */
+    public int getBigFont() {
+        return bigFont;
     }
 
     /**
@@ -69,7 +87,10 @@ public final class Configuration {
      * @return true if the configuration is consistent
      */
     public boolean isConsistent() {
-        return playerColors.size() >= maxPlayer && minPlayer < maxPlayer && windowHeight <= windowWidth;
+        return playerColors.size() >= maxPlayer
+                && minPlayer < maxPlayer
+                && windowHeight <= windowWidth
+                && smallFont < bigFont;
     }
 
 
@@ -122,6 +143,8 @@ public final class Configuration {
                         case "MAX_PLAYERS" -> configurationBuilder.setMax(Integer.parseInt(value));
                         case "WINDOW_WIDTH" -> configurationBuilder.setWidth(Integer.parseInt(value));
                         case "WINDOW_HEIGHT" -> configurationBuilder.setHeight(Integer.parseInt(value));
+                        case "BIG_FONT" -> configurationBuilder.setBigFont(Integer.parseInt(value));
+                        case "SMALL_FONT" -> configurationBuilder.setSmallFont(Integer.parseInt(value));
                         case "COLORS" -> {
                             final List<Color> colors = Arrays.stream(value.split(","))
                                 .map(String::trim)
@@ -173,6 +196,8 @@ public final class Configuration {
 
         private static final int MAX_PLAYER = 6; 
         private static final int MIN_PLAYER = 2;
+        private static final int BIG_FONT = 24;
+        private static final int SMALL_FONT = 16;
         private static final int WINDOW_HEIGHT = 400;
         private static final int WINDOW_WIDTH = 500;
         private static final List<Color> PLAYER_COLORS = List.of(
@@ -194,6 +219,8 @@ public final class Configuration {
         // Builder's default fields
         private int maxPlayer = MAX_PLAYER;
         private int minPlayer = MIN_PLAYER;
+        private int bigFont = BIG_FONT;
+        private int smallFont = SMALL_FONT;
         private int windowHeight = WINDOW_HEIGHT;
         private int windowWidth = WINDOW_WIDTH;
         private List<Color> playerColors = List.copyOf(PLAYER_COLORS);
@@ -214,6 +241,24 @@ public final class Configuration {
          */
         public Builder setMax(final int maxPlayer) {
             this.maxPlayer = maxPlayer;
+            return this;
+        }
+
+        /**
+         * @param smallFont the minimum size of the font
+         * @return this builder, for method chaining
+         */
+        public Builder setSmallFont(final int smallFont) {
+            this.smallFont = smallFont;
+            return this;
+        }
+
+        /**
+         * @param bigFont the maximum size of the font
+         * @return this builder, for method chaining
+         */
+        public Builder setBigFont(final int bigFont) {
+            this.bigFont = bigFont;
             return this;
         }
 
@@ -253,7 +298,7 @@ public final class Configuration {
                 throw new IllegalStateException("The builder can only be used once");
             }
             consumed = true;
-            return new Configuration(maxPlayer, minPlayer, windowHeight, windowWidth, playerColors);
+            return new Configuration(maxPlayer, minPlayer, smallFont, bigFont, windowHeight, windowWidth, playerColors);
         }
     }
 }
