@@ -9,7 +9,7 @@ import javax.swing.JButton;
 public class Vendita_LogicImpl implements Vendita_Logic {
 
     public void setSellButtons(final Proprieta prop, final JButton houseButton, final JButton propButton) {
-        if (prop.house_num()>0) {
+        if (prop.houseNum()>0) {
             houseButton.setEnabled(true);
             propButton.setEnabled(false);
         }else{
@@ -21,7 +21,7 @@ public class Vendita_LogicImpl implements Vendita_Logic {
     public boolean sellHouse(final List<Proprieta> properties, final Object selectedValue) {
         //manac metodo rossi per far arrivare i soldi al giocatore che vende
         final int propInd = getPropertyIndex(properties, selectedValue);
-        final int houses = properties.get(propInd).house_num();
+        final int houses = properties.get(propInd).houseNum();
         properties.get(propInd).setHouseNum(houses-1);
         return true;
     }

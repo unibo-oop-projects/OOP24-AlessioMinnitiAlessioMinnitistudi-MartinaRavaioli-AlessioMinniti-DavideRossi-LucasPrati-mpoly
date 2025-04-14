@@ -86,10 +86,10 @@ public class GUIVendita extends JFrame {
 
         final ListSelectionListener propertySelectionListener = e -> {
             final Proprieta selectedProperty = logic.getProperty(properties, propertiesList.getSelectedValue());
-            housesCostValue.setText(Integer.toString(selectedProperty.house_price()));
+            housesCostValue.setText(Integer.toString(selectedProperty.housePrice()));
             mortageValue.setText(Integer.toString(selectedProperty.mortage()));
-            rentValue.setText(Integer.toString(selectedProperty.latest_rent()));
-            housesNumValue.setText(Integer.toString(selectedProperty.house_num()));
+            rentValue.setText(Integer.toString(selectedProperty.latestRent()));
+            housesNumValue.setText(Integer.toString(selectedProperty.houseNum()));
 
             logic.setSellButtons(selectedProperty, sellHouse, sellProperty);
 
@@ -98,8 +98,8 @@ public class GUIVendita extends JFrame {
         final ActionListener sellHouseListener = e -> {
             final Proprieta property = logic.getProperty(properties, propertiesList.getSelectedValue());
             if (logic.sellHouse(properties, propertiesList.getSelectedValue())) {
-                final int houses = property.house_num();
-                final Payment_Dialog paymentComplete = new Payment_Dialog(property.house_price(), true);
+                final int houses = property.houseNum();
+                final PaymentDialog paymentComplete = new PaymentDialog(property.housePrice(), true);
                  paymentComplete.setVisible(true);
                 if (houses == 0) {
                     housesNumValue.setText(Integer.toString(houses));
@@ -109,7 +109,7 @@ public class GUIVendita extends JFrame {
                     housesNumValue.setText(Integer.toString(houses));
                 }
             } else {
-                final Payment_Dialog paymentComplete = new Payment_Dialog(property.house_price(), false);
+                final PaymentDialog paymentComplete = new PaymentDialog(property.housePrice(), false);
                 paymentComplete.setVisible(true);
             }
         };
@@ -119,7 +119,7 @@ public class GUIVendita extends JFrame {
             if (logic.sellProperty(properties, selectedProperty)) {
                 propertiesList.setListData(properties.stream().map(p -> p.name()).toArray());
                 sellProperty.setEnabled(false);
-                final Payment_Dialog paymentComplete = new Payment_Dialog(selectedProperty.mortage(), true);
+                final PaymentDialog paymentComplete = new PaymentDialog(selectedProperty.mortage(), true);
                 paymentComplete.setVisible(true);
                 housesCostValue.setText("0");
                 mortageValue.setText("0");
@@ -132,7 +132,7 @@ public class GUIVendita extends JFrame {
                     propertiesScrollPane.setVisible(false);
                 }
             } else {
-                final Payment_Dialog paymentComplete = new Payment_Dialog(selectedProperty.mortage(), false);
+                final PaymentDialog paymentComplete = new PaymentDialog(selectedProperty.mortage(), false);
                 paymentComplete.setVisible(true);
             }
 

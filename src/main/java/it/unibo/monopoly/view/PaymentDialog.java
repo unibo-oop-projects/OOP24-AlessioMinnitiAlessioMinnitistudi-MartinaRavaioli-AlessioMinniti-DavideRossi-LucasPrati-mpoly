@@ -14,22 +14,24 @@ import javax.swing.JTextArea;
 public class PaymentDialog extends JDialog {
 
     /**
-     * the constuctor build the frame with all the elements
+     * the constuctor build the frame with all the elements.
      * @param paidImport the import that has been deposited in the players banck account
      * @param succesfull wether the payment has succeded or not
      */
-    public PaymentDialog (final int paidImport, final boolean succesfull){
-        this.setSize(200, 150);
-        this.setLocation(150, 200);
+    public PaymentDialog(final int paidImport, final boolean succesfull) {
+        final int width = 200; 
+        final int heigth = 150;
+        this.setSize(width, heigth);
+        this.setLocation(heigth, width);
         String state = "";
         if (succesfull) {
             state = "succesfully";
-        }else{
+        } else {
             state = "unsuccesfully";
         }
         final JTextArea paymentComplete = new JTextArea("the paymente of " + paidImport + "\nhas been " + state + " made");
         final JButton closeButton = new JButton("exit");
-        final ActionListener closeListener = e-> {
+        final ActionListener closeListener = e -> {
             this.dispose();
         };
         closeButton.addActionListener(closeListener);
@@ -39,7 +41,7 @@ public class PaymentDialog extends JDialog {
 
         this.getContentPane().add(paymentCompletePane);
         this.setVisible(true);
-        
+
     }
 
 }

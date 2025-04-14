@@ -1,49 +1,92 @@
+
 package it.unibo.monopoly.view;
 import java.awt.Color;
 
+
+/**
+ * this class is a place holder for the actual proprieta class.
+ */
 public class Proprieta {
 
     private final Color color; 
     private final String name;
-    private final int latest_rent;
-    private final int house_price;
-    private int house_num;
+    private final int latestRent;
+    private final int housePrice;
+    private int houseNum;
     private final int mortage;
 
-    public Proprieta (final Color color, final String name, final int latest_rent, final int house_price, final int house_num, final int mortage){
+    /**
+     * the constructor of the class initialize all the fields.
+     * @param color of the property
+     * @param name of the property
+     * @param latestRent from the property
+     * @param housePrice to build a house on the property
+     * @param houseNum on the property
+     * @param mortage of the property
+     */
+    public Proprieta(final Color color, final String name, final int latestRent, 
+                            final int housePrice, final int houseNum, final int mortage) {
         this.color = color; 
         this.name = name;
-        this.latest_rent = latest_rent;
-        this.house_price = house_price;
-        this.house_num = house_num;
+        this.latestRent = latestRent;
+        this.housePrice = housePrice;
+        this.houseNum = houseNum;
         this.mortage = mortage;
     }
 
-    public void setHouseNum(final int num){
-        this.house_num=num;
+    /**
+     * sets the value of how many houses are on the property.
+     * @param num new house nuber
+     */
+    public void setHouseNum(final int num) {
+        this.houseNum = num;
     }
 
-    public Color color(){
+    /**
+     * .
+     * @return the color of the property
+     */
+    public Color color() {
         return this.color;
     }
 
-    public String name(){
+    /**
+     * .
+     * @return the name of the property
+     */
+    public String name() {
         return this.name;
     }
 
-    public int latest_rent(){
-        return this.latest_rent;
+    /**
+     * .
+     * @return the latest rent from the property
+     */
+    public int latestRent() {
+        return this.latestRent;
     }
 
-    public int house_price(){
-        return this.house_price;
+    /**
+     * .
+     * @return the price of buildig a house on the property
+     */
+    public int housePrice() {
+        return this.housePrice;
     }
 
-    public int mortage(){
+    /**
+     * .
+     * @return the mortage of the property
+     */
+    public int mortage() {
         return this.mortage;
     }
 
-    public int house_num(){
-        return this.house_num;
+    /**
+     * .
+     * @return how many houses are on the property
+     */
+    public int houseNum() {
+        return this.houseNum;
     }
 } 
