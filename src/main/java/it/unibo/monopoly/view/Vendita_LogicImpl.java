@@ -8,7 +8,7 @@ import javax.swing.JButton;
 
 public class Vendita_LogicImpl implements Vendita_Logic {
 
-    public void setSellButtons(Proprieta prop, JButton houseButton, JButton propButton) {
+    public void setSellButtons(final Proprieta prop, final JButton houseButton, final JButton propButton) {
         if (prop.house_num()>0) {
             houseButton.setEnabled(true);
             propButton.setEnabled(false);
@@ -18,22 +18,22 @@ public class Vendita_LogicImpl implements Vendita_Logic {
         }
     }
 
-    public boolean sellHouse(List<Proprieta> properties, Object selectedValue) {
-        int propInd = getPropertyIndex(properties, selectedValue);
-        int houses = properties.get(propInd).house_num();
+    public boolean sellHouse(final List<Proprieta> properties, final Object selectedValue) {
+        final int propInd = getPropertyIndex(properties, selectedValue);
+        final int houses = properties.get(propInd).house_num();
         properties.get(propInd).setHouseNum(houses-1);
         return true;
     }
 
     
-    public boolean sellProperty(List<Proprieta> properties, Proprieta selectedProperty) {
+    public boolean sellProperty(final List<Proprieta> properties, final Proprieta selectedProperty) {
         properties.remove(selectedProperty);                   
         return true;
     }
 
 
-    public Proprieta getProperty(List<Proprieta> properties, Object selectedValue) {
-        Optional<Proprieta> selectedPropertyO = properties.stream().filter(p->p.name().equals(selectedValue)).findAny();
+    public Proprieta getProperty(final List<Proprieta> properties, final Object selectedValue) {
+        final Optional<Proprieta> selectedPropertyO = properties.stream().filter(p->p.name().equals(selectedValue)).findAny();
         Proprieta selectedProperty=new Proprieta(Color.BLACK, "", 88, 0, 0, 0); 
         if (selectedPropertyO.isPresent()) {
             selectedProperty=selectedPropertyO.get();
@@ -41,8 +41,8 @@ public class Vendita_LogicImpl implements Vendita_Logic {
         return selectedProperty;
     }
 
-    private int getPropertyIndex(List<Proprieta> properties, Object selectedValue) {
-        Optional<Proprieta> selectedPropertyO = properties.stream().filter(p->p.name().equals(selectedValue)).findAny();
+    private int getPropertyIndex(final List<Proprieta> properties, final Object selectedValue) {
+        final Optional<Proprieta> selectedPropertyO = properties.stream().filter(p->p.name().equals(selectedValue)).findAny();
         Proprieta selectedProperty=new Proprieta(Color.BLACK, "", 88, 0, 0, 0); 
         if (selectedPropertyO.isPresent()) {
             selectedProperty=selectedPropertyO.get();

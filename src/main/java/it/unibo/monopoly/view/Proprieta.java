@@ -1,16 +1,16 @@
 package it.unibo.monopoly.view;
-import java.awt.*;
+import java.awt.Color;
 
 public class Proprieta {
 
-    private Color color; 
-    private String name;
-    private int latest_rent;
-    private int house_price;
+    private final Color color; 
+    private final String name;
+    private final int latest_rent;
+    private final int house_price;
     private int house_num;
-    private int mortage;
+    private final int mortage;
 
-    public Proprieta (Color color, String name, int latest_rent, int house_price, int house_num, int mortage){
+    public Proprieta (final Color color, final String name, final int latest_rent, final int house_price, final int house_num, final int mortage){
         this.color = color; 
         this.name = name;
         this.latest_rent = latest_rent;
@@ -19,7 +19,7 @@ public class Proprieta {
         this.mortage = mortage;
     }
 
-    public void setHouseNum(int num){
+    public void setHouseNum(final int num){
         this.house_num=num;
     }
 

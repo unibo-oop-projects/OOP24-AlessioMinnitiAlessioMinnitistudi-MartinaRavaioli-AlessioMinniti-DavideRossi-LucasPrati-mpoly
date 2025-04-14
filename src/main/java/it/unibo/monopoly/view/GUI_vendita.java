@@ -1,12 +1,23 @@
 package it.unibo.monopoly.view;
 
 
-import javax.swing.*;
-import java.util.*;
-import java.awt.*;
+import java.awt.Color;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.GridLayout;
+import java.awt.Insets;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.List;
-import java.awt.event.*;
 
+import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.border.Border;
 import javax.swing.event.ListSelectionListener;
 
@@ -15,21 +26,21 @@ public class GUI_vendita extends JFrame {
     private final List<Proprieta> properties = new ArrayList<>();
     private final Vendita_Logic logic;
 
-    public GUI_vendita(final List<Proprieta> player_properties){
-        Border b = BorderFactory.createLineBorder(Color.black);
+    public GUI_vendita(final List<Proprieta> player_properties, final int width, final int heigth){
+        final Border b = BorderFactory.createLineBorder(Color.black);
         logic = new Vendita_LogicImpl();
         this.properties.addAll(player_properties);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-        this.setSize(500, 300);
-        this.setLocation(500, 300);
+        this.setSize(width, heigth);
+        this.setLocation(width, heigth);
 
-        JPanel overallPane = new JPanel(new GridLayout(1, 2));
-        JPanel listPane = new JPanel(new GridBagLayout());
-        GridBagConstraints c = new GridBagConstraints();
-        JPanel actionsPane = new JPanel(new GridLayout(2, 1));
-        JPanel infoPane = new JPanel();
+        final JPanel overallPane = new JPanel(new GridLayout(1, 2));
+        final JPanel listPane = new JPanel(new GridBagLayout());
+        final GridBagConstraints c = new GridBagConstraints();
+        final JPanel actionsPane = new JPanel(new GridLayout(2, 1));
+        final JPanel infoPane = new JPanel();
         infoPane.setLayout(new BoxLayout(infoPane, BoxLayout.Y_AXIS));
-        JPanel buttonPane = new JPanel();
+        final JPanel buttonPane = new JPanel();
 
         overallPane.setBorder(b);
         listPane.setBorder(b);
@@ -37,35 +48,35 @@ public class GUI_vendita extends JFrame {
         infoPane.setBorder(b);
         buttonPane.setBorder(b);
 
-        JLabel housesNum = new JLabel("nuber of Houses on the selected property:");
+        final JLabel housesNum = new JLabel("nuber of Houses on the selected property:");
         housesNum.setAlignmentX(CENTER_ALIGNMENT);
-        JLabel housesNumValue = new JLabel("0");
+        final JLabel housesNumValue = new JLabel("0");
         housesNumValue.setAlignmentX(CENTER_ALIGNMENT);
-        JLabel rent = new JLabel("latest rent from the selected property:");
+        final JLabel rent = new JLabel("latest rent from the selected property:");
         rent.setAlignmentX(CENTER_ALIGNMENT);
-        JLabel rentValue = new JLabel("0");
+        final JLabel rentValue = new JLabel("0");
         rentValue.setAlignmentX(CENTER_ALIGNMENT);
-        JLabel mortage = new JLabel("mortage lending value of the selected property:");
+        final JLabel mortage = new JLabel("mortage lending value of the selected property:");
         mortage.setAlignmentX(CENTER_ALIGNMENT);
-        JLabel mortageValue = new JLabel("0");
+        final JLabel mortageValue = new JLabel("0");
         mortageValue.setAlignmentX(CENTER_ALIGNMENT);
-        JLabel housesCost = new JLabel("value of each house upon selling it:");
+        final JLabel housesCost = new JLabel("value of each house upon selling it:");
         housesCost.setAlignmentX(CENTER_ALIGNMENT);
-        JLabel housesCostValue = new JLabel("0");
+        final JLabel housesCostValue = new JLabel("0");
         housesCostValue.setAlignmentX(CENTER_ALIGNMENT);
 
-        JButton sellHouse = new JButton("sell House");
+        final JButton sellHouse = new JButton("sell House");
         sellHouse.setEnabled(false);
-        JButton sellProperty = new JButton("sell Property");
+        final JButton sellProperty = new JButton("sell Property");
         sellProperty.setEnabled(false);    
         
-        JLabel selectProperty = new JLabel("select the property you want to manage");
-        JList<Object> propertiesList = new JList<>(properties.stream().map(p->p.name()).toArray());
-        JScrollPane propertiesScrollPane = new JScrollPane(propertiesList);
+        final JLabel selectProperty = new JLabel("select the property you want to manage");
+        final JList<Object> propertiesList = new JList<>(properties.stream().map(p->p.name()).toArray());
+        final JScrollPane propertiesScrollPane = new JScrollPane(propertiesList);
 
-        ListSelectionListener propertySelectionListener = e -> {
+        final ListSelectionListener propertySelectionListener = e -> {
             
-            Proprieta selectedProperty = logic.getProperty(properties, propertiesList.getSelectedValue());
+            final Proprieta selectedProperty = logic.getProperty(properties, propertiesList.getSelectedValue());
             housesCostValue.setText(Integer.toString(selectedProperty.house_price()));
             mortageValue.setText(Integer.toString(selectedProperty.mortage()));
             rentValue.setText(Integer.toString(selectedProperty.latest_rent()));
@@ -75,10 +86,10 @@ public class GUI_vendita extends JFrame {
 
         };
 
-        ActionListener sellHouseListener = e-> {
+        final ActionListener sellHouseListener = e-> {
             if (logic.sellHouse(properties, propertiesList.getSelectedValue())) {
-                int houses = logic.getProperty(properties, propertiesList.getSelectedValue()).house_num();
-                Payment_Dialog paymentComplete = new Payment_Dialog(logic.getProperty(properties, propertiesList.getSelectedValue()).house_price(), true);
+                final int houses = logic.getProperty(properties, propertiesList.getSelectedValue()).house_num();
+                final Payment_Dialog paymentComplete = new Payment_Dialog(logic.getProperty(properties, propertiesList.getSelectedValue()).house_price(), true);
                 paymentComplete.setVisible(true);
                 if (houses==0) {
                     housesNumValue.setText(Integer.toString(houses));
@@ -88,17 +99,17 @@ public class GUI_vendita extends JFrame {
                     housesNumValue.setText(Integer.toString(houses));
                 }    
             }else{
-                Payment_Dialog paymentComplete = new Payment_Dialog(logic.getProperty(properties, propertiesList.getSelectedValue()).house_price(), false);
+                final Payment_Dialog paymentComplete = new Payment_Dialog(logic.getProperty(properties, propertiesList.getSelectedValue()).house_price(), false);
                 paymentComplete.setVisible(true);
             }
         };  
 
-        ActionListener sellPropertyListener = e -> {
-            Proprieta selectedProperty = logic.getProperty(properties, propertiesList.getSelectedValue());
+        final ActionListener sellPropertyListener = e -> {
+            final Proprieta selectedProperty = logic.getProperty(properties, propertiesList.getSelectedValue());
             if (logic.sellProperty(properties, selectedProperty)) {
                 propertiesList.setListData(properties.stream().map(p->p.name()).toArray());
                 sellProperty.setEnabled(false);
-                Payment_Dialog paymentComplete = new Payment_Dialog(selectedProperty.mortage(), true);
+                final Payment_Dialog paymentComplete = new Payment_Dialog(selectedProperty.mortage(), true);
                 paymentComplete.setVisible(true);
                 housesCostValue.setText("0");
                 mortageValue.setText("0");
@@ -111,7 +122,7 @@ public class GUI_vendita extends JFrame {
                     propertiesScrollPane.setVisible(false);
                 }
             }else{
-                Payment_Dialog paymentComplete = new Payment_Dialog(selectedProperty.mortage(), false);
+                final Payment_Dialog paymentComplete = new Payment_Dialog(selectedProperty.mortage(), false);
                 paymentComplete.setVisible(true);
             }                      
 
