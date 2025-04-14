@@ -85,28 +85,28 @@ public class GUIVendita extends JFrame {
         };
 
         final ActionListener sellHouseListener = e -> {
+            final Proprieta property = logic.getProperty(properties, propertiesList.getSelectedValue());
             if (logic.sellHouse(properties, propertiesList.getSelectedValue())) {
-                final Proprieta property = logic.getProperty(properties, propertiesList.getSelectedValue());
                 final int houses = property.house_num();
                 final Payment_Dialog paymentComplete = new Payment_Dialog(property.house_price(), true);
                  paymentComplete.setVisible(true);
-                if (houses==0) {
+                if (houses == 0) {
                     housesNumValue.setText(Integer.toString(houses));
                     sellHouse.setEnabled(false);
                     sellProperty.setEnabled(true);
-                }else{
+                } else {
                     housesNumValue.setText(Integer.toString(houses));
-                }    
-            }else{
-                final Payment_Dialog paymentComplete = new Payment_Dialog(logic.getProperty(properties, propertiesList.getSelectedValue()).house_price(), false);
+                }
+            } else {
+                final Payment_Dialog paymentComplete = new Payment_Dialog(property.house_price(), false);
                 paymentComplete.setVisible(true);
             }
-        };  
+        };
 
         final ActionListener sellPropertyListener = e -> {
             final Proprieta selectedProperty = logic.getProperty(properties, propertiesList.getSelectedValue());
             if (logic.sellProperty(properties, selectedProperty)) {
-                propertiesList.setListData(properties.stream().map(p->p.name()).toArray());
+                propertiesList.setListData(properties.stream().map(p -> p.name()).toArray());
                 sellProperty.setEnabled(false);
                 final Payment_Dialog paymentComplete = new Payment_Dialog(selectedProperty.mortage(), true);
                 paymentComplete.setVisible(true);
@@ -115,18 +115,18 @@ public class GUIVendita extends JFrame {
                 rentValue.setText("0");
                 housesNumValue.setText("0");
 
-                if (properties.size()==0) {
+                if (properties.size() == 0) {
                     selectProperty.setText("you have no properties to manage");
                     propertiesList.setVisible(false);
                     propertiesScrollPane.setVisible(false);
                 }
-            }else{
+            } else {
                 final Payment_Dialog paymentComplete = new Payment_Dialog(selectedProperty.mortage(), false);
                 paymentComplete.setVisible(true);
-            }                      
+            }
 
         };
-        
+
         propertiesList.addListSelectionListener(propertySelectionListener);
         sellHouse.addActionListener(sellHouseListener);
         sellProperty.addActionListener(sellPropertyListener);
