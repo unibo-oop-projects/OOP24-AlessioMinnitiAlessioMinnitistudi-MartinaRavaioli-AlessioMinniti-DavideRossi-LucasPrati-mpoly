@@ -29,7 +29,7 @@ import javax.swing.event.ListSelectionListener;
 
 public class GUIVendita extends JFrame {
     private final List<Proprieta> properties = new ArrayList<>();
-    private final Vendita_Logic logic;
+    private final VenditaLogic logic;
 
     /**
      * in this constructor the whole GUI is built with all the action listener.
@@ -39,7 +39,7 @@ public class GUIVendita extends JFrame {
      */
     public GUIVendita(final List<Proprieta> playerProperties, final int width, final int heigth) {
         final Border b = BorderFactory.createLineBorder(Color.black);
-        logic = new Vendita_LogicImpl();
+        logic = new VenditaLogicImpl();
         this.properties.addAll(playerProperties);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setSize(width, heigth);
@@ -91,7 +91,13 @@ public class GUIVendita extends JFrame {
             rentValue.setText(Integer.toString(selectedProperty.latestRent()));
             housesNumValue.setText(Integer.toString(selectedProperty.houseNum()));
 
-            logic.setSellButtons(selectedProperty, sellHouse, sellProperty);
+            if (logic.areThereHouses(selectedProperty)) {
+                sellHouse.setEnabled(true);
+                sellProperty.setEnabled(false);
+            } else {
+                sellHouse.setEnabled(false);
+                sellProperty.setEnabled(true);
+            }
 
         };
 
