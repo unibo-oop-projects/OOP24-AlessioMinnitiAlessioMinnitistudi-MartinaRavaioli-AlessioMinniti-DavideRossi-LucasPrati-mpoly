@@ -19,6 +19,7 @@ public class Vendita_LogicImpl implements Vendita_Logic {
     }
 
     public boolean sellHouse(final List<Proprieta> properties, final Object selectedValue) {
+        //manac metodo rossi per far arrivare i soldi al giocatore che vende
         final int propInd = getPropertyIndex(properties, selectedValue);
         final int houses = properties.get(propInd).house_num();
         properties.get(propInd).setHouseNum(houses-1);
@@ -27,6 +28,7 @@ public class Vendita_LogicImpl implements Vendita_Logic {
 
     
     public boolean sellProperty(final List<Proprieta> properties, final Proprieta selectedProperty) {
+        //manac metodo rossi per far arrivare i soldi al giocatore che vende    
         properties.remove(selectedProperty);                   
         return true;
     }

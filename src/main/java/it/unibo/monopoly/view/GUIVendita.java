@@ -22,14 +22,14 @@ import javax.swing.border.Border;
 import javax.swing.event.ListSelectionListener;
 
 
-public class GUI_vendita extends JFrame {
+public class GUIVendita extends JFrame {
     private final List<Proprieta> properties = new ArrayList<>();
     private final Vendita_Logic logic;
 
-    public GUI_vendita(final List<Proprieta> player_properties, final int width, final int heigth){
+    public GUIVendita(final List<Proprieta> playerProperties, final int width, final int heigth) {
         final Border b = BorderFactory.createLineBorder(Color.black);
         logic = new Vendita_LogicImpl();
-        this.properties.addAll(player_properties);
+        this.properties.addAll(playerProperties);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setSize(width, heigth);
         this.setLocation(width, heigth);
@@ -68,14 +68,12 @@ public class GUI_vendita extends JFrame {
         final JButton sellHouse = new JButton("sell House");
         sellHouse.setEnabled(false);
         final JButton sellProperty = new JButton("sell Property");
-        sellProperty.setEnabled(false);    
-        
+        sellProperty.setEnabled(false);
         final JLabel selectProperty = new JLabel("select the property you want to manage");
-        final JList<Object> propertiesList = new JList<>(properties.stream().map(p->p.name()).toArray());
+        final JList<Object> propertiesList = new JList<>(properties.stream().map(p -> p.name()).toArray());
         final JScrollPane propertiesScrollPane = new JScrollPane(propertiesList);
 
         final ListSelectionListener propertySelectionListener = e -> {
-            
             final Proprieta selectedProperty = logic.getProperty(properties, propertiesList.getSelectedValue());
             housesCostValue.setText(Integer.toString(selectedProperty.house_price()));
             mortageValue.setText(Integer.toString(selectedProperty.mortage()));
@@ -86,11 +84,12 @@ public class GUI_vendita extends JFrame {
 
         };
 
-        final ActionListener sellHouseListener = e-> {
+        final ActionListener sellHouseListener = e -> {
             if (logic.sellHouse(properties, propertiesList.getSelectedValue())) {
-                final int houses = logic.getProperty(properties, propertiesList.getSelectedValue()).house_num();
-                final Payment_Dialog paymentComplete = new Payment_Dialog(logic.getProperty(properties, propertiesList.getSelectedValue()).house_price(), true);
-                paymentComplete.setVisible(true);
+                final Proprieta property = logic.getProperty(properties, propertiesList.getSelectedValue());
+                final int houses = property.house_num();
+                final Payment_Dialog paymentComplete = new Payment_Dialog(property.house_price(), true);
+                 paymentComplete.setVisible(true);
                 if (houses==0) {
                     housesNumValue.setText(Integer.toString(houses));
                     sellHouse.setEnabled(false);
