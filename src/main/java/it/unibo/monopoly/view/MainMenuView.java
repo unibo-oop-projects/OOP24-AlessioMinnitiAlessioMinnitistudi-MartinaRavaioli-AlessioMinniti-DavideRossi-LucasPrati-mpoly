@@ -128,7 +128,6 @@ public class MainMenuView extends JFrame {
         giocatoriPanel.setLayout(new BoxLayout(giocatoriPanel, BoxLayout.Y_AXIS));
         giocatoriPanel.setBorder(BorderFactory.createEmptyBorder(TWENTY, TWENTY, TWENTY, TWENTY));
 
-
         for (int i = 0; i < controller.getNumPlayers(); i++) {
             final JPanel row = new JPanel(new BorderLayout(TEN, ZERO));
 
