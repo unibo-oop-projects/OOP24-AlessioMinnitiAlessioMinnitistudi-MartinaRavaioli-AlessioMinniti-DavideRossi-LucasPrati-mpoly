@@ -43,7 +43,7 @@ public class MainMenuView extends JFrame {
 
     private JButton decreaseButton;
     private JButton increaseButton;
-    private final JLabel playersLabel = new JLabel();
+    private final JLabel numPlayersLabel = new JLabel();
     private final JPanel mainPanel = new JPanel(new BorderLayout());
 
 
@@ -78,8 +78,11 @@ public class MainMenuView extends JFrame {
         final JPanel menuPanel = new JPanel(new GridLayout(THREE, TWO, TEN, TEN));
         menuPanel.setBorder(BorderFactory.createEmptyBorder(TWENTY, FIFTY, TWENTY, FIFTY));
 
+        final JLabel playersLabel = new JLabel("Players:", SwingConstants.CENTER);
         playersLabel.setFont(new Font("Arial", Font.BOLD, config.getSmallFont()));
-        playersLabel.setHorizontalAlignment(SwingConstants.CENTER);
+
+        numPlayersLabel.setFont(new Font("Arial", Font.BOLD, config.getSmallFont()));
+        numPlayersLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
         decreaseButton = new JButton("-");
         increaseButton = new JButton("+"); 
@@ -100,8 +103,8 @@ public class MainMenuView extends JFrame {
         final JButton rulesButton = new JButton("?");
         rulesButton.addActionListener(e -> new RulesWindowView(config));
 
-        menuPanel.add(new JLabel("Players:"));
         menuPanel.add(playersLabel);
+        menuPanel.add(numPlayersLabel);
         menuPanel.add(decreaseButton);
         menuPanel.add(increaseButton);
         menuPanel.add(continueButton);
@@ -182,7 +185,7 @@ public class MainMenuView extends JFrame {
 
 
     private void updateGUI() {
-        playersLabel.setText(String.valueOf(controller.getNumPlayers()));
+        numPlayersLabel.setText(String.valueOf(controller.getNumPlayers()));
         decreaseButton.setEnabled(!controller.AlreadyMinPlayers());
         increaseButton.setEnabled(!controller.AlreadyMaxPlayers());
     }
