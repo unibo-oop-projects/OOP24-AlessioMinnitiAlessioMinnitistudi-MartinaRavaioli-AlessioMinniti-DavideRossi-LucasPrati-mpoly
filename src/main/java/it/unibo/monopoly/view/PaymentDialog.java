@@ -11,7 +11,9 @@ import javax.swing.JTextArea;
  * this class draws a Dialog panel that informs the player wether the payment has been succesful or not.
  */
 
-public class PaymentDialog extends JDialog {
+public final class PaymentDialog extends JDialog {
+    private static final long serialVersionUID = -6218820567019985015L;
+
 
     /**
      * the constuctor build the frame with all the elements.
@@ -23,7 +25,7 @@ public class PaymentDialog extends JDialog {
         final int heigth = 150;
         this.setSize(width, heigth);
         this.setLocation(heigth, width);
-        String state = "";
+        final String state;
         if (succesfull) {
             state = "succesfully";
         } else {

@@ -1,14 +1,16 @@
 package it.unibo.monopoly.view;
 
 import java.awt.Color;
+import java.io.Serializable;
 import java.util.List;
 import java.util.Optional;
 
 /**
  * this is the implementation of the logic behind the property manager GUI. 
  */
-public class VenditaLogicImpl implements VenditaLogic {
-    private final int num = 0;
+public final class VenditaLogicImpl implements VenditaLogic, Serializable {
+    static final int NUM = 0;
+    private static final long serialVersionUID = -6218820567019985015L;
 
     @Override
     /**
@@ -17,10 +19,7 @@ public class VenditaLogicImpl implements VenditaLogic {
      * @return wether there are houses on the property
      */
     public boolean areThereHouses(final Proprieta prop) {
-        if (prop.houseNum() > 0) {
-            return true;
-        }
-        return false;
+        return prop.houseNum() > 0;
     }
 
     @Override
@@ -62,7 +61,7 @@ public class VenditaLogicImpl implements VenditaLogic {
      */
     public Proprieta getProperty(final List<Proprieta> properties, final Object selectedValue) {
         final Optional<Proprieta> selectedPropertyO = properties.stream().filter(p -> p.name().equals(selectedValue)).findAny();
-        Proprieta selectedProperty = new Proprieta(Color.BLACK, "", num, num, num, num); 
+        Proprieta selectedProperty = new Proprieta(Color.BLACK, "", NUM, NUM, NUM, NUM); 
         if (selectedPropertyO.isPresent()) {
             selectedProperty = selectedPropertyO.get();
         }
@@ -73,11 +72,11 @@ public class VenditaLogicImpl implements VenditaLogic {
      * private method to get the index of the selected value from the list.
      * @param properties
      * @param selectedValue
-     * @return
+     * @return index of the selected value 
      */
     private int getPropertyIndex(final List<Proprieta> properties, final Object selectedValue) {
         final Optional<Proprieta> selectedPropertyO = properties.stream().filter(p -> p.name().equals(selectedValue)).findAny();
-        Proprieta selectedProperty = new Proprieta(Color.BLACK, "", num, num, num, num); 
+        Proprieta selectedProperty = new Proprieta(Color.BLACK, "", NUM, NUM, NUM, NUM); 
         if (selectedPropertyO.isPresent()) {
             selectedProperty = selectedPropertyO.get();
         }

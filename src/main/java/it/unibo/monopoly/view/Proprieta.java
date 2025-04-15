@@ -1,12 +1,15 @@
 
 package it.unibo.monopoly.view;
 import java.awt.Color;
+import java.io.Serializable;
 
 
 /**
  * this class is a place holder for the actual proprieta class.
  */
-public class Proprieta {
+public final class Proprieta implements Serializable {
+    private static final long serialVersionUID = -6218820567019985015L;
+
 
     private final Color color; 
     private final String name;

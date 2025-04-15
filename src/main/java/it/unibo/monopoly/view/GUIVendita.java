@@ -27,7 +27,8 @@ import javax.swing.event.ListSelectionListener;
  * and then decide wether you wwant to sell it or not 
  */
 
-public class GUIVendita extends JFrame {
+public final class GUIVendita extends JFrame {
+    private static final long serialVersionUID = -6218820567019985015L;
     private final List<Proprieta> properties = new ArrayList<>();
     private final VenditaLogic logic;
 
@@ -81,7 +82,7 @@ public class GUIVendita extends JFrame {
         final JButton sellProperty = new JButton("sell Property");
         sellProperty.setEnabled(false);
         final JLabel selectProperty = new JLabel("select the property you want to manage");
-        final JList<Object> propertiesList = new JList<>(properties.stream().map(p -> p.name()).toArray());
+        final JList<Object> propertiesList = new JList<>(properties.stream().map(Proprieta::name).toArray());
         final JScrollPane propertiesScrollPane = new JScrollPane(propertiesList);
 
         final ListSelectionListener propertySelectionListener = e -> {
@@ -123,7 +124,7 @@ public class GUIVendita extends JFrame {
         final ActionListener sellPropertyListener = e -> {
             final Proprieta selectedProperty = logic.getProperty(properties, propertiesList.getSelectedValue());
             if (logic.sellProperty(properties, selectedProperty)) {
-                propertiesList.setListData(properties.stream().map(p -> p.name()).toArray());
+                propertiesList.setListData(properties.stream().map(Proprieta::name).toArray());
                 sellProperty.setEnabled(false);
                 final PaymentDialog paymentComplete = new PaymentDialog(selectedProperty.mortage(), true);
                 paymentComplete.setVisible(true);
@@ -132,7 +133,7 @@ public class GUIVendita extends JFrame {
                 rentValue.setText("0");
                 housesNumValue.setText("0");
 
-                if (properties.size() == 0) {
+                if (properties.isEmpty()) {
                     selectProperty.setText("you have no properties to manage");
                     propertiesList.setVisible(false);
                     propertiesScrollPane.setVisible(false);
