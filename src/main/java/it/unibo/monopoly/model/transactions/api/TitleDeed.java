@@ -1,8 +1,10 @@
 package it.unibo.monopoly.model.transactions.api;
 
+import java.util.Optional;
+
 public interface TitleDeed {
 
-    String getOwner();
+    Optional<String> getOwner();
 
     void setOwner(String ownerName);
 
