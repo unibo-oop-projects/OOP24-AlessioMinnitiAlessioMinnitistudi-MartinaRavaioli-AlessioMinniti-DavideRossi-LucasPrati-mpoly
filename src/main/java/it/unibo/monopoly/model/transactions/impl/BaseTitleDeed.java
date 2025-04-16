@@ -1,49 +1,68 @@
 package it.unibo.monopoly.model.transactions.impl;
 
+import java.util.Objects;
+import java.util.Optional;
+import java.util.function.Function;
+
 import it.unibo.monopoly.model.transactions.api.TitleDeed;
 
 public class BaseTitleDeed implements TitleDeed{
 
+    private final String group;
+    private final String name;
+    private final int salePrice;
+    private final Function<Integer,Integer> mortageFunction; 
+    private Optional<String> owner = Optional.empty();
+
+    public BaseTitleDeed(String group, String name, int salePrice, Function<Integer, Integer> mortageFunction) {
+        this.group = group;
+        this.name = name;
+        this.salePrice = salePrice;
+        this.mortageFunction = mortageFunction;
+    }
+
     @Override
-    public String getOwner() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getOwner'");
+    public Optional<String> getOwner() {
+        return owner;
     }
 
     @Override
     public void setOwner(String ownerName) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'setOwner'");
+
+        Objects.requireNonNull(ownerName);
+
+        if(owner.isPresent()) {
+            throw new IllegalStateException("Cannot set a new owner for the title deed because the owner" + owner.get() + " already owns it");
+        }
+
+        owner = Optional.of(ownerName);
     }
 
     @Override
     public void removeOwner() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'removeOwner'");
+        if(owner.isEmpty()) {
+            throw new IllegalStateException("Cannot remove the owner because no owner is set");
+        }
     }
 
     @Override
     public String getGroup() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getGroup'");
+        return this.group;
     }
 
     @Override
     public String getName() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getName'");
+        return this.name;
     }
 
     @Override
     public Integer getSalePrice() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getSalePrice'");
+        return this.salePrice;
     }
 
     @Override
     public Integer getMortgagePrice() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getMortgagePrice'");
+        return this.mortageFunction.apply(this.salePrice);
     }
 
 }
