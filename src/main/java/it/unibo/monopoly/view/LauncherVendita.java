@@ -23,8 +23,8 @@ public final class LauncherVendita {
     */
     public static void main(final String[] args) throws java.io.IOException {
         final int num = 50;
-        final int width = 500;
-        final int heigth = 300;
+        final int width = 700;
+        final int heigth = 500;
         final List<Proprieta> properties = new ArrayList<>();
         properties.add(new Proprieta(Color.BLUE, "parco della vittoria", num, num, num, num));
         properties.add(new Proprieta(Color.RED, "vicolo stretto", num, num, num, num));
