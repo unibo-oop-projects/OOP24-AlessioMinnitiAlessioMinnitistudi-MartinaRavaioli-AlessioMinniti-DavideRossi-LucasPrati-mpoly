@@ -139,8 +139,8 @@ public final class Configuration {
 
 
     private static boolean isValidFontName(final String fontName) {
-        return Arrays.stream(GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames())
-                     .anyMatch(name -> name.equalsIgnoreCase(fontName));
+        return  Arrays.stream(GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames())
+                               .anyMatch(name -> name.equalsIgnoreCase(fontName)) && Objects.nonNull(fontName);
     }
 
 

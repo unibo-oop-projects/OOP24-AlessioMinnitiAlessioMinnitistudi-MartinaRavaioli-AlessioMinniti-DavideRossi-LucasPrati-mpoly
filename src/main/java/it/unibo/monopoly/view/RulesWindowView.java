@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Font;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.stream.Collectors;
@@ -22,7 +23,9 @@ import it.unibo.monopoly.utils.Configuration;
 /**
  * RulesWindow view.
  */
-public class RulesWindowView extends JFrame {
+public final class RulesWindowView extends JFrame {
+
+    private static final long serialVersionUID = 1L;
 
     /**
      * Creates a view that displays the game rules, importing them from a file.
@@ -36,7 +39,7 @@ public class RulesWindowView extends JFrame {
 
         setTitle("Rules");
         setSize(config.getWindowWidth(), config.getWindowHeight());
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
         setLayout(new BorderLayout());
 
@@ -60,6 +63,7 @@ public class RulesWindowView extends JFrame {
     }
 
     private void loadRulesFromFile(final JTextArea textArea, final String filename) {
+        // Filename is safe: already validated in configuration, no need to check here
         try (InputStream is = getClass().getResourceAsStream("/" + filename)) {
             if (is == null) {
                 textArea.setText("Impossibile trovare il file delle regole.");
@@ -69,7 +73,7 @@ public class RulesWindowView extends JFrame {
                     textArea.setText(rules);
                 }
             }
-        } catch (final Exception e) {
+        } catch (final IOException  e) {
             textArea.setText("Errore durante la lettura del file delle regole [ " + filename + " ].");
         }
     }
