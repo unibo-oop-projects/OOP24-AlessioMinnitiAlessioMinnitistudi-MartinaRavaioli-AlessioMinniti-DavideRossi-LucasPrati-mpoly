@@ -48,8 +48,8 @@ public class MainMenuView extends JFrame {
 
 
     /**
-     * Creates a new MainMenuGUI with his controller.
-     * @param config a consistent configuration for initialise fields 
+     * Creates a new MainMenuView with his controller. Based on the given {@link Configuration}
+     * @param config a consistent configuration for settings
      * @param controller the controller of the GUI
      */
     public MainMenuView(final Configuration config, final MainMenuController controller) {
@@ -173,7 +173,7 @@ public class MainMenuView extends JFrame {
      * This map is then passed to the controller, which creates the {@link PlayerImpl} instances.
      */
     private void initializePlayers() {
-        Map<Color, String> playersSetup = nicknamePlayers.entrySet().stream()
+        final Map<Color, String> playersSetup = nicknamePlayers.entrySet().stream()
             .collect(Collectors.toMap(
                 Map.Entry::getKey,                      // chiave: Color
                 e -> e.getValue().getText().trim()      // valore: testo dal JTextField pulito con trim()
@@ -185,8 +185,8 @@ public class MainMenuView extends JFrame {
 
     private void updateGUI() {
         numPlayersLabel.setText(String.valueOf(controller.getNumPlayers()));
-        decreaseButton.setEnabled(!controller.AlreadyMinPlayers());
-        increaseButton.setEnabled(!controller.AlreadyMaxPlayers());
+        decreaseButton.setEnabled(!controller.alreadyMinPlayers());
+        increaseButton.setEnabled(!controller.alreadyMaxPlayers());
     }
 
 

@@ -25,10 +25,15 @@ import it.unibo.monopoly.utils.Configuration;
 public class RulesWindowView extends JFrame {
 
     /**
-     * Create a view with the game rules, importing them from a file.
+     * Creates a view that displays the game rules, importing them from a file.
+     * <p>
+     * The behavior of the view adapts to the provided {@link Configuration},
+     * which defines essential game settings such as window size, font size
+     *
+     * @param config the configuration object containing the base settings for the game
      */
     public RulesWindowView(final Configuration config) {
-        
+
         setTitle("Rules");
         setSize(config.getWindowWidth(), config.getWindowHeight());
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -50,12 +55,12 @@ public class RulesWindowView extends JFrame {
         exitButton.addActionListener(e -> dispose());
         add(exitButton, BorderLayout.SOUTH);
 
-        loadRulesFromFile(rulesTextArea);
+        loadRulesFromFile(rulesTextArea, config.getRulesFilenamename());
         updateView();
     }
 
-    private void loadRulesFromFile(final JTextArea textArea) {
-        try (InputStream is = getClass().getResourceAsStream("/rules.txt")) {
+    private void loadRulesFromFile(final JTextArea textArea, final String filename) {
+        try (InputStream is = getClass().getResourceAsStream("/" + filename)) {
             if (is == null) {
                 textArea.setText("Impossibile trovare il file delle regole.");
             } else {
@@ -65,7 +70,7 @@ public class RulesWindowView extends JFrame {
                 }
             }
         } catch (final Exception e) {
-            textArea.setText("Errore durante la lettura del file delle regole.");
+            textArea.setText("Errore durante la lettura del file delle regole [ " + filename + " ].");
         }
     }
 

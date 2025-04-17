@@ -12,12 +12,16 @@ import it.unibo.monopoly.utils.Configuration;
 /**
  * MainMenuLogic implementation.
  */
-public class MainMenuControllerImpl implements MainMenuController {
+public final class MainMenuControllerImpl implements MainMenuController {
 
     private int numPlayers;
     private final int minPlayers;
     private final int maxPlayers;
 
+    /**
+     * Creates a new MainMenuController. Based on the given {@link Configuration}
+     * @param config a consistent configuration for settings
+     */
     public MainMenuControllerImpl(final Configuration config) {
         this.maxPlayers = config.getMaxPlayer();
         this.minPlayers = config.getMinPlayer();
@@ -42,9 +46,9 @@ public class MainMenuControllerImpl implements MainMenuController {
 
 
     @Override
-    public void onClickStart(Map<Color, String> playersSetup) {
+    public void onClickStart(final Map<Color, String> playersSetup) {
         for (final var p : playersSetup.entrySet()) {
-            Player player = PlayerImpl.of(p.getValue(), p.getKey());
+            final Player player = PlayerImpl.of(p.getValue(), p.getKey());
             System.out.println("Creato: " + player.getName() + " " + player.getColor());
         }
         System.out.println("Gioco pronto! (da implementare)");
@@ -58,13 +62,13 @@ public class MainMenuControllerImpl implements MainMenuController {
 
 
     @Override
-    public boolean AlreadyMinPlayers() {
+    public boolean alreadyMinPlayers() {
         return numPlayers == minPlayers;
     }
 
 
     @Override
-    public boolean AlreadyMaxPlayers() {
+    public boolean alreadyMaxPlayers() {
         return numPlayers == maxPlayers;
     }
 }

@@ -11,9 +11,9 @@ import java.util.Map;
 public interface MainMenuController {
     /**
      * @implSpec must create players according the factory template with PlayerFactoryImpl, based on the { @param players } 
-     * @param players the list of player data, create players according to this
+     * @param playersSetup the list of player data, create players according to this
      */
-    void onClickStart(final Map<Color, String> playersSetup);
+    void onClickStart(Map<Color, String> playersSetup);
 
 
     /**
@@ -37,12 +37,12 @@ public interface MainMenuController {
     /**
      * @return true if numPlayer reach the minimum, false otherwise
      */
-    boolean AlreadyMinPlayers();
+    boolean alreadyMinPlayers();
 
 
     /**
      * @return true if numPlayer reach the maximum, false otherwise
      */
-    boolean AlreadyMaxPlayers();
+    boolean alreadyMaxPlayers();
 
 }

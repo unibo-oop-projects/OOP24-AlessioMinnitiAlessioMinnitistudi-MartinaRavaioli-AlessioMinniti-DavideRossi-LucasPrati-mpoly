@@ -2,6 +2,8 @@ package it.unibo.monopoly.utils;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
+import java.util.Objects;
 import java.util.stream.Collectors;
 import java.awt.Color;
 import java.io.BufferedReader;
@@ -20,17 +22,20 @@ public final class Configuration {
     private final int bigFont;
     private final int windowHeight;
     private final int windowWidth;
+    private final String rulesFilename;
     private final List<Color> playerColors;
 
 
     private Configuration(final int maxPlayer, final int minPlayer, final int smallFont, final int bigFont,
-                          final int windowHeight, final int windowWidth, final List<Color> playerColors) {
+                          final int windowHeight, final int windowWidth, final String rulesFilename, 
+                          final List<Color> playerColors) {
         this.maxPlayer = maxPlayer;
         this.minPlayer = minPlayer;
         this.smallFont = smallFont;
         this.bigFont = bigFont;
         this.windowHeight = windowHeight;
         this.windowWidth = windowWidth;
+        this.rulesFilename = rulesFilename;
         this.playerColors = playerColors;
     }
 
@@ -77,6 +82,13 @@ public final class Configuration {
     }
 
     /**
+     * @return the name of the file which contains all the rules of the game
+     */
+    public String getRulesFilenamename() {
+        return rulesFilename;
+    }
+
+    /**
      * @return the list of colors assigned to players
      */
     public List<Color> getPlayerColors() {
@@ -90,12 +102,13 @@ public final class Configuration {
         return playerColors.size() >= maxPlayer
                 && minPlayer < maxPlayer
                 && windowHeight <= windowWidth
-                && smallFont < bigFont;
+                && smallFont < bigFont
+                && Objects.nonNull(rulesFilename);
     }
 
 
     private static Color parseColor(final String name) {
-        return switch (name.toUpperCase()) {
+        return switch (name.toUpperCase(Locale.ENGLISH)) {
             case "BLACK" -> Color.BLACK;
             case "BLUE" -> Color.BLUE;
             case "CYAN" -> Color.CYAN;
@@ -135,23 +148,24 @@ public final class Configuration {
                     continue;
                 }
 
-                final String key = lineElements[0].trim().toUpperCase();
+                final String key = lineElements[0].trim().toUpperCase(Locale.ENGLISH);
                 final String value = lineElements[1].trim();
                 try {
                     switch (key) {
-                        case "MIN_PLAYERS" -> configurationBuilder.setMin(Integer.parseInt(value));
-                        case "MAX_PLAYERS" -> configurationBuilder.setMax(Integer.parseInt(value));
-                        case "WINDOW_WIDTH" -> configurationBuilder.setWidth(Integer.parseInt(value));
-                        case "WINDOW_HEIGHT" -> configurationBuilder.setHeight(Integer.parseInt(value));
-                        case "BIG_FONT" -> configurationBuilder.setBigFont(Integer.parseInt(value));
-                        case "SMALL_FONT" -> configurationBuilder.setSmallFont(Integer.parseInt(value));
+                        case "MIN_PLAYERS" -> configurationBuilder.withMin(Integer.parseInt(value));
+                        case "MAX_PLAYERS" -> configurationBuilder.withMax(Integer.parseInt(value));
+                        case "WINDOW_WIDTH" -> configurationBuilder.withWidth(Integer.parseInt(value));
+                        case "WINDOW_HEIGHT" -> configurationBuilder.withHeight(Integer.parseInt(value));
+                        case "BIG_FONT" -> configurationBuilder.withBigFont(Integer.parseInt(value));
+                        case "SMALL_FONT" -> configurationBuilder.withSmallFont(Integer.parseInt(value));
+                        case "RULES_FILE" -> configurationBuilder.withRulesFilename(value);
                         case "COLORS" -> {
                             final List<Color> colors = Arrays.stream(value.split(","))
                                 .map(String::trim)
                                 .map(Configuration::parseColor)
                                 .collect(Collectors.toList());
 
-                            configurationBuilder.setColors(colors);
+                            configurationBuilder.withColors(colors);
                         }
                         default -> System.err.println("[CONFIG] Unknown key: " + key);
                     }
@@ -200,6 +214,7 @@ public final class Configuration {
         private static final int SMALL_FONT = 16;
         private static final int WINDOW_HEIGHT = 400;
         private static final int WINDOW_WIDTH = 500;
+        private static final String RULES_FILENAME = "rules.txt";
         private static final List<Color> PLAYER_COLORS = List.of(
             Color.RED,
             Color.BLUE,
@@ -223,6 +238,7 @@ public final class Configuration {
         private int smallFont = SMALL_FONT;
         private int windowHeight = WINDOW_HEIGHT;
         private int windowWidth = WINDOW_WIDTH;
+        private String rulesFilename = RULES_FILENAME;
         private List<Color> playerColors = List.copyOf(PLAYER_COLORS);
         private boolean consumed;   // false di default
 
@@ -230,7 +246,7 @@ public final class Configuration {
          * @param minPlayer the minimum number of players
          * @return this builder, for method chaining
          */
-        public Builder setMin(final int minPlayer) {
+        public Builder withMin(final int minPlayer) {
             this.minPlayer = minPlayer;
             return this;
         }
@@ -239,7 +255,7 @@ public final class Configuration {
          * @param maxPlayer the maximum number of players
          * @return this builder, for method chaining
          */
-        public Builder setMax(final int maxPlayer) {
+        public Builder withMax(final int maxPlayer) {
             this.maxPlayer = maxPlayer;
             return this;
         }
@@ -248,7 +264,7 @@ public final class Configuration {
          * @param smallFont the minimum size of the font
          * @return this builder, for method chaining
          */
-        public Builder setSmallFont(final int smallFont) {
+        public Builder withSmallFont(final int smallFont) {
             this.smallFont = smallFont;
             return this;
         }
@@ -257,7 +273,7 @@ public final class Configuration {
          * @param bigFont the maximum size of the font
          * @return this builder, for method chaining
          */
-        public Builder setBigFont(final int bigFont) {
+        public Builder withBigFont(final int bigFont) {
             this.bigFont = bigFont;
             return this;
         }
@@ -266,7 +282,7 @@ public final class Configuration {
          * @param windowHeight the height of the window
          * @return this builder, for method chaining
          */
-        public Builder setHeight(final int windowHeight) {
+        public Builder withHeight(final int windowHeight) {
             this.windowHeight = windowHeight;
             return this;
         }
@@ -275,8 +291,18 @@ public final class Configuration {
          * @param windowWidth the width of the window
          * @return this builder, for method chaining
          */
-        public Builder setWidth(final int windowWidth) {
+        public Builder withWidth(final int windowWidth) {
             this.windowWidth = windowWidth;
+            return this;
+        }
+
+        /**
+         * 
+         * @param rulesFilename the name of the file which contains all the rules of the game
+         * @return this builder, for method chaining
+         */
+        public Builder withRulesFilename(final String rulesFilename) {
+            this.rulesFilename = rulesFilename;
             return this;
         }
 
@@ -284,7 +310,7 @@ public final class Configuration {
          * @param playerColors the colors of the players
          * @return this builder, for method chaining
          */
-        public Builder setColors(final List<Color> playerColors) {
+        public Builder withColors(final List<Color> playerColors) {
             this.playerColors = List.copyOf(playerColors);
             return this;
         }
@@ -298,7 +324,8 @@ public final class Configuration {
                 throw new IllegalStateException("The builder can only be used once");
             }
             consumed = true;
-            return new Configuration(maxPlayer, minPlayer, smallFont, bigFont, windowHeight, windowWidth, playerColors);
+            return new Configuration(maxPlayer, minPlayer, smallFont, bigFont, 
+                                    windowHeight, windowWidth, rulesFilename, playerColors);
         }
     }
 }
