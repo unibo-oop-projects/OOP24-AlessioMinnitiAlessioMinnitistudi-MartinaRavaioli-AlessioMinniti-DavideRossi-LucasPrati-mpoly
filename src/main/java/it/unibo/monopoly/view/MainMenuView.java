@@ -27,7 +27,9 @@ import it.unibo.monopoly.utils.Configuration;
 /**
  * MainMenuGUI view.
  */
-public class MainMenuView extends JFrame {
+public final class MainMenuView extends JFrame {
+
+    private static final long serialVersionUID = 1L;
 
     private static final int ZERO = 0;
     private static final int TWO = 2;
@@ -58,7 +60,7 @@ public class MainMenuView extends JFrame {
 
         setTitle("Monopoly - Menu");
         setSize(this.config.getWindowWidth(), this.config.getWindowHeight());
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setResizable(true);
         add(mainPanel);
@@ -71,7 +73,7 @@ public class MainMenuView extends JFrame {
         mainPanel.removeAll();
 
         final JLabel title = new JLabel("Monopoly", SwingConstants.CENTER);
-        title.setFont(new Font("Arial", Font.BOLD, config.getBigFont()));
+        title.setFont(new Font(config.getFontName(), Font.BOLD, config.getBigFont()));
         title.setForeground(Color.RED);
         mainPanel.add(title, BorderLayout.NORTH);
 
@@ -79,9 +81,9 @@ public class MainMenuView extends JFrame {
         menuPanel.setBorder(BorderFactory.createEmptyBorder(TWENTY, FIFTY, TWENTY, FIFTY));
 
         final JLabel playersLabel = new JLabel("Players:", SwingConstants.CENTER);
-        playersLabel.setFont(new Font("Arial", Font.BOLD, config.getSmallFont()));
+        playersLabel.setFont(new Font(config.getFontName(), Font.BOLD, config.getSmallFont()));
 
-        numPlayersLabel.setFont(new Font("Arial", Font.BOLD, config.getSmallFont()));
+        numPlayersLabel.setFont(new Font(config.getFontName(), Font.BOLD, config.getSmallFont()));
         numPlayersLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
         decreaseButton = new JButton("-");
@@ -121,7 +123,7 @@ public class MainMenuView extends JFrame {
         mainPanel.removeAll();
 
         final JLabel title = new JLabel("Set player nicknames", SwingConstants.CENTER);
-        title.setFont(new Font("Arial", Font.BOLD, config.getBigFont()));
+        title.setFont(new Font(config.getFontName(), Font.BOLD, config.getBigFont()));
         mainPanel.add(title, BorderLayout.NORTH);
 
         final JPanel giocatoriPanel = new JPanel();

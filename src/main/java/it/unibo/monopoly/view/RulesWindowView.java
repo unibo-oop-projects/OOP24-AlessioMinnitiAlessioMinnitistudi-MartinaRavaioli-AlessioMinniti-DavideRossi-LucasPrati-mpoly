@@ -41,13 +41,13 @@ public class RulesWindowView extends JFrame {
         setLayout(new BorderLayout());
 
         final JLabel titleLabel = new JLabel("Rules", SwingConstants.CENTER);
-        titleLabel.setFont(new Font("Arial", Font.BOLD, config.getBigFont()));
+        titleLabel.setFont(new Font(config.getFontName(), Font.BOLD, config.getBigFont()));
         titleLabel.setForeground(Color.RED);
         add(titleLabel, BorderLayout.NORTH);
 
         final JTextArea rulesTextArea = new JTextArea();
         rulesTextArea.setEditable(false);
-        rulesTextArea.setFont(new Font("Arial", Font.PLAIN, config.getSmallFont()));
+        rulesTextArea.setFont(new Font(config.getFontName(), Font.PLAIN, config.getSmallFont()));
         final JScrollPane scrollPane = new JScrollPane(rulesTextArea);
         add(scrollPane, BorderLayout.CENTER);
 

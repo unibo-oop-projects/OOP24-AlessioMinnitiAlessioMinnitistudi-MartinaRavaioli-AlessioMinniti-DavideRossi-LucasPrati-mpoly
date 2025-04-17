@@ -6,6 +6,7 @@ import java.util.Locale;
 import java.util.Objects;
 import java.util.stream.Collectors;
 import java.awt.Color;
+import java.awt.GraphicsEnvironment;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -18,6 +19,7 @@ public final class Configuration {
 
     private final int maxPlayer; 
     private final int minPlayer;
+    private final String fontName;
     private final int smallFont;
     private final int bigFont;
     private final int windowHeight;
@@ -26,11 +28,12 @@ public final class Configuration {
     private final List<Color> playerColors;
 
 
-    private Configuration(final int maxPlayer, final int minPlayer, final int smallFont, final int bigFont,
-                          final int windowHeight, final int windowWidth, final String rulesFilename, 
+    private Configuration(final int maxPlayer, final int minPlayer, final String fontName, final int smallFont,
+                          final int bigFont, final int windowHeight, final int windowWidth, final String rulesFilename, 
                           final List<Color> playerColors) {
         this.maxPlayer = maxPlayer;
         this.minPlayer = minPlayer;
+        this.fontName = fontName;
         this.smallFont = smallFont;
         this.bigFont = bigFont;
         this.windowHeight = windowHeight;
@@ -51,6 +54,13 @@ public final class Configuration {
      */
     public int getMinPlayer() {
         return minPlayer;
+    }
+
+    /**
+     * @return the name of the font to use
+     */
+    public String getFontName() {
+        return fontName;
     }
 
     /**
@@ -103,7 +113,8 @@ public final class Configuration {
                 && minPlayer < maxPlayer
                 && windowHeight <= windowWidth
                 && smallFont < bigFont
-                && Objects.nonNull(rulesFilename);
+                && Objects.nonNull(rulesFilename)
+                && isValidFontName(fontName);
     }
 
 
@@ -125,6 +136,13 @@ public final class Configuration {
             default -> throw new IllegalArgumentException("Unknown color: " + name);
         };
     }
+
+
+    private static boolean isValidFontName(final String fontName) {
+        return Arrays.stream(GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames())
+                     .anyMatch(name -> name.equalsIgnoreCase(fontName));
+    }
+
 
 
     /**
@@ -156,6 +174,7 @@ public final class Configuration {
                         case "MAX_PLAYERS" -> configurationBuilder.withMax(Integer.parseInt(value));
                         case "WINDOW_WIDTH" -> configurationBuilder.withWidth(Integer.parseInt(value));
                         case "WINDOW_HEIGHT" -> configurationBuilder.withHeight(Integer.parseInt(value));
+                        case "FONT_NAME" ->configurationBuilder.withFontName(value);
                         case "BIG_FONT" -> configurationBuilder.withBigFont(Integer.parseInt(value));
                         case "SMALL_FONT" -> configurationBuilder.withSmallFont(Integer.parseInt(value));
                         case "RULES_FILE" -> configurationBuilder.withRulesFilename(value);
@@ -210,6 +229,7 @@ public final class Configuration {
 
         private static final int MAX_PLAYER = 6; 
         private static final int MIN_PLAYER = 2;
+        private static final String FONT_NAME = "ARIAL";
         private static final int BIG_FONT = 24;
         private static final int SMALL_FONT = 16;
         private static final int WINDOW_HEIGHT = 400;
@@ -234,6 +254,7 @@ public final class Configuration {
         // Builder's default fields
         private int maxPlayer = MAX_PLAYER;
         private int minPlayer = MIN_PLAYER;
+        private String fontName = FONT_NAME;
         private int bigFont = BIG_FONT;
         private int smallFont = SMALL_FONT;
         private int windowHeight = WINDOW_HEIGHT;
@@ -257,6 +278,15 @@ public final class Configuration {
          */
         public Builder withMax(final int maxPlayer) {
             this.maxPlayer = maxPlayer;
+            return this;
+        }
+
+        /**
+         * @param fontName the name of the font to use
+         * @return this builder, for method chaining
+         */
+        public Builder withFontName(final String fontName) {
+            this.fontName = fontName;
             return this;
         }
 
@@ -316,6 +346,7 @@ public final class Configuration {
         }
 
 
+
         /**
          * @return a configuration
          */
@@ -324,7 +355,7 @@ public final class Configuration {
                 throw new IllegalStateException("The builder can only be used once");
             }
             consumed = true;
-            return new Configuration(maxPlayer, minPlayer, smallFont, bigFont, 
+            return new Configuration(maxPlayer, minPlayer, fontName, smallFont, bigFont, 
                                     windowHeight, windowWidth, rulesFilename, playerColors);
         }
     }
