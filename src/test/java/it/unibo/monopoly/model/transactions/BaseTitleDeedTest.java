@@ -126,7 +126,7 @@ class BaseTitleDeedTest {
             assertFalse(rentOption.getTitle().isBlank());   
             assertNotNull(rentOption.getDescription());
             assertFalse(rentOption.getDescription().isBlank());   
-            assertTrue(rentOption.price() > 0);
+            assertTrue(rentOption.getPrice() > 0);
         }
    }
 

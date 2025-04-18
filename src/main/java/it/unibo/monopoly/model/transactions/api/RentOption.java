@@ -6,6 +6,6 @@ public interface RentOption {
 
     String getDescription();
 
-    int price();
+    int getPrice();
 
 }
