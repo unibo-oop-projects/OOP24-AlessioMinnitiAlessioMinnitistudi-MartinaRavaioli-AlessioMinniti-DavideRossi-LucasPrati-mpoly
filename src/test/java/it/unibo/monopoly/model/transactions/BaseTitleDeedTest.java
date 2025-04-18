@@ -29,11 +29,12 @@ class BaseTitleDeedTest {
     private static final Function<Integer,Integer> MORTGAGE_PRICE_FUNCTION = salePrice -> {
         return salePrice / 10;
     };
+    private static final int BASE_RENT_PRICE = 2;
 
 
     @BeforeEach
     void setUp () {
-        deed = new BaseTitleDeed(GROUP_NAME, TITLE_DEED_NAME, SALE_PRICE, MORTGAGE_PRICE_FUNCTION);
+        deed = new BaseTitleDeed(GROUP_NAME, TITLE_DEED_NAME, SALE_PRICE, MORTGAGE_PRICE_FUNCTION,BASE_RENT_PRICE);
     }
 
 
@@ -106,7 +107,7 @@ class BaseTitleDeedTest {
    @Test
    void testGetRentPricePassingTitleDeedsOfDifferentGroup() {
 
-        final TitleDeed differentGroupTitleDeed = new BaseTitleDeed("marrone", "via dante", SALE_PRICE, MORTGAGE_PRICE_FUNCTION);
+        final TitleDeed differentGroupTitleDeed = new BaseTitleDeed("marrone", "via dante", SALE_PRICE, MORTGAGE_PRICE_FUNCTION,BASE_RENT_PRICE);
 
 
         final IllegalArgumentException titleDeedsOfDifferentGroup = assertThrows(
