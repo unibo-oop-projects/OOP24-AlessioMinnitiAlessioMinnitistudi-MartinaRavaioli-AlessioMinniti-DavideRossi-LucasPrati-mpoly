@@ -2,10 +2,10 @@ package it.unibo.monopoly.model.transactions.api;
 
 public interface RentOption {
 
-    String getTitle();
+    String Title();
 
-    String getDescription();
+    String Description();
 
-    int getPrice();
+    int Price();
 
 }

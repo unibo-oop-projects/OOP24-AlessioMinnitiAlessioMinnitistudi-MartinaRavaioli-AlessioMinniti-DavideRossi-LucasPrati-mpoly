@@ -122,11 +122,11 @@ class BaseTitleDeedTest {
         assertTrue(rentOptions.size() >= 1);
 
         for (RentOption rentOption : rentOptions) {
-            assertNotNull(rentOption.getTitle());
-            assertFalse(rentOption.getTitle().isBlank());   
-            assertNotNull(rentOption.getDescription());
-            assertFalse(rentOption.getDescription().isBlank());   
-            assertTrue(rentOption.getPrice() > 0);
+            assertNotNull(rentOption.Title());
+            assertFalse(rentOption.Title().isBlank());   
+            assertNotNull(rentOption.Description());
+            assertFalse(rentOption.Description().isBlank());   
+            assertTrue(rentOption.Price() > 0);
         }
    }
 
