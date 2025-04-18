@@ -1,8 +1,12 @@
 package it.unibo.monopoly.model.transactions.impl;
 
-import it.unibo.monopoly.model.transactions.api.RentOption;
+import java.util.Set;
+import java.util.function.Predicate;
 
-public record RentOptionImpl(String title,String description,int price) implements RentOption{
+import it.unibo.monopoly.model.transactions.api.RentOption;
+import it.unibo.monopoly.model.transactions.api.TitleDeed;
+
+public record RentOptionImpl(String title,String description,int price,Predicate<Set<TitleDeed>> applicabilityCondition) implements RentOption{
 
     private static final String BASE_RENT_TITLE = "Affitto base";
     
@@ -22,7 +26,12 @@ public record RentOptionImpl(String title,String description,int price) implemen
         return this.price();
     }
 
+    @Override
+    public boolean canBeApplied(Set<TitleDeed> groupDeeds) {
+        return applicabilityCondition.test(groupDeeds);
+    }
+
     public static RentOptionImpl baseRentOption(int baseRent) {
-        return new RentOptionImpl(BASE_RENT_TITLE, "", baseRent);
+        return new RentOptionImpl(BASE_RENT_TITLE, "", baseRent,deeds -> true);
     }
 }
