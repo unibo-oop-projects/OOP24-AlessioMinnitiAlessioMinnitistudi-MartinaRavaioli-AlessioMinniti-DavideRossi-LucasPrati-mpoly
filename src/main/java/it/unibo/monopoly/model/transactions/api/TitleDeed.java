@@ -1,6 +1,8 @@
 package it.unibo.monopoly.model.transactions.api;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 public interface TitleDeed {
 
@@ -17,5 +19,9 @@ public interface TitleDeed {
     Integer getSalePrice();
 
     Integer getMortgagePrice();
+
+    Object getRent(Set<TitleDeed> of);
+
+    List<RentOption> getRentOptions();
 
 }

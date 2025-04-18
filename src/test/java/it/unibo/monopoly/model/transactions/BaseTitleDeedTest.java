@@ -5,12 +5,16 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.util.List;
+import java.util.Set;
 import java.util.function.Function;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import it.unibo.monopoly.model.transactions.api.RentOption;
 import it.unibo.monopoly.model.transactions.api.TitleDeed;
 import it.unibo.monopoly.model.transactions.impl.BaseTitleDeed;
 
@@ -22,14 +26,14 @@ class BaseTitleDeedTest {
     private static final String GROUP_NAME = "viola";
     private static final String TITLE_DEED_NAME = "vicolo corto";
     private static final int SALE_PRICE = 50;
-    private static final Function<Integer,Integer> MORTAGE_PRICE_FUNCTION = salePrice -> {
+    private static final Function<Integer,Integer> MORTGAGE_PRICE_FUNCTION = salePrice -> {
         return salePrice / 10;
     };
 
 
     @BeforeEach
     void setUp () {
-        deed = new BaseTitleDeed(GROUP_NAME, TITLE_DEED_NAME, SALE_PRICE, MORTAGE_PRICE_FUNCTION);
+        deed = new BaseTitleDeed(GROUP_NAME, TITLE_DEED_NAME, SALE_PRICE, MORTGAGE_PRICE_FUNCTION);
     }
 
 
@@ -91,7 +95,7 @@ class BaseTitleDeedTest {
 
    @Test
    void testGetTitleDeedMortgagePrice () {
-        assertEquals(MORTAGE_PRICE_FUNCTION.apply(SALE_PRICE), deed.getMortgagePrice());
+        assertEquals(MORTGAGE_PRICE_FUNCTION.apply(SALE_PRICE), deed.getMortgagePrice());
    }
 
    @Test
@@ -101,12 +105,29 @@ class BaseTitleDeedTest {
 
    @Test
    void testGetRentPricePassingTitleDeedsOfDifferentGroup() {
-        throw new UnsupportedOperationException("testGetRentPricePassingTitleDeedsOfDifferentGroup not yet implemented");
+
+        final TitleDeed differentGroupTitleDeed = new BaseTitleDeed("marrone", "via dante", SALE_PRICE, MORTGAGE_PRICE_FUNCTION);
+
+
+        final IllegalArgumentException titleDeedsOfDifferentGroup = assertThrows(
+            IllegalArgumentException.class,
+            ()->deed.getRent(Set.of(differentGroupTitleDeed))
+        );
+        testExceptionFormat(titleDeedsOfDifferentGroup);
    }
 
    @Test
    void testGetAllRentOptions () {
-        throw new UnsupportedOperationException("testGetAllRentOptions test not yet implemented");
+        List<RentOption> rentOptions = deed.getRentOptions();
+        assertTrue(rentOptions.size() >= 1);
+
+        for (RentOption rentOption : rentOptions) {
+            assertNotNull(rentOption.getTitle());
+            assertFalse(rentOption.getTitle().isBlank());   
+            assertNotNull(rentOption.getDescription());
+            assertFalse(rentOption.getDescription().isBlank());   
+            assertTrue(rentOption.price() > 0);
+        }
    }
 
    /*
