@@ -20,7 +20,7 @@ public interface TitleDeed {
 
     Integer getMortgagePrice();
 
-    Object getRent(Set<TitleDeed> of);
+    Integer getRent(Set<TitleDeed> groupTitleDeeds);
 
     List<RentOption> getRentOptions();
 
