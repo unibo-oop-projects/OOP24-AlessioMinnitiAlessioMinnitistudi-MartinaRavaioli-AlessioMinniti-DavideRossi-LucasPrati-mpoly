@@ -103,7 +103,7 @@ public final class MainMenuView extends JFrame {
         continueButton.addActionListener(e -> showPlayerSetupScreen());
 
         final JButton rulesButton = new JButton("?");
-        rulesButton.addActionListener(e -> new RulesWindowView(config));
+        rulesButton.addActionListener(e -> new RulesWindowView(this, config));
 
         menuPanel.add(playersLabel);
         menuPanel.add(numPlayersLabel);

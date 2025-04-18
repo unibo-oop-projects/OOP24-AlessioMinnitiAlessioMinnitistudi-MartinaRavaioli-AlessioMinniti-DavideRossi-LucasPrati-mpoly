@@ -203,8 +203,8 @@ public final class Configuration {
                 }
             }
 
-        } catch (IOException  err) {
-            System.err.println("[CONFIG] Error reading config file: " + err.getMessage());
+        } catch (final IOException  e) {
+            System.err.println("[CONFIG] Error reading config file: " + e.getMessage());
         }
 
         final Configuration configuration = configurationBuilder.build();

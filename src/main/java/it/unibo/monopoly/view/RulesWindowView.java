@@ -3,7 +3,7 @@ package it.unibo.monopoly.view;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
-
+import java.awt.Frame;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -11,7 +11,7 @@ import java.io.InputStreamReader;
 import java.util.stream.Collectors;
 
 import javax.swing.JButton;
-import javax.swing.JFrame;
+import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -23,7 +23,7 @@ import it.unibo.monopoly.utils.Configuration;
 /**
  * RulesWindow view.
  */
-public final class RulesWindowView extends JFrame {
+public final class RulesWindowView extends JDialog {
 
     private static final long serialVersionUID = 1L;
 
@@ -33,14 +33,16 @@ public final class RulesWindowView extends JFrame {
      * The behavior of the view adapts to the provided {@link Configuration},
      * which defines essential game settings such as window size, font size
      *
+     * @param parent the parent frame that owns this dialog and will be blocked while the dialog is visible
      * @param config the configuration object containing the base settings for the game
      */
-    public RulesWindowView(final Configuration config) {
+    public RulesWindowView(final Frame parent, final Configuration config) {
 
-        setTitle("Rules");
+        super(parent, "Rules", true);
+
         setSize(config.getWindowWidth(), config.getWindowHeight());
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        setLocationRelativeTo(null);
+        setLocationRelativeTo(parent);
         setLayout(new BorderLayout());
 
         final JLabel titleLabel = new JLabel("Rules", SwingConstants.CENTER);
