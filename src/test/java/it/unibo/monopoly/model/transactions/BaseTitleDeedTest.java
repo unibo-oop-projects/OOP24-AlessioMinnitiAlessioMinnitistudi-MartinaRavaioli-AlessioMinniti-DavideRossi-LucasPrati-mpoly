@@ -29,7 +29,7 @@ class BaseTitleDeedTest {
 
     @BeforeEach
     void setUp () {
-        deed = new BaseTitleDeed();
+        deed = new BaseTitleDeed(GROUP_NAME, TITLE_DEED_NAME, SALE_PRICE, MORTAGE_PRICE_FUNCTION);
     }
 
 
