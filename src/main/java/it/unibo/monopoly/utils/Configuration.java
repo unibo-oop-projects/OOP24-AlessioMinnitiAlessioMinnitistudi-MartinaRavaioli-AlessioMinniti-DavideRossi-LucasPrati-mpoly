@@ -118,6 +118,13 @@ public final class Configuration {
     }
 
 
+    /**
+     * Parses a string representing a color name and returns the corresponding {@link Color} object.
+     *
+     * @param name the name of the color (case-insensitive)
+     * @return the {@link Color} object corresponding to the given name
+     * @throws IllegalArgumentException if the given {@param name} does not match any supported color
+    */
     private static Color parseColor(final String name) {
         return switch (name.toUpperCase(Locale.ENGLISH)) {
             case "BLACK" -> Color.BLACK;
@@ -188,6 +195,9 @@ public final class Configuration {
                         }
                         default -> System.err.println("[CONFIG] Unknown key: " + key);
                     }
+                } catch (final NumberFormatException e) {
+                    System.err.println(e.getMessage());
+
                 } catch (final IllegalArgumentException e) {
                     System.err.println("[CONFIG] Error parsing value for key '" + key + "': " + e.getMessage());
                 }
