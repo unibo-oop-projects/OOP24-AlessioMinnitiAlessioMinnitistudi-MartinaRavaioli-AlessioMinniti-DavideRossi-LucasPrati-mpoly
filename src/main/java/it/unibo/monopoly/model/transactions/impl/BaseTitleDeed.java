@@ -1,9 +1,16 @@
 package it.unibo.monopoly.model.transactions.impl;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Set;
 import java.util.function.Function;
 
+import com.google.common.collect.Sets;
+
+import it.unibo.monopoly.model.transactions.api.RentOption;
 import it.unibo.monopoly.model.transactions.api.TitleDeed;
 
 public class BaseTitleDeed implements TitleDeed{
@@ -13,12 +20,19 @@ public class BaseTitleDeed implements TitleDeed{
     private final int salePrice;
     private final Function<Integer,Integer> mortageFunction; 
     private Optional<String> owner = Optional.empty();
+    private final List<RentOption> rentOptions;
 
-    public BaseTitleDeed(String group, String name, int salePrice, Function<Integer, Integer> mortageFunction) {
+    public BaseTitleDeed(String group, String name, int salePrice, Function<Integer, Integer> mortageFunction, int baseRent) {
         this.group = group;
         this.name = name;
         this.salePrice = salePrice;
         this.mortageFunction = mortageFunction;
+        this.rentOptions = new ArrayList<>(List.of(RentOptionImpl.baseRentOption(baseRent)));
+    }
+
+    public BaseTitleDeed(String group, String name, int salePrice, Function<Integer, Integer> mortageFunction, int baseRent, List<RentOption> additionalRentOptions) {
+        this(group, name, salePrice, mortageFunction, baseRent);
+        this.rentOptions.addAll(additionalRentOptions);
     }
 
     @Override
@@ -65,4 +79,19 @@ public class BaseTitleDeed implements TitleDeed{
         return this.mortageFunction.apply(this.salePrice);
     }
 
+    @Override
+    public Integer getRent(Set<TitleDeed> groupTitleDeeds) {
+        if(!groupTitleDeeds.stream().allMatch(d -> d.getGroup().equals(this.group))) {
+            throw new IllegalArgumentException("The list of title deeds contains deeds that are not part of the group " + this.group + ", the group of this title deed");
+        }
+
+        Set<TitleDeed> allDeedsOfGroup = Sets.union(Set.of(this), groupTitleDeeds);
+
+        return this.rentOptions.stream().filter(op -> op.canBeApplied(allDeedsOfGroup)).mapToInt(op-> op.getPrice()).max().getAsInt();
+    }
+
+    @Override
+    public List<RentOption> getRentOptions() {
+        return List.copyOf(this.rentOptions);
+    }
 }
