@@ -193,17 +193,17 @@ public final class Configuration {
 
                             configurationBuilder.withColors(colors);
                         }
-                        default -> System.err.println("[CONFIG] Unknown key: " + key);
+                        default -> System.err.println("Unknown key: " + key);
                     }
                 } catch (final NumberFormatException e) {
-                    System.err.println(e.getMessage());
+                    System.err.println("[CONFIG] Error parsing value for key '" + key + "' --> " + e.getMessage());
 
                 } catch (final IllegalArgumentException e) {
-                    System.err.println("[CONFIG] Error parsing value for key '" + key + "': " + e.getMessage());
+                    System.err.println("[CONFIG] Error parsing color for value: '" + e.getMessage() + "'");
                 }
             }
 
-        } catch (IOException | NumberFormatException err) {
+        } catch (IOException  err) {
             System.err.println("[CONFIG] Error reading config file: " + err.getMessage());
         }
 
