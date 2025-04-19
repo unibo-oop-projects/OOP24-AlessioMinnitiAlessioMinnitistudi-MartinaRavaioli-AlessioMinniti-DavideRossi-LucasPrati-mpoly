@@ -22,12 +22,12 @@ public interface Bank {
     /**
      * Pay the rent for stepping on a property possessed
      * by another player.
-     * @param playerName the name associated to the {@link BankAccount}
-     * of the player that has to pay the rent
      * @param titleDeedName the {@link TitleDeed} whose rent has to be paid,
      * The rent will vary based on the {@link RentOption} chose by the system
+     * @param playerName the name associated to the {@link BankAccount}
+     * of the player that has to pay the rent
      */
-    void payRent(String playerName, String titleDeedName);
+    void payRent(String titleDeedName, String playerName);
 
 
     /**
@@ -36,4 +36,11 @@ public interface Bank {
      * @return {@link BankAccount} of the specified player
      */
     BankAccount getBankAccount(String playerName);
+
+	/**
+     * Get a copy of a {@link TitleDeed}.
+	 * @param titleDeedName the name of the {@link TitleDeed} to retrieve
+	 * @return the {@link TitleDeed} that corresponds to the given name
+	 */
+	TitleDeed getTitleDeed(String titleDeedName);
 }
