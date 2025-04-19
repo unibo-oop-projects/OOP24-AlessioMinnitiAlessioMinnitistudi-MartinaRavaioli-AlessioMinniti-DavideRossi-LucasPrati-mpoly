@@ -89,6 +89,24 @@ class SimpleBankAccountTest {
     }
 
     @Test
+    void checkAccountInvalidAfterSufficientDeposit() {
+        bankAccount.withdraw(bankAccount.getBalance() + AMOUNT);
+        bankAccount.deposit(AMOUNT * 2);
+        assertEquals(bankAccount.getBalance(), -AMOUNT + AMOUNT * 2);
+        assertTrue(bankAccount.canContinue());
+    }
+
+    private void testExceptionFormat(final Exception exception) {
+        assertNotNull(exception.getMessage());
+        assertFalse(exception.getMessage().isBlank());
+    }
+
+    /*
+    THESE TESTS ARE NOT NECESSARY FOR THIS BANK ACCOUNT IMPLEMENTATION
+    MOVE THEM TO TESTS SUITE OF OTHER BANK ACCOUNT IMPLEMENTATIONS
+
+
+    @Test
     void withdrawMoreThanBalance() {
         final int withdrawAmount = bankAccount.getBalance() + 1;
         bankAccount.withdraw(withdrawAmount);
@@ -104,7 +122,6 @@ class SimpleBankAccountTest {
         assertFalse(bankAccount.canContinue());
     }
 
-
     @Test
     void checkAccountInvalidAfterInsufficientDeposit() {
         bankAccount.withdraw(bankAccount.getBalance() + AMOUNT);
@@ -113,17 +130,6 @@ class SimpleBankAccountTest {
         assertFalse(bankAccount.canContinue());
     }
 
-    @Test
-    void checkAccountInvalidAfterSufficientDeposit() {
-        bankAccount.withdraw(bankAccount.getBalance() + AMOUNT);
-        bankAccount.deposit(AMOUNT * 2);
-        assertEquals(bankAccount.getBalance(), -AMOUNT + AMOUNT * 2);
-        assertTrue(bankAccount.canContinue());
-    }
-
-    private void testExceptionFormat(final Exception exception) {
-        assertNotNull(exception.getMessage());
-        assertFalse(exception.getMessage().isBlank());
-    }
+    */
 
 }
