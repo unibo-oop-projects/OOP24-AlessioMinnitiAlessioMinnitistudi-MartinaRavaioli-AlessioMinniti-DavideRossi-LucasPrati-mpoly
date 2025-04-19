@@ -6,23 +6,39 @@ import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 
 import javax.swing.JComponent;
-
-public class PropertyColor extends JComponent{
+/**
+ * class used to draw the rectangle representing the color of a property.
+ */
+public final class PropertyColor extends JComponent {
+    private static final long serialVersionUID = -6218820567019985015L;
     private Color color; 
 
-    public PropertyColor (Color color) {
+    /**
+     * the constructor sets the color that will be displayed.
+     * @param color of the property
+     */
+    public PropertyColor(final Color color) {
         this.color = color;
     }
 
-    protected void paintComponent(Graphics g) {
-        Graphics2D g2d = (Graphics2D) g;
+    @Override
+    /**
+     * this method is the one that actually draws the graphic.
+     * @param g graphic object 
+     */
+    protected void paintComponent(final Graphics g) {
+        final Graphics2D g2d = (Graphics2D) g;
         g.setColor(color);
-        Rectangle2D.Double rect = new Rectangle2D.Double(0, 0, 25, 25);
+        final Rectangle2D.Double rect = new Rectangle2D.Double(0, 0, 25, 25);
         g2d.fill(rect);
 
     }
 
-    public void setColor(Color nColor) {
+    /**
+     * changes the color og the graphic.
+     * @param nColor
+     */
+    public void setColor(final Color nColor) {
         this.color = nColor; 
         this.repaint();
     }

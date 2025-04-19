@@ -3,16 +3,12 @@ package it.unibo.monopoly.view;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
 import java.awt.GridLayout;
-import java.awt.Insets;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -30,9 +26,9 @@ import javax.swing.event.ListSelectionListener;
 
 public final class GUIVendita extends JFrame {
     private static final long serialVersionUID = -6218820567019985015L;
+    private static final int VGAP = 10;
     private final List<Proprieta> properties = new ArrayList<>();
     private final VenditaLogic logic;
-    private final static int VGAP = 10;
 
     /**
      * in this constructor the whole GUI is built with all the action listener.
@@ -84,7 +80,7 @@ public final class GUIVendita extends JFrame {
         sellHouse.setEnabled(false);
         final JButton sellProperty = new JButton("sell Property");
         sellProperty.setEnabled(false);
-        
+
 // create the Component for the listPane
         final JLabel selectProperty = new JLabel("select the property you want to manage");
 
@@ -97,7 +93,7 @@ public final class GUIVendita extends JFrame {
 
         //exit 
         final ActionListener exitListener = e -> {
-            System.exit(0);
+            this.dispose();
         };
 
         //selection of property
@@ -187,7 +183,7 @@ public final class GUIVendita extends JFrame {
         valuePane.add(mortageValue);
         valuePane.add(housesCostValue);
         valuePane.add(colorValue);
-        
+
         infoPane.add(fieldPane);
         infoPane.add(valuePane);
 
