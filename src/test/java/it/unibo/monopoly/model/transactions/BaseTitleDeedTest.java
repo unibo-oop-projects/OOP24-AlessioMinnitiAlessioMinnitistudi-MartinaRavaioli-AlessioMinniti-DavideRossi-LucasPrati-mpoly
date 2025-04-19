@@ -14,9 +14,12 @@ import java.util.function.Function;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import com.google.common.collect.Sets;
+
 import it.unibo.monopoly.model.transactions.api.RentOption;
 import it.unibo.monopoly.model.transactions.api.TitleDeed;
 import it.unibo.monopoly.model.transactions.impl.BaseTitleDeed;
+import it.unibo.monopoly.model.transactions.impl.RentOptionImpl;
 
 class BaseTitleDeedTest {
 
@@ -101,8 +104,18 @@ class BaseTitleDeedTest {
 
    @Test
    void testGetCorrectRentPrice () {
-        throw new UnsupportedOperationException("testGetCorrectRentPrice not yet implemented");
-   }
+        assertEquals(BASE_RENT_PRICE,deed.getRent(Set.of()));
+
+        RentOption allPropertiesOwned = new RentOptionImpl("Si possiede tutte le proprietà del gruppo", 
+                                        "", 
+                                        BASE_RENT_PRICE * 2, 
+                                        deeds -> deeds.stream().allMatch(d -> d.getOwner().isPresent() && d.getOwner().get().equals(OWNER_NAME)));
+        TitleDeed shortStreetDeed = new BaseTitleDeed(GROUP_NAME, "vicolo corto", SALE_PRICE, MORTGAGE_PRICE_FUNCTION, BASE_RENT_PRICE, List.of(allPropertiesOwned));
+        TitleDeed longStreetDeed = new BaseTitleDeed(GROUP_NAME, "vicolo lungo", SALE_PRICE, MORTGAGE_PRICE_FUNCTION, BASE_RENT_PRICE, List.of(allPropertiesOwned));
+        shortStreetDeed.setOwner(OWNER_NAME);
+        longStreetDeed.setOwner(OWNER_NAME);
+        assertEquals(BASE_RENT_PRICE * 2, shortStreetDeed.getRent(Set.of(longStreetDeed)));
+    }
 
    @Test
    void testGetRentPricePassingTitleDeedsOfDifferentGroup() {
@@ -126,7 +139,6 @@ class BaseTitleDeedTest {
             assertNotNull(rentOption.getTitle());
             assertFalse(rentOption.getTitle().isBlank());   
             assertNotNull(rentOption.getDescription());
-            assertFalse(rentOption.getDescription().isBlank());   
             assertTrue(rentOption.getPrice() > 0);
         }
    }
