@@ -37,10 +37,11 @@ public interface Bank {
      */
     BankAccount getBankAccount(String playerName);
 
-	/**
+    /**
      * Get a copy of a {@link TitleDeed}.
-	 * @param titleDeedName the name of the {@link TitleDeed} to retrieve
-	 * @return the {@link TitleDeed} that corresponds to the given name
-	 */
-	TitleDeed getTitleDeed(String titleDeedName);
+     * @param titleDeedName the name of the {@link TitleDeed} to retrieve
+     * @return the {@link TitleDeed} that corresponds to the given name
+     */
+    TitleDeed getTitleDeed(String titleDeedName);
+
 }

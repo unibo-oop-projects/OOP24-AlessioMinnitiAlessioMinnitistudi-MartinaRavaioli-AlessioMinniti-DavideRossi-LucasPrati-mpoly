@@ -16,7 +16,7 @@ import it.unibo.monopoly.model.transactions.api.TitleDeed;
  * Standard implementation of the TitleDeed interface 
  * that encapsulates all its information, handles the 
  * concept of player ownership and exposes a finite number 
- * of {@link RentOption} to choose the rent to pay
+ * of {@link RentOption} to choose the rent to pay.
  */
 public class BaseTitleDeed implements TitleDeed {
 
