@@ -1,7 +1,6 @@
 package it.unibo.monopoly.model.transactions.impl;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -13,83 +12,139 @@ import com.google.common.collect.Sets;
 import it.unibo.monopoly.model.transactions.api.RentOption;
 import it.unibo.monopoly.model.transactions.api.TitleDeed;
 
-public class BaseTitleDeed implements TitleDeed{
+/**
+ *{@inheritDoc}. 
+ */
+public class BaseTitleDeed implements TitleDeed {
 
     private final String group;
     private final String name;
     private final int salePrice;
-    private final Function<Integer,Integer> mortageFunction; 
-    private Optional<String> owner = Optional.empty();
+    private final Function<Integer, Integer> mortgageFunction; 
     private final List<RentOption> rentOptions;
+    private Optional<String> owner = Optional.empty();
 
-    public BaseTitleDeed(String group, String name, int salePrice, Function<Integer, Integer> mortageFunction, int baseRent) {
+
+    /**
+     * Creates a new {@link BaseTitleDeed} that 
+     * has only one standard rent fee.
+     * @param group The group this deed is part of
+     * @param name The name of the deed
+     * @param salePrice The price to pay to buy the deed
+     * @param mortgageFunction The 
+     * @param baseRent The standard rent fee
+     */
+    public BaseTitleDeed(final String group, 
+                        final String name, 
+                        final int salePrice, 
+                        final Function<Integer, Integer> mortgageFunction, 
+                        final int baseRent) {
         this.group = group;
         this.name = name;
         this.salePrice = salePrice;
-        this.mortageFunction = mortageFunction;
+        this.mortgageFunction = mortgageFunction;
         this.rentOptions = new ArrayList<>(List.of(RentOptionImpl.baseRentOption(baseRent)));
     }
 
-    public BaseTitleDeed(String group, String name, int salePrice, Function<Integer, Integer> mortageFunction, int baseRent, List<RentOption> additionalRentOptions) {
-        this(group, name, salePrice, mortageFunction, baseRent);
+    /**
+     * Creates a new {@link BaseTitleDeed}
+     * with a standard rent fee and a list of additional
+     * rent options.
+     * @param group The group this deed is part of
+     * @param name The name of the deed
+     * @param salePrice The price to pay to buy the deed
+     * @param mortgageFunction The 
+     * @param baseRent The standard rent fee
+     * @param additionalRentOptions The other rent options
+     * that could be applied when having to pay the rent
+     */
+    public BaseTitleDeed(final String group, 
+                        final String name, 
+                        final int salePrice, 
+                        final Function<Integer, Integer> mortgageFunction, 
+                        final int baseRent, 
+                        final List<RentOption> additionalRentOptions) {
+        this(group, name, salePrice, mortgageFunction, baseRent);
         this.rentOptions.addAll(additionalRentOptions);
     }
 
     @Override
-    public Optional<String> getOwner() {
+    public final Optional<String> getOwner() {
         return owner;
     }
 
     @Override
-    public void setOwner(String ownerName) {
-
+    public final void setOwner(final String ownerName) {
         Objects.requireNonNull(ownerName);
-
-        if(owner.isPresent()) {
-            throw new IllegalStateException("Cannot set a new owner for the title deed because the owner" + owner.get() + " already owns it");
+        if (owner.isPresent()) {
+            throw new IllegalStateException("Cannot set a new owner for" 
+                                            + "the title deed because the owner" 
+                                            + owner.get() 
+                                            + " already owns it"
+                                            );
         }
-
         owner = Optional.of(ownerName);
     }
 
     @Override
-    public void removeOwner() {
-        if(owner.isEmpty()) {
+    public final void removeOwner() {
+        if (owner.isEmpty()) {
             throw new IllegalStateException("Cannot remove the owner because no owner is set");
         }
+        owner = Optional.empty();
     }
 
     @Override
-    public String getGroup() {
+    public final String getGroup() {
         return this.group;
     }
 
     @Override
-    public String getName() {
+    public final String getName() {
         return this.name;
     }
 
     @Override
-    public Integer getSalePrice() {
+    public final Integer getSalePrice() {
         return this.salePrice;
     }
 
+    /**
+     * This implementation applies the {@code mortageFunction}
+     * to the {@code salePrice} to calculate the final mortgage value.
+     */
     @Override
     public Integer getMortgagePrice() {
-        return this.mortageFunction.apply(this.salePrice);
+        return this.mortgageFunction.apply(this.salePrice);
     }
 
+    /**
+     * This implementation verifies that the {@link Set} {@code groupTitleDeeds}
+     * contains only title deeds whose {@code group} is the same as the one 
+     * of this title deed. Then it checks which rent options are applicable, 
+     * selects the priciest and returns its value. 
+     */
     @Override
-    public Integer getRent(Set<TitleDeed> groupTitleDeeds) {
-        if(!groupTitleDeeds.stream().allMatch(d -> d.getGroup().equals(this.group))) {
-            throw new IllegalArgumentException("The list of title deeds contains deeds that are not part of the group " + this.group + ", the group of this title deed");
+    public Integer getRent(final Set<TitleDeed> groupTitleDeeds) {
+        if (!groupTitleDeeds.stream().allMatch(d -> d.getGroup().equals(this.group))) {
+            throw new IllegalArgumentException("The list of title deeds contains deeds"
+                                                + "that are not part of the group "
+                                                + this.group
+                                                + ", the group of this title deed");
         }
-
-        Set<TitleDeed> allDeedsOfGroup = Sets.union(Set.of(this), groupTitleDeeds);
-
-        return this.rentOptions.stream().filter(op -> op.canBeApplied(allDeedsOfGroup)).mapToInt(op-> op.getPrice()).max().getAsInt();
+        final Set<TitleDeed> allDeedsOfGroup = Sets.union(Set.of(this), groupTitleDeeds);
+        return this.rentOptions.stream()
+                                .filter(op -> op.canBeApplied(allDeedsOfGroup))
+                                .mapToInt(RentOption::getPrice)
+                                .max()
+                                .getAsInt();
     }
 
+    /**
+     * This implementation returns a copy 
+     * of all the rent options that could be applied when paying the
+     * rent of this specific {@link TitleDeed}.
+     */
     @Override
     public List<RentOption> getRentOptions() {
         return List.copyOf(this.rentOptions);
