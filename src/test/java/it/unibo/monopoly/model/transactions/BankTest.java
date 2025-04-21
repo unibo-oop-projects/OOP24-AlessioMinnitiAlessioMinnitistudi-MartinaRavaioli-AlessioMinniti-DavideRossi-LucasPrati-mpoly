@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -51,9 +52,49 @@ class BankTest {
 
     @BeforeEach
     void setUp() {
-        //bank = new BankImpl();
+        bank = new BankImpl(accounts, deeds);
     }
 
+    @Test
+    void deedsHaveDuplicates() {
+        final List<TitleDeed> deedsDuplicates = new ArrayList<>(deeds);
+        deedsDuplicates.add(deeds.getFirst());
+        final IllegalArgumentException listWithDuplicates = assertThrows(
+            IllegalArgumentException.class,
+            () -> bank = new BankImpl(accounts, deedsDuplicates)
+        );
+        testExceptionFormat(listWithDuplicates);
+    }
+
+    @Test 
+    void deedsIsEmpty() {
+        final IllegalArgumentException emptyList = assertThrows(
+            IllegalArgumentException.class, 
+            () -> bank = new BankImpl(accounts, List.of()) 
+        );
+        testExceptionFormat(emptyList);
+    }
+
+    @Test 
+    void accountsHaveDuplicates() {
+        final List<BankAccount> accountsDuplicates = new ArrayList<>(accounts);
+        accountsDuplicates.add(accounts.getFirst());
+        final IllegalArgumentException listWithDuplicates = assertThrows(
+            IllegalArgumentException.class,
+            () -> bank = new BankImpl(accountsDuplicates, deeds)
+        );
+        testExceptionFormat(listWithDuplicates);
+    }
+
+    @Test
+    void accountsIsEmpty() {
+        final IllegalArgumentException emptyList = assertThrows(
+            IllegalArgumentException.class, 
+            () -> bank = new BankImpl(List.of(), deeds) 
+        );
+        testExceptionFormat(emptyList);
+    }
+ 
     @Test
     void checkGetBankAccountOfInexistentPlayerThrowsException() {
         final IllegalArgumentException inexistentPlayerException = assertThrows(
