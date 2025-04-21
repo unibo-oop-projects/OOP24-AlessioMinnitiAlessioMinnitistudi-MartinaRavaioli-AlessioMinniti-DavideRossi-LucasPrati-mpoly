@@ -69,12 +69,31 @@ public final class SimpleBankAccountImpl implements BankAccount {
         return this.ownerName;
     }
 
+
+
     @Override
-    public boolean equals(final Object obj) {
-        if (obj == null) return false;
-        if (!List.of(obj.getClass().getInterfaces()).contains(BankAccount.class)) return false;
-        final BankAccount oj = (BankAccount) obj;
-        return this.ownerName.equals(oj.getPlayerName());
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((ownerName == null) ? 0 : ownerName.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        SimpleBankAccountImpl other = (SimpleBankAccountImpl) obj;
+        if (ownerName == null) {
+            if (other.ownerName != null)
+                return false;
+        } else if (!ownerName.equals(other.ownerName))
+            return false;
+        return true;
     }
 
     @Override

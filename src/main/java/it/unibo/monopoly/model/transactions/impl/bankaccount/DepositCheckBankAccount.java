@@ -52,12 +52,34 @@ public final class DepositCheckBankAccount implements BankAccount {
     }
 
     @Override
-    public boolean equals(Object obj) {
-        return this.account.equals(obj);
-    }
-
-    @Override
     public String toString() {
         return this.account.toString();
     }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((account == null) ? 0 : account.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        DepositCheckBankAccount other = (DepositCheckBankAccount) obj;
+        if (account == null) {
+            if (other.account != null)
+                return false;
+        } else if (!account.equals(other.account))
+            return false;
+        return true;
+    }
+
+    
 }
