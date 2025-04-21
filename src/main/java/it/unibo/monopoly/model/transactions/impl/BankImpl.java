@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import com.google.common.collect.Maps;
 import com.google.common.collect.Multimap;
@@ -89,8 +90,29 @@ public final class BankImpl implements Bank {
 
     @Override
     public void payRent(final String titleDeedName, final String playerName) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'payRent'");
+        Objects.requireNonNull(titleDeedName);
+        Objects.requireNonNull(playerName);
+        final TitleDeed deed = findTitleDeed(titleDeedName);
+        final BankAccount payer = findAccount(playerName);
+        if (deed.getOwner().isEmpty()) {
+            throw new IllegalStateException("Cannot pay rent for title deed with no owner");
+        }
+        final BankAccount receiver = findAccount(deed.getOwner().get());
+        if (receiver.equals(payer)) {
+            throw new IllegalStateException("Canot pay rent for property owned by the payer" + playerName);
+        }
+        final int rentAmount = deed.getRent(titleDeeds.values()
+            .stream()
+            .filter(d -> d.getGroup().equals(deed.getGroup()) && !d.equals(deed))
+            .collect(Collectors.toSet())
+        );
+        receiver.deposit(rentAmount);
+        try {
+            payer.withdraw(rentAmount);
+        } catch (final IllegalStateException e) {
+            receiver.withdraw(rentAmount);
+            throw e;
+        }
     }
 
     @Override
