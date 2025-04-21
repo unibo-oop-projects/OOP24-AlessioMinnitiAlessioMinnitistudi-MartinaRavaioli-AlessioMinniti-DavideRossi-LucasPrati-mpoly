@@ -66,4 +66,17 @@ public final class SimpleBankAccountImpl implements BankAccount {
     public String getPlayerName() {
         return this.ownerName;
     }
+
+    @Override
+    public boolean equals(final Object obj) {
+        if (obj == null) return false;
+        if (obj.getClass() != this.getClass()) return false;
+        final BankAccount oj = (BankAccount) obj;
+        return this.ownerName.equals(oj.getPlayerName());
+    }
+
+    @Override
+    public String toString() {
+        return this.ownerName + ", balance: " + this.balance;
+    }
 }

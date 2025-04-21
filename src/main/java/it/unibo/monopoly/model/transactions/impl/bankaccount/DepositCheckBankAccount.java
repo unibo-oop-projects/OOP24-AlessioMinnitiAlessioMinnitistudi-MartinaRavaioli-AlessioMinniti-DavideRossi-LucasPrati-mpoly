@@ -51,4 +51,13 @@ public final class DepositCheckBankAccount implements BankAccount {
         return this.account.getPlayerName();
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        return this.account.equals(obj);
+    }
+
+    @Override
+    public String toString() {
+        return this.account.toString();
+    }
 }

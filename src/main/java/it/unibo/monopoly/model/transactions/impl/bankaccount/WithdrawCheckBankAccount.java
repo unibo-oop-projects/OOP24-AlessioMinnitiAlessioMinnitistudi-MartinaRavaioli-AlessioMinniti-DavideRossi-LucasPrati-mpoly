@@ -51,4 +51,14 @@ public final class WithdrawCheckBankAccount implements BankAccount {
         return account.getPlayerName();
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        return this.account.equals(obj);
+    }
+
+    @Override
+    public String toString() {
+        return this.account.toString();
+    }
+
 }
