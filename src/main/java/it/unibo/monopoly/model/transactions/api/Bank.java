@@ -10,12 +10,18 @@ public interface Bank {
      * The {@link TitleDeed} becomes available for purchase
      * and the previous owner is refunded
      * @param titleDeedName the name of the deed to sell
+     * @throws IllegalStateException if the object, and the content it manages, is in
+     * a state that does not allow the execution of this operation. These checks
+     * are specific of the underlying implementation
      */
     void sellTitleDeed(String titleDeedName);
     /**
      * Purchase a {@link TitleDeed} for a specifc player.
      * @param titleDeedName the name of the {@link TitleDeed} to be purchased 
      * @param playerName the newOwner of the property
+     * @throws IllegalStateException if the object, and the content it manages, is in
+     * a state that does not allow the execution of this operation. These checks
+     * are specific of the underlying implementation
      */
     void buyTitleDeed(String titleDeedName, String playerName);
 
@@ -26,6 +32,9 @@ public interface Bank {
      * The rent will vary based on the {@link RentOption} chose by the system
      * @param playerName the name associated to the {@link BankAccount}
      * of the player that has to pay the rent
+     * @throws IllegalStateException if the object, and the content it manages, is in
+     * a state that does not allow the execution of this operation. These checks
+     * are specific of the underlying implementation
      */
     void payRent(String titleDeedName, String playerName);
 
