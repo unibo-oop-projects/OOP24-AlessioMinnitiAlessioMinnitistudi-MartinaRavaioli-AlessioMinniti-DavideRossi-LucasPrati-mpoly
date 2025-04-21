@@ -10,6 +10,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.stream.Collectors;
 
+import javax.swing.Icon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
@@ -18,6 +19,7 @@ import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
 
 import it.unibo.monopoly.utils.Configuration;
+import it.unibo.monopoly.utils.GuiUtils;
 
 
 /**
@@ -26,6 +28,14 @@ import it.unibo.monopoly.utils.Configuration;
 public final class RulesWindowView extends JDialog {
 
     private static final long serialVersionUID = 1L;
+
+    private static final String TITLE_WINDOW = "Monopoly - Rules";
+    private static final String TITLE_TEXT = "Rules";
+    private static final String EXIT_TEXT = "Exit";
+
+    private static final String ERROR_FILE_NOT_FOUND = "Impossibile trovare il file delle regole: ";
+    private static final String ERROR_DURING_READING_FILE = "Errore durante la lettura del file delle regole: ";
+
 
     /**
      * Creates a view that displays the game rules, importing them from a file.
@@ -37,38 +47,41 @@ public final class RulesWindowView extends JDialog {
      * @param config the configuration object containing the base settings for the game
      */
     public RulesWindowView(final Frame parent, final Configuration config) {
+        GuiUtils.configureWindow(this,
+                                 config.getWindowWidth(),
+                                 config.getWindowHeight(),
+                                 TITLE_WINDOW,
+                                 new BorderLayout(),
+                                 parent);
 
-        super(parent, "Rules", true);
-
-        setSize(config.getWindowWidth(), config.getWindowHeight());
-        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        setLocationRelativeTo(parent);
-        setLayout(new BorderLayout());
-
-        final JLabel titleLabel = new JLabel("Rules", SwingConstants.CENTER);
+        final JLabel titleLabel = new JLabel(TITLE_TEXT, SwingConstants.CENTER);
         titleLabel.setFont(new Font(config.getFontName(), Font.BOLD, config.getBigFont()));
         titleLabel.setForeground(Color.RED);
         add(titleLabel, BorderLayout.NORTH);
 
+        // Create a text area for display all the rules
         final JTextArea rulesTextArea = new JTextArea();
         rulesTextArea.setEditable(false);
         rulesTextArea.setFont(new Font(config.getFontName(), Font.PLAIN, config.getSmallFont()));
+
+        // Create a scrollable view for the rulesTextArea
         final JScrollPane scrollPane = new JScrollPane(rulesTextArea);
         add(scrollPane, BorderLayout.CENTER);
 
-        final JButton exitButton = new JButton("Exit");
+        // Create an exit button for the window
+        final JButton exitButton = new JButton(EXIT_TEXT);
         exitButton.addActionListener(e -> dispose());
         add(exitButton, BorderLayout.SOUTH);
 
         loadRulesFromFile(rulesTextArea, config.getRulesFilenamename());
-        updateView();
+        GuiUtils.refresh(this);
     }
 
     private void loadRulesFromFile(final JTextArea textArea, final String filename) {
         // Filename is safe: already validated in configuration, no need to check here
         try (InputStream is = getClass().getResourceAsStream("/" + filename)) {
             if (is == null) {
-                textArea.setText("Impossibile trovare il file delle regole.");
+                textArea.setText(ERROR_FILE_NOT_FOUND + filename);
             } else {
                 try (BufferedReader reader = new BufferedReader(new InputStreamReader(is))) {
                     final String rules = reader.lines().collect(Collectors.joining("\n"));
@@ -76,13 +89,7 @@ public final class RulesWindowView extends JDialog {
                 }
             }
         } catch (final IOException  e) {
-            textArea.setText("Errore durante la lettura del file delle regole [ " + filename + " ].");
+            textArea.setText(ERROR_DURING_READING_FILE + filename);
         }
-    }
-
-    private void updateView() {
-        revalidate();
-        repaint();
-        setVisible(true);
     }
 }

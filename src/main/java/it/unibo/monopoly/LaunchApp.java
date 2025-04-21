@@ -4,9 +4,7 @@ import java.io.FileNotFoundException;
 
 import javax.swing.SwingUtilities;
 
-import it.unibo.monopoly.controller.api.MainMenuController;
 import it.unibo.monopoly.utils.Configuration;
-import it.unibo.monopoly.controller.MainMenuControllerImpl;
 import it.unibo.monopoly.view.MainMenuView;
 
 /**
@@ -28,8 +26,7 @@ public final class LaunchApp {
 
         final Configuration config = Configuration.configureFromFile(CONFIG_FILE);
         SwingUtilities.invokeLater(() -> {
-            final MainMenuController controller = new MainMenuControllerImpl(config);
-            new MainMenuView(config, controller);
+            new MainMenuView(config);
         });
     }
 }
