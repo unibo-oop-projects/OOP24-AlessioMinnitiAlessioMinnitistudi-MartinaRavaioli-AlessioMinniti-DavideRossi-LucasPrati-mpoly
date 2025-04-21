@@ -77,6 +77,15 @@ public final class BankImpl implements Bank {
         td.setOwner(playerName);
     }
 
+    @Override
+    public BankAccount getBankAccount(final String playerName) {
+        return findAccount(playerName);
+    }
+
+    @Override
+    public TitleDeed getTitleDeed(final String titleDeedName) {
+        return findTitleDeed(titleDeedName);
+    }
 
     @Override
     public void payRent(final String titleDeedName, final String playerName) {
