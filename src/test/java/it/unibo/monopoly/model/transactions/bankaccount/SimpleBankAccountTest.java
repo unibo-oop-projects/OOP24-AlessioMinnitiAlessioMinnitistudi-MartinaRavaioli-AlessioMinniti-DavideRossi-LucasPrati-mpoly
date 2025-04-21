@@ -46,7 +46,7 @@ class SimpleBankAccountTest {
 
     @Test
     void checkOwnerNameIsCorrect() {
-        assertEquals(bankAccount.getOwner(), PLAYER_NAME);
+        assertEquals(bankAccount.getPlayerName(), PLAYER_NAME);
     }
 
     @Test

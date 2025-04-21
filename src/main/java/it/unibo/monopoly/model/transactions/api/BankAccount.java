@@ -40,5 +40,5 @@ public interface BankAccount {
      * Get the name of the player associated with the BankAccount.
      * @return the name of the player
      */
-    String getOwner();
+    String getPlayerName();
 }

@@ -47,8 +47,8 @@ public final class DepositCheckBankAccount implements BankAccount {
     }
 
     @Override
-    public String getOwner() {
-        return this.account.getOwner();
+    public String getPlayerName() {
+        return this.account.getPlayerName();
     }
 
 }

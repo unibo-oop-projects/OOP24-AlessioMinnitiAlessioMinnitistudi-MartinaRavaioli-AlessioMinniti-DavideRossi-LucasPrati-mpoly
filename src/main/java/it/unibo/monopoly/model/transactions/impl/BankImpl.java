@@ -34,9 +34,9 @@ public final class BankImpl implements Bank {
         if (accounts.isEmpty() || titleDeeds.isEmpty()) {
             throw new IllegalArgumentException("Input lists cannot be empty");
         }
-        checkForDuplicates(accounts, BankAccount::getOwner);
+        checkForDuplicates(accounts, BankAccount::getPlayerName);
         checkForDuplicates(titleDeeds, TitleDeed::getName);
-        this.accounts = Maps.uniqueIndex(accounts, BankAccount::getOwner);
+        this.accounts = Maps.uniqueIndex(accounts, BankAccount::getPlayerName);
         this.titleDeeds = Maps.uniqueIndex(titleDeeds, TitleDeed::getName);
     }
 

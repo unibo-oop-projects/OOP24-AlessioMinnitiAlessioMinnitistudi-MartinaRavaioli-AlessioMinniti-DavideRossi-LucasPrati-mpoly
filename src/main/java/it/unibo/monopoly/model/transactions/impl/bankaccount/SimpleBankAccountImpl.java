@@ -63,7 +63,7 @@ public final class SimpleBankAccountImpl implements BankAccount {
     }
 
     @Override
-    public String getOwner() {
+    public String getPlayerName() {
         return this.ownerName;
     }
 }

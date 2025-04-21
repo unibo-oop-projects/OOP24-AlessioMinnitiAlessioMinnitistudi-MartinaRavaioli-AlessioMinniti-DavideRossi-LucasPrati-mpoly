@@ -109,7 +109,7 @@ class BankTest {
         final BankAccount account = bank.getBankAccount(PLAYER1_NAME);
         assertEquals(accounts
                     .stream()
-                    .filter(a -> PLAYER1_NAME.equals(a.getOwner()))
+                    .filter(a -> PLAYER1_NAME.equals(a.getPlayerName()))
                     .toList()
                     .getFirst(), account);
     }

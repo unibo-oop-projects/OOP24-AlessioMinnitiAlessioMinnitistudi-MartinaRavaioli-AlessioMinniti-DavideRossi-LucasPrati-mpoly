@@ -47,8 +47,8 @@ public final class WithdrawCheckBankAccount implements BankAccount {
     }
 
     @Override
-    public String getOwner() {
-        return account.getOwner();
+    public String getPlayerName() {
+        return account.getPlayerName();
     }
 
 }
