@@ -48,28 +48,28 @@ public final class BankImpl implements Bank {
         }
     }
 
-    private BankAccount findAccount(String id) {
-        if(!accounts.containsKey(id)) {
+    private BankAccount findAccount(final String id) {
+        if (!accounts.containsKey(id)) {
             throw new IllegalArgumentException("The account of the player " + id + "is not present in the system");
         }
         return accounts.get(id);
     }
 
-    private TitleDeed findTitleDeed(String id) {
-        if(!titleDeeds.containsKey(id)) {
+    private TitleDeed findTitleDeed(final String id) {
+        if (!titleDeeds.containsKey(id)) {
             throw new IllegalArgumentException("The title deed " + id + "is not present in the system");
         }
         return titleDeeds.get(id);
     }
 
     @Override
-    public void buyTitleDeed(String titleDeedName, String playerName) {
+    public void buyTitleDeed(final String titleDeedName, final String playerName) {
         Objects.requireNonNull(titleDeedName);
         Objects.requireNonNull(playerName);
         final BankAccount buyer = findAccount(playerName);
         final TitleDeed td = findTitleDeed(titleDeedName);
 
-        if(td.getOwner().isPresent()) {
+        if (td.getOwner().isPresent()) {
             throw new IllegalStateException("Property is already owned by player" + td.getOwner().get());
         }
 
@@ -95,7 +95,13 @@ public final class BankImpl implements Bank {
 
     @Override
     public void sellTitleDeed(final String titleDeedName) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'sellTitleDeed'");   
+        Objects.requireNonNull(titleDeedName);
+        final TitleDeed deed = findTitleDeed(titleDeedName);
+        if (deed.getOwner().isEmpty()) {
+            throw new IllegalStateException("Cannot sell a title deed with no owner");
+        }
+        final BankAccount seller = findAccount(deed.getOwner().get());
+        seller.deposit(deed.getMortgagePrice());
+        deed.removeOwner();
     }
 }
