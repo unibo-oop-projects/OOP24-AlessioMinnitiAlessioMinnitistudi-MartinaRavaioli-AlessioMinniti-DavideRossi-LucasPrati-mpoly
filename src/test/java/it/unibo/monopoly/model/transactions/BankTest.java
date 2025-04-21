@@ -175,19 +175,23 @@ class BankTest {
         bank.buyTitleDeed(TITLE_DEED_NAME1, PLAYER2_NAME);
         final int rent = bank.getTitleDeed(TITLE_DEED_NAME1)
                             .getRent(Sets.filter(Sets.newHashSet(deeds), 
-                                            d -> !TITLE_DEED_NAME1.equals(d.getName())
-                                        )
-                                    );
+                                    d -> !TITLE_DEED_NAME1.equals(d.getName())
+                                )
+                            );
         final int pl1Balance = bank.getBankAccount(PLAYER1_NAME).getBalance();
 
-        for (int i = 0; i < (pl1Balance / rent) - 1; i++) {
+        for (int i = 0; i < (pl1Balance / rent); i++) {
             bank.payRent(TITLE_DEED_NAME1, PLAYER1_NAME);
         }
 
+        final int initialBalancePl1 = bank.getBankAccount(PLAYER1_NAME).getBalance();
+        final int initialBalancePl2 = bank.getBankAccount(PLAYER2_NAME).getBalance();
         final IllegalStateException withDrawConditionsViolated = assertThrows(
             IllegalStateException.class,
             () -> bank.payRent(TITLE_DEED_NAME1, PLAYER1_NAME));
         testExceptionFormat(withDrawConditionsViolated);
+        assertEquals(initialBalancePl1, bank.getBankAccount(PLAYER1_NAME).getBalance());
+        assertEquals(initialBalancePl2, bank.getBankAccount(PLAYER2_NAME).getBalance());
     }
 
     @Test
