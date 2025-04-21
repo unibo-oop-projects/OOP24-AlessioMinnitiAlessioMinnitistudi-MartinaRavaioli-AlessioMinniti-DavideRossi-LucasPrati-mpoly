@@ -107,7 +107,7 @@ public final class GuiUtils {
                 dialog.setTitle(title);
                 dialog.setResizable(true);
                 dialog.setModal(true);
-            }   
+            }
         }
     }
 
@@ -121,7 +121,8 @@ public final class GuiUtils {
      * @param layout the layout manager to apply
      * @return true if the provided parameters form a consistent configuration
      */
-    private static boolean isConsistent(final Window window, final int width, final int height, final String title, final LayoutManager layout) {
+    private static boolean isConsistent(final Window window, final int width, final int height, 
+                                        final String title, final LayoutManager layout) {
         return Objects.nonNull(window)
                 && (window instanceof JDialog || window instanceof JFrame)
                 && Objects.nonNull(title)

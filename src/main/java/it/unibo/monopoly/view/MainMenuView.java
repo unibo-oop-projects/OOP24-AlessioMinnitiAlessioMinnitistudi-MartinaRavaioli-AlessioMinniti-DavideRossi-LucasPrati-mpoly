@@ -75,7 +75,6 @@ public final class MainMenuView extends JFrame {
     /**
      * Creates a new MainMenuView with his controller. Based on the given {@link Configuration}
      * @param config a consistent configuration for settings
-     * @param controller the controller of the GUI
      */
     public MainMenuView(final Configuration config) {
         this.config = config;
@@ -121,7 +120,7 @@ public final class MainMenuView extends JFrame {
         rulesButton.addActionListener(e -> new RulesWindowView(this, config));
 
         final JButton settingsButton = new JButton(SETTINGS_TEXT);
-        settingsButton.addActionListener(e -> new SettingsWindowView(this, config));
+        // settingsButton.addActionListener(e -> new SettingsWindowView(this, config));
 
         final JButton continueButton = new JButton(CONTINUE_TEXT);
         continueButton.addActionListener(e -> showPlayerSetupScreen());
@@ -156,7 +155,7 @@ public final class MainMenuView extends JFrame {
 
         final JLabel title = new JLabel(TITLE_TEXT_PLAYER_SETUP, SwingConstants.CENTER);
         title.setFont(new Font(config.getFontName(), Font.BOLD, config.getBigFont()));
-        
+
         // Create panel for display the players info for edit
         final JPanel playersPanel = new JPanel();
         playersPanel.setLayout(new BoxLayout(playersPanel, BoxLayout.Y_AXIS));
@@ -179,7 +178,7 @@ public final class MainMenuView extends JFrame {
         // Create a scrollable view for the playersPanel
         final JScrollPane scrollPane = new JScrollPane(playersPanel);
         scrollPane.setBorder(BorderFactory.createEmptyBorder());
-        
+
         final JButton startGameButton = new JButton(START_TEXT);
         startGameButton.addActionListener(e -> initializePlayers());
 
