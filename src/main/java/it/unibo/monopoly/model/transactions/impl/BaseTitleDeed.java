@@ -153,11 +153,19 @@ public class BaseTitleDeed implements TitleDeed {
         return List.copyOf(this.rentOptions);
     }
 
+    /**
+     * This implementation returns the {@code name} and {@code group} of
+     * the {@link BaseTitleDeed}.
+     */
     @Override
     public String toString() {
         return "Name: " + this.name + "\n Group: " + this.group; 
     }
 
+    /**
+     * Default IDE generated implementation of the hashCode method
+     * based on the parameters {@code name} and {@code group}.
+     */
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -167,26 +175,36 @@ public class BaseTitleDeed implements TitleDeed {
         return result;
     }
 
+    /**
+     * Default IDE generated implementation of the equals method 
+     * based on the parameters {@code name} and {@code group}.
+     */
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
+    public boolean equals(final Object obj) {
+        if (this == obj) {
             return true;
-        if (obj == null)
+        }
+        if (obj == null) {
             return false;
-        if (getClass() != obj.getClass())
+        }
+        if (getClass() != obj.getClass()) {
             return false;
-        BaseTitleDeed other = (BaseTitleDeed) obj;
+        }
+        final BaseTitleDeed other = (BaseTitleDeed) obj;
         if (group == null) {
-            if (other.group != null)
+            if (other.group != null) {
                 return false;
-        } else if (!group.equals(other.group))
+            }
+        } else if (!group.equals(other.group)) {
             return false;
+        }
         if (name == null) {
-            if (other.name != null)
+            if (other.name != null) {
                 return false;
-        } else if (!name.equals(other.name))
+            }
+        } else if (!name.equals(other.name)) {
             return false;
+        }
         return true;
     }
-
 }

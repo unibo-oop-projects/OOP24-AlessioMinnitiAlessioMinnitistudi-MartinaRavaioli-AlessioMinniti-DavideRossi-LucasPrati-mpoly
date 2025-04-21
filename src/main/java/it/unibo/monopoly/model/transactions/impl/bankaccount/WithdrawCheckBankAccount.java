@@ -65,20 +65,24 @@ public final class WithdrawCheckBankAccount implements BankAccount {
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
+    public boolean equals(final Object obj) {
+        if (this == obj) {
             return true;
-        if (obj == null)
+        }
+        if (obj == null) {
             return false;
-        if (getClass() != obj.getClass())
+        }
+        if (getClass() != obj.getClass()) {
             return false;
-        WithdrawCheckBankAccount other = (WithdrawCheckBankAccount) obj;
+        }
+        final WithdrawCheckBankAccount other = (WithdrawCheckBankAccount) obj;
         if (account == null) {
-            if (other.account != null)
+            if (other.account != null) {
                 return false;
-        } else if (!account.equals(other.account))
+            }
+        } else if (!account.equals(other.account)) {
             return false;
+        }
         return true;
     }
-
 }

@@ -1,7 +1,5 @@
 package it.unibo.monopoly.model.transactions.impl.bankaccount;
 
-import java.util.List;
-
 import it.unibo.monopoly.model.transactions.api.BankAccount;
 
 /**
@@ -80,19 +78,24 @@ public final class SimpleBankAccountImpl implements BankAccount {
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
+    public boolean equals(final Object obj) {
+        if (this == obj) {
             return true;
-        if (obj == null)
+        }
+        if (obj == null) {
             return false;
-        if (getClass() != obj.getClass())
+        }
+        if (getClass() != obj.getClass()) {
             return false;
-        SimpleBankAccountImpl other = (SimpleBankAccountImpl) obj;
+        }
+        final SimpleBankAccountImpl other = (SimpleBankAccountImpl) obj;
         if (ownerName == null) {
-            if (other.ownerName != null)
+            if (other.ownerName != null) {
                 return false;
-        } else if (!ownerName.equals(other.ownerName))
+            }
+        } else if (!ownerName.equals(other.ownerName)) {
             return false;
+        }
         return true;
     }
 
