@@ -152,8 +152,8 @@ class BankTest {
 
     @Test
     void payRentOfPropertyWithNoOwner() {
-        final IllegalArgumentException propertyHasNoOwnerException = assertThrows(
-            IllegalArgumentException.class,
+        final IllegalStateException propertyHasNoOwnerException = assertThrows(
+            IllegalStateException.class,
             () -> bank.payRent(TITLE_DEED_NAME1, PLAYER1_NAME)
         );
         testExceptionFormat(propertyHasNoOwnerException); 
@@ -163,8 +163,8 @@ class BankTest {
     void payRentForPropertyPossessedByThePayer() {
         bank.buyTitleDeed(TITLE_DEED_NAME1, PLAYER1_NAME);
         assertEquals(PLAYER1_NAME, bank.getTitleDeed(TITLE_DEED_NAME1).getOwner().get());
-        final IllegalArgumentException propertyPossessedByPlayerException = assertThrows(
-            IllegalArgumentException.class,
+        final IllegalStateException propertyPossessedByPlayerException = assertThrows(
+            IllegalStateException.class,
             () -> bank.payRent(TITLE_DEED_NAME1, PLAYER1_NAME)
         );
         testExceptionFormat(propertyPossessedByPlayerException); 
@@ -192,13 +192,13 @@ class BankTest {
 
     @Test
     void payRentSuccessful() {
-        final int initialBalancePl1 = bank.getBankAccount(PLAYER1_NAME).getBalance();
-        final int initialBalancePl2 = bank.getBankAccount(PLAYER2_NAME).getBalance();
         final int rent = bank.getTitleDeed(TITLE_DEED_NAME1)
                                 .getRent(Sets.filter(Sets.newHashSet(deeds), 
                                         d -> !TITLE_DEED_NAME1.equals(d.getName()))
                                 );
         bank.buyTitleDeed(TITLE_DEED_NAME1, PLAYER2_NAME);
+        final int initialBalancePl1 = bank.getBankAccount(PLAYER1_NAME).getBalance();
+        final int initialBalancePl2 = bank.getBankAccount(PLAYER2_NAME).getBalance();
         bank.payRent(TITLE_DEED_NAME1, PLAYER1_NAME);
         assertEquals(initialBalancePl1 - rent, bank.getBankAccount(PLAYER1_NAME).getBalance());
         assertEquals(initialBalancePl2 + rent, bank.getBankAccount(PLAYER2_NAME).getBalance());
