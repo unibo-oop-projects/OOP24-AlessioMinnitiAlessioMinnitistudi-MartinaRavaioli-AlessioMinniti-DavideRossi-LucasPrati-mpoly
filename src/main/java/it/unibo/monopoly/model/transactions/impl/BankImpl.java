@@ -3,12 +3,10 @@ package it.unibo.monopoly.model.transactions.impl;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.function.Function;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import com.google.common.collect.Maps;
-import com.google.common.collect.Multimap;
-import com.google.common.collect.Multimaps;
 
 import it.unibo.monopoly.model.transactions.api.Bank;
 import it.unibo.monopoly.model.transactions.api.BankAccount;
@@ -32,21 +30,12 @@ public final class BankImpl implements Bank {
      * @param accounts the palyers' {@link BankAccount}
      * @param titleDeeds {@link List} of {@link TitleDeed} present in the game
      */
-    public BankImpl(final List<BankAccount> accounts, final List<TitleDeed> titleDeeds) {
+    public BankImpl(final Set<BankAccount> accounts, final Set<TitleDeed> titleDeeds) {
         if (accounts.isEmpty() || titleDeeds.isEmpty()) {
             throw new IllegalArgumentException("Input lists cannot be empty");
         }
-        checkForDuplicates(accounts, BankAccount::getPlayerName);
-        checkForDuplicates(titleDeeds, TitleDeed::getName);
         this.accounts = Maps.uniqueIndex(accounts, BankAccount::getPlayerName);
         this.titleDeeds = Maps.uniqueIndex(titleDeeds, TitleDeed::getName);
-    }
-
-    private <T, Y> void  checkForDuplicates(final List<T> list, final Function<? super T, Y> indexer) {
-        final Multimap<Y, T> index = Multimaps.index(list, indexer::apply);
-        if (index.size() < list.size()) {
-            throw new IllegalArgumentException("Duplicates were found in this list, making it unusable");
-        }
     }
 
     private BankAccount findAccount(final String id) {
