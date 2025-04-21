@@ -19,6 +19,7 @@ import it.unibo.monopoly.model.transactions.api.TitleDeed;
 import it.unibo.monopoly.model.transactions.impl.BankImpl;
 import it.unibo.monopoly.model.transactions.impl.BaseTitleDeed;
 import it.unibo.monopoly.model.transactions.impl.bankaccount.SimpleBankAccountImpl;
+import it.unibo.monopoly.model.transactions.impl.bankaccount.WithdrawCheckBankAccount;
 
 /*
  * Tests to verify correct functionality of
@@ -32,7 +33,14 @@ class BankTest {
     private static final String TITLE_DEED_NAME1 = "Bastoni Gran Sasso";
     private static final String TITLE_DEED_NAME2 = "Viale Monterosa";
 
-    private final BankAccount player1Account = new SimpleBankAccountImpl(AMOUNT, PLAYER1_NAME);
+    private final List<BankAccount> accounts = List.of(
+        new WithdrawCheckBankAccount(new SimpleBankAccountImpl(AMOUNT, PLAYER1_NAME),
+                                    (b, a) -> a <= b.getBalance()
+                                    ),
+        new WithdrawCheckBankAccount(new SimpleBankAccountImpl(AMOUNT, PLAYER2_NAME),
+                                    (b, a) -> a <= b.getBalance()
+                                    )
+    );
     private final List<TitleDeed> deeds = List.of(
         new BaseTitleDeed("viola", TITLE_DEED_NAME1, 50, s -> s / 2, 10),
         new BaseTitleDeed("viola", TITLE_DEED_NAME2, 60, s -> s / 2, 10)
@@ -43,7 +51,7 @@ class BankTest {
 
     @BeforeEach
     void setUp() {
-        bank = new BankImpl();
+        //bank = new BankImpl();
     }
 
     @Test
@@ -58,7 +66,11 @@ class BankTest {
     @Test
     void checkGetBankAccountOfPlayerGivesCorrectAccount() {
         final BankAccount account = bank.getBankAccount(PLAYER1_NAME);
-        assertEquals(player1Account, account);
+        assertEquals(accounts
+                    .stream()
+                    .filter(a -> PLAYER1_NAME.equals(a.getOwner()))
+                    .toList()
+                    .getFirst(), account);
     }
 
     @Test
