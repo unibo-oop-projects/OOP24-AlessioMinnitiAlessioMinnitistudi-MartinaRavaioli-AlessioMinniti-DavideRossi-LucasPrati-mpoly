@@ -2,6 +2,7 @@ package it.unibo.monopoly.model.transactions.impl;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.function.Function;
 
 import com.google.common.collect.Maps;
@@ -47,17 +48,35 @@ public final class BankImpl implements Bank {
         }
     }
 
-    @Override
-    public BankAccount getBankAccount(final String playerName) {
-        // TODO Auto-generated method stub
-        return null;
+    private BankAccount findAccount(String id) {
+        if(!accounts.containsKey(id)) {
+            throw new IllegalArgumentException("The account of the player " + id + "is not present in the system");
+        }
+        return accounts.get(id);
+    }
+
+    private TitleDeed findTitleDeed(String id) {
+        if(!titleDeeds.containsKey(id)) {
+            throw new IllegalArgumentException("The title deed " + id + "is not present in the system");
+        }
+        return titleDeeds.get(id);
     }
 
     @Override
-    public TitleDeed getTitleDeed(final String titleDeedName) {
-        // TODO Auto-generated method stub
-        return null;
+    public void buyTitleDeed(String titleDeedName, String playerName) {
+        Objects.requireNonNull(titleDeedName);
+        Objects.requireNonNull(playerName);
+        final BankAccount buyer = findAccount(playerName);
+        final TitleDeed td = findTitleDeed(titleDeedName);
+
+        if(td.getOwner().isPresent()) {
+            throw new IllegalStateException("Property is already owned by player" + td.getOwner().get());
+        }
+
+        buyer.withdraw(td.getSalePrice());
+        td.setOwner(playerName);
     }
+
 
     @Override
     public void payRent(final String titleDeedName, final String playerName) {
@@ -70,11 +89,4 @@ public final class BankImpl implements Bank {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'sellTitleDeed'");   
     }
-
-    @Override
-    public void buyTitleDeed(final String titleDeedName, final  String playerName) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'buyTitleDeed'");
-    }
-
 }
