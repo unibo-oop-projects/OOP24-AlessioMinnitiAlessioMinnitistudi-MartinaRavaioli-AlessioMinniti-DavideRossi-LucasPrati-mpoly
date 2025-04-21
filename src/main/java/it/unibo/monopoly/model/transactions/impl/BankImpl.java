@@ -31,6 +31,9 @@ public final class BankImpl implements Bank {
      * @param titleDeeds {@link List} of {@link TitleDeed} present in the game
      */
     public BankImpl(final List<BankAccount> accounts, final List<TitleDeed> titleDeeds) {
+        if (accounts.isEmpty() || titleDeeds.isEmpty()) {
+            throw new IllegalArgumentException("Input lists cannot be empty");
+        }
         checkForDuplicates(accounts, BankAccount::getOwner);
         checkForDuplicates(titleDeeds, TitleDeed::getName);
         this.accounts = Maps.uniqueIndex(accounts, BankAccount::getOwner);
