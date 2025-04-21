@@ -157,7 +157,7 @@ public class BaseTitleDeed implements TitleDeed {
     @Override
     public boolean equals(Object obj) {
         if (obj == null) return false;
-        if (obj.getClass() != this.getClass()) return false;
+        if (!List.of(obj.getClass().getInterfaces()).contains(TitleDeed.class)) return false;
         final TitleDeed deed = (TitleDeed) obj;
         return this.name.equals(deed.getName()) && this.group.equals(deed.getGroup());
     }
