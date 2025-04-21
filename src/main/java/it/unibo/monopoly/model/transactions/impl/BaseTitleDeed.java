@@ -152,4 +152,18 @@ public class BaseTitleDeed implements TitleDeed {
     public List<RentOption> getRentOptions() {
         return List.copyOf(this.rentOptions);
     }
+
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) return false;
+        if (obj.getClass() != this.getClass()) return false;
+        final TitleDeed deed = (TitleDeed) obj;
+        return this.name.equals(deed.getName()) && this.group.equals(deed.getGroup());
+    }
+
+    @Override
+    public String toString() {
+        return "Name: " + this.name + "\n Group: " + this.group; 
+    }
 }
