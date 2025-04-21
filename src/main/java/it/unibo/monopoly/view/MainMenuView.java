@@ -2,6 +2,7 @@ package it.unibo.monopoly.view;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.util.HashMap;
@@ -39,7 +40,10 @@ public final class MainMenuView extends JFrame {
     private static final int COLS = 2;
     private static final int GAP = 10;
 
-    private static final int TWENTY = 20;
+    // Size of boxes and empty borders
+    private static final int TOP_BORDER = 10;
+    private static final int BOTTOM_BORDER = 10;
+    private static final int SIDE_BORDER = 20;
     private static final int COLOR_BOX_SIZE = 40;
 
     // Main menu 
@@ -49,18 +53,13 @@ public final class MainMenuView extends JFrame {
     private static final String CONTINUE_TEXT = "Continue";
     private static final String MINUS_TEXT = "-";
     private static final String PLUS_TEXT = "+";
-
     private static final String RULES_TEXT = "?";
     private static final String SETTINGS_TEXT = "⚙️";
 
     // Player Setup Screen
-    private static final String TITLE_TEXT_PLAYER_SETUP = "Set player nicknames";
+    private static final String TITLE_TEXT_PLAYER_SETUP = "Set players nicknames";
     private static final String DEFAULT_PLAYER_TEXT = "Player ";
     private static final String START_TEXT = "Start";
-
-    private static final int TOP_BORDER = 10;
-    private static final int BOTTOM_BORDER = 10;
-    private static final int SIDE_BORDER = 50;
 
     private final Configuration config;
     private final MainMenuController controller;
@@ -103,7 +102,7 @@ public final class MainMenuView extends JFrame {
         final JLabel playersLabel = new JLabel(PLAYERS_TEXT, SwingConstants.CENTER);
         playersLabel.setFont(new Font(config.getFontName(), Font.BOLD, config.getSmallFont()));
 
-        // create buttons and their actionListener
+        // Create buttons and their actionListener
         decreaseButton = new JButton(MINUS_TEXT);
         decreaseButton.addActionListener(e -> {
             controller.decreaseNumPlayer();
@@ -120,11 +119,10 @@ public final class MainMenuView extends JFrame {
         rulesButton.addActionListener(e -> new RulesWindowView(this, config));
 
         final JButton settingsButton = new JButton(SETTINGS_TEXT);
-        // settingsButton.addActionListener(e -> new SettingsWindowView(this, config));
+        settingsButton.addActionListener(e -> new SettingsWindowView(this, config));
 
         final JButton continueButton = new JButton(CONTINUE_TEXT);
         continueButton.addActionListener(e -> showPlayerSetupScreen());
-
 
         // Create panel for display players and use buttons
         final JPanel menuPanel = new JPanel(new GridLayout(ROWS, COLS, GAP, GAP));
@@ -134,7 +132,6 @@ public final class MainMenuView extends JFrame {
         menuPanel.add(increaseButton);
         menuPanel.add(settingsButton);
         menuPanel.add(rulesButton);
-
 
         // Create panel for use the button for skip to setup all the players
         final JPanel continuePanel = new JPanel(new GridLayout(SINGLE, SINGLE));
@@ -159,11 +156,11 @@ public final class MainMenuView extends JFrame {
         // Create panel for display the players info for edit
         final JPanel playersPanel = new JPanel();
         playersPanel.setLayout(new BoxLayout(playersPanel, BoxLayout.Y_AXIS));
-        playersPanel.setBorder(BorderFactory.createEmptyBorder(TWENTY, TWENTY, TWENTY, TWENTY));
 
         // Create one row per player with color and editable nickname
         for (int i = 0; i < controller.getNumPlayers(); i++) {
             final JPanel row = new JPanel(new BorderLayout(GAP, GAP));
+            row.setMaximumSize(new Dimension(Integer.MAX_VALUE, COLOR_BOX_SIZE));
             final JLabel colorBox = GuiUtils.colorBoxFactory(config.getPlayerColors().get(i), COLOR_BOX_SIZE);
             final JTextField textField = new JTextField(DEFAULT_PLAYER_TEXT + (i + 1));
 
@@ -177,7 +174,7 @@ public final class MainMenuView extends JFrame {
 
         // Create a scrollable view for the playersPanel
         final JScrollPane scrollPane = new JScrollPane(playersPanel);
-        scrollPane.setBorder(BorderFactory.createEmptyBorder());
+        scrollPane.setBorder(BorderFactory.createEmptyBorder(TOP_BORDER, ZERO, BOTTOM_BORDER, ZERO));
 
         final JButton startGameButton = new JButton(START_TEXT);
         startGameButton.addActionListener(e -> initializePlayers());
@@ -185,7 +182,6 @@ public final class MainMenuView extends JFrame {
         // Create a panel for the start button
         final JPanel startPanel = new JPanel();
         startPanel.setLayout(new BoxLayout(startPanel, BoxLayout.X_AXIS));
-        startPanel.setBorder(BorderFactory.createEmptyBorder(TOP_BORDER, SIDE_BORDER, TOP_BORDER, SIDE_BORDER));
         startPanel.add(Box.createHorizontalGlue());
         startPanel.add(startGameButton);
 

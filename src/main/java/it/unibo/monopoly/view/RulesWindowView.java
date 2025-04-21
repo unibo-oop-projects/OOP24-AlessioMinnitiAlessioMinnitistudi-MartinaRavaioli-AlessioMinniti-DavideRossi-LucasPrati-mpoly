@@ -10,9 +10,11 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.stream.Collectors;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
@@ -35,6 +37,10 @@ public final class RulesWindowView extends JDialog {
     private static final String ERROR_FILE_NOT_FOUND = "Impossibile trovare il file delle regole: ";
     private static final String ERROR_DURING_READING_FILE = "Errore durante la lettura del file delle regole: ";
 
+    private static final int TOP_BORDER = 10;
+    private static final int BOTTOM_BORDER = 10;
+    private static final int SIDE_BORDER = 20;
+
 
     /**
      * Creates a view that displays the game rules, importing them from a file.
@@ -52,11 +58,13 @@ public final class RulesWindowView extends JDialog {
                                  TITLE_WINDOW,
                                  new BorderLayout(),
                                  parent);
+        final JPanel mainPanel = new JPanel(new BorderLayout());
+        mainPanel.setBorder(BorderFactory.createEmptyBorder(TOP_BORDER, SIDE_BORDER, BOTTOM_BORDER, SIDE_BORDER));
+        add(mainPanel);
 
         final JLabel titleLabel = new JLabel(TITLE_TEXT, SwingConstants.CENTER);
         titleLabel.setFont(new Font(config.getFontName(), Font.BOLD, config.getBigFont()));
         titleLabel.setForeground(Color.RED);
-        add(titleLabel, BorderLayout.NORTH);
 
         // Create a text area for display all the rules
         final JTextArea rulesTextArea = new JTextArea();
@@ -65,12 +73,14 @@ public final class RulesWindowView extends JDialog {
 
         // Create a scrollable view for the rulesTextArea
         final JScrollPane scrollPane = new JScrollPane(rulesTextArea);
-        add(scrollPane, BorderLayout.CENTER);
 
         // Create an exit button for the window
         final JButton exitButton = new JButton(EXIT_TEXT);
         exitButton.addActionListener(e -> dispose());
-        add(exitButton, BorderLayout.SOUTH);
+
+        mainPanel.add(titleLabel, BorderLayout.NORTH);
+        mainPanel.add(scrollPane, BorderLayout.CENTER);
+        mainPanel.add(exitButton, BorderLayout.SOUTH);
 
         loadRulesFromFile(rulesTextArea, config.getRulesFilenamename());
         GuiUtils.refresh(this);

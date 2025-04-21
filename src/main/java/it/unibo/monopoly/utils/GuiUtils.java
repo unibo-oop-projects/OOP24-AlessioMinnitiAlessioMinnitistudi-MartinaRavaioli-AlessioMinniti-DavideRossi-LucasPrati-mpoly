@@ -124,9 +124,9 @@ public final class GuiUtils {
     private static boolean isConsistent(final Window window, final int width, final int height, 
                                         final String title, final LayoutManager layout) {
         return Objects.nonNull(window)
-                && (window instanceof JDialog || window instanceof JFrame)
                 && Objects.nonNull(title)
                 && Objects.nonNull(layout)
+                && (window instanceof JDialog || window instanceof JFrame)
                 && width > 0
                 && height > 0;
     }
