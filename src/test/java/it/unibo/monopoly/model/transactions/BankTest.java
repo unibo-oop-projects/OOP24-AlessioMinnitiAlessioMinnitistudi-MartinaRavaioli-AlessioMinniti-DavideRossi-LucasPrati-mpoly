@@ -6,8 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Set;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -34,7 +33,7 @@ class BankTest {
     private static final String TITLE_DEED_NAME1 = "Bastoni Gran Sasso";
     private static final String TITLE_DEED_NAME2 = "Viale Monterosa";
 
-    private final List<BankAccount> accounts = List.of(
+    private final Set<BankAccount> accounts = Set.of(
         new WithdrawCheckBankAccount(new SimpleBankAccountImpl(AMOUNT, PLAYER1_NAME),
                                     (b, a) -> a <= b.getBalance()
                                     ),
@@ -42,7 +41,7 @@ class BankTest {
                                     (b, a) -> a <= b.getBalance()
                                     )
     );
-    private final List<TitleDeed> deeds = List.of(
+    private final Set<TitleDeed> deeds = Set.of(
         new BaseTitleDeed("viola", TITLE_DEED_NAME1, 50, s -> s / 2, 10),
         new BaseTitleDeed("viola", TITLE_DEED_NAME2, 60, s -> s / 2, 10)
 
@@ -55,42 +54,20 @@ class BankTest {
         bank = new BankImpl(accounts, deeds);
     }
 
-    @Test
-    void deedsHaveDuplicates() {
-        final List<TitleDeed> deedsDuplicates = new ArrayList<>(deeds);
-        deedsDuplicates.add(deeds.getFirst());
-        final IllegalArgumentException listWithDuplicates = assertThrows(
-            IllegalArgumentException.class,
-            () -> bank = new BankImpl(accounts, deedsDuplicates)
-        );
-        testExceptionFormat(listWithDuplicates);
-    }
-
     @Test 
     void deedsIsEmpty() {
         final IllegalArgumentException emptyList = assertThrows(
             IllegalArgumentException.class, 
-            () -> bank = new BankImpl(accounts, List.of()) 
+            () -> bank = new BankImpl(accounts, Set.of()) 
         );
         testExceptionFormat(emptyList);
-    }
-
-    @Test 
-    void accountsHaveDuplicates() {
-        final List<BankAccount> accountsDuplicates = new ArrayList<>(accounts);
-        accountsDuplicates.add(accounts.getFirst());
-        final IllegalArgumentException listWithDuplicates = assertThrows(
-            IllegalArgumentException.class,
-            () -> bank = new BankImpl(accountsDuplicates, deeds)
-        );
-        testExceptionFormat(listWithDuplicates);
     }
 
     @Test
     void accountsIsEmpty() {
         final IllegalArgumentException emptyList = assertThrows(
             IllegalArgumentException.class, 
-            () -> bank = new BankImpl(List.of(), deeds) 
+            () -> bank = new BankImpl(Set.of(), deeds) 
         );
         testExceptionFormat(emptyList);
     }
