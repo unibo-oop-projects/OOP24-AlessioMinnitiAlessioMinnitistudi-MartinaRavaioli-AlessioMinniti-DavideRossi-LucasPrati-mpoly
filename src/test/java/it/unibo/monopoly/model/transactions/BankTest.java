@@ -262,8 +262,8 @@ class BankTest {
 
     @Test
     void sellPropertyWithNoOwner() {
-        final IllegalArgumentException propertyNotOwned = assertThrows(
-            IllegalArgumentException.class,
+        final IllegalStateException propertyNotOwned = assertThrows(
+            IllegalStateException.class,
             () -> bank.sellTitleDeed(TITLE_DEED_NAME1));
         testExceptionFormat(propertyNotOwned);
     }
