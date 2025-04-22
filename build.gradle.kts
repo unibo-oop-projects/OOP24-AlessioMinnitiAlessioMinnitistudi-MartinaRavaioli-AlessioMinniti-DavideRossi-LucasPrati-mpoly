@@ -33,6 +33,15 @@ dependencies {
      */
     val slf4jVersion = "2.0.17"
     implementation("org.slf4j:slf4j-api:$slf4jVersion")
+
+    // Apache commons lang3
+    val commonsLangVersion = "3.17.0"
+    implementation ("org.apache.commons:commons-lang3:$commonsLangVersion")
+
+    //Google guava
+    val guavaVersion = "33.4.8"
+    implementation("com.google.guava:guava:$guavaVersion-jre")
+
     // Logback backend for SLF4J
     runtimeOnly("ch.qos.logback:logback-classic:1.5.18")
 
@@ -42,9 +51,6 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter-api:$jUnitVersion")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:$jUnitVersion")
 
-    // Apache commons lang3
-    val commonsLangVersion = "3.17.0"
-    implementation ("org.apache.commons:commons-lang3:$commonsLangVersion")
 
 }
 

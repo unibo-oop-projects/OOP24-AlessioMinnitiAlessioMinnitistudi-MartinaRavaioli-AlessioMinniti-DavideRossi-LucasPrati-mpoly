@@ -7,11 +7,19 @@ public interface BankAccount {
     /**
      * Increases the current amount of money in the account.
      * @param amount the amount of money to add to the account
+     * @throws IllegalStateException if the underlying implementation
+     * does not allow to deposit the given {@code amount} of money. This 
+     * depends on the state of the {@link BankAccount} and the check
+     * conditions applied by the implementation
      */
     void deposit(int amount);
     /** 
      * Decreases the current amount of money in the account.
      * @param amount the amount of money to pull from the account
+     * @throws IllegalStateException if the underlying implementation
+     * does not allow to pull the given {@code amount} of money. This 
+     * depends on the state of the {@link BankAccount} and the check
+     * conditions applied by the implementation
      */
     void withdraw(int amount);
 
@@ -26,13 +34,11 @@ public interface BankAccount {
      * @return true if it can continue playing, false if the account is in a state 
      * that doesn't allow the continuation of the game 
      */
-    boolean isAccountValid(); 
+    boolean canContinue(); 
 
     /**
-     * Checks if the player has officially gone 
-     * bankrupt. Therefore its account is in an 
-     * irreparable state and the player has lost
-     * @return the result of the check operation
+     * Get the name of the player associated with the BankAccount.
+     * @return the name of the player
      */
-    boolean isBankrupt();
+    String getPlayerName();
 }

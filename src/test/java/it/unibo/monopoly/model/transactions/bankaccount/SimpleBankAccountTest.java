@@ -1,4 +1,4 @@
-package it.unibo.monopoly.model.bankaccount;
+package it.unibo.monopoly.model.transactions.bankaccount;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -10,28 +10,43 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import it.unibo.monopoly.model.transactions.api.BankAccount;
-import it.unibo.monopoly.model.transactions.impl.BankAccountImpl;
+import it.unibo.monopoly.model.transactions.impl.bankaccount.SimpleBankAccountImpl;
 
 
-class BankAccountTest {
+class SimpleBankAccountTest {
 
     private static final int INITIAL_BALANCE = 0;
     private static final int AMOUNT = 100;
+    private static final String PLAYER_NAME = "Bob";
     private BankAccount bankAccount;
 
 
     @BeforeEach
     void setUp() {
-        bankAccount = new BankAccountImpl(INITIAL_BALANCE);
+        bankAccount = new SimpleBankAccountImpl(INITIAL_BALANCE, PLAYER_NAME);
     }
 
     @Test
     void createAccountWithNegativeBalance() {
         final IllegalArgumentException negativeAmountException = assertThrows(
             IllegalArgumentException.class,
-            () -> bankAccount = new BankAccountImpl(-(INITIAL_BALANCE + 1)),
+            () -> bankAccount = new SimpleBankAccountImpl(-(INITIAL_BALANCE + 1), PLAYER_NAME),
             "Creating a bankAccount with a negative balance should have thrown an error");
         testExceptionFormat(negativeAmountException);
+    }
+
+    @Test
+    void createAccountWithNoOwner() {
+        final IllegalArgumentException negativeAmountException = assertThrows(
+            IllegalArgumentException.class,
+            () -> bankAccount = new SimpleBankAccountImpl(-(INITIAL_BALANCE + 1), ""),
+            "Creating a bankAccount with no owner should have thrown an error");
+        testExceptionFormat(negativeAmountException);
+    }
+
+    @Test
+    void checkOwnerNameIsCorrect() {
+        assertEquals(bankAccount.getPlayerName(), PLAYER_NAME);
     }
 
     @Test
@@ -43,7 +58,7 @@ class BankAccountTest {
     void depositPositiveAmount() {
         bankAccount.deposit(AMOUNT);
         assertEquals(bankAccount.getBalance(), INITIAL_BALANCE + AMOUNT);
-        assertTrue(bankAccount.isAccountValid());
+        assertTrue(bankAccount.canContinue());
     }
 
     @Test 
@@ -70,32 +85,7 @@ class BankAccountTest {
         final int previousBalance = bankAccount.getBalance();
         bankAccount.withdraw(AMOUNT);
         assertEquals(bankAccount.getBalance(), previousBalance - AMOUNT);
-        assertTrue(bankAccount.isAccountValid());
-    }
-
-    @Test
-    void withdrawMoreThanBalance() {
-        final int withdrawAmount = bankAccount.getBalance() + 1;
-        bankAccount.withdraw(withdrawAmount);
-        assertEquals(bankAccount.getBalance(), INITIAL_BALANCE - withdrawAmount);
-        assertFalse(bankAccount.isAccountValid());
-    }
-
-    @Test 
-    void withdrawEqualToBalance() {
-        bankAccount.deposit(AMOUNT);
-        bankAccount.withdraw(bankAccount.getBalance());
-        assertEquals(bankAccount.getBalance(), 0);
-        assertFalse(bankAccount.isAccountValid());
-    }
-
-
-    @Test
-    void checkAccountInvalidAfterInsufficientDeposit() {
-        bankAccount.withdraw(bankAccount.getBalance() + AMOUNT);
-        bankAccount.deposit(AMOUNT / 2);
-        assertEquals(bankAccount.getBalance(), -AMOUNT + (AMOUNT / 2));
-        assertFalse(bankAccount.isAccountValid());
+        assertTrue(bankAccount.canContinue());
     }
 
     @Test
@@ -103,12 +93,43 @@ class BankAccountTest {
         bankAccount.withdraw(bankAccount.getBalance() + AMOUNT);
         bankAccount.deposit(AMOUNT * 2);
         assertEquals(bankAccount.getBalance(), -AMOUNT + AMOUNT * 2);
-        assertTrue(bankAccount.isAccountValid());
+        assertTrue(bankAccount.canContinue());
     }
 
     private void testExceptionFormat(final Exception exception) {
         assertNotNull(exception.getMessage());
         assertFalse(exception.getMessage().isBlank());
     }
+
+    /*
+    THESE TESTS ARE NOT NECESSARY FOR THIS BANK ACCOUNT IMPLEMENTATION
+    MOVE THEM TO TESTS SUITE OF OTHER BANK ACCOUNT IMPLEMENTATIONS
+
+
+    @Test
+    void withdrawMoreThanBalance() {
+        final int withdrawAmount = bankAccount.getBalance() + 1;
+        bankAccount.withdraw(withdrawAmount);
+        assertEquals(bankAccount.getBalance(), INITIAL_BALANCE - withdrawAmount);
+        assertFalse(bankAccount.canContinue());
+    }
+
+    @Test 
+    void withdrawEqualToBalance() {
+        bankAccount.deposit(AMOUNT);
+        bankAccount.withdraw(bankAccount.getBalance());
+        assertEquals(bankAccount.getBalance(), 0);
+        assertFalse(bankAccount.canContinue());
+    }
+
+    @Test
+    void checkAccountInvalidAfterInsufficientDeposit() {
+        bankAccount.withdraw(bankAccount.getBalance() + AMOUNT);
+        bankAccount.deposit(AMOUNT / 2);
+        assertEquals(bankAccount.getBalance(), -AMOUNT + (AMOUNT / 2));
+        assertFalse(bankAccount.canContinue());
+    }
+
+    */
 
 }
