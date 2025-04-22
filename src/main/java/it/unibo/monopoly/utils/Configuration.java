@@ -9,6 +9,7 @@ import java.awt.Color;
 import java.awt.GraphicsEnvironment;
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 
 /**
@@ -117,7 +118,6 @@ public final class Configuration {
                 && isValidFontName(fontName);
     }
 
-
     /**
      * Parses a string representing a color name and returns the corresponding {@link Color} object.
      *
@@ -144,12 +144,10 @@ public final class Configuration {
         };
     }
 
-
     private static boolean isValidFontName(final String fontName) {
         return  Arrays.stream(GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames())
                                .anyMatch(name -> name.equalsIgnoreCase(fontName)) && Objects.nonNull(fontName);
     }
-
 
 
     /**
@@ -157,10 +155,17 @@ public final class Configuration {
      * @return a configuration according to { @param configFile } if consistent, otherwise a default configuration
      */
     public static Configuration configureFromFile(final String configFile) {
+        // try to find the file
+        final InputStream in = Configuration.class.getClassLoader().getResourceAsStream(configFile);
 
+        // if not found, return a consistent default configuration
+        if (Objects.isNull(in)) {
+            return new Configuration.Builder().build();
+        }
+
+        // if found, read it
         final Configuration.Builder configurationBuilder = new Configuration.Builder();
-        try (var contents = new BufferedReader(
-                new InputStreamReader(ClassLoader.getSystemResourceAsStream(configFile)))) {
+        try (var contents = new BufferedReader(new InputStreamReader(in))) {
 
             for (String configLine = contents.readLine(); configLine != null; configLine = contents.readLine()) {
                 if (configLine.isBlank() || configLine.startsWith("#")) {
@@ -169,8 +174,7 @@ public final class Configuration {
 
                 final String[] lineElements = configLine.split(":", 2);
                 if (lineElements.length != 2) {
-                    System.err.println("[CONFIG] Invalid line: " + configLine);
-                    continue;
+                    continue;   // Skip invalid lines
                 }
 
                 final String key = lineElements[0].trim().toUpperCase(Locale.ENGLISH);
@@ -205,15 +209,18 @@ public final class Configuration {
 
         } catch (final IOException  e) {
             System.err.println("[CONFIG] Error reading config file: " + e.getMessage());
-        }
-
-        final Configuration configuration = configurationBuilder.build();
-
-        if (!configuration.isConsistent()) {
+            // return a consistent default configuration
             return new Configuration.Builder().build();
         }
 
-        return configuration;
+        // If the configuration is consistent, return it. Otherwise return a consistent default configuration
+        final Configuration configuration = configurationBuilder.build();
+        if (configuration.isConsistent()) {
+            return configuration;
+
+        } else {
+            return new Configuration.Builder().build();
+        }
     }
 
 
@@ -237,7 +244,7 @@ public final class Configuration {
      */
     public static class Builder {
 
-        private static final int MAX_PLAYER = 6; 
+        private static final int MAX_PLAYER = 4; 
         private static final int MIN_PLAYER = 2;
         private static final String FONT_NAME = "ARIAL";
         private static final int BIG_FONT = 24;
@@ -354,8 +361,6 @@ public final class Configuration {
             this.playerColors = List.copyOf(playerColors);
             return this;
         }
-
-
 
         /**
          * @return a configuration
