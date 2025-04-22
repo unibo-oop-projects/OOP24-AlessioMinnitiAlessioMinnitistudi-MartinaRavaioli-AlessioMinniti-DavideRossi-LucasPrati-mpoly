@@ -18,6 +18,8 @@ import javax.swing.JScrollPane;
 import javax.swing.border.Border;
 import javax.swing.event.ListSelectionListener;
 
+import it.unibo.monopoly.model.transactions.api.Bank;
+
 /**
  * the class presents the property manager frame of the game.
  * where you can look up the values of each of your property 
@@ -36,9 +38,9 @@ public final class GUIVendita extends JFrame {
      * @param width the initial width of the frame
      * @param heigth the initial heigth of the frame
      */
-    public GUIVendita(final List<Proprieta> playerProperties, final int width, final int heigth) {
+    public GUIVendita(final List<Proprieta> playerProperties, final int width, final int heigth, Bank bank) {
         final Border b = BorderFactory.createLineBorder(Color.black);
-        logic = new VenditaLogicImpl();
+        logic = new VenditaLogicImpl(bank);
         this.properties.addAll(playerProperties);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setSize(width, heigth);

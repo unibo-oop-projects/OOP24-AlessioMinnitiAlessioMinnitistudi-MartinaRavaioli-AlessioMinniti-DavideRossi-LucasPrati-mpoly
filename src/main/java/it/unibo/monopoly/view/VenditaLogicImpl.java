@@ -5,12 +5,19 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Optional;
 
+import it.unibo.monopoly.model.transactions.api.Bank;
+
 /**
  * this is the implementation of the logic behind the property manager GUI. 
  */
 public final class VenditaLogicImpl implements VenditaLogic, Serializable {
     static final int NUM = 0;
     private static final long serialVersionUID = -6218820567019985015L;
+    private final Bank bank; 
+
+    public VenditaLogicImpl(Bank bank) {
+        this.bank = bank; 
+    }
 
     @Override
     /**
@@ -47,7 +54,7 @@ public final class VenditaLogicImpl implements VenditaLogic, Serializable {
      * @return wether the payment has been succesful
      */
     public boolean sellProperty(final List<Proprieta> properties, final Proprieta selectedProperty) {
-        //manac metodo rossi per far arrivare i soldi al giocatore che vende
+        bank.sellTitleDeed(selectedProperty.name());
         properties.remove(selectedProperty);
         return true;
     }
