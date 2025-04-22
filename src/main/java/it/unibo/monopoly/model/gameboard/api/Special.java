@@ -9,5 +9,5 @@ public interface Special extends Tile {
     /**
      * @return effect
      */
-    Effect getEffect();
+    void activateEffect();
 }
