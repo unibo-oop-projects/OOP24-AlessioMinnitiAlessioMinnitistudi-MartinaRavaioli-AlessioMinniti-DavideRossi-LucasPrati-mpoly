@@ -11,7 +11,7 @@ public interface SpecialFactory {
 
     public Special goToPrison();
 
-    public Special prigsn();
+    public Special prison();
 
     public Special parking();
 
