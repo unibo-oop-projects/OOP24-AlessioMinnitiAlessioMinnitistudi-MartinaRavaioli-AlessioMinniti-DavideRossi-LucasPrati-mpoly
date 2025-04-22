@@ -3,21 +3,21 @@ package it.unibo.monopoly.model.gameboard.impl;
 import it.unibo.monopoly.model.gameboard.api.Effect;
 import it.unibo.monopoly.model.gameboard.api.Special;
 import it.unibo.monopoly.model.gameboard.api.SpecialFactory;
-import it.unibo.monopoly.model.transactions.api.TransactionManager;
+import it.unibo.monopoly.model.transactions.api.Bank;
 import it.unibo.monopoly.model.turnation.api.Player;
 
 public class SpecialFactoryImpl implements SpecialFactory{
 
     @Override
-    public Special start(TransactionManager bank) {
+    public Special start(Bank bank) {
         return new SpecialImpl(new Effect() {
 
-            private final TransactionManager transationM = bank;
+            private final Bank transationM = bank;
             private final static int START_AMOUNT = 200;
 
             @Override
             public void activate(Player palyer) {
-                transationM.sell(palyer, START_AMOUNT);
+                
             }
             
         });
@@ -63,7 +63,7 @@ public class SpecialFactoryImpl implements SpecialFactory{
     }
 
     @Override
-    public Special taxes() {
+    public Special taxes(Bank bank) {
         return new SpecialImpl(new Effect() {
 
             @Override
