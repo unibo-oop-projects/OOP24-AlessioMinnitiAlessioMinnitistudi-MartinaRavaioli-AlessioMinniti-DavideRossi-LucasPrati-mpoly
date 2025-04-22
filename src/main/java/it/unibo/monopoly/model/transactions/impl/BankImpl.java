@@ -115,4 +115,16 @@ public final class BankImpl implements Bank {
         seller.deposit(deed.getMortgagePrice());
         deed.removeOwner();
     }
+
+    @Override
+    public Set<TitleDeed> getTitleDeedsByOwner(final String ownerName) {
+        Objects.requireNonNull(ownerName);
+        if (!accounts.keySet().contains(ownerName)) {
+            throw new IllegalArgumentException("The player " + ownerName + "is not present in the system");
+        }
+        return titleDeeds.values()
+                        .stream()
+                        .filter(d -> d.getOwner().isPresent() && ownerName.equals(d.getOwner().get()))
+                        .collect(Collectors.toSet());
+    }
 }

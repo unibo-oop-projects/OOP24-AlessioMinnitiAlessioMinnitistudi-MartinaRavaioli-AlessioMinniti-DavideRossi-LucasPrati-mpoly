@@ -1,5 +1,7 @@
 package it.unibo.monopoly.model.transactions.api;
 
+import java.util.Set;
+
 /**
  * transaction manager interface.
 */
@@ -53,4 +55,12 @@ public interface Bank {
      */
     TitleDeed getTitleDeed(String titleDeedName);
 
+    /**
+     * Gets a {@link Set} containing the {@link TitleDeed} {@code deeds} owned 
+     * by a specific player.
+     * @param ownerName The name of the player whose properties have to 
+     * be retrieved
+     * @return a {@link Set} with copies of the original {@link TitleDeed} objects
+     */
+    Set<TitleDeed> getTitleDeedsByOwner(String ownerName);
 }
