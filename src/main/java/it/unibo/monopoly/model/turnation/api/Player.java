@@ -16,4 +16,13 @@ public interface Player {
      * @return if is alive
      */
     boolean isAlive();
+    /**
+     * moves the player to the special tile Prison
+     */
+    void sendToPrison();
+    /**
+     * 
+     * @return whether the palyer is still in prison
+     */
+    boolean isInPrison();
 }

@@ -12,18 +12,19 @@ public class SpecialFactoryImpl implements SpecialFactory{
     public Special start(TransactionManager bank) {
         return new SpecialImpl(new Effect() {
 
-            TransactionManager transationM = bank;
+            private final TransactionManager transationM = bank;
+            private final static int START_AMOUNT = 200;
 
             @Override
             public void activate(Player palyer) {
-                transationM.buy(palyer, 0);
+                transationM.sell(palyer, START_AMOUNT);
             }
             
         });
     }
 
     @Override
-    public Special goToPrigion() {
+    public Special goToPrison() {
         return new SpecialImpl(new Effect() {
 
             @Override
@@ -36,7 +37,7 @@ public class SpecialFactoryImpl implements SpecialFactory{
     }
 
     @Override
-    public Special prigion() {
+    public Special prison() {
         return new SpecialImpl(new Effect() {
 
             @Override

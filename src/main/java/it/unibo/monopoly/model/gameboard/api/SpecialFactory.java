@@ -9,9 +9,9 @@ public interface SpecialFactory {
 
     public Special start(TransactionManager bank);
 
-    public Special goToPrigion();
+    public Special goToPrison();
 
-    public Special prigion();
+    public Special prigsn();
 
     public Special parking();
 
