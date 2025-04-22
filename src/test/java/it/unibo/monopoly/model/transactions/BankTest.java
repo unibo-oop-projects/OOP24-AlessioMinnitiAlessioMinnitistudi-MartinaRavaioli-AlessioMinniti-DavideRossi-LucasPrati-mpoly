@@ -263,6 +263,14 @@ class BankTest {
         assertEquals(expectedBalanceAfterSale, bank.getBankAccount(PLAYER1_NAME).getBalance());
     }
 
+    @Test
+    void testGetTitleDeedsByOwner() {
+        bank.buyTitleDeed(TITLE_DEED_NAME1, PLAYER1_NAME);
+        final Set<TitleDeed> deeds = bank.getTitleDeedsByOwner(PLAYER1_NAME);
+        assertFalse(deeds.isEmpty());
+        assertTrue(deeds.stream().allMatch(d -> d.getOwner().isPresent() && PLAYER1_NAME.equals(d.getOwner().get())));
+    }
+
     private void testExceptionFormat(final Exception exception) {
         assertNotNull(exception.getMessage());
         assertFalse(exception.getMessage().isBlank());
