@@ -31,11 +31,6 @@ public final class WithdrawCheckBankAccount extends BankAccountDecorator {
     }
 
     @Override
-    public String toString() {
-        return getAccount().toString();
-    }
-
-    @Override
     public int hashCode() {
         final int prime = 31;
         int result = 1;
@@ -64,4 +59,10 @@ public final class WithdrawCheckBankAccount extends BankAccountDecorator {
         }
         return true;
     }
+
+    @Override
+    public String toString() {
+        return "WithdrawCheckBankAccount [withdrawCheck=" + withdrawCheck + ", getAccount()=" + getAccount() + "]";
+    }
+
 }
