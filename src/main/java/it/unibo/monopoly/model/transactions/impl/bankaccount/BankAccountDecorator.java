@@ -14,6 +14,10 @@ abstract class BankAccountDecorator implements BankAccount {
         this.account = account;
     }
 
+    protected BankAccount getAccount() {
+        return this.account;
+    }
+
     @Override
     public int getBalance() {
         return this.account.getBalance();
@@ -25,32 +29,17 @@ abstract class BankAccountDecorator implements BankAccount {
     }
 
     @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((account == null) ? 0 : account.hashCode());
-        return result;
+    public void deposit(final int amount) {
+        this.account.deposit(amount);
     }
 
     @Override
-    public boolean equals(final Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final BankAccountDecorator other = (BankAccountDecorator) obj;
-        if (account == null) {
-            if (other.account != null) {
-                return false;
-            }
-        } else if (!account.equals(other.account)) {
-            return false;
-        }
-        return true;
+    public void withdraw(final int amount) {
+        this.account.withdraw(amount);
+    }
+
+    @Override
+    public boolean canContinue() {
+        return this.account.canContinue();
     }
 }
