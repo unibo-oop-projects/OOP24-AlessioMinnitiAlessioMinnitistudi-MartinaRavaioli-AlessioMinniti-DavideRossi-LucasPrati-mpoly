@@ -127,4 +127,14 @@ public final class BankImpl implements Bank {
                         .filter(d -> d.getOwner().isPresent() && ownerName.equals(d.getOwner().get()))
                         .collect(Collectors.toSet());
     }
+
+    @Override
+    public void getPaymentFromBank(String ownerName) {
+        
+    }
+
+    @Override
+    public void makePaymentToBank(String ownerName) {
+        
+    }
 }

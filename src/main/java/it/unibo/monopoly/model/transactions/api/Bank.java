@@ -63,4 +63,16 @@ public interface Bank {
      * @return a {@link Set} with copies of the original {@link TitleDeed} objects
      */
     Set<TitleDeed> getTitleDeedsByOwner(String ownerName);
+
+    /**
+     * make a deposit from the bank to a player.
+     * @param ownerName the player that will recieve the payment
+     */
+    void getPaymentFromBank(String ownerName);
+
+    /**
+     * make a withdraw from a player account.
+     * @param ownerName the player that has to pay the bank
+     */
+    void makePaymentToBank(String ownerName);
 }
