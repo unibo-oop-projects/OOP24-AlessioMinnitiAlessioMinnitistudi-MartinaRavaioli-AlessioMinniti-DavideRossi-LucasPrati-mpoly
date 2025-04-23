@@ -129,7 +129,7 @@ public final class BankImpl implements Bank {
     }
 
     @Override
-    public void getPaymentFromBank(final String ownerName, final int amount) {
+    public void receivePaymentFromBank(final String ownerName, final int amount) {
         Objects.requireNonNull(ownerName);
         final BankAccount account = findAccount(ownerName);
         account.deposit(amount);

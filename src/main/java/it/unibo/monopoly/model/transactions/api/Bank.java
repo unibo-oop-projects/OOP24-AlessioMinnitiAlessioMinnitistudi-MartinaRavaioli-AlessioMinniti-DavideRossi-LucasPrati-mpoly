@@ -69,7 +69,7 @@ public interface Bank {
      * @param ownerName the player that will receive the payment
      * @param amount the amount of money to deposit
      */
-    void getPaymentFromBank(String ownerName, int amount);
+    void receivePaymentFromBank(String ownerName, int amount);
 
     /**
      * make a withdraw from a player account.
