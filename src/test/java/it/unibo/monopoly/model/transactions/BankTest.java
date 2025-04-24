@@ -18,6 +18,7 @@ import it.unibo.monopoly.model.transactions.api.BankAccount;
 import it.unibo.monopoly.model.transactions.api.TitleDeed;
 import it.unibo.monopoly.model.transactions.impl.BankImpl;
 import it.unibo.monopoly.model.transactions.impl.BaseTitleDeed;
+import it.unibo.monopoly.model.transactions.impl.bankaccount.ImmutableBankAccountView;
 import it.unibo.monopoly.model.transactions.impl.bankaccount.SimpleBankAccountImpl;
 import it.unibo.monopoly.model.transactions.impl.bankaccount.WithdrawCheckBankAccount;
 
@@ -87,6 +88,7 @@ class BankTest {
         assertEquals(accounts
                     .stream()
                     .filter(a -> PLAYER1_NAME.equals(a.getPlayerName()))
+                    .map(a -> new ImmutableBankAccountView(a))
                     .toList()
                     .getFirst(), account);
     }

@@ -11,6 +11,7 @@ import com.google.common.collect.Maps;
 import it.unibo.monopoly.model.transactions.api.Bank;
 import it.unibo.monopoly.model.transactions.api.BankAccount;
 import it.unibo.monopoly.model.transactions.api.TitleDeed;
+import it.unibo.monopoly.model.transactions.impl.bankaccount.ImmutableBankAccountView;
 
 /**
  * This implementation hadles all operations
@@ -76,7 +77,7 @@ public final class BankImpl implements Bank {
 
     @Override
     public BankAccount getBankAccount(final String playerName) {
-        return findAccount(playerName);
+        return new ImmutableBankAccountView(findAccount(playerName));
     }
 
     @Override
