@@ -4,20 +4,21 @@ import it.unibo.monopoly.model.transactions.api.BankAccount;
 
 /**
  * Immutable view for a {@link BankAccount} object.
- * The class wraps the object allowing for getter operations, but not 
+ * The class wraps a copy of the object allowing for getter operations, but not 
  * setter operations.
  */
-public final class ImmutableBankAccountView implements BankAccount {
+public final class ImmutableBankAccountCopy implements BankAccount {
 
     private final BankAccount account;
 
 
     /**
-     * Creates a new {@link ImmutableViewBankAccount}.
+     * Creates a new {@link ImmutableBankAccountCopy}.
      * @param account the account to wrap and to regulate access to
      */
-    public ImmutableBankAccountView(final BankAccount account) {
-        this.account = account;
+    public ImmutableBankAccountCopy(final BankAccount account) {
+        this.account = new CheckValidityBankAccount(new SimpleBankAccountImpl(account.getBalance(), account.getPlayerName()), 
+                        b -> account.canContinue());
     }
 
     @Override
@@ -64,7 +65,7 @@ public final class ImmutableBankAccountView implements BankAccount {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final ImmutableBankAccountView other = (ImmutableBankAccountView) obj;
+        final ImmutableBankAccountCopy other = (ImmutableBankAccountCopy) obj;
         if (account == null) {
             if (other.account != null) {
                 return false;
