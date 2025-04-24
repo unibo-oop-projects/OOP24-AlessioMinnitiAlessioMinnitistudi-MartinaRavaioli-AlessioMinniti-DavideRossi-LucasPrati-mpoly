@@ -82,7 +82,7 @@ public final class BankImpl implements Bank {
 
     @Override
     public TitleDeed getTitleDeed(final String titleDeedName) {
-        return findTitleDeed(titleDeedName);
+        return new ImmutableTitleDeedCopy(findTitleDeed(titleDeedName));
     }
 
     @Override
