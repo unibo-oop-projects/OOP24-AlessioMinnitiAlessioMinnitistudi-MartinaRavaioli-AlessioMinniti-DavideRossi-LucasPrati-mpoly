@@ -31,7 +31,9 @@ public interface RentOption {
      * can be applied. It may apply some check conditions on the 
      * title deeds that are passed as input
      * @param groupDeeds a {@link Set} of {@link TitleDeed} on which
-     * some check conditions might be applied
+     * some check conditions might be applied. The title deeds of the Set 
+     * should be all part of the same group, meaning that a call to {@code getGroup} on the title
+     * deeds should return the same value.
      * @return whether this rent option can be chosen based on the given 
      * information.
      */
