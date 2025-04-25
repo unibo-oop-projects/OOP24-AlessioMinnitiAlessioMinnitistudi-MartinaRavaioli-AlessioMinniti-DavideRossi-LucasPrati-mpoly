@@ -5,7 +5,7 @@ public class CircularLinkedList<T> {
     private Node<T> tail = null;
 
     public void addNode(T value) {
-        Node<T> newNode = new Node(value);
+        Node<T> newNode = new Node<T>(value);
     
         if (head == null) {
             head = newNode;
