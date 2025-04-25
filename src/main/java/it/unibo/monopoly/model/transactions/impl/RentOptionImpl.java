@@ -20,9 +20,6 @@ public record RentOptionImpl(String title,
                             int price,
                             Predicate<Set<TitleDeed>> applicabilityCondition) implements RentOption {
 
-    private static final String BASE_RENT_TITLE = "Affitto base";
-
-
     @Override
     public String getTitle() {
        return this.title();
@@ -41,15 +38,5 @@ public record RentOptionImpl(String title,
     @Override
     public boolean canBeApplied(final Set<TitleDeed> groupDeeds) {
         return applicabilityCondition.test(groupDeeds);
-    }
-
-    /**
-     * Creates the standard rent option. The most basic rent 
-     * option, which is always applicable
-     * @param baseRent the rent of the option
-     * @return the created rent option
-     */
-    public static RentOptionImpl baseRentOption(final int baseRent) {
-        return new RentOptionImpl(BASE_RENT_TITLE, "", baseRent, deeds -> true);
     }
 }

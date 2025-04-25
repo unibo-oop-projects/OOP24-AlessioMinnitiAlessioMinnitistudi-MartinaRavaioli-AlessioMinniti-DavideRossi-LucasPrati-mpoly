@@ -46,7 +46,7 @@ public class BaseTitleDeed implements TitleDeed {
         this.name = name;
         this.salePrice = salePrice;
         this.mortgageFunction = mortgageFunction;
-        this.rentOptions = new ArrayList<>(List.of(RentOptionImpl.baseRentOption(baseRent)));
+        this.rentOptions = new ArrayList<>(List.of(RentOption.baseRentOption(baseRent)));
     }
 
     /**
