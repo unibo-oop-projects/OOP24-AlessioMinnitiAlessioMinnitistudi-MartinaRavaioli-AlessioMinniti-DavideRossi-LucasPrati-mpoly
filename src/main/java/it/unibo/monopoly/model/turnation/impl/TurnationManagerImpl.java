@@ -1,42 +1,49 @@
 package it.unibo.monopoly.model.turnation.impl;
 
-import java.util.List;
-
 import org.apache.commons.lang3.tuple.Pair;
 
 import it.unibo.monopoly.model.turnation.api.Player;
 import it.unibo.monopoly.model.turnation.api.TurnationManager;
+import it.unibo.monopoly.resources.CircularLinkedList;
+
 
 /**
  * turnation manager implementation.
 */
 public class TurnationManagerImpl implements TurnationManager {
-    private List<Player> players;
+    private CircularLinkedList<Player> players;
+    private boolean isOver=false;
 
-    public TurnationManagerImpl(List<Player> plList){
+    public TurnationManagerImpl(CircularLinkedList<Player> plList){
         this.players=plList;
     }
 
-    public void setList(List<Player> plList){
+    public void setList(CircularLinkedList<Player> plList){
         this.players=plList;
     }
 
-    public List<Player> getList(){
+    public CircularLinkedList<Player> getList(){
         return this.players;
     }
 
     public void addPlayer(Player p){
-        this.players.add(p);
+        this.players.addNode(p);
+    }
+
+    public void setOver(){
+        this.isOver=true;
     }
 
     @Override
     public final boolean isOver() { 
-        return false; 
+        return this.isOver;
     }
+
     @Override
     public final Player getNextPlayer() { 
-        return null; 
+        return players.
     }
+
     @Override
     public final Pair<Integer, Integer> moveByDices() { 
         return null; 
