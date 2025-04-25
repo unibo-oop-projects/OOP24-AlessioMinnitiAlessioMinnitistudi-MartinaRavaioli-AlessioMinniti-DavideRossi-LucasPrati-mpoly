@@ -15,9 +15,10 @@ public class SpecialFactoryImpl implements SpecialFactory{
             private final Bank transationM = bank;
             private final static int START_AMOUNT = 200;
 
+            //DA CAMBIARE CON IL METODO PER AVERE IL NOME CHE ORA NON C'E'
             @Override
             public void activate(Player palyer) {
-                
+                transationM.depositTo(palyer.toString(), START_AMOUNT);
             }
             
         });
@@ -27,10 +28,12 @@ public class SpecialFactoryImpl implements SpecialFactory{
     public Special goToPrison() {
         return new SpecialImpl(new Effect() {
 
+            private final static int STEPS_TO_PRISON = 13;
+
             @Override
             public void activate(Player palyer) {
-                // TODO Auto-generated method stub
-                throw new UnsupportedOperationException("Unimplemented method 'activate'");
+                palyer.putInPrison();
+                palyer.makeMove(STEPS_TO_PRISON);                
             }
             
         });
@@ -38,15 +41,26 @@ public class SpecialFactoryImpl implements SpecialFactory{
 
     @Override
     public Special prison() {
-        return new SpecialImpl(new Effect() {
+        return new Special() {
+
+            private boolean valid;
+            private int steps;
+            
+            public void validateThrow(Pair<Integer,Integer> dices){
+                if (dices.a()==dices.b()) {
+                    steps = dices.a() + dices.b();
+                    valid = true;
+                }
+                valid = false;
+            }
 
             @Override
-            public void activate(Player palyer) {
-                // TODO Auto-generated method stub
-                throw new UnsupportedOperationException("Unimplemented method 'activate'");
+            public void activateEffect(Player player) {
+                if (valid) {
+                    player.makeMove(steps);
+                }
             }
-            
-        });
+        };
     }
 
     @Override
@@ -55,8 +69,7 @@ public class SpecialFactoryImpl implements SpecialFactory{
 
             @Override
             public void activate(Player palyer) {
-                // TODO Auto-generated method stub
-                throw new UnsupportedOperationException("Unimplemented method 'activate'");
+                palyer.park();
             }
             
         });
@@ -66,10 +79,13 @@ public class SpecialFactoryImpl implements SpecialFactory{
     public Special taxes(Bank bank) {
         return new SpecialImpl(new Effect() {
 
+            private final Bank transationM = bank;
+            private final static int TAXES_AMOUNT = 100;
+
+            //DA CAMBIARE CON IL METODO PER AVERE IL NOME CHE ORA NON C'E'
             @Override
             public void activate(Player palyer) {
-                // TODO Auto-generated method stub
-                throw new UnsupportedOperationException("Unimplemented method 'activate'");
+                transationM.withdrawFrom(palyer.toString(), TAXES_AMOUNT);
             }
             
         });

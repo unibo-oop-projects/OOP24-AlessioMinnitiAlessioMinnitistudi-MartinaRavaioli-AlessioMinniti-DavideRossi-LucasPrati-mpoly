@@ -16,13 +16,23 @@ public interface Player {
      * @return if is alive
      */
     boolean isAlive();
-    /**
-     * moves the player to the special tile Prison
+        /**
+     * tells whether and how long the player is parked.
+     * @return if the player is parked
      */
-    void sendToPrison();
+    boolean isParked();
     /**
-     * 
-     * @return whether the palyer is still in prison
+     * put the player in parked status and set the turns it has to wait 
+     */
+    void park();
+    /**
+     * tells whether the player is in prison.
+     * @return
      */
     boolean isInPrison();
+    /**
+     * put the player in prison and set the turns he has to wait
+     */
+    void putInPrison();
+
 }
