@@ -10,18 +10,18 @@ public class CircularLinkedList<T> {
         if (head == null) {
             head = newNode;
         } else {
-            tail.nextNode = newNode;
+            tail.setNextNode(newNode);
         }
     
         tail = newNode;
-        tail.nextNode = head;
+        tail.setNextNode(head);
     }
 
     public T giveNextNode(T value){
         Node<T> currentNode = head;
 
         if(currentNode != null){
-            if(currentNode.nextNode)
+            if(currentNode.getNextNode())
         }
     }
 
@@ -32,10 +32,10 @@ public class CircularLinkedList<T> {
             return false;
         } else {
             do {
-                if (currentNode.value == searchValue) {
+                if (currentNode.getValue() == searchValue) {
                     return true;
                 }
-                currentNode = currentNode.nextNode;
+                currentNode = currentNode.getNextNode();
             } while (currentNode != head);
             return false;
         }
@@ -47,15 +47,15 @@ public class CircularLinkedList<T> {
             return;
         }
         do {
-            Node<T> nextNode = currentNode.nextNode;
-            if (nextNode.value == valueToDelete) {
+            Node<T> nextNode = currentNode.getNextNode();
+            if (nextNode.getValue() == valueToDelete) {
                 if (tail == head) { // the list has only one single element
                     head = null;
                     tail = null;
                 } else {
-                    currentNode.nextNode = nextNode.nextNode;
+                    currentNode.setNextNode(nextNode.getNextNode());
                     if (head == nextNode) { //we're deleting the head
-                        head = head.nextNode;
+                        head = head.getNextNode();
                     }
                     if (tail == nextNode) { //we're deleting the tail
                         tail = currentNode;
