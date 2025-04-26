@@ -1,7 +1,5 @@
 package it.unibo.monopoly.model.gameboard.impl;
 
-import static org.junit.jupiter.api.DynamicTest.stream;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
