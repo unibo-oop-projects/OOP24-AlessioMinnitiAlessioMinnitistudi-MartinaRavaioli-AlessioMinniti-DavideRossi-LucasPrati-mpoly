@@ -1,7 +1,8 @@
 package it.unibo.monopoly.model.turnation.impl;
 
-import org.apache.commons.lang3.tuple.Pair;
+import java.util.Collection;
 
+import it.unibo.monopoly.model.turnation.api.Dice;
 import it.unibo.monopoly.model.turnation.api.Player;
 import it.unibo.monopoly.model.turnation.api.TurnationManager;
 import it.unibo.monopoly.resources.CircularLinkedList;
@@ -14,9 +15,11 @@ public class TurnationManagerImpl implements TurnationManager {
     private CircularLinkedList<Player> players;
     private boolean isOver=false;
     private Player currPlayer;
+    private Dice dice;
 
-    public TurnationManagerImpl(CircularLinkedList<Player> plList){
+    public TurnationManagerImpl(CircularLinkedList<Player> plList, Dice dice){
         this.players=plList;
+        this.dice = dice;
     }
 
     public void setList(CircularLinkedList<Player> plList){
@@ -47,7 +50,7 @@ public class TurnationManagerImpl implements TurnationManager {
     }
 
     @Override
-    public final Pair<Integer, Integer> moveByDices() { 
-        return null; 
+    public final Collection<Integer> moveByDices() { 
+        return dice.throwDices();
     }
 }

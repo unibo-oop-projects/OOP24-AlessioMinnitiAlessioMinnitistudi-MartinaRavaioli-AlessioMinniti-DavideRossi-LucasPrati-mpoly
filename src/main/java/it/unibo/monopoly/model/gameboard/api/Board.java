@@ -7,16 +7,7 @@ import it.unibo.monopoly.model.turnation.api.Position;
  * board interface.
  */
 public interface Board {
-    //call to sell an house
-    /**
-     * @param prop
-     */
-    void sellHouse(Property prop);
-    //call to sell a property
-    /**
-     * @param prop
-     */
-    void sellProperty(Property prop);
+
     //call to return a tile
     /**
      * @param pos

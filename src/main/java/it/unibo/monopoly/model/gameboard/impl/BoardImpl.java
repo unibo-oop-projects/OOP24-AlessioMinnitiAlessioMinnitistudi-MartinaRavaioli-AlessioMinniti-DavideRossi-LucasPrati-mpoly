@@ -36,14 +36,6 @@ public class BoardImpl implements Board {
         this.tiles.sort((a, b) -> ((TileImpl)a).compareTo((TileImpl)b));
     }
 
-    //sell an house
-    @Override
-    public void sellHouse(final Property prop) { }
-    //sell the entire proprierty
-
-    @Override
-    public void sellProperty(final Property prop) { }
-    //get a tile
 
     @Override
     public final Tile getTile(final Position pos) { 
@@ -62,7 +54,6 @@ public class BoardImpl implements Board {
 
     @Override
     public void movePawn(Pawn player) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'movePawn'");
+        
     }
 }
