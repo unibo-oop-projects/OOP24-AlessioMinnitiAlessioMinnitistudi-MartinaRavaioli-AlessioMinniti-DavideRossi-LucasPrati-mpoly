@@ -17,6 +17,14 @@ public class CircularLinkedList<T> {
         tail.nextNode = head;
     }
 
+    public T giveNextNode(T value){
+        Node<T> currentNode = head;
+
+        if(currentNode != null){
+            if(currentNode.nextNode)
+        }
+    }
+
     public boolean containsNode(T searchValue) {
         Node<T> currentNode = head;
     

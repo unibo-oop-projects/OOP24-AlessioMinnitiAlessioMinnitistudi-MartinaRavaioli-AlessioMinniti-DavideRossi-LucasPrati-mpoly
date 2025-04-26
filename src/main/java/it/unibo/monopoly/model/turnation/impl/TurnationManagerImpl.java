@@ -13,6 +13,7 @@ import it.unibo.monopoly.resources.CircularLinkedList;
 public class TurnationManagerImpl implements TurnationManager {
     private CircularLinkedList<Player> players;
     private boolean isOver=false;
+    private Player currPlayer;
 
     public TurnationManagerImpl(CircularLinkedList<Player> plList){
         this.players=plList;
@@ -41,7 +42,7 @@ public class TurnationManagerImpl implements TurnationManager {
 
     @Override
     public final Player getNextPlayer() { 
-        return players.
+        return null;
     }
 
     @Override
