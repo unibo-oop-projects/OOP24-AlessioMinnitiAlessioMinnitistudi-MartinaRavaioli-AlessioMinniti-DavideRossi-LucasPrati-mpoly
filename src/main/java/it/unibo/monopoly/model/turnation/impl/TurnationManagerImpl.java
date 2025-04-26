@@ -42,7 +42,8 @@ public class TurnationManagerImpl implements TurnationManager {
 
     @Override
     public final Player getNextPlayer() { 
-        return null;
+        currPlayer = players.giveNextNode(currPlayer);
+        return currPlayer;
     }
 
     @Override
