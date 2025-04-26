@@ -1,7 +1,7 @@
 package it.unibo.monopoly.model.transactions.impl;
 
 import java.util.Set;
-import java.util.function.Predicate;
+import java.util.function.BiPredicate;
 
 import it.unibo.monopoly.model.transactions.api.RentOption;
 import it.unibo.monopoly.model.transactions.api.TitleDeed;
@@ -18,7 +18,7 @@ import it.unibo.monopoly.model.transactions.api.TitleDeed;
 public record RentOptionImpl(String title,
                             String description,
                             int price,
-                            Predicate<Set<TitleDeed>> applicabilityCondition) implements RentOption {
+                            BiPredicate<Set<TitleDeed>, String> applicabilityCondition) implements RentOption {
 
     @Override
     public String getTitle() {
@@ -36,7 +36,7 @@ public record RentOptionImpl(String title,
     }
 
     @Override
-    public boolean canBeApplied(final Set<TitleDeed> groupDeeds) {
-        return applicabilityCondition.test(groupDeeds);
+    public boolean canBeApplied(final Set<TitleDeed> groupDeeds, final String owner) {
+        return applicabilityCondition.test(groupDeeds, owner);
     }
 }

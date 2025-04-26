@@ -100,9 +100,6 @@ public final class BankImpl implements Bank {
         }
         final int rentAmount = deed.getRent(
             titleDeedsByGroup(deed.getGroup())
-                                    .stream()
-                                    .filter(d -> !d.equals(deed))
-                                    .collect(Collectors.toSet())
         );
         receiver.deposit(rentAmount);
         try {
