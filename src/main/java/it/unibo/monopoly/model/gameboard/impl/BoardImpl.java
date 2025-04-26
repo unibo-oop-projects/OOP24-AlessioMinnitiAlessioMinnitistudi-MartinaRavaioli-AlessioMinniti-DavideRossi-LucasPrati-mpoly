@@ -1,6 +1,9 @@
 package it.unibo.monopoly.model.gameboard.impl;
 
+import static org.junit.jupiter.api.DynamicTest.stream;
+
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import it.unibo.monopoly.model.gameboard.api.Board;
@@ -53,7 +56,8 @@ public class BoardImpl implements Board {
     }
 
     @Override
-    public void movePawn(Pawn player) {
-        
+    public void movePawn(Pawn player, Collection<Integer> value) {
+        int steps = value.stream().mapToInt(Integer::intValue).sum();
+        player.move(steps);
     }
 }

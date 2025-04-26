@@ -1,5 +1,7 @@
 package it.unibo.monopoly.model.gameboard.api;
 
+import java.util.Collection;
+
 import it.unibo.monopoly.model.turnation.api.Player;
 import it.unibo.monopoly.model.turnation.api.Position;
 
@@ -23,5 +25,5 @@ public interface Board {
 
     Tile getTileForPawn(Pawn p);
 
-    void movePawn(Pawn player);
+    void movePawn(Pawn player, Collection<Integer> value);
 }
