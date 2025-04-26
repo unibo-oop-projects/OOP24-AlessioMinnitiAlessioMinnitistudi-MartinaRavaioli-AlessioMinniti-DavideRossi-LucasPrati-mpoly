@@ -1,5 +1,7 @@
 package it.unibo.monopoly.resources;
 
+import org.apache.commons.lang3.ObjectUtils;
+
 public class CircularLinkedList<T> {
     private Node<T> head = null;
     private Node<T> tail = null;
@@ -21,8 +23,13 @@ public class CircularLinkedList<T> {
         Node<T> currentNode = head;
 
         if(currentNode != null){
-            if(currentNode.getNextNode())
+            if(currentNode.getValue()==value){
+                return currentNode.getNextNode().getValue();
+            }
+            currentNode=currentNode.getNextNode();
         }
+
+        return null;
     }
 
     public boolean containsNode(T searchValue) {
