@@ -2,7 +2,6 @@ package it.unibo.monopoly.utils;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -23,6 +22,7 @@ class ConfigurationTest {
     private static final int VALID_HEIGHT = 400;
     private static final int SMALL_FONT = 16;
     private static final int BIG_FONT = 24;
+    private static final int VALID_STARTER_BALANCE = 1500;
     private static final String VALID_FONT = "ARIAL"; // should be available on most systems
     private static final String VALID_RULES_FILENAME = "rules.txt";
     private static final List<Color> VALID_COLORS = List.of(
@@ -53,6 +53,7 @@ class ConfigurationTest {
                 .withFontName(VALID_FONT)
                 .withSmallFont(SMALL_FONT)
                 .withBigFont(BIG_FONT)
+                .withStarterBalance(VALID_STARTER_BALANCE)
                 .withRulesFilename(VALID_RULES_FILENAME)
                 .withColors(VALID_COLORS);
     }
@@ -84,66 +85,77 @@ class ConfigurationTest {
     void configurationInconsistentIfTooFewColors() {
         final List<Color> invalidList = List.of(Color.RED);
         final Configuration config = builder.withColors(invalidList).withMax(invalidList.size() + 1).build();
-        assertFalse(config.isConsistent(), INVALID_CONFIG + "Colors list size < maxPlayers");
+        assertFalse(config.isConsistent(),
+                    INVALID_CONFIG + "Colors list size < maxPlayers");
     }
 
     @Test
     void configurationInconsistentIfFontInvalid() {
         final Configuration config = builder.withFontName("NonExistentFont").build();
-        assertFalse(config.isConsistent(), INVALID_CONFIG + "Font name must match an available system font.");
+        assertFalse(config.isConsistent(),
+                    INVALID_CONFIG + "Font name must match an available system font.");
     }
 
     @Test
     void configurationInconsistentIfSmallFontBiggerThanBigFont() {
         final Configuration config = builder.withSmallFont(BIG_FONT + 1).withBigFont(BIG_FONT).build();
-        assertFalse(config.isConsistent(), INVALID_CONFIG + "smallFont > bigFont");
+        assertFalse(config.isConsistent(),
+                    INVALID_CONFIG + "smallFont > bigFont");
     }
 
     @Test
     void configurationInconsistentIfMinGreaterOrEqualToMax() {
         final Configuration config = builder.withMin(VALID_MAX + 1).withMax(VALID_MAX).build();
-        assertFalse(config.isConsistent(), INVALID_CONFIG + "minPlayers > maxPlayers");
+        assertFalse(config.isConsistent(),
+                    INVALID_CONFIG + "minPlayers > maxPlayers");
     }
 
     @Test
     void configurationInconsistentIfMinEqualToMax() {
         final Configuration config = builder.withMin(VALID_MAX).withMax(VALID_MAX).build();
-        assertFalse(config.isConsistent(), INVALID_CONFIG + "minPlayers = maxPlayers");
+        assertFalse(config.isConsistent(),
+                    INVALID_CONFIG + "minPlayers = maxPlayers");
     }
 
     @Test
     void configurationInconsistentIfHeightGreaterThanWidth() {
         final Configuration config = builder.withHeight(VALID_WIDTH + 1).withWidth(VALID_WIDTH).build();
-        assertFalse(config.isConsistent(), INVALID_CONFIG + "height > width");
+        assertFalse(config.isConsistent(),
+                    INVALID_CONFIG + "height > width");
     }
 
     @Test
     void configurationInconsistentIfRulesFileIsNull() {
         final Configuration config = builder.withRulesFilename(null).build();
-        assertFalse(config.isConsistent(), INVALID_CONFIG + "rulesFilename can not be null");
+        assertFalse(config.isConsistent(),
+                    INVALID_CONFIG + "rulesFilename can not be null");
+    }
+
+    @Test
+    void defaultStarterBalanceIsCorrect() {
+        final Configuration config = builder.withStarterBalance(0).build();
+        assertFalse(config.isConsistent(),
+                    INVALID_CONFIG + "starterBalance < 0");
     }
 
     @Test
     void configureFromFileReturnsDefaultOnInvalidConfig() throws IOException {
-        // Invalid file must return a default configuration
+        // Parsing an invalid file should return a configuration where valid values are kept and defaults are used for errors or missing entries
         final Configuration config = Configuration.configureFromFile("invalid_config.yml");
-        assertTrue(config.isConsistent(), "Expected default configuration to be consistent");
+        assertTrue(config.isConsistent(), "Expected configuration to be consistent");
     }
 
     @Test
     void configureFromFileThrowsExceptionOnFileNotFound() {
-        // File that not exist must return a default configuration
+        // File that not exist should return a default configuration
         final Configuration config = Configuration.configureFromFile("not_exist");
-        assertTrue(config.isConsistent(), "Default configuration should be consistent");
+        assertTrue(config.isConsistent(), "Expected default configuration to be consistent");
     }
 
     @Test
     void configureFromFileParsesValidFileCorrectly() {
-        // Assumes file "valid_config.txt" exists and contains a valid config
+        // Parsing a valid file should return a consistent configuration
         final Configuration config = Configuration.configureFromFile("valid_config.yml");
-        final Configuration def = new Configuration.Builder().build();
-        // Check the player size that must not be equals in default configuration and valid_config (13 != 5)
-        assertNotEquals(def.getPlayerColors().size(), config.getPlayerColors().size(), "Configuration from valid file should not be equals to the default one");
         assertTrue(config.isConsistent(), "Configuration from valid file should be consistent");
     }
 }

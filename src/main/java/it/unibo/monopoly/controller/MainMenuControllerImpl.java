@@ -5,8 +5,8 @@ import java.awt.Color;
 import java.util.Map;
 
 import it.unibo.monopoly.controller.api.MainMenuController;
-import it.unibo.monopoly.model.turnation.api.Player;
-import it.unibo.monopoly.model.turnation.impl.PlayerImpl;
+// import it.unibo.monopoly.model.turnation.api.Player;
+// import it.unibo.monopoly.model.turnation.impl.PlayerImpl;
 import it.unibo.monopoly.utils.Configuration;
 
 /**
@@ -47,11 +47,11 @@ public final class MainMenuControllerImpl implements MainMenuController {
 
     @Override
     public void onClickStart(final Map<Color, String> playersSetup) {
-        for (final var p : playersSetup.entrySet()) {
-            final Player player = PlayerImpl.of(p.getValue(), p.getKey());
-            System.out.println("Creato: " + player.getName() + " " + player.getColor());
-        }
-        System.out.println("Gioco pronto! (da implementare)");
+        // for (final var p : playersSetup.entrySet()) {
+        //     final Player player = PlayerImpl.of(p.getValue(), p.getKey());
+        //     System.out.println("Creato: " + player.getName() + " " + player.getColor());
+        // }
+        // System.out.println("Gioco pronto! (da implementare)");
     }
 
 
