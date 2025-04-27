@@ -1,6 +1,8 @@
 package it.unibo.monopoly.view.api;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +18,7 @@ import it.unibo.monopoly.model.gameboard.api.Tile;
 public class GameboardView extends JFrame{
     private final GameboardLogic logic;
     private final List<JPanel> shapes=List.of(new PawnCircle(Color.RED),new PawnTriangle(Color.BLUE),new PawnSquare(Color.GREEN),new PawnSquare(Color.YELLOW));
-    private final List<JPanel> tiles=new ArrayList<>();
+    private final List<JPanel> tilesView=new ArrayList<>();
     
     public GameboardView(int size, int players, List<Tile> tiles){
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -29,7 +31,7 @@ public class GameboardView extends JFrame{
         for (int i = 0; i < size; i++) {
             for(int j=0; j<size;j++){
                 JPanel tile = new JPanel();
-                this.tiles.add(tile);
+                
                 
                 if (logic.isBoardTile(i,j,size)) {
                     tile.setBorder(BorderFactory.createLineBorder(Color.black));
@@ -38,13 +40,23 @@ public class GameboardView extends JFrame{
                     tile.setBackground(Color.lightGray); // Centro non giocabile
                 }
                 board.add(tile);
+                this.tilesView.add(tile);
             }
         }
 
+        for(int i=0;i<size;i++){
+            JPanel panel=this.tilesView.get(i);
+            JPanel stripe = new JPanel();
+            stripe.setPreferredSize(new Dimension(60, 10));
+            stripe.setBackground(Color.RED);
+            panel.add(stripe, BorderLayout.NORTH);
+        }
+
         for(int i=0; i < players; i++){
-            JPanel panel = this.tiles.get(0);
+            JPanel panel = this.tilesView.get(0);
             panel.add(shapes.get(i));
         }
+
 
         this.setVisible(true);
     }
