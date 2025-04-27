@@ -61,8 +61,8 @@ public final class MainMenuView extends JFrame {
     private static final String DEFAULT_PLAYER_TEXT = "Player ";
     private static final String START_TEXT = "Start";
 
-    private final Configuration config;
-    private final MainMenuController controller;
+    private final transient Configuration config;
+    private final transient MainMenuController controller;
     private final Map<Color, JTextField> playersInfo = new HashMap<>();
 
     private JButton decreaseButton;

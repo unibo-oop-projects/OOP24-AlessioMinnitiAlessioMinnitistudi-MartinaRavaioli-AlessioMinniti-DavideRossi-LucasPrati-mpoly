@@ -11,6 +11,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 
 /**
  * Represents the game's configuration parameters,
@@ -112,7 +113,7 @@ public final class Configuration {
      * @return the list of colors assigned to players
      */
     public List<Color> getPlayerColors() {
-        return playerColors;
+        return List.copyOf(playerColors);
     }
 
     /**
@@ -166,16 +167,16 @@ public final class Configuration {
      */
     public static Configuration configureFromFile(final String configFile) {
         // try to find the file
-        final InputStream in = Configuration.class.getClassLoader().getResourceAsStream(configFile);
+        final InputStream is = Configuration.class.getClassLoader().getResourceAsStream(configFile);
 
         // if not found, return a consistent default configuration
-        if (Objects.isNull(in)) {
+        if (Objects.isNull(is)) {
             return new Configuration.Builder().build();
         }
 
         // if found, read it
         final Configuration.Builder configurationBuilder = new Configuration.Builder();
-        try (var contents = new BufferedReader(new InputStreamReader(in))) {
+        try (var contents = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8))) {
 
             for (String configLine = contents.readLine(); configLine != null; configLine = contents.readLine()) {
                 if (configLine.isBlank() || configLine.startsWith("#")) {

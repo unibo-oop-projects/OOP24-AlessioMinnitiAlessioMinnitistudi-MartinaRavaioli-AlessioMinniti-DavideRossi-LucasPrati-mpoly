@@ -8,6 +8,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.util.stream.Collectors;
 
 import javax.swing.BorderFactory;
@@ -92,7 +93,7 @@ public final class RulesWindowView extends JDialog {
             if (is == null) {
                 textArea.setText(ERROR_FILE_NOT_FOUND + filename);
             } else {
-                try (BufferedReader reader = new BufferedReader(new InputStreamReader(is))) {
+                try (BufferedReader reader = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8))) {
                     final String rules = reader.lines().collect(Collectors.joining("\n"));
                     textArea.setText(rules);
                 }
