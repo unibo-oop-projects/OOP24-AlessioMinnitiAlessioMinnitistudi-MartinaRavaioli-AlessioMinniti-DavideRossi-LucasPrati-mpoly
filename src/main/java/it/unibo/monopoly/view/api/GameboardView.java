@@ -2,6 +2,7 @@ package it.unibo.monopoly.view.api;
 
 import java.awt.Color;
 import java.awt.GridLayout;
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
@@ -12,9 +13,9 @@ import it.unibo.monopoly.controller.impl.GameboardLogicImpl;
 
 public class GameboardView extends JFrame{
     private final GameboardLogic logic;
+    private final List<JPanel> shapes=List.of(new PawnCircle(Color.RED),new PawnTriangle(Color.BLUE));
     
-
-    public GameboardView(int size){
+    public GameboardView(int size, int players){
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setSize(70*size, 70*size);
         this.logic=new GameboardLogicImpl();
@@ -37,14 +38,6 @@ public class GameboardView extends JFrame{
             
         }
 
-        for (int i = 0; i < size; i++) {
-            for(int j=0; j<size;j++){
-                
-            }
-            
-        }
-
         this.setVisible(true);
     }
-    
 }
