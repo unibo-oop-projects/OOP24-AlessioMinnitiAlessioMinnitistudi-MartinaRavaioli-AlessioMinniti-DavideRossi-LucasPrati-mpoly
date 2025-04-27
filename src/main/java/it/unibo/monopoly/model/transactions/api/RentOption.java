@@ -15,7 +15,7 @@ import it.unibo.monopoly.model.transactions.impl.RentOptionImpl;
  * corresponds to the list of available rents written on a title deed card. Intuitively, a single 
  * row of that list corresponds to a {@link RentOption} object in this system. 
  * A rent option contains a title and eventually a description, 
- * a price and its applicability conditions.  
+ * a price and its applicability conditions.
  */
 public interface RentOption {
 
