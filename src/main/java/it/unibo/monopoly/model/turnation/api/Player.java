@@ -8,7 +8,7 @@ import it.unibo.monopoly.utils.Identifiable;
  * Player interface.
  * Extends {@link Identifiable} for the identification of the players
 */
-public interface Player extends Identifiable<Integer>{
+public interface Player extends Identifiable<Integer> {
     /**
      * @return the player's nickname
      */

@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.util.Objects;
 
 import it.unibo.monopoly.model.turnation.api.Player;
+import it.unibo.monopoly.utils.Identifiable;
 
 /**
  * Player implementation.
@@ -15,10 +16,11 @@ public final class PlayerImpl implements Player {
     private final Color color;
 
     /**
-     * Private constructor used internally by the static factory method {@link #of(String, Color)}.
+     * Private constructor used internally by the static factory method {@link #of(int, String, Color)}.
      *
+     * @param id the {@link Identifiable} representing the player
      * @param name  the name chosen by the player
-     * @param color the color representing the player
+     * @param color the {@link Color} representing the player
      */
     private PlayerImpl(final int id, final String name, final Color color) {
         this.id = id;
@@ -47,17 +49,18 @@ public final class PlayerImpl implements Player {
      * This method applies the Factory Method pattern (static variant),
      * allowing centralized creation logic and possible future extensions.
      *
-     * @param name the nickname chosen by the player
-     * @param color the color representing the player
+     * @param id the {@link Identifiable} representing the player
+     * @param name the name chosen by the player
+     * @param color the {@link Color} representing the player
      * @return a new {@link Player} instance
-     * @throws IllegalArgumentException if name is null/empty or color is null
+     * @throws NullPointerException if {@code id}, {@code name} or {@code color} are {@code null}
      */
-    public static Player of(final int id, String name, final Color color) {
+    public static Player of(final int id, final String name, final Color color) {
         Objects.requireNonNull(name);
         Objects.requireNonNull(id);
         Objects.requireNonNull(color);
         if (name.isBlank()) {
-            name = "Player " + Integer.toString(id);
+            return new PlayerImpl(id, "Player " + Integer.toString(id), color);
         }
         return new PlayerImpl(id, name, color);
     }

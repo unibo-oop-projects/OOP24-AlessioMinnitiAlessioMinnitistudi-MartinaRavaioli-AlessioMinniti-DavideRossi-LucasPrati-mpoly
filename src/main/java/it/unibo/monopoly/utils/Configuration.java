@@ -208,10 +208,10 @@ public final class Configuration {
 
                             configurationBuilder.withColors(colors);
                         }
-                        default -> throw new IllegalStateException("Unknown key: " + key);
+                        default -> { /* Ignore unknown key */ }
                     }
-                } catch (final IllegalArgumentException | IllegalStateException e) {
-                    // Error during parseColor (IllegalArgument) or switch(key) (IllegalState)
+                } catch (final IllegalArgumentException e) {
+                    // Error during parseColor
                     continue;
                 }
             }

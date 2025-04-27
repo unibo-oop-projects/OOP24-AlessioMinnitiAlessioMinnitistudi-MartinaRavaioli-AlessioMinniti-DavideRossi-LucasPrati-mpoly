@@ -140,7 +140,8 @@ class ConfigurationTest {
 
     @Test
     void configureFromFileReturnsDefaultOnInvalidConfig() throws IOException {
-        // Parsing an invalid file should return a configuration where valid values are kept and defaults are used for errors or missing entries
+        // Parsing an invalid file should return a configuration where
+        // valid values are kept and defaults are used for errors or missing entries
         final Configuration config = Configuration.configureFromFile("invalid_config.yml");
         assertTrue(config.isConsistent(), "Expected configuration to be consistent");
     }
