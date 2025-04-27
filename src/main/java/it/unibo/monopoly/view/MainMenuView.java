@@ -22,6 +22,7 @@ import javax.swing.SwingConstants;
 
 import it.unibo.monopoly.controller.MainMenuControllerImpl;
 import it.unibo.monopoly.controller.api.MainMenuController;
+import it.unibo.monopoly.model.transactions.api.BankAccountType;
 import it.unibo.monopoly.model.turnation.impl.PlayerImpl;
 import it.unibo.monopoly.utils.Configuration;
 import it.unibo.monopoly.utils.GuiUtils;
@@ -33,7 +34,7 @@ public final class MainMenuView extends JFrame {
 
     private static final long serialVersionUID = 1L;
 
-    // Grid layout 
+    // Grid layout
     private static final int ZERO = 0;
     private static final int SINGLE = 1;
     private static final int ROWS = 3;
@@ -61,6 +62,12 @@ public final class MainMenuView extends JFrame {
     private static final String DEFAULT_PLAYER_TEXT = "Player ";
     private static final String START_TEXT = "Start";
 
+    // Settings Menu
+    private static final String TITLE_TEXT_SETTINGS = "Select game mode";
+    private static final String EXIT_TEXT = "Exit";
+    private static final String INFINITY_TEXT = "Infinity Mode";
+    private static final String CLASSIC_TEXT = "Classic Mode";
+
     private final transient Configuration config;
     private final transient MainMenuController controller;
     private final Map<Color, JTextField> playersInfo = new HashMap<>();
@@ -68,6 +75,9 @@ public final class MainMenuView extends JFrame {
     private JButton decreaseButton;
     private JButton increaseButton;
     private final JLabel numPlayersLabel = new JLabel();
+    private JButton classicModeButton;
+    private JButton infinityModeButton;
+    private JButton exitButton;
     private final JPanel mainPanel = new JPanel(new BorderLayout());
 
 
@@ -119,7 +129,7 @@ public final class MainMenuView extends JFrame {
         rulesButton.addActionListener(e -> new RulesWindowView(this, config));
 
         final JButton settingsButton = new JButton(SETTINGS_TEXT);
-        settingsButton.addActionListener(e -> new SettingsWindowView(this, config));
+        settingsButton.addActionListener(e -> showSettingsMenu());
 
         final JButton continueButton = new JButton(CONTINUE_TEXT);
         continueButton.addActionListener(e -> showPlayerSetupScreen());
@@ -191,6 +201,48 @@ public final class MainMenuView extends JFrame {
         GuiUtils.refresh(this);
     }
 
+    private void showSettingsMenu() {
+        mainPanel.removeAll();
+        final JLabel title = new JLabel(TITLE_TEXT_SETTINGS, SwingConstants.CENTER);
+        title.setFont(new Font(config.getFontName(), Font.BOLD, config.getBigFont()));
+        title.setForeground(Color.RED);
+
+        // Create buttons for settings the game mode and an exit button
+        classicModeButton = new JButton(CLASSIC_TEXT);
+        infinityModeButton = new JButton(INFINITY_TEXT);
+        exitButton = new JButton(EXIT_TEXT);
+
+        // Adding action listener
+        classicModeButton.addActionListener(e -> {
+            controller.setBankAccountType(BankAccountType.CLASSIC);
+            updateSettingsButton();
+        });
+        infinityModeButton.addActionListener(e -> {
+            controller.setBankAccountType(BankAccountType.INFINITY);
+            updateSettingsButton();
+        });
+        exitButton.addActionListener(e -> showMainMenu());
+
+        // Create a panel for display all game mode and choose which one use
+        final JPanel modePanel = new JPanel(new GridLayout(SINGLE, COLS, GAP, GAP));
+        modePanel.add(classicModeButton);
+        modePanel.add(infinityModeButton);
+
+        // Create a panel that contains modePanel, used for vertical alignement
+        final JPanel centerWrapper = new JPanel();
+        centerWrapper.setLayout(new BoxLayout(centerWrapper, BoxLayout.Y_AXIS));
+        centerWrapper.add(Box.createVerticalGlue());
+        centerWrapper.add(modePanel);
+        centerWrapper.add(Box.createVerticalGlue());
+
+        mainPanel.add(title, BorderLayout.NORTH);
+        mainPanel.add(centerWrapper, BorderLayout.CENTER);
+        mainPanel.add(exitButton, BorderLayout.SOUTH);
+        updateSettingsButton();
+        GuiUtils.refresh(this);
+    }
+
+
     /**
      * Initializes the players according to the preferences entered by the users.
      * 
@@ -206,6 +258,11 @@ public final class MainMenuView extends JFrame {
             ));
 
         controller.onClickStart(playersSetup);
+    }
+
+    private void updateSettingsButton() {
+        classicModeButton.setEnabled(!controller.getBankAccountType().equals(BankAccountType.CLASSIC));
+        infinityModeButton.setEnabled(!controller.getBankAccountType().equals(BankAccountType.INFINITY));
     }
 
     private void updateNumPlayers() {
