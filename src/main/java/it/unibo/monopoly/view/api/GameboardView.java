@@ -41,7 +41,7 @@ public class GameboardView extends JFrame{
         }
 
         for(int i=0; i < players; i++){
-            JPanel panel = tiles.get(i);
+            JPanel panel = tiles.get(0);
             panel.add(shapes.get(i));
         }
 
