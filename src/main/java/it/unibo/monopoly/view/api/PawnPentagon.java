@@ -6,6 +6,7 @@ import java.awt.Dimension;
 import javax.swing.JPanel;
 
 public class PawnPentagon extends JPanel{
+    @SuppressWarnings("unused")
     private final Color color;
 
     public PawnPentagon(Color color) {

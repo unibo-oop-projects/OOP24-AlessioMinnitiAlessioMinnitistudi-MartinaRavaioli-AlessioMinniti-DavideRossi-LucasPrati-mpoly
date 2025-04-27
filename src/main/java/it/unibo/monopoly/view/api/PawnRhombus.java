@@ -7,6 +7,7 @@ import java.awt.Dimension;
 import javax.swing.JPanel;
 
 public class PawnRhombus extends JPanel{
+    @SuppressWarnings("unused")
     private final Color color;
 
     public PawnRhombus(Color color) {

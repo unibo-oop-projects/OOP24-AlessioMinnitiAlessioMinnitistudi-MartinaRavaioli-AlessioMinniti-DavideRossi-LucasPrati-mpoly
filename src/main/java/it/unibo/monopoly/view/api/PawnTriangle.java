@@ -7,7 +7,7 @@ import java.awt.Graphics;
 import javax.swing.JPanel;
 
 public class PawnTriangle extends JPanel {
-    private Color color;
+    private final Color color;
 
     public PawnTriangle(Color color) {
         this.color = color;
