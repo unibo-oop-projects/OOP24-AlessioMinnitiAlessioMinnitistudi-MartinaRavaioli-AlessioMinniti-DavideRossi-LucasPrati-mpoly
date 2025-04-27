@@ -15,7 +15,7 @@ public class GameboardLogicImpl implements GameboardLogic{
     }
 
     @Override
-    public Color getColor(Type type) {
+    public Color getTileColor(Type type) {
         switch (type) {
             case Type.RED -> {
                 return Color.RED;
