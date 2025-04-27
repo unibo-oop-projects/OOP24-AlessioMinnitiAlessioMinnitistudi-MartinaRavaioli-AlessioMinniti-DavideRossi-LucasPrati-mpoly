@@ -44,11 +44,11 @@ public class GameboardView extends JFrame{
             }
         }
 
-        for(int i=0;i<size;i++){
+        for(int i=0;i<tiles.size();i++){
             JPanel panel=this.tilesView.get(i);
             JPanel stripe = new JPanel();
             stripe.setPreferredSize(new Dimension(60, 10));
-            stripe.setBackground(Color.RED);
+            stripe.setBackground(logic.getTileColor(tiles.get(i).getType()));
             panel.add(stripe, BorderLayout.NORTH);
         }
 
