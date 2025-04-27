@@ -1,6 +1,7 @@
 package it.unibo.monopoly.model.turnation.impl;
 
 import java.awt.Color;
+import java.util.Objects;
 
 import it.unibo.monopoly.model.turnation.api.Player;
 
@@ -9,6 +10,7 @@ import it.unibo.monopoly.model.turnation.api.Player;
 */
 public final class PlayerImpl implements Player {
 
+    private final int id;
     private final String name;
     private final Color color;
 
@@ -18,7 +20,8 @@ public final class PlayerImpl implements Player {
      * @param name  the name chosen by the player
      * @param color the color representing the player
      */
-    private PlayerImpl(final String name, final Color color) {
+    private PlayerImpl(final int id, final String name, final Color color) {
+        this.id = id;
         this.name = name;
         this.color = color;
     }
@@ -33,6 +36,10 @@ public final class PlayerImpl implements Player {
         return name;
     }
 
+    @Override
+    public Integer getID() {
+        return id;
+    }
 
     /**
      * Static factory method for creating a new {@link PlayerImpl} instance.
@@ -45,14 +52,14 @@ public final class PlayerImpl implements Player {
      * @return a new {@link Player} instance
      * @throws IllegalArgumentException if name is null/empty or color is null
      */
-    public static Player of(final String name, final Color color) {
-        if (name == null || name.isBlank()) {
-            throw new IllegalArgumentException("Player name cannot be null or empty.");
+    public static Player of(final int id, String name, final Color color) {
+        Objects.requireNonNull(name);
+        Objects.requireNonNull(id);
+        Objects.requireNonNull(color);
+        if (name.isBlank()) {
+            name = "Player " + Integer.toString(id);
         }
-        if (color == null) {
-            throw new IllegalArgumentException("Player color cannot be null.");
-        }
-        return new PlayerImpl(name, color);
+        return new PlayerImpl(id, name, color);
     }
 
 }
