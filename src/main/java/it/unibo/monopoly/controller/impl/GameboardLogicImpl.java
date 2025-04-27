@@ -6,7 +6,7 @@ public class GameboardLogicImpl implements GameboardLogic{
 
     @Override
     public boolean isBoardTile(int i, int j, int size) {
-        if((i == 0 || i == size) && (j == 0 || j == size)){
+        if((i == 0 || i == size-1) || (j == 0 || j == size-1)){
             return true;
         }
 

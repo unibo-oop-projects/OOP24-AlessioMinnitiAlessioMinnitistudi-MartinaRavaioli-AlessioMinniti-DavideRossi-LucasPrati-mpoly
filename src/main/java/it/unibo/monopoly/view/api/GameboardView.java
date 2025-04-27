@@ -25,12 +25,13 @@ public class GameboardView extends JFrame{
         for (int i = 0; i < size; i++) {
             for(int j=0; j<size;j++){
                 JPanel tile = new JPanel();
-                tile.setBorder(BorderFactory.createLineBorder(Color.black));
+                
                 if (logic.isBoardTile(i,j,size)) {
-                    tile.setBackground(Color.white);
+                    tile.setBorder(BorderFactory.createLineBorder(Color.black));
+                    tile.setBackground(Color.lightGray);
                     tile.add(new JLabel("Casella " + i)); // Testo segnaposto
                 } else {
-                    tile.setBackground(Color.lightGray); // Centro non giocabile
+                    tile.setBackground(Color.white); // Centro non giocabile
                 }
                 board.add(tile);
             }
