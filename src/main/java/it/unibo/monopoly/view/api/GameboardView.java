@@ -5,7 +5,6 @@ import java.awt.GridLayout;
 
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import it.unibo.monopoly.controller.api.GameboardLogic;
@@ -13,6 +12,7 @@ import it.unibo.monopoly.controller.impl.GameboardLogicImpl;
 
 public class GameboardView extends JFrame{
     private final GameboardLogic logic;
+    
 
     public GameboardView(int size){
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -28,12 +28,18 @@ public class GameboardView extends JFrame{
                 
                 if (logic.isBoardTile(i,j,size)) {
                     tile.setBorder(BorderFactory.createLineBorder(Color.black));
-                    tile.setBackground(Color.lightGray);
-                    tile.add(new JLabel("Casella " + i)); // Testo segnaposto
+                    tile.setBackground(Color.white);
                 } else {
-                    tile.setBackground(Color.white); // Centro non giocabile
+                    tile.setBackground(Color.lightGray); // Centro non giocabile
                 }
                 board.add(tile);
+            }
+            
+        }
+
+        for (int i = 0; i < size; i++) {
+            for(int j=0; j<size;j++){
+                
             }
             
         }
