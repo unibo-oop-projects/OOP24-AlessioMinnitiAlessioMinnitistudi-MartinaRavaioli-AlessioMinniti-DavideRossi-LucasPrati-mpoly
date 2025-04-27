@@ -77,7 +77,6 @@ public final class MainMenuView extends JFrame {
     private final JLabel numPlayersLabel = new JLabel();
     private JButton classicModeButton;
     private JButton infinityModeButton;
-    private JButton exitButton;
     private final JPanel mainPanel = new JPanel(new BorderLayout());
 
 
@@ -210,7 +209,7 @@ public final class MainMenuView extends JFrame {
         // Create buttons for settings the game mode and an exit button
         classicModeButton = new JButton(CLASSIC_TEXT);
         infinityModeButton = new JButton(INFINITY_TEXT);
-        exitButton = new JButton(EXIT_TEXT);
+        final JButton exitButton = new JButton(EXIT_TEXT);
 
         // Adding action listener
         classicModeButton.addActionListener(e -> {

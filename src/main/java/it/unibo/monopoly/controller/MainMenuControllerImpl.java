@@ -76,7 +76,7 @@ public final class MainMenuControllerImpl implements MainMenuController {
     }
 
     @Override
-    public void setBankAccountType(BankAccountType bankAccountType) {
+    public void setBankAccountType(final BankAccountType bankAccountType) {
         this.bankAccountType = bankAccountType;
     }
 }
