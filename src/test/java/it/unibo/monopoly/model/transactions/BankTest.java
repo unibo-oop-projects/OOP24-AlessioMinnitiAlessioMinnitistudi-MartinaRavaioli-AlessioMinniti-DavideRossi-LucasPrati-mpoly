@@ -177,11 +177,11 @@ class BankTest {
 
     @Test
     void payRentSuccessful() {
-        final int rent = bank.getTitleDeed(TITLE_DEED_NAME1)
-                                .getRent(Sets.filter(Sets.newHashSet(deeds), 
-                                        d -> !TITLE_DEED_NAME1.equals(d.getName()))
-                                );
         bank.buyTitleDeed(TITLE_DEED_NAME1, PLAYER2_NAME);
+        final int rent = bank.getTitleDeed(TITLE_DEED_NAME1)
+                                                .getRent(Sets.filter(Sets.newHashSet(deeds), 
+                                                        d -> !TITLE_DEED_NAME1.equals(d.getName()))
+                                                );
         final int initialBalancePl1 = bank.getBankAccount(PLAYER1_NAME).getBalance();
         final int initialBalancePl2 = bank.getBankAccount(PLAYER2_NAME).getBalance();
         bank.payRent(TITLE_DEED_NAME1, PLAYER1_NAME);
