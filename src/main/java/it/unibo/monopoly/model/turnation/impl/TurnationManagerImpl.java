@@ -15,7 +15,7 @@ public class TurnationManagerImpl implements TurnationManager {
     private CircularLinkedList<Player> players;
     private boolean isOver=false;
     private Player currPlayer;
-    private Dice dice;
+    private final Dice dice;
 
     public TurnationManagerImpl(CircularLinkedList<Player> plList, Dice dice){
         this.players=plList;
