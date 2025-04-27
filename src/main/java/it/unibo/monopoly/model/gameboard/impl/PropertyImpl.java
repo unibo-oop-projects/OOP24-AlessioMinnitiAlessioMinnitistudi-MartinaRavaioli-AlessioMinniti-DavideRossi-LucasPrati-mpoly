@@ -1,12 +1,13 @@
 package it.unibo.monopoly.model.gameboard.impl;
 
 import it.unibo.monopoly.model.gameboard.api.Property;
+import it.unibo.monopoly.model.turnation.api.Position;
 
 /**
  * property implementation.
 */
 
-public class PropertyImpl implements Property {
+public class PropertyImpl extends TileImpl implements Property {
     private static final int MAX_HOUSES=4;
     private int price;
     private boolean isOwned;
@@ -14,11 +15,13 @@ public class PropertyImpl implements Property {
     private int hotelPrice;
     private int nHouses;
     private boolean hotel;
+    
     //constructor
     /**
      * @param price
      */
-    public PropertyImpl(final int price,final int housePrice,final int hotelPrice) { 
+    public PropertyImpl(final int price,final int housePrice,final int hotelPrice, Position id, Type type) { 
+        super(id,type);
         this.nHouses=0;
         this.hotel=false;
         this.isOwned=false;

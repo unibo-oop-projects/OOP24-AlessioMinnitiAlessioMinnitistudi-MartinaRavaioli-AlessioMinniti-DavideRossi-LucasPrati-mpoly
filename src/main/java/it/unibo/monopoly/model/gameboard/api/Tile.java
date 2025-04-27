@@ -1,19 +1,13 @@
 package it.unibo.monopoly.model.gameboard.api;
 
+import it.unibo.monopoly.model.gameboard.impl.Type;
+
 /**
  * tile interface.
  */
-enum Type{
-    RED,
-    BLUE,
-    GREEN,
-    YELLOW,
-    PURPLE,
-    ORANGE,
-    CYAN,
-    BLACK
-}
 
 public interface Tile {
+    public Type getType();
 
+    public void setType(Type type);
 }
