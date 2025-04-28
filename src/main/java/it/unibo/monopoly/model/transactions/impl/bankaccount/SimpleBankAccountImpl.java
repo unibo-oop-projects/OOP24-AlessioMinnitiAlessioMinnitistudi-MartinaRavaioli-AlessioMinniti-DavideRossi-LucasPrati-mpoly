@@ -16,7 +16,7 @@ public final class SimpleBankAccountImpl implements BankAccount {
 
     /**
      * Creates a new BankAccount with an initial amount of money.
-     * @param initialBalance The initial amount of money
+     * @param initialBalance the initial amount of money
      * @param owner the name of the player that owns the {@link BankAccount} 
      * @throws IllegalArgumentException if the {@code initialBalance} is negative
      * @throws NullPointerException if the {@code owner} is {@code null}
