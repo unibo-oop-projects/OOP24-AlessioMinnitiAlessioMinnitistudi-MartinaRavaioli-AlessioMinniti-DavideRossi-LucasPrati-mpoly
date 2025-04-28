@@ -3,6 +3,7 @@ package it.unibo.monopoly.model.transactions.impl.bankaccount;
 import java.util.Objects;
 
 import it.unibo.monopoly.model.transactions.api.BankAccount;
+import it.unibo.monopoly.utils.Identifiable;
 
 /**
  * Simple implementation of the {@link BankAccount} interface.
@@ -15,7 +16,9 @@ public final class SimpleBankAccountImpl implements BankAccount {
     private final String ownerName;
 
     /**
-     * Creates a new BankAccount with an initial amount of money.
+     * Creates a new {@link BankAccount} with an initial amount of money.
+     * <p>
+     * @param id the {@link Identifiable} representing the {@link BankAccount}
      * @param initialBalance the initial amount of money
      * @param owner the name of the player that owns the {@link BankAccount} 
      * @throws IllegalArgumentException if the {@code initialBalance} is negative
@@ -33,7 +36,9 @@ public final class SimpleBankAccountImpl implements BankAccount {
     }
 
     /**
-     * Creates a BankAccount with a default, positive and non-zero amount of money.
+     * Creates a new {@link BankAccount} with a default, positive and non-zero amount of money.
+     * <p>
+     * @param id the {@link Identifiable} representing the {@link BankAccount}
      * @param owner the name of the player that owns the {@link BankAccount}
      */
     public SimpleBankAccountImpl(final int id, final String owner) {

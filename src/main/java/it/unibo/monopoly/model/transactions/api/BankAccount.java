@@ -5,7 +5,7 @@ import it.unibo.monopoly.utils.Identifiable;
 /**
  * The bank account associated with each player in the game.
 */
-public interface BankAccount extends Identifiable<Integer>{
+public interface BankAccount extends Identifiable<Integer> {
     /**
      * Increases the current amount of money in the account.
      * @param amount the amount of money to add to the account

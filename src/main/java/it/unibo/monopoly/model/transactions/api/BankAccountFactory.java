@@ -31,7 +31,7 @@ public interface BankAccountFactory {
     BankAccount createSimple(int id, String owner);
 
     /**
-     * Creates a {@link BankAccount} with an initial provided amount of money and a provided {@code check}
+     * Creates a {@link BankAccount} with an initial provided amount of money and a provided {@code check}.
      * <p>
      * @param id the {@link Identifiable} representing the {@link BankAccount}
      * @param initialBalance the initial amount of money

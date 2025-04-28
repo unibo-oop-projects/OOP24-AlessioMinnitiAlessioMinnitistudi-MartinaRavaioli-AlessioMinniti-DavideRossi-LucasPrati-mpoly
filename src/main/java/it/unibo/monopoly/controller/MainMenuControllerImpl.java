@@ -115,7 +115,7 @@ public final class MainMenuControllerImpl implements MainMenuController {
      * @param id the {@link Identifiable} representing the {@link BankAccount}
      * @param owner the {@code name} of the {@link Player} that owns the {@link BankAccount} 
      * @return a new istance of {@link BankAccount} according to the {@code bankAccountType}
-     * @throws NullPointerException if {@code owner} or {@code bankAccountType} are {@code null}
+     * @throws NullPointerException if {@code owner} is {@code null}
      */
     private BankAccount createBankAccountByType(final int id,
                                                 final String owner) {
@@ -124,7 +124,6 @@ public final class MainMenuControllerImpl implements MainMenuController {
         return switch (bankAccountType) {
             case CLASSIC -> bankAccountFactory.createWithCheck(id, initialBalance, owner);
             case INFINITY  -> bankAccountFactory.createSimple(id, initialBalance, owner);
-            default -> throw new NullPointerException("BankAccountType not found");
         };
 
     }

@@ -10,17 +10,17 @@ import it.unibo.monopoly.model.transactions.api.BankAccountFactory;
 public final class BankAccountFactoryImpl implements BankAccountFactory {
 
     @Override
-    public BankAccount createSimple(int id, int initialBalance, String owner) {
+    public BankAccount createSimple(final int id, final int initialBalance, final String owner) {
         return new SimpleBankAccountImpl(id, initialBalance, owner);
     }
 
     @Override
-    public BankAccount createSimple(int id, String owner) {
+    public BankAccount createSimple(final int id, final String owner) {
         return new SimpleBankAccountImpl(id, owner);
     }
 
     @Override
-    public BankAccount createWithCheck(int id, int initialBalance, String owner) {
+    public BankAccount createWithCheck(final int id, final int initialBalance, final String owner) {
         return new CheckValidityBankAccount(createSimple(id, initialBalance, owner), 
                                             accounts -> accounts.getBalance() > 0);
     }
