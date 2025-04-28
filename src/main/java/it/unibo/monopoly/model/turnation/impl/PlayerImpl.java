@@ -19,9 +19,9 @@ public final class PlayerImpl implements Player {
     /**
      * Private constructor used internally by the static factory method {@link #of(int, String, Color)}.
      *
-     * @param id the {@link Identifiable} representing the player
-     * @param name  the name chosen by the player
-     * @param color the {@link Color} representing the player
+     * @param id the {@link Identifiable} representing the {@link Player}
+     * @param owner the {@code name} chosen by the {@link Player} for himself
+     * @param color the {@link Color} representing the {@link Player}
      */
     private PlayerImpl(final int id, final String name, final Color color) {
         this.id = id;
@@ -65,12 +65,11 @@ public final class PlayerImpl implements Player {
     /**
      * Static factory method for creating a new {@link PlayerImpl} instance.
      * <p>
-     * This method applies the Factory Method pattern (static variant),
-     * allowing centralized creation logic and possible future extensions.
-     *
-     * @param id the {@link Identifiable} representing the player
-     * @param name the name chosen by the player
-     * @param color the {@link Color} representing the player
+     * This method applies the Factory Method pattern (static variant).
+     * 
+     * @param id the {@link Identifiable} representing the {@link Player}
+     * @param owner the {@code name} chosen by the {@link Player} for himself
+     * @param color the {@link Color} representing the {@link Player}
      * @return a new {@link Player} instance
      * @throws NullPointerException if {@code id}, {@code name} or {@code color} are {@code null}
      */

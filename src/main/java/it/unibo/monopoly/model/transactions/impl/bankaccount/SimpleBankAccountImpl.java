@@ -11,8 +11,8 @@ public final class SimpleBankAccountImpl implements BankAccount {
 
     private static final int DEFAULT_BALANCE = 1000;
     private int balance;
+    private final int id;
     private final String ownerName;
-
 
     /**
      * Creates a new BankAccount with an initial amount of money.
@@ -21,7 +21,7 @@ public final class SimpleBankAccountImpl implements BankAccount {
      * @throws IllegalArgumentException if the {@code initialBalance} is negative
      * @throws NullPointerException if the {@code owner} is {@code null}
      */
-    public SimpleBankAccountImpl(final int initialBalance, final String owner) {
+    public SimpleBankAccountImpl(final int id, final int initialBalance, final String owner) {
         Objects.requireNonNull(owner);
         if (initialBalance < 0) {
             throw new IllegalArgumentException("The initial balance of the account cannot be negative");
@@ -29,14 +29,15 @@ public final class SimpleBankAccountImpl implements BankAccount {
 
         this.balance += initialBalance;
         this.ownerName = owner;
+        this.id = id;
     }
 
     /**
      * Creates a BankAccount with a default, positive and non-zero amount of money.
      * @param owner the name of the player that owns the {@link BankAccount}
      */
-    public SimpleBankAccountImpl(final String owner) {
-        this(DEFAULT_BALANCE, owner);
+    public SimpleBankAccountImpl(final int id, final String owner) {
+        this(id, DEFAULT_BALANCE, owner);
     }
 
     @Override
@@ -70,6 +71,11 @@ public final class SimpleBankAccountImpl implements BankAccount {
     @Override
     public String getPlayerName() {
         return this.ownerName;
+    }
+
+    @Override
+    public Integer getID() {
+        return id;
     }
 
 

@@ -11,7 +11,6 @@ public final class ImmutableBankAccountCopy implements BankAccount {
 
     private final BankAccount account;
 
-
     /**
      * Creates a new {@link ImmutableBankAccountCopy}.
      * @param account the account to wrap and to regulate access to
@@ -47,6 +46,13 @@ public final class ImmutableBankAccountCopy implements BankAccount {
     }
 
     @Override
+    public Integer getID() {
+        return this.account.getID();
+    }
+
+
+
+    @Override
     public int hashCode() {
         final int prime = 31;
         int result = 1;
@@ -75,6 +81,4 @@ public final class ImmutableBankAccountCopy implements BankAccount {
         }
         return true;
     }
-
-
 }

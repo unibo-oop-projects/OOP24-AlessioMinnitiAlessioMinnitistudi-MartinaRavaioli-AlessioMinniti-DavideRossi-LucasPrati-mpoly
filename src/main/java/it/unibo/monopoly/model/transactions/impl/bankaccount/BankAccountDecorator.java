@@ -42,4 +42,9 @@ abstract class BankAccountDecorator implements BankAccount {
     public boolean canContinue() {
         return this.account.canContinue();
     }
+
+    @Override
+    public Integer getID() {
+        return this.account.getID();
+    }
 }
