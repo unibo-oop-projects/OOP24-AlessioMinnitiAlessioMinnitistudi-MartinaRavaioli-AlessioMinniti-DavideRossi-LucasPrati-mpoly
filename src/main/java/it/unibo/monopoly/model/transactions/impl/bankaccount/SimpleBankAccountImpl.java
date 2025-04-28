@@ -1,5 +1,7 @@
 package it.unibo.monopoly.model.transactions.impl.bankaccount;
 
+import java.util.Objects;
+
 import it.unibo.monopoly.model.transactions.api.BankAccount;
 
 /**
@@ -15,9 +17,12 @@ public final class SimpleBankAccountImpl implements BankAccount {
     /**
      * Creates a new BankAccount with an initial amount of money.
      * @param initialBalance The initial amount of money
-     * @param owner the name of the player taht owns the {@link BankAccount} 
+     * @param owner the name of the player that owns the {@link BankAccount} 
+     * @throws IllegalArgumentException if the {@code initialBalance} is negative
+     * @throws NullPointerException if the {@code owner} is {@code null}
      */
     public SimpleBankAccountImpl(final int initialBalance, final String owner) {
+        Objects.requireNonNull(owner);
         if (initialBalance < 0) {
             throw new IllegalArgumentException("The initial balance of the account cannot be negative");
         }
@@ -28,7 +33,7 @@ public final class SimpleBankAccountImpl implements BankAccount {
 
     /**
      * Creates a BankAccount with a default, positive and non-zero amount of money.
-     * @param owner the name of the player taht owns the {@link BankAccount}
+     * @param owner the name of the player that owns the {@link BankAccount}
      */
     public SimpleBankAccountImpl(final String owner) {
         this(DEFAULT_BALANCE, owner);
