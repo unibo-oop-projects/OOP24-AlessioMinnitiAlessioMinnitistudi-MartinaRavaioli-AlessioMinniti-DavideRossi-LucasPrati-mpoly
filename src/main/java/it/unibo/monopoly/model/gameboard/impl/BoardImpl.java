@@ -10,6 +10,7 @@ import it.unibo.monopoly.model.gameboard.api.Property;
 import it.unibo.monopoly.model.gameboard.api.Tile;
 import it.unibo.monopoly.model.turnation.api.Player;
 import it.unibo.monopoly.model.turnation.api.Position;
+import it.unibo.monopoly.model.turnation.impl.PositionImpl;
 
 /**
  * board implementation.
@@ -56,9 +57,13 @@ public class BoardImpl implements Board {
     public List<Pawn> getPawninTile(Tile tile){
         List<Pawn> pawnsInTile=new ArrayList<>();
 
-        for(Pawn p in pawnsInTile){
-            if(p.getPosition().compareTo(tile.getPosition()))
+        for(Pawn p : pawnsInTile){
+            if(((PositionImpl)p.getPosition()).equals((PositionImpl)tile.getPosition())){
+                pawnsInTile.add(p);
+            }
         }
+
+        return pawnsInTile;
     }
 
     @Override

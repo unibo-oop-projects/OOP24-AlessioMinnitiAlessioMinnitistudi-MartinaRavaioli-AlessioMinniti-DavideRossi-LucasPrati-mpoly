@@ -25,6 +25,6 @@ public class PositionImpl implements Position,Comparable<Position> {
     @Override
     public int compareTo(Position o) {
         return this.pos.compareTo(o.getPos());
-    } 
+    }
     
 }
