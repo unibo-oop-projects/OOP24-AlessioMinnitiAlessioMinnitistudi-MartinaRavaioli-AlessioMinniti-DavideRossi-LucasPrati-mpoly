@@ -14,13 +14,14 @@ import javax.swing.JPanel;
 import it.unibo.monopoly.controller.api.GameboardLogic;
 import it.unibo.monopoly.controller.impl.GameboardLogicImpl;
 import it.unibo.monopoly.model.gameboard.api.Tile;
+import it.unibo.monopoly.model.turnation.api.Player;
 
 public class GameboardView extends JFrame{
     private final GameboardLogic logic;
     private final List<JPanel> shapes=List.of(new PawnCircle(Color.RED),new PawnTriangle(Color.BLUE),new PawnSquare(Color.GREEN),new PawnSquare(Color.YELLOW));
     private final List<JPanel> tilesView=new ArrayList<>();
     
-    public GameboardView(int size, int players, List<Tile> tiles){
+    public GameboardView(int size, List<Player> players, List<Tile> tiles){
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setSize(70*size, 70*size);
         this.logic=new GameboardLogicImpl();
@@ -52,7 +53,7 @@ public class GameboardView extends JFrame{
             panel.add(stripe, BorderLayout.NORTH);
         }
 
-        for(int i=0; i < players; i++){
+        for(int i=0; i < players.size(); i++){
             JPanel panel = this.tilesView.get(0);
             panel.add(shapes.get(i));
         }
