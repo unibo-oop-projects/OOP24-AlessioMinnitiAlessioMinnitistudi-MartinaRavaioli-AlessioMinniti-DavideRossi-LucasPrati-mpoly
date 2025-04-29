@@ -42,7 +42,7 @@ public class PawnImpl extends AbstractIdPlayerImpl implements Pawn {
 
     @Override
     public void move(int steps) {
-        this.pos.setPos(steps);
+        this.pos.setPos(this.pos.getPos()+steps);
     }
 
  
