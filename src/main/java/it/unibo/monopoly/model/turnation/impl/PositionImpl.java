@@ -5,10 +5,10 @@ import it.unibo.monopoly.model.turnation.api.Position;
 /**
  * position implementation.
 */
-public class PositionImpl implements Position {
-    private int pos;
+public class PositionImpl implements Position,Comparable<Position> {
+    private Integer pos;
 
-    public PositionImpl(int value){
+    public PositionImpl(Integer value){
         this.pos=value;
     }
 
@@ -20,6 +20,11 @@ public class PositionImpl implements Position {
     @Override
     public void setPos(int value) {
         this.pos=value;
+    }
+
+    @Override
+    public int compareTo(Position o) {
+        return this.pos.compareTo(o.getPos());
     } 
     
 }
