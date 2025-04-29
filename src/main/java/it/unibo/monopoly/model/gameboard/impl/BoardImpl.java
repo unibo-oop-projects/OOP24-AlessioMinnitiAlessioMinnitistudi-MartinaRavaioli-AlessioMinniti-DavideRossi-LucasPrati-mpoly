@@ -44,6 +44,14 @@ public class BoardImpl implements Board {
         return tiles.get(pos.getPos());
     }
 
+    public void removePawn(Pawn p){
+        this.pawns.remove(p);
+    }
+
+    public void addPawn(Pawn p){
+        this.pawns.add(p);
+    }
+
     //buy a proprierty
     @Override
     public void buyProperty(final Property prop, final Player owner) {
