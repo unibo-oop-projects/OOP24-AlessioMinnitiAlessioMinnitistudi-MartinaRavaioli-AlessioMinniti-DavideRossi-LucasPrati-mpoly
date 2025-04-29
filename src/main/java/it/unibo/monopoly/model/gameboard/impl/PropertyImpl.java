@@ -31,4 +31,9 @@ public class PropertyImpl implements Property {
     public final int getRent() { 
         return this.price; 
     }
+    @Override
+    public Type getType() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getType'");
+    }
 }

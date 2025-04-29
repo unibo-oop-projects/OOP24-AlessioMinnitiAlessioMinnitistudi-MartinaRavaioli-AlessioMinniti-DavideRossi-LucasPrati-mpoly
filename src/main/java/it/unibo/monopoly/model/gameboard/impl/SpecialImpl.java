@@ -11,4 +11,10 @@ public class SpecialImpl implements Special {
     public final Effect getEffect() { 
         return null; 
     }
+
+    @Override
+    public Type getType() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getType'");
+    }
 }
