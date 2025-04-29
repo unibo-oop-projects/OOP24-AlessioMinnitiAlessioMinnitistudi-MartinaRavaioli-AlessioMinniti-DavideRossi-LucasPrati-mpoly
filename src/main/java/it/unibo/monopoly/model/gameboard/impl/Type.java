@@ -1,7 +1,5 @@
 package it.unibo.monopoly.model.gameboard.impl;
 
-import java.awt.Color;
-
 public enum Type{
     RED,
     BLUE,
@@ -10,5 +8,6 @@ public enum Type{
     PURPLE,
     ORANGE,
     CYAN,
-    BLACK
+    BLACK,
+    WHITE
 }
