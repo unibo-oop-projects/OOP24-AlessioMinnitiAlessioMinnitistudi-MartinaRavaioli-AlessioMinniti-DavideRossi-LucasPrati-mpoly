@@ -9,7 +9,6 @@ public interface Property extends Tile {
     /**
      * @return price
      */
-    int getRent();
 
     void buildHouse() throws Exception;
 
@@ -17,7 +16,7 @@ public interface Property extends Tile {
 
     int getPrice();
 
-    int getHousePrice();
+    void buy();
 
-    int getHotelPrice();
+    void sell();
 }
