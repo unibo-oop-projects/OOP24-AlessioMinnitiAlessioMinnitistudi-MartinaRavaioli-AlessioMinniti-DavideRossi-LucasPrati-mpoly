@@ -2,6 +2,7 @@ package it.unibo.monopoly.model.gameboard.impl;
 
 import it.unibo.monopoly.model.gameboard.api.Property;
 import it.unibo.monopoly.model.turnation.api.Player;
+import it.unibo.monopoly.model.turnation.api.Position;
 
 /**
  * property implementation.
@@ -30,5 +31,10 @@ public class PropertyImpl implements Property {
     @Override
     public final int getRent() { 
         return this.price; 
+    }
+    @Override
+    public Position getPosition() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getPosition'");
     }
 }

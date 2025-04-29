@@ -53,6 +53,14 @@ public class BoardImpl implements Board {
         return tiles.get(p.getPosition().getPos());
     }
 
+    public List<Pawn> getPawninTile(Tile tile){
+        List<Pawn> pawnsInTile=new ArrayList<>();
+
+        for(Pawn p in pawnsInTile){
+            if(p.getPosition().compareTo(tile.getPosition()))
+        }
+    }
+
     @Override
     public void movePawn(Pawn player, Collection<Integer> value) {
         int steps = value.stream().mapToInt(Integer::intValue).sum();
