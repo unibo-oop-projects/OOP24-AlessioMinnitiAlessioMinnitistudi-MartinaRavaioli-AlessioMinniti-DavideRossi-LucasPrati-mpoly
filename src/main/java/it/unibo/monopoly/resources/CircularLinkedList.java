@@ -1,13 +1,12 @@
 package it.unibo.monopoly.resources;
 
-import org.apache.commons.lang3.ObjectUtils;
 
 public class CircularLinkedList<T> {
     private Node<T> head = null;
     private Node<T> tail = null;
 
     public void addNode(T value) {
-        Node<T> newNode = new Node<T>(value);
+        Node<T> newNode = new Node<>(value);
     
         if (head == null) {
             head = newNode;
@@ -26,7 +25,7 @@ public class CircularLinkedList<T> {
             if(currentNode.getValue()==value){
                 return currentNode.getNextNode().getValue();
             }
-            currentNode=currentNode.getNextNode();
+            currentNode = currentNode.getNextNode();
         }
 
         return null;

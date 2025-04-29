@@ -6,10 +6,10 @@ import it.unibo.monopoly.resources.Identifiable;
 /**
  * player implementation.
 */
-public abstract class PlayerImpl implements Player,Identifiable<Integer> {
+public abstract class AbstractIdPlayerImpl implements Player,Identifiable<Integer> {
     private int id;
 
-    public PlayerImpl(int id){
+    public AbstractIdPlayerImpl(int id){
         this.id=id;
     }
 
