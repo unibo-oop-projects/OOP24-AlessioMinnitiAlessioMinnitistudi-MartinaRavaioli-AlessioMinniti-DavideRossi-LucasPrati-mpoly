@@ -11,13 +11,7 @@ public class GameboardActionControllerImpl implements GameboardActionController{
 
     @Override
     public void startGame(int size, List<Player> players, List<Tile> tiles) {
-        new GameboardView(10,4,null); 
-    }
-
-    @Override
-    public void setPlayers(String name) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'setPlayers'");
+        new GameboardView(10,players,null); 
     }
 
     @Override

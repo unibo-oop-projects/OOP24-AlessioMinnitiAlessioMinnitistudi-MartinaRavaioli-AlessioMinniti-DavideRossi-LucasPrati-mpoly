@@ -8,7 +8,5 @@ import it.unibo.monopoly.model.turnation.api.Player;
 public interface GameboardActionController {
     void startGame(int size, List<Player> players, List<Tile> tiles);
 
-    void setPlayers(String name);
-
     void gameOver();
 }
