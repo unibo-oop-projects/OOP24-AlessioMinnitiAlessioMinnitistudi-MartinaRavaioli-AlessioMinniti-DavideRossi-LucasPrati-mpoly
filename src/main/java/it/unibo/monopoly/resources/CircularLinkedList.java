@@ -21,7 +21,7 @@ public class CircularLinkedList<T> {
     public T giveNextNode(T value){
         Node<T> currentNode = head;
 
-        if(currentNode != null){
+        while(currentNode != null){
             if(currentNode.getValue()==value){
                 return currentNode.getNextNode().getValue();
             }
