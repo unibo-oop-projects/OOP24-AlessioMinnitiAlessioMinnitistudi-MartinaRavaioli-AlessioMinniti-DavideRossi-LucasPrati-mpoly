@@ -6,18 +6,19 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
-import it.unibo.monopoly.model.transactions.api.Bank;
+// import it.unibo.monopoly.model.transactions.api.Bank;
 import it.unibo.monopoly.model.transactions.api.BankAccount;
 import it.unibo.monopoly.model.transactions.api.BankAccountFactory;
 import it.unibo.monopoly.model.transactions.api.BankAccountType;
 import it.unibo.monopoly.model.transactions.api.TitleDeed;
-import it.unibo.monopoly.model.transactions.impl.BankImpl;
+// import it.unibo.monopoly.model.transactions.impl.BankImpl;
 import it.unibo.monopoly.model.transactions.impl.bankaccount.BankAccountFactoryImpl;
 import it.unibo.monopoly.controller.api.MainMenuController;
 import it.unibo.monopoly.model.turnation.api.Player;
 import it.unibo.monopoly.model.turnation.impl.PlayerImpl;
 import it.unibo.monopoly.utils.Configuration;
 import it.unibo.monopoly.utils.Identifiable;
+// import it.unibo.monopoly.utils.ResourceLoader;
 
 /**
  * MainMenuLogic implementation.
@@ -75,13 +76,16 @@ public final class MainMenuControllerImpl implements MainMenuController {
             players.add(PlayerImpl.of(id, name, color));
             accounts.add(createBankAccountByType(id, name));
             // TODO create pawns
-            // pawns.add();
+            // pawns.add(PawnsImpl.of(id, color));
         }
 
-        // TODO import tiles from file with a private method
+        // TODO import titles from file with a private method
+        // titleDeeds = ResourceLoader.loadTitleDeed(config.getTitleDeedsFilename());
 
-        // create the bankImpl with provided sets of accounts and tiles
-        final Bank bank = new BankImpl(accounts, titleDeeds);
+        // create the bankImpl with provided sets of accounts and titles
+        // final Bank bank = new BankImpl(accounts, titleDeeds);
+
+        // TODO launch a new GUI for the game and put all these data to it
     }
 
     @Override
@@ -125,6 +129,5 @@ public final class MainMenuControllerImpl implements MainMenuController {
             case CLASSIC -> bankAccountFactory.createWithCheck(id, initialBalance, owner);
             case INFINITY  -> bankAccountFactory.createSimple(id, initialBalance, owner);
         };
-
     }
 }

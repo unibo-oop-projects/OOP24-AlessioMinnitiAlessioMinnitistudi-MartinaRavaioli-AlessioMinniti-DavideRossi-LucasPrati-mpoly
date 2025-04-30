@@ -4,12 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Frame;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.nio.charset.StandardCharsets;
-import java.util.stream.Collectors;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -22,6 +16,7 @@ import javax.swing.SwingConstants;
 
 import it.unibo.monopoly.utils.Configuration;
 import it.unibo.monopoly.utils.GuiUtils;
+import it.unibo.monopoly.utils.ResourceLoader;
 
 
 /**
@@ -34,9 +29,6 @@ public final class RulesWindowView extends JDialog {
     private static final String TITLE_WINDOW = "Monopoly - Rules";
     private static final String TITLE_TEXT = "Rules";
     private static final String EXIT_TEXT = "Exit";
-
-    private static final String ERROR_FILE_NOT_FOUND = "Impossibile trovare il file delle regole: ";
-    private static final String ERROR_DURING_READING_FILE = "Errore durante la lettura del file delle regole: ";
 
     private static final int TOP_BORDER = 10;
     private static final int BOTTOM_BORDER = 10;
@@ -71,6 +63,7 @@ public final class RulesWindowView extends JDialog {
         final JTextArea rulesTextArea = new JTextArea();
         rulesTextArea.setEditable(false);
         rulesTextArea.setFont(new Font(config.getFontName(), Font.PLAIN, config.getSmallFont()));
+        rulesTextArea.setText(ResourceLoader.loadTextResource(config.getRulesFilenamename()));
 
         // Create a scrollable view for the rulesTextArea
         final JScrollPane scrollPane = new JScrollPane(rulesTextArea);
@@ -83,23 +76,6 @@ public final class RulesWindowView extends JDialog {
         mainPanel.add(scrollPane, BorderLayout.CENTER);
         mainPanel.add(exitButton, BorderLayout.SOUTH);
 
-        loadRulesFromFile(rulesTextArea, config.getRulesFilenamename());
         GuiUtils.refresh(this);
-    }
-
-    private void loadRulesFromFile(final JTextArea textArea, final String filename) {
-        // Filename is safe: already validated in configuration, no need to check here
-        try (InputStream is = getClass().getResourceAsStream("/" + filename)) {
-            if (is == null) {
-                textArea.setText(ERROR_FILE_NOT_FOUND + filename);
-            } else {
-                try (BufferedReader reader = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8))) {
-                    final String rules = reader.lines().collect(Collectors.joining("\n"));
-                    textArea.setText(rules);
-                }
-            }
-        } catch (final IOException  e) {
-            textArea.setText(ERROR_DURING_READING_FILE + filename);
-        }
     }
 }
