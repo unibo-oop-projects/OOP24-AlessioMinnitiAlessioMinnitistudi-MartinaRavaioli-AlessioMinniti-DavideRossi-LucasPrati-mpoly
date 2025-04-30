@@ -1,11 +1,14 @@
 package it.unibo.monopoly.controller;
 
-
 import java.awt.Color;
+import java.io.IOException;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+
+import it.unibo.monopoly.controller.api.MainMenuController;
+
 // import it.unibo.monopoly.model.transactions.api.Bank;
 import it.unibo.monopoly.model.transactions.api.BankAccount;
 import it.unibo.monopoly.model.transactions.api.BankAccountFactory;
@@ -13,12 +16,13 @@ import it.unibo.monopoly.model.transactions.api.BankAccountType;
 import it.unibo.monopoly.model.transactions.api.TitleDeed;
 // import it.unibo.monopoly.model.transactions.impl.BankImpl;
 import it.unibo.monopoly.model.transactions.impl.bankaccount.BankAccountFactoryImpl;
-import it.unibo.monopoly.controller.api.MainMenuController;
 import it.unibo.monopoly.model.turnation.api.Player;
 import it.unibo.monopoly.model.turnation.impl.PlayerImpl;
+
 import it.unibo.monopoly.utils.Configuration;
 import it.unibo.monopoly.utils.Identifiable;
-// import it.unibo.monopoly.utils.ResourceLoader;
+import it.unibo.monopoly.utils.ResourceLoader;
+
 
 /**
  * MainMenuLogic implementation.
@@ -58,8 +62,8 @@ public final class MainMenuControllerImpl implements MainMenuController {
     }
 
     @Override
-    public void onClickStart(final Map<Color, String> playersSetup) {
-        // TODO init all the game (Player, Pawn, BankAccount according to the type chosen)
+    public void onClickStart(final Map<Color, String> playersSetup) throws IOException {
+        // init all the game (Player, Pawn, BankAccount according to the type chosen)
         final Set<Player> players = new HashSet<>();
         final Set<BankAccount> accounts = new HashSet<>();
         // final Set<Pawn> pawns = new HashSet<>();
@@ -79,8 +83,8 @@ public final class MainMenuControllerImpl implements MainMenuController {
             // pawns.add(PawnsImpl.of(id, color));
         }
 
-        // TODO import titles from file with a private method
-        // titleDeeds = ResourceLoader.loadTitleDeed(config.getTitleDeedsFilename());
+        // import titles from file with a private method
+        titleDeeds.addAll(ResourceLoader.loadTitleDeed("TitleDeedsFilename"));
 
         // create the bankImpl with provided sets of accounts and titles
         // final Bank bank = new BankImpl(accounts, titleDeeds);

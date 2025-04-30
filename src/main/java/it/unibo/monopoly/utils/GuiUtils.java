@@ -12,6 +12,7 @@ import java.util.Objects;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.WindowConstants;
 
 /**
@@ -143,5 +144,23 @@ public final class GuiUtils {
             window.repaint();
             window.setVisible(true);
         }
+    }
+
+    /**
+     * Shows an error message dialog and then terminates the entire application.
+     * <p>
+     * @param parent  the parent component for the dialog; may be {@code null}
+     *                in which case a default frame is used
+     * @param title   the title to display on the dialog window
+     * @param message the error message text to show to the user
+     */
+    public static void showErrorAndExit(final Window parent, String title, String message) {
+        JOptionPane.showMessageDialog(
+            parent,
+            message,
+            title,
+            JOptionPane.ERROR_MESSAGE
+        );
+        System.exit(0);
     }
 }

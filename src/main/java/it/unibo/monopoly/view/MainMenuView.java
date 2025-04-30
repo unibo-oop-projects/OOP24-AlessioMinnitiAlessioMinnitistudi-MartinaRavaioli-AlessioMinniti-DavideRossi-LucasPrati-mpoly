@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -253,10 +254,17 @@ public final class MainMenuView extends JFrame {
         final Map<Color, String> playersSetup = playersInfo.entrySet().stream()
             .collect(Collectors.toMap(
                 Map.Entry::getKey,                      // chiave: Color
-                e -> e.getValue().getText().trim()      // valore: testo dal JTextField pulito con trim()
+                e -> e.getValue().getText().trim()      // valore: testo dal JTextField pulito da spazi extra con trim()
             ));
-
-        controller.onClickStart(playersSetup);
+        try {
+            controller.onClickStart(playersSetup);
+        } catch (IOException e) {
+            GuiUtils.showErrorAndExit(
+                this,
+                e.getMessage(),
+                "Error loading Title Deeds"
+                );
+            }
     }
 
     private void updateSettingsButton() {
