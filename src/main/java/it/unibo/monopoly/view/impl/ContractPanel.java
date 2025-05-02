@@ -6,10 +6,15 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.Toolkit;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.List;
 import java.util.Vector;
 import java.util.stream.Collectors;
 
+import javax.swing.BorderFactory;
+import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
@@ -27,9 +32,10 @@ import it.unibo.monopoly.utils.GuiUtils;
  */
 final class ContractPanel extends JPanel {
 
-    private static final long serialVersionUID = 42L;
+    private static final long serialVersionUID = 43L;
     private static final int BIG_FONT_SIZE = 15;
     private static final int N_ROWS = 5;
+    private static final int PROPORTION = 5;
 
     private ContractPanel() {
         this.setLayout(new BorderLayout());
@@ -85,14 +91,44 @@ final class ContractPanel extends JPanel {
     }
 
     private Component rentOptionsList(final List<RentOption> options) {
+
         final JList<RentOption> optJList = new JList<>(
                                         options.stream()
-                                                .collect(Collectors.toCollection(() -> new Vector<RentOption>())));
+                                                .collect(Collectors.toCollection(() -> new Vector<RentOption>()))); //NOPMD
+                                                /*JList richiede un Vector o un array di oggetti in input 
+                                                al costruttore. Passare un array di oggetti
+                                                porterebbe alla perdita della type variable 
+                                                e eventualmente problemi di type safety
+                                                */
         optJList.setCellRenderer(new ListItem());
 
-        final JScrollPane scrollableOptionsList = new JScrollPane(optJList, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+        optJList.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(final MouseEvent e) {
+                final int pos = optJList.locationToIndex(e.getPoint());
+                final RentOption option = optJList.getModel().getElementAt(pos);
+                if (!option.getDescription().isBlank()) {
+                    displayDescription(option);
+                }
+            }
+        });
+
+        return new JScrollPane(optJList, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
         JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        return scrollableOptionsList;
+    }
+
+    private void displayDescription(final RentOption option) {
+        final JDialog descriptionDialog = new JDialog();
+        final JTextArea descriptionJTextArea = new JTextArea();
+        descriptionJTextArea.setLineWrap(true);
+        descriptionJTextArea.setWrapStyleWord(true);
+        descriptionJTextArea.setText(option.getDescription());
+        descriptionDialog.add(descriptionJTextArea);
+        final Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
+        final int sw = (int) screen.getWidth();
+        final int sh = (int) screen.getHeight();
+        descriptionDialog.setSize(sw / PROPORTION, sh / PROPORTION);
+        descriptionDialog.setVisible(true);
     }
 
     static ContractPanel createCard(final TitleDeed titleDeed) {
@@ -103,19 +139,21 @@ final class ContractPanel extends JPanel {
 
     private static final class ListItem implements ListCellRenderer<RentOption> {
 
-        final JPanel optionPanel = new JPanel();
-        final JLabel titleLabel = new JLabel();
-        final JLabel priceLabel = new JLabel();
-        final JTextArea descriptionJTextArea = new JTextArea();
+        private final JPanel optionPanel = new JPanel();
+        private final JLabel titleLabel = new JLabel();
+        private final JLabel priceLabel = new JLabel();
 
         private ListItem() {
             priceLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-            descriptionJTextArea.setLineWrap(true);
-            descriptionJTextArea.setWrapStyleWord(true);
             optionPanel.setLayout(new BorderLayout());
             optionPanel.add(titleLabel, BorderLayout.WEST);
             optionPanel.add(priceLabel, BorderLayout.CENTER);
-            optionPanel.add(descriptionJTextArea, BorderLayout.SOUTH);    
+            optionPanel.setBorder(
+                BorderFactory.createCompoundBorder(
+                    BorderFactory.createLineBorder(Color.LIGHT_GRAY),
+                    BorderFactory.createEmptyBorder(10, 10, 10, 10)
+                )
+            );
         }
 
 
@@ -128,15 +166,6 @@ final class ContractPanel extends JPanel {
                 final boolean cellHasFocus) {
             titleLabel.setText(value.getTitle());
             priceLabel.setText(Integer.toString(value.getPrice()));
-            if (!value.getDescription().isEmpty()) {
-                descriptionJTextArea.setText(value.getDescription());            
-                descriptionJTextArea.setSize(list.getWidth(),Short.MAX_VALUE);
-                Dimension preferred = descriptionJTextArea.getPreferredSize();
-                descriptionJTextArea.setPreferredSize(preferred);
-                descriptionJTextArea.setVisible(true);
-            }else{
-                descriptionJTextArea.setVisible(false);
-            }
             return optionPanel;
         }
     }
