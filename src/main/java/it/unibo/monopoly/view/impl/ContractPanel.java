@@ -3,6 +3,7 @@ package it.unibo.monopoly.view.impl;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.util.List;
@@ -102,6 +103,22 @@ final class ContractPanel extends JPanel {
 
     private static final class ListItem implements ListCellRenderer<RentOption> {
 
+        final JPanel optionPanel = new JPanel();
+        final JLabel titleLabel = new JLabel();
+        final JLabel priceLabel = new JLabel();
+        final JTextArea descriptionJTextArea = new JTextArea();
+
+        private ListItem() {
+            priceLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+            descriptionJTextArea.setLineWrap(true);
+            descriptionJTextArea.setWrapStyleWord(true);
+            optionPanel.setLayout(new BorderLayout());
+            optionPanel.add(titleLabel, BorderLayout.WEST);
+            optionPanel.add(priceLabel, BorderLayout.CENTER);
+            optionPanel.add(descriptionJTextArea, BorderLayout.SOUTH);    
+        }
+
+
         @Override
         public Component getListCellRendererComponent(
                 final JList<? extends RentOption> list, 
@@ -109,13 +126,16 @@ final class ContractPanel extends JPanel {
                 final int index,
                 final boolean isSelected, 
                 final boolean cellHasFocus) {
-            final JPanel optionPanel = new JPanel();
-            optionPanel.setLayout(new BorderLayout());
-            optionPanel.add(new JLabel(value.getTitle()), BorderLayout.WEST);
-            optionPanel.add(new JLabel(Integer.toString(value.getPrice()), SwingConstants.RIGHT), BorderLayout.CENTER);
+            titleLabel.setText(value.getTitle());
+            priceLabel.setText(Integer.toString(value.getPrice()));
             if (!value.getDescription().isEmpty()) {
-                final JTextArea descriptionJTextArea = new JTextArea(value.getDescription());
-                optionPanel.add(descriptionJTextArea, BorderLayout.SOUTH);
+                descriptionJTextArea.setText(value.getDescription());            
+                descriptionJTextArea.setSize(list.getWidth(),Short.MAX_VALUE);
+                Dimension preferred = descriptionJTextArea.getPreferredSize();
+                descriptionJTextArea.setPreferredSize(preferred);
+                descriptionJTextArea.setVisible(true);
+            }else{
+                descriptionJTextArea.setVisible(false);
             }
             return optionPanel;
         }
