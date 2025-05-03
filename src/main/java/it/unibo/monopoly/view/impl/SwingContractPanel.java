@@ -30,18 +30,19 @@ import it.unibo.monopoly.utils.GuiUtils;
 /**
  * A panel to visualise all information related to a {@link TitleDeed}.
  */
-final class ContractPanel extends JPanel {
+public final class SwingContractPanel extends JPanel {
 
     private static final long serialVersionUID = 43L;
     private static final int BIG_FONT_SIZE = 15;
     private static final int N_ROWS = 5;
     private static final int PROPORTION = 5;
 
-    private ContractPanel() {
+    private SwingContractPanel() {
         this.setLayout(new BorderLayout());
     }
 
-    private void renderPanel(final TitleDeed titleDeed) {
+    private void displayTitleDeed(final TitleDeed titleDeed) {
+        this.removeAll();
         final JPanel northPanel = new JPanel();
         northPanel.setLayout(new GridLayout(N_ROWS, 1)); 
 
@@ -131,12 +132,6 @@ final class ContractPanel extends JPanel {
         descriptionDialog.setVisible(true);
     }
 
-    static ContractPanel createCard(final TitleDeed titleDeed) {
-        final ContractPanel panel = new ContractPanel();
-        panel.renderPanel(titleDeed);
-        return panel;
-    }
-
     private static final class ListItem implements ListCellRenderer<RentOption> {
 
         private final JPanel optionPanel = new JPanel();
@@ -168,5 +163,11 @@ final class ContractPanel extends JPanel {
             priceLabel.setText(Integer.toString(value.getPrice()));
             return optionPanel;
         }
+    }
+
+    static SwingContractPanel createCard(final TitleDeed titleDeed) {
+        final SwingContractPanel panel = new SwingContractPanel();
+        panel.displayTitleDeed(titleDeed);
+        return panel;
     }
 }
