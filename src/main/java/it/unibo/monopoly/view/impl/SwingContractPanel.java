@@ -26,11 +26,12 @@ import javax.swing.SwingConstants;
 import it.unibo.monopoly.model.transactions.api.RentOption;
 import it.unibo.monopoly.model.transactions.api.TitleDeed;
 import it.unibo.monopoly.utils.GuiUtils;
+import it.unibo.monopoly.view.api.ContractPanel;
 
 /**
  * A panel to visualise all information related to a {@link TitleDeed}.
  */
-public final class SwingContractPanel extends JPanel {
+public final class SwingContractPanel extends JPanel implements ContractPanel{
 
     private static final long serialVersionUID = 43L;
     private static final int BIG_FONT_SIZE = 15;
@@ -41,19 +42,26 @@ public final class SwingContractPanel extends JPanel {
         this.setLayout(new BorderLayout());
     }
 
-    private void displayTitleDeed(final TitleDeed titleDeed) {
+    @Override
+    public void clear() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'clear'");
+    }
+
+    @Override
+    public void displayPropertyContract(final TitleDeed deed) {
         this.removeAll();
         final JPanel northPanel = new JPanel();
         northPanel.setLayout(new GridLayout(N_ROWS, 1)); 
 
         //name label
-        final JLabel name = new JLabel(titleDeed.getName(), SwingConstants.CENTER);
+        final JLabel name = new JLabel(deed.getName(), SwingConstants.CENTER);
         name.setFont(new Font(getFont().getName(), Font.BOLD, BIG_FONT_SIZE));
 
         //group information
         final JPanel groupPanel = new JPanel();
         groupPanel.setLayout(new BorderLayout());
-        final JLabel group = new JLabel(titleDeed.getGroup(), SwingConstants.RIGHT);
+        final JLabel group = new JLabel(deed.getGroup(), SwingConstants.RIGHT);
         final JLabel colorBox = GuiUtils.colorBoxFactory(Color.BLUE, 30);
         groupPanel.add(colorBox, BorderLayout.WEST);
         groupPanel.add(group, BorderLayout.CENTER);
@@ -62,7 +70,7 @@ public final class SwingContractPanel extends JPanel {
         final JPanel ownerPanel = new JPanel();
         ownerPanel.setLayout(new BorderLayout());
         final JLabel ownerDesc = new JLabel("Proprietario: ");
-        final JLabel ownerInfo = new JLabel(titleDeed.getOwner().isPresent() ? titleDeed.getOwner().get() : "NO OWNER", 
+        final JLabel ownerInfo = new JLabel(deed.getOwner().isPresent() ? deed.getOwner().get() : "NO OWNER", 
                                             SwingConstants.RIGHT);
         ownerPanel.add(ownerDesc, BorderLayout.WEST);
         ownerPanel.add(ownerInfo, BorderLayout.CENTER);
@@ -71,7 +79,7 @@ public final class SwingContractPanel extends JPanel {
         final JPanel salePanel = new JPanel();
         salePanel.setLayout(new BorderLayout());
         final JLabel saleDesc = new JLabel("Prezzo d'acquisto: "); 
-        final JLabel salePrice = new JLabel(Integer.toString(titleDeed.getSalePrice()), SwingConstants.RIGHT);
+        final JLabel salePrice = new JLabel(Integer.toString(deed.getSalePrice()), SwingConstants.RIGHT);
         salePanel.add(saleDesc, BorderLayout.WEST);
         salePanel.add(salePrice, BorderLayout.CENTER);
 
@@ -79,7 +87,7 @@ public final class SwingContractPanel extends JPanel {
         final JPanel mortgagePanel = new JPanel();
         mortgagePanel.setLayout(new BorderLayout());
         final JLabel mortgageDesc = new JLabel("Ipoteca: ");
-        final JLabel mortgagePrice = new JLabel(Integer.toString(titleDeed.getMortgagePrice()), SwingConstants.RIGHT);
+        final JLabel mortgagePrice = new JLabel(Integer.toString(deed.getMortgagePrice()), SwingConstants.RIGHT);
         mortgagePanel.add(mortgageDesc, BorderLayout.WEST);
         mortgagePanel.add(mortgagePrice, BorderLayout.CENTER);
         northPanel.add(name);
@@ -88,7 +96,7 @@ public final class SwingContractPanel extends JPanel {
         northPanel.add(salePanel);
         northPanel.add(mortgagePanel);
         this.add(northPanel, BorderLayout.NORTH);
-        this.add(rentOptionsList(titleDeed.getRentOptions()), BorderLayout.CENTER);
+        this.add(rentOptionsList(deed.getRentOptions()), BorderLayout.CENTER);
     }
 
     private Component rentOptionsList(final List<RentOption> options) {
