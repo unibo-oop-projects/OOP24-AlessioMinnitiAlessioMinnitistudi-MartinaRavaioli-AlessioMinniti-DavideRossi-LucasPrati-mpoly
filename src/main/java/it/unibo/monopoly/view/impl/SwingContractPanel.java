@@ -172,10 +172,4 @@ public final class SwingContractPanel extends JPanel implements ContractPanel{
             return optionPanel;
         }
     }
-
-    static SwingContractPanel createCard(final TitleDeed titleDeed) {
-        final SwingContractPanel panel = new SwingContractPanel();
-        panel.displayTitleDeed(titleDeed);
-        return panel;
-    }
 }
