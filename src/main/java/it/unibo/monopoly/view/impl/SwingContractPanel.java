@@ -37,6 +37,7 @@ public final class SwingContractPanel extends JPanel implements ContractPanel{
     private static final int BIG_FONT_SIZE = 15;
     private static final int N_ROWS = 5;
     private static final int PROPORTION = 5;
+    private static final String CONTRACT_PANEL_PLACEHOLDER = "THE CONTRACT OF THE PROPERTY YOU STEPPED ONTO WILL APPEAR AS SOON AS YOU MAKE A MOVE";
 
     private SwingContractPanel() {
         this.setLayout(new BorderLayout());
@@ -44,8 +45,10 @@ public final class SwingContractPanel extends JPanel implements ContractPanel{
 
     @Override
     public void clear() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'clear'");
+        this.removeAll();
+        final JLabel contractPlaceholder = new JLabel(CONTRACT_PANEL_PLACEHOLDER);
+        //set style label
+        this.add(contractPlaceholder);
     }
 
     @Override
