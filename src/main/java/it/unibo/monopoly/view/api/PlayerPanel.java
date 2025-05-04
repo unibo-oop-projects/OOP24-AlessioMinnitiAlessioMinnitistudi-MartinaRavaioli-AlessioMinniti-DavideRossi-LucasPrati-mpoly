@@ -11,5 +11,5 @@ public interface PlayerPanel extends InfoPanel{
      * Display the information related to the {@link Player}.
      * @param pl the {@link Player} to unpack
      */
-    void displayPlayerInfo(Player pl);
+    void displayPlayer(Player pl);
 }
