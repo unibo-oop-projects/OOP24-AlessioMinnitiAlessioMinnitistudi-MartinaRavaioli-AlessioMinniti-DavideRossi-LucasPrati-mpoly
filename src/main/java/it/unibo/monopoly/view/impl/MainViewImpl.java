@@ -1,36 +1,67 @@
 package it.unibo.monopoly.view.impl;
 
-import java.util.List;
-import java.awt.Dimension;
+import java.awt.BorderLayout;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import it.unibo.monopoly.controller.GameControllerImpl;
+import it.unibo.monopoly.controller.api.GameController;
 import it.unibo.monopoly.model.transactions.api.BankAccount;
-import it.unibo.monopoly.model.transactions.api.RentOptionFactory;
 import it.unibo.monopoly.model.transactions.api.TitleDeed;
-import it.unibo.monopoly.model.transactions.impl.BaseTitleDeed;
-import it.unibo.monopoly.model.transactions.impl.RentOptionFactoryImpl;
 import it.unibo.monopoly.model.turnation.api.Player;
+import it.unibo.monopoly.view.api.AccountPanel;
+import it.unibo.monopoly.view.api.ContractPanel;
+import it.unibo.monopoly.view.api.GamePanelsFactory;
 import it.unibo.monopoly.view.api.MainGameView;
+import it.unibo.monopoly.view.api.PlayerPanel;
 
+//RENAME CLASS FOR BETTER UNDERSTANDABILITY
 public class MainViewImpl extends JFrame implements MainGameView{
 
-    private static final RentOptionFactory fact = new RentOptionFactoryImpl();
-    private static final TitleDeed prova = new BaseTitleDeed("viola", "bastoni gran sasso", 20, s -> s / 2, 5, List.of(fact.allDeedsOfGroupWithSameOwner(5),fact.allDeedsOfGroupWithSameOwner(27)));
-    private final JPanel tilePanel = ContractPanel.createCard(prova);
+    private final PlayerPanel playerInfoPanel;
+    private final AccountPanel accountInfoPanel;
+    private final ContractPanel contractPanel;
+    private final JPanel mainActionsPanel;
 
-    private MainViewImpl () {
-        mainFrame.add(tilePanel);
-        /*Dimension d = new Dimension(100, 400);
-        mainFrame.setSize(d);*/
-        mainFrame.pack();
-        mainFrame.setVisible(true);
+    private MainViewImpl (final GameController controller) {
+        GamePanelsFactory fact = new SwingPanelsFactory();
+        contractPanel = fact.contractPanel();
+        checkComponentIsJPanel(contractPanel);
+        playerInfoPanel = fact.userInfoPanel();
+        checkComponentIsJPanel(playerInfoPanel);
+        accountInfoPanel = fact.bankAccountInfoPanel();
+        checkComponentIsJPanel(accountInfoPanel);
+        mainActionsPanel = (JPanel) fact.mainCommandsPanel(controller);
+        this.getContentPane().add(buildActionPanelUI(controller),BorderLayout.CENTER);
+        this.pack();
+        this.setVisible(true);
+    }
+
+    private JPanel buildActionPanelUI (final GameController controller) {
+        final JPanel actionPanel = new JPanel();
+        actionPanel.setLayout(new BorderLayout());
+        final JPanel userInfoPanel = new JPanel();
+        userInfoPanel.setLayout(new BorderLayout());
+        userInfoPanel.add((JPanel) playerInfoPanel, BorderLayout.NORTH);
+        userInfoPanel.add((JPanel) accountInfoPanel,BorderLayout.SOUTH);
+
+        actionPanel.add(userInfoPanel,BorderLayout.NORTH);
+        actionPanel.add((JPanel) contractPanel,BorderLayout.CENTER);
+        //actionPanel.add(actionsPanel(controller),BorderLayout.WEST);
+        actionPanel.add(mainActionsPanel,BorderLayout.SOUTH);    
+        return actionPanel;  
+    }
+
+    private void checkComponentIsJPanel (Object oj) {
+        if (oj.getClass().isAssignableFrom(JPanel.class)) {
+            throw new ClassCastException("The object" + oj.toString() + "provided by the factory is not a JPanel");
+        }
     }
 
 
     public static void main(final String[] args) {
-        new MainViewImpl();
+        new MainViewImpl(new GameControllerImpl());
     }
 
 
@@ -38,5 +69,11 @@ public class MainViewImpl extends JFrame implements MainGameView{
     public void displayCurrentPlayerInfo(Player plData, BankAccount accountData) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'displayCurrentPlayerInfo'");
+    }
+
+    @Override
+    public void displayPropertyContract(TitleDeed propertyContract) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'displayPropertyContract'");
     }
 }
