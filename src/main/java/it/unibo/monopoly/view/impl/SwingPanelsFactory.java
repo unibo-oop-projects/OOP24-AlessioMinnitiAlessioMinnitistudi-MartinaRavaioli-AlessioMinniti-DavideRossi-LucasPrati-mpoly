@@ -9,6 +9,10 @@ import it.unibo.monopoly.view.api.PlayerPanel;
 import it.unibo.monopoly.view.api.AccountPanel;
 import it.unibo.monopoly.view.api.ContractPanel;
 
+/**
+ * Implementation of the {@link GamePanelsFactory}
+ * that creates {@link JPanel} components
+ */
 public class SwingPanelsFactory implements GamePanelsFactory{
 
     @Override
