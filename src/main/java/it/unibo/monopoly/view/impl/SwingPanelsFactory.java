@@ -9,7 +9,7 @@ import it.unibo.monopoly.view.api.PlayerPanel;
 import it.unibo.monopoly.view.api.AccountPanel;
 import it.unibo.monopoly.view.api.ContractPanel;
 
-public class ActionPanelComponentsFactoryImpl implements GamePanelsFactory{
+public class SwingPanelsFactory implements GamePanelsFactory{
 
     @Override
     public PlayerPanel userInfoPanel() {
