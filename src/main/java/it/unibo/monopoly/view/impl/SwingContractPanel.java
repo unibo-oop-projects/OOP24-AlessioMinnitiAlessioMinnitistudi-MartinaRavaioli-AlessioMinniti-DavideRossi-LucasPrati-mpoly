@@ -39,8 +39,9 @@ public final class SwingContractPanel extends JPanel implements ContractPanel{
     private static final int PROPORTION = 5;
     private static final String CONTRACT_PANEL_PLACEHOLDER = "THE CONTRACT OF THE PROPERTY YOU STEPPED ONTO WILL APPEAR AS SOON AS YOU MAKE A MOVE";
 
-    private SwingContractPanel() {
+    SwingContractPanel() {
         this.setLayout(new BorderLayout());
+        clear();
     }
 
     @Override
