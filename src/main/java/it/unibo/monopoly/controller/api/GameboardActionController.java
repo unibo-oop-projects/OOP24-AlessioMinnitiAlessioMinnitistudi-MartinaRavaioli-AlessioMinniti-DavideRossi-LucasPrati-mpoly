@@ -9,4 +9,6 @@ public interface GameboardActionController {
     void startGame(int size, List<Player> players, List<Tile> tiles);
 
     void gameOver();
+
+    void playerGameOver();
 }

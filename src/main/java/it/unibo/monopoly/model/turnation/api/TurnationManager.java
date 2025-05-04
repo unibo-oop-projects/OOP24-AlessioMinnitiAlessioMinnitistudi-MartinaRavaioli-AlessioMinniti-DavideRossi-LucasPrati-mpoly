@@ -18,4 +18,5 @@ public interface TurnationManager {
      * @return the dices' result
      */
     Pair<Integer, Integer> moveByDices();
+    void setOver();
 }
