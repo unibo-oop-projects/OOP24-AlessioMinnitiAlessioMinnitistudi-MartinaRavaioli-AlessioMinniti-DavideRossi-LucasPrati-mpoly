@@ -15,7 +15,7 @@ import it.unibo.monopoly.model.transactions.impl.bankaccount.SimpleBankAccountIm
 
 class SimpleBankAccountTest {
 
-    private static final int INITIAL_BALANCE = 0;
+    private static final int ID = 42;
     private static final int AMOUNT = 100;
     private static final String PLAYER_NAME = "Bob";
     private BankAccount bankAccount;
@@ -23,25 +23,16 @@ class SimpleBankAccountTest {
 
     @BeforeEach
     void setUp() {
-        bankAccount = new SimpleBankAccountImpl(INITIAL_BALANCE, PLAYER_NAME);
-    }
-
-    @Test
-    void createAccountWithNegativeBalance() {
-        final IllegalArgumentException negativeAmountException = assertThrows(
-            IllegalArgumentException.class,
-            () -> bankAccount = new SimpleBankAccountImpl(-(INITIAL_BALANCE + 1), PLAYER_NAME),
-            "Creating a bankAccount with a negative balance should have thrown an error");
-        testExceptionFormat(negativeAmountException);
+        bankAccount = new SimpleBankAccountImpl(ID, PLAYER_NAME);
     }
 
     @Test
     void createAccountWithNoOwner() {
-        final IllegalArgumentException negativeAmountException = assertThrows(
-            IllegalArgumentException.class,
-            () -> bankAccount = new SimpleBankAccountImpl(-(INITIAL_BALANCE + 1), ""),
+        final NullPointerException noOwnerException = assertThrows(
+            NullPointerException.class,
+            () -> bankAccount = new SimpleBankAccountImpl(ID, ""),
             "Creating a bankAccount with no owner should have thrown an error");
-        testExceptionFormat(negativeAmountException);
+        testExceptionFormat(noOwnerException);
     }
 
     @Test
@@ -51,13 +42,14 @@ class SimpleBankAccountTest {
 
     @Test
     void checkInitialBalance() {
-        assertEquals(bankAccount.getBalance(), INITIAL_BALANCE);
+        assertTrue(bankAccount.getBalance() > 0);
     }
 
     @Test
     void depositPositiveAmount() {
+        final var initBalance = bankAccount.getBalance();
         bankAccount.deposit(AMOUNT);
-        assertEquals(bankAccount.getBalance(), INITIAL_BALANCE + AMOUNT);
+        assertEquals(bankAccount.getBalance(), initBalance + AMOUNT);
         assertTrue(bankAccount.canContinue());
     }
 

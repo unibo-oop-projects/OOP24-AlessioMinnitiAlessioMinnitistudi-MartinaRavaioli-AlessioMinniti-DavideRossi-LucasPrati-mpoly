@@ -258,7 +258,7 @@ public final class MainMenuView extends JFrame {
             ));
         try {
             controller.onClickStart(playersSetup);
-        } catch (IOException e) {
+        } catch (final IOException e) {
             GuiUtils.showErrorAndExit(
                 this,
                 e.getMessage(),

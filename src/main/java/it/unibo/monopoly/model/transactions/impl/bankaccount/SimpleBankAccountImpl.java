@@ -2,6 +2,8 @@ package it.unibo.monopoly.model.transactions.impl.bankaccount;
 
 import java.util.Objects;
 
+import com.google.common.base.Strings;
+
 import it.unibo.monopoly.model.transactions.api.BankAccount;
 import it.unibo.monopoly.utils.Identifiable;
 
@@ -22,10 +24,10 @@ public final class SimpleBankAccountImpl implements BankAccount {
      * @param initialBalance the initial amount of money
      * @param owner the name of the player that owns the {@link BankAccount} 
      * @throws IllegalArgumentException if the {@code initialBalance} is negative
-     * @throws NullPointerException if the {@code owner} is {@code null}
+     * @throws NullPointerException if the {@code owner} is {@code null} or {@code empty}
      */
     public SimpleBankAccountImpl(final int id, final int initialBalance, final String owner) {
-        Objects.requireNonNull(owner, "the name of the owner can not be null");
+        Objects.requireNonNull(Strings.emptyToNull(owner), "The name of the owner can not be null or empty");
         if (initialBalance < 0) {
             throw new IllegalArgumentException("The initial balance of the account cannot be negative");
         }

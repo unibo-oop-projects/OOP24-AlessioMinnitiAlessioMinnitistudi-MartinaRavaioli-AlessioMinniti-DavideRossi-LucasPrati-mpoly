@@ -149,12 +149,12 @@ public final class Configuration {
 
 
     /**
-     * Pattern builder: used here because:
+     * Pattern builder: used here because:.
      * <p>
      * All the parameters of the {@link Configuration} class have a default value, which
      * means that we would like to have all the possible combinations of
      * constructors (one with three parameters, three with two parameters, three
-     * with a single parameter), which are way too many and confusing to use
+     * with a single parameter), which are way too many and confusing to use.
      * 
      */
     public static class Builder {

@@ -19,7 +19,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import it.unibo.monopoly.model.transactions.api.TitleDeed;
 
 /**
- * A small utility class to load resources (JSON, text) from the classpath.
+ * A small utility class to load resources (JSON, text and YML) from the classpath.
  * All methods are static, this class cannot be instantiated.
  */
 public final class ResourceLoader {
@@ -108,7 +108,9 @@ public final class ResourceLoader {
     /**
      * Helper that opens a classpath resource as an InputStream.
      * <p>
+     * @param filename the name of the file in {@code src/main/resources} we want to get
      * @throws IOException if the file is missing
+     * @return an {@link InputStream} to the classpath resource
      */
     private static InputStream getRequiredStream(final String filename) throws IOException {
         final var stream = Thread.currentThread()
@@ -121,12 +123,16 @@ public final class ResourceLoader {
     }
 
     /**
-     * Parses a 
-     * @param configurationBuilder
-     * @param key
-     * @param value
+     * Parses a provided {@code key-value} for set configutation's parameters.
+     * <p>
+     * @param configurationBuilder the {@link Configuration.Builder} we want to upload the data
+     * @param key the name of the element to parse
+     * @param value tha value of the element to parse
+     * @throws IllegalArgumentException if the underlying implementation does not parse value successfully
      */
-    private static void parseConfigurationKey(final Configuration.Builder configurationBuilder, final String key, final String value) {
+    private static void parseConfigurationKey(final Configuration.Builder configurationBuilder,
+                                              final String key,
+                                              final String value) {
         switch (key) {
             case "MIN_PLAYERS" -> configurationBuilder.withMin(Integer.parseInt(value));
             case "MAX_PLAYERS" -> configurationBuilder.withMax(Integer.parseInt(value));

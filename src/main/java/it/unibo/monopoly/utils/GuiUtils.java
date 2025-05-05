@@ -154,7 +154,7 @@ public final class GuiUtils {
      * @param title   the title to display on the dialog window
      * @param message the error message text to show to the user
      */
-    public static void showErrorAndExit(final Window parent, String title, String message) {
+    public static void showErrorAndExit(final Window parent, final String title, final String message) {
         JOptionPane.showMessageDialog(
             parent,
             message,
