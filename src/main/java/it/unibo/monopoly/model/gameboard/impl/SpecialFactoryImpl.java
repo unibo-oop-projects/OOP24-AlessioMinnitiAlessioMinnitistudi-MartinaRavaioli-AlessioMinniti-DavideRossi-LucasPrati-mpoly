@@ -4,10 +4,10 @@ import it.unibo.monopoly.model.gameboard.api.Effect;
 import it.unibo.monopoly.model.gameboard.api.Special;
 import it.unibo.monopoly.model.gameboard.api.SpecialFactory;
 import it.unibo.monopoly.model.transactions.api.Bank;
+import it.unibo.monopoly.model.transactions.api.TitleDeed;
 import it.unibo.monopoly.model.turnation.api.Player;
 import it.unibo.monopoly.model.turnation.api.TurnationManager;
 
-import org.apache.commons.lang3.tuple.Pair;
 
 
 public class SpecialFactoryImpl implements SpecialFactory{
@@ -93,6 +93,18 @@ public class SpecialFactoryImpl implements SpecialFactory{
             }
             
         });
+    }
+
+    @Override
+    public TitleDeed Station() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'Station'");
+    }
+
+    @Override
+    public TitleDeed Society() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'Society'");
     }
 
 }
