@@ -13,7 +13,15 @@ public final class BankAccountFactoryImpl implements BankAccountFactory {
 
     private final int initialBalance;
 
+    /**
+     * Creates a new {@link BankAccountFactoryImpl}. Based on the given {@code initialBalance}
+     * @param initialBalance the initial amount of money of each {@link BankAccount}
+     * @throws IllegalArgumentException if {@code initialBalance} is negative
+     */
     public BankAccountFactoryImpl(final int initialBalance) {
+        if(initialBalance < 0) {
+            throw new IllegalArgumentException("The initial balance of the account cannot be negative");
+        }
         this.initialBalance = initialBalance;
     }
 

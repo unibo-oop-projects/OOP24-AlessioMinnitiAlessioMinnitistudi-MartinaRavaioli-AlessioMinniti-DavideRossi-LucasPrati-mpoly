@@ -37,7 +37,7 @@ public final class MainMenuControllerImpl implements MainMenuController {
     private final int maxPlayers;
 
     /**
-     * Creates a new MainMenuController. Based on the given {@link Configuration}
+     * Creates a new {@link MainMenuController}. Based on the given {@link Configuration}
      * @param config a consistent configuration for settings
      */
     public MainMenuControllerImpl(final Configuration config) {
@@ -91,6 +91,7 @@ public final class MainMenuControllerImpl implements MainMenuController {
         // final Bank bank = new BankImpl(accounts, titleDeeds);
 
         // TODO launch a new GUI for the game and put all these data to it
+        // launch C_Game_Manager(config)
     }
 
     @Override
