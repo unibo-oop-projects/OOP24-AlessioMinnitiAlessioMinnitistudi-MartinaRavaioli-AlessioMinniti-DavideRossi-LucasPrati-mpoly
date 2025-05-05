@@ -8,8 +8,6 @@ import it.unibo.monopoly.model.turnation.api.Position;
 */
 public class PropertyImpl extends TileImpl implements Property {
     private static final int MAX_HOUSES=4;
-    private int price;
-    private boolean isOwned;
     private int nHouses;
     private boolean hotel;
     private String name;
@@ -18,12 +16,10 @@ public class PropertyImpl extends TileImpl implements Property {
     /**
      * @param price
     */
-    public PropertyImpl(final int price, Position id, Type type) { 
+    public PropertyImpl(String name, Position id, Type type) { 
         super(id,type);
         this.nHouses=0;
         this.hotel=false;
-        this.isOwned=false;
-        setPrice(price);
         setName(name);
     }
 
@@ -35,32 +31,11 @@ public class PropertyImpl extends TileImpl implements Property {
         return this.name;
     }
 
-    private void setPrice(int price){
-        this.price = price;
-    }
-
-    @Override
-    public int getPrice(){
-        return this.price;
-    }
 
     public int getNHouses(){
         return this.nHouses;
     }
 
-    public boolean isOwned(){
-        return this.isOwned;
-    }
-
-    @Override
-    public void buy(){
-        this.isOwned=true;
-    }
-
-    @Override
-    public void sell(){
-        this.isOwned=false;
-    }
 
     @Override
     public void buildHouse() throws Exception {

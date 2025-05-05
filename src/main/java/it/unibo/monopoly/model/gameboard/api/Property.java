@@ -14,9 +14,4 @@ public interface Property extends Tile {
 
     void buildHotel() throws Exception;
 
-    int getPrice();
-
-    void buy();
-
-    void sell();
 }
