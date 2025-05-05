@@ -1,5 +1,9 @@
 package it.unibo.monopoly.view.api;
 
+import java.util.Set;
+import java.util.function.Consumer;
+
+import it.unibo.monopoly.controller.api.GameController;
 import it.unibo.monopoly.model.transactions.api.BankAccount;
 import it.unibo.monopoly.model.transactions.api.TitleDeed;
 import it.unibo.monopoly.model.turnation.api.Player;
@@ -12,7 +16,9 @@ public interface MainGameView {
 
     /**
      * Display information related to the player 
-     * that is currently playing its turn.
+     * that's next to play its turn.
+     * The method also clears all panels that shows informations that are subsequent 
+     * to the player's movement.
      * @param plData General information of the player 
      * @param accountData the bank account of the player
      */
@@ -25,4 +31,13 @@ public interface MainGameView {
      * @param propertyContract the title deed to display
      */
     void displayPropertyContract(TitleDeed propertyContract);
+
+
+    /**
+     * Display interactable UI elements that show the possible actions for a player.
+     * @param actions the set of actions that the player can do. When a player selects an action
+     * this will be executed passing to the {@link Consumer} the {@link GameController} instance
+     * that was previously attached to this view.
+     */
+    void showPlayerActions(Set<Consumer<GameController>> actions);
 }
