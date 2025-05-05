@@ -31,7 +31,7 @@ public interface BankAccountFactory {
      * @throws IllegalArgumentException if {@code initialBalance} is negative
      * @throws NullPointerException if {@code owner} is {@code null}
      */
-    BankAccount createWithCheck(int id, String owner, final Predicate<BankAccount> check);
+    BankAccount createWithCheck(int id, String owner, Predicate<BankAccount> check);
 
 
 }

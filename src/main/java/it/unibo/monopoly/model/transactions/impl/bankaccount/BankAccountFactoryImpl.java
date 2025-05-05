@@ -20,7 +20,7 @@ public final class BankAccountFactoryImpl implements BankAccountFactory {
      * @throws IllegalArgumentException if {@code initialBalance} is negative
      */
     public BankAccountFactoryImpl(final int initialBalance) {
-        if(initialBalance < 0) {
+        if (initialBalance < 0) {
             throw new IllegalArgumentException("The initial balance of the account cannot be negative");
         }
         this.initialBalance = initialBalance;
