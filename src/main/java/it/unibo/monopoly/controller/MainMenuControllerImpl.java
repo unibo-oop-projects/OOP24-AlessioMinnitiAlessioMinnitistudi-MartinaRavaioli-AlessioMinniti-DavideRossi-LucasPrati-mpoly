@@ -30,7 +30,7 @@ import it.unibo.monopoly.utils.ResourceLoader;
 public final class MainMenuControllerImpl implements MainMenuController {
 
     private final Configuration config;
-    private final BankAccountFactory bankAccountFactory = new BankAccountFactoryImpl();
+    private final BankAccountFactory bankAccountFactory;
     private BankAccountType bankAccountType = BankAccountType.CLASSIC;
     private int numPlayers;
     private final int minPlayers;
@@ -44,6 +44,7 @@ public final class MainMenuControllerImpl implements MainMenuController {
         this.config = config;
         this.maxPlayers = config.getMaxPlayer();
         this.minPlayers = config.getMinPlayer();
+        this.bankAccountFactory = new BankAccountFactoryImpl(config.getInitBalance());
         this.numPlayers = minPlayers;
     }
  
@@ -128,10 +129,10 @@ public final class MainMenuControllerImpl implements MainMenuController {
     private BankAccount createBankAccountByType(final int id,
                                                 final String owner) {
         Objects.requireNonNull(owner);
-        final int initialBalance = config.getStarterBalance();
         return switch (bankAccountType) {
-            case CLASSIC -> bankAccountFactory.createWithCheck(id, initialBalance, owner);
-            case INFINITY  -> bankAccountFactory.createSimple(id, initialBalance, owner);
+            case CLASSIC -> bankAccountFactory.createWithCheck(id, owner,
+                                                               account -> account.getBalance() > 0);
+            case INFINITY  -> bankAccountFactory.createSimple(id, owner);
         };
     }
 }

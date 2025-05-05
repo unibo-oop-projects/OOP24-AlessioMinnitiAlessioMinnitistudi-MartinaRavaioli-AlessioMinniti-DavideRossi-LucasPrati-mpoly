@@ -53,7 +53,7 @@ class ConfigurationTest {
                 .withFontName(VALID_FONT)
                 .withSmallFont(SMALL_FONT)
                 .withBigFont(BIG_FONT)
-                .withStarterBalance(VALID_STARTER_BALANCE)
+                .withInitBalance(VALID_STARTER_BALANCE)
                 .withRulesFilename(VALID_RULES_FILENAME)
                 .withColors(VALID_COLORS);
     }
@@ -133,7 +133,7 @@ class ConfigurationTest {
 
     @Test
     void defaultStarterBalanceIsCorrect() {
-        final Configuration config = builder.withStarterBalance(0).build();
+        final Configuration config = builder.withInitBalance(0).build();
         assertFalse(config.isConsistent(),
                     INVALID_CONFIG + "starterBalance < 0");
     }

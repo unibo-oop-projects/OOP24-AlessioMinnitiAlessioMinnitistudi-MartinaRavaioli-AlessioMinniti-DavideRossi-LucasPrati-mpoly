@@ -26,13 +26,13 @@ public final class Configuration {
     private final int bigFont;
     private final int windowHeight;
     private final int windowWidth;
-    private final int starterBalance;
+    private final int initBalance;
     private final String rulesFilename;
     private final List<Color> playerColors;
 
 
     private Configuration(final int maxPlayer, final int minPlayer, final String fontName, final int smallFont,
-                          final int bigFont, final int windowHeight, final int windowWidth, final int starterBalance,
+                          final int bigFont, final int windowHeight, final int windowWidth, final int initBalance,
                           final String rulesFilename, final List<Color> playerColors) {
         this.maxPlayer = maxPlayer;
         this.minPlayer = minPlayer;
@@ -41,7 +41,7 @@ public final class Configuration {
         this.bigFont = bigFont;
         this.windowHeight = windowHeight;
         this.windowWidth = windowWidth;
-        this.starterBalance = starterBalance;
+        this.initBalance = initBalance;
         this.rulesFilename = rulesFilename;
         this.playerColors = playerColors;
     }
@@ -98,8 +98,8 @@ public final class Configuration {
     /**
      * @return the initial amount of each bank account
      */
-    public int getStarterBalance() {
-        return starterBalance;
+    public int getInitBalance() {
+        return initBalance;
     }
 
     /**
@@ -126,7 +126,7 @@ public final class Configuration {
                 && smallFont < bigFont
                 && Objects.nonNull(rulesFilename)
                 && isValidFontName(fontName)
-                && starterBalance > 0;
+                && initBalance > 0;
     }
 
     /**
@@ -199,7 +199,7 @@ public final class Configuration {
                         case "FONT_NAME" -> configurationBuilder.withFontName(value);
                         case "BIG_FONT" -> configurationBuilder.withBigFont(Integer.parseInt(value));
                         case "SMALL_FONT" -> configurationBuilder.withSmallFont(Integer.parseInt(value));
-                        case "STARTER_BALANCE" -> configurationBuilder.withStarterBalance(Integer.parseInt(value));
+                        case "INIT_BALANCE" -> configurationBuilder.withInitBalance(Integer.parseInt(value));
                         case "RULES_FILE" -> configurationBuilder.withRulesFilename(value);
                         case "COLORS" -> {
                             final List<Color> colors = Arrays.stream(value.split(","))
@@ -260,7 +260,7 @@ public final class Configuration {
         private static final int SMALL_FONT = 16;
         private static final int WINDOW_HEIGHT = 400;
         private static final int WINDOW_WIDTH = 500;
-        private static final int STARTER_BALANCE = 2000;
+        private static final int INIT_BALANCE = 2000;
         private static final String RULES_FILENAME = "rules.txt";
         private static final List<Color> PLAYER_COLORS = List.of(
             Color.RED,
@@ -286,7 +286,7 @@ public final class Configuration {
         private int smallFont = SMALL_FONT;
         private int windowHeight = WINDOW_HEIGHT;
         private int windowWidth = WINDOW_WIDTH;
-        private int starterBalance = STARTER_BALANCE;
+        private int initBalance = INIT_BALANCE;
         private String rulesFilename = RULES_FILENAME;
         private List<Color> playerColors = List.copyOf(PLAYER_COLORS);
         private boolean consumed;
@@ -355,11 +355,11 @@ public final class Configuration {
         }
 
         /**
-         * @param starterBalance the initial balance of each bank account
+         * @param initBalance the initial balance of each bank account
          * @return this builder, for method chaining
          */
-        public Builder withStarterBalance(final int starterBalance) {
-            this.starterBalance = starterBalance;
+        public Builder withInitBalance(final int initBalance) {
+            this.initBalance = initBalance;
             return this;
         }
 
@@ -391,7 +391,7 @@ public final class Configuration {
             }
             consumed = true;
             return new Configuration(maxPlayer, minPlayer, fontName, smallFont, bigFont, 
-                                    windowHeight, windowWidth, starterBalance, rulesFilename, playerColors);
+                                    windowHeight, windowWidth, initBalance, rulesFilename, playerColors);
         }
     }
 }
