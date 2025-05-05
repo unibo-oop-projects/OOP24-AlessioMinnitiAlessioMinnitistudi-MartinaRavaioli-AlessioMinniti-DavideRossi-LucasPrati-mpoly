@@ -8,6 +8,7 @@ import it.unibo.monopoly.view.api.GamePanelsFactory;
 import it.unibo.monopoly.view.api.PlayerPanel;
 import it.unibo.monopoly.view.api.AccountPanel;
 import it.unibo.monopoly.view.api.ContractPanel;
+import it.unibo.monopoly.view.api.GameActionsPanel;
 
 /**
  * Implementation of the {@link GamePanelsFactory}
@@ -31,7 +32,9 @@ public class SwingPanelsFactory implements GamePanelsFactory{
     }
 
     @Override
-    public Component gameActionsPanel(final GameController controller) {
-        return new SwingMainCommandsPanel(controller);
+    public GameActionsPanel gameActionsPanel(final GameController controller) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'gameActionsPanel'");
     }
+
 }
