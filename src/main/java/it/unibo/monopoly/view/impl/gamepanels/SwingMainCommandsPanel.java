@@ -1,4 +1,4 @@
-package it.unibo.monopoly.view.impl;
+package it.unibo.monopoly.view.impl.gamepanels;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -9,7 +9,7 @@ import javax.swing.JPanel;
 
 import it.unibo.monopoly.controller.api.GameController;
 
-public class SwingMainCommandsPanel extends JPanel{
+class SwingMainCommandsPanel extends JPanel{
 
     public SwingMainCommandsPanel (final GameController controller) {    
         this.setLayout(new GridLayout(2,1));    

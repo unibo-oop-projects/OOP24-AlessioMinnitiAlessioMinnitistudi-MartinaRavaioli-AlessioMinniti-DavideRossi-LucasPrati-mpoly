@@ -1,4 +1,4 @@
-package it.unibo.monopoly.view.impl;
+package it.unibo.monopoly.view.impl.gamepanels;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -9,7 +9,7 @@ import javax.swing.JPanel;
 import it.unibo.monopoly.model.transactions.api.BankAccount;
 import it.unibo.monopoly.view.api.AccountPanel;
 
-public class SwingAccountPanel extends JPanel implements AccountPanel{
+class SwingAccountPanel extends JPanel implements AccountPanel{
 
     private static final String DESC = "Saldo";
     private static final String PLACEHOLDER = "None";

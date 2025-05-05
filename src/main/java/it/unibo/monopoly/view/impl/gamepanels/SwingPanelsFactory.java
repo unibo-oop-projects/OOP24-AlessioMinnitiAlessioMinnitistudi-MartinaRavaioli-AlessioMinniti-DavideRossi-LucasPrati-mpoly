@@ -1,4 +1,4 @@
-package it.unibo.monopoly.view.impl;
+package it.unibo.monopoly.view.impl.gamepanels;
 
 import java.awt.Component;
 

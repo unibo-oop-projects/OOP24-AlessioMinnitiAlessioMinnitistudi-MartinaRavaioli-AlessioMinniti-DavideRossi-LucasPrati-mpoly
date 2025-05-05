@@ -1,4 +1,4 @@
-package it.unibo.monopoly.view.impl;
+package it.unibo.monopoly.view.impl.gamepanels;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -31,7 +31,7 @@ import it.unibo.monopoly.view.api.ContractPanel;
 /**
  * A panel to visualise all information related to a {@link TitleDeed}.
  */
-public final class SwingContractPanel extends JPanel implements ContractPanel{
+final class SwingContractPanel extends JPanel implements ContractPanel{
 
     private static final long serialVersionUID = 43L;
     private static final int BIG_FONT_SIZE = 15;

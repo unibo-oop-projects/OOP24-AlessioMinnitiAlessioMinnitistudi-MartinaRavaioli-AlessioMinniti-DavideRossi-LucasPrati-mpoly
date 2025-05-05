@@ -1,4 +1,4 @@
-package it.unibo.monopoly.view.impl;
+package it.unibo.monopoly.view.impl.gamepanels;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -6,7 +6,7 @@ import javax.swing.JPanel;
 import it.unibo.monopoly.model.turnation.api.Player;
 import it.unibo.monopoly.view.api.PlayerPanel;
 
-public class SwingPlayerPanel extends JPanel implements PlayerPanel{
+class SwingPlayerPanel extends JPanel implements PlayerPanel{
 
     private static final String PLACEHOLDER = "No player selected";
 
