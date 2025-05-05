@@ -5,11 +5,23 @@ import it.unibo.monopoly.model.gameboard.api.Special;
 import it.unibo.monopoly.model.gameboard.api.SpecialFactory;
 import it.unibo.monopoly.model.transactions.api.Bank;
 import it.unibo.monopoly.model.turnation.api.Player;
+import it.unibo.monopoly.model.turnation.api.TurnationManager;
+
+import org.apache.commons.lang3.tuple.Pair;
+
 
 public class SpecialFactoryImpl implements SpecialFactory{
 
+    private final Bank bank;
+    private final TurnationManager turnationManager;
+
+    public SpecialFactoryImpl(Bank bank, TurnationManager turnationManager) {
+        this.turnationManager = turnationManager;
+        this.bank = bank;
+    }
+
     @Override
-    public Special start(Bank bank) {
+    public Special start() {
         return new SpecialImpl(new Effect() {
 
             private final Bank transationM = bank;
@@ -42,21 +54,13 @@ public class SpecialFactoryImpl implements SpecialFactory{
     @Override
     public Special prison() {
         return new Special() {
-
-            private boolean valid;
+            private final TurnationManager turnM = turnationManager;
             private int steps;
-            
-            public void validateThrow(Pair<Integer,Integer> dices){
-                if (dices.a()==dices.b()) {
-                    steps = dices.a() + dices.b();
-                    valid = true;
-                }
-                valid = false;
-            }
 
             @Override
             public void activateEffect(Player player) {
-                if (valid) {
+                if (turnM.moveByDices().getRight()==turnM.moveByDices().getLeft()) {
+                    steps = turnM.moveByDices().getRight() + turnM.moveByDices().getLeft();
                     player.makeMove(steps);
                 }
             }
@@ -76,7 +80,7 @@ public class SpecialFactoryImpl implements SpecialFactory{
     }
 
     @Override
-    public Special taxes(Bank bank) {
+    public Special taxes() {
         return new SpecialImpl(new Effect() {
 
             private final Bank transationM = bank;
