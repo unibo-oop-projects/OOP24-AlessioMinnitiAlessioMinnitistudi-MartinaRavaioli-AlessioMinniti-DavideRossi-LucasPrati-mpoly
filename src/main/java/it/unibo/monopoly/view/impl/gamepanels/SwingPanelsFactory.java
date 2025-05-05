@@ -31,7 +31,7 @@ public class SwingPanelsFactory implements GamePanelsFactory{
     }
 
     @Override
-    public Component mainCommandsPanel(final GameController controller) {
+    public Component gameActionsPanel(final GameController controller) {
         return new SwingMainCommandsPanel(controller);
     }
 }
