@@ -1,6 +1,8 @@
 package it.unibo.monopoly.view.impl;
 
 import java.awt.BorderLayout;
+import java.util.Set;
+import java.util.function.Consumer;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -15,9 +17,12 @@ import it.unibo.monopoly.view.api.ContractPanel;
 import it.unibo.monopoly.view.api.GamePanelsFactory;
 import it.unibo.monopoly.view.api.MainGameView;
 import it.unibo.monopoly.view.api.PlayerPanel;
+import it.unibo.monopoly.view.impl.gamepanels.SwingPanelsFactory;
 
 //RENAME CLASS FOR BETTER UNDERSTANDABILITY
-public class MainViewImpl extends JFrame implements MainGameView{
+public class MainViewImpl implements MainGameView{
+
+    private final JFrame mainGameFrame = new JFrame();
 
     private final PlayerPanel playerInfoPanel;
     private final AccountPanel accountInfoPanel;
@@ -33,9 +38,9 @@ public class MainViewImpl extends JFrame implements MainGameView{
         accountInfoPanel = fact.bankAccountInfoPanel();
         checkComponentIsJPanel(accountInfoPanel);
         mainActionsPanel = (JPanel) fact.mainCommandsPanel(controller);
-        this.getContentPane().add(buildActionPanelUI(controller),BorderLayout.CENTER);
-        this.pack();
-        this.setVisible(true);
+        mainGameFrame.getContentPane().add(buildActionPanelUI(controller),BorderLayout.CENTER);
+        mainGameFrame.pack();
+        mainGameFrame.setVisible(true);
     }
 
     private JPanel buildActionPanelUI (final GameController controller) {
@@ -76,4 +81,12 @@ public class MainViewImpl extends JFrame implements MainGameView{
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'displayPropertyContract'");
     }
+
+    @Override
+    public void showPlayerActions(Set<Consumer<GameController>> actions) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'showPlayerActions'");
+    }
+
+    
 }
