@@ -6,7 +6,6 @@ import it.unibo.monopoly.model.turnation.api.Position;
 /**
  * property implementation.
 */
-
 public class PropertyImpl extends TileImpl implements Property {
     private static final int MAX_HOUSES=4;
     private int price;
@@ -17,7 +16,7 @@ public class PropertyImpl extends TileImpl implements Property {
     //constructor
     /**
      * @param price
-     */
+    */
     public PropertyImpl(final int price, Position id, Type type) { 
         super(id,type);
         this.nHouses=0;
