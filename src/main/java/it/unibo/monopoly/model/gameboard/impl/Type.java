@@ -9,5 +9,7 @@ public enum Type{
     ORANGE,
     CYAN,
     BLACK,
-    WHITE
+    STATION,
+    SOCIETY,
+    SPECIAL
 }
