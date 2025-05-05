@@ -1,17 +1,10 @@
 package it.unibo.monopoly.utils;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Locale;
-import java.util.Objects;
-import java.util.stream.Collectors;
 import java.awt.Color;
 import java.awt.GraphicsEnvironment;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Objects;
 
 /**
  * Represents the game's configuration parameters,
@@ -129,31 +122,6 @@ public final class Configuration {
                 && initBalance > 0;
     }
 
-    /**
-     * Parses a string representing a color name and returns the corresponding {@link Color} object.
-     *
-     * @param name the name of the color (case-insensitive)
-     * @return the {@link Color} object corresponding to the given name
-     * @throws IllegalArgumentException if the given {@param name} does not match any supported color
-    */
-    private static Color parseColor(final String name) {
-        return switch (name.toUpperCase(Locale.ENGLISH)) {
-            case "BLACK" -> Color.BLACK;
-            case "BLUE" -> Color.BLUE;
-            case "CYAN" -> Color.CYAN;
-            case "DARK_GRAY" -> Color.DARK_GRAY;
-            case "GRAY" -> Color.GRAY;
-            case "GREEN" -> Color.GREEN;
-            case "LIGHT_GRAY" -> Color.LIGHT_GRAY;
-            case "MAGENTA" -> Color.MAGENTA;
-            case "ORANGE" -> Color.ORANGE;
-            case "PINK" -> Color.PINK;
-            case "RED" -> Color.RED;
-            case "WHITE" -> Color.WHITE;
-            case "YELLOW" -> Color.YELLOW;
-            default -> throw new IllegalArgumentException("Unknown color: " + name);
-        };
-    }
 
     private static boolean isValidFontName(final String fontName) {
         return  Arrays.stream(GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames())
@@ -162,71 +130,17 @@ public final class Configuration {
 
 
     /**
+     * Set some values of the application according to the file for the configuration ({@code filename}).
+     * <p>
      * @param configFile the name of the configuration file
-     * @return a configuration according to { @param configFile } if consistent, otherwise a default configuration
+     * @return a {@link Configuration} according to {@code configFile} if consistent. Otherwise a default {@link Configuration}
      */
     public static Configuration configureFromFile(final String configFile) {
-        // try to find the file
-        final InputStream is = Configuration.class.getClassLoader().getResourceAsStream(configFile);
 
-        // if not found, return a consistent default configuration
-        if (Objects.isNull(is)) {
-            return new Configuration.Builder().build();
-        }
+        final Configuration configuration = ResourceLoader.loadConfigurationFile(configFile);
 
-        // if found, read it
-        final Configuration.Builder configurationBuilder = new Configuration.Builder();
-        try (var contents = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8))) {
-
-            for (String configLine = contents.readLine(); configLine != null; configLine = contents.readLine()) {
-                if (configLine.isBlank() || configLine.startsWith("#")) {
-                    continue;   // Skip empty lines and comments
-                }
-
-                final String[] lineElements = configLine.split(":", 2);
-                if (lineElements.length != 2) {
-                    continue;   // Skip invalid lines
-                }
-
-                final String key = lineElements[0].trim().toUpperCase(Locale.ENGLISH);
-                final String value = lineElements[1].trim();
-                try {
-                    switch (key) {
-                        case "MIN_PLAYERS" -> configurationBuilder.withMin(Integer.parseInt(value));
-                        case "MAX_PLAYERS" -> configurationBuilder.withMax(Integer.parseInt(value));
-                        case "WINDOW_WIDTH" -> configurationBuilder.withWidth(Integer.parseInt(value));
-                        case "WINDOW_HEIGHT" -> configurationBuilder.withHeight(Integer.parseInt(value));
-                        case "FONT_NAME" -> configurationBuilder.withFontName(value);
-                        case "BIG_FONT" -> configurationBuilder.withBigFont(Integer.parseInt(value));
-                        case "SMALL_FONT" -> configurationBuilder.withSmallFont(Integer.parseInt(value));
-                        case "INIT_BALANCE" -> configurationBuilder.withInitBalance(Integer.parseInt(value));
-                        case "RULES_FILE" -> configurationBuilder.withRulesFilename(value);
-                        case "COLORS" -> {
-                            final List<Color> colors = Arrays.stream(value.split(","))
-                                .map(String::trim)
-                                .map(Configuration::parseColor)
-                                .collect(Collectors.toList());
-
-                            configurationBuilder.withColors(colors);
-                        }
-                        default -> { /* Ignore unknown key */ }
-                    }
-                } catch (final IllegalArgumentException e) {
-                    // Error during parseColor
-                    continue;
-                }
-            }
-
-        } catch (final IOException  e) {    // Error during reading the file
-            // return a consistent default configuration
-            return new Configuration.Builder().build();
-        }
-
-        // If the configuration is consistent, return it. Otherwise return a consistent default configuration
-        final Configuration configuration = configurationBuilder.build();
         if (configuration.isConsistent()) {
             return configuration;
-
         } else {
             return new Configuration.Builder().build();
         }
@@ -236,19 +150,11 @@ public final class Configuration {
 
     /**
      * Pattern builder: used here because:
-     * 
-     * - all the parameters of the {@link Configuration} class have a default value, which
+     * <p>
+     * All the parameters of the {@link Configuration} class have a default value, which
      * means that we would like to have all the possible combinations of
      * constructors (one with three parameters, three with two parameters, three
      * with a single parameter), which are way too many and confusing to use
-     * 
-     * - moreover, it would be impossible to provide all of them, because they are
-     * all of the same type, and only a single constructor can exist with a given
-     * list of parameter types.
-     * 
-     * - the Configuration class has three parameters of the same type, and it is
-     * unclear to understand, in a call to its contructor, which is which. By using
-     * the builder, we emulate the so-called "named arguments".
      * 
      */
     public static class Builder {
@@ -364,7 +270,6 @@ public final class Configuration {
         }
 
         /**
-         * 
          * @param rulesFilename the name of the file which contains all the rules of the game
          * @return this builder, for method chaining
          */
