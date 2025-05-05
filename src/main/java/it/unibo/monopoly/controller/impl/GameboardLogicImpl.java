@@ -42,7 +42,7 @@ public class GameboardLogicImpl implements GameboardLogic{
                 return Color.BLACK;
             }
             default -> {
-                return Color.BLACK;
+                return Color.WHITE;
             }
         }
     }
