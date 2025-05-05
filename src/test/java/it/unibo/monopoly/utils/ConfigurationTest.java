@@ -70,6 +70,7 @@ class ConfigurationTest {
         assertEquals(VALID_FONT, config.getFontName());
         assertEquals(SMALL_FONT, config.getSmallFont());
         assertEquals(BIG_FONT, config.getBigFont());
+        assertEquals(VALID_STARTER_BALANCE, config.getInitBalance());
         assertEquals(VALID_RULES_FILENAME, config.getRulesFilenamename());
         assertEquals(VALID_COLORS.size(), config.getPlayerColors().size());
     }
@@ -78,7 +79,7 @@ class ConfigurationTest {
     void builderCannotBeUsedTwice() {
         builder.build();
         final IllegalStateException exception = assertThrows(IllegalStateException.class, builder::build);
-        assertNotNull(exception.getMessage());
+        testExceptionFormat(exception);
     }
 
     @Test
@@ -140,14 +141,16 @@ class ConfigurationTest {
 
     @Test
     void configureFromFileReturnsDefaultOnInvalidConfig() throws IOException {
-        // Parsing an invalid file should return a configuration where
-        // valid values are kept and defaults are used for errors or missing entries
+        /*
+          Parsing an invalid file should return a configuration where
+          valid values are kept and defaults are used for errors or missing entries
+        */
         final Configuration config = Configuration.configureFromFile("invalid_config.yml");
         assertTrue(config.isConsistent(), "Expected configuration to be consistent");
     }
 
     @Test
-    void configureFromFileThrowsExceptionOnFileNotFound() {
+    void configureFromFileReturnsDefaultOnFileNotFound() {
         // File that not exist should return a default configuration
         final Configuration config = Configuration.configureFromFile("not_exist");
         assertTrue(config.isConsistent(), "Expected default configuration to be consistent");
@@ -158,5 +161,10 @@ class ConfigurationTest {
         // Parsing a valid file should return a consistent configuration
         final Configuration config = Configuration.configureFromFile("valid_config.yml");
         assertTrue(config.isConsistent(), "Configuration from valid file should be consistent");
+    }
+
+    private void testExceptionFormat(final Exception exception) {
+        assertNotNull(exception.getMessage());
+        assertFalse(exception.getMessage().isBlank());
     }
 }
