@@ -6,6 +6,11 @@ import it.unibo.monopoly.controller.api.GameController;
 /**
  * Abstract factory to create UI components 
  * necessary to play the game.
+ * All these components comply to view specific interfaces
+ * that facilitate the panels update by hiding all the UI
+ * managements, which is handled by the panels.
+ * The specific UI components and libraries used depend 
+ * on the factory implementation.
  */
 public interface GamePanelsFactory {
 
@@ -27,13 +32,21 @@ public interface GamePanelsFactory {
      */
     ContractPanel contractPanel();
 
+
     /**
-     * Returns a panel that allows the user to do the 
-     * basic actions of the game.
+     * Returns a {@link GameActionsPanel}, a panel that can display
+     * specifc game controls and allow the user to interact with them.
+     * @return an object that implements the {@link GameActionsPanel} interface
+     */
+    GameActionsPanel gameActionsPanel();
+
+    /**
+     * Returns a panel that allows the user to perform standard
+     * game actions.
      * @param controller the {@link GameController} that is currently handling 
      * the ongoing game
      * @return a generic {@link Component} that embeds UI elements to 
      * perform basic game actions
      */
-    GameActionsPanel gameActionsPanel(GameController controller);
+    Component standardControlsPanel(GameController controller);
 }
