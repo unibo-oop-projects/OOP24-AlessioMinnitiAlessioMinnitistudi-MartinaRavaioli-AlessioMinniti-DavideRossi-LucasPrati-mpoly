@@ -41,8 +41,10 @@ public class GameboardLogicImpl implements GameboardLogic{
             case Type.BLACK -> {
                 return Color.BLACK;
             }
+            default -> {
+                return Color.BLACK;
+            }
         }
-        return null;
     }
     
 }

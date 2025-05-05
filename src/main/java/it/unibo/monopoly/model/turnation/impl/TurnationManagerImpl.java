@@ -21,4 +21,9 @@ public class TurnationManagerImpl implements TurnationManager {
     public final Pair<Integer, Integer> moveByDices() { 
         return null; 
     }
+    @Override
+    public void setOver() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'setOver'");
+    }
 }

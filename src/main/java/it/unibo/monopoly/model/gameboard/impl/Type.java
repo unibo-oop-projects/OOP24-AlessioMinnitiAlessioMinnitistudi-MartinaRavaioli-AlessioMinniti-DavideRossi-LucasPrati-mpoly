@@ -8,5 +8,5 @@ public enum Type {
     PURPLE,
     ORANGE,
     CYAN,
-    BLACK
+    BLACK, WHITE
 }

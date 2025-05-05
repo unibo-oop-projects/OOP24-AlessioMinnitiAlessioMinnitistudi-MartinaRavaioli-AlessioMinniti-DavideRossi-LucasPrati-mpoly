@@ -45,15 +45,15 @@ public class GameboardView extends JFrame{
             }
         }
 
-        for(int i=0;i<tiles.size();i++){
+        for(int i=0;i<40;i++){
             JPanel panel=this.tilesView.get(i);
             JPanel stripe = new JPanel();
             stripe.setPreferredSize(new Dimension(50, 10));
-            stripe.setBackground(logic.getTileColor(tiles.get(i).getType()));
+            // stripe.setBackground(logic.getTileColor(tiles.get(i).getType()));
             panel.add(stripe, BorderLayout.NORTH);
         }
 
-        for(int i=0; i < players.size(); i++){
+        for(int i=0; i < 4; i++){
             JPanel panel = this.tilesView.get(0);
             panel.add(shapes.get(i));
         }
