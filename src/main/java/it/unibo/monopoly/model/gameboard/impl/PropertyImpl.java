@@ -12,6 +12,7 @@ public class PropertyImpl extends TileImpl implements Property {
     private boolean isOwned;
     private int nHouses;
     private boolean hotel;
+    private String name;
     
     //constructor
     /**
@@ -23,7 +24,15 @@ public class PropertyImpl extends TileImpl implements Property {
         this.hotel=false;
         this.isOwned=false;
         setPrice(price);
+        setName(name);
+    }
 
+    public final void setName(String name){
+        this.name=name;
+    }
+
+    public String getName(){
+        return this.name;
     }
 
     private void setPrice(int price){
