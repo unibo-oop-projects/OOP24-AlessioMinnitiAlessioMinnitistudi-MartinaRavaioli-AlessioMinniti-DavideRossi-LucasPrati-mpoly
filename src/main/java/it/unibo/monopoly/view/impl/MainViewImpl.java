@@ -14,6 +14,7 @@ import it.unibo.monopoly.model.transactions.api.TitleDeed;
 import it.unibo.monopoly.model.turnation.api.Player;
 import it.unibo.monopoly.view.api.AccountPanel;
 import it.unibo.monopoly.view.api.ContractPanel;
+import it.unibo.monopoly.view.api.GameActionsPanel;
 import it.unibo.monopoly.view.api.GamePanelsFactory;
 import it.unibo.monopoly.view.api.MainGameView;
 import it.unibo.monopoly.view.api.PlayerPanel;
@@ -27,9 +28,9 @@ public class MainViewImpl implements MainGameView{
     private final PlayerPanel playerInfoPanel;
     private final AccountPanel accountInfoPanel;
     private final ContractPanel contractPanel;
-    private final JPanel mainActionsPanel;
+    private final GameActionsPanel mainActionsPanel;
 
-    private MainViewImpl (final GameController controller) {
+    private MainViewImpl(final GameController controller) {
         GamePanelsFactory fact = new SwingPanelsFactory();
         contractPanel = fact.contractPanel();
         checkComponentIsJPanel(contractPanel);
@@ -37,13 +38,14 @@ public class MainViewImpl implements MainGameView{
         checkComponentIsJPanel(playerInfoPanel);
         accountInfoPanel = fact.bankAccountInfoPanel();
         checkComponentIsJPanel(accountInfoPanel);
-        mainActionsPanel = (JPanel) fact.mainCommandsPanel(controller);
+        mainActionsPanel = fact.gameActionsPanel(controller);
+        checkComponentIsJPanel(mainActionsPanel);
         mainGameFrame.getContentPane().add(buildActionPanelUI(controller),BorderLayout.CENTER);
         mainGameFrame.pack();
         mainGameFrame.setVisible(true);
     }
 
-    private JPanel buildActionPanelUI (final GameController controller) {
+    private JPanel buildActionPanelUI(final GameController controller) {
         final JPanel actionPanel = new JPanel();
         actionPanel.setLayout(new BorderLayout());
         final JPanel userInfoPanel = new JPanel();
@@ -54,11 +56,11 @@ public class MainViewImpl implements MainGameView{
         actionPanel.add(userInfoPanel,BorderLayout.NORTH);
         actionPanel.add((JPanel) contractPanel,BorderLayout.CENTER);
         //actionPanel.add(actionsPanel(controller),BorderLayout.WEST);
-        actionPanel.add(mainActionsPanel,BorderLayout.SOUTH);    
+        actionPanel.add((JPanel) mainActionsPanel,BorderLayout.SOUTH);    
         return actionPanel;  
     }
 
-    private void checkComponentIsJPanel (Object oj) {
+    private void checkComponentIsJPanel(final Object oj) {
         if (oj.getClass().isAssignableFrom(JPanel.class)) {
             throw new ClassCastException("The object" + oj.toString() + "provided by the factory is not a JPanel");
         }
@@ -71,22 +73,20 @@ public class MainViewImpl implements MainGameView{
 
 
     @Override
-    public void displayCurrentPlayerInfo(Player plData, BankAccount accountData) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'displayCurrentPlayerInfo'");
+    public void displayCurrentPlayerInfo(final Player plData, final BankAccount accountData) {
+        playerInfoPanel.displayPlayer(plData);
+        accountInfoPanel.displayBankAccount(accountData);
+        contractPanel.clear();
+        mainActionsPanel.clear();
     }
 
     @Override
-    public void displayPropertyContract(TitleDeed propertyContract) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'displayPropertyContract'");
+    public void displayPropertyContract(final TitleDeed propertyContract) {
+        contractPanel.displayPropertyContract(propertyContract);
     }
 
     @Override
-    public void showPlayerActions(Set<Consumer<GameController>> actions) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'showPlayerActions'");
+    public void showPlayerActions(final Set<Consumer<GameController>> actions) {
+        mainActionsPanel.buildActionButtons(actions);
     }
-
-    
 }
