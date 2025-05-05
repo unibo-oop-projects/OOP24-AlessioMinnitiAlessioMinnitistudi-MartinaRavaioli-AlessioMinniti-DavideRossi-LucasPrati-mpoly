@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.Toolkit;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,7 +24,8 @@ public class GameboardView extends JFrame{
     
     public GameboardView(int size, List<Player> players, List<Tile> tiles){
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-        this.setSize(70*size, 70*size);
+        this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        this.setSize(Toolkit.getDefaultToolkit().getScreenSize());
         this.logic=new GameboardLogicImpl();
 
         JPanel board = new JPanel(new GridLayout(size,size));
@@ -33,15 +35,15 @@ public class GameboardView extends JFrame{
             for(int j=0; j<size;j++){
                 JPanel tile = new JPanel();
                 
-                
                 if (logic.isBoardTile(i,j,size)) {
                     tile.setBorder(BorderFactory.createLineBorder(Color.black));
                     tile.setBackground(Color.white);
+                    this.tilesView.add(tile);
                 } else {
                     tile.setBackground(Color.lightGray); // Centro non giocabile
                 }
                 board.add(tile);
-                this.tilesView.add(tile);
+                
             }
         }
 
@@ -60,5 +62,17 @@ public class GameboardView extends JFrame{
 
 
         this.setVisible(true);
+    }
+
+    public void addHouse(){
+
+    }
+
+    public void addHotel(){
+
+    }
+
+    public void changePos(){
+
     }
 }

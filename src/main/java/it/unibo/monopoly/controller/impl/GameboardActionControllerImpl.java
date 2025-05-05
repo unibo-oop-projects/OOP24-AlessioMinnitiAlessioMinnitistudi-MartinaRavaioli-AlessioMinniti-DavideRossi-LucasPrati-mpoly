@@ -4,6 +4,7 @@ import java.util.List;
 
 import it.unibo.monopoly.controller.api.GameboardActionController;
 import it.unibo.monopoly.model.gameboard.api.Board;
+import it.unibo.monopoly.model.gameboard.api.Property;
 import it.unibo.monopoly.model.gameboard.api.Tile;
 import it.unibo.monopoly.model.gameboard.impl.BoardImpl;
 import it.unibo.monopoly.model.turnation.api.Player;
@@ -28,6 +29,24 @@ public class GameboardActionControllerImpl implements GameboardActionController{
     @Override
     public void playerGameOver() {
         
+    }
+
+    @Override
+    public void changePositions() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'changePositions'");
+    }
+
+    @Override
+    public void addHouse(Property prop) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'addHouse'");
+    }
+
+    @Override
+    public void addHotel(Property prop) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'addHotel'");
     }
     
 }
