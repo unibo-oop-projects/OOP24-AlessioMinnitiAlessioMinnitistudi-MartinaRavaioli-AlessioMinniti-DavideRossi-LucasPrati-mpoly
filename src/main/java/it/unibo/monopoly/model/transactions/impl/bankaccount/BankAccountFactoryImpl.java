@@ -14,7 +14,8 @@ public final class BankAccountFactoryImpl implements BankAccountFactory {
     private final int initialBalance;
 
     /**
-     * Creates a new {@link BankAccountFactoryImpl}. Based on the given {@code initialBalance}
+     * Creates a new {@link BankAccountFactoryImpl}. Based on the given {@code initialBalance}.
+     * <p>
      * @param initialBalance the initial amount of money of each {@link BankAccount}
      * @throws IllegalArgumentException if {@code initialBalance} is negative
      */

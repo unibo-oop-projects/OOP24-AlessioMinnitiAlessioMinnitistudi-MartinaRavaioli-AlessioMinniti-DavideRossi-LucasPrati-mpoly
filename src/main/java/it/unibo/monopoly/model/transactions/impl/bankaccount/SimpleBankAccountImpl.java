@@ -25,7 +25,7 @@ public final class SimpleBankAccountImpl implements BankAccount {
      * @throws NullPointerException if the {@code owner} is {@code null}
      */
     public SimpleBankAccountImpl(final int id, final int initialBalance, final String owner) {
-        Objects.requireNonNull(owner);
+        Objects.requireNonNull(owner, "the name of the owner can not be null");
         if (initialBalance < 0) {
             throw new IllegalArgumentException("The initial balance of the account cannot be negative");
         }
