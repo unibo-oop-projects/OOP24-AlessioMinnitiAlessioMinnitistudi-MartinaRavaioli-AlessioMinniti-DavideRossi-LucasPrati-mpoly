@@ -3,13 +3,15 @@ package it.unibo.monopoly.view.impl.gamepanels;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
 import it.unibo.monopoly.controller.api.GameController;
+import it.unibo.monopoly.view.api.StandardControlsPanel;
 
-class SwingMainCommandsPanel extends JPanel{
+class SwingMainCommandsPanel extends JPanel implements StandardControlsPanel{
 
     public SwingMainCommandsPanel (final GameController controller) {    
         this.setLayout(new GridLayout(2,1));    
@@ -60,5 +62,17 @@ class SwingMainCommandsPanel extends JPanel{
         dicesPanelLayout.setConstraints(dicesResultJLabel, dicesResulConstraints);
 
         return dicesPanel;
+    }
+
+    @Override
+    public void clear() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'clear'");
+    }
+
+    @Override
+    public void displayDicesResults(List<Integer> results) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'displayDicesResults'");
     }
 }

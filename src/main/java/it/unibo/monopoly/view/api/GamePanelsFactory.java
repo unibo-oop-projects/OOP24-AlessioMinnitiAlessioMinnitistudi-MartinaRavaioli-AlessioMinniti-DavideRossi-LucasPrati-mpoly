@@ -48,5 +48,5 @@ public interface GamePanelsFactory {
      * @return a generic {@link Component} that embeds UI elements to 
      * perform basic game actions
      */
-    Component standardControlsPanel(GameController controller);
+    StandardControlsPanel standardControlsPanel(GameController controller);
 }
