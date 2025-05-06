@@ -26,7 +26,7 @@ public final class ResourceLoader {
 
     private static final ObjectMapper MAPPER = new ObjectMapper();
 
-    private ResourceLoader() { /* not instantiable */ }
+    public ResourceLoader(){ /* Empty */}
 
     /**
      * Loads an array of {@link TitleDeed} from a JSON file on the classpath
@@ -36,25 +36,10 @@ public final class ResourceLoader {
      * @return an unmodifiable {@link Set} of {@link TitleDeed}, never {@code null}
      * @throws IOException if the resource is missing or cannot be parsed
      */
-    public static Set<TitleDeed> loadTitleDeed(final String filename) throws IOException {
+    public Set<TitleDeed> loadTitleDeed(final String filename) throws IOException {
         try (InputStream is = getRequiredStream(filename)) {
             final var array = MAPPER.readValue(is, TitleDeed[].class);
             return Collections.unmodifiableSet(new HashSet<>(Arrays.asList(array)));
-        }
-    }
-
-    /**
-     * Reads a text resource from the classpath into a single {@link String}.
-     * <p>
-     * @param filename the name of the text file in {@code src/main/resources} with all the rules of the game
-     * @return the full contents of the file (using {@code UTF-8})
-     */
-    public static String loadTextResource(final String filename) {
-        try (var is = getRequiredStream(filename);
-             var reader = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8))) {
-            return reader.lines().collect(Collectors.joining("\n"));
-        } catch (final IOException e) {
-            return e.getMessage();
         }
     }
 
@@ -64,7 +49,7 @@ public final class ResourceLoader {
      * @param filename the name of the YML file in {@code src/main/resources} with all the custom data
      * @return a {@link Configuration} with the custom data provided by the file
      */
-    public static Configuration loadConfigurationFile(final String filename) {
+    public Configuration loadConfigurationFile(final String filename) {
         // find the file
         final InputStream is;
         try {
@@ -81,7 +66,6 @@ public final class ResourceLoader {
                 if (configLine.isBlank() || configLine.startsWith("#")) {
                     continue;   // Skip empty lines and comments
                 }
-
                 final String[] lineElements = configLine.split(":", 2);
                 if (lineElements.length != 2) {
                     continue;   // Skip invalid lines
@@ -96,14 +80,13 @@ public final class ResourceLoader {
                     continue;
                 }
             }
-
         } catch (final IOException  e) {    // Error during reading the file
             // return a consistent default configuration
             return new Configuration.Builder().build();
         }
         return configurationBuilder.build();
-
     }
+
 
     /**
      * Helper that opens a classpath resource as an InputStream.
@@ -112,15 +95,14 @@ public final class ResourceLoader {
      * @throws IOException if the file is missing
      * @return an {@link InputStream} to the classpath resource
      */
-    private static InputStream getRequiredStream(final String filename) throws IOException {
-        final var stream = Thread.currentThread()
-                           .getContextClassLoader()
-                           .getResourceAsStream(filename);
+    private InputStream getRequiredStream(final String filename) throws IOException {
+        final InputStream stream = getClass().getResourceAsStream(filename);
         if (stream == null) {
             throw new IOException("Resource not found: " + filename);
         }
         return stream;
     }
+
 
     /**
      * Parses a provided {@code key-value} for set configutation's parameters.
@@ -130,7 +112,7 @@ public final class ResourceLoader {
      * @param value tha value of the element to parse
      * @throws IllegalArgumentException if the underlying implementation does not parse value successfully
      */
-    private static void parseConfigurationKey(final Configuration.Builder configurationBuilder,
+    private void parseConfigurationKey(final Configuration.Builder configurationBuilder,
                                               final String key,
                                               final String value) {
         switch (key) {

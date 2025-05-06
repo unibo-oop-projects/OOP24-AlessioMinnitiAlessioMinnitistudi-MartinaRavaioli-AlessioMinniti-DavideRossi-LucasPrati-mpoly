@@ -16,7 +16,6 @@ import javax.swing.SwingConstants;
 
 import it.unibo.monopoly.utils.Configuration;
 import it.unibo.monopoly.utils.GuiUtils;
-import it.unibo.monopoly.utils.ResourceLoader;
 
 
 /**
@@ -44,7 +43,7 @@ public final class RulesWindowView extends JDialog {
      * @param parent the parent frame that owns this dialog and will be blocked while the dialog is visible
      * @param config the configuration object containing the base settings for the game
      */
-    public RulesWindowView(final Frame parent, final Configuration config) {
+    public RulesWindowView(final Frame parent, final Configuration config, final String rules) {
         GuiUtils.configureWindow(this,
                                  config.getWindowWidth(),
                                  config.getWindowHeight(),
@@ -63,7 +62,7 @@ public final class RulesWindowView extends JDialog {
         final JTextArea rulesTextArea = new JTextArea();
         rulesTextArea.setEditable(false);
         rulesTextArea.setFont(new Font(config.getFontName(), Font.PLAIN, config.getSmallFont()));
-        rulesTextArea.setText(ResourceLoader.loadTextResource(config.getRulesFilenamename()));
+        rulesTextArea.setText(rules);
 
         // Create a scrollable view for the rulesTextArea
         final JScrollPane scrollPane = new JScrollPane(rulesTextArea);

@@ -1,16 +1,17 @@
 package it.unibo.monopoly.controller.api;
 
-
 import java.awt.Color;
 import java.io.IOException;
 import java.util.Map;
 
+import it.unibo.monopoly.controller.MainMenuControllerImpl;
 import it.unibo.monopoly.model.transactions.api.BankAccountType;
 import it.unibo.monopoly.model.transactions.api.TitleDeed;
+import it.unibo.monopoly.utils.UseFileTxt;
 
 
 /**
- * MainMenuLogic interface.
+ * {@link MainMenuControllerImpl} interface.
  */
 public interface MainMenuController {
     /**
@@ -54,5 +55,12 @@ public interface MainMenuController {
      * @param bankAccountType the {@link BankAccountType} to set
      */
     void setBankAccountType(BankAccountType bankAccountType);
+
+    /**
+     * Use a {@link UseFileTxt} for getting the {@link String} with all the rules of the game
+     * <p>
+     * @return a {@link String} with all the rules of the game
+     */
+    String getRules();
 
 }

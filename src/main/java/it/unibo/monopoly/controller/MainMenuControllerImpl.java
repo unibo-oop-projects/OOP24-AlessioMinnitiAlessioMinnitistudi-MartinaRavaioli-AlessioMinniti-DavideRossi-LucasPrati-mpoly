@@ -22,14 +22,16 @@ import it.unibo.monopoly.model.turnation.impl.PlayerImpl;
 import it.unibo.monopoly.utils.Configuration;
 import it.unibo.monopoly.utils.Identifiable;
 import it.unibo.monopoly.utils.ResourceLoader;
+import it.unibo.monopoly.utils.UseFileTxt;
 
 
 /**
- * MainMenuLogic implementation.
+ * {@link MainMenuController} implementation.
  */
-public final class MainMenuControllerImpl implements MainMenuController {
+public final class MainMenuControllerImpl  implements MainMenuController {
 
     private final Configuration config;
+    private final UseFileTxt fileLoaderTxt;
     private final BankAccountFactory bankAccountFactory;
     private BankAccountType bankAccountType = BankAccountType.CLASSIC;
     private int numPlayers;
@@ -42,6 +44,7 @@ public final class MainMenuControllerImpl implements MainMenuController {
      */
     public MainMenuControllerImpl(final Configuration config) {
         this.config = config;
+        this.fileLoaderTxt = new UseFileTxt(config.getRulesFilename());
         this.maxPlayers = config.getMaxPlayer();
         this.minPlayers = config.getMinPlayer();
         this.bankAccountFactory = new BankAccountFactoryImpl(config.getInitBalance());
@@ -118,6 +121,12 @@ public final class MainMenuControllerImpl implements MainMenuController {
     public void setBankAccountType(final BankAccountType bankAccountType) {
         this.bankAccountType = bankAccountType;
     }
+
+    @Override
+    public String getRules() {
+        return fileLoaderTxt.getExtractedText();
+    }
+
 
     /**
      * Use {@link BankAccountFactory} to create a new {@link BankAccount} istances according to the {@code bankAccountType}.

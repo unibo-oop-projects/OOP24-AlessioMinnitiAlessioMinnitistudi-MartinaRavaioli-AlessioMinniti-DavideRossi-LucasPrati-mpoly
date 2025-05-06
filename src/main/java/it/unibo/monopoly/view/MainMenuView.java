@@ -126,7 +126,7 @@ public final class MainMenuView extends JFrame {
         });
 
         final JButton rulesButton = new JButton(RULES_TEXT);
-        rulesButton.addActionListener(e -> new RulesWindowView(this, config));
+        rulesButton.addActionListener(e -> new RulesWindowView(this, config, controller.getRules()));
 
         final JButton settingsButton = new JButton(SETTINGS_TEXT);
         settingsButton.addActionListener(e -> showSettingsMenu());
