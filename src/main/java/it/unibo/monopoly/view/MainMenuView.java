@@ -56,7 +56,7 @@ public final class MainMenuView extends JFrame {
     private static final String MINUS_TEXT = "-";
     private static final String PLUS_TEXT = "+";
     private static final String RULES_TEXT = "?";
-    private static final String SETTINGS_TEXT = "⚙️";
+    private static final String SETTINGS_TEXT = "settings";
 
     // Player Setup Screen
     private static final String TITLE_TEXT_PLAYER_SETUP = "Set players nicknames";
