@@ -98,7 +98,7 @@ public final class Configuration {
     /**
      * @return the name of the file which contains all the rules of the game
      */
-    public String getRulesFilenamename() {
+    public String getRulesFilename() {
         return rulesFilename;
     }
 

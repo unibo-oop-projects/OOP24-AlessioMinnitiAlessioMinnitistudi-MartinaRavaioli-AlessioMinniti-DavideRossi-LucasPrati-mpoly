@@ -12,7 +12,7 @@ import it.unibo.monopoly.view.MainMenuView;
  */
 public final class LaunchApp {
 
-    private static final String CONFIG_FILE = "config.yml";
+    private static final String CONFIG_FILE = "configuration/config.yml";
 
     private LaunchApp() { }
 

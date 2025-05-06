@@ -71,7 +71,7 @@ class ConfigurationTest {
         assertEquals(SMALL_FONT, config.getSmallFont());
         assertEquals(BIG_FONT, config.getBigFont());
         assertEquals(VALID_STARTER_BALANCE, config.getInitBalance());
-        assertEquals(VALID_RULES_FILENAME, config.getRulesFilenamename());
+        assertEquals(VALID_RULES_FILENAME, config.getRulesFilename());
         assertEquals(VALID_COLORS.size(), config.getPlayerColors().size());
     }
 

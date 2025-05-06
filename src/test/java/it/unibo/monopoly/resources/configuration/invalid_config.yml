@@ -1,0 +1,17 @@
+# For tests: INVALID CONFIGURATION (missing elements)
+
+# Missing player min value
+# Missing player max value
+
+WINDOW_HEIGHT: 400
+WINDOW_WIDTH: 500
+
+FONT_NAME: ARIAL
+BIG_FONT: 26
+SMALL_FONT: 16
+
+# Missing init balance
+
+# Missing rules filename
+# Invalid Color
+COLORS: AJEJE
