@@ -136,8 +136,9 @@ public final class Configuration {
      * @return a {@link Configuration} according to {@code configFile} if consistent. Otherwise a default {@link Configuration}
      */
     public static Configuration configureFromFile(final String configFile) {
+        final ResourceLoader generiLoader = new ResourceLoader();
 
-        final Configuration configuration = ResourceLoader.loadConfigurationFile(configFile);
+        final Configuration configuration = generiLoader.loadConfigurationFile(configFile);
 
         if (configuration.isConsistent()) {
             return configuration;

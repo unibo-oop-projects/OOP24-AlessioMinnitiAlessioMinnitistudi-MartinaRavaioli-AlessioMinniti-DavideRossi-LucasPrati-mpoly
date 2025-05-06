@@ -57,7 +57,7 @@ public interface MainMenuController {
     void setBankAccountType(BankAccountType bankAccountType);
 
     /**
-     * Use a {@link UseFileTxt} for getting the {@link String} with all the rules of the game
+     * Use a {@link UseFileTxt} for getting the {@link String} with all the rules of the game.
      * <p>
      * @return a {@link String} with all the rules of the game
      */

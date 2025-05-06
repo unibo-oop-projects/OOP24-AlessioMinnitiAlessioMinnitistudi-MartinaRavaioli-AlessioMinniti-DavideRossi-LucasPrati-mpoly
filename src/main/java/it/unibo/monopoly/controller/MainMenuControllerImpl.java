@@ -32,6 +32,7 @@ public final class MainMenuControllerImpl  implements MainMenuController {
 
     private final Configuration config;
     private final UseFileTxt fileLoaderTxt;
+    private final ResourceLoader genericLoader;
     private final BankAccountFactory bankAccountFactory;
     private BankAccountType bankAccountType = BankAccountType.CLASSIC;
     private int numPlayers;
@@ -45,6 +46,7 @@ public final class MainMenuControllerImpl  implements MainMenuController {
     public MainMenuControllerImpl(final Configuration config) {
         this.config = config;
         this.fileLoaderTxt = new UseFileTxt(config.getRulesFilename());
+        this.genericLoader = new ResourceLoader();
         this.maxPlayers = config.getMaxPlayer();
         this.minPlayers = config.getMinPlayer();
         this.bankAccountFactory = new BankAccountFactoryImpl(config.getInitBalance());
@@ -88,7 +90,7 @@ public final class MainMenuControllerImpl  implements MainMenuController {
         }
 
         // import titles from file with a private method
-        titleDeeds.addAll(ResourceLoader.loadTitleDeed("TitleDeedsFilename"));
+        titleDeeds.addAll(genericLoader.loadTitleDeed("TitleDeedsFilename"));
 
         // create the bankImpl with provided sets of accounts and titles
         // final Bank bank = new BankImpl(accounts, titleDeeds);

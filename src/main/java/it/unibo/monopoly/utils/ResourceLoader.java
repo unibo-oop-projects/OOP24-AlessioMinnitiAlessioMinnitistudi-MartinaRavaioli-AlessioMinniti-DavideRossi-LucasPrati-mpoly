@@ -19,14 +19,16 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import it.unibo.monopoly.model.transactions.api.TitleDeed;
 
 /**
- * A small utility class to load resources (JSON, text and YML) from the classpath.
- * All methods are static, this class cannot be instantiated.
+ * A small utility class to load resources (JSON, TXT and YML) from the classpath.
  */
 public final class ResourceLoader {
 
     private static final ObjectMapper MAPPER = new ObjectMapper();
 
-    public ResourceLoader(){ /* Empty */}
+    /**
+     * Create a small {@code utility Object} for load resources from the classpath.
+     */
+    public ResourceLoader() { /* Empty */ }
 
     /**
      * Loads an array of {@link TitleDeed} from a JSON file on the classpath

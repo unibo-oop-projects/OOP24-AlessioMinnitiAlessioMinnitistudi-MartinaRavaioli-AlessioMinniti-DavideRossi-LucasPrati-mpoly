@@ -14,6 +14,11 @@ public final class UseFileTxt {
 
     private final String extractedText;
 
+    /**
+     * Create a small {@code utility Object} for load {@code .txt} resources from the classpath.
+     * <p>
+     * @param filename the name of the file in {@code src/main/resources}
+     */
     public UseFileTxt(final String filename) {
         this.extractedText = loadTextResource(filename);
     }

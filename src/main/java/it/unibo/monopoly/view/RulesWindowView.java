@@ -42,6 +42,7 @@ public final class RulesWindowView extends JDialog {
      *
      * @param parent the parent frame that owns this dialog and will be blocked while the dialog is visible
      * @param config the configuration object containing the base settings for the game
+     * @param rules a {@link String} with the rules of the game, to show
      */
     public RulesWindowView(final Frame parent, final Configuration config, final String rules) {
         GuiUtils.configureWindow(this,
