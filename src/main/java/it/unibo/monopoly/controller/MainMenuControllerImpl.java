@@ -22,7 +22,6 @@ import it.unibo.monopoly.model.turnation.impl.PlayerImpl;
 import it.unibo.monopoly.utils.Configuration;
 import it.unibo.monopoly.utils.Identifiable;
 import it.unibo.monopoly.utils.ResourceLoader;
-import it.unibo.monopoly.utils.UseFileTxt;
 
 
 /**
@@ -31,7 +30,7 @@ import it.unibo.monopoly.utils.UseFileTxt;
 public final class MainMenuControllerImpl  implements MainMenuController {
 
     private final Configuration config;
-    private final UseFileTxt fileLoaderTxt;
+    private final ResourceLoader genericFileLoader = new ResourceLoader();
     private final ResourceLoader genericLoader;
     private final BankAccountFactory bankAccountFactory;
     private BankAccountType bankAccountType = BankAccountType.CLASSIC;
@@ -45,7 +44,6 @@ public final class MainMenuControllerImpl  implements MainMenuController {
      */
     public MainMenuControllerImpl(final Configuration config) {
         this.config = config;
-        this.fileLoaderTxt = new UseFileTxt(config.getRulesFilename());
         this.genericLoader = new ResourceLoader();
         this.maxPlayers = config.getMaxPlayer();
         this.minPlayers = config.getMinPlayer();
@@ -126,7 +124,7 @@ public final class MainMenuControllerImpl  implements MainMenuController {
 
     @Override
     public String getRules() {
-        return fileLoaderTxt.getExtractedText();
+        return genericFileLoader.loadTextResource(config.getRulesFilename());
     }
 
 

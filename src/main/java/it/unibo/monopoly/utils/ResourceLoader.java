@@ -11,6 +11,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -30,6 +31,23 @@ public final class ResourceLoader {
      */
     public ResourceLoader() { /* Empty */ }
 
+
+    /**
+     * Reads a text resource from the classpath into a single {@link String}.
+     * <p>
+     * @param filename the name of the text file in {@code src/main/resources} with all the rules of the game
+     * @return a {@link String} with the full contents of the file (using {@code UTF-8})
+     */
+    public String loadTextResource(final String filename) {
+        try (var is = getRequiredStream(filename);
+             var reader = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8))) {
+            return reader.lines().collect(Collectors.joining("\n"));
+        } catch (final IOException e) {
+            return e.getMessage();
+        }
+    }
+
+
     /**
      * Loads an array of {@link TitleDeed} from a JSON file on the classpath
      * and returns them as a {@link Set}.
@@ -44,6 +62,7 @@ public final class ResourceLoader {
             return Collections.unmodifiableSet(new HashSet<>(Arrays.asList(array)));
         }
     }
+
 
     /**
      * Reads a resource from the classpath and set a {@link Configuration}.
@@ -91,14 +110,16 @@ public final class ResourceLoader {
 
 
     /**
-     * Helper that opens a classpath resource as an InputStream.
+     * Helper that opens a classpath resource as an {@link InputStream}.
      * <p>
-     * @param filename the name of the file in {@code src/main/resources} we want to get
-     * @throws IOException if the file is missing
-     * @return an {@link InputStream} to the classpath resource
+     * @param filename filename the name (and optional relative path) of the resource on the classpath
+     * @return an {@link InputStream} pointing to the given resource
+     * @throws IOException if the resource cannot be found
      */
     private InputStream getRequiredStream(final String filename) throws IOException {
-        final InputStream stream = getClass().getResourceAsStream(filename);
+        Objects.requireNonNull(filename, "filename must not be null");
+        final ClassLoader cl = Thread.currentThread().getContextClassLoader();
+        final InputStream stream = cl.getResourceAsStream(filename);
         if (stream == null) {
             throw new IOException("Resource not found: " + filename);
         }

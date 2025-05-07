@@ -7,7 +7,6 @@ import java.util.Map;
 import it.unibo.monopoly.controller.MainMenuControllerImpl;
 import it.unibo.monopoly.model.transactions.api.BankAccountType;
 import it.unibo.monopoly.model.transactions.api.TitleDeed;
-import it.unibo.monopoly.utils.UseFileTxt;
 
 
 /**
