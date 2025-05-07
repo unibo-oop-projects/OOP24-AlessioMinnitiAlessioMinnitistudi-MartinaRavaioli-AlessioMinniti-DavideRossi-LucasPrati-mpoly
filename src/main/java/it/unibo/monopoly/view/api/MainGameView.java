@@ -36,8 +36,8 @@ public interface MainGameView {
     /**
      * Display interactable UI elements that show the possible actions for a player.
      * @param actions the set of actions that the player can do. When a player selects an action
-     * this will be executed passing to the {@link Consumer} the {@link GameController} instance
+     * this will be executed passing to the {@link GameControllerAction} the {@link GameController} instance
      * that was previously attached to this view.
      */
-    void showPlayerActions(Set<Consumer<GameController>> actions);
+    void showPlayerActions(Set<GameControllerAction> actions);
 }

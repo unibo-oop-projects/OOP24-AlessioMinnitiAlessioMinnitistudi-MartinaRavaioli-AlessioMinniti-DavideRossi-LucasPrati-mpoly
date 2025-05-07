@@ -14,10 +14,12 @@ import it.unibo.monopoly.model.transactions.api.TitleDeed;
 import it.unibo.monopoly.model.turnation.api.Player;
 import it.unibo.monopoly.view.api.AccountPanel;
 import it.unibo.monopoly.view.api.ContractPanel;
+import it.unibo.monopoly.view.api.GameControllerAction;
 import it.unibo.monopoly.view.api.GameActionsPanel;
 import it.unibo.monopoly.view.api.GamePanelsFactory;
 import it.unibo.monopoly.view.api.MainGameView;
 import it.unibo.monopoly.view.api.PlayerPanel;
+import it.unibo.monopoly.view.api.StandardControlsPanel;
 import it.unibo.monopoly.view.impl.gamepanels.SwingPanelsFactory;
 
 //RENAME CLASS FOR BETTER UNDERSTANDABILITY
@@ -28,9 +30,10 @@ public class MainViewImpl implements MainGameView{
     private final PlayerPanel playerInfoPanel;
     private final AccountPanel accountInfoPanel;
     private final ContractPanel contractPanel;
-    private final GameActionsPanel mainActionsPanel;
+    private final GameActionsPanel gameActionsPanel;
+    private final StandardControlsPanel mainActionsPanel;
 
-    private MainViewImpl(final GameController controller) {
+    private MainViewImpl (final GameController controller) {
         GamePanelsFactory fact = new SwingPanelsFactory();
         contractPanel = fact.contractPanel();
         checkComponentIsJPanel(contractPanel);
@@ -38,7 +41,9 @@ public class MainViewImpl implements MainGameView{
         checkComponentIsJPanel(playerInfoPanel);
         accountInfoPanel = fact.bankAccountInfoPanel();
         checkComponentIsJPanel(accountInfoPanel);
-        mainActionsPanel = fact.gameActionsPanel(controller);
+        gameActionsPanel = fact.gameActionsPanel();
+        checkComponentIsJPanel(gameActionsPanel);
+        mainActionsPanel = fact.standardControlsPanel(controller);
         checkComponentIsJPanel(mainActionsPanel);
         mainGameFrame.getContentPane().add(buildActionPanelUI(controller),BorderLayout.CENTER);
         mainGameFrame.pack();
@@ -55,7 +60,7 @@ public class MainViewImpl implements MainGameView{
 
         actionPanel.add(userInfoPanel,BorderLayout.NORTH);
         actionPanel.add((JPanel) contractPanel,BorderLayout.CENTER);
-        //actionPanel.add(actionsPanel(controller),BorderLayout.WEST);
+        actionPanel.add((JPanel) gameActionsPanel,BorderLayout.WEST);
         actionPanel.add((JPanel) mainActionsPanel,BorderLayout.SOUTH);    
         return actionPanel;  
     }
@@ -73,10 +78,11 @@ public class MainViewImpl implements MainGameView{
 
 
     @Override
-    public void displayCurrentPlayerInfo(final Player plData, final BankAccount accountData) {
+    public void displayCurrentPlayerInfo(final Player plData,final BankAccount accountData) {
         playerInfoPanel.displayPlayer(plData);
         accountInfoPanel.displayBankAccount(accountData);
         contractPanel.clear();
+        gameActionsPanel.clear();
         mainActionsPanel.clear();
     }
 
@@ -86,7 +92,7 @@ public class MainViewImpl implements MainGameView{
     }
 
     @Override
-    public void showPlayerActions(final Set<Consumer<GameController>> actions) {
-        mainActionsPanel.buildActionButtons(actions);
+    public void showPlayerActions(final Set<GameControllerAction> actions) {
+        gameActionsPanel.buildActionButtons(actions);
     }
 }
