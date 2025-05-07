@@ -33,9 +33,27 @@ public final class ResourceLoader {
 
 
     /**
+     * Helper that opens a classpath resource as an {@link InputStream}.
+     * <p>
+     * @param filename the name (and optional relative path) of the resource on the classpath
+     * @return an {@link InputStream} pointing to the given resource
+     * @throws IOException if the resource cannot be found
+     */
+    public InputStream getRequiredStream(final String filename) throws IOException {
+        Objects.requireNonNull(filename, "filename must not be null");
+        final ClassLoader cl = Thread.currentThread().getContextClassLoader();
+        final InputStream stream = cl.getResourceAsStream(filename);
+        if (stream == null) {
+            throw new IOException("Resource not found: " + filename);
+        }
+        return stream;
+    }
+
+
+    /**
      * Reads a text resource from the classpath into a single {@link String}.
      * <p>
-     * @param filename the name of the text file in {@code src/main/resources} with all the rules of the game
+     * @param filename the name (and optional relative path) of the resource on the classpath with all the rules of the game
      * @return a {@link String} with the full contents of the file (using {@code UTF-8})
      */
     public String loadTextResource(final String filename) {
@@ -51,8 +69,8 @@ public final class ResourceLoader {
     /**
      * Loads an array of {@link TitleDeed} from a JSON file on the classpath
      * and returns them as a {@link Set}.
-     *
-     * @param filename the name of the JSON file in {@code src/main/resources} with all the Title Deeds
+     * <p>
+     * @param filename the name (and optional relative path) of the resource on the classpath with all the Title Deeds
      * @return an unmodifiable {@link Set} of {@link TitleDeed}, never {@code null}
      * @throws IOException if the resource is missing or cannot be parsed
      */
@@ -67,7 +85,7 @@ public final class ResourceLoader {
     /**
      * Reads a resource from the classpath and set a {@link Configuration}.
      * <p>
-     * @param filename the name of the YML file in {@code src/main/resources} with all the custom data
+     * @param filename the name (and optional relative path) of the resource on the classpath with all the custom data
      * @return a {@link Configuration} with the custom data provided by the file
      */
     public Configuration loadConfigurationFile(final String filename) {
@@ -106,24 +124,6 @@ public final class ResourceLoader {
             return new Configuration.Builder().build();
         }
         return configurationBuilder.build();
-    }
-
-
-    /**
-     * Helper that opens a classpath resource as an {@link InputStream}.
-     * <p>
-     * @param filename filename the name (and optional relative path) of the resource on the classpath
-     * @return an {@link InputStream} pointing to the given resource
-     * @throws IOException if the resource cannot be found
-     */
-    private InputStream getRequiredStream(final String filename) throws IOException {
-        Objects.requireNonNull(filename, "filename must not be null");
-        final ClassLoader cl = Thread.currentThread().getContextClassLoader();
-        final InputStream stream = cl.getResourceAsStream(filename);
-        if (stream == null) {
-            throw new IOException("Resource not found: " + filename);
-        }
-        return stream;
     }
 
 
