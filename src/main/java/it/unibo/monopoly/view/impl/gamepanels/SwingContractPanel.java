@@ -31,13 +31,17 @@ import it.unibo.monopoly.view.api.ContractPanel;
 /**
  * A panel to visualise all information related to a {@link TitleDeed}.
  */
-final class SwingContractPanel extends JPanel implements ContractPanel{
+final class SwingContractPanel extends JPanel implements ContractPanel {
 
     private static final long serialVersionUID = 43L;
     private static final int BIG_FONT_SIZE = 15;
     private static final int N_ROWS = 5;
     private static final int PROPORTION = 5;
-    private static final String CONTRACT_PANEL_PLACEHOLDER = "THE CONTRACT OF THE PROPERTY YOU STEPPED ONTO WILL APPEAR AS SOON AS YOU MAKE A MOVE";
+    private static final String CONTRACT_PANEL_PLACEHOLDER = 
+            """
+                THE CONTRACT OF THE PROPERTY YOU STEPPED ONTO 
+                WILL APPEAR AS SOON AS YOU MAKE A MOVE
+            """;
 
     SwingContractPanel() {
         this.setLayout(new BorderLayout());
