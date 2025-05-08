@@ -5,26 +5,42 @@ import it.unibo.monopoly.model.turnation.api.Position;
 /**
  * position implementation.
 */
-public class PositionImpl implements Position,Comparable<Position> {
+public class PositionImpl implements Position, Comparable<Position> {
     private Integer pos;
 
-    public PositionImpl(Integer value){
-        this.pos=value;
+    /**
+     * constructor.
+     * @param value
+    */
+    public PositionImpl(final Integer value) {
+        this.pos = value;
     }
 
+    /**
+     * get the position.
+     * @return int
+    */
     @Override
     public int getPos() {
         return this.pos;
     }
 
+    /**
+     * set the position.
+     * @param value
+    */
     @Override
-    public void setPos(int value) {
-        this.pos=value;
+    public void setPos(final int value) {
+        this.pos = value;
     }
 
+    /**
+     * compare to.
+     * @param o
+     * @return int
+    */
     @Override
-    public int compareTo(Position o) {
+    public int compareTo(final Position o) {
         return this.pos.compareTo(o.getPos());
     }
-    
 }
