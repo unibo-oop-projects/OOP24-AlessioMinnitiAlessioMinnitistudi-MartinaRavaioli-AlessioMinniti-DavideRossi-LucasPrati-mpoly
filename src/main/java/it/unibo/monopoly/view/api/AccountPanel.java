@@ -5,7 +5,7 @@ import it.unibo.monopoly.model.transactions.api.BankAccount;
 /**
  * Display information related to the {@link BankAccount} of a player.
  */
-public interface AccountPanel extends InfoPanel{
+public interface AccountPanel extends InfoPanel {
 
     /**
      * Displays information related to a {@link BankAccount}.

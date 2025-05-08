@@ -4,9 +4,9 @@ import it.unibo.monopoly.model.transactions.api.TitleDeed;
 
 /**
  * A panel that displays information related to
- * a {@link TitleDeed}
+ * a {@link TitleDeed}.
  */
-public interface ContractPanel extends InfoPanel{
+public interface ContractPanel extends InfoPanel {
 
     /**
      * Displays information related to a {@link TitleDeed}.
