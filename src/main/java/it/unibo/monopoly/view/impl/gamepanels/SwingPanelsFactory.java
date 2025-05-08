@@ -1,8 +1,5 @@
 package it.unibo.monopoly.view.impl.gamepanels;
 
-import java.awt.Component;
-
-
 import it.unibo.monopoly.controller.api.GameController;
 import it.unibo.monopoly.view.api.GamePanelsFactory;
 import it.unibo.monopoly.view.api.PlayerPanel;
@@ -13,9 +10,9 @@ import it.unibo.monopoly.view.api.GameActionsPanel;
 
 /**
  * Implementation of the {@link GamePanelsFactory}
- * that creates {@link JPanel} components
+ * that creates {@link JPanel} components.
  */
-public class SwingPanelsFactory implements GamePanelsFactory{
+public final class SwingPanelsFactory implements GamePanelsFactory {
 
     @Override
     public PlayerPanel userInfoPanel() {
@@ -34,8 +31,7 @@ public class SwingPanelsFactory implements GamePanelsFactory{
 
     @Override
     public GameActionsPanel gameActionsPanel() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'gameActionsPanel'");
+        return new SwingGameActionsPanel();
     }
 
     @Override
