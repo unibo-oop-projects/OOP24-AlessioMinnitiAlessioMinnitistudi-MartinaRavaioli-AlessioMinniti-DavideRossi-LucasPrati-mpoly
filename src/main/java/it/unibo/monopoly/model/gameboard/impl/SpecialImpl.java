@@ -14,7 +14,7 @@ public class SpecialImpl implements Special {
     }
 
     @Override
-    public Position getPosition() {
+    public final Position getPosition() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'getPosition'");
     }

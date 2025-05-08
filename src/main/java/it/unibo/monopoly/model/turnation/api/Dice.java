@@ -7,9 +7,13 @@ import java.util.Collection;
 */
 public interface Dice {
     /**
-     * @return dices' result
+     * return the result of the dices.
+     * @return collection of integer
      */
     Collection<Integer> throwDices();
-    
+    /**
+     * get the number of dices.
+     * @return int
+     */
     int getNDices();
 }
