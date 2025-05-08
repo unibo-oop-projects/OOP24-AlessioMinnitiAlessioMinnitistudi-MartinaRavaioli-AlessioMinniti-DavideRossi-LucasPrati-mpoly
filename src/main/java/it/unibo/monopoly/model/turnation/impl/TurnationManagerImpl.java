@@ -13,44 +13,82 @@ import it.unibo.monopoly.resources.CircularLinkedList;
 */
 public class TurnationManagerImpl implements TurnationManager {
     private CircularLinkedList<Player> players;
-    private boolean isOver=false;
+    private boolean isOver;
     private Player currPlayer;
-    private final Dice dice;
-
-    public TurnationManagerImpl(CircularLinkedList<Player> plList, Dice dice){
-        this.players=plList;
+    private Dice dice;
+    /**
+     * constructor.
+     * @param plList
+     * @param dice
+    */
+    public TurnationManagerImpl(final CircularLinkedList<Player> plList, final Dice dice) {
+        this.players = plList;
         this.dice = dice;
     }
-
-    public void setList(CircularLinkedList<Player> plList){
-        this.players=plList;
+    /**
+     * constructor.
+     * @param plList
+    */
+    public void setList(final CircularLinkedList<Player> plList) {
+        this.players = plList;
     }
-
-    public CircularLinkedList<Player> getList(){
+    /**
+     * set Dice.
+     * @param dice
+    */
+    public final void setDice(final Dice dice) {
+        this.dice = dice;
+    }
+    /**
+     * get dice.
+     * @return Dice
+    */
+    public Dice getDice() {
+        return this.dice;
+    }
+    /**
+     * get player list.
+     * @return Circular List of player
+    */
+    public CircularLinkedList<Player> getPlayerList() {
         return this.players;
     }
-
-    public void addPlayer(Player p){
+    /**
+     * add a player.
+     * @param p
+    */
+    public void addPlayer(final Player p) {
         this.players.addNode(p);
     }
-
-    public void setOver(){
-        this.isOver=true;
+    /**
+     * set game over.
+    */
+    public void setOver() {
+        this.isOver = true;
     }
-
+    /**
+     * check if is over.
+     * @return boolean
+    */
     @Override
     public final boolean isOver() { 
         return this.isOver;
     }
-
+    /**
+     * get the next player.
+     * @return player
+    */
     @Override
     public final Player getNextPlayer() { 
-        currPlayer = players.giveNextNode(currPlayer);
-        return currPlayer;
+        this.currPlayer = players.giveNextNode(this.currPlayer);
+        return this.currPlayer;
     }
-
+    /**
+     * throw the dices.
+     * @return Collection of Integer
+    */
     @Override
     public final Collection<Integer> moveByDices() { 
-        return dice.throwDices();
+        return this.dice.throwDices();
     }
 }
