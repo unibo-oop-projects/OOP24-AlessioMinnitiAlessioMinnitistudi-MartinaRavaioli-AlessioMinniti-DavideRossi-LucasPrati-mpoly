@@ -12,18 +12,30 @@ public interface Board {
 
     //call to return a tile
     /**
+     * get the tile.
      * @param pos
      * @return return a tile
      */
     Tile getTile(Position pos);
     //call to buy a property
     /**
+     * buy property.
      * @param prop
      * @param owner
      */
     void buyProperty(Property prop, Player owner);
 
+    /**
+     * get the tile of the pawn.
+     * @param p
+     * @return Tile
+     */
     Tile getTileForPawn(Pawn p);
 
+    /**
+     * move the pawn.
+     * @param player
+     * @param value
+     */
     void movePawn(Pawn player, Collection<Integer> value);
 }

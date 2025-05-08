@@ -28,14 +28,17 @@ public class BoardImpl implements Board {
     /**
      * constructor.
      * @param tiles
+     * @param pawns
     */
     public BoardImpl(final List<Tile> tiles, final List<Pawn> pawns) {
         this.tiles = tiles;
         this.pawns = pawns;
     }
-
-    public void sortTiles(){
-        this.tiles.sort((a, b) -> ((TileImpl)a).compareTo((TileImpl)b));
+    /**
+     * sort the tiles.
+    */
+    public void sortTiles() {
+        this.tiles.sort((a, b) -> ((TileImpl) a).compareTo((TileImpl) b));
     }
 
 
@@ -43,12 +46,18 @@ public class BoardImpl implements Board {
     public final Tile getTile(final Position pos) { 
         return tiles.get(pos.getPos());
     }
-
-    public void removePawn(Pawn p){
+    /**
+     * remove a pawn.
+     * @param p
+    */
+    public void removePawn(final Pawn p) {
         this.pawns.remove(p);
     }
-
-    public void addPawn(Pawn p){
+    /**
+     * add a pawn.
+     * @param p
+    */
+    public void addPawn(final Pawn p) {
         this.pawns.add(p);
     }
 
@@ -57,16 +66,25 @@ public class BoardImpl implements Board {
     public void buyProperty(final Property prop, final Player owner) {
     }
 
+    /**
+     * get the tile of the pawn.
+     * @param p
+     * @return Tile
+    */
     @Override
-    public Tile getTileForPawn(Pawn p) {
+    public final Tile getTileForPawn(final Pawn p) {
         return tiles.get(p.getPosition().getPos());
     }
+    /**
+     * get the pawn on a tile.
+     * @param tile
+     * @return List of Pawn
+    */
+    public List<Pawn> getPawninTile(final Tile tile) {
+        final List<Pawn> pawnsInTile = new ArrayList<>();
 
-    public List<Pawn> getPawninTile(Tile tile){
-        List<Pawn> pawnsInTile=new ArrayList<>();
-
-        for(Pawn p : pawnsInTile){
-            if(((PositionImpl)p.getPosition()).equals((PositionImpl)tile.getPosition())){
+        for (final Pawn p : pawnsInTile) {
+            if (((PositionImpl) p.getPosition()).equals((PositionImpl) tile.getPosition())) {
                 pawnsInTile.add(p);
             }
         }
@@ -75,8 +93,8 @@ public class BoardImpl implements Board {
     }
 
     @Override
-    public void movePawn(Pawn player, Collection<Integer> value) {
-        int steps = value.stream().mapToInt(Integer::intValue).sum();
+    public final void movePawn(final Pawn player, final Collection<Integer> value) {
+        final int steps = value.stream().mapToInt(Integer::intValue).sum();
         player.move(steps);
     }
 }
