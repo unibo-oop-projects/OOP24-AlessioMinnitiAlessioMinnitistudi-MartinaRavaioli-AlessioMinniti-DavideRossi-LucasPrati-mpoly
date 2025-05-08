@@ -1,12 +1,11 @@
 package it.unibo.monopoly.view.api;
 
-import it.unibo.monopoly.controller.api.GameController;
-
 /**
  * An object that encapsulates an 
- * action that can be called on a {@link GameController}.
+ * action of the game that the current playing 
+ * player can launch.
  */
-public interface GameControllerAction {
+public interface GameAction {
 
     /**
      * The name of the action.
