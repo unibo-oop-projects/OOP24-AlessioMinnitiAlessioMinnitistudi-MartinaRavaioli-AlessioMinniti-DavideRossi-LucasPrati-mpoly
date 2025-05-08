@@ -7,47 +7,81 @@ import it.unibo.monopoly.model.turnation.api.Position;
 import it.unibo.monopoly.model.turnation.impl.AbstractIdPlayerImpl;
 import it.unibo.monopoly.model.turnation.impl.PositionImpl;
 
+/**
+ * pawn implementation.
+*/
 public class PawnImpl extends AbstractIdPlayerImpl implements Pawn {
     private Position pos;
     private Color color;
     private String shape;
-    
-    public PawnImpl(Position id,Color color, String shape) {
+    /**
+     * constructor.
+     * @param id
+     * @param color
+     * @param shape
+    */
+    public PawnImpl(final Position id, final Color color, final String shape) {
         super(id.getPos());
-        this.pos=new PositionImpl(id.getPos());
+        this.pos = new PositionImpl(id.getPos());
         setColor(color);
         setShape(shape);
     }
-
-    public final void setColor(Color color){
-        this.color=color;
+    /**
+     * set color.
+     * @param color
+    */
+    public final void setColor(final Color color) {
+        this.color = color;
     }
 
-    public final void setShape(String shape){
-        this.shape=shape;
+    /**
+     * set the shape.
+     * @param shape
+    */
+    public final void setShape(final String shape) {
+        this.shape = shape;
     }
 
-    public Color getColor(){
+    /**
+     * get the color.
+     * @return Color
+    */
+    public Color getColor() {
         return this.color;
     }
 
-    public String getShape(){
+    /**
+     * get the shape.
+     * @return String
+    */
+    public String getShape() {
         return this.shape;
     }
 
+    /**
+     * get the position.
+     * @return Position
+    */
     @Override
     public Position getPosition() {
         return this.pos;
     }
 
-    public void setPosition(Position pos) {
-        this.pos=pos;
+    /**
+     * set the position.
+     * @param pos
+    */
+    public void setPosition(final Position pos) {
+        this.pos = pos;
     }
 
+    /**
+     * move a pawn.
+     * @param steps
+    */
     @Override
-    public void move(int steps) {
-        this.pos.setPos(this.pos.getPos()+steps);
+    public void move(final int steps) {
+        this.pos.setPos(this.pos.getPos() + steps);
     }
 
- 
 }
