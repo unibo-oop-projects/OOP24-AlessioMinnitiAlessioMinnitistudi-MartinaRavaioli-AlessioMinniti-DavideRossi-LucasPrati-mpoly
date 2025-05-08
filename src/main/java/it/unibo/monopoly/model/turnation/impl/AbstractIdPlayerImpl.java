@@ -8,18 +8,27 @@ import it.unibo.monopoly.resources.Identifiable;
 */
 public abstract class AbstractIdPlayerImpl implements Player, Identifiable<Integer> {
     private int id;
-
-    public AbstractIdPlayerImpl(int id){
-        this.id=id;
+    /**
+     * constructor.
+     * @param id
+    */
+    public AbstractIdPlayerImpl(final int id) {
+        this.id = id;
     }
-
+    /**
+    * get ID.
+    * @return Integer
+    */
     @Override
-    public Integer getID(){
+    public final Integer getID() {
         return this.id;
     }
-
+    /**
+     * set the ID.
+     * @param value
+    */
     @Override
-    public void setID(Integer value){
-        this.id=value;
+    public final void setID(final Integer value) {
+        this.id = value;
     }
 }
