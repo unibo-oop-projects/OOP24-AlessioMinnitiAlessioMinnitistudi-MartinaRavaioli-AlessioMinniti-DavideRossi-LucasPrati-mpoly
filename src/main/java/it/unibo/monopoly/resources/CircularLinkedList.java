@@ -1,28 +1,38 @@
 package it.unibo.monopoly.resources;
 
+/**
+ * circular linked list.
+ * @param <T>
+*/
+public final class CircularLinkedList<T> {
+    private Node<T> head;
+    private Node<T> tail;
 
-public class CircularLinkedList<T> {
-    private Node<T> head = null;
-    private Node<T> tail = null;
-
-    public void addNode(T value) {
-        Node<T> newNode = new Node<>(value);
-    
-        if (head == null) {
-            head = newNode;
+    /**
+     * add a node.
+     * @param value
+    */
+    public void addNode(final T value) {
+        final Node<T> newNode = new Node<>(value);
+        if (this.head == null) {
+            this.head = newNode;
         } else {
             tail.setNextNode(newNode);
         }
-    
-        tail = newNode;
-        tail.setNextNode(head);
+        this.tail = newNode;
+        this.tail.setNextNode(this.head);
     }
 
-    public T giveNextNode(T value){
-        Node<T> currentNode = head;
+    /**
+     * get the next node.
+     * @param value
+     * @return T
+    */
+    public T giveNextNode(final T value) {
+        Node<T> currentNode = this.head;
 
-        while(currentNode != null){
-            if(currentNode.getValue()==value){
+        while (currentNode != null) {
+            if (currentNode.getValue() == value) {
                 return currentNode.getNextNode().getValue();
             }
             currentNode = currentNode.getNextNode();
@@ -30,11 +40,14 @@ public class CircularLinkedList<T> {
 
         return null;
     }
-
-    public boolean containsNode(T searchValue) {
-        Node<T> currentNode = head;
-    
-        if (head == null) {
+    /**
+     * control if contains a node.
+     * @param searchValue
+     * @return boolean
+    */
+    public boolean containsNode(final T searchValue) {
+        Node<T> currentNode = this.head;
+        if (this.head == null) {
             return false;
         } else {
             do {
@@ -42,35 +55,38 @@ public class CircularLinkedList<T> {
                     return true;
                 }
                 currentNode = currentNode.getNextNode();
-            } while (currentNode != head);
+            } while (currentNode != this.head);
             return false;
         }
     }
-
-    public void deleteNode(T valueToDelete) {
-        Node<T> currentNode = head;
-        if (head == null) { // the list is empty
+    /**
+     * delete a node.
+     * @param valueToDelete
+    */
+    public void deleteNode(final T valueToDelete) {
+        Node<T> currentNode = this.head;
+        if (this.head == null) { // the list is empty
             return;
         }
         do {
-            Node<T> nextNode = currentNode.getNextNode();
+            final Node<T> nextNode = currentNode.getNextNode();
             if (nextNode.getValue() == valueToDelete) {
-                if (tail == head) { // the list has only one single element
-                    head = null;
-                    tail = null;
+                if (this.tail == this.head) { // the list has only one single element
+                    this.head = null;
+                    this.tail = null;
                 } else {
                     currentNode.setNextNode(nextNode.getNextNode());
-                    if (head == nextNode) { //we're deleting the head
-                        head = head.getNextNode();
+                    if (this.head == nextNode) { //we're deleting the head
+                        this.head = this.head.getNextNode();
                     }
-                    if (tail == nextNode) { //we're deleting the tail
-                        tail = currentNode;
+                    if (this.tail == nextNode) { //we're deleting the tail
+                        this.tail = currentNode;
                     }
                 }
                 break;
             }
             currentNode = nextNode;
-        } while (currentNode != head);
+        } while (currentNode != this.head);
     }
 
 }
