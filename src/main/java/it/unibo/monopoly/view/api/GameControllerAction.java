@@ -15,9 +15,7 @@ public interface GameControllerAction {
     String getName();
 
     /**
-     * Run the object's action on the {@code controller} given as input.
-     * @param controller The {@link GameController} on which commands will be called.
-     * The action will execute commands on the controller given as input.
+     * Start the execution of the object's action.
      */
-    void execute(GameController controller);
+    void execute();
 }
