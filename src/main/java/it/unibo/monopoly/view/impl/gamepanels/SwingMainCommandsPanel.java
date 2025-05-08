@@ -12,40 +12,32 @@ import javax.swing.JPanel;
 import it.unibo.monopoly.controller.api.GameController;
 import it.unibo.monopoly.view.api.StandardControlsPanel;
 
-class SwingMainCommandsPanel extends JPanel implements StandardControlsPanel{
+final class SwingMainCommandsPanel extends JPanel implements StandardControlsPanel {
 
     private static final String DICES_RESULTS_PH = "Risultato dadi:";
-    private static final String DICES_TOTAL_PH = "TOTALE TIRO:";        
+    private static final String DICES_TOTAL_PH = "TOTALE TIRO:";
+    private static final long serialVersionUID = 1L;
 
-    private final JPanel turnJPanel;
-    private final JPanel dicesJPanel;
+
     private final JLabel dicesResultsJLabel;
     private final JLabel dicesTotalJLabel;
 
-    public SwingMainCommandsPanel (final GameController controller) {    
-        this.setLayout(new GridLayout(2,1));    
-        turnJPanel = createTurnPanel(controller);
-        dicesJPanel = createDicesPanel(controller);
-        dicesResultsJLabel = (JLabel) dicesJPanel.getComponent(1);
-        dicesTotalJLabel = (JLabel) dicesJPanel.getComponent(2);
+    SwingMainCommandsPanel(final GameController controller) {
+        this.setLayout(new GridLayout(2, 1));
 
-        this.add(dicesJPanel);
-        this.add(turnJPanel);
-    }
-
-    private JPanel createTurnPanel (final GameController controller) {
-        final JPanel turnPanel = new JPanel();
+        //Turn panel UI
+        final JPanel turnJPanel = new JPanel();
         final GridBagLayout turnPanelLayout = new GridBagLayout();
-        turnPanel.setLayout(turnPanelLayout);
+        turnJPanel.setLayout(turnPanelLayout);
 
         final JButton handlePropertiesButton = new JButton("Gestione proprietà");
         final JButton rulesButton = new JButton("?");
         final JButton endTurnButton = new JButton("Termina turno");
         endTurnButton.addActionListener(e -> controller.endTurn());
 
-        turnPanel.add(handlePropertiesButton);
-        turnPanel.add(rulesButton);
-        turnPanel.add(endTurnButton);
+        turnJPanel.add(handlePropertiesButton);
+        turnJPanel.add(rulesButton);
+        turnJPanel.add(endTurnButton);
 
         final GridBagConstraints fixedButtonsConstraints = new GridBagConstraints();
         fixedButtonsConstraints.fill = GridBagConstraints.BOTH;
@@ -59,21 +51,18 @@ class SwingMainCommandsPanel extends JPanel implements StandardControlsPanel{
         endTurnButtonConstraints.fill = GridBagConstraints.BOTH;
         turnPanelLayout.setConstraints(endTurnButton, endTurnButtonConstraints);
 
-        return turnPanel;
-    }
-
-    private JPanel createDicesPanel(final GameController controller) {
-        final JPanel dicesPanel = new JPanel();
+        //Dices panel UI
+        final JPanel dicesJPanel = new JPanel();
         final GridBagLayout dicesPanelLayout = new GridBagLayout();
-        dicesPanel.setLayout(dicesPanelLayout);
+        dicesJPanel.setLayout(dicesPanelLayout);
 
         final JButton throwDicesButton = new JButton("Lancia i dadi");
         throwDicesButton.addActionListener(e -> controller.throwDices());
-        final JLabel dicesResultJLabel = new JLabel("Risultato dadi:");
-        final JLabel dicesTotatlJLabel = new JLabel("TOTALE:");
-        dicesPanel.add(throwDicesButton);   
-        dicesPanel.add(dicesResultJLabel);
-        dicesPanel.add(dicesTotatlJLabel);
+        dicesResultsJLabel = new JLabel("Risultato dadi:");
+        dicesTotalJLabel = new JLabel("TOTALE:");
+        dicesJPanel.add(throwDicesButton);
+        dicesJPanel.add(dicesResultsJLabel);
+        dicesJPanel.add(dicesTotalJLabel);
 
         final GridBagConstraints throwDicesButtonConstraints = new GridBagConstraints();
         throwDicesButtonConstraints.weighty = 1.0;
@@ -87,10 +76,11 @@ class SwingMainCommandsPanel extends JPanel implements StandardControlsPanel{
         dicesResulConstraints.gridheight = 1;
         dicesResulConstraints.gridwidth = GridBagConstraints.REMAINDER;
         dicesResulConstraints.fill = GridBagConstraints.BOTH;
-        dicesPanelLayout.setConstraints(dicesResultJLabel, dicesResulConstraints);
-        dicesPanelLayout.setConstraints(dicesTotatlJLabel, dicesResulConstraints);
+        dicesPanelLayout.setConstraints(dicesResultsJLabel, dicesResulConstraints);
+        dicesPanelLayout.setConstraints(dicesTotalJLabel, dicesResulConstraints);
 
-        return dicesPanel;
+        this.add(dicesJPanel);
+        this.add(turnJPanel);
     }
 
     @Override
@@ -101,12 +91,11 @@ class SwingMainCommandsPanel extends JPanel implements StandardControlsPanel{
 
     @Override
     public void displayDicesResults(final List<Integer> results) {
-        StringBuilder stringBuilder = new StringBuilder();
-        results.stream().forEach(i ->{
-            stringBuilder.append(i);
-            stringBuilder.append(",");
+        final StringBuilder stringBuilder = new StringBuilder();
+        results.stream().forEach(i -> {
+            stringBuilder.append(i).append(',');
         });
-        stringBuilder.deleteCharAt(stringBuilder.length()-1);
+        stringBuilder.deleteCharAt(stringBuilder.length() - 1);
         dicesResultsJLabel.setText(DICES_RESULTS_PH + stringBuilder.toString());
         dicesTotalJLabel.setText(DICES_TOTAL_PH + Integer.toString(results.stream().mapToInt(i -> i).sum()));
     }
