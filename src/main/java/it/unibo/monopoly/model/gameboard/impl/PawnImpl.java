@@ -46,9 +46,8 @@ public class PawnImpl extends AbstractIdPlayerImpl implements Pawn, PawnFactory 
         try {
             this.color = color;
         } catch (Exception e) {
-
+            throw new RuntimeException(e.getMessage());
         }
-        
     }
 
     /**
@@ -103,15 +102,27 @@ public class PawnImpl extends AbstractIdPlayerImpl implements Pawn, PawnFactory 
     public void move(final int steps) {
         this.pos.setPos(this.pos.getPos() + steps);
     }
-
+    /**
+     * factory method to create basic pawns.
+     * @param id
+     * @param pos
+     * @param color
+    */
     @Override
     public Pawn createBasic(int id, Position pos, Color color) {
-        final Pawn p = new PawnImpl(id, pos, color)
-        return null;
+        final Pawn p = new PawnImpl(id, pos, color);
+        return p;
     }
+    /**
+     * factory method to create advanced pawns.
+     * @param id
+     * @param pos
+     * @param color
+     * @param shape
+    */
     @Override
     public Pawn createAdvanced(int id, Position pos, Color color, String shape) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'createAdvanced'");
+        final Pawn p = new PawnImpl(id, pos, color, shape);
+        return p;
     }
 }
