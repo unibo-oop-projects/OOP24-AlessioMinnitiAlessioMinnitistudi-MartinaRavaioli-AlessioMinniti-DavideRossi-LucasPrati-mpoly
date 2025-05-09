@@ -62,11 +62,15 @@ public final class RulesWindowView extends JDialog {
         // Create a text area for display all the rules
         final JTextArea rulesTextArea = new JTextArea();
         rulesTextArea.setEditable(false);
+        rulesTextArea.setLineWrap(true);
+        rulesTextArea.setWrapStyleWord(true);
         rulesTextArea.setFont(new Font(config.getFontName(), Font.PLAIN, config.getSmallFont()));
         rulesTextArea.setText(rules);
+        rulesTextArea.setCaretPosition(0);
 
         // Create a scrollable view for the rulesTextArea
         final JScrollPane scrollPane = new JScrollPane(rulesTextArea);
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 
         // Create an exit button for the window
         final JButton exitButton = new JButton(EXIT_TEXT);

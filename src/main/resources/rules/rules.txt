@@ -1,1 +1,95 @@
-PROOOOOOOOOOOOOVAAAAAAAAAAAAAAA
+Monopoly Rules
+
+
+Objective:
+The goal of the game is to become the wealthiest player by buying, renting, and selling properties.
+
+
+Setup:
+Each player chooses a name and a token color.
+Each player receives an initial amount of money from the Bank to begin the game.
+
+
+The Bank:
+The Bank manages the following:
+Holds Title Deed cards and houses before they are purchased.
+Pays salaries and bonuses.
+Sells properties and distributes the corresponding Title Deed cards.
+Sells houses and grants mortgages when needed.
+Collects taxes and property payments.
+The Bank never goes bankrupt.
+
+
+The Play:
+Players take turns rolling the dice and moving their token forward the number of spaces shown.
+After finishing a turn, the next player proceeds.
+Tokens remain on the space where they landed and resume from that point next turn.
+Multiple tokens can share the same space.
+Depending on where you land, you may:
+    - Buy properties
+    - Pay rent or taxes
+    - Draw a Chance or Community Chest card
+    - Be sent to Jail
+
+
+"GO":
+Every time a player passes or lands on GO, they collect $200 from the Bank.
+
+
+Buying Property:
+If you land on an unowned property, you may buy it from the Bank at its printed price.
+You will receive the corresponding Title Deed card as proof of ownership.
+
+
+Paying Rent:
+If you land on property owned by another player, you must pay them rent as listed on the Title Deed.
+If a player owns all properties in a color group, they may charge double rent for those without houses.
+Rent increases significantly when houses are built.
+
+
+"CHANCE" and "COMMUNITY CHEST":
+When you land on these spaces, draw a card from the corresponding deck and follow its instructions immediately.
+
+
+"INCOME TAX":
+If you land on the Income Tax space, you must pay $200 to the Bank.
+
+
+"JAIL":
+You go to Jail if:
+    - You land on the “Go to Jail” space.
+    - You draw a “Go to Jail” card.
+Rules while in Jail:
+    - Move your token directly to Jail—you do not collect $200 for passing GO.
+    - Your turn ends immediately.
+    - Jail time lasts for 1 turn.
+    - You can still collect rent from other players.
+
+
+"FREE PARKING":
+Landing on Free Parking has no reward or penalty.
+It is simply a resting space.
+
+
+Houses:
+If you own all properties in a color group, you may buy houses from the Bank and build them on those properties.
+The cost per house is listed on the property’s Title Deed card.
+Each property has a limit to how many houses it can hold.
+Even without houses, complete ownership of a color group allows double rent.
+
+
+Selling:
+Unimproved properties, railroads, and utilities may be sold back to the Bank.
+Properties cannot be sold if there are houses on any properties in that color group.
+Houses may be sold back to the Bank for half their purchase price.
+
+
+Bankruptcy:
+- Classic Mode: A player is declared bankrupt if their bank account is negative at the end of their turn.
+- Infinity Mode: Players can continue playing regardless of balance.
+When you go bankrupt, all your properties are automatically returned to the Bank.
+
+
+Other Rules:
+Only the Bank may loan money to players.
+Players may not loan or borrow money from each other.
