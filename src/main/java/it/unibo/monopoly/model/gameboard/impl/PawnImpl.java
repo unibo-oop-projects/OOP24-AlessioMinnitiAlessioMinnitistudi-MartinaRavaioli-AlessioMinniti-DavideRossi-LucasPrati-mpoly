@@ -18,10 +18,11 @@ public class PawnImpl extends AbstractIdPlayerImpl implements Pawn, PawnFactory 
     /**
      * constructor.
      * @param id
+     * @param pos
      * @param color
      * @param shape
     */
-    public PawnImpl(final int id, final Position pos,final Color color, final String shape) {
+    public PawnImpl(final int id, final Position pos, final Color color, final String shape) {
         super(id);
         this.pos = new PositionImpl(pos.getPos());
         setColor(color);
@@ -30,9 +31,10 @@ public class PawnImpl extends AbstractIdPlayerImpl implements Pawn, PawnFactory 
     /**
      * constructor.
      * @param id
+     * @param pos
      * @param color
     */
-    public PawnImpl(final int id, final Position pos,final Color color) {
+    public PawnImpl(final int id, final Position pos, final Color color) {
         super(id);
         this.pos = new PositionImpl(pos.getPos());
         setColor(color);
@@ -43,11 +45,7 @@ public class PawnImpl extends AbstractIdPlayerImpl implements Pawn, PawnFactory 
      * @param color
     */
     public final void setColor(final Color color) {
-        try {
-            this.color = color;
-        } catch (Exception e) {
-            throw new RuntimeException(e.getMessage());
-        }
+        this.color = color;
     }
 
     /**
@@ -55,7 +53,7 @@ public class PawnImpl extends AbstractIdPlayerImpl implements Pawn, PawnFactory 
      * @param shape
     */
     public final void setShape(final String shape) {
-        if(shape.isEmpty() || shape.isBlank()){
+        if (shape.isEmpty() || shape.isBlank()) {
             throw new IllegalArgumentException();
         }
         this.shape = shape;
@@ -107,11 +105,11 @@ public class PawnImpl extends AbstractIdPlayerImpl implements Pawn, PawnFactory 
      * @param id
      * @param pos
      * @param color
+     * @return Pawn
     */
     @Override
-    public Pawn createBasic(int id, Position pos, Color color) {
-        final Pawn p = new PawnImpl(id, pos, color);
-        return p;
+    public Pawn createBasic(final int id, final Position pos, final Color color) {
+        return new PawnImpl(id, pos, color);
     }
     /**
      * factory method to create advanced pawns.
@@ -119,10 +117,10 @@ public class PawnImpl extends AbstractIdPlayerImpl implements Pawn, PawnFactory 
      * @param pos
      * @param color
      * @param shape
+     * @return Pawn
     */
     @Override
-    public Pawn createAdvanced(int id, Position pos, Color color, String shape) {
-        final Pawn p = new PawnImpl(id, pos, color, shape);
-        return p;
+    public Pawn createAdvanced(final int id, final Position pos, final Color color, final String shape) {
+        return  new PawnImpl(id, pos, color, shape);
     }
 }

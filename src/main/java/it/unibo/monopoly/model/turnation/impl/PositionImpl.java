@@ -6,7 +6,7 @@ import it.unibo.monopoly.model.turnation.api.Position;
  * position implementation.
 */
 public class PositionImpl implements Position, Comparable<Position> {
-    private final static Integer MAX_POS = 40;
+    private static final Integer MAX_POS = 40;
     private Integer value;
 
     /**
@@ -32,13 +32,11 @@ public class PositionImpl implements Position, Comparable<Position> {
     */
     @Override
     public void setPos(final int value) {
-        if(value <= MAX_POS){
+        if (value <= MAX_POS) {
             this.value = value;
-        }
-        else{
+        } else {
             throw new IllegalArgumentException("out of bound");
         }
-        
     }
 
     /**
