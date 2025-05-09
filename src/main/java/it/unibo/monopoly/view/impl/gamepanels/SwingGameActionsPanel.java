@@ -6,12 +6,11 @@ import java.util.Set;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 
 import it.unibo.monopoly.view.api.GameActionsPanel;
 import it.unibo.monopoly.view.api.GameAction;
 
-final class SwingGameActionsPanel extends JPanel implements GameActionsPanel {
+final class SwingGameActionsPanel extends SwingAbstractJPanel implements GameActionsPanel {
 
     private static final long serialVersionUID = 1L;
     private static final String PLACEHOLDER = 

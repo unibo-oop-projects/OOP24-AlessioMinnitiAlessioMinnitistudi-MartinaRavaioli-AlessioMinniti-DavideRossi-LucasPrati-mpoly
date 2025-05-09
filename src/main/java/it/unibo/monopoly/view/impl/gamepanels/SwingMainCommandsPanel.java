@@ -12,7 +12,7 @@ import javax.swing.JPanel;
 import it.unibo.monopoly.controller.api.GameController;
 import it.unibo.monopoly.view.api.StandardControlsPanel;
 
-final class SwingMainCommandsPanel extends JPanel implements StandardControlsPanel {
+final class SwingMainCommandsPanel extends SwingAbstractJPanel implements StandardControlsPanel {
 
     private static final String DICES_RESULTS_PH = "Risultato dadi:";
     private static final String DICES_TOTAL_PH = "TOTALE TIRO:";

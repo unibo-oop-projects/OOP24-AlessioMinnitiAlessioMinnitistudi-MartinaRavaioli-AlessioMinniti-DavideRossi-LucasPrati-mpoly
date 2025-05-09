@@ -10,7 +10,7 @@ import javax.swing.SwingConstants;
 import it.unibo.monopoly.model.turnation.api.Player;
 import it.unibo.monopoly.view.api.PlayerPanel;
 
-final class SwingPlayerPanel extends JPanel implements PlayerPanel {
+final class SwingPlayerPanel extends SwingAbstractJPanel implements PlayerPanel {
 
     private static final long serialVersionUID = 1L;
     private static final String NO_PLAYER_PH = "No player selected";

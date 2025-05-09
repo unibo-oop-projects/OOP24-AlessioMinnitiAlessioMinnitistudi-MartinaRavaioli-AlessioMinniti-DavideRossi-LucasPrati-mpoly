@@ -31,7 +31,7 @@ import it.unibo.monopoly.view.api.ContractPanel;
 /**
  * A panel to visualise all information related to a {@link TitleDeed}.
  */
-final class SwingContractPanel extends JPanel implements ContractPanel {
+final class SwingContractPanel extends SwingAbstractJPanel implements ContractPanel {
 
     private static final long serialVersionUID = 43L;
     private static final int BIG_FONT_SIZE = 15;
