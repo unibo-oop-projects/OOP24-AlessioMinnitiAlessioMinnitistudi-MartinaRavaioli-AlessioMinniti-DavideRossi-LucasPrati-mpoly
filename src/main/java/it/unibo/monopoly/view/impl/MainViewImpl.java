@@ -46,15 +46,10 @@ public final class MainViewImpl implements MainGameView {
     public MainViewImpl(final GameController controller) {
         final GamePanelsFactory fact = new SwingPanelsFactory();
         contractPanel = fact.contractPanel();
-        checkComponentIsJPanel(contractPanel);
         playerInfoPanel = fact.userInfoPanel();
-        checkComponentIsJPanel(playerInfoPanel);
         accountInfoPanel = fact.bankAccountInfoPanel();
-        checkComponentIsJPanel(accountInfoPanel);
         gameActionsPanel = fact.gameActionsPanel();
-        checkComponentIsJPanel(gameActionsPanel);
         mainActionsPanel = fact.standardControlsPanel(controller);
-        checkComponentIsJPanel(mainActionsPanel);
         mainGameFrame.getContentPane().add(buildActionPanelUI(), BorderLayout.CENTER);
         mainGameFrame.pack();
         mainGameFrame.setVisible(true);
@@ -65,20 +60,14 @@ public final class MainViewImpl implements MainGameView {
         actionPanel.setLayout(new BorderLayout());
         final JPanel userInfoPanel = new JPanel();
         userInfoPanel.setLayout(new BorderLayout());
-        userInfoPanel.add((JPanel) playerInfoPanel, BorderLayout.NORTH);
-        userInfoPanel.add((JPanel) accountInfoPanel, BorderLayout.SOUTH);
+        userInfoPanel.add(playerInfoPanel.getPanel(), BorderLayout.NORTH);
+        userInfoPanel.add(accountInfoPanel.getPanel(), BorderLayout.SOUTH);
 
         actionPanel.add(userInfoPanel, BorderLayout.NORTH);
-        actionPanel.add((JPanel) contractPanel, BorderLayout.CENTER);
-        actionPanel.add((JPanel) gameActionsPanel, BorderLayout.WEST);
-        actionPanel.add((JPanel) mainActionsPanel, BorderLayout.SOUTH);
+        actionPanel.add(contractPanel.getPanel(), BorderLayout.CENTER);
+        actionPanel.add(gameActionsPanel.getPanel(), BorderLayout.WEST);
+        actionPanel.add(mainActionsPanel.getPanel(), BorderLayout.SOUTH);
         return actionPanel;
-    }
-
-    private void checkComponentIsJPanel(final Object oj) {
-        if (oj.getClass().isAssignableFrom(JPanel.class)) {
-            throw new ClassCastException("The object" + oj.toString() + "provided by the factory is not a JPanel");
-        }
     }
 
     @Override
@@ -102,5 +91,11 @@ public final class MainViewImpl implements MainGameView {
 
     public static void main(final String[] args) {
         new MainViewImpl(new GameControllerImpl());
+    }
+
+    @Override
+    public void displayError(final Exception e) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'displayError'");
     }
 }
