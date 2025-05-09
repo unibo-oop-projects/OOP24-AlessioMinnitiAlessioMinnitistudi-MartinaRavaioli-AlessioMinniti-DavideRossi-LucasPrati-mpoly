@@ -20,9 +20,9 @@ public class PawnImpl extends AbstractIdPlayerImpl implements Pawn {
      * @param color
      * @param shape
     */
-    public PawnImpl(final Position id, final Color color, final String shape) {
-        super(id.getPos());
-        this.pos = new PositionImpl(id.getPos());
+    public PawnImpl(final int id, final Position pos,final Color color, final String shape) {
+        super(id);
+        this.pos = new PositionImpl(pos.getPos());
         setColor(color);
         setShape(shape);
     }
