@@ -3,6 +3,7 @@ package it.unibo.monopoly.model.gameboard.impl;
 import java.awt.Color;
 
 import it.unibo.monopoly.model.gameboard.api.Pawn;
+import it.unibo.monopoly.model.gameboard.api.PawnFactory;
 import it.unibo.monopoly.model.turnation.api.Position;
 import it.unibo.monopoly.model.turnation.impl.AbstractIdPlayerImpl;
 import it.unibo.monopoly.model.turnation.impl.PositionImpl;
@@ -10,7 +11,7 @@ import it.unibo.monopoly.model.turnation.impl.PositionImpl;
 /**
  * pawn implementation.
 */
-public class PawnImpl extends AbstractIdPlayerImpl implements Pawn {
+public class PawnImpl extends AbstractIdPlayerImpl implements Pawn, PawnFactory {
     private Position pos;
     private Color color;
     private String shape;
@@ -25,6 +26,17 @@ public class PawnImpl extends AbstractIdPlayerImpl implements Pawn {
         this.pos = new PositionImpl(pos.getPos());
         setColor(color);
         setShape(shape);
+    }
+    /**
+     * constructor.
+     * @param id
+     * @param color
+    */
+    public PawnImpl(final int id, final Position pos,final Color color) {
+        super(id);
+        this.pos = new PositionImpl(pos.getPos());
+        setColor(color);
+        setShape("square");
     }
     /**
      * set color.
@@ -92,7 +104,14 @@ public class PawnImpl extends AbstractIdPlayerImpl implements Pawn {
         this.pos.setPos(this.pos.getPos() + steps);
     }
 
-    public static PawnImpl createPawn(final Position pos, final Color color, final String shape) {
+    @Override
+    public Pawn createBasic(int id, Position pos, Color color) {
+        final Pawn p = new PawnImpl(id, pos, color)
         return null;
+    }
+    @Override
+    public Pawn createAdvanced(int id, Position pos, Color color, String shape) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'createAdvanced'");
     }
 }
