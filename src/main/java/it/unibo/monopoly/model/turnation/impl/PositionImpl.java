@@ -6,14 +6,14 @@ import it.unibo.monopoly.model.turnation.api.Position;
  * position implementation.
 */
 public class PositionImpl implements Position, Comparable<Position> {
-    private Integer pos;
+    private Integer value;
 
     /**
      * constructor.
      * @param value
     */
     public PositionImpl(final Integer value) {
-        this.pos = value;
+        this.value = value;
     }
 
     /**
@@ -22,7 +22,7 @@ public class PositionImpl implements Position, Comparable<Position> {
     */
     @Override
     public int getPos() {
-        return this.pos;
+        return this.value;
     }
 
     /**
@@ -31,7 +31,7 @@ public class PositionImpl implements Position, Comparable<Position> {
     */
     @Override
     public void setPos(final int value) {
-        this.pos = value;
+        this.value = value;
     }
 
     /**
@@ -41,6 +41,6 @@ public class PositionImpl implements Position, Comparable<Position> {
     */
     @Override
     public int compareTo(final Position o) {
-        return this.pos.compareTo(o.getPos());
+        return this.value.compareTo(o.getPos());
     }
 }

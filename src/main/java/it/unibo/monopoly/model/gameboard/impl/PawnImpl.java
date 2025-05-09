@@ -31,7 +31,12 @@ public class PawnImpl extends AbstractIdPlayerImpl implements Pawn {
      * @param color
     */
     public final void setColor(final Color color) {
-        this.color = color;
+        try {
+            this.color = color;
+        } catch (Exception e) {
+
+        }
+        
     }
 
     /**
@@ -39,6 +44,9 @@ public class PawnImpl extends AbstractIdPlayerImpl implements Pawn {
      * @param shape
     */
     public final void setShape(final String shape) {
+        if(shape.isEmpty() || shape.isBlank()){
+            throw new IllegalArgumentException();
+        }
         this.shape = shape;
     }
 
@@ -84,4 +92,7 @@ public class PawnImpl extends AbstractIdPlayerImpl implements Pawn {
         this.pos.setPos(this.pos.getPos() + steps);
     }
 
+    public static PawnImpl createPawn(final Position pos, final Color color, final String shape) {
+        return null;
+    }
 }

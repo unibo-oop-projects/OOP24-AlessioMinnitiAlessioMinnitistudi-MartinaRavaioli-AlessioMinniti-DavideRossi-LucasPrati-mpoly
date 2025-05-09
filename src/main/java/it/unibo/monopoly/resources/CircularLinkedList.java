@@ -32,7 +32,7 @@ public final class CircularLinkedList<T> {
         Node<T> currentNode = this.head;
 
         while (currentNode != null) {
-            if (currentNode.getValue() == value) {
+            if (currentNode.getValue().equals(value)) {
                 return currentNode.getNextNode().getValue();
             }
             currentNode = currentNode.getNextNode();
@@ -51,11 +51,11 @@ public final class CircularLinkedList<T> {
             return false;
         } else {
             do {
-                if (currentNode.getValue() == searchValue) {
+                if (currentNode.getValue().equals(searchValue)) {
                     return true;
                 }
                 currentNode = currentNode.getNextNode();
-            } while (currentNode != this.head);
+            } while (!currentNode.equals(this.head));
             return false;
         }
     }
@@ -64,29 +64,29 @@ public final class CircularLinkedList<T> {
      * @param valueToDelete
     */
     public void deleteNode(final T valueToDelete) {
-        Node<T> currentNode = this.head;
         if (this.head == null) { // the list is empty
             return;
         }
+        Node<T> currentNode = this.head;
         do {
             final Node<T> nextNode = currentNode.getNextNode();
-            if (nextNode.getValue() == valueToDelete) {
-                if (this.tail == this.head) { // the list has only one single element
+            if (nextNode.getValue().equals(valueToDelete)) {
+                if (this.tail.equals(this.head)) { // the list has only one single element
                     this.head = null;
                     this.tail = null;
                 } else {
                     currentNode.setNextNode(nextNode.getNextNode());
-                    if (this.head == nextNode) { //we're deleting the head
+                    if (this.head.equals(nextNode)) { //we're deleting the head
                         this.head = this.head.getNextNode();
                     }
-                    if (this.tail == nextNode) { //we're deleting the tail
+                    if (this.tail.equals(nextNode)) { //we're deleting the tail
                         this.tail = currentNode;
                     }
                 }
                 break;
             }
             currentNode = nextNode;
-        } while (currentNode != this.head);
+        } while (!currentNode.equals(this.head));
     }
 
 }
