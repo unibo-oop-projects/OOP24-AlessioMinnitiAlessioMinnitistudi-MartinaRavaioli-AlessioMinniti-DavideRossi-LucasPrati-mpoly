@@ -48,6 +48,7 @@ public class SpecialFactoryImpl implements SpecialFactory{
         return new SpecialImpl(new Effect() {
 
             private final static int STEPS_TO_PRISON = 13;
+            //fallo con la differenza 
 
             @Override
             public void activate(Player palyer) {
