@@ -6,7 +6,7 @@ import java.util.Set;
  * Display a panel to execute actions 
  * and interact with the game.
  */
-public interface GameActionsPanel extends InfoPanel {
+public interface GameActionsPanel extends GamePanel {
 
 
     /**

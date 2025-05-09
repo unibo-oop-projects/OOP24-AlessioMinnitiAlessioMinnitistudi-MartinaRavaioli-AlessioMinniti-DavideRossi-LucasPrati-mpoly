@@ -6,7 +6,7 @@ import java.util.List;
  * A panel that displays the main controls to 
  * conduct the game.
  */
-public interface StandardControlsPanel extends InfoPanel {
+public interface StandardControlsPanel extends GamePanel {
 
     /**
      * Displays the results of the dices' throw.

@@ -5,7 +5,7 @@ import it.unibo.monopoly.model.turnation.api.Player;
 /**
  * A panel that displays information of a {@link Player}.
  */
-public interface PlayerPanel extends InfoPanel {
+public interface PlayerPanel extends GamePanel {
 
     /**
      * Display the information related to the {@link Player}.
