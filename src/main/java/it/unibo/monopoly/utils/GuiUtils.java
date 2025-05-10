@@ -172,13 +172,24 @@ public final class GuiUtils {
     }
 
     /**
-     * Get a percentage {@link Dimension} of the screen size.
+     * Get a default percentage {@link Dimension} of the screen size.
      * <p>
-     * @return a {@link Dimension} based the screen size
+     * @return a {@link Dimension} based the screen size with default percentage
      */
     public static Dimension getDimensionWindow() {
+        return getDimensionWindow(WIDTH_PERC, HEIGHT_PERC);
+    }
+
+    /**
+     * Get a percentage {@link Dimension} of the screen size.
+     * <p>
+     * @param width_perc the percentage of the full screen's width
+     * @param height_perc the percentage of the full screen's height
+     * @return a {@link Dimension} based the screen size and the provided percentage
+     */
+    public static Dimension getDimensionWindow(final double width_perc, final double height_perc) {
         final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        return new Dimension((int) (screenSize.getWidth() * WIDTH_PERC), (int) (screenSize.getHeight() * HEIGHT_PERC));
+        return new Dimension((int) (screenSize.getWidth() * width_perc), (int) (screenSize.getHeight() * height_perc));
     }
 
     /**
@@ -192,9 +203,10 @@ public final class GuiUtils {
     }
 
     /**
-     * 
-     * @param config
-     * @return
+     * Should return a new {@link Font} with a big size, according to the {@link Configuration}
+     * <p>
+     * @param config a consistent {@link Configuration} for upload {@code size} and {@code name} parameters
+     * @return a new {@link Font} according to the {@link Configuration} parameters
      */
     public static Font getBigFontFromConfiguration(final Configuration config){
         return getFontFromConfiguration(config.getFontName(), config.getBigFont());
