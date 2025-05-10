@@ -5,6 +5,7 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.function.Function;
 
+import it.unibo.monopoly.model.gameboard.api.Board;
 import it.unibo.monopoly.model.gameboard.api.Effect;
 import it.unibo.monopoly.model.gameboard.api.Special;
 import it.unibo.monopoly.model.gameboard.api.SpecialFactory;
@@ -21,10 +22,12 @@ public class SpecialFactoryImpl implements SpecialFactory{
 
     private final Bank bank;
     private final TurnationManager turnationManager;
+    private final Board board;
 
-    public SpecialFactoryImpl(Bank bank, TurnationManager turnationManager) {
+    public SpecialFactoryImpl(Bank bank, TurnationManager turnationManager, Board board) {
         this.turnationManager = turnationManager;
         this.bank = bank;
+        this.board = board;
     }
 
     @Override
@@ -63,13 +66,14 @@ public class SpecialFactoryImpl implements SpecialFactory{
     public Special prison() {
         return new Special() {
             private final TurnationManager turnM = turnationManager;
+            private final Board boarD = board;
             private int steps;
 
             @Override
             public void activateEffect(Player player) {
                 if (turnM.moveByDices().getRight()==turnM.moveByDices().getLeft()) {
                     steps = turnM.moveByDices().getRight() + turnM.moveByDices().getLeft();
-                    player.makeMove(steps);
+                    board.muovi //non c'è il metodo!!
                 }
             }
         };
@@ -101,71 +105,6 @@ public class SpecialFactoryImpl implements SpecialFactory{
             }
             
         });
-    }
-
-    @Override
-    public TitleDeed Station(String group, String name, int salePrice, Function<Integer, Integer> mortgageFunction,
-                                int baseRent,List<RentOption> additionalRentOptions) {
-
-        return new BaseTitleDeed(group, name, salePrice, mortgageFunction, baseRent, additionalRentOptions);
-        
-    }
-
-    @Override
-    public TitleDeed Society(String group, String name, int salePrice, Function<Integer, Integer> mortgageFunction,
-            int baseRent,List<RentOption> additionalRentOptions) {
-        return new TitleDeed() {
-
-            private final TitleDeed titleDeed = new BaseTitleDeed(group, name, salePrice, mortgageFunction, baseRent, additionalRentOptions);
-            private final TurnationManager tunrM = turnationManager;
-    
-            @Override
-            public Optional<String> getOwner() {
-                return titleDeed.getOwner();
-            }
-    
-            @Override
-            public void setOwner(String ownerName) {
-                titleDeed.setOwner(ownerName);
-            }
-    
-            @Override
-            public void removeOwner() {
-                titleDeed.removeOwner();
-            }
-    
-            @Override
-            public String getGroup() {
-                return titleDeed.getGroup();
-            }
-    
-            @Override
-            public String getName() {
-                return titleDeed.getName();
-            }
-    
-            @Override
-            public Integer getSalePrice() {
-                return titleDeed.getSalePrice();
-            }
-    
-            @Override
-            public Integer getMortgagePrice() {
-                return titleDeed.getMortgagePrice();
-            }
-    
-            @Override
-            public Integer getRent(Set<TitleDeed> groupTitleDeeds) {
-                return titleDeed.getRent(groupTitleDeeds) * (tunrM.moveByDices().getLeft()+tunrM.moveByDices().getRight());
-            }
-    
-            @Override
-            public List<RentOption> getRentOptions() {
-                return titleDeed.getRentOptions();
-            }
-                
-            };
-    
     }
 
 
