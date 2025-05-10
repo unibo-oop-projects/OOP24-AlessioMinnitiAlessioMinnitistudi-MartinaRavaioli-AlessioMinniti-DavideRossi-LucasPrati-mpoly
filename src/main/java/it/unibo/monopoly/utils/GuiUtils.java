@@ -4,7 +4,9 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.LayoutManager;
+import java.awt.Toolkit;
 import java.awt.Window;
 
 import java.util.Objects;
@@ -19,6 +21,11 @@ import javax.swing.WindowConstants;
  * Utility class for common GUI operations.
  */
 public final class GuiUtils {
+
+    private static final double WIDTH_PERC = 0.5;
+    private static final double HEIGHT_PERC = 0.5;
+    private static final int FONT_STYLE = Font.BOLD;
+    static final int NUM_TILES = 40;
 
     private GuiUtils() { }
 
@@ -162,5 +169,38 @@ public final class GuiUtils {
             JOptionPane.ERROR_MESSAGE
         );
         System.exit(0);
+    }
+
+    /**
+     * Get a percentage {@link Dimension} of the screen size.
+     * <p>
+     * @return a {@link Dimension} based the screen size
+     */
+    public static Dimension getDimensionWindow() {
+        final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        return new Dimension((int) (screenSize.getWidth() * WIDTH_PERC), (int) (screenSize.getHeight() * HEIGHT_PERC));
+    }
+
+    /**
+     * Should return a new {@link Font} with a small size, according to the {@link Configuration}
+     * <p>
+     * @param config a consistent {@link Configuration} for upload {@code size} and {@code name} parameters
+     * @return a new {@link Font} according to the {@link Configuration} parameters
+     */
+    public static Font getSmallFontFromConfiguration(final Configuration config){
+        return getFontFromConfiguration(config.getFontName(), config.getSmallFont());
+    }
+
+    /**
+     * 
+     * @param config
+     * @return
+     */
+    public static Font getBigFontFromConfiguration(final Configuration config){
+        return getFontFromConfiguration(config.getFontName(), config.getBigFont());
+    }
+
+    private static Font getFontFromConfiguration(final String name, final int size){
+        return new Font(name, FONT_STYLE, size);
     }
 }
