@@ -207,4 +207,15 @@ public class BaseTitleDeed implements TitleDeed {
         }
         return true;
     }
+    /* PLACE HOLDER FOR ATUAL METHOD */
+    @Override
+    public int housePrice() {
+        return 55;
+    }
+    /* PLACE HOLDER FOR ATUAL METHOD */
+    @Override
+    public int houseNum() {
+        return 3;
+    }
+
 }

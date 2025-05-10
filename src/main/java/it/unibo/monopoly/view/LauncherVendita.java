@@ -3,9 +3,16 @@ package it.unibo.monopoly.view;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import it.unibo.monopoly.model.transactions.api.Bank;
+import it.unibo.monopoly.model.transactions.api.BankAccount;
+import it.unibo.monopoly.model.transactions.api.TitleDeed;
 import it.unibo.monopoly.model.transactions.impl.BankImpl;
+import it.unibo.monopoly.model.transactions.impl.BaseTitleDeed;
+import it.unibo.monopoly.model.transactions.impl.bankaccount.SimpleBankAccountImpl;
+import it.unibo.monopoly.model.turnation.api.Player;
+import it.unibo.monopoly.model.turnation.impl.PlayerImpl;
 
 /**
  * test class for the property manager frame.
@@ -25,14 +32,18 @@ public final class LauncherVendita {
      * @param args
     */
     public static void main(final String[] args) throws java.io.IOException {
-        final Bank bank = new BankImpl(null, null);
+        final BankAccount ac1 = new SimpleBankAccountImpl("piero");
+        final BankAccount ac2 = new SimpleBankAccountImpl("pietro");
+        final Player p1 = new PlayerImpl("piero");
+        final TitleDeed ti1 = new BaseTitleDeed("blue", "nana", 0, null, 0);
+        final Bank bank = new BankImpl(Set.of(ac1,ac2), Set.of(ti1));
         final int num = 50;
         final int width = 700;
         final int heigth = 500;
         final List<Proprieta> properties = new ArrayList<>();
         properties.add(new Proprieta(Color.BLUE, "parco della vittoria", num, num, num, num));
         properties.add(new Proprieta(Color.RED, "vicolo stretto", num, num, num, num));
-        new GUIVendita(properties, width, heigth, bank); 
+        new GUIVendita(p1, width, heigth, bank); 
     }
 
 }
