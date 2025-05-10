@@ -127,31 +127,54 @@ class ConfigurationTest {
     }
 
     @Test
-    void configureFromFileReturnsDefaultOnInvalidConfig() throws IOException {
+    void configureFromFileReturnsValidOnInvalidConfigFile() throws IOException {
         /*
           Parsing an invalid file should return a configuration where
           valid values are kept and defaults are used for errors or missing entries
         */
-        final Configuration config = Configuration.configureFromFile("invalid_config.yml");
-        assertTrue(config.isConsistent(), "Expected configuration to be consistent");
+        final String filename = "configuration/invalid_config.yml";
+        assertTrue(checkFileFound(filename), 
+                    filename + " should be found");
+        assertTrue(Configuration.configureFromFile(filename).isConsistent(),
+                    "Expected configuration to be consistent");
     }
 
     @Test
     void configureFromFileReturnsDefaultOnFileNotFound() {
         // File that not exist should return a default configuration
-        final Configuration config = Configuration.configureFromFile("not_exist");
-        assertTrue(config.isConsistent(), "Expected default configuration to be consistent");
+        final String filename = "not_exist";
+        assertFalse(checkFileFound(filename), 
+                    "A file that not exist should not be found");
+        assertTrue(Configuration.configureFromFile(filename).isConsistent(),
+                    "Expected default configuration to be consistent");
     }
 
     @Test
     void configureFromFileParsesValidFileCorrectly() {
         // Parsing a valid file should return a consistent configuration
-        final Configuration config = Configuration.configureFromFile("valid_config.yml");
-        assertTrue(config.isConsistent(), "Configuration from valid file should be consistent");
+        final String filename = "configuration/valid_config.yml";
+        assertTrue(checkFileFound(filename), 
+                    filename + " should be found");
+        assertTrue(Configuration.configureFromFile(filename).isConsistent(),
+                    "Configuration from valid file should be consistent");
     }
+
+
 
     private void testExceptionFormat(final Exception exception) {
         assertNotNull(exception.getMessage());
         assertFalse(exception.getMessage().isBlank());
+    }
+
+    private boolean checkFileFound(final String filename) {
+        final ResourceLoader genericLoader = new ResourceLoader();
+        try {
+            genericLoader.getRequiredStream(filename);
+
+        } catch (final IOException e) {
+            testExceptionFormat(e);
+            return false;
+        }
+        return true;
     }
 }
