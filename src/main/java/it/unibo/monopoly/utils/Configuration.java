@@ -1,10 +1,7 @@
 package it.unibo.monopoly.utils;
 
 import java.awt.Color;
-import java.awt.GraphicsEnvironment;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * Represents the game's configuration parameters. 
@@ -97,15 +94,9 @@ public final class Configuration {
         return playerColors.size() >= maxPlayer
                 && minPlayer < maxPlayer
                 && smallFont < bigFont
-                && Objects.nonNull(rulesFilename)
-                && isValidFontName(fontName)
+                && ResourceLoader.checkFilename(rulesFilename)
+                && ResourceLoader.isValidFontName(fontName)
                 && initBalance > 0;
-    }
-
-
-    private static boolean isValidFontName(final String fontName) {
-        return  Arrays.stream(GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames())
-                               .anyMatch(name -> name.equalsIgnoreCase(fontName)) && Objects.nonNull(fontName);
     }
 
 
@@ -116,9 +107,8 @@ public final class Configuration {
      * @return a {@link Configuration} according to {@code configFile} if consistent. Otherwise a default {@link Configuration}
      */
     public static Configuration configureFromFile(final String configFile) {
-        final ResourceLoader generiLoader = new ResourceLoader();
-
-        final Configuration configuration = generiLoader.loadConfigurationFile(configFile);
+        final ResourceLoader genericLoader = new ResourceLoader();
+        final Configuration configuration = genericLoader.loadConfigurationFile(configFile);
 
         if (configuration.isConsistent()) {
             return configuration;
@@ -146,7 +136,7 @@ public final class Configuration {
         private static final int BIG_FONT = 24;
         private static final int SMALL_FONT = 16;
         private static final int INIT_BALANCE = 2000;
-        private static final String RULES_FILENAME = "rules.txt";
+        private static final String RULES_FILENAME = "rules/rules.txt";
         private static final List<Color> PLAYER_COLORS = List.of(
             Color.RED,
             Color.BLUE,

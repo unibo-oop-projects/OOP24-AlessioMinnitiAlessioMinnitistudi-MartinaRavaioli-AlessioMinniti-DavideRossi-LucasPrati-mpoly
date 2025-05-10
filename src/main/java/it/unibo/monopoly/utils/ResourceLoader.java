@@ -1,6 +1,7 @@
 package it.unibo.monopoly.utils;
 
 import java.awt.Color;
+import java.awt.GraphicsEnvironment;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -30,6 +31,66 @@ public final class ResourceLoader {
      * Create a small {@code utility Object} for load resources from the classpath.
      */
     public ResourceLoader() { /* Empty */ }
+
+    /**
+     * Check if the {@link Font} {@code name} is available in the system.
+     * <p>
+     * @param fontName the name to check
+     * @return true if is valid, false otherwise
+     */
+    public static boolean isValidFontName(final String fontName) {
+        return  Arrays.stream(GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames())
+                               .anyMatch(name -> name.equalsIgnoreCase(fontName)) && Objects.nonNull(fontName);
+    }
+
+
+    /**
+     * Check a filename, trying to found it.
+     * <p>
+     * @param filename the name (and optional relative path) of the resource to check
+     * @return true if found, false otherwise
+     */
+    public static boolean checkFilename(final String filename) {
+        if (Objects.nonNull(filename)) {
+            return false;
+        }
+
+        final ResourceLoader genericLoader = new ResourceLoader();
+        try {
+            genericLoader.getRequiredStream(filename);
+
+        } catch (final IOException e) {
+            return false;
+        }
+        return true;
+    }
+
+
+    /**
+     * Parses a string representing a color name and returns the corresponding {@link Color} object.
+     * <p>
+     * @param name the name of the color (case-insensitive)
+     * @return the {@link Color} object corresponding to the given name
+     * @throws IllegalArgumentException if the given {@param name} does not match any supported color
+    */
+    public static Color parseColor(final String name) {
+        return switch (name.toUpperCase(Locale.ENGLISH)) {
+            case "BLACK" -> Color.BLACK;
+            case "BLUE" -> Color.BLUE;
+            case "CYAN" -> Color.CYAN;
+            case "DARK_GRAY" -> Color.DARK_GRAY;
+            case "GRAY" -> Color.GRAY;
+            case "GREEN" -> Color.GREEN;
+            case "LIGHT_GRAY" -> Color.LIGHT_GRAY;
+            case "MAGENTA" -> Color.MAGENTA;
+            case "ORANGE" -> Color.ORANGE;
+            case "PINK" -> Color.PINK;
+            case "RED" -> Color.RED;
+            case "WHITE" -> Color.WHITE;
+            case "YELLOW" -> Color.YELLOW;
+            default -> throw new IllegalArgumentException("Unknown color: " + name);
+        };
+    }
 
 
     /**
@@ -96,7 +157,6 @@ public final class ResourceLoader {
         } catch (final IOException e) {
             return new Configuration.Builder().build();
         }
-
         // if found, read it
         final Configuration.Builder configurationBuilder = new Configuration.Builder();
         try (var contents = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8))) {
@@ -125,6 +185,8 @@ public final class ResourceLoader {
         }
         return configurationBuilder.build();
     }
+
+
 
 
     /**
@@ -156,31 +218,5 @@ public final class ResourceLoader {
             }
             default -> { /* Ignore unknown key */ }
         }
-    }
-
-    /**
-     * Parses a string representing a color name and returns the corresponding {@link Color} object.
-     * <p>
-     * @param name the name of the color (case-insensitive)
-     * @return the {@link Color} object corresponding to the given name
-     * @throws IllegalArgumentException if the given {@param name} does not match any supported color
-    */
-    private static Color parseColor(final String name) {
-        return switch (name.toUpperCase(Locale.ENGLISH)) {
-            case "BLACK" -> Color.BLACK;
-            case "BLUE" -> Color.BLUE;
-            case "CYAN" -> Color.CYAN;
-            case "DARK_GRAY" -> Color.DARK_GRAY;
-            case "GRAY" -> Color.GRAY;
-            case "GREEN" -> Color.GREEN;
-            case "LIGHT_GRAY" -> Color.LIGHT_GRAY;
-            case "MAGENTA" -> Color.MAGENTA;
-            case "ORANGE" -> Color.ORANGE;
-            case "PINK" -> Color.PINK;
-            case "RED" -> Color.RED;
-            case "WHITE" -> Color.WHITE;
-            case "YELLOW" -> Color.YELLOW;
-            default -> throw new IllegalArgumentException("Unknown color: " + name);
-        };
     }
 }

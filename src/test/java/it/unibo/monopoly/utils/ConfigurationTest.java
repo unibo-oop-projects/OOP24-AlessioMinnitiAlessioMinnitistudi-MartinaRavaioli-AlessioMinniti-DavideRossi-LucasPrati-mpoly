@@ -22,7 +22,10 @@ class ConfigurationTest {
     private static final int BIG_FONT = 24;
     private static final int VALID_STARTER_BALANCE = 1500;
     private static final String VALID_FONT = "ARIAL"; // should be available on most systems
-    private static final String VALID_RULES_FILENAME = "rules.txt";
+    private static final String VALID_RULES_FILENAME = "rules/rules.txt";
+    private static final List<String> VALID_FILENAMES = List.of(
+        VALID_RULES_FILENAME
+    );
     private static final List<Color> VALID_COLORS = List.of(
         Color.RED,
         Color.BLUE,
@@ -56,6 +59,7 @@ class ConfigurationTest {
 
     @Test
     void buildValidConfiguration() {
+        checkFilenames();
         final Configuration config = builder.build();
         assertNotNull(config);
         assertTrue(config.isConsistent());
@@ -133,8 +137,7 @@ class ConfigurationTest {
           valid values are kept and defaults are used for errors or missing entries
         */
         final String filename = "configuration/invalid_config.yml";
-        assertTrue(checkFileFound(filename), 
-                    filename + " should be found");
+        assertFileExists(filename);
         assertTrue(Configuration.configureFromFile(filename).isConsistent(),
                     "Expected configuration to be consistent");
     }
@@ -143,8 +146,7 @@ class ConfigurationTest {
     void configureFromFileReturnsDefaultOnFileNotFound() {
         // File that not exist should return a default configuration
         final String filename = "not_exist";
-        assertFalse(checkFileFound(filename), 
-                    "A file that not exist should not be found");
+        assertFileNotExists(filename);
         assertTrue(Configuration.configureFromFile(filename).isConsistent(),
                     "Expected default configuration to be consistent");
     }
@@ -153,8 +155,7 @@ class ConfigurationTest {
     void configureFromFileParsesValidFileCorrectly() {
         // Parsing a valid file should return a consistent configuration
         final String filename = "configuration/valid_config.yml";
-        assertTrue(checkFileFound(filename), 
-                    filename + " should be found");
+        assertFileExists(filename);
         assertTrue(Configuration.configureFromFile(filename).isConsistent(),
                     "Configuration from valid file should be consistent");
     }
@@ -166,15 +167,19 @@ class ConfigurationTest {
         assertFalse(exception.getMessage().isBlank());
     }
 
-    private boolean checkFileFound(final String filename) {
-        final ResourceLoader genericLoader = new ResourceLoader();
-        try {
-            genericLoader.getRequiredStream(filename);
+    private void assertFileExists(final String filename) {
+        assertTrue(ResourceLoader.checkFilename(filename),
+                    "File not found " + filename);
+    }
 
-        } catch (final IOException e) {
-            testExceptionFormat(e);
-            return false;
-        }
-        return true;
+    private void assertFileNotExists(final String filename) {
+        assertFalse(ResourceLoader.checkFilename(filename),
+                    "File should not be found " + filename);
+    }
+
+    private void checkFilenames() {
+        for (final String string : VALID_FILENAMES) {
+            assertFileExists(string);
+        } 
     }
 }
