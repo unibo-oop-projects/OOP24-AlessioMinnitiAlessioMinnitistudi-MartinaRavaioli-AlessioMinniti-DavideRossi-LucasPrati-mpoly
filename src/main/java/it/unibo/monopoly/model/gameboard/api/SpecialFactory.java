@@ -21,16 +21,5 @@ public interface SpecialFactory {
 
     public Special taxes();
 
-    public TitleDeed Station(final String group, 
-                        final String name, 
-                        final int salePrice, 
-                        final Function<Integer, Integer> mortgageFunction, 
-                        final int baseRent,List<RentOption> additionalRentOptions);
-
-    public TitleDeed Society(final String group, 
-                        final String name, 
-                        final int salePrice, 
-                        final Function<Integer, Integer> mortgageFunction, 
-                        final int baseRent,List<RentOption> additionalRentOptions);
 
 }
