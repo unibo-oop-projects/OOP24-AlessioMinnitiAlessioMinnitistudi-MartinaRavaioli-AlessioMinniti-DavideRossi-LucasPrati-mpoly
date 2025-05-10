@@ -18,7 +18,6 @@ import it.unibo.monopoly.model.transactions.api.TitleDeed;
 import it.unibo.monopoly.model.transactions.impl.bankaccount.BankAccountFactoryImpl;
 import it.unibo.monopoly.model.turnation.api.Player;
 import it.unibo.monopoly.model.turnation.impl.PlayerImpl;
-
 import it.unibo.monopoly.utils.Configuration;
 import it.unibo.monopoly.utils.Identifiable;
 import it.unibo.monopoly.utils.ResourceLoader;

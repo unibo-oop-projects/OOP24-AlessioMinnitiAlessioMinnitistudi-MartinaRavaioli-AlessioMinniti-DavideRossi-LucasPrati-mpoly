@@ -2,7 +2,6 @@ package it.unibo.monopoly.view;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Font;
 import java.awt.Frame;
 
 import javax.swing.BorderFactory;
@@ -46,8 +45,8 @@ public final class RulesWindowView extends JDialog {
      */
     public RulesWindowView(final Frame parent, final Configuration config, final String rules) {
         GuiUtils.configureWindow(this,
-                                 config.getWindowWidth(),
-                                 config.getWindowHeight(),
+                                 parent.getWidth(),
+                                 parent.getHeight(),
                                  TITLE_WINDOW,
                                  new BorderLayout(),
                                  parent);
@@ -56,7 +55,7 @@ public final class RulesWindowView extends JDialog {
         add(mainPanel);
 
         final JLabel titleLabel = new JLabel(TITLE_TEXT, SwingConstants.CENTER);
-        titleLabel.setFont(new Font(config.getFontName(), Font.BOLD, config.getBigFont()));
+        titleLabel.setFont(GuiUtils.getBigFontFromConfiguration(config));
         titleLabel.setForeground(Color.RED);
 
         // Create a text area for display all the rules
@@ -64,7 +63,7 @@ public final class RulesWindowView extends JDialog {
         rulesTextArea.setEditable(false);
         rulesTextArea.setLineWrap(true);
         rulesTextArea.setWrapStyleWord(true);
-        rulesTextArea.setFont(new Font(config.getFontName(), Font.PLAIN, config.getSmallFont()));
+        rulesTextArea.setFont(GuiUtils.getSmallFontFromConfiguration(config));
         rulesTextArea.setText(rules);
         rulesTextArea.setCaretPosition(0);
 

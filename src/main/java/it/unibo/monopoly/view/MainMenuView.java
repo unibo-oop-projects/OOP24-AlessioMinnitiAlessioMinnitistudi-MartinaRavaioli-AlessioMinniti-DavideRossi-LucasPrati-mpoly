@@ -89,8 +89,8 @@ public final class MainMenuView extends JFrame {
         this.config = config;
         this.controller = new MainMenuControllerImpl(config);
         GuiUtils.configureWindow(this,
-                                 config.getWindowWidth(),
-                                 config.getWindowHeight(),
+                                 (int) GuiUtils.getDimensionWindow().getWidth(),
+                                 (int) GuiUtils.getDimensionWindow().getHeight(),
                                  TITLE_WINDOW);
         add(mainPanel);
         showMainMenu();
@@ -102,36 +102,41 @@ public final class MainMenuView extends JFrame {
         mainPanel.removeAll();
         mainPanel.setBorder(BorderFactory.createEmptyBorder(TOP_BORDER, SIDE_BORDER, BOTTOM_BORDER, SIDE_BORDER));
 
-        numPlayersLabel.setFont(new Font(config.getFontName(), Font.BOLD, config.getSmallFont()));
+        numPlayersLabel.setFont(getSmallFont());
         numPlayersLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
         final JLabel title = new JLabel(TITLE_TEXT_MAIN, SwingConstants.CENTER);
-        title.setFont(new Font(config.getFontName(), Font.BOLD, config.getBigFont()));
+        title.setFont(getBigFont());
         title.setForeground(Color.RED);
 
         final JLabel playersLabel = new JLabel(PLAYERS_TEXT, SwingConstants.CENTER);
-        playersLabel.setFont(new Font(config.getFontName(), Font.BOLD, config.getSmallFont()));
+        playersLabel.setFont(getSmallFont());
 
         // Create buttons and their actionListener
         decreaseButton = new JButton(MINUS_TEXT);
+        decreaseButton.setFont(getSmallFont());
         decreaseButton.addActionListener(e -> {
             controller.decreaseNumPlayer();
             updateNumPlayers();
         });
 
         increaseButton = new JButton(PLUS_TEXT); 
+        increaseButton.setFont(getSmallFont());
         increaseButton.addActionListener(e -> {
             controller.increaseNumPlayer();
             updateNumPlayers();
         });
 
         final JButton rulesButton = new JButton(RULES_TEXT);
+        rulesButton.setFont(getSmallFont());
         rulesButton.addActionListener(e -> new RulesWindowView(this, config, controller.getRules()));
 
         final JButton settingsButton = new JButton(SETTINGS_TEXT);
+        settingsButton.setFont(getSmallFont());
         settingsButton.addActionListener(e -> showSettingsMenu());
 
         final JButton continueButton = new JButton(CONTINUE_TEXT);
+        continueButton.setFont(getSmallFont());
         continueButton.addActionListener(e -> showPlayerSetupScreen());
 
         // Create panel for display players and use buttons
@@ -161,7 +166,7 @@ public final class MainMenuView extends JFrame {
         playersInfo.clear();
 
         final JLabel title = new JLabel(TITLE_TEXT_PLAYER_SETUP, SwingConstants.CENTER);
-        title.setFont(new Font(config.getFontName(), Font.BOLD, config.getBigFont()));
+        title.setFont(getBigFont());
 
         // Create panel for display the players info for edit
         final JPanel playersPanel = new JPanel();
@@ -173,6 +178,7 @@ public final class MainMenuView extends JFrame {
             row.setMaximumSize(new Dimension(Integer.MAX_VALUE, COLOR_BOX_SIZE));
             final JLabel colorBox = GuiUtils.colorBoxFactory(config.getPlayerColors().get(i), COLOR_BOX_SIZE);
             final JTextField textField = new JTextField(DEFAULT_PLAYER_TEXT + (i + 1));
+            textField.setFont(getSmallFont());
 
             row.add(colorBox, BorderLayout.WEST);
             row.add(textField, BorderLayout.CENTER);
@@ -187,6 +193,7 @@ public final class MainMenuView extends JFrame {
         scrollPane.setBorder(BorderFactory.createEmptyBorder(TOP_BORDER, ZERO, BOTTOM_BORDER, ZERO));
 
         final JButton startGameButton = new JButton(START_TEXT);
+        startGameButton.setFont(getSmallFont());
         startGameButton.addActionListener(e -> initializePlayers());
 
         // Create a panel for the start button
@@ -204,13 +211,16 @@ public final class MainMenuView extends JFrame {
     private void showSettingsMenu() {
         mainPanel.removeAll();
         final JLabel title = new JLabel(TITLE_TEXT_SETTINGS, SwingConstants.CENTER);
-        title.setFont(new Font(config.getFontName(), Font.BOLD, config.getBigFont()));
+        title.setFont(GuiUtils.getBigFontFromConfiguration(config));
         title.setForeground(Color.RED);
 
         // Create buttons for settings the game mode and an exit button
         classicModeButton = new JButton(CLASSIC_TEXT);
+        classicModeButton.setFont(getSmallFont());
         infinityModeButton = new JButton(INFINITY_TEXT);
+        infinityModeButton.setFont(getSmallFont());
         final JButton exitButton = new JButton(EXIT_TEXT);
+        exitButton.setFont(getSmallFont());
 
         // Adding action listener
         classicModeButton.addActionListener(e -> {
@@ -276,5 +286,13 @@ public final class MainMenuView extends JFrame {
         numPlayersLabel.setText(String.valueOf(controller.getNumPlayers()));
         decreaseButton.setEnabled(!controller.alreadyMinPlayers());
         increaseButton.setEnabled(!controller.alreadyMaxPlayers());
+    }
+
+    private Font getSmallFont() {
+        return GuiUtils.getSmallFontFromConfiguration(config);
+    }
+
+    private Font getBigFont() {
+        return GuiUtils.getBigFontFromConfiguration(config);
     }
 }
