@@ -141,8 +141,6 @@ public final class ResourceLoader {
         switch (key) {
             case "MIN_PLAYERS" -> configurationBuilder.withMin(Integer.parseInt(value));
             case "MAX_PLAYERS" -> configurationBuilder.withMax(Integer.parseInt(value));
-            case "WINDOW_WIDTH" -> configurationBuilder.withWidth(Integer.parseInt(value));
-            case "WINDOW_HEIGHT" -> configurationBuilder.withHeight(Integer.parseInt(value));
             case "FONT_NAME" -> configurationBuilder.withFontName(value);
             case "BIG_FONT" -> configurationBuilder.withBigFont(Integer.parseInt(value));
             case "SMALL_FONT" -> configurationBuilder.withSmallFont(Integer.parseInt(value));

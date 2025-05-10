@@ -7,8 +7,7 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * Represents the game's configuration parameters,
- * including player limits, window size, and color assignments.
+ * Represents the game's configuration parameters. 
  */
 public final class Configuration {
 
@@ -17,23 +16,19 @@ public final class Configuration {
     private final String fontName;
     private final int smallFont;
     private final int bigFont;
-    private final int windowHeight;
-    private final int windowWidth;
     private final int initBalance;
     private final String rulesFilename;
     private final List<Color> playerColors;
 
 
     private Configuration(final int maxPlayer, final int minPlayer, final String fontName, final int smallFont,
-                          final int bigFont, final int windowHeight, final int windowWidth, final int initBalance,
-                          final String rulesFilename, final List<Color> playerColors) {
+                          final int bigFont, final int initBalance, final String rulesFilename,
+                          final List<Color> playerColors) {
         this.maxPlayer = maxPlayer;
         this.minPlayer = minPlayer;
         this.fontName = fontName;
         this.smallFont = smallFont;
         this.bigFont = bigFont;
-        this.windowHeight = windowHeight;
-        this.windowWidth = windowWidth;
         this.initBalance = initBalance;
         this.rulesFilename = rulesFilename;
         this.playerColors = playerColors;
@@ -75,20 +70,6 @@ public final class Configuration {
     }
 
     /**
-     * @return the height of the window
-     */
-    public int getWindowHeight() {
-        return windowHeight;
-    }
-
-    /**
-     * @return the width of the window
-     */
-    public int getWindowWidth() {
-        return windowWidth;
-    }
-
-    /**
      * @return the initial amount of each bank account
      */
     public int getInitBalance() {
@@ -115,7 +96,6 @@ public final class Configuration {
     public boolean isConsistent() {
         return playerColors.size() >= maxPlayer
                 && minPlayer < maxPlayer
-                && windowHeight <= windowWidth
                 && smallFont < bigFont
                 && Objects.nonNull(rulesFilename)
                 && isValidFontName(fontName)
@@ -165,8 +145,6 @@ public final class Configuration {
         private static final String FONT_NAME = "ARIAL";
         private static final int BIG_FONT = 24;
         private static final int SMALL_FONT = 16;
-        private static final int WINDOW_HEIGHT = 400;
-        private static final int WINDOW_WIDTH = 500;
         private static final int INIT_BALANCE = 2000;
         private static final String RULES_FILENAME = "rules.txt";
         private static final List<Color> PLAYER_COLORS = List.of(
@@ -191,8 +169,6 @@ public final class Configuration {
         private String fontName = FONT_NAME;
         private int bigFont = BIG_FONT;
         private int smallFont = SMALL_FONT;
-        private int windowHeight = WINDOW_HEIGHT;
-        private int windowWidth = WINDOW_WIDTH;
         private int initBalance = INIT_BALANCE;
         private String rulesFilename = RULES_FILENAME;
         private List<Color> playerColors = List.copyOf(PLAYER_COLORS);
@@ -244,24 +220,6 @@ public final class Configuration {
         }
 
         /**
-         * @param windowHeight the height of the window
-         * @return this builder, for method chaining
-         */
-        public Builder withHeight(final int windowHeight) {
-            this.windowHeight = windowHeight;
-            return this;
-        }
-
-        /**
-         * @param windowWidth the width of the window
-         * @return this builder, for method chaining
-         */
-        public Builder withWidth(final int windowWidth) {
-            this.windowWidth = windowWidth;
-            return this;
-        }
-
-        /**
          * @param initBalance the initial balance of each bank account
          * @return this builder, for method chaining
          */
@@ -297,7 +255,7 @@ public final class Configuration {
             }
             consumed = true;
             return new Configuration(maxPlayer, minPlayer, fontName, smallFont, bigFont, 
-                                    windowHeight, windowWidth, initBalance, rulesFilename, playerColors);
+                                     initBalance, rulesFilename, playerColors);
         }
     }
 }

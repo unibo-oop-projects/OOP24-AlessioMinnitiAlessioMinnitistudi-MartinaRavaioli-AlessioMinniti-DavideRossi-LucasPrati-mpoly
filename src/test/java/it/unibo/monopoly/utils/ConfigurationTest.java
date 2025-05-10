@@ -18,8 +18,6 @@ class ConfigurationTest {
     private static final String INVALID_CONFIG = "Invalid configuration should not be consistent: ";
     private static final int VALID_MIN = 2;
     private static final int VALID_MAX = 4;
-    private static final int VALID_WIDTH = 500;
-    private static final int VALID_HEIGHT = 400;
     private static final int SMALL_FONT = 16;
     private static final int BIG_FONT = 24;
     private static final int VALID_STARTER_BALANCE = 1500;
@@ -48,8 +46,6 @@ class ConfigurationTest {
         builder = new Configuration.Builder()
                 .withMin(VALID_MIN)
                 .withMax(VALID_MAX)
-                .withWidth(VALID_WIDTH)
-                .withHeight(VALID_HEIGHT)
                 .withFontName(VALID_FONT)
                 .withSmallFont(SMALL_FONT)
                 .withBigFont(BIG_FONT)
@@ -65,8 +61,6 @@ class ConfigurationTest {
         assertTrue(config.isConsistent());
         assertEquals(VALID_MIN, config.getMinPlayer());
         assertEquals(VALID_MAX, config.getMaxPlayer());
-        assertEquals(VALID_WIDTH, config.getWindowWidth());
-        assertEquals(VALID_HEIGHT, config.getWindowHeight());
         assertEquals(VALID_FONT, config.getFontName());
         assertEquals(SMALL_FONT, config.getSmallFont());
         assertEquals(BIG_FONT, config.getBigFont());
@@ -116,13 +110,6 @@ class ConfigurationTest {
         final Configuration config = builder.withMin(VALID_MAX).withMax(VALID_MAX).build();
         assertFalse(config.isConsistent(),
                     INVALID_CONFIG + "minPlayers = maxPlayers");
-    }
-
-    @Test
-    void configurationInconsistentIfHeightGreaterThanWidth() {
-        final Configuration config = builder.withHeight(VALID_WIDTH + 1).withWidth(VALID_WIDTH).build();
-        assertFalse(config.isConsistent(),
-                    INVALID_CONFIG + "height > width");
     }
 
     @Test
