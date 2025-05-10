@@ -22,10 +22,10 @@ import javax.swing.WindowConstants;
  */
 public final class GuiUtils {
 
+    static final int NUM_TILES = 40;
     private static final double WIDTH_PERC = 0.5;
     private static final double HEIGHT_PERC = 0.5;
     private static final int FONT_STYLE = Font.BOLD;
-    static final int NUM_TILES = 40;
 
     private GuiUtils() { }
 
@@ -183,36 +183,36 @@ public final class GuiUtils {
     /**
      * Get a percentage {@link Dimension} of the screen size.
      * <p>
-     * @param width_perc the percentage of the full screen's width
-     * @param height_perc the percentage of the full screen's height
+     * @param widthPerc the percentage of the full screen's width
+     * @param heightPerc the percentage of the full screen's height
      * @return a {@link Dimension} based the screen size and the provided percentage
      */
-    public static Dimension getDimensionWindow(final double width_perc, final double height_perc) {
+    public static Dimension getDimensionWindow(final double widthPerc, final double heightPerc) {
         final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        return new Dimension((int) (screenSize.getWidth() * width_perc), (int) (screenSize.getHeight() * height_perc));
+        return new Dimension((int) (screenSize.getWidth() * widthPerc), (int) (screenSize.getHeight() * heightPerc));
     }
 
     /**
-     * Should return a new {@link Font} with a small size, according to the {@link Configuration}
+     * Should return a new {@link Font} with a small size, according to the {@link Configuration}.
      * <p>
      * @param config a consistent {@link Configuration} for upload {@code size} and {@code name} parameters
      * @return a new {@link Font} according to the {@link Configuration} parameters
      */
-    public static Font getSmallFontFromConfiguration(final Configuration config){
+    public static Font getSmallFontFromConfiguration(final Configuration config) {
         return getFontFromConfiguration(config.getFontName(), config.getSmallFont());
     }
 
     /**
-     * Should return a new {@link Font} with a big size, according to the {@link Configuration}
+     * Should return a new {@link Font} with a big size, according to the {@link Configuration}.
      * <p>
      * @param config a consistent {@link Configuration} for upload {@code size} and {@code name} parameters
      * @return a new {@link Font} according to the {@link Configuration} parameters
      */
-    public static Font getBigFontFromConfiguration(final Configuration config){
+    public static Font getBigFontFromConfiguration(final Configuration config) {
         return getFontFromConfiguration(config.getFontName(), config.getBigFont());
     }
 
-    private static Font getFontFromConfiguration(final String name, final int size){
+    private static Font getFontFromConfiguration(final String name, final int size) {
         return new Font(name, FONT_STYLE, size);
     }
 }
