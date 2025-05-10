@@ -1,12 +1,11 @@
 package it.unibo.monopoly.model.turnation.impl;
 
-import it.unibo.monopoly.model.turnation.api.Player;
 import it.unibo.monopoly.resources.Identifiable;
 
 /**
  * abstract player id implementation.
 */
-public abstract class AbstractIdPlayerImpl implements Player, Identifiable<Integer> {
+public abstract class AbstractIdPlayerImpl implements Identifiable<Integer> {
     private int id;
     /**
      * constructor.
