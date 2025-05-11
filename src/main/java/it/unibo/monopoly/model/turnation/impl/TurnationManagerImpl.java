@@ -22,7 +22,10 @@ public class TurnationManagerImpl implements TurnationManager {
      * @param dice
     */
     public TurnationManagerImpl(final CircularLinkedList<Player> plList, final Dice dice) {
-        this.players = plList;
+        this.players = new CircularLinkedList<>();
+        for (Player p : plList.toList()) {
+            this.players.addNode(p);
+        }
         this.dice = dice;
     }
     /**
