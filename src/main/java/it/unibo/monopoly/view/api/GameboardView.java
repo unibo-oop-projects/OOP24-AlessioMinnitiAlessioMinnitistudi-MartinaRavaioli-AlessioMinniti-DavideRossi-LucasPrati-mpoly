@@ -19,6 +19,7 @@ import it.unibo.monopoly.controller.impl.GameboardLogicImpl;
 import it.unibo.monopoly.model.gameboard.api.Tile;
 import it.unibo.monopoly.model.turnation.api.Player;
 import it.unibo.monopoly.model.turnation.api.Position;
+import it.unibo.monopoly.model.turnation.impl.PositionImpl;
 
 public class GameboardView extends JFrame{
     private GameboardLogic logic;
@@ -65,11 +66,11 @@ public class GameboardView extends JFrame{
         }
 
         for (int i =0; i<players.size();i++){
-            
+            pawnPositions.put(i, new PositionImpl(0));
         }
 
         for (int i=0; i < 4; i++){
-            JPanel panel = this.tilesView.get(0);
+            JPanel panel = this.tilesView.get(pawnPositions.get(i).getPos());
             panel.add(shapes.get(i));
         }
 
@@ -85,6 +86,8 @@ public class GameboardView extends JFrame{
     }
 
     public void changePos(){
-
+        for (JPanel p : this.tilesView) {
+            p.remove(shapes.get(0));
+        }
     }
 }
