@@ -86,8 +86,16 @@ public interface TitleDeed {
      */
     List<RentOption> getRentOptions();
 
+    /**
+     * place holder. 
+     * @return price of houses
+     */
     int housePrice();
 
+    /**
+     * place holder. 
+     * @return number of houses
+     */
     int houseNum();
 
 }
