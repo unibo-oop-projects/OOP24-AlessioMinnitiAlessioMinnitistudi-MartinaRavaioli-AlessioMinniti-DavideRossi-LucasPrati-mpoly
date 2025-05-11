@@ -26,11 +26,17 @@ public final class BankAccountFactoryImpl implements BankAccountFactory {
         this.initialBalance = initialBalance;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public BankAccount createSimple(final int id, final String owner) {
         return new SimpleBankAccountImpl(id, initialBalance, owner);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public BankAccount createWithCheck(final int id, final String owner, final Predicate<BankAccount> check) {
         return new CheckValidityBankAccount(createSimple(id, owner), 
