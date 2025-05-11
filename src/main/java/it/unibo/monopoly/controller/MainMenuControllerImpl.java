@@ -145,6 +145,7 @@ public final class MainMenuControllerImpl  implements MainMenuController {
     /**
      * {@inheritDoc}
      */
+    @Override
     public String getRules() {
         return ResourceLoader.loadTextResource(config.getRulesFilename());
     }
