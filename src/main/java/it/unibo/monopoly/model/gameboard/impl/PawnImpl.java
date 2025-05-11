@@ -81,7 +81,7 @@ public class PawnImpl extends AbstractIdPlayerImpl implements Pawn, PawnFactory 
     */
     @Override
     public Position getPosition() {
-        return this.pos;
+        return new PositionImpl(this.pos.getPos());
     }
 
     /**
@@ -89,7 +89,7 @@ public class PawnImpl extends AbstractIdPlayerImpl implements Pawn, PawnFactory 
      * @param pos
     */
     public void setPosition(final Position pos) {
-        this.pos = pos;
+        this.pos = new PositionImpl(pos.getPos());
     }
 
     /**
