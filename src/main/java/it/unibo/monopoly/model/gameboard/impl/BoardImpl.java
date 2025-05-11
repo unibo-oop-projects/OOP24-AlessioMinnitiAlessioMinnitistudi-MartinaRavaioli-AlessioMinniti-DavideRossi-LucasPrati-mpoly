@@ -97,7 +97,13 @@ public class BoardImpl implements Board {
         player.move(steps);
     }
 
-    // public Pawn getPawn(int id) {
-    //     return 
-    // }
+    public Pawn getPawn(int id) {
+        for (final Pawn p : this.pawns) {
+            if (((PawnImpl) p).getID() == id) {
+                return new PawnImpl(id,p.getPosition(),p.getColor());
+            }
+        }
+
+        throw new IllegalArgumentException("id not present");
+    }
 }

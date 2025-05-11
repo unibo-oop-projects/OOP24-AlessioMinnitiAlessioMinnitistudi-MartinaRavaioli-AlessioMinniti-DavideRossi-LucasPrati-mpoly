@@ -63,6 +63,7 @@ public class PawnImpl extends AbstractIdPlayerImpl implements Pawn, PawnFactory 
      * get the color.
      * @return Color
     */
+    @Override
     public Color getColor() {
         return this.color;
     }
