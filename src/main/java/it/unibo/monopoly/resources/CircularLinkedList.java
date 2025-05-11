@@ -17,8 +17,11 @@ public final class CircularLinkedList<T> {
         this.head = null;
         this.tail = null;
     }
-
-    public T getHead(){
+    /**
+     * return the head.
+     * @return value
+    */
+    public T getHead() {
         return this.head.getValue();
     }
     /**
@@ -35,13 +38,16 @@ public final class CircularLinkedList<T> {
         this.tail = newNode;
         this.tail.setNextNode(this.head);
     }
-
+    /**
+     * convert to a list.
+     * @return List
+    */
     public List<T> toList() {
         final List<T> list = new ArrayList<>();
         Node<T> current = this.head;
         if (this.head == null) {
             return list;
-        }   
+        }
         do {
             list.add(current.getValue());
             current = current.getNextNode();

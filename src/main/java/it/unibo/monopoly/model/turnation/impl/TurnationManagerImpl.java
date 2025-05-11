@@ -25,11 +25,11 @@ public class TurnationManagerImpl implements TurnationManager {
     */
     public TurnationManagerImpl(final CircularLinkedList<Player> plList, final Dice dice) {
         this.players = new CircularLinkedList<>();
-        for (Player p : plList.toList()) {
+        for (final Player p : plList.toList()) {
             this.players.addNode(p);
         }
         this.dice = dice;
-        this.currPlayer = this.players.
+        this.currPlayer = this.players.getHead();
     }
     /**
      * constructor.
@@ -37,7 +37,7 @@ public class TurnationManagerImpl implements TurnationManager {
     */
     public void setList(final CircularLinkedList<Player> plList) {
         this.players = new CircularLinkedList<>();
-        for (Player p : plList.toList()) {
+        for (final Player p : plList.toList()) {
             this.players.addNode(p);
         }
     }
