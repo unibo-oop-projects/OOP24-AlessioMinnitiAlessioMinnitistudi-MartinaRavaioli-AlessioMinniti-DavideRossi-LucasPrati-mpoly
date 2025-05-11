@@ -44,10 +44,10 @@ public final class CircularLinkedList<T> {
     */
     public List<T> toList() {
         final List<T> list = new ArrayList<>();
-        Node<T> current = this.head;
         if (this.head == null) {
             return list;
         }
+        Node<T> current = this.head;
         do {
             list.add(current.getValue());
             current = current.getNextNode();
