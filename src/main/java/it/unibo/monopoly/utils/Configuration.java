@@ -19,11 +19,12 @@ public final class Configuration {
     private final String rulesFilename;
     private final String cardsFilename;
     private final List<Color> playerColors;
-    
 
 
-    private Configuration(int minPlayer, int maxPlayer, int numDice, int sidesPerDie, String fontName, int bigFont,
-            int smallFont, int initBalance, String rulesFilename, String cardsFilename, List<Color> playerColors) {
+
+    private Configuration(final int minPlayer, final int maxPlayer, final int numDice, final int sidesPerDie,
+                            final String fontName, final int bigFont, final int smallFont, final int initBalance,
+                            final String rulesFilename, final String cardsFilename, final List<Color> playerColors) {
         this.minPlayer = minPlayer;
         this.maxPlayer = maxPlayer;
         this.numDice = numDice;
@@ -38,14 +39,14 @@ public final class Configuration {
     }
 
 
-    
+
     /**
      * @return the minimum number of players
      */
     public int getMinPlayer() {
         return minPlayer;
     }
-    
+
     /**
      * @return the maximum number of players
      */

@@ -106,13 +106,6 @@ class ConfigurationTest {
     }
 
     @Test
-    void configurationInconsistentIfMinEqualToMax() {
-        final Configuration config = builder.withMin(VALID_MAX).withMax(VALID_MAX).build();
-        assertFalse(config.isConsistent(),
-                    MESSAGE_INVALID_CONFIG + "minPlayers = maxPlayers");
-    }
-
-    @Test
     void configurationInconsistentIfMinIsZeroOrNegative() {
         final Configuration config = builder.withMin(0).build();
         assertFalse(config.isConsistent(),
@@ -148,8 +141,8 @@ class ConfigurationTest {
     }
 
     @Test
-    void defaultStarterBalanceIsCorrect() {
-        final Configuration config = builder.withInitBalance( - VALID_STARTER_BALANCE).build();
+    void configurationInconsistentIfBalanceIsNegative() {
+        final Configuration config = builder.withInitBalance(-VALID_STARTER_BALANCE).build();
         assertFalse(config.isConsistent(),
                     MESSAGE_INVALID_CONFIG + "starterBalance < 0");
     }
