@@ -56,9 +56,8 @@ public final class VenditaLogicImpl implements VenditaLogic, Serializable {
      * @param selectedProperty the property you want to sell
      * @return wether the payment has been succesful
      */
-    public boolean sellProperty(final List<TitleDeed> properties, final TitleDeed selectedProperty) {
+    public boolean sellProperty(List<TitleDeed> properties, final TitleDeed selectedProperty) {
         bank.sellTitleDeed(selectedProperty.getName());
-        properties.remove(selectedProperty);
         return true;
     }
 
@@ -95,6 +94,9 @@ public final class VenditaLogicImpl implements VenditaLogic, Serializable {
 
     @Override
     public List<TitleDeed> getProperties(Player player) {
+        if (bank.getTitleDeedsByOwner(player.getName()).isEmpty()) {
+            return List.of();
+        }
         return bank.getTitleDeedsByOwner(player.getName()).stream().toList();
     }
 

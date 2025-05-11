@@ -35,14 +35,11 @@ public final class LauncherVendita {
         final BankAccount ac1 = new SimpleBankAccountImpl("piero");
         final BankAccount ac2 = new SimpleBankAccountImpl("pietro");
         final Player p1 = new PlayerImpl("piero");
-        final TitleDeed ti1 = new BaseTitleDeed("blue", "nana", 0, null, 0);
+        final TitleDeed ti1 = new BaseTitleDeed("blue", "nana", 23, i -> i + 40 , 20);
         final Bank bank = new BankImpl(Set.of(ac1,ac2), Set.of(ti1));
-        final int num = 50;
         final int width = 700;
         final int heigth = 500;
-        final List<Proprieta> properties = new ArrayList<>();
-        properties.add(new Proprieta(Color.BLUE, "parco della vittoria", num, num, num, num));
-        properties.add(new Proprieta(Color.RED, "vicolo stretto", num, num, num, num));
+        bank.buyTitleDeed("nana", "piero");
         new GUIVendita(p1, width, heigth, bank); 
     }
 

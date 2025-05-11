@@ -215,7 +215,7 @@ public class BaseTitleDeed implements TitleDeed {
     /* PLACE HOLDER FOR ATUAL METHOD */
     @Override
     public int houseNum() {
-        return 3;
+        return 0;
     }
 
 }

@@ -63,9 +63,11 @@ public final class GUIVendita extends JFrame {
         overallPane.setBorder(b);
         actionsPane.setBorder(b);
         infoPane.setBorder(b);
-        buttonPane.setBorder(b);
+        rightDownPane.setBorder(b);
         fieldPane.setBorder(b);
         valuePane.setBorder(b);
+        buttonPane.setBorder(b);
+        balancePane.setBorder(b);
 
 // create all the info labels
         final JLabel housesNum = new JLabel("nuber of Houses on the selected property:");
@@ -146,15 +148,14 @@ public final class GUIVendita extends JFrame {
         final ActionListener sellPropertyListener = e -> {
             final TitleDeed selectedProperty = logic.getProperty(logic.getProperties(player), propertiesList.getSelectedValue());
             if (logic.sellProperty(logic.getProperties(player), selectedProperty)) {
-                propertiesList.setListData(logic.getProperties(player).stream().map(TitleDeed::getName).toArray());
-                sellProperty.setEnabled(false);
                 final PaymentDialog paymentComplete = new PaymentDialog(selectedProperty.getMortgagePrice(), true);
+                sellProperty.setEnabled(false);
                 paymentComplete.setVisible(true);
-                housesCostValue.setText("0");
                 mortageValue.setText("0");
+                housesCostValue.setText("0");
                 rentValue.setText("0");
                 housesNumValue.setText("0");
-                balanceValue.setText(""+logic.getPlayerBalance(player));
+                balanceValue.setText(String.valueOf(logic.getPlayerBalance(player)));
 
                 if (logic.getProperties(player).isEmpty()) {
                     selectProperty.setText("you have no properties to manage");
@@ -205,7 +206,7 @@ public final class GUIVendita extends JFrame {
         rightDownPane.add(balancePane);
 
         actionsPane.add(infoPane);
-        actionsPane.add(buttonPane);
+        actionsPane.add(rightDownPane);
 
         overallPane.add(rightPane);
         overallPane.add(actionsPane);
