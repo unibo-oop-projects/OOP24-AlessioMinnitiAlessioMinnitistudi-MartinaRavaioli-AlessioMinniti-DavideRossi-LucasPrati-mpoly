@@ -47,6 +47,9 @@ public final class MainMenuControllerImpl  implements MainMenuController {
         this.numPlayers = minPlayers;
     }
  
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void decreaseNumPlayer() {
         if (numPlayers > minPlayers) {
@@ -54,6 +57,9 @@ public final class MainMenuControllerImpl  implements MainMenuController {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void increaseNumPlayer() {
         if (numPlayers < maxPlayers) {
@@ -61,6 +67,9 @@ public final class MainMenuControllerImpl  implements MainMenuController {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void onClickStart(final Map<Color, String> playersSetup) throws IOException {
         // init all the game (Player, Pawn, BankAccount according to the type chosen)
@@ -93,32 +102,49 @@ public final class MainMenuControllerImpl  implements MainMenuController {
         // launch C_Game_Manager(config)
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int getNumPlayers() {
         return numPlayers;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean alreadyMinPlayers() {
         return numPlayers == minPlayers;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean alreadyMaxPlayers() {
         return numPlayers == maxPlayers;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public BankAccountType getBankAccountType() {
         return bankAccountType;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setBankAccountType(final BankAccountType bankAccountType) {
         this.bankAccountType = bankAccountType;
     }
 
-    @Override
+    /**
+     * {@inheritDoc}
+     */
     public String getRules() {
         return ResourceLoader.loadTextResource(config.getRulesFilename());
     }
@@ -126,7 +152,7 @@ public final class MainMenuControllerImpl  implements MainMenuController {
 
     /**
      * Use {@link BankAccountFactory} to create a new {@link BankAccount} istances according to the {@code bankAccountType}.
-     * <p>
+     * 
      * @param id the {@link Identifiable} representing the {@link BankAccount}
      * @param owner the {@code name} of the {@link Player} that owns the {@link BankAccount} 
      * @return a new istance of {@link BankAccount} according to the {@code bankAccountType}

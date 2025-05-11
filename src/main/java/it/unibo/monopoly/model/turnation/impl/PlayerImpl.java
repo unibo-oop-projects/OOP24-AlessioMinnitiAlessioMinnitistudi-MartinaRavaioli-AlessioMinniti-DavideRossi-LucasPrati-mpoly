@@ -64,7 +64,7 @@ public final class PlayerImpl implements Player {
 
     /**
      * Static factory method for creating a new {@link PlayerImpl} instance.
-     * <p>
+     * 
      * This method applies the Factory Method pattern (static variant).
      * 
      * @param id the {@link Identifiable} representing the {@link Player}

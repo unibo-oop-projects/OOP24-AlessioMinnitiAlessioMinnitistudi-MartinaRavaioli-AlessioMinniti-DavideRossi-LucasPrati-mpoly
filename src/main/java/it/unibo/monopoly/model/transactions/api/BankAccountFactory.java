@@ -12,7 +12,7 @@ public interface BankAccountFactory {
 
     /**
      * Creates a {@link BankAccount} with an {@code initialBalance}.
-     * <p>
+     * 
      * @param id the {@link Identifiable} representing the {@link BankAccount}
      * @param owner the name of the {@link Player} that owns the {@link BankAccount} 
      * @return a new {@link BankAccount} with an {@code initialBalance}
@@ -23,7 +23,7 @@ public interface BankAccountFactory {
 
     /**
      * Creates a {@link BankAccount} with a provided {@code initialBalance} and a provided {@code check}.
-     * <p>
+     * 
      * @param id the {@link Identifiable} representing the {@link BankAccount}
      * @param owner the {@code name} of the {@link Player} that owns the {@link BankAccount} 
      * @param check strategy to determine if the {@link BankAccount} can still be used to play based on its state

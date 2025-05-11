@@ -24,7 +24,7 @@ import it.unibo.monopoly.model.transactions.api.TitleDeed;
 /**
  * Utility class for loading and parsing resources such as fonts, colors,
  * configuration files, JSON assets, and plain text files from the classpath.
- * <p>
+ * 
  * This class is not meant to be instantiated. All methods are static and stateless.
  */
 public final class ResourceLoader {
@@ -35,7 +35,7 @@ public final class ResourceLoader {
 
     /**
      * Checks whether the given font name is available in the local graphics environment.
-     * <p>
+     * 
      * @param fontName the name of the font to check
      * @return {@code true} if the font is available; {@code false} otherwise
      */
@@ -49,7 +49,7 @@ public final class ResourceLoader {
     /**
      * Checks whether a resource with the given filename exists in the classpath.
      * This method attempts to open the resource and immediately closes it.
-     * <p>
+     * 
      * @param filename the name (and optional path) of the resource
      * @return {@code true} if the resource exists and can be opened; {@code false} otherwise
      */
@@ -68,7 +68,7 @@ public final class ResourceLoader {
 
     /**
      * Parses a string representing a color name and returns the corresponding {@link Color} object.
-     * <p>
+     * 
      * @param name the name of the color (case-insensitive)
      * @return a {@link Color} object matching the given name
      * @throws IllegalArgumentException if the color name is unknown or {@code null}
@@ -95,7 +95,7 @@ public final class ResourceLoader {
 
     /**
      * Loads a resource from the classpath as an {@link InputStream}.
-     * <p>
+     * 
      * @param filename the name (and optional path) of the resource file
      * @return an {@link InputStream} for the specified resource
      * @throws IOException if the resource cannot be found or loaded
@@ -113,7 +113,7 @@ public final class ResourceLoader {
 
     /**
      * Loads a resource from the classpath and returns a buffered reader over its contents.
-     * <p>
+     * 
      * @param filename the name (and optional path) of the resource file
      * @return a {@link BufferedReader} to read the resource
      * @throws IOException if the resource cannot be found
@@ -125,7 +125,7 @@ public final class ResourceLoader {
 
     /**
      * Reads a text resource from the classpath and returns its contents as a single string.
-     * <p>
+     * 
      * @param filename the name (and optional relative path) of the resource
      * @return a {@link String} containing the full contents of the file,
      *         or the error message if the resource could not be loaded
@@ -141,7 +141,7 @@ public final class ResourceLoader {
 
     /**
      * Loads a set of {@link TitleDeed} objects from a JSON file in the classpath.
-     * <p>
+     * 
      * @param filename the name (and optional relative path) of the JSON resource file
      * @return an unmodifiable {@link Set} of {@link TitleDeed} instances
      * @throws IOException if the resource cannot be found or parsed
@@ -157,7 +157,7 @@ public final class ResourceLoader {
     /**
      * Loads a {@link Configuration} object from a configuration file in the classpath.
      * Skips malformed or unknown entries gracefully.
-     * <p>
+     * 
      * @param filename the name (and optional relative path) of the resource
      * @return a {@link Configuration} object, or a default one if loading fails
      */
@@ -204,7 +204,7 @@ public final class ResourceLoader {
 
     /**
      * Parses a key-value pair from the configuration file and applies it to the {@link Configuration.Builder}.
-     * <p>
+     * 
      * @param configurationBuilder the {@link Configuration.Builder} to apply the parsed setting to
      * @param key the configuration key
      * @param value the associated value to parse
@@ -235,7 +235,7 @@ public final class ResourceLoader {
 
     /**
      * Determines whether a configuration line should be skipped (blank or comment).
-     * <p>
+     * 
      * @param line the line to check
      * @return {@code true} if the line is blank or a comment; {@code false} otherwise
      */
@@ -245,7 +245,7 @@ public final class ResourceLoader {
 
     /**
      * Checks whether a parsed configuration line is malformed.
-     * <p>
+     * 
      * @param parts the result of splitting the line on ":"
      * @return {@code true} if the split result is invalid; {@code false} otherwise
      */

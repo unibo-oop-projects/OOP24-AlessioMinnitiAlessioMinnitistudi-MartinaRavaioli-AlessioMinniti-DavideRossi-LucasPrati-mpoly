@@ -50,7 +50,7 @@ public final class GuiUtils {
 
     /**
      * Configures a window with default layout and location, along with standard behaviors.
-     * <p>
+     * 
      * This version applies default values for layout and location:
      * <ul>
      *   <li>{@code BorderLayout} is used as default layout manager</li>
@@ -79,8 +79,8 @@ public final class GuiUtils {
 
     /**
      * Configures common properties for a window (either {@link JFrame} or {@link JDialog}).
-     * <p>
-     * @apiNote Some properties are automatically enforced and cannot be customized through parameters:
+     * 
+     * @implNote Some properties are automatically enforced and cannot be customized through parameters:
      *   <ul>
      *    <li>{@code setResizable(true)} is always applied</li>
      *    <li>{@code setModal(true)} is enforced for {@link JDialog}</li>
@@ -155,7 +155,7 @@ public final class GuiUtils {
 
     /**
      * Shows an error message dialog and then terminates the entire application.
-     * <p>
+     * 
      * @param parent  the parent component for the dialog; may be {@code null}
      *                in which case a default frame is used
      * @param title   the title to display on the dialog window
@@ -173,7 +173,7 @@ public final class GuiUtils {
 
     /**
      * Get a default percentage {@link Dimension} of the screen size.
-     * <p>
+     * 
      * @return a {@link Dimension} based the screen size with default percentage
      */
     public static Dimension getDimensionWindow() {
@@ -182,7 +182,7 @@ public final class GuiUtils {
 
     /**
      * Get a percentage {@link Dimension} of the screen size.
-     * <p>
+     * 
      * @param widthPerc the percentage of the full screen's width
      * @param heightPerc the percentage of the full screen's height
      * @return a {@link Dimension} based the screen size and the provided percentage
@@ -194,7 +194,7 @@ public final class GuiUtils {
 
     /**
      * Should return a new {@link Font} with a small size, according to the {@link Configuration}.
-     * <p>
+     * 
      * @param config a consistent {@link Configuration} for upload {@code size} and {@code name} parameters
      * @return a new {@link Font} according to the {@link Configuration} parameters
      */
@@ -204,7 +204,7 @@ public final class GuiUtils {
 
     /**
      * Should return a new {@link Font} with a big size, according to the {@link Configuration}.
-     * <p>
+     * 
      * @param config a consistent {@link Configuration} for upload {@code size} and {@code name} parameters
      * @return a new {@link Font} according to the {@link Configuration} parameters
      */

@@ -19,7 +19,7 @@ public final class SimpleBankAccountImpl implements BankAccount {
 
     /**
      * Creates a new {@link BankAccount} with an initial amount of money.
-     * <p>
+     * 
      * @param id the {@link Identifiable} representing the {@link BankAccount}
      * @param initialBalance the initial amount of money
      * @param owner the name of the player that owns the {@link BankAccount} 
@@ -39,7 +39,7 @@ public final class SimpleBankAccountImpl implements BankAccount {
 
     /**
      * Creates a new {@link BankAccount} with a default, positive and non-zero amount of money.
-     * <p>
+     * 
      * @param id the {@link Identifiable} representing the {@link BankAccount}
      * @param owner the name of the player that owns the {@link BankAccount}
      */

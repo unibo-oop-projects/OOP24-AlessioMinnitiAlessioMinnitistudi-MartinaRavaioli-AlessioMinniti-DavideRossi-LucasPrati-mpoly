@@ -102,7 +102,7 @@ public final class Configuration {
 
     /**
      * Set some values of the application according to the file for the configuration ({@code filename}).
-     * <p>
+     * 
      * @param configFile the name of the configuration file
      * @return a {@link Configuration} according to {@code configFile} if consistent. Otherwise a default {@link Configuration}
      */
@@ -119,7 +119,7 @@ public final class Configuration {
 
     /**
      * Builder pattern is used here because.
-     * <p>
+     * 
      * - All parameters have sensible defaults
      * - Overloading constructors would be confusing and verbose
      * - It allows readable, flexible, chainable configuration setup
@@ -228,7 +228,7 @@ public final class Configuration {
         /**
          * Sets the list of player colors. If {@code playerColors} is {@code null},
          * this method does nothing and retains the default configuration.
-         * <p>
+         * 
          * @param playerColors the list of player colors, or {@code null} to keep defaults
          * @return this builder, for method chaining
          */
