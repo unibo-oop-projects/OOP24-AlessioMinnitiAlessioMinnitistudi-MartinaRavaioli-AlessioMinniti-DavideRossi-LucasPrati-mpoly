@@ -100,14 +100,15 @@ class BaseTitleDeedTest {
 
    @Test
    void testGetCorrectRentPrice() {
+        deed.setOwner(OWNER_NAME);
         assertEquals(BASE_RENT_PRICE, deed.getRent(Set.of()));
         final RentOption allPropertiesOwned = new RentOptionImpl("Si possiede tutte le proprietà del gruppo", 
                                                                 "", 
                                                                 BASE_RENT_PRICE * 2, 
-                                                                deeds -> deeds.stream()
+                                                                (deeds, o) -> deeds.stream()
                                                                                 .allMatch(d -> d.getOwner()
                                                                                                 .isPresent() 
-                                                                                                && OWNER_NAME.equals(d.getOwner()
+                                                                                                && o.equals(d.getOwner()
                                                                                                 .get())
                                                                                                 )
                                                                 );

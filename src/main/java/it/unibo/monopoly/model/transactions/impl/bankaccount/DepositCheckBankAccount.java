@@ -8,11 +8,9 @@ import it.unibo.monopoly.model.transactions.api.BankAccount;
  * Decorator class of {@link BankAccount} that executes 
  * a check every time a deposit operation is performed.
  */
-public final class DepositCheckBankAccount implements BankAccount {
+public final class DepositCheckBankAccount extends BankAccountDecorator {
 
-    private final BankAccount account;
     private final BiPredicate<BankAccount, Integer> depositCheck;
-
 
     /**
      * @param account the {@link BankAccount} implementation to decorate
@@ -20,47 +18,23 @@ public final class DepositCheckBankAccount implements BankAccount {
      * be performed, based on the {@link BankAccount} state and the amount to deposit
      */
     public DepositCheckBankAccount(final BankAccount account, final BiPredicate<BankAccount, Integer> depositCheck) {
-        this.account = account;
+        super(account);
         this.depositCheck = depositCheck;
     }
 
     @Override
     public void deposit(final int amount) {
-        if (!depositCheck.test(account, amount)) {
+        if (!depositCheck.test(getAccount(), amount)) {
             throw new IllegalStateException("Cannot deposit money because deposit conditions were violated");
         }
-    }
-
-    @Override
-    public void withdraw(final int amount) {
-        this.account.withdraw(amount);
-    }
-
-    @Override
-    public int getBalance() {
-        return this.account.getBalance();
-    }
-
-    @Override
-    public boolean canContinue() {
-        return this.account.canContinue();
-    }
-
-    @Override
-    public String getPlayerName() {
-        return this.account.getPlayerName();
-    }
-
-    @Override
-    public String toString() {
-        return this.account.toString();
+        getAccount().deposit(amount);
     }
 
     @Override
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((account == null) ? 0 : account.hashCode());
+        result = prime * result + ((getAccount() == null) ? 0 : getAccount().hashCode());
         return result;
     }
 
@@ -76,13 +50,19 @@ public final class DepositCheckBankAccount implements BankAccount {
             return false;
         }
         final DepositCheckBankAccount other = (DepositCheckBankAccount) obj;
-        if (account == null) {
-            if (other.account != null) {
+        if (getAccount() == null) {
+            if (other.getAccount() != null) {
                 return false;
             }
-        } else if (!account.equals(other.account)) {
+        } else if (!getAccount().equals(other.getAccount()) || depositCheck.equals(other.depositCheck)) {
             return false;
         }
         return true;
     }
+
+    @Override
+    public String toString() {
+        return "DepositCheckBankAccount [depositCheck=" + depositCheck + ", getAccount()=" + getAccount() + "]";
+    }
+
 }

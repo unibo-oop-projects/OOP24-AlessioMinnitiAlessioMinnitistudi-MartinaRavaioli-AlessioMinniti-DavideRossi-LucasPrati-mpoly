@@ -1,21 +1,28 @@
 package it.unibo.monopoly.model.turnation.api;
 
-/**
- * player interface.
-*/
-public interface Player {
+import java.awt.Color;
 
+import it.unibo.monopoly.utils.Identifiable;
+
+/**
+ * Player interface.
+ * Extends {@link Identifiable} for the identification of the players
+*/
+
+public interface Player extends Identifiable<Integer> {
+
+    /**
+     * @return the player's nickname
+     */
     String getName();
+
     /**
-     * @return the own position
+     * @return the player's color
      */
-    Position getPosition();
-    /**
-     * @param steps
-     */
-    void makeMove(int steps);
+    Color getColor();
+
     /**
      * @return if is alive
      */
-    boolean isAlive();
+    // boolean isAlive();
 }
