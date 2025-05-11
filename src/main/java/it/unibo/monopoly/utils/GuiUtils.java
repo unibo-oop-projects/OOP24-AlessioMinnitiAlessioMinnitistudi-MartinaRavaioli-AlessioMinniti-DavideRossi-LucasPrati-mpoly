@@ -30,7 +30,7 @@ public final class GuiUtils {
     private GuiUtils() { }
 
     /**
-     * Utility method to create a fixed-size square colored label.
+     * Create a fixed-size square colored label.
      * Useful for player color boxes.
      *
      * @param color the background color
@@ -181,7 +181,7 @@ public final class GuiUtils {
     }
 
     /**
-     * Get a percentage {@link Dimension} of the screen size.
+     * Get a custom percentage {@link Dimension} of the screen size.
      * 
      * @param widthPerc the percentage of the full screen's width
      * @param heightPerc the percentage of the full screen's height
@@ -193,26 +193,26 @@ public final class GuiUtils {
     }
 
     /**
-     * Should return a new {@link Font} with a small size, according to the {@link Configuration}.
+     * Get a new {@link Font} with a small size, according to the {@link Configuration}.
      * 
      * @param config a consistent {@link Configuration} for upload {@code size} and {@code name} parameters
      * @return a new {@link Font} according to the {@link Configuration} parameters
      */
     public static Font getSmallFontFromConfiguration(final Configuration config) {
-        return getFontFromConfiguration(config.getFontName(), config.getSmallFont());
+        return createFont(config.getFontName(), config.getSmallFont());
     }
 
     /**
-     * Should return a new {@link Font} with a big size, according to the {@link Configuration}.
+     * Get a new {@link Font} with a big size, according to the {@link Configuration}.
      * 
      * @param config a consistent {@link Configuration} for upload {@code size} and {@code name} parameters
      * @return a new {@link Font} according to the {@link Configuration} parameters
      */
     public static Font getBigFontFromConfiguration(final Configuration config) {
-        return getFontFromConfiguration(config.getFontName(), config.getBigFont());
+        return createFont(config.getFontName(), config.getBigFont());
     }
 
-    private static Font getFontFromConfiguration(final String name, final int size) {
+    private static Font createFont(final String name, final int size) {
         return new Font(name, FONT_STYLE, size);
     }
 }
