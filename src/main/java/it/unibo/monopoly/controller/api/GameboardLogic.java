@@ -8,4 +8,6 @@ public interface GameboardLogic {
     boolean isBoardTile(int i, int j, int size);
 
     Color getTileColor(Type type);
+
+    int getSize(int numTiles);
 }
