@@ -27,7 +27,14 @@ public interface GameController {
 
     /**
      * Pay the rent amount to the owner of the property
-     * occupied by the player whose turn it is.
+     * occupied by the player's pawn whose turn it is.
      */
     void payPropertyOwner();
+
+
+    /**
+     * Sell a {@link TitleDeed} back to the bank and refund the owner.
+     * @param titledeedName the name of the {@link TitleDeed} to sell.
+     */
+    void sellProperty(String titledeedName);
 }
