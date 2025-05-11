@@ -97,4 +97,8 @@ public class BoardImpl implements Board {
         final int steps = value.stream().mapToInt(Integer::intValue).sum();
         player.move(steps);
     }
+
+    // public Pawn getPawn(int id) {
+    //     return 
+    // }
 }

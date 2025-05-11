@@ -91,4 +91,11 @@ public class TurnationManagerImpl implements TurnationManager {
     public final Collection<Integer> moveByDices() { 
         return this.dice.throwDices();
     }
+    /**
+     * return the id of the current player.
+     * @return int
+    */
+    public final int getIdCurrPlayer() {
+        return this.currPlayer.getID();
+    }
 }

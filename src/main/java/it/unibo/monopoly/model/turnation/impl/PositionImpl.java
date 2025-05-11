@@ -48,4 +48,42 @@ public class PositionImpl implements Position, Comparable<Position> {
     public int compareTo(final Position o) {
         return this.value.compareTo(o.getPos());
     }
+    /**
+     * hashcode.
+     * @return int
+    */
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((value == null) ? 0 : value.hashCode());
+        return result;
+    }
+    /**
+     * equals.
+     * @param obj
+     * @return bool
+    */
+    @Override
+    public boolean equals(final Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final PositionImpl other = (PositionImpl) obj;
+        if (value == null) {
+            if (other.value != null) {
+                return false;
+            }
+        } else if (!value.equals(other.value)) {
+            return false;
+        }
+        return true;
+    }
+
 }
