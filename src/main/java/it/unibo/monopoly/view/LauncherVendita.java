@@ -1,5 +1,6 @@
 package it.unibo.monopoly.view;
 
+import java.awt.Color;
 import java.util.Set;
 
 import it.unibo.monopoly.model.transactions.api.Bank;
@@ -32,7 +33,7 @@ public final class LauncherVendita {
     public static void main(final String[] args) throws java.io.IOException {
         final BankAccount ac1 = new SimpleBankAccountImpl("piero");
         final BankAccount ac2 = new SimpleBankAccountImpl("pietro");
-        final Player p1 = new PlayerImpl("piero");
+        final Player p1 = PlayerImpl.of(0, "piero", Color.BLUE);
         final TitleDeed ti1 = new BaseTitleDeed("blue", "nana", 23, i -> i + 40 , 20);
         final Bank bank = new BankImpl(Set.of(ac1,ac2), Set.of(ti1));
         final int width = 700;

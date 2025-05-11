@@ -66,8 +66,5 @@ public final class PlayerImpl implements Player {
         }
         return new PlayerImpl(id, name, color);
     }
-    @Override
-    public String getName() {
-         return this.name;
-    }
+
 }

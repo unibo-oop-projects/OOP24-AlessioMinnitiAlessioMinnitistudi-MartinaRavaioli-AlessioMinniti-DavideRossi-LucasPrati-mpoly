@@ -3,6 +3,7 @@ package it.unibo.monopoly.view.impl;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
 import java.util.stream.Collectors;
@@ -96,7 +97,8 @@ public final class GUIVendita extends JFrame {
 
 // create the Component for the listPane
         final JLabel selectProperty = new JLabel("select the property you want to manage");
-
+        Font f = new Font("gigi", Font.TYPE1_FONT, 20);
+        selectProperty.setFont(f);
         final JList<Object> propertiesList = new JList<>(logic.getProperties(player).stream().map(TitleDeed::getName).toArray());
         final JScrollPane propertiesScrollPane = new JScrollPane(propertiesList);
         final JButton exitButton = new JButton("done");
