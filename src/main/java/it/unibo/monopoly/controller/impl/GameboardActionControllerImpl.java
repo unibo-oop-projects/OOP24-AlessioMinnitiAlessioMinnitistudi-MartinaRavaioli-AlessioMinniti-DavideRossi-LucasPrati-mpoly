@@ -37,7 +37,7 @@ public class GameboardActionControllerImpl implements GameboardActionController{
     public void changePositions() {
         List<Integer> res = (List<Integer>) turnManager.moveByDices();
         ((BoardImpl) this.gameboard).movePawn(((BoardImpl) this.gameboard).getPawn(((TurnationManagerImpl) this.turnManager).getIdCurrPlayer()),res);
-        gameboardView.changePos();
+        gameboardView.changePos(((BoardImpl) this.gameboard).getPawn(((TurnationManagerImpl) this.turnManager).getIdCurrPlayer()).getPosition());
     }
 
     @Override

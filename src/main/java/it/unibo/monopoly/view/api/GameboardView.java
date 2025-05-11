@@ -85,9 +85,16 @@ public class GameboardView extends JFrame{
 
     }
 
-    public void changePos(){
+    public void changePos(Position newPos){
         for (JPanel p : this.tilesView) {
             p.remove(shapes.get(0));
+        }
+    }
+
+    public void clearPanel(){
+        for (int i=0; i < 4; i++){
+            JPanel panel = this.tilesView.get(pawnPositions.get(i).getPos());
+            panel.remove(shapes.get(i));
         }
     }
 }
