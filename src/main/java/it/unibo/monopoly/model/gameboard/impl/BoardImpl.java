@@ -90,17 +90,25 @@ public class BoardImpl implements Board {
 
         return pawnsInTile;
     }
-
+    /**
+     * move the pawn.
+     * @param player
+     * @param value
+    */
     @Override
     public final void movePawn(final Pawn player, final Collection<Integer> value) {
         final int steps = value.stream().mapToInt(Integer::intValue).sum();
         player.move(steps);
     }
-
-    public Pawn getPawn(int id) {
+    /**
+     * get the pawn of the id given.
+     * @param id
+     * @return Pawn
+    */
+    public Pawn getPawn(final int id) {
         for (final Pawn p : this.pawns) {
             if (((PawnImpl) p).getID() == id) {
-                return new PawnImpl(id,p.getPosition(),p.getColor());
+                return new PawnImpl(id, p.getPosition(), p.getColor());
             }
         }
 
