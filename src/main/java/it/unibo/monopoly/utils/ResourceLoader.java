@@ -184,7 +184,6 @@ public final class ResourceLoader {
 
                 final String key = parts[0].trim().toUpperCase(Locale.ENGLISH);
                 final String value = parts[1].trim();
-
                 try {
                     parseConfigurationKey(builder, key, value);
                 } catch (final IllegalArgumentException e) {
@@ -216,11 +215,14 @@ public final class ResourceLoader {
         switch (key) {
             case "MIN_PLAYERS" -> configurationBuilder.withMin(Integer.parseInt(value));
             case "MAX_PLAYERS" -> configurationBuilder.withMax(Integer.parseInt(value));
+            case "NUM_DICE" -> configurationBuilder.withNumDice(Integer.parseInt(value));
+            case "SIDES_PER_DIE" -> configurationBuilder.withSidesPerDie(Integer.parseInt(value));
             case "FONT_NAME" -> configurationBuilder.withFontName(value);
             case "BIG_FONT" -> configurationBuilder.withBigFont(Integer.parseInt(value));
             case "SMALL_FONT" -> configurationBuilder.withSmallFont(Integer.parseInt(value));
             case "INIT_BALANCE" -> configurationBuilder.withInitBalance(Integer.parseInt(value));
             case "RULES_FILE" -> configurationBuilder.withRulesFilename(value);
+            case "CARDS_FILE" -> configurationBuilder.withCardsFilename(value);
             case "COLORS" -> {
                 final List<Color> colors = Arrays.stream(value.split(","))
                     .map(String::trim)

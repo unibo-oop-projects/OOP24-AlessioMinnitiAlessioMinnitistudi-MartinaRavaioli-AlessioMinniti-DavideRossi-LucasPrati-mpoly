@@ -15,16 +15,20 @@ import org.junit.jupiter.api.Test;
 
 class ConfigurationTest {
 
-    private static final String INVALID_CONFIG = "Invalid configuration should not be consistent: ";
+    private static final String MESSAGE_INVALID_CONFIG = "Invalid configuration should not be consistent: ";
     private static final int VALID_MIN = 2;
     private static final int VALID_MAX = 4;
-    private static final int SMALL_FONT = 16;
-    private static final int BIG_FONT = 24;
-    private static final int VALID_STARTER_BALANCE = 1500;
+    private static final int VALID_NUM_DICE = 2;
+    private static final int VALID_SIDES_PER_DIE = 6;
     private static final String VALID_FONT = "ARIAL"; // should be available on most systems
+    private static final int VALID_BIG_FONT = 24;
+    private static final int VALID_SMALL_FONT = 16;
+    private static final int VALID_STARTER_BALANCE = 1500;
     private static final String VALID_RULES_FILENAME = "rules/rules.txt";
+    private static final String VALID_CARDS_FILENAME = "cards/monopoly_cards.json";
     private static final List<String> VALID_FILENAMES = List.of(
-        VALID_RULES_FILENAME
+        VALID_RULES_FILENAME,
+        VALID_CARDS_FILENAME
     );
     private static final List<Color> VALID_COLORS = List.of(
         Color.RED,
@@ -49,11 +53,14 @@ class ConfigurationTest {
         builder = new Configuration.Builder()
                 .withMin(VALID_MIN)
                 .withMax(VALID_MAX)
+                .withNumDice(VALID_NUM_DICE)
+                .withSidesPerDie(VALID_SIDES_PER_DIE)
                 .withFontName(VALID_FONT)
-                .withSmallFont(SMALL_FONT)
-                .withBigFont(BIG_FONT)
+                .withBigFont(VALID_BIG_FONT)
+                .withSmallFont(VALID_SMALL_FONT)
                 .withInitBalance(VALID_STARTER_BALANCE)
                 .withRulesFilename(VALID_RULES_FILENAME)
+                .withCardsFilename(VALID_CARDS_FILENAME)
                 .withColors(VALID_COLORS);
     }
 
@@ -65,11 +72,14 @@ class ConfigurationTest {
         assertTrue(config.isConsistent());
         assertEquals(VALID_MIN, config.getMinPlayer());
         assertEquals(VALID_MAX, config.getMaxPlayer());
+        assertEquals(VALID_NUM_DICE, config.getNumDice());
+        assertEquals(VALID_SIDES_PER_DIE, config.getSidesPerDie());
         assertEquals(VALID_FONT, config.getFontName());
-        assertEquals(SMALL_FONT, config.getSmallFont());
-        assertEquals(BIG_FONT, config.getBigFont());
+        assertEquals(VALID_BIG_FONT, config.getBigFont());
+        assertEquals(VALID_SMALL_FONT, config.getSmallFont());
         assertEquals(VALID_STARTER_BALANCE, config.getInitBalance());
         assertEquals(VALID_RULES_FILENAME, config.getRulesFilename());
+        assertEquals(VALID_CARDS_FILENAME, config.getCardsFilename());
         assertEquals(VALID_COLORS.size(), config.getPlayerColors().size());
     }
 
@@ -85,49 +95,77 @@ class ConfigurationTest {
         final List<Color> invalidList = List.of(Color.RED);
         final Configuration config = builder.withColors(invalidList).withMax(invalidList.size() + 1).build();
         assertFalse(config.isConsistent(),
-                    INVALID_CONFIG + "Colors list size < maxPlayers");
+                    MESSAGE_INVALID_CONFIG + "Colors list size < maxPlayers");
     }
 
     @Test
-    void configurationInconsistentIfFontInvalid() {
-        final Configuration config = builder.withFontName("NonExistentFont").build();
-        assertFalse(config.isConsistent(),
-                    INVALID_CONFIG + "Font name must match an available system font.");
-    }
-
-    @Test
-    void configurationInconsistentIfSmallFontBiggerThanBigFont() {
-        final Configuration config = builder.withSmallFont(BIG_FONT + 1).withBigFont(BIG_FONT).build();
-        assertFalse(config.isConsistent(),
-                    INVALID_CONFIG + "smallFont > bigFont");
-    }
-
-    @Test
-    void configurationInconsistentIfMinGreaterOrEqualToMax() {
+    void configurationInconsistentIfMinGreaterToMax() {
         final Configuration config = builder.withMin(VALID_MAX + 1).withMax(VALID_MAX).build();
         assertFalse(config.isConsistent(),
-                    INVALID_CONFIG + "minPlayers > maxPlayers");
+                    MESSAGE_INVALID_CONFIG + "minPlayers > maxPlayers");
     }
 
     @Test
     void configurationInconsistentIfMinEqualToMax() {
         final Configuration config = builder.withMin(VALID_MAX).withMax(VALID_MAX).build();
         assertFalse(config.isConsistent(),
-                    INVALID_CONFIG + "minPlayers = maxPlayers");
+                    MESSAGE_INVALID_CONFIG + "minPlayers = maxPlayers");
+    }
+
+    @Test
+    void configurationInconsistentIfMinIsZeroOrNegative() {
+        final Configuration config = builder.withMin(0).build();
+        assertFalse(config.isConsistent(),
+                    MESSAGE_INVALID_CONFIG + "minPlayers <= 0");
+    }
+
+    @Test
+    void configurationInconsistentIfNumDicesIsZeroOrNegative() {
+        final Configuration config = builder.withNumDice(0).build();
+        assertFalse(config.isConsistent(),
+                    MESSAGE_INVALID_CONFIG + "numDice <= 0");
+    }
+
+    @Test
+    void configurationInconsistentIfSidesPerDieIsZeroOrNegative() {
+        final Configuration config = builder.withSidesPerDie(0).build();
+        assertFalse(config.isConsistent(),
+                    MESSAGE_INVALID_CONFIG + "sidesPerDie <= 0");
+    }
+
+    @Test
+    void configurationInconsistentIfFontInvalid() {
+        final Configuration config = builder.withFontName("NonExistentFont").build();
+        assertFalse(config.isConsistent(),
+                    MESSAGE_INVALID_CONFIG + "Font name must match an available system font.");
+    }
+
+    @Test
+    void configurationInconsistentIfSmallFontBiggerThanBigFont() {
+        final Configuration config = builder.withSmallFont(VALID_BIG_FONT + 1).withBigFont(VALID_BIG_FONT).build();
+        assertFalse(config.isConsistent(),
+                    MESSAGE_INVALID_CONFIG + "smallFont > bigFont");
+    }
+
+    @Test
+    void defaultStarterBalanceIsCorrect() {
+        final Configuration config = builder.withInitBalance( - VALID_STARTER_BALANCE).build();
+        assertFalse(config.isConsistent(),
+                    MESSAGE_INVALID_CONFIG + "starterBalance < 0");
     }
 
     @Test
     void configurationInconsistentIfRulesFileIsNull() {
         final Configuration config = builder.withRulesFilename(null).build();
         assertFalse(config.isConsistent(),
-                    INVALID_CONFIG + "rulesFilename can not be null");
+                    MESSAGE_INVALID_CONFIG + "rulesFilename cannot be null");
     }
 
     @Test
-    void defaultStarterBalanceIsCorrect() {
-        final Configuration config = builder.withInitBalance(0).build();
+    void configurationInconsistentIfCardsFileIsNull() {
+        final Configuration config = builder.withCardsFilename(null).build();
         assertFalse(config.isConsistent(),
-                    INVALID_CONFIG + "starterBalance < 0");
+                    MESSAGE_INVALID_CONFIG + "cardsFilename cannot be null");
     }
 
     @Test

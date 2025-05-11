@@ -8,29 +8,44 @@ import java.util.List;
  */
 public final class Configuration {
 
-    private final int maxPlayer; 
     private final int minPlayer;
+    private final int maxPlayer;
+    private final int numDice;
+    private final int sidesPerDie;
     private final String fontName;
-    private final int smallFont;
     private final int bigFont;
+    private final int smallFont;
     private final int initBalance;
     private final String rulesFilename;
+    private final String cardsFilename;
     private final List<Color> playerColors;
+    
 
 
-    private Configuration(final int maxPlayer, final int minPlayer, final String fontName, final int smallFont,
-                          final int bigFont, final int initBalance, final String rulesFilename,
-                          final List<Color> playerColors) {
-        this.maxPlayer = maxPlayer;
+    private Configuration(int minPlayer, int maxPlayer, int numDice, int sidesPerDie, String fontName, int bigFont,
+            int smallFont, int initBalance, String rulesFilename, String cardsFilename, List<Color> playerColors) {
         this.minPlayer = minPlayer;
+        this.maxPlayer = maxPlayer;
+        this.numDice = numDice;
+        this.sidesPerDie = sidesPerDie;
         this.fontName = fontName;
-        this.smallFont = smallFont;
         this.bigFont = bigFont;
+        this.smallFont = smallFont;
         this.initBalance = initBalance;
         this.rulesFilename = rulesFilename;
+        this.cardsFilename = cardsFilename;
         this.playerColors = playerColors;
     }
 
+
+    
+    /**
+     * @return the minimum number of players
+     */
+    public int getMinPlayer() {
+        return minPlayer;
+    }
+    
     /**
      * @return the maximum number of players
      */
@@ -39,10 +54,17 @@ public final class Configuration {
     }
 
     /**
-     * @return the minimum number of players
+     * @return the number of dice
      */
-    public int getMinPlayer() {
-        return minPlayer;
+    public int getNumDice() {
+        return numDice;
+    }
+
+    /**
+     * @return the number of sides for each die
+     */
+    public int getSidesPerDie() {
+        return sidesPerDie;
     }
 
     /**
@@ -53,17 +75,17 @@ public final class Configuration {
     }
 
     /**
-     * @return the minimum size of the font
-     */
-    public int getSmallFont() {
-        return smallFont;
-    }
-
-    /**
      * @return the maximum size of the font
      */
     public int getBigFont() {
         return bigFont;
+    }
+
+    /**
+     * @return the minimum size of the font
+     */
+    public int getSmallFont() {
+        return smallFont;
     }
 
     /**
@@ -81,6 +103,13 @@ public final class Configuration {
     }
 
     /**
+     * @return the name of the file which contains all the cards of the game
+     */
+    public String getCardsFilename() {
+        return cardsFilename;
+    }
+
+    /**
      * @return the list of colors assigned to players
      */
     public List<Color> getPlayerColors() {
@@ -92,11 +121,15 @@ public final class Configuration {
      */
     public boolean isConsistent() {
         return playerColors.size() >= maxPlayer
-                && minPlayer < maxPlayer
-                && smallFont < bigFont
-                && ResourceLoader.checkFilename(rulesFilename)
+                && minPlayer > 0
+                && minPlayer <= maxPlayer
+                && numDice > 0
+                && sidesPerDie > 0
                 && ResourceLoader.isValidFontName(fontName)
-                && initBalance > 0;
+                && smallFont < bigFont
+                && initBalance >= 0
+                && ResourceLoader.checkFilename(rulesFilename)
+                && ResourceLoader.checkFilename(cardsFilename);
     }
 
 
@@ -127,13 +160,16 @@ public final class Configuration {
      */
     public static class Builder {
 
-        private static final int MAX_PLAYER = 4; 
         private static final int MIN_PLAYER = 2;
+        private static final int MAX_PLAYER = 4; 
+        private static final int NUM_DICE = 2;
+        private static final int SIDES_PER_DIE = 6;
         private static final String FONT_NAME = "ARIAL";
         private static final int BIG_FONT = 24;
         private static final int SMALL_FONT = 16;
         private static final int INIT_BALANCE = 2000;
         private static final String RULES_FILENAME = "rules/rules.txt";
+        private static final String CARDS_FILENAME = "cards/monopoly_cards.json";
         private static final List<Color> PLAYER_COLORS = List.of(
             Color.RED,
             Color.BLUE,
@@ -151,13 +187,16 @@ public final class Configuration {
         );
 
         // Builder's default fields
-        private int maxPlayer = MAX_PLAYER;
         private int minPlayer = MIN_PLAYER;
+        private int maxPlayer = MAX_PLAYER;
+        private int numDice = NUM_DICE;
+        private int sidesPerDie = SIDES_PER_DIE;
         private String fontName = FONT_NAME;
         private int bigFont = BIG_FONT;
         private int smallFont = SMALL_FONT;
         private int initBalance = INIT_BALANCE;
         private String rulesFilename = RULES_FILENAME;
+        private String cardsFilename = CARDS_FILENAME;
         private List<Color> playerColors = List.copyOf(PLAYER_COLORS);
         private boolean consumed;
 
@@ -180,6 +219,24 @@ public final class Configuration {
         }
 
         /**
+         * @param numDice the number of dice
+         * @return this builder, for method chaining
+         */
+        public Builder withNumDice(final int numDice) {
+            this.numDice = numDice;
+            return this;
+        }
+
+        /**
+         * @param sidesPerDie the number of sides for each die
+         * @return this builder, for method chaining
+         */
+        public Builder withSidesPerDie(final int sidesPerDie) {
+            this.sidesPerDie = sidesPerDie;
+            return this;
+        }
+
+        /**
          * @param fontName the name of the font to use;
          * if null, consistency check will fail and default configuration will be used
          * @return this builder, for method chaining
@@ -190,20 +247,20 @@ public final class Configuration {
         }
 
         /**
-         * @param smallFont the minimum size of the font
-         * @return this builder, for method chaining
-         */
-        public Builder withSmallFont(final int smallFont) {
-            this.smallFont = smallFont;
-            return this;
-        }
-
-        /**
          * @param bigFont the maximum size of the font
          * @return this builder, for method chaining
          */
         public Builder withBigFont(final int bigFont) {
             this.bigFont = bigFont;
+            return this;
+        }
+
+        /**
+         * @param smallFont the minimum size of the font
+         * @return this builder, for method chaining
+         */
+        public Builder withSmallFont(final int smallFont) {
+            this.smallFont = smallFont;
             return this;
         }
 
@@ -222,6 +279,15 @@ public final class Configuration {
          */
         public Builder withRulesFilename(final String rulesFilename) {
             this.rulesFilename = rulesFilename;
+            return this;
+        }
+
+        /**
+         * @param cardsFilename the name of the file which contains all the cards of the game
+         * @return this builder, for method chaining
+         */
+        public Builder withCardsFilename(final String cardsFilename) {
+            this.cardsFilename = cardsFilename;
             return this;
         }
 
@@ -247,8 +313,9 @@ public final class Configuration {
                 throw new IllegalStateException("The builder can only be used once");
             }
             consumed = true;
-            return new Configuration(maxPlayer, minPlayer, fontName, smallFont, bigFont, 
-                                     initBalance, rulesFilename, playerColors);
+            return new Configuration(minPlayer, maxPlayer, numDice, sidesPerDie,
+                                    fontName, bigFont, smallFont, initBalance,
+                                    rulesFilename, cardsFilename, playerColors);
         }
     }
 }

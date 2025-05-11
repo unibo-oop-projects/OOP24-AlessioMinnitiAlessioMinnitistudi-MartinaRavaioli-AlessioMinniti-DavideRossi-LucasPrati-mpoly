@@ -1,14 +1,10 @@
 # For tests: INVALID CONFIGURATION (missing elements)
 
-# Missing player min value
-# Missing player max value
+# Missing elements
 
-FONT_NAME: ARIAL
+FONT_NAME: null
 BIG_FONT: 26
 SMALL_FONT: 16
 
-# Missing init balance
-
-# Missing rules filename
-# Invalid Color
+# invalid Color
 COLORS: AJEJE
