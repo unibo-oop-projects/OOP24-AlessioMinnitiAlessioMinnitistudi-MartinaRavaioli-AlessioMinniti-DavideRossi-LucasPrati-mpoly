@@ -29,33 +29,51 @@ public final class PlayerImpl implements Player {
         this.color = color;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Color getColor() {
         return color;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getName() {
         return name;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Integer getID() {
         return id;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Position getPosition() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'getPosition'");
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void makeMove(final int steps) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'makeMove'");
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean isAlive() {
         // TODO Auto-generated method stub
