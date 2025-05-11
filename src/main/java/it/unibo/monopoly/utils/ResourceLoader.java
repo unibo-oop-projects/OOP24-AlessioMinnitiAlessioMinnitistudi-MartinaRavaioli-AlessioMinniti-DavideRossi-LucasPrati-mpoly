@@ -18,51 +18,51 @@ import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.monopoly.model.transactions.api.TitleDeed;
 
 /**
- * A small utility class to load resources (JSON, TXT and YML) from the classpath.
+ * Utility class for loading and parsing resources such as fonts, colors,
+ * configuration files, JSON assets, and plain text files from the classpath.
+ * <p>
+ * This class is not meant to be instantiated. All methods are static and stateless.
  */
 public final class ResourceLoader {
 
     private static final ObjectMapper MAPPER = new ObjectMapper();
 
-    /**
-     * Create a small {@code utility Object} for load resources from the classpath.
-     */
-    public ResourceLoader() { /* Empty */ }
+    private ResourceLoader() { /* Prevent instantiation */ }
 
     /**
-     * Check if the {@link Font} {@code name} is available in the system.
+     * Checks whether the given font name is available in the local graphics environment.
      * <p>
-     * @param fontName the name to check
-     * @return true if is valid, false otherwise
+     * @param fontName the name of the font to check
+     * @return {@code true} if the font is available; {@code false} otherwise
      */
     public static boolean isValidFontName(final String fontName) {
-        return  Arrays.stream(GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames())
-                               .anyMatch(name -> name.equalsIgnoreCase(fontName)) && Objects.nonNull(fontName);
+        return  fontName != null
+                && Arrays.stream(GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames())
+                            .anyMatch(name -> name.equalsIgnoreCase(fontName));
     }
 
 
     /**
-     * Check a filename, trying to found it.
+     * Checks whether a resource with the given filename exists in the classpath.
+     * This method attempts to open the resource and immediately closes it.
      * <p>
-     * @param filename the name (and optional relative path) of the resource to check
-     * @return true if found, false otherwise
+     * @param filename the name (and optional path) of the resource
+     * @return {@code true} if the resource exists and can be opened; {@code false} otherwise
      */
     public static boolean checkFilename(final String filename) {
-        if (Objects.nonNull(filename)) {
+        if (filename == null) {
             return false;
         }
 
-        final ResourceLoader genericLoader = new ResourceLoader();
-        try {
-            genericLoader.getRequiredStream(filename);
-
+        try (InputStream ignored  = getRequiredStream(filename)) {
+            return true;
         } catch (final IOException e) {
             return false;
         }
-        return true;
     }
 
 
@@ -70,9 +70,9 @@ public final class ResourceLoader {
      * Parses a string representing a color name and returns the corresponding {@link Color} object.
      * <p>
      * @param name the name of the color (case-insensitive)
-     * @return the {@link Color} object corresponding to the given name
-     * @throws IllegalArgumentException if the given {@param name} does not match any supported color
-    */
+     * @return a {@link Color} object matching the given name
+     * @throws IllegalArgumentException if the color name is unknown or {@code null}
+     */
     public static Color parseColor(final String name) {
         return switch (name.toUpperCase(Locale.ENGLISH)) {
             case "BLACK" -> Color.BLACK;
@@ -94,13 +94,13 @@ public final class ResourceLoader {
 
 
     /**
-     * Helper that opens a classpath resource as an {@link InputStream}.
+     * Loads a resource from the classpath as an {@link InputStream}.
      * <p>
-     * @param filename the name (and optional relative path) of the resource on the classpath
-     * @return an {@link InputStream} pointing to the given resource
-     * @throws IOException if the resource cannot be found
+     * @param filename the name (and optional path) of the resource file
+     * @return an {@link InputStream} for the specified resource
+     * @throws IOException if the resource cannot be found or loaded
      */
-    public InputStream getRequiredStream(final String filename) throws IOException {
+    public static InputStream getRequiredStream(final String filename) throws IOException {
         Objects.requireNonNull(filename, "filename must not be null");
         final ClassLoader cl = Thread.currentThread().getContextClassLoader();
         final InputStream stream = cl.getResourceAsStream(filename);
@@ -112,14 +112,26 @@ public final class ResourceLoader {
 
 
     /**
-     * Reads a text resource from the classpath into a single {@link String}.
+     * Loads a resource from the classpath and returns a buffered reader over its contents.
      * <p>
-     * @param filename the name (and optional relative path) of the resource on the classpath with all the rules of the game
-     * @return a {@link String} with the full contents of the file (using {@code UTF-8})
+     * @param filename the name (and optional path) of the resource file
+     * @return a {@link BufferedReader} to read the resource
+     * @throws IOException if the resource cannot be found
      */
-    public String loadTextResource(final String filename) {
-        try (var is = getRequiredStream(filename);
-             var reader = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8))) {
+    public static BufferedReader getRequiredReader(final String filename) throws IOException {
+        return new BufferedReader(new InputStreamReader(getRequiredStream(filename), StandardCharsets.UTF_8));
+    }
+
+
+    /**
+     * Reads a text resource from the classpath and returns its contents as a single string.
+     * <p>
+     * @param filename the name (and optional relative path) of the resource
+     * @return a {@link String} containing the full contents of the file,
+     *         or the error message if the resource could not be loaded
+     */
+    public static String loadTextResource(final String filename) {
+        try (BufferedReader reader = getRequiredReader(filename)) {
             return reader.lines().collect(Collectors.joining("\n"));
         } catch (final IOException e) {
             return e.getMessage();
@@ -128,14 +140,13 @@ public final class ResourceLoader {
 
 
     /**
-     * Loads an array of {@link TitleDeed} from a JSON file on the classpath
-     * and returns them as a {@link Set}.
+     * Loads a set of {@link TitleDeed} objects from a JSON file in the classpath.
      * <p>
-     * @param filename the name (and optional relative path) of the resource on the classpath with all the Title Deeds
-     * @return an unmodifiable {@link Set} of {@link TitleDeed}, never {@code null}
-     * @throws IOException if the resource is missing or cannot be parsed
+     * @param filename the name (and optional relative path) of the JSON resource file
+     * @return an unmodifiable {@link Set} of {@link TitleDeed} instances
+     * @throws IOException if the resource cannot be found or parsed
      */
-    public Set<TitleDeed> loadTitleDeed(final String filename) throws IOException {
+    public static Set<TitleDeed> loadTitleDeed(final String filename) throws IOException {
         try (InputStream is = getRequiredStream(filename)) {
             final var array = MAPPER.readValue(is, TitleDeed[].class);
             return Collections.unmodifiableSet(new HashSet<>(Arrays.asList(array)));
@@ -144,60 +155,62 @@ public final class ResourceLoader {
 
 
     /**
-     * Reads a resource from the classpath and set a {@link Configuration}.
+     * Loads a {@link Configuration} object from a configuration file in the classpath.
+     * Skips malformed or unknown entries gracefully.
      * <p>
-     * @param filename the name (and optional relative path) of the resource on the classpath with all the custom data
-     * @return a {@link Configuration} with the custom data provided by the file
+     * @param filename the name (and optional relative path) of the resource
+     * @return a {@link Configuration} object, or a default one if loading fails
      */
-    public Configuration loadConfigurationFile(final String filename) {
-        // find the file
-        final InputStream is;
-        try {
-            is = getRequiredStream(filename);
-        } catch (final IOException e) {
-            return new Configuration.Builder().build();
-        }
-        // if found, read it
-        final Configuration.Builder configurationBuilder = new Configuration.Builder();
-        try (var contents = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8))) {
+    @SuppressWarnings("PMD.AssignmentInOperand") // intentional: idiomatic BufferedReader usage
+    @SuppressFBWarnings(
+            value = "ASSIGNMENT_IN_CONDITION",
+            justification = "Intentional use of assignment in the while condition — "
+                            + "a standard practice for reading lines from a BufferedReader in a compact way."
+    )
+    public static Configuration loadConfigurationFile(final String filename) {
+        try (BufferedReader reader = getRequiredReader(filename)) {
+            final Configuration.Builder builder = new Configuration.Builder();
 
-            for (String configLine = contents.readLine(); configLine != null; configLine = contents.readLine()) {
-                if (configLine.isBlank() || configLine.startsWith("#")) {
-                    continue;   // Skip empty lines and comments
-                }
-                final String[] lineElements = configLine.split(":", 2);
-                if (lineElements.length != 2) {
-                    continue;   // Skip invalid lines
+            String line;
+            while ((line = reader.readLine()) != null) {
+                if (isSkippable(line)) {
+                    continue;
                 }
 
-                final String key = lineElements[0].trim().toUpperCase(Locale.ENGLISH);
-                final String value = lineElements[1].trim();
+                final String[] parts  = line.split(":", 2);
+                if (isMalformed(parts)) {
+                    continue;
+                }
+
+                final String key = parts[0].trim().toUpperCase(Locale.ENGLISH);
+                final String value = parts[1].trim();
+
                 try {
-                    parseConfigurationKey(configurationBuilder, key, value);
+                    parseConfigurationKey(builder, key, value);
                 } catch (final IllegalArgumentException e) {
-                    // Error during parseColor
+                    // Skipping unsupported or invalid configuration entry
                     continue;
                 }
             }
-        } catch (final IOException  e) {    // Error during reading the file
-            // return a consistent default configuration
+            return builder.build();
+
+        } catch (final IOException e) {
             return new Configuration.Builder().build();
         }
-        return configurationBuilder.build();
     }
 
 
 
 
     /**
-     * Parses a provided {@code key-value} for set configutation's parameters.
+     * Parses a key-value pair from the configuration file and applies it to the {@link Configuration.Builder}.
      * <p>
-     * @param configurationBuilder the {@link Configuration.Builder} we want to upload the data
-     * @param key the name of the element to parse
-     * @param value tha value of the element to parse
-     * @throws IllegalArgumentException if the underlying implementation does not parse value successfully
+     * @param configurationBuilder the {@link Configuration.Builder} to apply the parsed setting to
+     * @param key the configuration key
+     * @param value the associated value to parse
+     * @throws IllegalArgumentException if the key is recognized but the value is invalid
      */
-    private void parseConfigurationKey(final Configuration.Builder configurationBuilder,
+    private static void parseConfigurationKey(final Configuration.Builder configurationBuilder,
                                               final String key,
                                               final String value) {
         switch (key) {
@@ -218,5 +231,25 @@ public final class ResourceLoader {
             }
             default -> { /* Ignore unknown key */ }
         }
+    }
+
+    /**
+     * Determines whether a configuration line should be skipped (blank or comment).
+     * <p>
+     * @param line the line to check
+     * @return {@code true} if the line is blank or a comment; {@code false} otherwise
+     */
+    private static boolean isSkippable(final String line) {
+        return line.isBlank() || line.startsWith("#");
+    }
+
+    /**
+     * Checks whether a parsed configuration line is malformed.
+     * <p>
+     * @param parts the result of splitting the line on ":"
+     * @return {@code true} if the split result is invalid; {@code false} otherwise
+     */
+    private static boolean isMalformed(final String[] parts) {
+        return parts.length != 2;
     }
 }

@@ -14,19 +14,19 @@ import it.unibo.monopoly.model.transactions.api.TitleDeed;
  */
 public interface MainMenuController {
     /**
-     * @implSpec must create players according the factory template with PlayerFactoryImpl, based on the { @param players } 
+     * @implNote must create players according the factory template with PlayerFactoryImpl, based on the { @param players } 
      * @param playersSetup the list of player data, create players according to this
      * @throws IOException if the loading of {@link TitleDeed}s from {@code JSON} failed
      */
     void onClickStart(Map<Color, String> playersSetup) throws IOException;
 
     /**
-     * @implSpec decreases the field numPlayer
+     * @implNote decreases the field numPlayer
      */
     void decreaseNumPlayer();
 
     /**
-     * @implSpec increases the field numPlayer
+     * @implNote increases the field numPlayer
      */
     void increaseNumPlayer();
 

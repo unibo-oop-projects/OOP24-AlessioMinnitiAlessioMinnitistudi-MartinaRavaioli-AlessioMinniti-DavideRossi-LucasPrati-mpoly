@@ -107,25 +107,22 @@ public final class Configuration {
      * @return a {@link Configuration} according to {@code configFile} if consistent. Otherwise a default {@link Configuration}
      */
     public static Configuration configureFromFile(final String configFile) {
-        final ResourceLoader genericLoader = new ResourceLoader();
-        final Configuration configuration = genericLoader.loadConfigurationFile(configFile);
+        final Configuration configuration = ResourceLoader.loadConfigurationFile(configFile);
 
         if (configuration.isConsistent()) {
             return configuration;
-        } else {
-            return new Configuration.Builder().build();
         }
+        return new Configuration.Builder().build();
     }
 
 
 
     /**
-     * Pattern builder: used here because:.
+     * Builder pattern is used here because.
      * <p>
-     * All the parameters of the {@link Configuration} class have a default value, which
-     * means that we would like to have all the possible combinations of
-     * constructors (one with three parameters, three with two parameters, three
-     * with a single parameter), which are way too many and confusing to use.
+     * - All parameters have sensible defaults
+     * - Overloading constructors would be confusing and verbose
+     * - It allows readable, flexible, chainable configuration setup
      * 
      */
     public static class Builder {
@@ -183,7 +180,8 @@ public final class Configuration {
         }
 
         /**
-         * @param fontName the name of the font to use
+         * @param fontName the name of the font to use;
+         * if null, consistency check will fail and default configuration will be used
          * @return this builder, for method chaining
          */
         public Builder withFontName(final String fontName) {
@@ -228,11 +226,16 @@ public final class Configuration {
         }
 
         /**
-         * @param playerColors the colors of the players
+         * Sets the list of player colors. If {@code playerColors} is {@code null},
+         * this method does nothing and retains the default configuration.
+         * <p>
+         * @param playerColors the list of player colors, or {@code null} to keep defaults
          * @return this builder, for method chaining
          */
         public Builder withColors(final List<Color> playerColors) {
-            this.playerColors = List.copyOf(playerColors);
+            if (playerColors != null) {
+                this.playerColors = List.copyOf(playerColors);
+            }
             return this;
         }
 
