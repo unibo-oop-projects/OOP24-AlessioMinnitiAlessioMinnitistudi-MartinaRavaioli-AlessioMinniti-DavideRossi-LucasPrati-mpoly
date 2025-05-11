@@ -13,6 +13,7 @@ import it.unibo.monopoly.model.transactions.impl.BaseTitleDeed;
 import it.unibo.monopoly.model.transactions.impl.bankaccount.SimpleBankAccountImpl;
 import it.unibo.monopoly.model.turnation.api.Player;
 import it.unibo.monopoly.model.turnation.impl.PlayerImpl;
+import it.unibo.monopoly.view.impl.GUIVendita;
 
 /**
  * test class for the property manager frame.

@@ -9,6 +9,7 @@ import it.unibo.monopoly.model.transactions.api.Bank;
 import it.unibo.monopoly.model.transactions.api.TitleDeed;
 import it.unibo.monopoly.model.transactions.impl.BaseTitleDeed;
 import it.unibo.monopoly.model.turnation.api.Player;
+import it.unibo.monopoly.view.api.VenditaLogic;
 
 /**
  * this is the implementation of the logic behind the property manager GUI. 

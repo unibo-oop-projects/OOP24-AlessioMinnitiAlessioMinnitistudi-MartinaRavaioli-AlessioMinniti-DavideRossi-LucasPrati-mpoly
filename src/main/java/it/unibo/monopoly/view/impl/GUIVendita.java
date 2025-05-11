@@ -1,4 +1,4 @@
-package it.unibo.monopoly.view;
+package it.unibo.monopoly.view.impl;
 
 
 import java.awt.BorderLayout;
@@ -20,6 +20,8 @@ import javax.swing.event.ListSelectionListener;
 import it.unibo.monopoly.model.transactions.api.Bank;
 import it.unibo.monopoly.model.transactions.api.TitleDeed;
 import it.unibo.monopoly.model.turnation.api.Player;
+import it.unibo.monopoly.view.VenditaLogicImpl;
+import it.unibo.monopoly.view.api.VenditaLogic;
 
 /**
  * the class presents the property manager frame of the game.
@@ -38,6 +40,9 @@ public final class GUIVendita extends JFrame {
      * @param width the initial width of the frame
      * @param heigth the initial heigth of the frame
      */
+
+     // TODO al posto di bank viene passato il controller e lo assegni alla logica al posto di usare il costruttore
+     //TODO sposta i metodi della logica nel controller
     public GUIVendita(final Player player, final int width, final int heigth, Bank bank) {
         final Border b = BorderFactory.createLineBorder(Color.black);
         logic = new VenditaLogicImpl(bank);
