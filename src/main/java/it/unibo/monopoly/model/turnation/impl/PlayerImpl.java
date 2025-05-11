@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.util.Objects;
 
 import it.unibo.monopoly.model.turnation.api.Player;
-import it.unibo.monopoly.model.turnation.api.Position;
 import it.unibo.monopoly.utils.Identifiable;
 
 /**
@@ -42,24 +41,6 @@ public final class PlayerImpl implements Player {
     @Override
     public Integer getID() {
         return id;
-    }
-
-    @Override
-    public Position getPosition() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getPosition'");
-    }
-
-    @Override
-    public void makeMove(final int steps) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'makeMove'");
-    }
-
-    @Override
-    public boolean isAlive() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'isAlive'");
     }
 
     /**

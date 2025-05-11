@@ -20,17 +20,7 @@ public interface Player extends Identifiable<Integer> {
     Color getColor();
 
     /**
-     * @return the own position
-     */
-    Position getPosition();
-
-    /**
-     * @param steps
-     */
-    void makeMove(int steps);
-
-    /**
      * @return if is alive
      */
-    boolean isAlive();
+    // boolean isAlive();
 }
