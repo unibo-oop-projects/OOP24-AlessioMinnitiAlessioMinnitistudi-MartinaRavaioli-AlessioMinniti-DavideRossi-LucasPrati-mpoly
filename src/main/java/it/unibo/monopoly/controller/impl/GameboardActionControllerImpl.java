@@ -14,12 +14,13 @@ import it.unibo.monopoly.view.api.GameboardView;
 
 public class GameboardActionControllerImpl implements GameboardActionController{
     private Board gameboard=new BoardImpl();
-    private TurnationManager turnManager=new TurnationManagerImpl();
+    private final TurnationManager turnManager=new TurnationManagerImpl();
     private GameboardView gameboardView;
         
     @Override
     public void startGame(int size, List<Player> players, List<Tile> tiles) {
-        new GameboardView(10,players,null); 
+        gameboardView = new GameboardView(10); 
+        gameboardView.show(players,tiles);
     }
 
     @Override

@@ -18,24 +18,30 @@ import it.unibo.monopoly.model.gameboard.api.Tile;
 import it.unibo.monopoly.model.turnation.api.Player;
 
 public class GameboardView extends JFrame{
-    private final GameboardLogic logic;
+    private GameboardLogic logic;
     private final List<JPanel> shapes=List.of(new PawnCircle(Color.RED),new PawnTriangle(Color.BLUE),new PawnSquare(Color.GREEN),new PawnSquare(Color.YELLOW));
     private final List<JPanel> tilesView=new ArrayList<>();
+    private final int size;
+
     
-    public GameboardView(int size, List<Player> players, List<Tile> tiles){
+    public GameboardView(int size){
+        this.size = size;
+    }
+
+    public final void show(List<Player> players, List<Tile> tiles){
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         this.setSize(Toolkit.getDefaultToolkit().getScreenSize());
         this.logic=new GameboardLogicImpl();
 
-        JPanel board = new JPanel(new GridLayout(size,size));
+        JPanel board = new JPanel(new GridLayout(this.size,this.size));
         this.getContentPane().add(board);
 
-        for (int i = 0; i < size; i++) {
-            for(int j=0; j<size;j++){
+        for (int i = 0; i < this.size; i++) {
+            for(int j=0; j<this.size;j++){
                 JPanel tile = new JPanel();
                 
-                if (logic.isBoardTile(i,j,size)) {
+                if (logic.isBoardTile(i,j,this.size)) {
                     tile.setBorder(BorderFactory.createLineBorder(Color.black));
                     tile.setBackground(Color.white);
                     this.tilesView.add(tile);
