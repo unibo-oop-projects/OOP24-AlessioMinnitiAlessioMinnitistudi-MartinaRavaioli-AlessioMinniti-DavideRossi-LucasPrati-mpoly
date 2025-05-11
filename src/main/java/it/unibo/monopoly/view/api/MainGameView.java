@@ -40,4 +40,10 @@ public interface MainGameView {
      * that was previously attached to this view.
      */
     void showPlayerActions(Set<GameAction> actions);
+
+    /**
+     * Displays an error on the UI
+     * @param e the {@code exception} thrown and whose information has to be displayed.
+     */
+    void displayError(Exception e);
 }
