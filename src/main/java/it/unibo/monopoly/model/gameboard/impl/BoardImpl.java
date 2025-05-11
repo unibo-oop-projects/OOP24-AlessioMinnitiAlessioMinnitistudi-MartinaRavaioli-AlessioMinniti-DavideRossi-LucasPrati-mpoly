@@ -31,8 +31,8 @@ public class BoardImpl implements Board {
      * @param pawns
     */
     public BoardImpl(final List<Tile> tiles, final List<Pawn> pawns) {
-        this.tiles = tiles;
-        this.pawns = pawns;
+        this.tiles = new ArrayList<>(tiles);
+        this.pawns = new ArrayList<>(pawns);
     }
     /**
      * sort the tiles.
@@ -40,7 +40,6 @@ public class BoardImpl implements Board {
     public void sortTiles() {
         this.tiles.sort((a, b) -> ((TileImpl) a).compareTo((TileImpl) b));
     }
-
 
     @Override
     public final Tile getTile(final Position pos) { 
