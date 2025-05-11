@@ -7,6 +7,7 @@ import java.util.Map;
 import it.unibo.monopoly.controller.MainMenuControllerImpl;
 import it.unibo.monopoly.model.transactions.api.BankAccountType;
 import it.unibo.monopoly.model.transactions.api.TitleDeed;
+import it.unibo.monopoly.utils.ResourceLoader;
 
 
 /**
@@ -56,7 +57,7 @@ public interface MainMenuController {
     void setBankAccountType(BankAccountType bankAccountType);
 
     /**
-     * Use a {@link UseFileTxt} for getting the {@link String} with all the rules of the game.
+     * Use a {@link ResourceLoader} for getting the {@link String} with all the rules of the game.
      * 
      * @return a {@link String} with all the rules of the game
      */

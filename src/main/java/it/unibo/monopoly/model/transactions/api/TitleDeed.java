@@ -3,6 +3,7 @@ package it.unibo.monopoly.model.transactions.api;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import it.unibo.monopoly.model.gameboard.api.Property;
 
 /**
  * The title deed card of a specific {@link Property}.
