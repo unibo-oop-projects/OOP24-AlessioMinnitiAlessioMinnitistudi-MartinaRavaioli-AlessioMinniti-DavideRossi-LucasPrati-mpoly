@@ -1,6 +1,8 @@
 package it.unibo.monopoly.model.turnation.impl;
 
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 import it.unibo.monopoly.model.turnation.api.Dice;
 import it.unibo.monopoly.model.turnation.api.Player;
@@ -27,13 +29,17 @@ public class TurnationManagerImpl implements TurnationManager {
             this.players.addNode(p);
         }
         this.dice = dice;
+        this.currPlayer = this.players.
     }
     /**
      * constructor.
      * @param plList
     */
     public void setList(final CircularLinkedList<Player> plList) {
-        this.players = plList;
+        this.players = new CircularLinkedList<>();
+        for (Player p : plList.toList()) {
+            this.players.addNode(p);
+        }
     }
     /**
      * set Dice.
@@ -51,10 +57,10 @@ public class TurnationManagerImpl implements TurnationManager {
     }
     /**
      * get player list.
-     * @return Circular List of player
+     * @return List of player
     */
-    public CircularLinkedList<Player> getPlayerList() {
-        return this.players;
+    public List<Player> getPlayerList() {
+        return Collections.unmodifiableList(this.players.toList());
     }
     /**
      * add a player.

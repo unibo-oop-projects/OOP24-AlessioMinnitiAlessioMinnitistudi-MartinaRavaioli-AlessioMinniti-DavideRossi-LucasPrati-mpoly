@@ -17,6 +17,10 @@ public final class CircularLinkedList<T> {
         this.head = null;
         this.tail = null;
     }
+
+    public T getHead(){
+        return this.head.getValue();
+    }
     /**
      * add a node.
      * @param value
