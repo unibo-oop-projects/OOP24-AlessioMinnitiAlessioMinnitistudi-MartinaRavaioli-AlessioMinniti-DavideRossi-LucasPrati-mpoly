@@ -1,6 +1,6 @@
 package it.unibo.monopoly.model.turnation.api;
 
-import org.apache.commons.lang3.tuple.Pair;
+import java.util.Collection;
 
 /**
  * turnation manager interface.
@@ -17,6 +17,7 @@ public interface TurnationManager {
     /**
      * @return the dices' result
      */
-    Pair<Integer, Integer> moveByDices();
+    Collection<Integer> moveByDices();
+    
     void setOver();
 }

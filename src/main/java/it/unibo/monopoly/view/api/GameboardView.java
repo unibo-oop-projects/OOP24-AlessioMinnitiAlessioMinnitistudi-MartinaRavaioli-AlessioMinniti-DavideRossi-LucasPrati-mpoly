@@ -6,7 +6,9 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
@@ -16,14 +18,15 @@ import it.unibo.monopoly.controller.api.GameboardLogic;
 import it.unibo.monopoly.controller.impl.GameboardLogicImpl;
 import it.unibo.monopoly.model.gameboard.api.Tile;
 import it.unibo.monopoly.model.turnation.api.Player;
+import it.unibo.monopoly.model.turnation.api.Position;
 
 public class GameboardView extends JFrame{
     private GameboardLogic logic;
     private final List<JPanel> shapes=List.of(new PawnCircle(Color.RED),new PawnTriangle(Color.BLUE),new PawnSquare(Color.GREEN),new PawnSquare(Color.YELLOW));
     private final List<JPanel> tilesView=new ArrayList<>();
     private final int size;
+    private final Map<Integer,Position> pawnPositions=new HashMap<>();
 
-    
     public GameboardView(int size){
         this.size = size;
     }
@@ -53,7 +56,7 @@ public class GameboardView extends JFrame{
             }
         }
 
-        for(int i=0;i<40;i++){
+        for (int i=0;i<40;i++){
             JPanel panel=this.tilesView.get(i);
             JPanel stripe = new JPanel();
             stripe.setPreferredSize(new Dimension(50, 10));
@@ -61,11 +64,14 @@ public class GameboardView extends JFrame{
             panel.add(stripe, BorderLayout.NORTH);
         }
 
-        for(int i=0; i < 4; i++){
+        for (int i =0; i<players.size();i++){
+            
+        }
+
+        for (int i=0; i < 4; i++){
             JPanel panel = this.tilesView.get(0);
             panel.add(shapes.get(i));
         }
-
 
         this.setVisible(true);
     }

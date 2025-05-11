@@ -5,6 +5,7 @@ import java.util.List;
 import it.unibo.monopoly.model.gameboard.api.Property;
 import it.unibo.monopoly.model.gameboard.api.Tile;
 import it.unibo.monopoly.model.turnation.api.Player;
+import it.unibo.monopoly.model.turnation.api.Position;
 
 public interface GameboardActionController {
     void startGame(int size, List<Player> players, List<Tile> tiles);
@@ -13,7 +14,7 @@ public interface GameboardActionController {
 
     void playerGameOver();
 
-    void changePositions();
+    Position changePositions();
 
     void addHouse(Property prop);
 
