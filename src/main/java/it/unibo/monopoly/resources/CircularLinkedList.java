@@ -5,8 +5,8 @@ package it.unibo.monopoly.resources;
  * @param <T>
 */
 public final class CircularLinkedList<T> {
-    private Node<T> head;
-    private Node<T> tail;
+    private Node<T> head = null;
+    private Node<T> tail = null;
 
     /**
      * add a node.

@@ -14,6 +14,7 @@ public class Node<T> {
     */
     public Node(final T value) {
         this.value = value;
+        this.nextNode = null;
     }
     /**
      * get the value.
