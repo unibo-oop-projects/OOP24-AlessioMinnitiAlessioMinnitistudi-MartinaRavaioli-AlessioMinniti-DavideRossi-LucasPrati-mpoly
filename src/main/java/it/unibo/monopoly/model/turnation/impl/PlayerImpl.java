@@ -7,7 +7,6 @@ import it.unibo.monopoly.model.turnation.api.Position;
  * player implementation.
 */
 public class PlayerImpl implements Player {
-    
     @Override
     public final Position getPosition() { 
         return null; 
