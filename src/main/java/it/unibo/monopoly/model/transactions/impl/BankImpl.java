@@ -11,6 +11,7 @@ import com.google.common.collect.Maps;
 import it.unibo.monopoly.model.transactions.api.Bank;
 import it.unibo.monopoly.model.transactions.api.BankAccount;
 import it.unibo.monopoly.model.transactions.api.TitleDeed;
+import it.unibo.monopoly.model.transactions.impl.bankaccount.ImmutableBankAccountCopy;
 
 /**
  * This implementation hadles all operations
@@ -52,6 +53,13 @@ public final class BankImpl implements Bank {
         return titleDeeds.get(id);
     }
 
+    private Set<TitleDeed> titleDeedsByGroup(final String group) {
+        return titleDeeds.values()
+                        .stream()
+                        .filter(d -> d.getGroup().equals(group))
+                        .collect(Collectors.toSet());
+    }
+
     @Override
     public void buyTitleDeed(final String titleDeedName, final String playerName) {
         Objects.requireNonNull(titleDeedName);
@@ -69,12 +77,12 @@ public final class BankImpl implements Bank {
 
     @Override
     public BankAccount getBankAccount(final String playerName) {
-        return findAccount(playerName);
+        return new ImmutableBankAccountCopy(findAccount(playerName));
     }
 
     @Override
     public TitleDeed getTitleDeed(final String titleDeedName) {
-        return findTitleDeed(titleDeedName);
+        return new ImmutableTitleDeedCopy(findTitleDeed(titleDeedName));
     }
 
     @Override
@@ -90,10 +98,8 @@ public final class BankImpl implements Bank {
         if (receiver.equals(payer)) {
             throw new IllegalStateException("Canot pay rent for property owned by the payer" + playerName);
         }
-        final int rentAmount = deed.getRent(titleDeeds.values()
-            .stream()
-            .filter(d -> d.getGroup().equals(deed.getGroup()) && !d.equals(deed))
-            .collect(Collectors.toSet())
+        final int rentAmount = deed.getRent(
+            titleDeedsByGroup(deed.getGroup())
         );
         receiver.deposit(rentAmount);
         try {

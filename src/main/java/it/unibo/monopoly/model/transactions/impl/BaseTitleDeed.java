@@ -7,8 +7,6 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.function.Function;
 
-import com.google.common.collect.Sets;
-
 import it.unibo.monopoly.model.transactions.api.RentOption;
 import it.unibo.monopoly.model.transactions.api.TitleDeed;
 
@@ -46,7 +44,7 @@ public class BaseTitleDeed implements TitleDeed {
         this.name = name;
         this.salePrice = salePrice;
         this.mortgageFunction = mortgageFunction;
-        this.rentOptions = new ArrayList<>(List.of(RentOptionImpl.baseRentOption(baseRent)));
+        this.rentOptions = new ArrayList<>(List.of(RentOption.baseRentOption(baseRent)));
     }
 
     /**
@@ -135,9 +133,14 @@ public class BaseTitleDeed implements TitleDeed {
                                                 + this.group
                                                 + ", the group of this title deed");
         }
-        final Set<TitleDeed> allDeedsOfGroup = Sets.union(Set.of(this), groupTitleDeeds);
+
+        if (this.owner.isEmpty()) {
+            throw new IllegalStateException("This title deed has not owner yet so it makes no sense to request the rent of it." 
+            + "Besides, some calculations to determine the final rent require the title deed to have a owner to work");
+        }
+
         return this.rentOptions.stream()
-                                .filter(op -> op.canBeApplied(allDeedsOfGroup))
+                                .filter(op -> op.canBeApplied(groupTitleDeeds, this.owner.get()))
                                 .mapToInt(RentOption::getPrice)
                                 .max()
                                 .getAsInt();

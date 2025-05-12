@@ -1,11 +1,19 @@
 package it.unibo.monopoly.model.turnation.api;
 
+import java.util.Collection;
+
 /**
  * dice interface.
 */
 public interface Dice {
     /**
-     * @return dices' result
+     * return the result of the dices.
+     * @return collection of integer
      */
-    int throwDice();
+    Collection<Integer> throwDices();
+    /**
+     * get the number of dices.
+     * @return int
+     */
+    int getNDices();
 }

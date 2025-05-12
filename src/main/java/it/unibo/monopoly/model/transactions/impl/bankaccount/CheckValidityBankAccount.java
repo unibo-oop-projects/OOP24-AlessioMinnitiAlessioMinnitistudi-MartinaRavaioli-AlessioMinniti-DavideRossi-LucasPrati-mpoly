@@ -10,11 +10,9 @@ import it.unibo.monopoly.model.transactions.api.BankAccount;
  * to continue playing. The check is performed every time 
  * the canCotinue method is called
  */
-public final class CheckValidityBankAccount implements BankAccount {
+public final class CheckValidityBankAccount extends BankAccountDecorator {
 
-    private final BankAccount account;
     private final Predicate<BankAccount> canPlay;
-
 
     /**
      * @param account the {@link BankAccount} to decorate
@@ -22,45 +20,20 @@ public final class CheckValidityBankAccount implements BankAccount {
      * can still be used to play based on its state
      */
     public CheckValidityBankAccount(final BankAccount account, final Predicate<BankAccount> canContinue) {
-        this.account = account;
+        super(account);
         this.canPlay = canContinue;
     }
 
     @Override
-    public void deposit(final int amount) {
-        this.account.deposit(amount);
-    }
-
-    @Override
-    public void withdraw(final int amount) {
-        this.account.withdraw(amount);
-    }
-
-    @Override
-    public int getBalance() {
-        return this.account.getBalance();
-    }
-
-    @Override
     public boolean canContinue() {
-        return this.canPlay.test(account) && this.account.canContinue();
-    }
-
-    @Override
-    public String getPlayerName() {
-        return this.account.getPlayerName();
-    }
-
-    @Override
-    public String toString() {
-        return this.account.toString();
+        return this.canPlay.test(getAccount()) && getAccount().canContinue();
     }
 
     @Override
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((account == null) ? 0 : account.hashCode());
+        result = prime * result + ((getAccount() == null) ? 0 : getAccount().hashCode());
         return result;
     }
 
@@ -76,13 +49,19 @@ public final class CheckValidityBankAccount implements BankAccount {
             return false;
         }
         final CheckValidityBankAccount other = (CheckValidityBankAccount) obj;
-        if (account == null) {
-            if (other.account != null) {
+        if (getAccount() == null) {
+            if (other.getAccount() != null) {
                 return false;
             }
-        } else if (!account.equals(other.account)) {
+        } else if (!getAccount().equals(other.getAccount()) || canPlay.equals(other.canPlay)) {
             return false;
         }
         return true;
     }
+
+    @Override
+    public String toString() {
+        return "CheckValidityBankAccount [canPlay=" + canPlay + ", getAccount()=" + getAccount() + "]";
+    }
+
 }

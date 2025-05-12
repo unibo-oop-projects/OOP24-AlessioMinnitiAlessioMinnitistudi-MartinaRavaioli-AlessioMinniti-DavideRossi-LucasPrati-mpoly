@@ -18,6 +18,8 @@ import it.unibo.monopoly.model.transactions.api.BankAccount;
 import it.unibo.monopoly.model.transactions.api.TitleDeed;
 import it.unibo.monopoly.model.transactions.impl.BankImpl;
 import it.unibo.monopoly.model.transactions.impl.BaseTitleDeed;
+import it.unibo.monopoly.model.transactions.impl.ImmutableTitleDeedCopy;
+import it.unibo.monopoly.model.transactions.impl.bankaccount.ImmutableBankAccountCopy;
 import it.unibo.monopoly.model.transactions.impl.bankaccount.SimpleBankAccountImpl;
 import it.unibo.monopoly.model.transactions.impl.bankaccount.WithdrawCheckBankAccount;
 
@@ -87,6 +89,7 @@ class BankTest {
         assertEquals(accounts
                     .stream()
                     .filter(a -> PLAYER1_NAME.equals(a.getPlayerName()))
+                    .map(a -> new ImmutableBankAccountCopy(a))
                     .toList()
                     .getFirst(), account);
     }
@@ -105,6 +108,7 @@ class BankTest {
         assertEquals(deeds
                     .stream()
                     .filter(d -> TITLE_DEED_NAME1.equals(d.getName()))
+                    .map(d -> new ImmutableTitleDeedCopy(d))
                     .toList()
                     .getFirst(), deed);
     }
@@ -173,11 +177,11 @@ class BankTest {
 
     @Test
     void payRentSuccessful() {
-        final int rent = bank.getTitleDeed(TITLE_DEED_NAME1)
-                                .getRent(Sets.filter(Sets.newHashSet(deeds), 
-                                        d -> !TITLE_DEED_NAME1.equals(d.getName()))
-                                );
         bank.buyTitleDeed(TITLE_DEED_NAME1, PLAYER2_NAME);
+        final int rent = bank.getTitleDeed(TITLE_DEED_NAME1)
+                                                .getRent(Sets.filter(Sets.newHashSet(deeds), 
+                                                        d -> !TITLE_DEED_NAME1.equals(d.getName()))
+                                                );
         final int initialBalancePl1 = bank.getBankAccount(PLAYER1_NAME).getBalance();
         final int initialBalancePl2 = bank.getBankAccount(PLAYER2_NAME).getBalance();
         bank.payRent(TITLE_DEED_NAME1, PLAYER1_NAME);
