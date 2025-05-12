@@ -10,9 +10,11 @@ import it.unibo.monopoly.model.turnation.api.Position;
 */
 public class SpecialImpl implements Special {
 
+    private Position position; 
     private Effect effetto;
 
-    public SpecialImpl(Effect effetto){
+    public SpecialImpl(Effect effetto, Position position){
+        this.position = position;
         this.effetto = effetto;
     } 
 
@@ -24,7 +26,6 @@ public class SpecialImpl implements Special {
 
     @Override
     public final Position getPosition() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getPosition'");
+        return this.position;
     }
 }
