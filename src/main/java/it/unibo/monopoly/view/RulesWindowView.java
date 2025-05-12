@@ -73,6 +73,7 @@ public final class RulesWindowView extends JDialog {
 
         // Create an exit button for the window
         final JButton exitButton = new JButton(EXIT_TEXT);
+        exitButton.setFont(GuiUtils.getSmallFontFromConfiguration(config));
         exitButton.addActionListener(e -> dispose());
 
         mainPanel.add(titleLabel, BorderLayout.NORTH);
