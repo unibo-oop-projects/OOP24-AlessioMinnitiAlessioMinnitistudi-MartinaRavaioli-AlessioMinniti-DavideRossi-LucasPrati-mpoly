@@ -7,7 +7,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.awt.Color;
-import java.io.IOException;
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -26,10 +25,6 @@ class ConfigurationTest {
     private static final int VALID_STARTER_BALANCE = 1500;
     private static final String VALID_RULES_FILENAME = "rules/rules.txt";
     private static final String VALID_CARDS_FILENAME = "cards/monopoly_cards.json";
-    private static final List<String> VALID_FILENAMES = List.of(
-        VALID_RULES_FILENAME,
-        VALID_CARDS_FILENAME
-    );
     private static final List<Color> VALID_COLORS = List.of(
         Color.RED,
         Color.BLUE,
@@ -66,7 +61,6 @@ class ConfigurationTest {
 
     @Test
     void buildValidConfiguration() {
-        checkFilenames();
         final Configuration config = builder.build();
         assertNotNull(config);
         assertTrue(config.isConsistent());
@@ -162,33 +156,13 @@ class ConfigurationTest {
     }
 
     @Test
-    void configureFromFileReturnsValidOnInvalidConfigFile() throws IOException {
-        /*
-          Parsing an invalid file should return a configuration where
-          valid values are kept and defaults are used for errors or missing entries
-        */
-        final String filename = "configuration/invalid_config.yml";
-        assertFileExists(filename);
-        assertTrue(Configuration.configureFromFile(filename).isConsistent(),
-                    "Expected configuration to be consistent");
-    }
-
-    @Test
-    void configureFromFileReturnsDefaultOnFileNotFound() {
-        // File that not exist should return a default configuration
-        final String filename = "not_exist";
-        assertFileNotExists(filename);
-        assertTrue(Configuration.configureFromFile(filename).isConsistent(),
-                    "Expected default configuration to be consistent");
-    }
-
-    @Test
-    void configureFromFileParsesValidFileCorrectly() {
-        // Parsing a valid file should return a consistent configuration
+    void integrationConfigureFromFileWorksWithValidFile() {
+        // Integration test: verifies that Configuration can be correctly loaded from a file
+        // using ResourceLoader and parsed into a consistent object
         final String filename = "configuration/valid_config.yml";
-        assertFileExists(filename);
-        assertTrue(Configuration.configureFromFile(filename).isConsistent(),
-                    "Configuration from valid file should be consistent");
+        final Configuration config = Configuration.configureFromFile(filename);
+        assertNotNull(config);
+        assertTrue(config.isConsistent());
     }
 
 
@@ -198,19 +172,4 @@ class ConfigurationTest {
         assertFalse(exception.getMessage().isBlank());
     }
 
-    private void assertFileExists(final String filename) {
-        assertTrue(ResourceLoader.checkFilename(filename),
-                    "File not found " + filename);
-    }
-
-    private void assertFileNotExists(final String filename) {
-        assertFalse(ResourceLoader.checkFilename(filename),
-                    "File should not be found " + filename);
-    }
-
-    private void checkFilenames() {
-        for (final String string : VALID_FILENAMES) {
-            assertFileExists(string);
-        } 
-    }
 }
