@@ -91,7 +91,9 @@ public final class SimpleBankAccountImpl implements BankAccount {
     public int hashCode() {
         final int prime = 31;
         int result = 1;
+        result = prime * result + id;
         result = prime * result + ((ownerName == null) ? 0 : ownerName.hashCode());
+        result = prime * result + balance;
         return result;
     }
 
@@ -107,18 +109,13 @@ public final class SimpleBankAccountImpl implements BankAccount {
             return false;
         }
         final SimpleBankAccountImpl other = (SimpleBankAccountImpl) obj;
-        if (ownerName == null) {
-            if (other.ownerName != null) {
-                return false;
-            }
-        } else if (!ownerName.equals(other.ownerName)) {
-            return false;
-        }
-        return true;
+        return id == other.id
+                && balance == other.balance
+                && ownerName.equals(other.ownerName);
     }
 
     @Override
     public String toString() {
-        return this.ownerName + ", balance: " + this.balance;
+        return this.ownerName + ", balance: " + this.balance + ", id: " + this.id;
     }
 }
