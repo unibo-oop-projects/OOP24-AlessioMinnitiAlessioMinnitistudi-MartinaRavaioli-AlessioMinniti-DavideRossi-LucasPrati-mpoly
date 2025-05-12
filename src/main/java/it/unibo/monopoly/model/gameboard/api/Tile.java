@@ -4,10 +4,16 @@ import it.unibo.monopoly.model.gameboard.impl.Type;
 
 /**
  * tile interface.
- */
-
+*/
 public interface Tile {
-    public Type getType();
-
-    public void setType(Type type);
+    /**
+    * get the type.
+    * @return Type
+    */
+    Type getType();
+    /**
+    * set the type.
+    * @param type
+    */
+    void setType(Type type);
 }

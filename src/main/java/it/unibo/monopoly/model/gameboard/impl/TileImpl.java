@@ -3,38 +3,60 @@ package it.unibo.monopoly.model.gameboard.impl;
 import it.unibo.monopoly.model.gameboard.api.Tile;
 import it.unibo.monopoly.model.turnation.api.Position;
 import it.unibo.monopoly.resources.Identifiable;
-
-public abstract class TileImpl implements Tile,Identifiable<Position>,Comparable<TileImpl>{
+/**
+* tile implementation.
+*/
+public abstract class TileImpl implements Tile, Identifiable<Position>, Comparable<TileImpl> {
     private Position id; 
     private Type type;
-
-    protected TileImpl(Position pos, Type type){
-        this.id=pos;
-        this.type=type;
+    /**
+    * constructor.
+    * @param pos
+    * @param type
+    */
+    protected TileImpl(final Position pos, final Type type) {
+        this.id = pos;
+        this.type = type;
     }
-    
+    /**
+    * get ID.
+    * @return Position
+    */
     @Override
     public Position getID() {
         return this.id;
     }
-
+    /**
+    * set ID.
+    * @param value
+    */
     @Override
-    public void setID(Position value) {
-        this.id=value;
+    public void setID(final Position value) {
+        this.id = value;
     }
-    
+    /**
+    * compare to.
+    * @param o
+    * @return int
+    */
     @Override
-    public int compareTo(TileImpl o){
-        return Integer.compare(this.getID().getPos(),o.getID().getPos());
+    public int compareTo(final TileImpl o) {
+        return Integer.compare(this.getID().getPos(), o.getID().getPos());
     }
-    
+    /**
+    * get the type.
+    * @return Type
+    */
     @Override
-    public Type getType(){
+    public Type getType() {
         return this.type;
     }
-
+    /**
+    * set the type.
+    * @param type
+    */
     @Override
-    public void setType(Type type){
-        this.type=type;
+    public void setType(final Type type) {
+        this.type = type;
     }
 }
