@@ -8,10 +8,18 @@ import it.unibo.monopoly.model.turnation.api.Position;
  * special tile implementation.
 */
 public class SpecialImpl extends TileImpl implements Special {
-
-    public SpecialImpl(Position pos, Type type) {
+    /**
+    * get the type.
+    * @param pos
+    * @param type
+    */
+    public SpecialImpl(final Position pos, final Type type) {
         super(pos, type);
     }
+    /**
+    * get the type.
+    * @return Effect
+    */
     @Override
     public final Effect getEffect() { 
         return null; 
