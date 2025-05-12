@@ -26,7 +26,7 @@ public final class BankImpl implements Bank {
 
 
     /**
-     * Creates a new instance of {@link BankImpl} that 
+     * Creates a new instance of {@link BankImpl} that
      * operates with the given {@code accounts} and {@code title deeds}.
      * @param accounts the palyers' {@link BankAccount}
      * @param titleDeeds {@link List} of {@link TitleDeed} present in the game
