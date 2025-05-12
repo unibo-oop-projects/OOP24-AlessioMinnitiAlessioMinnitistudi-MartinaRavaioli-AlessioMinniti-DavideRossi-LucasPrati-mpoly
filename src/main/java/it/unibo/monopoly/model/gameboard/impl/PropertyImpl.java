@@ -1,6 +1,7 @@
 package it.unibo.monopoly.model.gameboard.impl;
 
 import it.unibo.monopoly.model.gameboard.api.Property;
+import it.unibo.monopoly.model.turnation.api.Player;
 import it.unibo.monopoly.model.turnation.api.Position;
 
 /**
@@ -75,4 +76,5 @@ public class PropertyImpl extends TileImpl implements Property {
     public boolean hasHotel() {
         return this.hotel;
     }
+
 }

@@ -1,7 +1,7 @@
 package it.unibo.monopoly.model.gameboard.api;
 
 /**
- * property interface.
+* property interface.
 */
 public interface Property extends Tile {
     /**

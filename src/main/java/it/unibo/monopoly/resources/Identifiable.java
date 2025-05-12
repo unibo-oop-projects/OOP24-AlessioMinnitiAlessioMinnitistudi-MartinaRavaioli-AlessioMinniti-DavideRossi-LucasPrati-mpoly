@@ -1,6 +1,6 @@
 package it.unibo.monopoly.resources;
 /**
- * identifiable interface.
+ * interface identifiable.
  * @param <E>
 */
 public interface Identifiable<E> {
@@ -9,10 +9,10 @@ public interface Identifiable<E> {
      * @return E
     */
     E getID();
+
     /**
-     * set ID.
-     * @param value
+    * set ID.
+    * @param value
     */
     void setID(E value);
 }
-

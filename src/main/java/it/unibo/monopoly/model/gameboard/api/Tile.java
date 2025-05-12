@@ -1,6 +1,7 @@
 package it.unibo.monopoly.model.gameboard.api;
 
 import it.unibo.monopoly.model.gameboard.impl.Type;
+import it.unibo.monopoly.model.turnation.api.Position;
 
 /**
  * tile interface.
@@ -16,4 +17,10 @@ public interface Tile {
     * @param type
     */
     void setType(Type type);
+    /**
+    * get the position.
+    * @return position
+    */
+    Position getPosition();
+
 }

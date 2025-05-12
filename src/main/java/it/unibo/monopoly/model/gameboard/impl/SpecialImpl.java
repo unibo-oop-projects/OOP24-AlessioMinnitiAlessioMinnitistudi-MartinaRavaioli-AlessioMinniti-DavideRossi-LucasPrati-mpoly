@@ -24,4 +24,10 @@ public class SpecialImpl extends TileImpl implements Special {
     public final Effect getEffect() { 
         return null; 
     }
+
+    @Override
+    public final Position getPosition() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getPosition'");
+    }
 }
