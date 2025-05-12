@@ -74,7 +74,9 @@ public final class VenditaLogicImpl implements VenditaLogic, Serializable {
      * @return the property 
      */
     public TitleDeed getProperty(final List<TitleDeed> properties, final Object selectedValue) {
-        final Optional<TitleDeed> selectedPropertyO = properties.stream().filter(p -> p.getName().equals(selectedValue)).findAny();
+        final Optional<TitleDeed> selectedPropertyO = properties.stream()
+                                                                .filter(p -> p.getName().equals(selectedValue))
+                                                                .findAny();
         TitleDeed selectedProperty = new BaseTitleDeed("null", "null", NUM, null, NUM); 
         if (selectedPropertyO.isPresent()) {
             selectedProperty = selectedPropertyO.get();
@@ -89,7 +91,9 @@ public final class VenditaLogicImpl implements VenditaLogic, Serializable {
      * @return index of the selected value 
      */
     /*private int getPropertyIndex(final List<TitleDeed> properties, final Object selectedValue) {
-        final Optional<TitleDeed> selectedPropertyO = properties.stream().filter(p -> p.getName().equals(selectedValue)).findAny();
+        final Optional<TitleDeed> selectedPropertyO = properties.stream()
+                                                                .filter(p -> p.getName().equals(selectedValue))
+                                                                .findAny();
         TitleDeed selectedProperty = new BaseTitleDeed("null", "null", NUM, null, NUM); 
         if (selectedPropertyO.isPresent()) {
             selectedProperty = selectedPropertyO.get();
@@ -98,7 +102,7 @@ public final class VenditaLogicImpl implements VenditaLogic, Serializable {
     }*/
 
     @Override
-    public List<TitleDeed> getProperties(Player player) {
+    public List<TitleDeed> getProperties(final Player player) {
         if (bank.getTitleDeedsByOwner(player.getName()).isEmpty()) {
             return List.of();
         }
@@ -106,35 +110,35 @@ public final class VenditaLogicImpl implements VenditaLogic, Serializable {
     }
 
     @Override
-    public int getPlayerBalance(Player player) {
+    public int getPlayerBalance(final Player player) {
         return bank.getBankAccount(player.getName()).getBalance();
     }
 
     @Override
-    public Color getPropertyColor(TitleDeed selectedProperty) {
+    public Color getPropertyColor(final TitleDeed selectedProperty) {
         final String colorS = selectedProperty.getGroup();
-        Color color;
+        final Color color;
         switch (colorS) {
             case "blue":
-                color = Color.BLUE;                
+                color = Color.BLUE;
                 break;
             case "red":
-                color = Color.RED;                
+                color = Color.RED;
                 break;
             case "green":
-                color = Color.GREEN;                
+                color = Color.GREEN;
                 break;
             case "yellow":
-                color = Color.YELLOW;                
+                color = Color.YELLOW;
                 break;
             case "pink":
-                color = Color.PINK;                
+                color = Color.PINK;
                 break;
             case "orange":
-                color = Color.ORANGE;                
+                color = Color.ORANGE;
                 break;
             case "black":
-                color = Color.BLACK;                
+                color = Color.BLACK;
                 break;
             default:
                 color = Color.WHITE;

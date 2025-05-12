@@ -138,7 +138,7 @@ public final class GUIVendita extends JFrame {
                 final int houses = property.houseNum();
                 final PaymentDialog paymentComplete = new PaymentDialog(property.housePrice(), true);
                 paymentComplete.setVisible(true);
-                balanceValue.setText("" + logic.getPlayerBalance(player));
+                balanceValue.setText(String.valueOf(logic.getPlayerBalance(player)));
                 if (houses == 0) {
                     housesNumValue.setText(Integer.toString(houses));
                     sellHouse.setEnabled(false);

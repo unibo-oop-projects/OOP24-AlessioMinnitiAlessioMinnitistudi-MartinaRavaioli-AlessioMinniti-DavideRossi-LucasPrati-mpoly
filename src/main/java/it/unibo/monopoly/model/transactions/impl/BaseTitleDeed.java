@@ -18,6 +18,7 @@ import it.unibo.monopoly.model.transactions.api.TitleDeed;
  */
 public class BaseTitleDeed implements TitleDeed {
 
+    private static final int HPRICE = 55;
     private final String group;
     private final String name;
     private final int salePrice;
@@ -217,8 +218,7 @@ public class BaseTitleDeed implements TitleDeed {
      */
     @Override
     public int housePrice() {
-        final int hPrice = 55;
-        return hPrice;
+        return HPRICE;
     }
     /* PLACE HOLDER FOR ATUAL METHOD */
     /**
