@@ -111,4 +111,16 @@ public final class ImmutableTitleDeedCopy implements TitleDeed {
         return true;
     }
 
+    @Override
+    public int housePrice() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'housePrice'");
+    }
+
+    @Override
+    public int houseNum() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'houseNum'");
+    }
+
 }

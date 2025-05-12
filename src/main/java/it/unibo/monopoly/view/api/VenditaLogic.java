@@ -45,10 +45,25 @@ public interface VenditaLogic {
      */
     boolean sellProperty(List<TitleDeed> properties, TitleDeed selectedProperty);
 
+    /**
+     * gets the list of property owned by the palyer using the bank.
+     * @param player
+     * @return its property
+     */
     List<TitleDeed> getProperties(Player player);
 
+    /**
+     * gets the balance of the player account using the bank.
+     * @param player
+     * @return its balance
+     */
     int getPlayerBalance(Player player);
 
+    /**
+     * converts the property color from its string parameter group to a Color object.
+     * @param selectedProperty
+     * @return an object of the class Color
+     */
     Color getPropertyColor(TitleDeed selectedProperty);
 
 }

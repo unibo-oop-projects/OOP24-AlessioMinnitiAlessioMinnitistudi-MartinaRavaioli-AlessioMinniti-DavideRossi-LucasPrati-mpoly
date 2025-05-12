@@ -211,11 +211,20 @@ public class BaseTitleDeed implements TitleDeed {
         return true;
     }
     /* PLACE HOLDER FOR ATUAL METHOD */
+    /**
+     * place holder. 
+     * @return price of houses
+     */
     @Override
     public int housePrice() {
-        return 55;
+        final int PRICE = 55;
+        return PRICE;
     }
     /* PLACE HOLDER FOR ATUAL METHOD */
+    /**
+     * place holder. 
+     * @return number of houses
+     */
     @Override
     public int houseNum() {
         return 0;
