@@ -7,8 +7,12 @@ import it.unibo.monopoly.model.turnation.api.Position;
 */
 public class PositionImpl implements Position {
     private int pos;
-    public PositionImpl(int pos2) {
-        //TODO Auto-generated constructor stub
+    /**
+     * constructor.
+     * @param pos
+    */
+    public PositionImpl(final int pos) {
+        this.pos = pos;
     }
     /**
      * get pos.

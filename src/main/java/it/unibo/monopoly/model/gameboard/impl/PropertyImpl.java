@@ -50,7 +50,7 @@ public class PropertyImpl extends TileImpl implements Property {
      * add house.
     */
     @Override
-    public void buildHouse() throws IllegalArgumentException {
+    public void buildHouse() {
         if (this.getNHouses() < MAX_HOUSES) {
             this.nHouses++;
         } else {
@@ -61,7 +61,7 @@ public class PropertyImpl extends TileImpl implements Property {
      * add hotel.
     */
     @Override
-    public void buildHotel() throws IllegalArgumentException {
+    public void buildHotel() {
         if (!this.hotel) {
             this.hotel = true;
         } else {
