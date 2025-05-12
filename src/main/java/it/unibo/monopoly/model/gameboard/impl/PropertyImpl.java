@@ -7,57 +7,72 @@ import it.unibo.monopoly.model.turnation.api.Position;
  * property implementation.
 */
 public class PropertyImpl extends TileImpl implements Property {
-    private static final int MAX_HOUSES=4;
+    private static final int MAX_HOUSES = 4;
     private int nHouses;
     private boolean hotel;
     private String name;
-    
-    //constructor
     /**
-     * @param price
+     * constructor.
+     * @param name
+     * @param id
+     * @param type
     */
-    public PropertyImpl(String name, Position id, Type type) { 
-        super(id,type);
-        this.nHouses=0;
-        this.hotel=false;
+    public PropertyImpl(final String name, final Position id, final Type type) { 
+        super(id, type);
+        this.nHouses = 0;
+        this.hotel = false;
         setName(name);
     }
-
-    public final void setName(String name){
-        this.name=name;
+    /**
+     * set the name.
+     * @param name
+    */
+    public final void setName(final String name) {
+        this.name = name;
     }
-
-    public String getName(){
+    /**
+     * get the name.
+     * @return String
+    */
+    public String getName() {
         return this.name;
     }
 
-
-    public int getNHouses(){
+    /**
+     * get the number of houses.
+     * @return int
+    */
+    public int getNHouses() {
         return this.nHouses;
     }
 
-
+    /**
+     * add house.
+    */
     @Override
     public void buildHouse() throws Exception {
-        if(this.getNHouses() < MAX_HOUSES){
+        if (this.getNHouses() < MAX_HOUSES) {
             this.nHouses++;
-        }
-        else{
+        } else {
             throw new Exception("max num houses reached");
         }
     }
-
+    /**
+     * add hotel.
+    */
     @Override
     public void buildHotel() throws Exception {
-        if(this.hotel == false){
-            this.hotel=true;
-        }
-        else{
+        if (!this.hotel) {
+            this.hotel = true;
+        } else {
             throw new Exception("hotel already exists");
         }
     }
-
-    public boolean hasHotel(){
+    /**
+     * control if it has an hotel.
+     * @return bool
+    */
+    public boolean hasHotel() {
         return this.hotel;
     }
 }
