@@ -1,6 +1,10 @@
 package it.unibo.monopoly.utils;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.awt.Color;
 import java.io.IOException;
@@ -81,7 +85,6 @@ class ResourceLoaderTest {
         assertFalse(ResourceLoader.isValidFontName(INVALID_FONT_NAME), "Fake font should be invalid");
     }
 
-    // ========== Private helper methods ==========
 
     private void testExceptionFormat(final Exception exception) {
         assertNotNull(exception.getMessage());
