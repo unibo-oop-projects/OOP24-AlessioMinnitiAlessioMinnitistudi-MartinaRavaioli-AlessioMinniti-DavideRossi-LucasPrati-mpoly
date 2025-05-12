@@ -7,11 +7,11 @@ public interface Property extends Tile {
     /**
      * add house.
     */
-    void buildHouse() throws Exception;
+    void buildHouse();
 
     /**
      * add hotel.
     */
-    void buildHotel() throws Exception;
+    void buildHotel();
 
 }

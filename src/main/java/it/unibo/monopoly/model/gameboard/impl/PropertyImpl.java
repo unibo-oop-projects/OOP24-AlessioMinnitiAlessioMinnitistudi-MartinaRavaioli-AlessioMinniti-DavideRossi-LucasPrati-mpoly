@@ -50,22 +50,22 @@ public class PropertyImpl extends TileImpl implements Property {
      * add house.
     */
     @Override
-    public void buildHouse() throws Exception {
+    public void buildHouse() throws IllegalArgumentException {
         if (this.getNHouses() < MAX_HOUSES) {
             this.nHouses++;
         } else {
-            throw new Exception("max num houses reached");
+            throw new IllegalArgumentException("max num houses reached");
         }
     }
     /**
      * add hotel.
     */
     @Override
-    public void buildHotel() throws Exception {
+    public void buildHotel() throws IllegalArgumentException {
         if (!this.hotel) {
             this.hotel = true;
         } else {
-            throw new Exception("hotel already exists");
+            throw new IllegalArgumentException("hotel already exists");
         }
     }
     /**
