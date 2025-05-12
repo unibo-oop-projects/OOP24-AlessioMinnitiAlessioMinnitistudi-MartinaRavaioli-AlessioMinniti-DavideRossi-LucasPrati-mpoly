@@ -65,7 +65,7 @@ public abstract class TileImpl implements Tile, Identifiable<Position>, Comparab
     * @return Position
     */
     @Override
-    public Position getPosition(){
+    public Position getPosition() {
         return new PositionImpl(id.getPos());
     }
     /**
