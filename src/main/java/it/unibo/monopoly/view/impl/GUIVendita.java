@@ -35,16 +35,16 @@ public final class GUIVendita extends JFrame {
     private static final int VGAP = 10;
     private final VenditaLogic logic;
 
-    /**
-     * in this constructor the whole GUI is built with all the action listener.
-     * @param playerProperties a list of the property possesed by the player 
-     * @param width the initial width of the frame
-     * @param heigth the initial heigth of the frame
-     */
-
+     /**
+      * in this constructor the whole GUI is built with all the action listener.
+      * @param player the player that wants to manage its properties
+      * @param width of the frame
+      * @param heigth of the frame
+      * @param bank will be changed to controlller
+      */
      // TODO al posto di bank viene passato il controller e lo assegni alla logica al posto di usare il costruttore
      //TODO sposta i metodi della logica nel controller
-    public GUIVendita(final Player player, final int width, final int heigth, Bank bank) {
+    public GUIVendita(final Player player, final int width, final int heigth, final Bank bank) {
         final Border b = BorderFactory.createLineBorder(Color.black);
         logic = new VenditaLogicImpl(bank);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -63,7 +63,6 @@ public final class GUIVendita extends JFrame {
         final JPanel buttonPane = new JPanel();
         final JPanel balancePane = new JPanel();
         final JPanel rightDownPane = new JPanel(new GridLayout(2, 1));
-        
 
 // set borders for all the panels 
         overallPane.setBorder(b);
@@ -97,7 +96,8 @@ public final class GUIVendita extends JFrame {
 
 // create the Component for the listPane
         final JLabel selectProperty = new JLabel("select the property you want to manage");
-        Font f = new Font("gigi", Font.TYPE1_FONT, 20);
+        final int fontSize = 20;
+        final Font f = new Font("gigi", Font.TYPE1_FONT, fontSize);
         selectProperty.setFont(f);
         final JList<Object> propertiesList = new JList<>(logic.getProperties(player).stream().map(TitleDeed::getName).toArray());
         final JScrollPane propertiesScrollPane = new JScrollPane(propertiesList);
@@ -116,7 +116,8 @@ public final class GUIVendita extends JFrame {
             final TitleDeed selectedProperty = logic.getProperty(logic.getProperties(player), propertiesList.getSelectedValue());
             housesCostValue.setText(Integer.toString(selectedProperty.housePrice()));
             mortageValue.setText(Integer.toString(selectedProperty.getMortgagePrice()));
-            rentValue.setText(Integer.toString(selectedProperty.getRent(logic.getProperties(player).stream().collect(Collectors.toSet()))));
+            rentValue.setText(Integer.toString(selectedProperty.getRent(logic.getProperties(player)
+                                                                            .stream().collect(Collectors.toSet()))));
             housesNumValue.setText(Integer.toString(selectedProperty.houseNum()));
             colorValue.setColor(logic.getPropertyColor(selectedProperty));
 
@@ -137,7 +138,7 @@ public final class GUIVendita extends JFrame {
                 final int houses = property.houseNum();
                 final PaymentDialog paymentComplete = new PaymentDialog(property.housePrice(), true);
                 paymentComplete.setVisible(true);
-                balanceValue.setText(""+logic.getPlayerBalance(player));
+                balanceValue.setText("" + logic.getPlayerBalance(player));
                 if (houses == 0) {
                     housesNumValue.setText(Integer.toString(houses));
                     sellHouse.setEnabled(false);
@@ -154,7 +155,7 @@ public final class GUIVendita extends JFrame {
         //sell property
         final ActionListener sellPropertyListener = e -> {
             final TitleDeed selectedProperty = logic.getProperty(logic.getProperties(player), propertiesList.getSelectedValue());
-            if (logic.sellProperty(logic.getProperties(player), selectedProperty)) {
+            if (logic.sellProperty(selectedProperty)) {
                 final PaymentDialog paymentComplete = new PaymentDialog(selectedProperty.getMortgagePrice(), true);
                 sellProperty.setEnabled(false);
                 paymentComplete.setVisible(true);

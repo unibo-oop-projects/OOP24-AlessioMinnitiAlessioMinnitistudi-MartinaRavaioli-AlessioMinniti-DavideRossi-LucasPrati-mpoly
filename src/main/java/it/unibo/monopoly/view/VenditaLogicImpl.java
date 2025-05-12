@@ -19,7 +19,11 @@ public final class VenditaLogicImpl implements VenditaLogic, Serializable {
     private static final long serialVersionUID = -6218820567019985015L;
     private final Bank bank; 
 
-    public VenditaLogicImpl(Bank bank) {
+    /**
+     * constructor for this class.
+     * @param bank
+     */
+    public VenditaLogicImpl(final Bank bank) {
         this.bank = bank; 
     }
 
@@ -57,7 +61,7 @@ public final class VenditaLogicImpl implements VenditaLogic, Serializable {
      * @param selectedProperty the property you want to sell
      * @return wether the payment has been succesful
      */
-    public boolean sellProperty(List<TitleDeed> properties, final TitleDeed selectedProperty) {
+    public boolean sellProperty(final TitleDeed selectedProperty) {
         bank.sellTitleDeed(selectedProperty.getName());
         return true;
     }

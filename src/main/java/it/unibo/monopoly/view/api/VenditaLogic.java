@@ -39,11 +39,10 @@ public interface VenditaLogic {
     /**
      * this method removes the property fromm the property list. 
      * calls the bank method to deposit the ammount in the pleyers bank accouunt
-     * @param properties players properties
      * @param selectedProperty the property you want to sell
      * @return wether the payment has been succesful
      */
-    boolean sellProperty(List<TitleDeed> properties, TitleDeed selectedProperty);
+    boolean sellProperty(TitleDeed selectedProperty);
 
     /**
      * gets the list of property owned by the palyer using the bank.

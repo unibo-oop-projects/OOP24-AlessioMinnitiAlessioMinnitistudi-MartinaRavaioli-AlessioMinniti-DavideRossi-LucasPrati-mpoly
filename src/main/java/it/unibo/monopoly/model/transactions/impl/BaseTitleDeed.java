@@ -217,8 +217,8 @@ public class BaseTitleDeed implements TitleDeed {
      */
     @Override
     public int housePrice() {
-        final int PRICE = 55;
-        return PRICE;
+        final int hPrice = 55;
+        return hPrice;
     }
     /* PLACE HOLDER FOR ATUAL METHOD */
     /**
