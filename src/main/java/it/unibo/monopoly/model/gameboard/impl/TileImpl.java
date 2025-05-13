@@ -8,24 +8,36 @@ import it.unibo.monopoly.resources.Identifiable;
 * tile implementation.
 */
 public abstract class TileImpl implements Tile, Identifiable<Position>, Comparable<TileImpl> {
-    private Position id; 
+    private final String name;
+    private Position pos; 
     private Type type;
     /**
     * constructor.
+    * @param name
     * @param pos
     * @param type
     */
-    protected TileImpl(final Position pos, final Type type) {
-        this.id = pos;
+    protected TileImpl(final String name, final Position pos, final Type type) {
+        this.name = name;
+        this.pos = pos;
         this.type = type;
     }
+    /**
+    * get the name.
+    * @return String
+    */
+    @Override
+    public String getName() {
+        return this.name;
+    }
+
     /**
     * get ID.
     * @return Position
     */
     @Override
     public Position getID() {
-        return new PositionImpl(this.id.getPos());
+        return new PositionImpl(this.pos.getPos());
     }
     /**
     * set ID.
@@ -33,7 +45,7 @@ public abstract class TileImpl implements Tile, Identifiable<Position>, Comparab
     */
     @Override
     public void setID(final Position value) {
-        this.id = new PositionImpl(value.getPos());
+        this.pos = new PositionImpl(value.getPos());
     }
     /**
     * compare to.
@@ -66,7 +78,7 @@ public abstract class TileImpl implements Tile, Identifiable<Position>, Comparab
     */
     @Override
     public Position getPosition() {
-        return new PositionImpl(id.getPos());
+        return new PositionImpl(pos.getPos());
     }
     /**
     * hash code.
@@ -76,7 +88,7 @@ public abstract class TileImpl implements Tile, Identifiable<Position>, Comparab
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((id == null) ? 0 : id.hashCode());
+        result = prime * result + ((pos == null) ? 0 : pos.hashCode());
         result = prime * result + ((type == null) ? 0 : type.hashCode());
         return result;
     }
@@ -97,11 +109,11 @@ public abstract class TileImpl implements Tile, Identifiable<Position>, Comparab
             return false;
         }
         final TileImpl other = (TileImpl) obj;
-        if (this.id == null) {
-            if (other.id != null) {
+        if (this.pos == null) {
+            if (other.pos != null) {
                 return false;
             }
-        } else if (!id.equals(other.id)) {
+        } else if (!pos.equals(other.pos)) {
             return false;
         }
         return this.type == other.type;
