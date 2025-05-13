@@ -6,8 +6,11 @@ import java.util.List;
 import it.unibo.monopoly.model.transactions.api.TitleDeed;
 import it.unibo.monopoly.model.turnation.api.Player;
 
+/**
+ * interface for game controller.
+ */
 public interface GameController {
-    
+
     /**
      * this method returns wether there are houses on the property.
      * @param prop the property you want to know if there are houses
@@ -54,7 +57,7 @@ public interface GameController {
      */
     int getPlayerBalance(Player player);
 
-    
+
     /**
      * PLACEHOLDER there will be the method in Tile .
      * @param selectedProperty

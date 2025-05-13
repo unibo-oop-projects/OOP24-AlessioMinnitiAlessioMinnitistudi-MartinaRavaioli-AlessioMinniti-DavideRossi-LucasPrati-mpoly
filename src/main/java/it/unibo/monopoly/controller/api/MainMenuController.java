@@ -51,6 +51,5 @@ public interface MainMenuController {
      * @param bankAccountType the {@link BankAccountType} to set
      */
     void setBankAccountType(BankAccountType bankAccountType);
-    
 
 }
