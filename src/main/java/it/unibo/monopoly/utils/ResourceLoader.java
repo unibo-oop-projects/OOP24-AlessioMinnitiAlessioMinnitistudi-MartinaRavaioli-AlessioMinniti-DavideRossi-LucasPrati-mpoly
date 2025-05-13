@@ -57,7 +57,7 @@ public final class ResourceLoader {
      * @param path relative path of the resource
      * @return {@code true} if the resource exists and can be opened; {@code false} otherwise
      */
-    public static boolean checkFilename(final String path) {
+    public static boolean checkPath(final String path) {
         if (path == null) {
             return false;
         }
@@ -103,11 +103,11 @@ public final class ResourceLoader {
      * @param path relative path of the resource file
      * @return an {@link InputStream} for the specified resource
      * @throws IOException if the resource cannot be found or loaded
+     * @throws NullPointerException if {@code path} is {@code null}
      */
     public static InputStream getRequiredStream(final String path) throws IOException {
         Objects.requireNonNull(path, "path must not be null");
-        final ClassLoader cl = Thread.currentThread().getContextClassLoader();
-        final InputStream stream = cl.getResourceAsStream(path);
+        final InputStream stream = ClassLoader.getSystemResourceAsStream(path);
         if (stream == null) {
             throw new IOException("Resource not found: " + path);
         }
@@ -121,6 +121,7 @@ public final class ResourceLoader {
      * @param path relative path of the resource file
      * @return a {@link BufferedReader} to read the resource
      * @throws IOException if the resource cannot be found
+     * @throws NullPointerException if {@code path} is {@code null}
      */
     public static BufferedReader getRequiredReader(final String path) throws IOException {
         return new BufferedReader(new InputStreamReader(getRequiredStream(path), StandardCharsets.UTF_8));
@@ -144,15 +145,21 @@ public final class ResourceLoader {
 
 
     /**
+     * Loads a list of objects of the specified type from a JSON file in the classpath.
+     * <p>
+     * The file must contain a JSON array of elements compatible with the provided {@code type}.
      * 
-     * @param <T>
-     * @param path relative path
-     * @param type
-     * @return
+     * @param <T> the type of elements to load
+     * @param filename the relative path of the JSON resource file
+     * @param type the class of the target type
+     * @return a {@link List} of deserialized objects of type {@code T}
+     * @throws NullPointerException if {@code filename} or {@code type} is {@code null}
+     * @throws UncheckedIOException if the file cannot be read or parsed
      */
     public static <T> List<T> loadJsonList(final String path, final Class<T> type) {
+        Objects.requireNonNull(type);
         final List<T> out;
-        try (InputStream fileJson = ClassLoader.getSystemResourceAsStream(path)) {
+        try (InputStream fileJson = getRequiredStream(path)) {
             final JavaType outType = MAPPER.getTypeFactory()
                     .constructCollectionLikeType(List.class, type);
             out = MAPPER.readValue(fileJson, outType);
@@ -168,7 +175,7 @@ public final class ResourceLoader {
      * 
      * @param path relative path relative path of the JSON resource file
      * @return an unmodifiable {@link Set} of {@link TitleDeed} instances
-     * @throws IOException if the resource cannot be found or parsed
+     * @throws UncheckedIOException if the resource cannot be found or parsed
      */
     public static Set<TitleDeed> loadTitleDeedsFromJson(final String path) {
         List<RawDeed> rawDeeds = loadJsonList(path, RawDeed.class);
@@ -251,8 +258,9 @@ public final class ResourceLoader {
             case "BIG_FONT" -> configurationBuilder.withBigFont(Integer.parseInt(value));
             case "SMALL_FONT" -> configurationBuilder.withSmallFont(Integer.parseInt(value));
             case "INIT_BALANCE" -> configurationBuilder.withInitBalance(Integer.parseInt(value));
-            case "RULES_FILE" -> configurationBuilder.withRulesFilename(value);
-            case "TITLE_DEEDS_FILE" -> configurationBuilder.withTitleDeedsFilename(value);
+            case "RULES_FILE" -> configurationBuilder.withRulesPath(value);
+            case "TITLE_DEEDS_FILE" -> configurationBuilder.withTitleDeedsPath(value);
+            case "TILES_FILE" -> configurationBuilder.withTilesPath(value);
             case "COLORS" -> {
                 final List<Color> colors = Arrays.stream(value.split(","))
                     .map(String::trim)

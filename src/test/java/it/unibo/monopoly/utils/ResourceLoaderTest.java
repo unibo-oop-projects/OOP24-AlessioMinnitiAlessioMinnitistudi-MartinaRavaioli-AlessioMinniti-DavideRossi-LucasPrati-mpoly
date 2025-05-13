@@ -8,6 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.awt.Color;
 import java.io.IOException;
+import java.io.UncheckedIOException;
 import java.util.List;
 import java.util.Set;
 
@@ -19,14 +20,19 @@ class ResourceLoaderTest {
 
     private static final String INVALID_FONT_NAME = "TotallyFakeFont";
     private static final String VALID_FONT_NAME = "ARIAL";
-    private static final String VALID_RULES_TXT = "rules/rules.txt";
-    private static final String INVALID_FILE = "nonexistent";
     private static final String VALID_COLOR_NAME = "red";
     private static final String INVALID_COLOR_NAME = "notacolor";
+    private static final String INVALID_FILE = "nonexistent";
+    private static final String VALID_RULES_TXT = "rules/rules.txt";
     private static final String VALID_TITLE_DEEDS_JSON = "cards/title_deeds.json";
+    private static final String VALID_TILES_JSON = "cards/tiles.json";
+    private static final int EXPECTED_NUM_TITLE_DEEDS = 28;
+    private static final String EXPECTED_TITLE_DEED = "Boardwalk";
+
     private static final List<String> VALID_FILENAMES = List.of(
         VALID_RULES_TXT,
-        VALID_TITLE_DEEDS_JSON
+        VALID_TITLE_DEEDS_JSON,
+        VALID_TILES_JSON
     );
 
     @Test
@@ -64,11 +70,28 @@ class ResourceLoaderTest {
     }
 
     @Test
-    void testLoadTitleDeedFromValidJson() throws IOException {
-        assertFileExists(VALID_TITLE_DEEDS_JSON);
+    void testLoadTitleDeedsFromJsonReturnsCorrectSize() throws IOException {
         final Set<TitleDeed> titleDeeds = ResourceLoader.loadTitleDeedsFromJson(VALID_TITLE_DEEDS_JSON);
-        assertNotNull(titleDeeds, "Returned title deed set should not be null");
-        assertFalse(titleDeeds.isEmpty(), "Expected at least one title deed to be loaded");
+        assertEquals(EXPECTED_NUM_TITLE_DEEDS, titleDeeds.size(), "Expected " +
+                                                              EXPECTED_NUM_TITLE_DEEDS +
+                                                              " title deeds to be loaded");
+    }
+
+    @Test
+    void testLoadTitleDeedsFromJsonContainsExpectedTitle() {
+        final Set<TitleDeed> titleDeeds = ResourceLoader.loadTitleDeedsFromJson(VALID_TITLE_DEEDS_JSON);
+        assertTrue(
+            titleDeeds.stream().anyMatch(td -> td.getName().equalsIgnoreCase(EXPECTED_TITLE_DEED)),
+            "Expected to find a title deed with name '" + EXPECTED_TITLE_DEED + "'"
+        );
+    }
+
+    @Test
+    void testLoadTitleDeedsFromJsonThrowsOnInvalidPath() {
+        assertThrows(UncheckedIOException.class,
+            () -> ResourceLoader.loadTitleDeedsFromJson(INVALID_FILE),
+            "Expected UncheckedIOException for invalid path when loading title deeds"
+        );
     }
 
     @Test
@@ -86,18 +109,19 @@ class ResourceLoaderTest {
     }
 
 
+
     private void testExceptionFormat(final Exception exception) {
         assertNotNull(exception.getMessage());
         assertFalse(exception.getMessage().isBlank());
     }
 
     private void assertFileExists(final String filename) {
-        assertTrue(ResourceLoader.checkFilename(filename),
+        assertTrue(ResourceLoader.checkPath(filename),
                    "File not found: " + filename);
     }
 
     private void assertFileNotExists(final String filename) {
-        assertFalse(ResourceLoader.checkFilename(filename),
+        assertFalse(ResourceLoader.checkPath(filename),
                     "File should not exist: " + filename);
     }
 }

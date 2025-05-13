@@ -97,7 +97,7 @@ public final class MainMenuControllerImpl  implements MainMenuController {
         }
 
         // import titledeeds from file with a private method
-        titleDeeds.addAll(ResourceLoader.loadTitleDeedsFromJson(config.getTitleDeedsFilename()));
+        titleDeeds.addAll(ResourceLoader.loadTitleDeedsFromJson(config.getTitleDeedsPath()));
 
         // create List<Tile>, with json and resourceLoader
 
@@ -159,7 +159,7 @@ public final class MainMenuControllerImpl  implements MainMenuController {
      */
     @Override
     public String getRules() {
-        return ResourceLoader.loadTextResource(config.getRulesFilename());
+        return ResourceLoader.loadTextResource(config.getRulesPath());
     }
 
 
