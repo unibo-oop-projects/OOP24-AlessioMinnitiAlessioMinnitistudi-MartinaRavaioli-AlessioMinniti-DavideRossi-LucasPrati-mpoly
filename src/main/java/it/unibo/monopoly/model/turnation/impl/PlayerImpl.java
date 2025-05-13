@@ -82,8 +82,10 @@ public final class PlayerImpl implements Player {
 
     /**
      * Static factory method for creating a new {@link PlayerImpl} instance.
-     * 
-     * This method applies the Factory Method pattern (static variant).
+     * <p>
+     * If the provided {@code name} is blank or contains only whitespace, it will be replaced with a default
+     * value in the format {@code "Player <id>"}, where {@code id} is the player's unique identifier.
+     * Duplicate names are permitted; identity is enforced via {@code id}.
      * 
      * @param id the {@link Identifiable} representing the {@link Player}
      * @param name the {@code name} chosen by the {@link Player} for himself
