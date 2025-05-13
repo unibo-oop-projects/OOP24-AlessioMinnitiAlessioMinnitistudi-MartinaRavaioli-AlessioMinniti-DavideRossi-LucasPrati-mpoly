@@ -23,8 +23,9 @@ class ConfigurationTest {
     private static final int VALID_BIG_FONT = 24;
     private static final int VALID_SMALL_FONT = 16;
     private static final int VALID_STARTER_BALANCE = 1500;
-    private static final String VALID_RULES_FILENAME = "rules/rules.txt";
-    private static final String VALID_TITLE_DEEDS_FILENAME = "cards/title_deeds.json";
+    private static final String VALID_RULES_PATH = "rules/rules.txt";
+    private static final String VALID_TITLE_DEEDS_PATH = "cards/title_deeds.json";
+    private static final String VALID_TILES_PATH = "cards/tiles.json";
     private static final List<Color> VALID_COLORS = List.of(
         Color.RED,
         Color.BLUE,
@@ -54,8 +55,9 @@ class ConfigurationTest {
                 .withBigFont(VALID_BIG_FONT)
                 .withSmallFont(VALID_SMALL_FONT)
                 .withInitBalance(VALID_STARTER_BALANCE)
-                .withRulesFilename(VALID_RULES_FILENAME)
-                .withTitleDeedsFilename(VALID_TITLE_DEEDS_FILENAME)
+                .withRulesPath(VALID_RULES_PATH)
+                .withTitleDeedsPath(VALID_TITLE_DEEDS_PATH)
+                .withTilesPath(VALID_TILES_PATH)
                 .withColors(VALID_COLORS);
     }
 
@@ -72,8 +74,9 @@ class ConfigurationTest {
         assertEquals(VALID_BIG_FONT, config.getBigFont());
         assertEquals(VALID_SMALL_FONT, config.getSmallFont());
         assertEquals(VALID_STARTER_BALANCE, config.getInitBalance());
-        assertEquals(VALID_RULES_FILENAME, config.getRulesFilename());
-        assertEquals(VALID_TITLE_DEEDS_FILENAME, config.getTitleDeedsFilename());
+        assertEquals(VALID_RULES_PATH, config.getRulesPath());
+        assertEquals(VALID_TITLE_DEEDS_PATH, config.getTitleDeedsPath());
+        assertEquals(VALID_TILES_PATH, config.getTilesPath());
         assertEquals(VALID_COLORS.size(), config.getPlayerColors().size());
     }
 
@@ -143,16 +146,23 @@ class ConfigurationTest {
 
     @Test
     void configurationInconsistentIfRulesFileIsNull() {
-        final Configuration config = builder.withRulesFilename(null).build();
+        final Configuration config = builder.withRulesPath(null).build();
         assertFalse(config.isConsistent(),
-                    MESSAGE_INVALID_CONFIG + "rulesFilename cannot be null");
+                    MESSAGE_INVALID_CONFIG + "rulesPath cannot be null");
     }
 
     @Test
     void configurationInconsistentIfTitleDeedsFileIsNull() {
-        final Configuration config = builder.withTitleDeedsFilename(null).build();
+        final Configuration config = builder.withTitleDeedsPath(null).build();
         assertFalse(config.isConsistent(),
-                    MESSAGE_INVALID_CONFIG + "titleDeedsFilename cannot be null");
+                    MESSAGE_INVALID_CONFIG + "titleDeedsPath cannot be null");
+    }
+
+    @Test
+    void configurationInconsistentIfTilesFileIsNull() {
+        final Configuration config = builder.withTilesPath(null).build();
+        assertFalse(config.isConsistent(),
+                    MESSAGE_INVALID_CONFIG + "tilesPath cannot be null");
     }
 
     @Test
