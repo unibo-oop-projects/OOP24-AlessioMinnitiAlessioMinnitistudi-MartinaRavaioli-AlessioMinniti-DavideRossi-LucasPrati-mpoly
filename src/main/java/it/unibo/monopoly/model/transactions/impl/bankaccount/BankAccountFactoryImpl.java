@@ -1,6 +1,7 @@
 package it.unibo.monopoly.model.transactions.impl.bankaccount;
 
 
+import java.util.Objects;
 import java.util.function.Predicate;
 
 import it.unibo.monopoly.model.transactions.api.BankAccount;
@@ -39,6 +40,7 @@ public final class BankAccountFactoryImpl implements BankAccountFactory {
      */
     @Override
     public BankAccount createWithCheck(final int id, final String owner, final Predicate<BankAccount> check) {
+        Objects.requireNonNull(check, "Check cannot be null");
         return new CheckValidityBankAccount(createSimple(id, owner), 
                                             check);
     }
