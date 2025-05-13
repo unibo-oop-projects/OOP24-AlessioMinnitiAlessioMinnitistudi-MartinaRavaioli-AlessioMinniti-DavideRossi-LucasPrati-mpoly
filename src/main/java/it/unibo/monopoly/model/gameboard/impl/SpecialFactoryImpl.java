@@ -58,9 +58,8 @@ public class SpecialFactoryImpl implements SpecialFactory{
 
             @Override
             public void activate(Player palyer) {
-                
                 palyer.putInPrison();
-                movementM.movePawn(movementM., STEPS_TO_PRISON);            
+                movementM.movePawn( /* manca la pawn */, STEPS_TO_PRISON);            
             }
             
         });
