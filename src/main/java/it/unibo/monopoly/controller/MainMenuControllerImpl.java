@@ -102,7 +102,7 @@ public final class MainMenuControllerImpl  implements MainMenuController {
 
         // import titledeeds and tiles from json
         titleDeeds.addAll(Set.copyOf(ResourceLoader.loadJsonList(config.getTitleDeedsPath(), BaseTitleDeed.class)));
-        tiles.addAll(List.copyOf(ResourceLoader.loadJsonListAsSet(config.getTilesPath(), TileImpl.class)));
+        tiles.addAll(List.copyOf(ResourceLoader.loadJsonList(config.getTilesPath(), TileImpl.class)));
 
         // create the bankImpl with provided sets of accounts and titles
         // final Bank bank = new BankImpl(accounts, titleDeeds);
