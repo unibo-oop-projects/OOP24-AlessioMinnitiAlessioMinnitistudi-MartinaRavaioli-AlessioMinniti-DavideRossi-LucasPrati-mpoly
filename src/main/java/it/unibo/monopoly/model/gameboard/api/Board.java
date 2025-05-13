@@ -33,6 +33,7 @@ public interface Board {
     /**
      * get the pawn with the given id.
      * @param id
+     * @return Pawn
     */
     Pawn getPawn(int id);
 }
