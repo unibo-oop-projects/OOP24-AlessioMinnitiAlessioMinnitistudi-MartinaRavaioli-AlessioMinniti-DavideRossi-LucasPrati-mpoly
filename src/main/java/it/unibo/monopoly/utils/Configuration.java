@@ -307,7 +307,13 @@ public final class Configuration {
         }
 
         /**
-         * @return a configuration
+         * Builds a new {@link Configuration} instance using the parameters specified so far.
+         * <p>
+         * This builder is single-use: after this method is called once, further calls will throw
+         * an {@link IllegalStateException}.
+         * 
+         * @return the constructed {@link Configuration}
+         * @throws IllegalStateException if this method is called more than once
          */
         public final Configuration build() {
             if (consumed) {
