@@ -90,7 +90,7 @@ class ResourceLoaderTest {
     @Test
     void testLoadJsonListThrowsOnInvalidPath() {
         assertThrows(UncheckedIOException.class,
-            () -> ResourceLoader.loadJsonList(INVALID_PATH, TitleDeed.class),
+            () -> ResourceLoader.loadJsonList(INVALID_PATH, BaseTitleDeed.class),
             "Expected UncheckedIOException for invalid path when loading title deeds"
         );
     }
@@ -102,7 +102,7 @@ class ResourceLoaderTest {
             "Expected NullPointerException for null Class'type when loading title deeds"
         );
         assertThrows(NullPointerException.class,
-            () -> ResourceLoader.loadJsonList(null, TitleDeed.class),
+            () -> ResourceLoader.loadJsonList(null, BaseTitleDeed.class),
             "Expected NullPointerException for null path when loading title deeds"
         );
     }
