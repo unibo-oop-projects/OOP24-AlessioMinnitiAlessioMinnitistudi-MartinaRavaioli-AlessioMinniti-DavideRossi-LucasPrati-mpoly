@@ -19,14 +19,14 @@ class ResourceLoaderTest {
 
     private static final String INVALID_FONT_NAME = "TotallyFakeFont";
     private static final String VALID_FONT_NAME = "ARIAL";
-    private static final String VALID_RULES_FILE = "rules/rules.txt";
+    private static final String VALID_RULES_TXT = "rules/rules.txt";
     private static final String INVALID_FILE = "nonexistent";
     private static final String VALID_COLOR_NAME = "red";
     private static final String INVALID_COLOR_NAME = "notacolor";
-    private static final String VALID_CARDS_JSON_FILE = "cards/monopoly_cards.json";
+    private static final String VALID_TITLE_DEEDS_JSON = "cards/title_deeds.json";
     private static final List<String> VALID_FILENAMES = List.of(
-        VALID_RULES_FILE,
-        VALID_CARDS_JSON_FILE
+        VALID_RULES_TXT,
+        VALID_TITLE_DEEDS_JSON
     );
 
     @Test
@@ -65,16 +65,16 @@ class ResourceLoaderTest {
 
     @Test
     void testLoadTitleDeedFromValidJson() throws IOException {
-        assertFileExists(VALID_CARDS_JSON_FILE);
-        final Set<TitleDeed> titleDeeds = ResourceLoader.loadTitleDeed(VALID_CARDS_JSON_FILE);
+        assertFileExists(VALID_TITLE_DEEDS_JSON);
+        final Set<TitleDeed> titleDeeds = ResourceLoader.loadTitleDeedsFromJson(VALID_TITLE_DEEDS_JSON);
         assertNotNull(titleDeeds, "Returned title deed set should not be null");
         assertFalse(titleDeeds.isEmpty(), "Expected at least one title deed to be loaded");
     }
 
     @Test
     void testLoadTextResource() {
-        assertFileExists(VALID_RULES_FILE);
-        final String contents = ResourceLoader.loadTextResource(VALID_RULES_FILE);
+        assertFileExists(VALID_RULES_TXT);
+        final String contents = ResourceLoader.loadTextResource(VALID_RULES_TXT);
         assertNotNull(contents, "Loaded text should not be null");
         assertFalse(contents.isBlank(), "Loaded text should not be blank");
     }

@@ -6,20 +6,22 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.UncheckedIOException;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.monopoly.model.transactions.api.TitleDeed;
+import it.unibo.monopoly.model.transactions.impl.BaseTitleDeed;
 
 /**
  * Utility class for loading and parsing resources such as fonts, colors,
@@ -29,7 +31,9 @@ import it.unibo.monopoly.model.transactions.api.TitleDeed;
  */
 public final class ResourceLoader {
 
-    private static final ObjectMapper MAPPER = new ObjectMapper();
+    private static final ObjectMapper MAPPER = new ObjectMapper()
+                                                .registerModule(new Jdk8Module());
+    private static record RawDeed(String name, String type, int price, int rent) {}
 
     private ResourceLoader() { /* Prevent instantiation */ }
 
@@ -47,18 +51,18 @@ public final class ResourceLoader {
 
 
     /**
-     * Checks whether a resource with the given filename exists in the classpath.
+     * Checks whether a resource with the given path exists in the classpath.
      * This method attempts to open the resource and immediately closes it.
      * 
-     * @param filename the name (and optional path) of the resource
+     * @param path relative path of the resource
      * @return {@code true} if the resource exists and can be opened; {@code false} otherwise
      */
-    public static boolean checkFilename(final String filename) {
-        if (filename == null) {
+    public static boolean checkFilename(final String path) {
+        if (path == null) {
             return false;
         }
 
-        try (InputStream ignored  = getRequiredStream(filename)) {
+        try (InputStream ignored  = getRequiredStream(path)) {
             return true;
         } catch (final IOException e) {
             return false;
@@ -96,16 +100,16 @@ public final class ResourceLoader {
     /**
      * Loads a resource from the classpath as an {@link InputStream}.
      * 
-     * @param filename the name (and optional path) of the resource file
+     * @param path relative path of the resource file
      * @return an {@link InputStream} for the specified resource
      * @throws IOException if the resource cannot be found or loaded
      */
-    public static InputStream getRequiredStream(final String filename) throws IOException {
-        Objects.requireNonNull(filename, "filename must not be null");
+    public static InputStream getRequiredStream(final String path) throws IOException {
+        Objects.requireNonNull(path, "path must not be null");
         final ClassLoader cl = Thread.currentThread().getContextClassLoader();
-        final InputStream stream = cl.getResourceAsStream(filename);
+        final InputStream stream = cl.getResourceAsStream(path);
         if (stream == null) {
-            throw new IOException("Resource not found: " + filename);
+            throw new IOException("Resource not found: " + path);
         }
         return stream;
     }
@@ -114,24 +118,24 @@ public final class ResourceLoader {
     /**
      * Loads a resource from the classpath and returns a buffered reader over its contents.
      * 
-     * @param filename the name (and optional path) of the resource file
+     * @param path relative path of the resource file
      * @return a {@link BufferedReader} to read the resource
      * @throws IOException if the resource cannot be found
      */
-    public static BufferedReader getRequiredReader(final String filename) throws IOException {
-        return new BufferedReader(new InputStreamReader(getRequiredStream(filename), StandardCharsets.UTF_8));
+    public static BufferedReader getRequiredReader(final String path) throws IOException {
+        return new BufferedReader(new InputStreamReader(getRequiredStream(path), StandardCharsets.UTF_8));
     }
 
 
     /**
      * Reads a text resource from the classpath and returns its contents as a single string.
      * 
-     * @param filename the name (and optional relative path) of the resource
+     * @param path relative path of the resource
      * @return a {@link String} containing the full contents of the file,
      *         or the error message if the resource could not be loaded
      */
-    public static String loadTextResource(final String filename) {
-        try (BufferedReader reader = getRequiredReader(filename)) {
+    public static String loadTextResource(final String path) {
+        try (BufferedReader reader = getRequiredReader(path)) {
             return reader.lines().collect(Collectors.joining("\n"));
         } catch (final IOException e) {
             return e.getMessage();
@@ -140,17 +144,43 @@ public final class ResourceLoader {
 
 
     /**
+     * 
+     * @param <T>
+     * @param path relative path
+     * @param type
+     * @return
+     */
+    public static <T> List<T> loadJsonList(final String path, final Class<T> type) {
+        final List<T> out;
+        try (InputStream fileJson = ClassLoader.getSystemResourceAsStream(path)) {
+            final JavaType outType = MAPPER.getTypeFactory()
+                    .constructCollectionLikeType(List.class, type);
+            out = MAPPER.readValue(fileJson, outType);
+        } catch (final IOException e) {
+            throw new UncheckedIOException("Failed to convert the Json file", e);
+        }
+        return out;
+    }
+
+
+    /**
      * Loads a set of {@link TitleDeed} objects from a JSON file in the classpath.
      * 
-     * @param filename the name (and optional relative path) of the JSON resource file
+     * @param path relative path relative path of the JSON resource file
      * @return an unmodifiable {@link Set} of {@link TitleDeed} instances
      * @throws IOException if the resource cannot be found or parsed
      */
-    public static Set<TitleDeed> loadTitleDeed(final String filename) throws IOException {
-        try (InputStream is = getRequiredStream(filename)) {
-            final var array = MAPPER.readValue(is, TitleDeed[].class);
-            return Collections.unmodifiableSet(new HashSet<>(Arrays.asList(array)));
-        }
+    public static Set<TitleDeed> loadTitleDeedsFromJson(final String path) {
+        List<RawDeed> rawDeeds = loadJsonList(path, RawDeed.class);
+        return rawDeeds.stream()
+            .map(d -> new BaseTitleDeed(
+                d.type(),
+                d.name(),
+                d.price(),
+                price -> price / 2,
+                d.rent()
+            ))
+            .collect(Collectors.toSet());
     }
 
 
@@ -158,7 +188,7 @@ public final class ResourceLoader {
      * Loads a {@link Configuration} object from a configuration file in the classpath.
      * Skips malformed or unknown entries gracefully.
      * 
-     * @param filename the name (and optional relative path) of the resource
+     * @param path relative path of the resource
      * @return a {@link Configuration} object, or a default one if loading fails
      */
     @SuppressWarnings("PMD.AssignmentInOperand") // intentional: idiomatic BufferedReader usage
@@ -167,8 +197,8 @@ public final class ResourceLoader {
             justification = "Intentional use of assignment in the while condition — "
                             + "a standard practice for reading lines from a BufferedReader in a compact way."
     )
-    public static Configuration loadConfigurationFile(final String filename) {
-        try (BufferedReader reader = getRequiredReader(filename)) {
+    public static Configuration loadConfigurationFile(final String path) {
+        try (BufferedReader reader = getRequiredReader(path)) {
             final Configuration.Builder builder = new Configuration.Builder();
 
             String line;
@@ -222,7 +252,7 @@ public final class ResourceLoader {
             case "SMALL_FONT" -> configurationBuilder.withSmallFont(Integer.parseInt(value));
             case "INIT_BALANCE" -> configurationBuilder.withInitBalance(Integer.parseInt(value));
             case "RULES_FILE" -> configurationBuilder.withRulesFilename(value);
-            case "CARDS_FILE" -> configurationBuilder.withCardsFilename(value);
+            case "TITLE_DEEDS_FILE" -> configurationBuilder.withTitleDeedsFilename(value);
             case "COLORS" -> {
                 final List<Color> colors = Arrays.stream(value.split(","))
                     .map(String::trim)

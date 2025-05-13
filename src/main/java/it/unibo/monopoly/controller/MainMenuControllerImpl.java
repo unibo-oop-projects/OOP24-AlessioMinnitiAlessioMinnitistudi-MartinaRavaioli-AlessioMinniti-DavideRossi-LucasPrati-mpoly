@@ -97,7 +97,7 @@ public final class MainMenuControllerImpl  implements MainMenuController {
         }
 
         // import titledeeds from file with a private method
-        titleDeeds.addAll(ResourceLoader.loadTitleDeed("TitleDeedsFilename"));
+        titleDeeds.addAll(ResourceLoader.loadTitleDeedsFromJson(config.getTitleDeedsFilename()));
 
         // create List<Tile>, with json and resourceLoader
 
