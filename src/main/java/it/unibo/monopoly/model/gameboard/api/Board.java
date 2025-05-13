@@ -28,6 +28,11 @@ public interface Board {
      * move the pawn.
      * @param player
      * @param value
-     */
+    */
     void movePawn(Pawn player, Collection<Integer> value);
+    /**
+     * get the pawn with the given id.
+     * @param id
+    */
+    Pawn getPawn(int id);
 }
