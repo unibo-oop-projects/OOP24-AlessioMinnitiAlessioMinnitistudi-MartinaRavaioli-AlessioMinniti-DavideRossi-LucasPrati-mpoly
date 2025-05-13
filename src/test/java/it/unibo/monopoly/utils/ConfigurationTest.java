@@ -24,7 +24,7 @@ class ConfigurationTest {
     private static final int VALID_SMALL_FONT = 16;
     private static final int VALID_STARTER_BALANCE = 1500;
     private static final String VALID_RULES_FILENAME = "rules/rules.txt";
-    private static final String VALID_CARDS_FILENAME = "cards/monopoly_cards.json";
+    private static final String VALID_TITLE_DEEDS_FILENAME = "cards/title_deeds.json";
     private static final List<Color> VALID_COLORS = List.of(
         Color.RED,
         Color.BLUE,
@@ -55,7 +55,7 @@ class ConfigurationTest {
                 .withSmallFont(VALID_SMALL_FONT)
                 .withInitBalance(VALID_STARTER_BALANCE)
                 .withRulesFilename(VALID_RULES_FILENAME)
-                .withCardsFilename(VALID_CARDS_FILENAME)
+                .withTitleDeedsFilename(VALID_TITLE_DEEDS_FILENAME)
                 .withColors(VALID_COLORS);
     }
 
@@ -73,7 +73,7 @@ class ConfigurationTest {
         assertEquals(VALID_SMALL_FONT, config.getSmallFont());
         assertEquals(VALID_STARTER_BALANCE, config.getInitBalance());
         assertEquals(VALID_RULES_FILENAME, config.getRulesFilename());
-        assertEquals(VALID_CARDS_FILENAME, config.getCardsFilename());
+        assertEquals(VALID_TITLE_DEEDS_FILENAME, config.getTitleDeedsFilename());
         assertEquals(VALID_COLORS.size(), config.getPlayerColors().size());
     }
 
@@ -149,10 +149,10 @@ class ConfigurationTest {
     }
 
     @Test
-    void configurationInconsistentIfCardsFileIsNull() {
-        final Configuration config = builder.withCardsFilename(null).build();
+    void configurationInconsistentIfTitleDeedsFileIsNull() {
+        final Configuration config = builder.withTitleDeedsFilename(null).build();
         assertFalse(config.isConsistent(),
-                    MESSAGE_INVALID_CONFIG + "cardsFilename cannot be null");
+                    MESSAGE_INVALID_CONFIG + "titleDeedsFilename cannot be null");
     }
 
     @Test

@@ -17,14 +17,14 @@ public final class Configuration {
     private final int smallFont;
     private final int initBalance;
     private final String rulesFilename;
-    private final String cardsFilename;
+    private final String titleDeedsFilename;
     private final List<Color> playerColors;
 
 
 
     private Configuration(final int minPlayer, final int maxPlayer, final int numDice, final int sidesPerDie,
                             final String fontName, final int bigFont, final int smallFont, final int initBalance,
-                            final String rulesFilename, final String cardsFilename, final List<Color> playerColors) {
+                            final String rulesFilename, final String titleDeedsFilename, final List<Color> playerColors) {
         this.minPlayer = minPlayer;
         this.maxPlayer = maxPlayer;
         this.numDice = numDice;
@@ -34,7 +34,7 @@ public final class Configuration {
         this.smallFont = smallFont;
         this.initBalance = initBalance;
         this.rulesFilename = rulesFilename;
-        this.cardsFilename = cardsFilename;
+        this.titleDeedsFilename = titleDeedsFilename;
         this.playerColors = playerColors;
     }
 
@@ -104,10 +104,10 @@ public final class Configuration {
     }
 
     /**
-     * @return the name of the file which contains all the cards of the game
+     * @return the name of the file which contains all the title deeds of the game
      */
-    public String getCardsFilename() {
-        return cardsFilename;
+    public String getTitleDeedsFilename() {
+        return titleDeedsFilename;
     }
 
     /**
@@ -130,7 +130,7 @@ public final class Configuration {
                 && smallFont < bigFont
                 && initBalance >= 0
                 && ResourceLoader.checkFilename(rulesFilename)
-                && ResourceLoader.checkFilename(cardsFilename);
+                && ResourceLoader.checkFilename(titleDeedsFilename);
     }
 
 
@@ -170,7 +170,7 @@ public final class Configuration {
         private static final int SMALL_FONT = 16;
         private static final int INIT_BALANCE = 2000;
         private static final String RULES_FILENAME = "rules/rules.txt";
-        private static final String CARDS_FILENAME = "cards/monopoly_cards.json";
+        private static final String TITLE_DEEDS_FILENAME = "cards/title_deeds.json";
         private static final List<Color> PLAYER_COLORS = List.of(
             Color.RED,
             Color.BLUE,
@@ -197,7 +197,7 @@ public final class Configuration {
         private int smallFont = SMALL_FONT;
         private int initBalance = INIT_BALANCE;
         private String rulesFilename = RULES_FILENAME;
-        private String cardsFilename = CARDS_FILENAME;
+        private String titleDeedsFilename = TITLE_DEEDS_FILENAME;
         private List<Color> playerColors = List.copyOf(PLAYER_COLORS);
         private boolean consumed;
 
@@ -284,11 +284,11 @@ public final class Configuration {
         }
 
         /**
-         * @param cardsFilename the name of the file which contains all the cards of the game
+         * @param titleDeedsFilename the name of the file which contains all the cards of the game
          * @return this builder, for method chaining
          */
-        public Builder withCardsFilename(final String cardsFilename) {
-            this.cardsFilename = cardsFilename;
+        public Builder withTitleDeedsFilename(final String titleDeedsFilename) {
+            this.titleDeedsFilename = titleDeedsFilename;
             return this;
         }
 
@@ -322,7 +322,7 @@ public final class Configuration {
             consumed = true;
             return new Configuration(minPlayer, maxPlayer, numDice, sidesPerDie,
                                     fontName, bigFont, smallFont, initBalance,
-                                    rulesFilename, cardsFilename, playerColors);
+                                    rulesFilename, titleDeedsFilename, playerColors);
         }
     }
 }
