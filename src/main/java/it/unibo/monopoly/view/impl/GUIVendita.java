@@ -37,10 +37,9 @@ public final class GUIVendita extends JFrame {
       * @param player the player that wants to manage its properties
       * @param width of the frame
       * @param heigth of the frame
-      * @param bank will be changed to controlller
+      * @param gController for game
       */
-     // TODO al posto di bank viene passato il controller e lo assegni alla logica al posto di usare il costruttore
-     //TODO sposta i metodi della logica nel controller
+
     public GUIVendita(final Player player, final int width, final int heigth, final GameController gController) {
         final Border b = BorderFactory.createLineBorder(Color.black);
         logic = gController;

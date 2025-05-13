@@ -11,11 +11,15 @@ import it.unibo.monopoly.model.transactions.api.TitleDeed;
 import it.unibo.monopoly.model.transactions.impl.BaseTitleDeed;
 import it.unibo.monopoly.model.turnation.api.Player;
 
-public class GameControllerImpl implements GameController, Serializable{
-
-    static final int NUM = 0;
-    private static final long serialVersionUID = -6218820567019985015L;
+/**
+ * implementation of game controller.
+ */
+public final class GameControllerImpl implements GameController, Serializable {
+    
     private final Bank bank; 
+    private static final int NUM = 0;
+    private static final long serialVersionUID = -6218820567019985015L;
+    
 
     /**
      * constructor for this class.
@@ -112,7 +116,6 @@ public class GameControllerImpl implements GameController, Serializable{
         return bank.getBankAccount(player.getName()).getBalance();
     }
 
-    
     @Override
     public Color getPropertyColor(final TitleDeed selectedProperty) {
         final String colorS = selectedProperty.getGroup();
