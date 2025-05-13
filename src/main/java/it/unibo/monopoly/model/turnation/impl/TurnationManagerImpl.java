@@ -104,6 +104,7 @@ public class TurnationManagerImpl implements TurnationManager {
      * return the id of the current player.
      * @return int
     */
+    @Override
     public final int getIdCurrPlayer() {
         return this.currPlayer.getID();
     }
