@@ -1,0 +1,301 @@
+{
+    "cards": [
+      {
+        "type": "SPECIAL",
+        "index": 0,
+        "name": "Go",
+        "effect": "Collect 200"
+      },
+      {
+        "type": "PROPERTY",
+        "index": 1,
+        "name": "Mediterranean Avenue",
+        "color": "MAGENTA",
+        "price": 60,
+        "rent": 2
+      },
+      {
+        "type": "SPECIAL",
+        "index": 2,
+        "name": "Community Chest",
+        "effect": "Community Chest"
+      },
+      {
+        "type": "PROPERTY",
+        "index": 3,
+        "name": "Baltic Avenue",
+        "color": "MAGENTA",
+        "price": 60,
+        "rent": 4
+      },
+      {
+        "type": "SPECIAL",
+        "index": 4,
+        "name": "Income Tax",
+        "effect": "Pay 200"
+      },
+      {
+        "type": "PROPERTY",
+        "index": 5,
+        "name": "Reading Railroad",
+        "color": "BLACK",
+        "price": 200,
+        "rent": 25
+      },
+      {
+        "type": "PROPERTY",
+        "index": 6,
+        "name": "Oriental Avenue",
+        "color": "CYAN",
+        "price": 100,
+        "rent": 6
+      },
+      {
+        "type": "SPECIAL",
+        "index": 7,
+        "name": "Chance",
+        "effect": "Chance"
+      },
+      {
+        "type": "PROPERTY",
+        "index": 8,
+        "name": "Vermont Avenue",
+        "color": "CYAN",
+        "price": 100,
+        "rent": 6
+      },
+      {
+        "type": "PROPERTY",
+        "index": 9,
+        "name": "Connecticut Avenue",
+        "color": "CYAN",
+        "price": 120,
+        "rent": 8
+      },
+      {
+        "type": "SPECIAL",
+        "index": 10,
+        "name": "Jail",
+        "effect": "Just visiting / In Jail"
+      },
+      {
+        "type": "PROPERTY",
+        "index": 11,
+        "name": "St. Charles Place",
+        "color": "PINK",
+        "price": 140,
+        "rent": 10
+      },
+      {
+        "type": "PROPERTY",
+        "index": 12,
+        "name": "Electric Company",
+        "color": "LIGHT_GRAY",
+        "price": 150,
+        "rent": 10
+      },
+      {
+        "type": "PROPERTY",
+        "index": 13,
+        "name": "States Avenue",
+        "color": "PINK",
+        "price": 140,
+        "rent": 10
+      },
+      {
+        "type": "PROPERTY",
+        "index": 14,
+        "name": "Virginia Avenue",
+        "color": "PINK",
+        "price": 160,
+        "rent": 12
+      },
+      {
+        "type": "PROPERTY",
+        "index": 15,
+        "name": "Pennsylvania Railroad",
+        "color": "BLACK",
+        "price": 200,
+        "rent": 25
+      },
+      {
+        "type": "PROPERTY",
+        "index": 16,
+        "name": "St. James Place",
+        "color": "ORANGE",
+        "price": 180,
+        "rent": 14
+      },
+      {
+        "type": "SPECIAL",
+        "index": 17,
+        "name": "Community Chest",
+        "effect": "Community Chest"
+      },
+      {
+        "type": "PROPERTY",
+        "index": 18,
+        "name": "Tennessee Avenue",
+        "color": "ORANGE",
+        "price": 180,
+        "rent": 14
+      },
+      {
+        "type": "PROPERTY",
+        "index": 19,
+        "name": "New York Avenue",
+        "color": "ORANGE",
+        "price": 200,
+        "rent": 16
+      },
+      {
+        "type": "SPECIAL",
+        "index": 20,
+        "name": "Free Parking",
+        "effect": "Free Parking"
+      },
+      {
+        "type": "PROPERTY",
+        "index": 21,
+        "name": "Kentucky Avenue",
+        "color": "RED",
+        "price": 220,
+        "rent": 18
+      },
+      {
+        "type": "SPECIAL",
+        "index": 22,
+        "name": "Chance",
+        "effect": "Chance"
+      },
+      {
+        "type": "PROPERTY",
+        "index": 23,
+        "name": "Indiana Avenue",
+        "color": "RED",
+        "price": 220,
+        "rent": 18
+      },
+      {
+        "type": "PROPERTY",
+        "index": 24,
+        "name": "Illinois Avenue",
+        "color": "RED",
+        "price": 240,
+        "rent": 20
+      },
+      {
+        "type": "PROPERTY",
+        "index": 25,
+        "name": "B&O Railroad",
+        "color": "BLACK",
+        "price": 200,
+        "rent": 25
+      },
+      {
+        "type": "PROPERTY",
+        "index": 26,
+        "name": "Atlantic Avenue",
+        "color": "YELLOW",
+        "price": 260,
+        "rent": 22
+      },
+      {
+        "type": "PROPERTY",
+        "index": 27,
+        "name": "Ventnor Avenue",
+        "color": "YELLOW",
+        "price": 260,
+        "rent": 22
+      },
+      {
+        "type": "PROPERTY",
+        "index": 28,
+        "name": "Water Works",
+        "color": "LIGHT_GRAY",
+        "price": 150,
+        "rent": 10
+      },
+      {
+        "type": "PROPERTY",
+        "index": 29,
+        "name": "Marvin Gardens",
+        "color": "YELLOW",
+        "price": 280,
+        "rent": 24
+      },
+      {
+        "type": "SPECIAL",
+        "index": 30,
+        "name": "Go to Jail",
+        "effect": "Go to Jail"
+      },
+      {
+        "type": "PROPERTY",
+        "index": 31,
+        "name": "Pacific Avenue",
+        "color": "GREEN",
+        "price": 300,
+        "rent": 26
+      },
+      {
+        "type": "PROPERTY",
+        "index": 32,
+        "name": "North Carolina Avenue",
+        "color": "GREEN",
+        "price": 300,
+        "rent": 26
+      },
+      {
+        "type": "SPECIAL",
+        "index": 33,
+        "name": "Community Chest",
+        "effect": "Community Chest"
+      },
+      {
+        "type": "PROPERTY",
+        "index": 34,
+        "name": "Pennsylvania Avenue",
+        "color": "GREEN",
+        "price": 320,
+        "rent": 28
+      },
+      {
+        "type": "PROPERTY",
+        "index": 35,
+        "name": "Short Line",
+        "color": "BLACK",
+        "price": 200,
+        "rent": 25
+      },
+      {
+        "type": "SPECIAL",
+        "index": 36,
+        "name": "Chance",
+        "effect": "Chance"
+      },
+      {
+        "type": "PROPERTY",
+        "index": 37,
+        "name": "Park Place",
+        "color": "BLUE",
+        "price": 350,
+        "rent": 35
+      },
+      {
+        "type": "SPECIAL",
+        "index": 38,
+        "name": "Luxury Tax",
+        "effect": "Pay 100"
+      },
+      {
+        "type": "PROPERTY",
+        "index": 39,
+        "name": "Boardwalk",
+        "color": "BLUE",
+        "price": 400,
+        "rent": 50
+      }
+    ]
+  }
+  

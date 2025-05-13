@@ -2,7 +2,9 @@ package it.unibo.monopoly.controller;
 
 import java.awt.Color;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
@@ -17,7 +19,9 @@ import it.unibo.monopoly.model.transactions.api.TitleDeed;
 // import it.unibo.monopoly.model.transactions.impl.BankImpl;
 import it.unibo.monopoly.model.transactions.impl.bankaccount.BankAccountFactoryImpl;
 import it.unibo.monopoly.model.turnation.api.Player;
+import it.unibo.monopoly.model.turnation.api.TurnationManager;
 import it.unibo.monopoly.model.turnation.impl.PlayerImpl;
+import it.unibo.monopoly.model.turnation.impl.TurnationManagerImpl;
 import it.unibo.monopoly.utils.Configuration;
 import it.unibo.monopoly.utils.Identifiable;
 import it.unibo.monopoly.utils.ResourceLoader;
@@ -73,9 +77,9 @@ public final class MainMenuControllerImpl  implements MainMenuController {
     @Override
     public void onClickStart(final Map<Color, String> playersSetup) throws IOException {
         // init all the game (Player, Pawn, BankAccount according to the type chosen)
-        final Set<Player> players = new HashSet<>();
+        final List<Player> players = new ArrayList<>();
         final Set<BankAccount> accounts = new HashSet<>();
-        // final Set<Pawn> pawns = new HashSet<>();
+        // final List<Pawn> pawns = new ArrayList<>();
         final Set<TitleDeed> titleDeeds = new HashSet<>();
 
         // create a id for each Player (his Pawn and BankAccount must have the same id)
@@ -92,14 +96,22 @@ public final class MainMenuControllerImpl  implements MainMenuController {
             // pawns.add(PawnsImpl.of(id, color));
         }
 
-        // import titles from file with a private method
+        // import titledeeds from file with a private method
         titleDeeds.addAll(ResourceLoader.loadTitleDeed("TitleDeedsFilename"));
+
+        // create List<Tile>, with json and resourceLoader
 
         // create the bankImpl with provided sets of accounts and titles
         // final Bank bank = new BankImpl(accounts, titleDeeds);
+        // create Board
+        // final Board board = new BoardImpl(List<Tile>, pawns);
+        // create TurnationManager
+        // final TurnationManager turnationManager = new TurnationManagerImpl(config, players);
+         
 
         // TODO launch a new GUI for the game and put all these data to it
-        // launch C_Game_Manager(config)
+        // launch C_Game_Manager(config, board) //alessio
+        // launch controller di davide (config, bank, )
     }
 
     /**
