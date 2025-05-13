@@ -18,12 +18,9 @@ import javax.swing.JScrollPane;
 import javax.swing.border.Border;
 import javax.swing.event.ListSelectionListener;
 
-import it.unibo.monopoly.model.transactions.api.Bank;
+import it.unibo.monopoly.controller.api.GameController;
 import it.unibo.monopoly.model.transactions.api.TitleDeed;
 import it.unibo.monopoly.model.turnation.api.Player;
-import it.unibo.monopoly.view.VenditaLogicImpl;
-import it.unibo.monopoly.view.api.VenditaLogic;
-
 /**
  * the class presents the property manager frame of the game.
  * where you can look up the values of each of your property 
@@ -33,7 +30,7 @@ import it.unibo.monopoly.view.api.VenditaLogic;
 public final class GUIVendita extends JFrame {
     private static final long serialVersionUID = -6218820567019985015L;
     private static final int VGAP = 10;
-    private final VenditaLogic logic;
+    private final GameController logic;
 
      /**
       * in this constructor the whole GUI is built with all the action listener.
@@ -44,9 +41,9 @@ public final class GUIVendita extends JFrame {
       */
      // TODO al posto di bank viene passato il controller e lo assegni alla logica al posto di usare il costruttore
      //TODO sposta i metodi della logica nel controller
-    public GUIVendita(final Player player, final int width, final int heigth, final Bank bank) {
+    public GUIVendita(final Player player, final int width, final int heigth, final GameController gController) {
         final Border b = BorderFactory.createLineBorder(Color.black);
-        logic = new VenditaLogicImpl(bank);
+        logic = gController;
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setSize(width, heigth);
 

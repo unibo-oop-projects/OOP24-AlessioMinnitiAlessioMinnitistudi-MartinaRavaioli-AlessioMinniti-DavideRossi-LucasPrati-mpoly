@@ -3,6 +3,8 @@ package it.unibo.monopoly.view;
 import java.awt.Color;
 import java.util.Set;
 
+import it.unibo.monopoly.controller.api.GameController;
+import it.unibo.monopoly.controller.impl.GameControllerImpl;
 import it.unibo.monopoly.model.transactions.api.Bank;
 import it.unibo.monopoly.model.transactions.api.BankAccount;
 import it.unibo.monopoly.model.transactions.api.TitleDeed;
@@ -39,8 +41,9 @@ public final class LauncherVendita {
         final Bank bank = new BankImpl(Set.of(ac1, ac2), Set.of(ti1));
         final int width = 700;
         final int heigth = 500;
+        final GameController g = new GameControllerImpl(bank);
         bank.buyTitleDeed("nana", "piero");
-        new GUIVendita(p1, width, heigth, bank); 
+        new GUIVendita(p1, width, heigth, g); 
     }
 
 }

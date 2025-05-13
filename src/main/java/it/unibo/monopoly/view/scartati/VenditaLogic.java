@@ -1,4 +1,4 @@
-package it.unibo.monopoly.view.api;
+package it.unibo.monopoly.view.scartati;
 
 import java.awt.Color;
 import java.util.List;
