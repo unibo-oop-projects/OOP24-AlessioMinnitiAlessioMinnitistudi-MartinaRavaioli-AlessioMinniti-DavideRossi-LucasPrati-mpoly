@@ -87,9 +87,9 @@ public final class PlayerImpl implements Player {
      * value in the format {@code "Player <id>"}, where {@code id} is the player's unique identifier.
      * Duplicate names are permitted; identity is enforced via {@code id}.
      * 
-     * @param id the {@link Identifiable} representing the {@link Player}
-     * @param name the {@code name} chosen by the {@link Player} for himself
-     * @param color the {@link Color} representing the {@link Player}
+     * @param id the id the unique player ID
+     * @param name name the player's nickname (may be blank)
+     * @param color the player's color
      * @return a new {@link Player} instance
      * @throws NullPointerException if {@code id}, {@code name} or {@code color} are {@code null}
      */
