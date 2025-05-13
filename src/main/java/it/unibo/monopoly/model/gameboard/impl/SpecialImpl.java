@@ -13,7 +13,7 @@ public class SpecialImpl implements Special {
     private Position position; 
     private Effect effetto;
 
-    public SpecialImpl(Effect effetto, Position position){
+    public SpecialImpl(Position position, Effect effetto){
         this.position = position;
         this.effetto = effetto;
     } 

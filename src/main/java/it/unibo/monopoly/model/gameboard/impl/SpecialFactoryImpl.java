@@ -14,7 +14,9 @@ import it.unibo.monopoly.model.transactions.api.RentOption;
 import it.unibo.monopoly.model.transactions.api.TitleDeed;
 import it.unibo.monopoly.model.transactions.impl.BaseTitleDeed;
 import it.unibo.monopoly.model.turnation.api.Player;
+import it.unibo.monopoly.model.turnation.api.Position;
 import it.unibo.monopoly.model.turnation.api.TurnationManager;
+import it.unibo.monopoly.model.turnation.impl.PositionImpl;
 
 
 
@@ -32,42 +34,45 @@ public class SpecialFactoryImpl implements SpecialFactory{
 
     @Override
     public Special start() {
-        return new SpecialImpl(new Effect() {
+        return new SpecialImpl(new PositionImpl(0), new Effect() {
 
-            private final Bank transationM = bank;
+            private final Bank transactiontionM = bank;
             private final static int START_AMOUNT = 200;
 
             //DA CAMBIARE CON IL METODO PER AVERE IL NOME CHE ORA NON C'E'
             @Override
             public void activate(Player palyer) {
-                transationM.depositTo(palyer.toString(), START_AMOUNT);
+                transactiontionM.depositTo(palyer.toString(), START_AMOUNT);
             }
             
         });
     }
 
     @Override
-    public Special goToPrison() {
-        return new SpecialImpl(new Effect() {
+    public Special goToPrison(Position pos) {
+        return new SpecialImpl(pos, new Effect() {
 
-            private final static int STEPS_TO_PRISON = 13;
+            private final Board movementM = board;
+            private final static Integer STEPS_TO_PRISON = 13;
             //fallo con la differenza 
 
             @Override
             public void activate(Player palyer) {
+                
                 palyer.putInPrison();
-                palyer.makeMove(STEPS_TO_PRISON);                
+                movementM.movePawn(movementM., STEPS_TO_PRISON);            
             }
             
         });
     }
 
     @Override
-    public Special prison() {
+    public Special prison(Position pos) {
         return new Special() {
             private final TurnationManager turnM = turnationManager;
             private final Board boarD = board;
             private int steps;
+            private final Position position;
 
             @Override
             public void activateEffect(Player player) {
@@ -75,13 +80,19 @@ public class SpecialFactoryImpl implements SpecialFactory{
                     steps = turnM.moveByDices().getRight() + turnM.moveByDices().getLeft();
                     board.muovi //non c'è il metodo!!
                 }
+
+            @Override
+            public Position getPosition() {
+                // TODO Auto-generated method stub
+                throw new UnsupportedOperationException("Unimplemented method 'getPosition'");
+            }
             }
         };
     }
 
     @Override
-    public Special parking() {
-        return new SpecialImpl(new Effect() {
+    public Special parking(Position pos) {
+        return new SpecialImpl(pos, new Effect() {
 
             @Override
             public void activate(Player palyer) {
@@ -92,8 +103,8 @@ public class SpecialFactoryImpl implements SpecialFactory{
     }
 
     @Override
-    public Special taxes() {
-        return new SpecialImpl(new Effect() {
+    public Special taxes(Position pos) {
+        return new SpecialImpl(pos, new Effect() {
 
             private final Bank transationM = bank;
             private final static int TAXES_AMOUNT = 100;

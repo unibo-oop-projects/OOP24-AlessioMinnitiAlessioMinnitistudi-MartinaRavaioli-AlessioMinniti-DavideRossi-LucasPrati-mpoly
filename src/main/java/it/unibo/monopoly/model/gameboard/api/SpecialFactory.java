@@ -5,6 +5,7 @@ import java.util.function.Function;
 
 import it.unibo.monopoly.model.transactions.api.RentOption;
 import it.unibo.monopoly.model.transactions.api.TitleDeed;
+import it.unibo.monopoly.model.turnation.api.Position;
 
 /**
  * this is SpecialFactory interface, defines which special tiles you can create 
@@ -13,13 +14,13 @@ public interface SpecialFactory {
 
     public Special start();
 
-    public Special goToPrison();
+    public Special goToPrison(Position pos);
 
-    public Special prison();
+    public Special prison(Position pos);
 
-    public Special parking();
+    public Special parking(Position pos);
 
-    public Special taxes();
+    public Special taxes(Position pos);
 
 
 }
