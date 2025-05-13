@@ -1,15 +1,26 @@
 package it.unibo.monopoly.model.gameboard.api;
 
+import it.unibo.monopoly.model.gameboard.impl.Type;
 import it.unibo.monopoly.model.turnation.api.Position;
 
 /**
  * tile interface.
- */
+*/
 public interface Tile {
     /**
-     * get the pawn on a tile.
-     * @return Position
+    * get the type.
+    * @return Type
     */
-    Position getPosition(); 
+    Type getType();
+    /**
+    * set the type.
+    * @param type
+    */
+    void setType(Type type);
+    /**
+    * get the position.
+    * @return position
+    */
+    Position getPosition();
 
 }

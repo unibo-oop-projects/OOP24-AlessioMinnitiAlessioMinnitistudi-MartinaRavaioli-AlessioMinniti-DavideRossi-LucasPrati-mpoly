@@ -33,6 +33,7 @@ public final class PlayerImpl implements Player {
         return color;
     }
 
+
     @Override
     public String getName() {
         return name;

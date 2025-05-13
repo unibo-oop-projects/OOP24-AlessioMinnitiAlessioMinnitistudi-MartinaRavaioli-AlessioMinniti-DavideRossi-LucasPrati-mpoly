@@ -1,40 +1,79 @@
 package it.unibo.monopoly.model.gameboard.impl;
 
 import it.unibo.monopoly.model.gameboard.api.Property;
-import it.unibo.monopoly.model.turnation.api.Player;
 import it.unibo.monopoly.model.turnation.api.Position;
 
 /**
  * property implementation.
 */
-public class PropertyImpl implements Property {
-    private final Player owner;
-    private final int price;
-    //constructor
+public class PropertyImpl extends TileImpl implements Property {
+    private static final int MAX_HOUSES = 4;
+    private int nHouses;
+    private boolean hotel;
+    private String name;
     /**
-     * @param owner
-     * @param price
-     */
-    public PropertyImpl(final Player owner, final int price) { 
-        this.owner = owner;
-        this.price = price;
+     * constructor.
+     * @param name
+     * @param id
+     * @param type
+    */
+    public PropertyImpl(final String name, final Position id, final Type type) { 
+        super(id, type);
+        this.nHouses = 0;
+        this.hotel = false;
+        setName(name);
     }
-    //set the owner
-    @Override 
-    public void setOwner(final Player owner) { }
-    //get the owner
+    /**
+     * set the name.
+     * @param name
+    */
+    public final void setName(final String name) {
+        this.name = name;
+    }
+    /**
+     * get the name.
+     * @return String
+    */
+    public String getName() {
+        return this.name;
+    }
+
+    /**
+     * get the number of houses.
+     * @return int
+    */
+    public int getNHouses() {
+        return this.nHouses;
+    }
+
+    /**
+     * add house.
+    */
     @Override
-    public final Player getOwner() { 
-        return this.owner; 
+    public void buildHouse() {
+        if (this.getNHouses() < MAX_HOUSES) {
+            this.nHouses++;
+        } else {
+            throw new IllegalArgumentException("max num houses reached");
+        }
     }
-    //get the price of the property
+    /**
+     * add hotel.
+    */
     @Override
-    public final int getRent() { 
-        return this.price; 
+    public void buildHotel() {
+        if (!this.hotel) {
+            this.hotel = true;
+        } else {
+            throw new IllegalArgumentException("hotel already exists");
+        }
     }
-    @Override
-    public final Position getPosition() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getPosition'");
+    /**
+     * control if it has an hotel.
+     * @return bool
+    */
+    public boolean hasHotel() {
+        return this.hotel;
     }
+
 }

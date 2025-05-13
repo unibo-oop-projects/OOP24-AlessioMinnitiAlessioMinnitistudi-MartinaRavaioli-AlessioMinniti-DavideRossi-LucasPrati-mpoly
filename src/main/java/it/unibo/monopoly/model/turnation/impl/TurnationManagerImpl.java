@@ -1,6 +1,8 @@
 package it.unibo.monopoly.model.turnation.impl;
 
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 import it.unibo.monopoly.model.turnation.api.Dice;
 import it.unibo.monopoly.model.turnation.api.Player;
@@ -22,15 +24,22 @@ public class TurnationManagerImpl implements TurnationManager {
      * @param dice
     */
     public TurnationManagerImpl(final CircularLinkedList<Player> plList, final Dice dice) {
-        this.players = plList;
+        this.players = new CircularLinkedList<>();
+        for (final Player p : plList.toList()) {
+            this.players.addNode(p);
+        }
         this.dice = dice;
+        this.currPlayer = this.players.getHead();
     }
     /**
      * constructor.
      * @param plList
     */
     public void setList(final CircularLinkedList<Player> plList) {
-        this.players = plList;
+        this.players = new CircularLinkedList<>();
+        for (final Player p : plList.toList()) {
+            this.players.addNode(p);
+        }
     }
     /**
      * set Dice.
@@ -48,10 +57,10 @@ public class TurnationManagerImpl implements TurnationManager {
     }
     /**
      * get player list.
-     * @return Circular List of player
+     * @return List of player
     */
-    public CircularLinkedList<Player> getPlayerList() {
-        return this.players;
+    public List<Player> getPlayerList() {
+        return Collections.unmodifiableList(this.players.toList());
     }
     /**
      * add a player.
@@ -90,5 +99,12 @@ public class TurnationManagerImpl implements TurnationManager {
     @Override
     public final Collection<Integer> moveByDices() { 
         return this.dice.throwDices();
+    }
+    /**
+     * return the id of the current player.
+     * @return int
+    */
+    public final int getIdCurrPlayer() {
+        return this.currPlayer.getID();
     }
 }

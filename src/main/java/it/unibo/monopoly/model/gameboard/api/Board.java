@@ -2,7 +2,6 @@ package it.unibo.monopoly.model.gameboard.api;
 
 import java.util.Collection;
 
-import it.unibo.monopoly.model.turnation.api.Player;
 import it.unibo.monopoly.model.turnation.api.Position;
 
 /**
@@ -17,13 +16,6 @@ public interface Board {
      * @return return a tile
      */
     Tile getTile(Position pos);
-    //call to buy a property
-    /**
-     * buy property.
-     * @param prop
-     * @param owner
-     */
-    void buyProperty(Property prop, Player owner);
 
     /**
      * get the tile of the pawn.

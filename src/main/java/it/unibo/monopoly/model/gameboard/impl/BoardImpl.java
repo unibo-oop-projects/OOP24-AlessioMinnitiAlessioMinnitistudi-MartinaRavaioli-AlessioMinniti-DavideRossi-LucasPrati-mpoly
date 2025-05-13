@@ -6,9 +6,7 @@ import java.util.List;
 
 import it.unibo.monopoly.model.gameboard.api.Board;
 import it.unibo.monopoly.model.gameboard.api.Pawn;
-import it.unibo.monopoly.model.gameboard.api.Property;
 import it.unibo.monopoly.model.gameboard.api.Tile;
-import it.unibo.monopoly.model.turnation.api.Player;
 import it.unibo.monopoly.model.turnation.api.Position;
 import it.unibo.monopoly.model.turnation.impl.PositionImpl;
 
@@ -31,8 +29,8 @@ public class BoardImpl implements Board {
      * @param pawns
     */
     public BoardImpl(final List<Tile> tiles, final List<Pawn> pawns) {
-        this.tiles = tiles;
-        this.pawns = pawns;
+        this.tiles = new ArrayList<>(tiles);
+        this.pawns = new ArrayList<>(pawns);
     }
     /**
      * sort the tiles.
@@ -40,7 +38,6 @@ public class BoardImpl implements Board {
     public void sortTiles() {
         this.tiles.sort((a, b) -> ((TileImpl) a).compareTo((TileImpl) b));
     }
-
 
     @Override
     public final Tile getTile(final Position pos) { 
@@ -59,11 +56,6 @@ public class BoardImpl implements Board {
     */
     public void addPawn(final Pawn p) {
         this.pawns.add(p);
-    }
-
-    //buy a proprierty
-    @Override
-    public void buyProperty(final Property prop, final Player owner) {
     }
 
     /**
@@ -91,10 +83,28 @@ public class BoardImpl implements Board {
 
         return pawnsInTile;
     }
-
+    /**
+     * move the pawn.
+     * @param player
+     * @param value
+    */
     @Override
     public final void movePawn(final Pawn player, final Collection<Integer> value) {
         final int steps = value.stream().mapToInt(Integer::intValue).sum();
         player.move(steps);
+    }
+    /**
+     * get the pawn of the id given.
+     * @param id
+     * @return Pawn
+    */
+    public Pawn getPawn(final int id) {
+        for (final Pawn p : this.pawns) {
+            if (((PawnImpl) p).getID() == id) {
+                return new PawnImpl(id, p.getPosition(), p.getColor());
+            }
+        }
+
+        throw new IllegalArgumentException("id not present");
     }
 }

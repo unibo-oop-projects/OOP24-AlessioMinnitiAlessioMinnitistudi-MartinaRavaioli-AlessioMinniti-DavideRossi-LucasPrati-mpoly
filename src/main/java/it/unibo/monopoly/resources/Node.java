@@ -14,6 +14,7 @@ public class Node<T> {
     */
     public Node(final T value) {
         this.value = value;
+        this.nextNode = null;
     }
     /**
      * get the value.
@@ -27,7 +28,7 @@ public class Node<T> {
      * @return Node
     */
     public Node<T> getNextNode() {
-        return this.nextNode;
+        return new Node<>(this.nextNode.getValue());
     }
     /**
      * set the value.
@@ -41,6 +42,6 @@ public class Node<T> {
      * @param node
     */
     public void setNextNode(final Node<T> node) {
-        this.nextNode = node;
+        this.nextNode = new Node<>(node.getValue());
     }
 }

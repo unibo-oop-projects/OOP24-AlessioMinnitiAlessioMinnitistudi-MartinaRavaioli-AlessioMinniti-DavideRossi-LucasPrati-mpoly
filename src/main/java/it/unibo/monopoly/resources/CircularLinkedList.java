@@ -1,5 +1,8 @@
 package it.unibo.monopoly.resources;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * circular linked list.
  * @param <T>
@@ -7,7 +10,20 @@ package it.unibo.monopoly.resources;
 public final class CircularLinkedList<T> {
     private Node<T> head;
     private Node<T> tail;
-
+    /**
+     * constructor.
+    */
+    public CircularLinkedList() {
+        this.head = null;
+        this.tail = null;
+    }
+    /**
+     * return the head.
+     * @return value
+    */
+    public T getHead() {
+        return this.head.getValue();
+    }
     /**
      * add a node.
      * @param value
@@ -21,6 +37,22 @@ public final class CircularLinkedList<T> {
         }
         this.tail = newNode;
         this.tail.setNextNode(this.head);
+    }
+    /**
+     * convert to a list.
+     * @return List
+    */
+    public List<T> toList() {
+        final List<T> list = new ArrayList<>();
+        if (this.head == null) {
+            return list;
+        }
+        Node<T> current = this.head;
+        do {
+            list.add(current.getValue());
+            current = current.getNextNode();
+        } while (!current.equals(this.head));
+        return list;
     }
 
     /**

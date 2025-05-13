@@ -1,26 +1,17 @@
 package it.unibo.monopoly.model.gameboard.api;
 
-import it.unibo.monopoly.model.turnation.api.Player;
-
 /**
 * property interface.
 */
 public interface Property extends Tile {
     /**
-     * set the owner.
-     * @param owner
+     * add house.
     */
-    void setOwner(Player owner);
+    void buildHouse();
 
     /**
-     * get the owner.
-     * @return Player
+     * add hotel.
     */
-    Player getOwner();
+    void buildHotel();
 
-    /**
-     * get the owner.
-     * @return int
-    */
-    int getRent();
 }
