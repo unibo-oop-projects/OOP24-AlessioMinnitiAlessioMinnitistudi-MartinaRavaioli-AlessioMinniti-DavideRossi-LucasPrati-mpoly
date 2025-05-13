@@ -10,7 +10,7 @@ import java.util.Objects;
 import java.util.Set;
 
 import it.unibo.monopoly.controller.api.MainMenuController;
-
+import it.unibo.monopoly.model.gameboard.api.Tile;
 // import it.unibo.monopoly.model.transactions.api.Bank;
 import it.unibo.monopoly.model.transactions.api.BankAccount;
 import it.unibo.monopoly.model.transactions.api.BankAccountFactory;
@@ -81,6 +81,7 @@ public final class MainMenuControllerImpl  implements MainMenuController {
         final Set<BankAccount> accounts = new HashSet<>();
         // final List<Pawn> pawns = new ArrayList<>();
         final Set<TitleDeed> titleDeeds = new HashSet<>();
+        final List<Tile> tiles = new ArrayList<>();
 
         // create a id for each Player (his Pawn and BankAccount must have the same id)
         int id = 0;
@@ -96,10 +97,9 @@ public final class MainMenuControllerImpl  implements MainMenuController {
             // pawns.add(PawnsImpl.of(id, color));
         }
 
-        // import titledeeds from file with a private method
+        // import titledeeds and tiles from json
         titleDeeds.addAll(ResourceLoader.loadTitleDeedsFromJson(config.getTitleDeedsPath()));
-
-        // create List<Tile>, with json and resourceLoader
+        // tiles.addAll(ResourceLoader.loadJsonList(config.getTilesPath(), TileImpl));
 
         // create the bankImpl with provided sets of accounts and titles
         // final Bank bank = new BankImpl(accounts, titleDeeds);
