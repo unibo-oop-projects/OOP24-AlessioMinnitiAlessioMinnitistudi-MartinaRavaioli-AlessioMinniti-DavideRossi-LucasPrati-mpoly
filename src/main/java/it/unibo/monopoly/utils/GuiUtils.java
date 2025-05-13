@@ -31,21 +31,25 @@ public final class GuiUtils {
 
     /**
      * Create a fixed-size square colored label.
-     * Useful for player color boxes.
+     * If the {@code size} is invalid (zero or negative), returns a placeholder label
+     * with an error message instead of throwing an exception.
+     * <p>
+     * This behavior is intentional to allow graceful failure in GUI contexts where
+     * exception handling would be excessive or intrusive.
      *
      * @param color the background color
      * @param size the width and height in pixels
-     * @return a square JLabel with the given background color
+     * @return a square JLabel or an error label if size is invalid
      */
     public static JLabel colorBoxFactory(final Color color, final int size) {
-        if (size > 0) {
-            final JLabel colorBox = new JLabel();
-            colorBox.setOpaque(true);
-            colorBox.setBackground(color);
-            colorBox.setPreferredSize(new Dimension(size, size));
-            return colorBox;
+        if (size < 0) {
+            return new JLabel("Error size box");
         }
-        return new JLabel("Error size box");
+        final JLabel colorBox = new JLabel();
+        colorBox.setOpaque(true);
+        colorBox.setBackground(color);
+        colorBox.setPreferredSize(new Dimension(size, size));
+        return colorBox;
     }
 
     /**
