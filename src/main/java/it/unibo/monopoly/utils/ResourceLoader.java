@@ -12,7 +12,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.databind.JavaType;
@@ -20,8 +19,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-import it.unibo.monopoly.model.transactions.api.TitleDeed;
-import it.unibo.monopoly.model.transactions.impl.BaseTitleDeed;
+
 
 /**
  * Utility class for loading and parsing resources such as fonts, colors,
@@ -33,7 +31,6 @@ public final class ResourceLoader {
 
     private static final ObjectMapper MAPPER = new ObjectMapper()
                                                 .registerModule(new Jdk8Module());
-    private static record RawDeed(String name, String type, int price, int rent) {}
 
     private ResourceLoader() { /* Prevent instantiation */ }
 
@@ -150,10 +147,10 @@ public final class ResourceLoader {
      * The file must contain a JSON array of elements compatible with the provided {@code type}.
      * 
      * @param <T> the type of elements to load
-     * @param filename the relative path of the JSON resource file
+     * @param path the relative path of the JSON resource file
      * @param type the class of the target type
      * @return a {@link List} of deserialized objects of type {@code T}
-     * @throws NullPointerException if {@code filename} or {@code type} is {@code null}
+     * @throws NullPointerException if {@code path} or {@code type} is {@code null}
      * @throws UncheckedIOException if the file cannot be read or parsed
      */
     public static <T> List<T> loadJsonList(final String path, final Class<T> type) {
@@ -167,27 +164,6 @@ public final class ResourceLoader {
             throw new UncheckedIOException("Failed to convert the Json file", e);
         }
         return out;
-    }
-
-
-    /**
-     * Loads a set of {@link TitleDeed} objects from a JSON file in the classpath.
-     * 
-     * @param path relative path relative path of the JSON resource file
-     * @return an unmodifiable {@link Set} of {@link TitleDeed} instances
-     * @throws UncheckedIOException if the resource cannot be found or parsed
-     */
-    public static Set<TitleDeed> loadTitleDeedsFromJson(final String path) {
-        List<RawDeed> rawDeeds = loadJsonList(path, RawDeed.class);
-        return rawDeeds.stream()
-            .map(d -> new BaseTitleDeed(
-                d.type(),
-                d.name(),
-                d.price(),
-                price -> price / 2,
-                d.rent()
-            ))
-            .collect(Collectors.toSet());
     }
 
 

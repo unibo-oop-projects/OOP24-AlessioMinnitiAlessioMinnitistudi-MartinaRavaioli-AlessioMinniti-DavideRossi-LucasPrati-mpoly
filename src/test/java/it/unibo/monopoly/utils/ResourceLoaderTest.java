@@ -15,6 +15,7 @@ import java.util.Set;
 import org.junit.jupiter.api.Test;
 
 import it.unibo.monopoly.model.transactions.api.TitleDeed;
+import it.unibo.monopoly.model.transactions.impl.BaseTitleDeed;
 
 class ResourceLoaderTest {
 
@@ -22,7 +23,7 @@ class ResourceLoaderTest {
     private static final String VALID_FONT_NAME = "ARIAL";
     private static final String VALID_COLOR_NAME = "red";
     private static final String INVALID_COLOR_NAME = "notacolor";
-    private static final String INVALID_FILE = "nonexistent";
+    private static final String INVALID_PATH = "nonexistent";
     private static final String VALID_RULES_TXT = "rules/rules.txt";
     private static final String VALID_TITLE_DEEDS_JSON = "cards/title_deeds.json";
     private static final String VALID_TILES_JSON = "cards/tiles.json";
@@ -44,7 +45,7 @@ class ResourceLoaderTest {
 
     @Test
     void testCheckFilenameWithMissingFile() {
-        assertFileNotExists(INVALID_FILE);
+        assertFileNotExists(INVALID_PATH);
     }
 
     @Test
@@ -64,14 +65,14 @@ class ResourceLoaderTest {
 
     @Test
     void testLoadConfigurationFileFallback() {
-        final Configuration config = ResourceLoader.loadConfigurationFile(INVALID_FILE);
+        final Configuration config = ResourceLoader.loadConfigurationFile(INVALID_PATH);
         assertNotNull(config, "Fallback configuration should not be null");
         // The consistence of the configuration should be check in ConfigurationTest, not here
     }
 
     @Test
     void testLoadTitleDeedsFromJsonReturnsCorrectSize() throws IOException {
-        final Set<TitleDeed> titleDeeds = ResourceLoader.loadTitleDeedsFromJson(VALID_TITLE_DEEDS_JSON);
+        final Set<TitleDeed> titleDeeds = Set.copyOf(ResourceLoader.loadJsonList(VALID_TITLE_DEEDS_JSON, BaseTitleDeed.class));
         assertEquals(EXPECTED_NUM_TITLE_DEEDS, titleDeeds.size(), "Expected " +
                                                               EXPECTED_NUM_TITLE_DEEDS +
                                                               " title deeds to be loaded");
@@ -79,7 +80,7 @@ class ResourceLoaderTest {
 
     @Test
     void testLoadTitleDeedsFromJsonContainsExpectedTitle() {
-        final Set<TitleDeed> titleDeeds = ResourceLoader.loadTitleDeedsFromJson(VALID_TITLE_DEEDS_JSON);
+        final Set<TitleDeed> titleDeeds = Set.copyOf(ResourceLoader.loadJsonList(VALID_TITLE_DEEDS_JSON, BaseTitleDeed.class));
         assertTrue(
             titleDeeds.stream().anyMatch(td -> td.getName().equalsIgnoreCase(EXPECTED_TITLE_DEED)),
             "Expected to find a title deed with name '" + EXPECTED_TITLE_DEED + "'"
@@ -87,10 +88,22 @@ class ResourceLoaderTest {
     }
 
     @Test
-    void testLoadTitleDeedsFromJsonThrowsOnInvalidPath() {
+    void testLoadJsonListThrowsOnInvalidPath() {
         assertThrows(UncheckedIOException.class,
-            () -> ResourceLoader.loadTitleDeedsFromJson(INVALID_FILE),
+            () -> ResourceLoader.loadJsonList(INVALID_PATH, TitleDeed.class),
             "Expected UncheckedIOException for invalid path when loading title deeds"
+        );
+    }
+
+    @Test
+    void testLoadJsonListThrowsOnNullClassOrNullPath() {
+        assertThrows(NullPointerException.class,
+            () -> ResourceLoader.loadJsonList(VALID_TITLE_DEEDS_JSON, null),
+            "Expected NullPointerException for null Class'type when loading title deeds"
+        );
+        assertThrows(NullPointerException.class,
+            () -> ResourceLoader.loadJsonList(null, TitleDeed.class),
+            "Expected NullPointerException for null path when loading title deeds"
         );
     }
 

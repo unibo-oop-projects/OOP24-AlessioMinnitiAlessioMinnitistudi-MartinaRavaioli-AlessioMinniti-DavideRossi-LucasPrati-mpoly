@@ -11,17 +11,19 @@ import java.util.Set;
 
 import it.unibo.monopoly.controller.api.MainMenuController;
 import it.unibo.monopoly.model.gameboard.api.Tile;
+import it.unibo.monopoly.model.gameboard.impl.TileImpl;
 // import it.unibo.monopoly.model.transactions.api.Bank;
 import it.unibo.monopoly.model.transactions.api.BankAccount;
 import it.unibo.monopoly.model.transactions.api.BankAccountFactory;
 import it.unibo.monopoly.model.transactions.api.BankAccountType;
 import it.unibo.monopoly.model.transactions.api.TitleDeed;
+import it.unibo.monopoly.model.transactions.impl.BaseTitleDeed;
 // import it.unibo.monopoly.model.transactions.impl.BankImpl;
 import it.unibo.monopoly.model.transactions.impl.bankaccount.BankAccountFactoryImpl;
 import it.unibo.monopoly.model.turnation.api.Player;
-import it.unibo.monopoly.model.turnation.api.TurnationManager;
+// import it.unibo.monopoly.model.turnation.api.TurnationManager;
 import it.unibo.monopoly.model.turnation.impl.PlayerImpl;
-import it.unibo.monopoly.model.turnation.impl.TurnationManagerImpl;
+// import it.unibo.monopoly.model.turnation.impl.TurnationManagerImpl;
 import it.unibo.monopoly.utils.Configuration;
 import it.unibo.monopoly.utils.Identifiable;
 import it.unibo.monopoly.utils.ResourceLoader;
@@ -90,16 +92,17 @@ public final class MainMenuControllerImpl  implements MainMenuController {
         for (final var p : playersSetup.entrySet()) {
             final String name = p.getValue();
             final Color color = p.getKey();
+            int index = id;     // used for collocate players and pawns in the right order, following the ids
             id++;
-            players.add(PlayerImpl.of(id, name, color));
+            players.add(index, PlayerImpl.of(id, name, color));
             accounts.add(createBankAccountByType(id, name));
             // TODO create pawns
-            // pawns.add(PawnsImpl.of(id, color));
+            // pawns.add(index, PawnsImpl.of(id, color));
         }
 
         // import titledeeds and tiles from json
-        titleDeeds.addAll(ResourceLoader.loadTitleDeedsFromJson(config.getTitleDeedsPath()));
-        // tiles.addAll(ResourceLoader.loadJsonList(config.getTilesPath(), TileImpl));
+        titleDeeds.addAll(Set.copyOf(ResourceLoader.loadJsonList(config.getTitleDeedsPath(), BaseTitleDeed.class)));
+        tiles.addAll(List.copyOf(ResourceLoader.loadJsonListAsSet(config.getTilesPath(), TileImpl.class)));
 
         // create the bankImpl with provided sets of accounts and titles
         // final Bank bank = new BankImpl(accounts, titleDeeds);

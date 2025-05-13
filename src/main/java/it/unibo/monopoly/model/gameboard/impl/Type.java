@@ -32,9 +32,21 @@ public enum Type {
     */
     CYAN,
     /**
+     * pink.
+     */
+    PINK,
+    /**
+     * magenta
+     */
+    MAGENTA,
+    /**
      * black.
     */
     BLACK,
+    /**
+     * light gray.
+     */
+    LIGHT_GRAY,
     /**
      * station.
     */
