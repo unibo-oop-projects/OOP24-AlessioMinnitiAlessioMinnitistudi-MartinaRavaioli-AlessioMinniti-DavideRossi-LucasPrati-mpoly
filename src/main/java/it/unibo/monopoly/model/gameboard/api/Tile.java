@@ -1,21 +1,31 @@
 package it.unibo.monopoly.model.gameboard.api;
 
-import com.fasterxml.jackson.annotation.JsonSubTypes;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import it.unibo.monopoly.model.gameboard.impl.PropertyImpl;
-import it.unibo.monopoly.model.gameboard.impl.SpecialImpl;
+import it.unibo.monopoly.model.gameboard.impl.Type;
+import it.unibo.monopoly.model.turnation.api.Position;
 
 /**
- * Marker interface for a board tile.
- */
-@JsonTypeInfo(
-    use = JsonTypeInfo.Id.NAME,
-    include = JsonTypeInfo.As.PROPERTY,
-    property = "type"  // This matches "type": "PROPERTY"/"SPECIAL" in the JSON
-)
-@JsonSubTypes({
-    @JsonSubTypes.Type(value = PropertyImpl.class, name = "PROPERTY"),
-    @JsonSubTypes.Type(value = SpecialImpl.class, name = "SPECIAL")
-})
+ * tile interface.
+*/
 public interface Tile {
+    /**
+    * get the type.
+    * @return Type
+    */
+    Type getType();
+    /**
+    * set the type.
+    * @param type
+    */
+    void setType(Type type);
+    /**
+    * get the position.
+    * @return position
+    */
+    Position getPosition();
+    /**
+    * get the name.
+    * @return String
+    */
+    String getName();
+
 }
