@@ -14,8 +14,8 @@ import java.util.Set;
 
 import org.junit.jupiter.api.Test;
 
+import it.unibo.monopoly.model.gameboard.api.Tile;
 import it.unibo.monopoly.model.transactions.api.TitleDeed;
-import it.unibo.monopoly.model.transactions.impl.BaseTitleDeed;
 
 class ResourceLoaderTest {
 
@@ -71,16 +71,16 @@ class ResourceLoaderTest {
     }
 
     @Test
-    void testLoadTitleDeedsFromJsonReturnsCorrectSize() throws IOException {
-        final Set<TitleDeed> titleDeeds = Set.copyOf(ResourceLoader.loadJsonList(VALID_TITLE_DEEDS_JSON, BaseTitleDeed.class));
+    void testLoadTitleDeedsReturnsCorrectSize() throws IOException {
+        final Set<TitleDeed> titleDeeds = ResourceLoader.loadTitleDeeds(VALID_TITLE_DEEDS_JSON);
         assertEquals(EXPECTED_NUM_TITLE_DEEDS, titleDeeds.size(), "Expected " +
                                                               EXPECTED_NUM_TITLE_DEEDS +
                                                               " title deeds to be loaded");
     }
 
     @Test
-    void testLoadTitleDeedsFromJsonContainsExpectedTitle() {
-        final Set<TitleDeed> titleDeeds = Set.copyOf(ResourceLoader.loadJsonList(VALID_TITLE_DEEDS_JSON, BaseTitleDeed.class));
+    void testLoadTitleDeedsContainsExpectedTitle() {
+        final Set<TitleDeed> titleDeeds = ResourceLoader.loadTitleDeeds(VALID_TITLE_DEEDS_JSON);
         assertTrue(
             titleDeeds.stream().anyMatch(td -> td.getName().equalsIgnoreCase(EXPECTED_TITLE_DEED)),
             "Expected to find a title deed with name '" + EXPECTED_TITLE_DEED + "'"
@@ -88,9 +88,9 @@ class ResourceLoaderTest {
     }
 
     @Test
-    void testLoadJsonListThrowsOnInvalidPath() {
+    void testLoadTitleDeedsThrowsOnInvalidPath() {
         assertThrows(UncheckedIOException.class,
-            () -> ResourceLoader.loadJsonList(INVALID_PATH, BaseTitleDeed.class),
+            () -> ResourceLoader.loadTitleDeeds(INVALID_PATH),
             "Expected UncheckedIOException for invalid path when loading title deeds"
         );
     }
@@ -98,12 +98,12 @@ class ResourceLoaderTest {
     @Test
     void testLoadJsonListThrowsOnNullClassOrNullPath() {
         assertThrows(NullPointerException.class,
-            () -> ResourceLoader.loadJsonList(VALID_TITLE_DEEDS_JSON, null),
-            "Expected NullPointerException for null Class'type when loading title deeds"
+            () -> ResourceLoader.loadJsonList(VALID_TILES_JSON, null),
+            "Expected NullPointerException for null Class'type when loading Json"
         );
         assertThrows(NullPointerException.class,
-            () -> ResourceLoader.loadJsonList(null, BaseTitleDeed.class),
-            "Expected NullPointerException for null path when loading title deeds"
+            () -> ResourceLoader.loadJsonList(null, Tile.class),
+            "Expected NullPointerException for null path when loading Json"
         );
     }
 
