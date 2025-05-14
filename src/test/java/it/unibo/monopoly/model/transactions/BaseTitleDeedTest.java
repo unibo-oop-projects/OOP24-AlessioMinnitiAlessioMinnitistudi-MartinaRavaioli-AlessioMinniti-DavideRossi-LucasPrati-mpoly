@@ -13,6 +13,7 @@ import java.util.function.Function;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import it.unibo.monopoly.model.gameboard.impl.Type;
 import it.unibo.monopoly.model.transactions.api.RentOption;
 import it.unibo.monopoly.model.transactions.api.TitleDeed;
 import it.unibo.monopoly.model.transactions.impl.BaseTitleDeed;
@@ -22,7 +23,7 @@ class BaseTitleDeedTest {
 
     private static final String OWNER_NAME = "Bob";
     private static final String SECOND_OWNER_NAME = "Alice";
-    private static final String GROUP_NAME = "viola";
+    private static final Type GROUP_NAME = Type.GREEN;
     private static final String TITLE_DEED_NAME = "vicolo corto";
     private static final int SALE_PRICE = 50;
     private static final Function<Integer, Integer> MORTGAGE_PRICE_FUNCTION = salePrice -> {
@@ -80,7 +81,7 @@ class BaseTitleDeedTest {
     //change to robust group object
    @Test
    void testGetGroup() {
-        assertEquals(GROUP_NAME, deed.getGroup());
+        assertEquals(GROUP_NAME, deed.getType());
    }
 
    @Test
@@ -134,7 +135,7 @@ class BaseTitleDeedTest {
    @Test
    void testGetRentPricePassingTitleDeedsOfDifferentGroup() {
 
-        final TitleDeed differentGroupTitleDeed = new BaseTitleDeed("marrone", 
+        final TitleDeed differentGroupTitleDeed = new BaseTitleDeed(Type.BLUE, 
                                                         "via dante", 
                                                         SALE_PRICE, 
                                                         MORTGAGE_PRICE_FUNCTION,
