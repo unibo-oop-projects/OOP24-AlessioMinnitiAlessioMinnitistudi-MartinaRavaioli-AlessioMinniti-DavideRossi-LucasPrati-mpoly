@@ -3,14 +3,17 @@ package it.unibo.monopoly.model.gameboard.impl;
 import it.unibo.monopoly.model.gameboard.api.Tile;
 import it.unibo.monopoly.model.turnation.api.Position;
 import it.unibo.monopoly.model.turnation.impl.PositionImpl;
-import it.unibo.monopoly.resources.Identifiable;
+import it.unibo.monopoly.utils.Identifiable;
+
+
 /**
-* tile implementation.
+* {@link Tile} implementation.
 */
 public abstract class TileImpl implements Tile, Identifiable<Position>, Comparable<TileImpl> {
     private final String name;
     private Position pos; 
     private Type type;
+
     /**
     * constructor.
     * @param name
@@ -22,68 +25,58 @@ public abstract class TileImpl implements Tile, Identifiable<Position>, Comparab
         this.pos = pos;
         this.type = type;
     }
+
     /**
-    * get the name.
-    * @return String
-    */
+     * {@inheritDoc}
+     */
     @Override
     public String getName() {
         return this.name;
     }
 
     /**
-    * get ID.
-    * @return Position
-    */
+     * {@inheritDoc}
+     */
     @Override
     public Position getID() {
         return new PositionImpl(this.pos.getPos());
     }
+
     /**
-    * set ID.
-    * @param value
-    */
-    @Override
-    public void setID(final Position value) {
-        this.pos = new PositionImpl(value.getPos());
-    }
-    /**
-    * compare to.
-    * @param o
-    * @return int
-    */
+     * {@inheritDoc}
+     */
     @Override
     public int compareTo(final TileImpl o) {
         return Integer.compare(this.getID().getPos(), o.getID().getPos());
     }
+
     /**
-    * get the type.
-    * @return Type
-    */
+     * {@inheritDoc}
+     */
     @Override
     public Type getType() {
         return this.type;
     }
+
     /**
-    * set the type.
-    * @param type
-    */
+     * {@inheritDoc}
+     */
     @Override
     public void setType(final Type type) {
         this.type = type;
     }
+
     /**
-    * get the position.
-    * @return Position
-    */
+     * {@inheritDoc}
+     */
     @Override
     public Position getPosition() {
         return new PositionImpl(pos.getPos());
     }
+
     /**
-    * hash code.
-    * @return int
-    */
+     * {@inheritDoc}
+     */
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -92,11 +85,10 @@ public abstract class TileImpl implements Tile, Identifiable<Position>, Comparab
         result = prime * result + ((type == null) ? 0 : type.hashCode());
         return result;
     }
+
     /**
-    * equals method.
-    * @param obj
-    * @return bool
-    */
+     * {@inheritDoc}
+     */
     @Override
     public boolean equals(final Object obj) {
         if (this == obj) {
