@@ -30,7 +30,6 @@ import it.unibo.monopoly.model.turnation.api.Player;
 public final class GUIVendita extends JFrame {
     private static final long serialVersionUID = -6218820567019985015L;
     private static final int VGAP = 10;
-    private final GameController logic;
 
      /**
       * in this constructor the whole GUI is built with all the action listener.
@@ -42,7 +41,7 @@ public final class GUIVendita extends JFrame {
 
     public GUIVendita(final Player player, final int width, final int heigth, final GameController gController) {
         final Border b = BorderFactory.createLineBorder(Color.black);
-        logic = gController;
+        final GameController logic = gController;
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setSize(width, heigth);
 

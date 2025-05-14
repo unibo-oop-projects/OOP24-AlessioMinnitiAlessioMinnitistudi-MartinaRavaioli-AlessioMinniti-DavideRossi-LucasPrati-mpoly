@@ -1,7 +1,6 @@
 package it.unibo.monopoly.controller.impl;
 
 import java.awt.Color;
-import java.io.Serializable;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,12 +13,10 @@ import it.unibo.monopoly.model.turnation.api.Player;
 /**
  * implementation of game controller.
  */
-public final class GameControllerImpl implements GameController, Serializable {
-    
-    private final Bank bank; 
+public final class GameControllerImpl implements GameController {
+
     private static final int NUM = 0;
-    private static final long serialVersionUID = -6218820567019985015L;
-    
+    private final Bank bank; 
 
     /**
      * constructor for this class.

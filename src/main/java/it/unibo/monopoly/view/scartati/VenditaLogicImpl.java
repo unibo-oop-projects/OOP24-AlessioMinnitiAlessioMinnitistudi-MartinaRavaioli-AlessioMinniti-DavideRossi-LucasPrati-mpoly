@@ -1,7 +1,6 @@
 package it.unibo.monopoly.view.scartati;
 
 import java.awt.Color;
-import java.io.Serializable;
 import java.util.List;
 import java.util.Optional;
 
@@ -13,9 +12,9 @@ import it.unibo.monopoly.model.turnation.api.Player;
 /**
  * this is the implementation of the logic behind the property manager GUI. 
  */
-public final class VenditaLogicImpl implements VenditaLogic, Serializable {
+
+ public final class VenditaLogicImpl implements VenditaLogic {
     static final int NUM = 0;
-    private static final long serialVersionUID = -6218820567019985015L;
     private final Bank bank; 
 
     /**
