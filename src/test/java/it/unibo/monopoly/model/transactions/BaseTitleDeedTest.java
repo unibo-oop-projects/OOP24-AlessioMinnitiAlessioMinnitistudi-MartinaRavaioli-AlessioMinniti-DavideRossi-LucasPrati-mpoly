@@ -13,6 +13,7 @@ import java.util.function.Function;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import it.unibo.monopoly.model.gameboard.impl.Type;
 import it.unibo.monopoly.model.transactions.api.RentOption;
 import it.unibo.monopoly.model.transactions.api.TitleDeed;
 import it.unibo.monopoly.model.transactions.impl.BaseTitleDeed;
@@ -22,7 +23,7 @@ class BaseTitleDeedTest {
 
     private static final String OWNER_NAME = "Bob";
     private static final String SECOND_OWNER_NAME = "Alice";
-    private static final String GROUP_NAME = "viola";
+    private static final Type GROUP_TYPE = Type.PURPLE;
     private static final String TITLE_DEED_NAME = "vicolo corto";
     private static final int SALE_PRICE = 50;
     private static final Function<Integer, Integer> MORTGAGE_PRICE_FUNCTION = salePrice -> {
@@ -35,7 +36,7 @@ class BaseTitleDeedTest {
 
     @BeforeEach
     void setUp() {
-        deed = new BaseTitleDeed(GROUP_NAME, TITLE_DEED_NAME, SALE_PRICE, MORTGAGE_PRICE_FUNCTION, BASE_RENT_PRICE);
+        deed = new BaseTitleDeed(GROUP_TYPE, TITLE_DEED_NAME, SALE_PRICE, MORTGAGE_PRICE_FUNCTION, BASE_RENT_PRICE);
     }
 
 
@@ -80,7 +81,7 @@ class BaseTitleDeedTest {
     //change to robust group object
    @Test
    void testGetGroup() {
-        assertEquals(GROUP_NAME, deed.getGroup());
+        assertEquals(GROUP_TYPE, deed.getType());
    }
 
    @Test
@@ -112,14 +113,14 @@ class BaseTitleDeedTest {
                                                                                                 .get())
                                                                                                 )
                                                                 );
-        final TitleDeed shortStreetDeed = new BaseTitleDeed(GROUP_NAME,
+        final TitleDeed shortStreetDeed = new BaseTitleDeed(GROUP_TYPE,
                                         "vicolo corto", 
                                         SALE_PRICE, 
                                         MORTGAGE_PRICE_FUNCTION, 
                                         BASE_RENT_PRICE, 
                                         List.of(allPropertiesOwned)
                                     );
-        final TitleDeed longStreetDeed = new BaseTitleDeed(GROUP_NAME, 
+        final TitleDeed longStreetDeed = new BaseTitleDeed(GROUP_TYPE, 
                                         "vicolo lungo",
                                         SALE_PRICE, 
                                         MORTGAGE_PRICE_FUNCTION, 
@@ -134,7 +135,7 @@ class BaseTitleDeedTest {
    @Test
    void testGetRentPricePassingTitleDeedsOfDifferentGroup() {
 
-        final TitleDeed differentGroupTitleDeed = new BaseTitleDeed("marrone", 
+        final TitleDeed differentGroupTitleDeed = new BaseTitleDeed(Type.BLUE, 
                                                         "via dante", 
                                                         SALE_PRICE, 
                                                         MORTGAGE_PRICE_FUNCTION,
@@ -162,14 +163,6 @@ class BaseTitleDeedTest {
             assertTrue(rentOption.getPrice() > 0);
         }
    }
-
-   /*
-   Verify if such control can be implemented with the enums implementation
-   @Test
-   void testGetRentPriceNotPassingAllTitleDeedsOfGroup () {
-
-   }
-    */
 
     private void testExceptionFormat(final Exception exception) {
         assertNotNull(exception.getMessage());
