@@ -1,5 +1,6 @@
 package it.unibo.monopoly.model.transactions.api;
 
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -77,4 +78,23 @@ public interface Bank {
      * @param amount the amount of money to withdraw
      */
     void makePaymentToBank(String ownerName, int amount);
+
+    /**
+     * Ranks the players based on the state of their {@link BankAccount}
+     * and the {@link TitleDeed} they own.
+     * The ranking algorithm is given to the bank on construction
+     * and it is responsible for calculating the total monetary 
+     * value of a player.
+     * In the default version of the algorithm the total monetary value
+     * is given by summing the {@code balance} of the player's {@link BankAccount}
+     * and the {@code mortgageValue} of each {@link TitleDeed} owned.
+     * However different versions of the algorithm may give more importance
+     * to a value more than another or may simply do different calculations,
+     * resulting in a different ranking
+     * @return a map where the keys are the players' nicknames and
+     * the values are the monetary values of each player (calculated with the
+     * ranking algorithm).
+     * The {@link Map.Entry} are sorted based on ascending values
+     */
+    Map<String, Integer> rankPlayers();
 }

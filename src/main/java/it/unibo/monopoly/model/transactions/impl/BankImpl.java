@@ -1,9 +1,11 @@
 package it.unibo.monopoly.model.transactions.impl;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.BiFunction;
 import java.util.stream.Collectors;
 
 import com.google.common.collect.Maps;
@@ -21,8 +23,15 @@ import it.unibo.monopoly.model.transactions.impl.bankaccount.ImmutableBankAccoun
  */
 public final class BankImpl implements Bank {
 
+    private static final BiFunction<BankAccount, Set<TitleDeed>, Integer> DEFAULT_RANKING_FUNCTION = (b, deeds) -> {
+        return b.getBalance() + deeds
+                                    .stream()
+                                    .mapToInt(TitleDeed::getMortgagePrice)
+                                    .sum();
+    };
     private final Map<String, BankAccount> accounts;
     private final Map<String, TitleDeed> titleDeeds;
+    private final BiFunction<BankAccount, Set<TitleDeed>, Integer> rankingBiFunction; 
 
 
     /**
@@ -32,12 +41,32 @@ public final class BankImpl implements Bank {
      * @param titleDeeds {@link List} of {@link TitleDeed} present in the game
      */
     public BankImpl(final Set<BankAccount> accounts, final Set<TitleDeed> titleDeeds) {
+        this(accounts, titleDeeds, DEFAULT_RANKING_FUNCTION);
+    }
+
+
+
+    /**
+     * Creates a new instance of {@link BankImpl} that
+     * operates with the given {@code accounts} and {@code title deeds}.
+     * It also allows to specify a rankingBiFunction used to caluclate 
+     * the monetary value of a player (therefore its score).
+     * @param accounts the palyers' {@link BankAccount}
+     * @param titleDeeds {@link List} of {@link TitleDeed} present in the game
+     * @param rankingBiFunction the function used to rank a player. Takes as input its {@link BankAccount}
+     * and all the {@link TitleDeed} whose ownership is associated with that player.
+     */
+    public BankImpl(final Set<BankAccount> accounts, final Set<TitleDeed> titleDeeds,
+            final BiFunction<BankAccount, Set<TitleDeed>, Integer> rankingBiFunction) {
         if (accounts.isEmpty() || titleDeeds.isEmpty()) {
             throw new IllegalArgumentException("Input lists cannot be empty");
         }
         this.accounts = Maps.uniqueIndex(accounts, BankAccount::getPlayerName);
         this.titleDeeds = Maps.uniqueIndex(titleDeeds, TitleDeed::getName);
+        this.rankingBiFunction = rankingBiFunction;
     }
+
+
 
     private BankAccount findAccount(final String id) {
         if (!accounts.containsKey(id)) {
@@ -58,6 +87,15 @@ public final class BankImpl implements Bank {
                         .stream()
                         .filter(d -> d.getGroup().equals(group))
                         .collect(Collectors.toSet());
+    }
+
+    private int rankPlayer(final String playerName) {
+        final Set<TitleDeed> playerDeeds = titleDeeds.values()
+                                        .stream()
+                                        .filter(t -> t.getOwner().isPresent() 
+                                                    && playerName.equals(t.getOwner().get()))
+                                        .collect(Collectors.toSet());
+        return rankingBiFunction.apply(findAccount(playerName), playerDeeds);
     }
 
     @Override
@@ -146,5 +184,22 @@ public final class BankImpl implements Bank {
         Objects.requireNonNull(ownerName);
         final BankAccount account = findAccount(ownerName);
         account.withdraw(amount);
+    }
+
+    @Override
+    public Map<String, Integer> rankPlayers() {
+        final Map<String, Integer> ranks = accounts.values()
+                                    .stream()
+                                    .collect(Collectors.toMap(BankAccount::getPlayerName, 
+                                            e1 -> rankPlayer(e1.getPlayerName())
+                                        )
+                                    );
+        return ranks.entrySet().stream().sorted((e1, e2) ->
+                    Integer.compare(e1.getValue(), e2.getValue())
+                ).collect(Collectors.toMap(Map.Entry::getKey, 
+                            Map.Entry::getValue,
+                            (e1, e2) -> e1,
+                            LinkedHashMap::new
+                        ));
     }
 }
