@@ -14,10 +14,12 @@ import it.unibo.monopoly.utils.ResourceLoader;
  * {@link MainMenuControllerImpl} interface.
  */
 public interface MainMenuController {
+
     /**
      * @implNote must create players according the factory template with PlayerFactoryImpl, based on the { @param players } 
      * @param playersSetup the list of player data, create players according to this
-     * @throws IOException if the loading of {@link TitleDeed}s from {@code JSON} failed
+     * @throws IOException if the loading from {@code JSON}s failed
+     * @throws NullPointerException if {@code id}, {@code name} or {@code color} are {@code null}
      */
     void onClickStart(Map<Color, String> playersSetup) throws IOException;
 

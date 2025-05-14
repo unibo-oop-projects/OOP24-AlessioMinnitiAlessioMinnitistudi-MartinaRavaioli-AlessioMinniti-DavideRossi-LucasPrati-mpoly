@@ -32,7 +32,7 @@ import it.unibo.monopoly.utils.ResourceLoader;
 /**
  * {@link MainMenuController} implementation.
  */
-public final class MainMenuControllerImpl  implements MainMenuController {
+public final class MainMenuControllerImpl implements MainMenuController {
 
     private final Configuration config;
     private final BankAccountFactory bankAccountFactory;

@@ -266,15 +266,25 @@ public final class MainMenuView extends JFrame {
                 Map.Entry::getKey,                      // chiave: Color
                 e -> e.getValue().getText().trim()      // valore: testo dal JTextField pulito da spazi extra con trim()
             ));
+
         try {
             controller.onClickStart(playersSetup);
+
         } catch (final IOException e) {
             GuiUtils.showErrorAndExit(
                 this,
                 e.getMessage(),
-                "Error loading Title Deeds"
+                "Error loading Json"
                 );
-            }
+
+        } catch (final NullPointerException e) {
+            GuiUtils.showErrorAndExit(
+                this,
+                e.getMessage(),
+                "Something is null during the initialization of the game"
+                );
+        }
+        this.dispose();
     }
 
     private void updateSettingsButton() {
