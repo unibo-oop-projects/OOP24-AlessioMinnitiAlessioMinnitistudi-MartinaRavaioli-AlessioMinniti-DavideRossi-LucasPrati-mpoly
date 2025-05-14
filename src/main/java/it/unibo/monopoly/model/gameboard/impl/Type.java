@@ -1,4 +1,5 @@
 package it.unibo.monopoly.model.gameboard.impl;
+
 /**
  * enum type.
 */
@@ -36,7 +37,7 @@ public enum Type {
      */
     PINK,
     /**
-     * magenta
+     * magenta.
      */
     MAGENTA,
     /**

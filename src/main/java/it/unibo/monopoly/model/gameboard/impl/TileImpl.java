@@ -11,7 +11,7 @@ import it.unibo.monopoly.utils.Identifiable;
 */
 public abstract class TileImpl implements Tile, Identifiable<Position>, Comparable<TileImpl> {
     private final String name;
-    private Position pos; 
+    private final Position pos; 
     private Type type;
 
     /**

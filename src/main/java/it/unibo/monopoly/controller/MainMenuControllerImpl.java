@@ -92,7 +92,7 @@ public final class MainMenuControllerImpl  implements MainMenuController {
         for (final var p : playersSetup.entrySet()) {
             final String name = p.getValue();
             final Color color = p.getKey();
-            int index = id;     // used for collocate players and pawns in the right order, following the ids
+            final int index = id;     // used for collocate players and pawns in the right order, following the ids
             id++;
             players.add(index, PlayerImpl.of(id, name, color));
             accounts.add(createBankAccountByType(id, name));
@@ -110,7 +110,7 @@ public final class MainMenuControllerImpl  implements MainMenuController {
         // final Board board = new BoardImpl(List<Tile>, pawns);
         // create TurnationManager
         // final TurnationManager turnationManager = new TurnationManagerImpl(config, players);
-         
+
 
         // TODO launch a new GUI for the game and put all these data to it
         // launch C_Game_Manager(config, board) //alessio

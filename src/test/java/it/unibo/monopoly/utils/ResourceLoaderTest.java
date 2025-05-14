@@ -73,16 +73,15 @@ class ResourceLoaderTest {
     @Test
     void testLoadTitleDeedsReturnsCorrectSize() throws IOException {
         final Set<TitleDeed> titleDeeds = ResourceLoader.loadTitleDeeds(VALID_TITLE_DEEDS_JSON);
-        assertEquals(EXPECTED_NUM_TITLE_DEEDS, titleDeeds.size(), "Expected " +
-                                                              EXPECTED_NUM_TITLE_DEEDS +
-                                                              " title deeds to be loaded");
+        assertEquals(EXPECTED_NUM_TITLE_DEEDS, titleDeeds.size(), 
+                    "Expected " + EXPECTED_NUM_TITLE_DEEDS + " title deeds to be loaded");
     }
 
     @Test
     void testLoadTitleDeedsContainsExpectedTitle() {
         final Set<TitleDeed> titleDeeds = ResourceLoader.loadTitleDeeds(VALID_TITLE_DEEDS_JSON);
         assertTrue(
-            titleDeeds.stream().anyMatch(td -> td.getName().equalsIgnoreCase(EXPECTED_TITLE_DEED)),
+            titleDeeds.stream().anyMatch(td -> EXPECTED_TITLE_DEED.equalsIgnoreCase(td.getName())),
             "Expected to find a title deed with name '" + EXPECTED_TITLE_DEED + "'"
         );
     }
