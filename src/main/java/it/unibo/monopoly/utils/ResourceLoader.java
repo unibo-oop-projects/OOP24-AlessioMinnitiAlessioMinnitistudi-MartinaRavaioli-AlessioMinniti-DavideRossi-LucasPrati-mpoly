@@ -12,6 +12,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.databind.JavaType;
@@ -19,6 +20,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import it.unibo.monopoly.model.transactions.api.TitleDeed;
+import it.unibo.monopoly.model.transactions.impl.BaseTitleDeed;
 
 
 /**
@@ -165,6 +168,25 @@ public final class ResourceLoader {
         }
         return out;
     }
+
+    /**
+     * Loads a set of {@link TitleDeed} instances from a JSON file in the classpath.
+     * <p>
+     * This method internally loads a list of {@link BaseTitleDeed} objects and safely upcasts them
+     * to the interface {@link TitleDeed}, returning them as an unmodifiable {@link Set}.
+     * <p>
+     * The JSON file is expected to contain an array of objects, each compatible with the structure of {@link BaseTitleDeed},
+     * and must be located in the resource path relative to the classpath root.
+     *
+     * @param path the relative path of the JSON resource file
+     * @return an unmodifiable {@link Set} of {@link TitleDeed} instances
+     * @throws NullPointerException if {@code path} is {@code null}
+     * @throws UncheckedIOException if the file cannot be read or parsed
+     */
+    public static Set<TitleDeed> loadTitleDeeds(final String path) {
+        return Set.copyOf(loadJsonList(path, BaseTitleDeed.class));
+    }
+
 
 
     /**
