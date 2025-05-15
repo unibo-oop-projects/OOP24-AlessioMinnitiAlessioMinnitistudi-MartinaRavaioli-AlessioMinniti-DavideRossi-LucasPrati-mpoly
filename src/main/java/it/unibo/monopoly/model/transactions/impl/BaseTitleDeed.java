@@ -7,9 +7,9 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.function.Function;
 
+import it.unibo.monopoly.model.gameboard.impl.Group;
 import it.unibo.monopoly.model.transactions.api.RentOption;
 import it.unibo.monopoly.model.transactions.api.TitleDeed;
-import it.unibo.monopoly.model.gameboard.impl.Type;
 
 
 /**
@@ -21,7 +21,7 @@ import it.unibo.monopoly.model.gameboard.impl.Type;
 public class BaseTitleDeed implements TitleDeed {
 
     private static final int HPRICE = 55;
-    private final Type type;
+    private final Group group;
     private final String name;
     private final int salePrice;
     private final Function<Integer, Integer> mortgageFunction; 
@@ -32,18 +32,18 @@ public class BaseTitleDeed implements TitleDeed {
     /**
      * Creates a new {@link BaseTitleDeed} that 
      * has only one standard rent fee.
-     * @param type The type of group of title deeds this deed is part of
+     * @param group The Group of group of title deeds this deed is part of
      * @param name The name of the deed
      * @param salePrice The price to pay to buy the deed
      * @param mortgageFunction The 
      * @param baseRent The standard rent fee
      */
-    public BaseTitleDeed(final Type type, 
+    public BaseTitleDeed(final Group group, 
                         final String name, 
                         final int salePrice, 
                         final Function<Integer, Integer> mortgageFunction, 
                         final int baseRent) {
-        this.type = type;
+        this.group = group;
         this.name = name;
         this.salePrice = salePrice;
         this.mortgageFunction = mortgageFunction;
@@ -54,7 +54,7 @@ public class BaseTitleDeed implements TitleDeed {
      * Creates a new {@link BaseTitleDeed}
      * with a standard rent fee and a list of additional
      * rent options.
-     * @param type The type of group of title deeds this deed is part of
+     * @param group The Group of group of title deeds this deed is part of
      * @param name The name of the deed
      * @param salePrice The price to pay to buy the deed
      * @param mortgageFunction The 
@@ -62,13 +62,13 @@ public class BaseTitleDeed implements TitleDeed {
      * @param additionalRentOptions The other rent options
      * that could be applied when having to pay the rent
      */
-    public BaseTitleDeed(final Type type, 
+    public BaseTitleDeed(final Group group, 
                         final String name, 
                         final int salePrice, 
                         final Function<Integer, Integer> mortgageFunction, 
                         final int baseRent, 
                         final List<RentOption> additionalRentOptions) {
-        this(type, name, salePrice, mortgageFunction, baseRent);
+        this(group, name, salePrice, mortgageFunction, baseRent);
         this.rentOptions.addAll(additionalRentOptions);
     }
 
@@ -99,8 +99,8 @@ public class BaseTitleDeed implements TitleDeed {
     }
 
     @Override
-    public final Type getType() {
-        return this.type;
+    public final Group getGroup() {
+        return this.group;
     }
 
     @Override
@@ -130,10 +130,10 @@ public class BaseTitleDeed implements TitleDeed {
      */
     @Override
     public Integer getRent(final Set<TitleDeed> groupTitleDeeds) {
-        if (!groupTitleDeeds.stream().allMatch(d -> d.getType().equals(this.type))) {
+        if (!groupTitleDeeds.stream().allMatch(d -> d.getGroup().equals(this.group))) {
             throw new IllegalArgumentException("The list of title deeds contains deeds"
                                                 + "that are not part of the group "
-                                                + this.type
+                                                + this.group
                                                 + ", the group of this title deed");
         }
 
@@ -165,7 +165,7 @@ public class BaseTitleDeed implements TitleDeed {
      */
     @Override
     public String toString() {
-        return "Name: " + this.name + "\n Group: " + this.type; 
+        return "Name: " + this.name + "\n Group: " + this.group; 
     }
 
     /**
@@ -176,14 +176,14 @@ public class BaseTitleDeed implements TitleDeed {
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((type == null) ? 0 : type.hashCode());
+        result = prime * result + ((group == null) ? 0 : group.hashCode());
         result = prime * result + ((name == null) ? 0 : name.hashCode());
         return result;
     }
 
     /**
      * Default IDE generated implementation of the equals method 
-     * based on the parameters {@code name} and {@code type}.
+     * based on the parameters {@code name} and {@code Group}.
      */
     @Override
     public boolean equals(final Object obj) {
@@ -197,11 +197,11 @@ public class BaseTitleDeed implements TitleDeed {
             return false;
         }
         final BaseTitleDeed other = (BaseTitleDeed) obj;
-        if (type == null) {
-            if (other.type != null) {
+        if (group == null) {
+            if (other.group != null) {
                 return false;
             }
-        } else if (!type.equals(other.type)) {
+        } else if (!group.equals(other.group)) {
             return false;
         }
         if (name == null) {

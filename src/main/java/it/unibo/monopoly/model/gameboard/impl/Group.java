@@ -4,7 +4,7 @@ import java.awt.Color;
 /**
  * enum type.
 */
-public enum Type {
+public enum Group {
     /**
      * red.
     */
@@ -54,7 +54,7 @@ public enum Type {
      * method to get the real color from the type of the enum.
      * @return Color
     */
-    public Color getColor(){
+    public Color getColor() {
         switch (this) {
             case RED -> {
                 return Color.RED;
@@ -84,6 +84,5 @@ public enum Type {
                 return Color.WHITE;
             }
         }
-
     }
 }

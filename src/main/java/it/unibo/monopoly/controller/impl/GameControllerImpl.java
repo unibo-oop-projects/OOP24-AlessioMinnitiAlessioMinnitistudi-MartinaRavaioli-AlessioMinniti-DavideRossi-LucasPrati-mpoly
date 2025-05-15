@@ -3,10 +3,9 @@ package it.unibo.monopoly.controller.impl;
 import java.awt.Color;
 import java.util.List;
 import java.util.Optional;
-import it.unibo.monopoly.model.gameboard.impl.Type;
-
 
 import it.unibo.monopoly.controller.api.GameController;
+import it.unibo.monopoly.model.gameboard.impl.Group;
 import it.unibo.monopoly.model.transactions.api.Bank;
 import it.unibo.monopoly.model.transactions.api.TitleDeed;
 import it.unibo.monopoly.model.transactions.impl.BaseTitleDeed;
@@ -117,25 +116,25 @@ public final class GameControllerImpl implements GameController {
 
     @Override
     public Color getPropertyColor(final TitleDeed selectedProperty) {
-        final Type colorS = selectedProperty.getType();
+        final Group colorS = selectedProperty.getGroup();
         final Color color;
         switch (colorS) {
-            case Type.BLUE:
+            case Group.BLUE:
                 color = Color.BLUE;
                 break;
-            case Type.RED:
+            case Group.RED:
                 color = Color.RED;
                 break;
-            case Type.GREEN:
+            case Group.GREEN:
                 color = Color.GREEN;
                 break;
-            case Type.YELLOW:
+            case Group.YELLOW:
                 color = Color.YELLOW;
                 break;
-            case Type.ORANGE:
+            case Group.ORANGE:
                 color = Color.ORANGE;
                 break;
-            case Type.BLACK:
+            case Group.BLACK:
                 color = Color.BLACK;
                 break;
             default:

@@ -1,19 +1,18 @@
 package it.unibo.monopoly.model.transactions;
 
+import java.util.Set;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-
-import java.util.Set;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import com.google.common.collect.Sets;
 
-import it.unibo.monopoly.model.gameboard.impl.Type;
+import it.unibo.monopoly.model.gameboard.impl.Group;
 import it.unibo.monopoly.model.transactions.api.Bank;
 import it.unibo.monopoly.model.transactions.api.BankAccount;
 import it.unibo.monopoly.model.transactions.api.TitleDeed;
@@ -45,8 +44,8 @@ class BankTest {
                                     )
     );
     private final Set<TitleDeed> deeds = Set.of(
-        new BaseTitleDeed(Type.PURPLE, TITLE_DEED_NAME1, 50, s -> s / 2, 10),
-        new BaseTitleDeed(Type.PURPLE, TITLE_DEED_NAME2, 60, s -> s / 2, 10)
+        new BaseTitleDeed(Group.PURPLE, TITLE_DEED_NAME1, 50, s -> s / 2, 10),
+        new BaseTitleDeed(Group.PURPLE, TITLE_DEED_NAME2, 60, s -> s / 2, 10)
 
     );
     private Bank bank;
