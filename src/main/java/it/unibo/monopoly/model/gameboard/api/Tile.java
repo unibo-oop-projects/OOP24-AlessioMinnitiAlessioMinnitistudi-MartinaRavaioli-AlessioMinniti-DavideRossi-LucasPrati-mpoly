@@ -14,7 +14,7 @@ public interface Tile {
     Group getGroup();
     /**
     * set the Group.
-    * @param Group
+    * @param group
     */
     void setGroup(Group group);
     /**
