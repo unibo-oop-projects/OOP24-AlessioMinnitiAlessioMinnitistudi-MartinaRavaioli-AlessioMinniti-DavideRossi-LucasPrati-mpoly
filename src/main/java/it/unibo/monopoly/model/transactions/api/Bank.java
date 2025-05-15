@@ -1,7 +1,9 @@
 package it.unibo.monopoly.model.transactions.api;
 
-import java.util.Map;
+import java.util.List;
 import java.util.Set;
+
+import org.apache.commons.lang3.tuple.Pair;
 
 /**
  * transaction manager interface.
@@ -91,10 +93,10 @@ public interface Bank {
      * However different versions of the algorithm may give more importance
      * to a value more than another or may simply do different calculations,
      * resulting in a different ranking
-     * @return a map where the keys are the players' nicknames and
-     * the values are the monetary values of each player (calculated with the
-     * ranking algorithm).
-     * The {@link Map.Entry} are sorted based on ascending values
+     * @return a {@link List} of {@link Pair} where the first element is 
+     * the player's name and the second is its monetary value. 
+     * The values of the list are sorted in ascending order based on monetary
+     * value.
      */
-    Map<String, Integer> rankPlayers();
+    List<Pair<String, Integer>> rankPlayers();
 }

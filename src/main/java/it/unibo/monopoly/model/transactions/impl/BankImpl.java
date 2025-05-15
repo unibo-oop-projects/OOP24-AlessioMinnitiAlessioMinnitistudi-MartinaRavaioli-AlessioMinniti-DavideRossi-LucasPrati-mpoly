@@ -1,12 +1,13 @@
 package it.unibo.monopoly.model.transactions.impl;
 
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.function.BiFunction;
 import java.util.stream.Collectors;
+
+import org.apache.commons.lang3.tuple.Pair;
 
 import com.google.common.collect.Maps;
 
@@ -188,19 +189,16 @@ public final class BankImpl implements Bank {
     }
 
     @Override
-    public Map<String, Integer> rankPlayers() {
+    public List<Pair<String, Integer>> rankPlayers() {
         final Map<String, Integer> ranks = accounts.values()
                                     .stream()
                                     .collect(Collectors.toMap(BankAccount::getPlayerName, 
                                             e1 -> rankPlayer(e1.getPlayerName())
                                         )
                                     );
-        return ranks.entrySet().stream().sorted((e1, e2) ->
-                    Integer.compare(e1.getValue(), e2.getValue())
-                ).collect(Collectors.toMap(Map.Entry::getKey, 
-                            Map.Entry::getValue,
-                            (e1, e2) -> e1,
-                            LinkedHashMap::new
-                        ));
+        return ranks.entrySet().stream()
+                                .map(e1 -> Pair.of(e1))
+                                .sorted((e1, e2) -> Integer.compare(e1.getRight(), e2.getRight()))
+                                .toList();
     }
 }
