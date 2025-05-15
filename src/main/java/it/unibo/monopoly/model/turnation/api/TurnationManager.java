@@ -18,4 +18,9 @@ public interface TurnationManager {
      * @return the dices' result
      */
     Collection<Integer> moveByDices();
+    /**
+     * return the id of the current player.
+     * @return int
+     */
+    int getIdCurrPlayer();
 }

@@ -9,6 +9,7 @@ import it.unibo.monopoly.utils.Identifiable;
 /**
  * Player implementation.
 */
+
 public final class PlayerImpl implements Player {
 
     private final int id;
@@ -26,6 +27,7 @@ public final class PlayerImpl implements Player {
         this.id = id;
         this.name = name;
         this.color = color;
+
     }
 
     @Override
@@ -65,4 +67,5 @@ public final class PlayerImpl implements Player {
         }
         return new PlayerImpl(id, name, color);
     }
+
 }

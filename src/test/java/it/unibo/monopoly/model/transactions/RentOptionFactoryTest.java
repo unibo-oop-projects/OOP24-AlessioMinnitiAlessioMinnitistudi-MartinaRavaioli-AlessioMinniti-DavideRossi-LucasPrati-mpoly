@@ -13,6 +13,7 @@ import org.junit.jupiter.api.Test;
 
 import org.apache.commons.lang3.tuple.Pair;
 
+import it.unibo.monopoly.model.gameboard.impl.Type;
 import it.unibo.monopoly.model.transactions.api.RentOption;
 import it.unibo.monopoly.model.transactions.api.RentOptionFactory;
 import it.unibo.monopoly.model.transactions.api.TitleDeed;
@@ -25,7 +26,7 @@ class RentOptionFactoryTest {
     private static final String OWNER_NAME = "Alice";
     private static final int MULTIPLY_FACTOR = 2;
     private static final int N_STATIONS = 4;
-    private static final String GROUP_NAME = "stazione";
+    private static final Type GROUP_TYPE = Type.STATION;
     private RentOptionFactory rentOptionFactory;
 
     @BeforeEach
@@ -37,8 +38,8 @@ class RentOptionFactoryTest {
     void allTitleDeedsOfAGroupOwned() {
         final RentOption doubledPrice = rentOptionFactory.allDeedsOfGroupWithSameOwner(START_RENT);
         final List<TitleDeed> deeds = List.of(
-            new BaseTitleDeed("viola", "vicolo corto", START_RENT * 10, s -> s / 2, START_RENT, List.of(doubledPrice)),
-            new BaseTitleDeed("viola", "vicolo stretto", START_RENT * 10, s -> s / 2, START_RENT, List.of(doubledPrice))
+            new BaseTitleDeed(Type.PURPLE, "vicolo corto", START_RENT * 10, s -> s / 2, START_RENT, List.of(doubledPrice)),
+            new BaseTitleDeed(Type.PURPLE, "vicolo stretto", START_RENT * 10, s -> s / 2, START_RENT, List.of(doubledPrice))
         );
         deeds.getFirst().setOwner(OWNER_NAME);
         assertFalse(doubledPrice.canBeApplied(Set.copyOf(deeds), OWNER_NAME));
@@ -52,10 +53,10 @@ class RentOptionFactoryTest {
     void priceIncreasesProgressivelyBasedOnOwnedTitleDeeds() {
         final List<RentOption> options = rentOptionFactory.progressivelyIncreasingPrice(START_RENT, MULTIPLY_FACTOR, N_STATIONS);
         final List<TitleDeed> deeds = List.of(
-            new BaseTitleDeed(GROUP_NAME, "stazione nord", START_RENT * 10, s -> s / 2, START_RENT, options),
-            new BaseTitleDeed(GROUP_NAME, "stazione sud", START_RENT * 10, s -> s / 2, START_RENT, options),
-            new BaseTitleDeed(GROUP_NAME, "stazione est", START_RENT * 10, s -> s / 2, START_RENT, options),
-            new BaseTitleDeed(GROUP_NAME, "stazione ovest", START_RENT * 10, s -> s / 2, START_RENT, options)
+            new BaseTitleDeed(GROUP_TYPE, "stazione nord", START_RENT * 10, s -> s / 2, START_RENT, options),
+            new BaseTitleDeed(GROUP_TYPE, "stazione sud", START_RENT * 10, s -> s / 2, START_RENT, options),
+            new BaseTitleDeed(GROUP_TYPE, "stazione est", START_RENT * 10, s -> s / 2, START_RENT, options),
+            new BaseTitleDeed(GROUP_TYPE, "stazione ovest", START_RENT * 10, s -> s / 2, START_RENT, options)
         );
 
         assertTrue(Stream.iterate(Pair.of(0, START_RENT), p -> Pair.of(p.getLeft() + 1, p.getRight() * MULTIPLY_FACTOR))

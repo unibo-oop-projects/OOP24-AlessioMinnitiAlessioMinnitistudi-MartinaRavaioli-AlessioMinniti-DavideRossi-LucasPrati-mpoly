@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
+import it.unibo.monopoly.model.gameboard.impl.Type;
 import it.unibo.monopoly.model.transactions.api.RentOption;
 import it.unibo.monopoly.model.transactions.api.TitleDeed;
 
@@ -25,7 +26,7 @@ public final class ImmutableTitleDeedCopy implements TitleDeed {
     public ImmutableTitleDeedCopy(final TitleDeed deed) {
         final List<RentOption> rentOptionCopy = new ArrayList<>(deed.getRentOptions());
         rentOptionCopy.removeFirst();
-        this.deed = new BaseTitleDeed(deed.getGroup(), 
+        this.deed = new BaseTitleDeed(deed.getType(), 
                                     deed.getName(),
                                     deed.getSalePrice(), 
                                     d -> deed.getMortgagePrice(), 
@@ -52,8 +53,8 @@ public final class ImmutableTitleDeedCopy implements TitleDeed {
     }
 
     @Override
-    public String getGroup() {
-        return this.deed.getGroup();
+    public Type getType() {
+        return this.deed.getType();
     }
 
     @Override
@@ -109,6 +110,18 @@ public final class ImmutableTitleDeedCopy implements TitleDeed {
             return false;
         }
         return true;
+    }
+
+    @Override
+    public int housePrice() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'housePrice'");
+    }
+
+    @Override
+    public int houseNum() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'houseNum'");
     }
 
 }

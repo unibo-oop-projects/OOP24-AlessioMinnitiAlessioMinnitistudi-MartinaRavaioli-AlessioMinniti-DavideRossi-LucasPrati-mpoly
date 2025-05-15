@@ -10,7 +10,6 @@ public class PropertyImpl extends TileImpl implements Property {
     private static final int MAX_HOUSES = 4;
     private int nHouses;
     private boolean hotel;
-    private String name;
     /**
      * constructor.
      * @param name
@@ -18,24 +17,9 @@ public class PropertyImpl extends TileImpl implements Property {
      * @param type
     */
     public PropertyImpl(final String name, final Position id, final Type type) { 
-        super(id, type);
+        super(name, id, type);
         this.nHouses = 0;
         this.hotel = false;
-        setName(name);
-    }
-    /**
-     * set the name.
-     * @param name
-    */
-    public final void setName(final String name) {
-        this.name = name;
-    }
-    /**
-     * get the name.
-     * @return String
-    */
-    public String getName() {
-        return this.name;
     }
 
     /**
