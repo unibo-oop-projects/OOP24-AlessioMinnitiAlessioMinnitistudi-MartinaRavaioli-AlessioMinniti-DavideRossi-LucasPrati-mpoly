@@ -2,6 +2,7 @@ package it.unibo.monopoly.model.transactions.api;
 
 import java.util.List;
 import java.util.Set;
+import java.util.function.BiFunction;
 
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -9,6 +10,20 @@ import org.apache.commons.lang3.tuple.Pair;
  * transaction manager interface.
 */
 public interface Bank { 
+
+    /**
+     * The default ranking function used to calculate a player's
+     * monetary value. This is the function that is used in the original
+     * table version of the game 'Monopoly'. The final monetary value is the
+     * sum of the money that is currently inside the player's bank account, 
+     * and the the sum of the mortgage prices of all the title deeds it owns.
+     */
+    BiFunction<BankAccount, Set<TitleDeed>, Integer> DEFAULT_RANKING_FUNCTION = (b, deeds) -> {
+        return b.getBalance() + deeds
+                                    .stream()
+                                    .mapToInt(TitleDeed::getMortgagePrice)
+                                    .sum();
+    };
     /**
      * Sells a {@link TitleDeed} associated with a specific
      * {@link BankAccount}.

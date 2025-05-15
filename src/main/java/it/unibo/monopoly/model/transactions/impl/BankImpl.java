@@ -25,12 +25,6 @@ import it.unibo.monopoly.model.transactions.impl.bankaccount.ImmutableBankAccoun
  */
 public final class BankImpl implements Bank {
 
-    private static final BiFunction<BankAccount, Set<TitleDeed>, Integer> DEFAULT_RANKING_FUNCTION = (b, deeds) -> {
-        return b.getBalance() + deeds
-                                    .stream()
-                                    .mapToInt(TitleDeed::getMortgagePrice)
-                                    .sum();
-    };
     private final Map<String, BankAccount> accounts;
     private final Map<String, TitleDeed> titleDeeds;
     private final BiFunction<BankAccount, Set<TitleDeed>, Integer> rankingBiFunction; 
