@@ -3,6 +3,8 @@ package it.unibo.monopoly.controller.impl;
 import java.awt.Color;
 import java.util.List;
 import java.util.Optional;
+import it.unibo.monopoly.model.gameboard.impl.Type;
+
 
 import it.unibo.monopoly.controller.api.GameController;
 import it.unibo.monopoly.model.transactions.api.Bank;
@@ -76,7 +78,7 @@ public final class GameControllerImpl implements GameController {
         final Optional<TitleDeed> selectedPropertyO = properties.stream()
                                                                 .filter(p -> p.getName().equals(selectedValue))
                                                                 .findAny();
-        TitleDeed selectedProperty = new BaseTitleDeed("null", "null", NUM, null, NUM); 
+        TitleDeed selectedProperty = new BaseTitleDeed(null, "null", NUM, null, NUM); 
         if (selectedPropertyO.isPresent()) {
             selectedProperty = selectedPropertyO.get();
         }
@@ -115,28 +117,25 @@ public final class GameControllerImpl implements GameController {
 
     @Override
     public Color getPropertyColor(final TitleDeed selectedProperty) {
-        final String colorS = selectedProperty.getGroup();
+        final Type colorS = selectedProperty.getType();
         final Color color;
         switch (colorS) {
-            case "blue":
+            case Type.BLUE:
                 color = Color.BLUE;
                 break;
-            case "red":
+            case Type.RED:
                 color = Color.RED;
                 break;
-            case "green":
+            case Type.GREEN:
                 color = Color.GREEN;
                 break;
-            case "yellow":
+            case Type.YELLOW:
                 color = Color.YELLOW;
                 break;
-            case "pink":
-                color = Color.PINK;
-                break;
-            case "orange":
+            case Type.ORANGE:
                 color = Color.ORANGE;
                 break;
-            case "black":
+            case Type.BLACK:
                 color = Color.BLACK;
                 break;
             default:

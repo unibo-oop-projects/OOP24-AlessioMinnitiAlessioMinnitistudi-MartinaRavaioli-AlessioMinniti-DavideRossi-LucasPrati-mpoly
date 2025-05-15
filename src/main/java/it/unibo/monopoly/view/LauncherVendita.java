@@ -5,6 +5,7 @@ import java.util.Set;
 
 import it.unibo.monopoly.controller.api.GameController;
 import it.unibo.monopoly.controller.impl.GameControllerImpl;
+import it.unibo.monopoly.model.gameboard.impl.Type;
 import it.unibo.monopoly.model.transactions.api.Bank;
 import it.unibo.monopoly.model.transactions.api.BankAccount;
 import it.unibo.monopoly.model.transactions.api.TitleDeed;
@@ -37,7 +38,7 @@ public final class LauncherVendita {
         final BankAccount ac2 = new SimpleBankAccountImpl("pietro");
         final Player p1 = PlayerImpl.of(0, "piero", Color.BLUE);
         final int parMortage = 40;
-        final TitleDeed ti1 = new BaseTitleDeed("blue", "nana", 23, i -> i + parMortage, 20);
+        final TitleDeed ti1 = new BaseTitleDeed(Type.BLUE, "nana", 23, i -> i + parMortage, 20);
         final Bank bank = new BankImpl(Set.of(ac1, ac2), Set.of(ti1));
         final int width = 700;
         final int heigth = 500;
