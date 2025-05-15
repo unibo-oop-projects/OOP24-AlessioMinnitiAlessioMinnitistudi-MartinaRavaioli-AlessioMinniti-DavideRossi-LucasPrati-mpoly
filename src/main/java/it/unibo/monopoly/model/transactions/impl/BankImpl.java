@@ -197,7 +197,7 @@ public final class BankImpl implements Bank {
                                         )
                                     );
         return ranks.entrySet().stream()
-                                .map(e1 -> Pair.of(e1))
+                                .map(Pair::of)
                                 .sorted((e1, e2) -> Integer.compare(e1.getRight(), e2.getRight()))
                                 .toList();
     }
