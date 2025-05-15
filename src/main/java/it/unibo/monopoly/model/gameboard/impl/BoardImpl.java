@@ -98,6 +98,7 @@ public class BoardImpl implements Board {
      * @param id
      * @return Pawn
     */
+    @Override
     public Pawn getPawn(final int id) {
         for (final Pawn p : this.pawns) {
             if (((PawnImpl) p).getID() == id) {

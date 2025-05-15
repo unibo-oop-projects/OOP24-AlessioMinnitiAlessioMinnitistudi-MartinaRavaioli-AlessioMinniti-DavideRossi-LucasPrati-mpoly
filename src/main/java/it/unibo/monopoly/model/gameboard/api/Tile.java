@@ -22,5 +22,10 @@ public interface Tile {
     * @return position
     */
     Position getPosition();
+    /**
+    * get the name.
+    * @return String
+    */
+    String getName();
 
 }

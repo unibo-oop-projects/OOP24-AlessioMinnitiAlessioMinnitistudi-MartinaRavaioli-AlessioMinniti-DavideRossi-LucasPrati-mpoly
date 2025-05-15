@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
+import it.unibo.monopoly.model.gameboard.impl.Type;
+
 /**
  * The title deed card of a specific {@link Property}.
  * Each {@link TitleDeed} lists all its 
@@ -44,7 +46,7 @@ public interface TitleDeed {
     /**
      * @return the name of the group this {@link TitleDeed} is part of.
      */
-    String getGroup();
+    Type getType();
 
     /**
      * @return the name of this {@link TitleDeed}
@@ -73,7 +75,7 @@ public interface TitleDeed {
      * title deeds that will be checked to determine the final 
      * rent price. 
      * The tile deeds should be part of the same group,
-     * a call on {@link #getGroup()} should give the same {@code String}
+     * a call on {@link #getType()} should give the same {@code String}
      * for each of the deeds that are part of this {@link Set}
      * @return the final rent that should be paid as an {@code Integer}
      */
@@ -85,5 +87,17 @@ public interface TitleDeed {
      * {@link TitleDeed}.
      */
     List<RentOption> getRentOptions();
+
+    /**
+     * place holder. 
+     * @return price of houses
+     */
+    int housePrice();
+
+    /**
+     * place holder. 
+     * @return number of houses
+     */
+    int houseNum();
 
 }

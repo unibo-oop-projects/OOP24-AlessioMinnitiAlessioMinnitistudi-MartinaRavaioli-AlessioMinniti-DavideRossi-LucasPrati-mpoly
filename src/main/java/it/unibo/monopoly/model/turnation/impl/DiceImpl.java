@@ -12,7 +12,8 @@ import it.unibo.monopoly.model.turnation.api.Dice;
  * dice implementation.
 */
 public class DiceImpl implements Dice {
-    private static final int FACES_OF_THE_DICE = 5;
+    private static final int DEFAULT_FACES = 5;
+    private final int faces;
     private final Random rand = new Random();
     private int nDices;
     private final int[] dices;
@@ -23,6 +24,17 @@ public class DiceImpl implements Dice {
     public DiceImpl(final int n) {
         setNDices(n);
         this.dices = new int[this.nDices];
+        this.faces = DEFAULT_FACES;
+    }
+    /**
+     * constructor.
+     * @param n
+     * @param faces
+    */
+    public DiceImpl(final int n, final int faces) {
+        setNDices(n);
+        this.dices = new int[this.nDices];
+        this.faces = faces;
     }
 
     /**
@@ -31,6 +43,7 @@ public class DiceImpl implements Dice {
     public DiceImpl() {
         setNDices(2);
         this.dices = new int[this.nDices];
+        this.faces = DEFAULT_FACES;
     }
     /**
      * throw the dices.
@@ -39,7 +52,7 @@ public class DiceImpl implements Dice {
     @Override
     public final Collection<Integer> throwDices() {
         return IntStream.range(0, dices.length)
-                .map(i -> rand.nextInt(FACES_OF_THE_DICE) + 1)
+                .map(i -> rand.nextInt(this.faces) + 1)
                 .boxed()
                 .collect(Collectors.toList());
     }
