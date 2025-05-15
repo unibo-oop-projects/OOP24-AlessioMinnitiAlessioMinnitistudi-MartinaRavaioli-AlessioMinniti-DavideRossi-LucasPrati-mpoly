@@ -6,8 +6,12 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
+import java.util.function.BiFunction;
 
+import org.apache.commons.lang3.tuple.Pair;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -274,6 +278,39 @@ class BankTest {
         final Set<TitleDeed> deeds = bank.getTitleDeedsByOwner(PLAYER1_NAME);
         assertFalse(deeds.isEmpty());
         assertTrue(deeds.stream().allMatch(d -> d.getOwner().isPresent() && PLAYER1_NAME.equals(d.getOwner().get())));
+    }
+
+    @Test
+    void defaultRankFunction() {
+        bank.buyTitleDeed(TITLE_DEED_NAME1, PLAYER1_NAME);
+        List<Pair<String,Integer>> ranking = bank.rankPlayers();
+        assertEquals(2, ranking.size());
+        final int pl1Value = bank.getBankAccount(PLAYER1_NAME).getBalance() + bank.getTitleDeed(TITLE_DEED_NAME1).getMortgagePrice();
+        final int pl2Value = bank.getBankAccount(PLAYER2_NAME).getBalance();
+        assertEquals(pl1Value, ranking.getFirst().getRight());
+        assertEquals(pl2Value, ranking.getLast().getRight());
+        assertEquals(PLAYER1_NAME, ranking.getFirst().getLeft());        
+        assertEquals(PLAYER2_NAME, ranking.getLast().getLeft());
+    }
+
+    @Test
+    void customRankFunction() {
+        /*in this ranking function the current balance only matters 50% and the sale price is used
+          instead of the mortgage price
+        */
+        BiFunction<BankAccount, Set<TitleDeed>, Integer> customRankingFunction = (b, deeds) -> {
+            return b.getBalance() / 2 + deeds.stream().mapToInt(d -> d.getSalePrice()).sum();
+        };
+        bank = new BankImpl(accounts, deeds, customRankingFunction);
+        bank.buyTitleDeed(TITLE_DEED_NAME1, PLAYER1_NAME);
+        List<Pair<String,Integer>> ranking = bank.rankPlayers();
+        assertEquals(2, ranking.size());
+        final int pl1Value = customRankingFunction.apply(bank.getBankAccount(PLAYER1_NAME), bank.getTitleDeedsByOwner(PLAYER1_NAME));
+        final int pl2Value = customRankingFunction.apply(bank.getBankAccount(PLAYER2_NAME), bank.getTitleDeedsByOwner(PLAYER2_NAME));
+        assertEquals(pl2Value, ranking.getFirst().getRight());
+        assertEquals(pl1Value, ranking.getLast().getRight());
+        assertEquals(PLAYER2_NAME, ranking.getFirst().getLeft());        
+        assertEquals(PLAYER1_NAME, ranking.getLast().getLeft());
     }
 
     private void testExceptionFormat(final Exception exception) {
