@@ -3,6 +3,9 @@ package it.unibo.monopoly.controller.impl;
 import java.awt.Color;
 import java.util.List;
 import java.util.Optional;
+
+import it.unibo.monopoly.model.gameboard.api.Board;
+import it.unibo.monopoly.model.gameboard.api.Tile;
 import it.unibo.monopoly.model.gameboard.impl.Type;
 
 
@@ -11,6 +14,8 @@ import it.unibo.monopoly.model.transactions.api.Bank;
 import it.unibo.monopoly.model.transactions.api.TitleDeed;
 import it.unibo.monopoly.model.transactions.impl.BaseTitleDeed;
 import it.unibo.monopoly.model.turnation.api.Player;
+import it.unibo.monopoly.model.turnation.api.TurnationManager;
+import it.unibo.monopoly.view.api.MainGameView;
 
 /**
  * implementation of game controller.
@@ -19,6 +24,9 @@ public final class GameControllerImpl implements GameController {
 
     private static final int NUM = 0;
     private final Bank bank; 
+    private  Board board;
+    private  MainGameView gameView;
+    private TurnationManager manager;
 
     /**
      * constructor for this class.
@@ -146,4 +154,35 @@ public final class GameControllerImpl implements GameController {
     }
 
 
+    @Override
+    public void endTurn() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'endTurn'");
+    }
+
+    @Override
+    public void throwDices() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'throwDices'");
+    }
+
+    @Override
+    public void buyProperty() {
+        try {
+            Tile currentPlayerTile = board.getTileForPawn(board.getPawn(manager.getIdCurrPlayer()));
+            bank.buyTitleDeed(currentPlayerTile.toString(), null);
+        } catch (Exception e) {
+            gameView.displayError(e);
+        }
+    }
+
+    @Override
+    public void payPropertyOwner() {
+        try {
+            Tile currentPlayerTile = board.getTileForPawn(board.getPawn(manager.getIdCurrPlayer()));
+            bank.payRent(currentPlayerTile.toString(), null);
+        } catch (Exception e) {
+            gameView.displayError(e);
+        }
+    }
 }
