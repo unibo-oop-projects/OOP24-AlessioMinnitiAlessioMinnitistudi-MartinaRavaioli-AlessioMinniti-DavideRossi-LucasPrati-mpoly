@@ -1,12 +1,13 @@
 package it.unibo.monopoly.model.turnation.impl;
 
 import it.unibo.monopoly.model.turnation.api.Position;
+import it.unibo.monopoly.utils.GuiUtils;
 
 /**
- * position implementation.
+ * {@link Position}'s implementation.
 */
 public class PositionImpl implements Position, Comparable<Position> {
-    private static final Integer MAX_POS = 40;
+
     private Integer value;
 
     /**
@@ -32,7 +33,7 @@ public class PositionImpl implements Position, Comparable<Position> {
     */
     @Override
     public void setPos(final int value) {
-        if (value <= MAX_POS) {
+        if (value <= GuiUtils.NUM_TILES) {
             this.value = value;
         } else {
             throw new IllegalArgumentException("out of bound");

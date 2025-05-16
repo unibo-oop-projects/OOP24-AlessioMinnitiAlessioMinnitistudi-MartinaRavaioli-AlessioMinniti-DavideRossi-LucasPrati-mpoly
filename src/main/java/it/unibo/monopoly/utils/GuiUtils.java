@@ -22,7 +22,7 @@ import javax.swing.WindowConstants;
  */
 public final class GuiUtils {
 
-    static final int NUM_TILES = 40;
+    public static final int NUM_TILES = 40;
     private static final double WIDTH_PERC = 0.5;
     private static final double HEIGHT_PERC = 0.5;
     private static final int FONT_STYLE = Font.BOLD;
