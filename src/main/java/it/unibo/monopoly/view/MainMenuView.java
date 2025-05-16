@@ -6,7 +6,7 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.io.IOException;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -71,7 +71,7 @@ public final class MainMenuView extends JFrame {
 
     private final transient Configuration config;
     private final transient MainMenuController controller;
-    private final Map<Color, JTextField> playersInfo = new HashMap<>();
+    private final Map<Color, JTextField> playersInfo = new LinkedHashMap<>();
 
     private JButton decreaseButton;
     private JButton increaseButton;
@@ -264,7 +264,9 @@ public final class MainMenuView extends JFrame {
         final Map<Color, String> playersSetup = playersInfo.entrySet().stream()
             .collect(Collectors.toMap(
                 Map.Entry::getKey,                      // chiave: Color
-                e -> e.getValue().getText().trim()      // valore: testo dal JTextField pulito da spazi extra con trim()
+                e -> e.getValue().getText().trim(),     // valore: testo dal JTextField pulito da spazi extra con trim()
+                (a, b) -> b,                            // risolve eventuali duplicati Colore mantenendo l'ultimo valore
+                LinkedHashMap::new                      // preservo l'ordine di inserimento
             ));
 
         try {

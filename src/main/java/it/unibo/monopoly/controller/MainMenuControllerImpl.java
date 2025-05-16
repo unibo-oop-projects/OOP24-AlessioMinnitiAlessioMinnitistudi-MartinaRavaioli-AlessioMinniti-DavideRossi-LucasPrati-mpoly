@@ -113,6 +113,8 @@ public final class MainMenuControllerImpl implements MainMenuController {
 
 
         // TODO launch a new GUI for the game and put all these data to it
+        // !!! la configurazione forse non serve più da qui in poi
+        // !!! creare sia controller che view, poi usare .attach()
         // launch C_Game_Manager(config, board) //alessio
         // launch controller di davide (config, bank, )
     }

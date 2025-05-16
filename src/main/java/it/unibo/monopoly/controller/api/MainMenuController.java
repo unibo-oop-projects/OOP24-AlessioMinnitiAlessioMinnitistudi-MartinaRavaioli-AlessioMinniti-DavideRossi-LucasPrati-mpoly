@@ -6,7 +6,6 @@ import java.util.Map;
 
 import it.unibo.monopoly.controller.MainMenuControllerImpl;
 import it.unibo.monopoly.model.transactions.api.BankAccountType;
-import it.unibo.monopoly.model.transactions.api.TitleDeed;
 import it.unibo.monopoly.utils.ResourceLoader;
 
 
@@ -16,7 +15,7 @@ import it.unibo.monopoly.utils.ResourceLoader;
 public interface MainMenuController {
 
     /**
-     * @implNote must create players according the factory template with PlayerFactoryImpl, based on the { @param players } 
+     * Must initialize all the game, starting from the given {@code playerSetup}
      * @param playersSetup the list of player data, create players according to this
      * @throws IOException if the loading from {@code JSON}s failed
      * @throws NullPointerException if {@code id}, {@code name} or {@code color} are {@code null}
@@ -24,27 +23,27 @@ public interface MainMenuController {
     void onClickStart(Map<Color, String> playersSetup) throws IOException;
 
     /**
-     * @implNote decreases the field numPlayer
+     * Decrease the selected number of players
      */
     void decreaseNumPlayer();
 
     /**
-     * @implNote increases the field numPlayer
+     * Increase the selected number of players
      */
     void increaseNumPlayer();
 
     /**
-     * @return the amount of numPlayer
+     * @return the the selected number of players
      */
     int getNumPlayers();
 
     /**
-     * @return true if numPlayer reach the minimum, false otherwise
+     * @return true if the selected number of players reach the minimum, false otherwise
      */
     boolean alreadyMinPlayers();
 
     /**
-     * @return true if numPlayer reach the maximum, false otherwise
+     * @return true if the selected number of players reach the maximum, false otherwise
      */
     boolean alreadyMaxPlayers();
 
@@ -59,7 +58,7 @@ public interface MainMenuController {
     void setBankAccountType(BankAccountType bankAccountType);
 
     /**
-     * Use a {@link ResourceLoader} for getting the {@link String} with all the rules of the game.
+     * Use a {@link ResourceLoader} for getting a {@link String} with all the rules of the game.
      * 
      * @return a {@link String} with all the rules of the game
      */
