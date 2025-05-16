@@ -47,8 +47,6 @@ final class SwingPlayerPanel extends SwingAbstractJPanel implements PlayerPanel 
     public void displayPlayer(final Player pl) {
         this.setLayout(new GridLayout(4, 1));
         this.add(createRow(userNameJLabel, new JLabel(pl.getName())));
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'displayPlayer'");
     }
 
 }
