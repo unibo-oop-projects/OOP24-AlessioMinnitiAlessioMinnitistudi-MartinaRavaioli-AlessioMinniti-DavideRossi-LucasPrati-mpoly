@@ -196,4 +196,10 @@ public final class GameControllerImpl implements GameController {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'getPlayerAccount'");
     }
+
+    @Override
+    public void loadRules() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'loadRules'");
+    }
 }

@@ -94,4 +94,10 @@ public interface GameController {
 
     BankAccount getPlayerAccount(Player currentPlayer);
 
+    /**
+     * Loads the game rules from the file
+     * and asks the {@link MainGameView} to display them.
+     */
+    void loadRules();
+
 }
