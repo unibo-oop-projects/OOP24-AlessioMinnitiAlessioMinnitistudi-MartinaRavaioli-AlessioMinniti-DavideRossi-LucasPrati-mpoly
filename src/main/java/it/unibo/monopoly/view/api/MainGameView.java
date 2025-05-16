@@ -15,14 +15,13 @@ import it.unibo.monopoly.model.turnation.api.Player;
 public interface MainGameView {
 
     /**
-     * Display information related to the player 
-     * that's next to play its turn.
-     * The method also clears all panels that shows informations that are subsequent 
-     * to the player's movement.
-     * @param plData General information of the player 
-     * @param accountData the bank account of the player
+     * Ask the {@code view} to refresh the information related
+     * to the player that is currently playing. 
+     * Usually this involves a series of calls 
+     * to controller methods to retrieve the data and then
+     * display it.
      */
-    void displayCurrentPlayerInfo(Player plData, BankAccount accountData);
+    void refreshCurrentPlayerInfo();
 
     /**
      * Display information of the {@link TitleDeed}

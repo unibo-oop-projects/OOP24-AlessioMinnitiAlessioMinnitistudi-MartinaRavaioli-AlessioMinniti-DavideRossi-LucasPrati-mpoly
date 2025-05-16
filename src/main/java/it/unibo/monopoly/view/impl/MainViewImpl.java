@@ -6,9 +6,8 @@ import java.util.Set;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import it.unibo.monopoly.controller.GameControllerImpl;
 import it.unibo.monopoly.controller.api.GameController;
-import it.unibo.monopoly.model.transactions.api.BankAccount;
+import it.unibo.monopoly.controller.impl.GameControllerImpl;
 import it.unibo.monopoly.model.transactions.api.TitleDeed;
 import it.unibo.monopoly.model.turnation.api.Player;
 import it.unibo.monopoly.view.api.AccountPanel;
@@ -36,6 +35,7 @@ public final class MainViewImpl implements MainGameView {
     private final GameActionsPanel gameActionsPanel;
     private final StandardControlsPanel mainActionsPanel;
 
+    private final GameController controller;
     /**
      * Assembles the UI of the game interface and adds all components to {@code mainFrame} object.
      * The {@code mainFrame} is a {@link JFrame}. 
@@ -44,6 +44,7 @@ public final class MainViewImpl implements MainGameView {
      * will be captured and handled by the {@code controller} provided to this constructor. 
      */
     public MainViewImpl(final GameController controller) {
+        this.controller = controller;
         final GamePanelsFactory fact = new SwingPanelsFactory();
         contractPanel = fact.contractPanel();
         playerInfoPanel = fact.userInfoPanel();
@@ -53,6 +54,7 @@ public final class MainViewImpl implements MainGameView {
         mainGameFrame.getContentPane().add(buildActionPanelUI(), BorderLayout.CENTER);
         mainGameFrame.pack();
         mainGameFrame.setVisible(true);
+
     }
 
     private JPanel buildActionPanelUI() {
@@ -71,9 +73,10 @@ public final class MainViewImpl implements MainGameView {
     }
 
     @Override
-    public void displayCurrentPlayerInfo(final Player plData, final BankAccount accountData) {
-        playerInfoPanel.displayPlayer(plData);
-        accountInfoPanel.displayBankAccount(accountData);
+    public void refreshCurrentPlayerInfo() {
+        Player currentPlayer = controller.getCurrentPlayer();
+        playerInfoPanel.displayPlayer(currentPlayer);
+        accountInfoPanel.displayBankAccount(controller.getPlayerAccount(currentPlayer));
         contractPanel.clear();
         gameActionsPanel.clear();
         mainActionsPanel.clear();
@@ -90,7 +93,7 @@ public final class MainViewImpl implements MainGameView {
     }
 
     public static void main(final String[] args) {
-        new MainViewImpl(new GameControllerImpl());
+        new MainViewImpl(new GameControllerImpl(null));
     }
 
     @Override
