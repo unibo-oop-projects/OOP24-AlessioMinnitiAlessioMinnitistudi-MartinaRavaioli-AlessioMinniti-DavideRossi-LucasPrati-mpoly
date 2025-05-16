@@ -1,5 +1,8 @@
 package it.unibo.monopoly.model.gameboard.impl;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import it.unibo.monopoly.model.gameboard.api.Effect;
 import it.unibo.monopoly.model.gameboard.api.Special;
 import it.unibo.monopoly.model.turnation.api.Position;
@@ -8,17 +11,26 @@ import it.unibo.monopoly.model.turnation.api.Position;
  * special tile implementation.
 */
 public class SpecialImpl extends TileImpl implements Special {
+
+    private final String effect;
+
     /**
     * get the type.
     * @param name
-    * @param pos
+    * @param position
     * @param type
     */
-    public SpecialImpl(final String name, final Position pos) {
-        super(name, pos, Type.SPECIAL);
+    @JsonCreator
+    public SpecialImpl(
+        @JsonProperty("name") final String name,
+        @JsonProperty("position") final Position position,
+        @JsonProperty("effect") final String effect
+    ){
+        super(name, position, Type.SPECIAL);
+        this.effect = effect;
     }
     /**
-    * get the type.
+    * get the effect.
     * @return Effect
     */
     @Override
@@ -26,9 +38,7 @@ public class SpecialImpl extends TileImpl implements Special {
         return null; 
     }
 
-    @Override
-    public final Position getPosition() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getPosition'");
+    public String debugEffectTODELETE() {
+        return effect;
     }
 }

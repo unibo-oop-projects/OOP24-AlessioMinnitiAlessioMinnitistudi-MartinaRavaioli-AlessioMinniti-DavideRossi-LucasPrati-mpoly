@@ -42,7 +42,7 @@ public class BaseTitleDeed implements TitleDeed {
      */
     @JsonCreator
     public BaseTitleDeed(
-        @JsonProperty("type") final Type type,
+        @JsonProperty("group") final Type type,
         @JsonProperty("name") final String name,
         @JsonProperty("price") final int salePrice,
         @JsonProperty("rent") final int baseRent
