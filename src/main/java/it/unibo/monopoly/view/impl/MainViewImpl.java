@@ -8,8 +8,11 @@ import javax.swing.JPanel;
 
 import it.unibo.monopoly.controller.api.GameController;
 import it.unibo.monopoly.controller.impl.GameControllerImpl;
+import it.unibo.monopoly.model.gameboard.impl.Group;
 import it.unibo.monopoly.model.transactions.api.TitleDeed;
+import it.unibo.monopoly.model.transactions.impl.BaseTitleDeed;
 import it.unibo.monopoly.model.turnation.api.Player;
+import it.unibo.monopoly.utils.GuiUtils;
 import it.unibo.monopoly.view.api.AccountPanel;
 import it.unibo.monopoly.view.api.ContractPanel;
 import it.unibo.monopoly.view.api.GameAction;
@@ -54,7 +57,6 @@ public final class MainViewImpl implements MainGameView {
         mainGameFrame.getContentPane().add(buildActionPanelUI(), BorderLayout.CENTER);
         mainGameFrame.pack();
         mainGameFrame.setVisible(true);
-
     }
 
     private JPanel buildActionPanelUI() {
@@ -80,16 +82,19 @@ public final class MainViewImpl implements MainGameView {
         contractPanel.clear();
         gameActionsPanel.clear();
         mainActionsPanel.clear();
+        GuiUtils.refresh(mainGameFrame);
     }
 
     @Override
     public void displayPropertyContract(final TitleDeed propertyContract) {
         contractPanel.displayPropertyContract(propertyContract);
+        GuiUtils.refresh(mainGameFrame);
     }
 
     @Override
     public void showPlayerActions(final Set<GameAction> actions) {
         gameActionsPanel.buildActionButtons(actions);
+        GuiUtils.refresh(mainGameFrame);
     }
 
     public static void main(final String[] args) {

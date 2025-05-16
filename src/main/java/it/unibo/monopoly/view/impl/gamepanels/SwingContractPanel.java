@@ -39,8 +39,8 @@ final class SwingContractPanel extends SwingAbstractJPanel implements ContractPa
     private static final int PROPORTION = 5;
     private static final String CONTRACT_PANEL_PLACEHOLDER = 
             """
-                THE CONTRACT OF THE PROPERTY YOU STEPPED ONTO 
-                WILL APPEAR AS SOON AS YOU MAKE A MOVE
+            THE CONTRACT OF THE PROPERTY YOU STEPPED ONTO
+            WILL APPEAR AS SOON AS YOU MAKE A MOVE
             """;
 
     SwingContractPanel() {
@@ -51,8 +51,10 @@ final class SwingContractPanel extends SwingAbstractJPanel implements ContractPa
     @Override
     public void clear() {
         this.removeAll();
-        final JLabel contractPlaceholder = new JLabel(CONTRACT_PANEL_PLACEHOLDER);
-        //set style label
+        final JTextArea contractPlaceholder = new JTextArea(CONTRACT_PANEL_PLACEHOLDER);
+        contractPlaceholder.setLineWrap(true);
+        contractPlaceholder.setWrapStyleWord(true);
+        contractPlaceholder.setEditable(false);
         this.add(contractPlaceholder);
     }
 
@@ -69,8 +71,9 @@ final class SwingContractPanel extends SwingAbstractJPanel implements ContractPa
         //group information
         final JPanel groupPanel = new JPanel();
         groupPanel.setLayout(new BorderLayout());
-        final JLabel group = new JLabel(deed.getGroup(), SwingConstants.RIGHT);
-        final JLabel colorBox = GuiUtils.colorBoxFactory(Color.BLUE, 30);
+        final JLabel group = new JLabel(deed.getGroup().toString(), SwingConstants.RIGHT);
+
+        final JLabel colorBox = GuiUtils.colorBoxFactory(deed.getGroup().getColor(), 30);
         groupPanel.add(colorBox, BorderLayout.WEST);
         groupPanel.add(group, BorderLayout.CENTER);
 
@@ -108,7 +111,6 @@ final class SwingContractPanel extends SwingAbstractJPanel implements ContractPa
     }
 
     private Component rentOptionsList(final List<RentOption> options) {
-
         final JList<RentOption> optJList = new JList<>(
                                         options.stream()
                                                 .collect(Collectors.toCollection(() -> new Vector<RentOption>()))); //NOPMD
@@ -140,6 +142,7 @@ final class SwingContractPanel extends SwingAbstractJPanel implements ContractPa
         descriptionJTextArea.setLineWrap(true);
         descriptionJTextArea.setWrapStyleWord(true);
         descriptionJTextArea.setText(option.getDescription());
+        descriptionJTextArea.setEditable(false);
         descriptionDialog.add(descriptionJTextArea);
         final Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
         final int sw = (int) screen.getWidth();
