@@ -8,7 +8,6 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import it.unibo.monopoly.controller.api.GameController;
-import it.unibo.monopoly.controller.impl.GameControllerImpl;
 import it.unibo.monopoly.model.transactions.api.TitleDeed;
 import it.unibo.monopoly.model.turnation.api.Player;
 import it.unibo.monopoly.utils.GuiUtils;
@@ -114,13 +113,15 @@ public final class MainViewImpl implements MainGameView {
         mainGameFrame.repaint();
     }
 
-    public static void main(final String[] args) {
-        new MainViewImpl(new GameControllerImpl(null));
-    }
-
     @Override
     public void displayError(final Exception e) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'displayError'");
+    }
+
+    @Override
+    public void showRules(final String rules) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'showRules'");
     }
 }

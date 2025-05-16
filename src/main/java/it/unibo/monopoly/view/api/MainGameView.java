@@ -39,8 +39,15 @@ public interface MainGameView {
     void showPlayerActions(Set<GameAction> actions);
 
     /**
-     * Displays an error on the UI
+     * Displays an error on the UI.
      * @param e the {@code exception} thrown and whose information has to be displayed.
      */
     void displayError(Exception e);
+
+    /**
+     * Displays the game rules and general information
+     * to play the game.
+     * @param rules the text of the game rules
+     */
+    void showRules(String rules);
 }
