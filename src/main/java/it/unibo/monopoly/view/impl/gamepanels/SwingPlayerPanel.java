@@ -15,7 +15,7 @@ final class SwingPlayerPanel extends SwingAbstractJPanel implements PlayerPanel 
     private static final long serialVersionUID = 1L;
     private static final String NO_PLAYER_PH = "No player selected";
     private static final String NAME_PH = "Giocatore:";
-    //numero giocatore? 
+    private static final String NUMERO_PH = "Numero:";
     private static final String PRISON_PH = "È in prigione:";
     private static final String PRISON_TURNS_PH = "Turni rimasti da scontare:";
     private static final String PARKING_PH = "È nel parcheggio:";
@@ -24,6 +24,7 @@ final class SwingPlayerPanel extends SwingAbstractJPanel implements PlayerPanel 
     private final JLabel prisonStateJLabel = new JLabel(PRISON_PH);
     private final JLabel prisonTurnsJLabel = new JLabel(PRISON_TURNS_PH);
     private final JLabel parkingStateJLabel = new JLabel(PARKING_PH);
+    private final JLabel orderJLabel = new JLabel(NUMERO_PH);
 
     private JPanel createRow(final JLabel title, final JLabel info) {
         title.setHorizontalAlignment(SwingConstants.LEFT);
@@ -47,6 +48,10 @@ final class SwingPlayerPanel extends SwingAbstractJPanel implements PlayerPanel 
     public void displayPlayer(final Player pl) {
         this.setLayout(new GridLayout(4, 1));
         this.add(createRow(userNameJLabel, new JLabel(pl.getName())));
+        this.add(orderJLabel, new JLabel(Integer.toString(pl.getID())));
+        this.add(createRow(prisonStateJLabel, new JLabel("NO INFO")));
+        this.add(createRow(prisonTurnsJLabel, new JLabel("NO INFO")));
+        this.add(createRow(parkingStateJLabel, new JLabel("NO INFO")));
     }
 
 }
