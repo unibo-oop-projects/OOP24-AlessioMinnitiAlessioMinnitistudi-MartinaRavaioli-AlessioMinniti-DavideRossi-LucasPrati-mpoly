@@ -14,8 +14,8 @@ public class SpecialImpl extends TileImpl implements Special {
     * @param pos
     * @param type
     */
-    public SpecialImpl(final String name, final Position pos, final Type type) {
-        super(name, pos, type);
+    public SpecialImpl(final String name, final Position pos) {
+        super(name, pos, Type.SPECIAL);
     }
     /**
     * get the type.
