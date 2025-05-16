@@ -86,7 +86,7 @@ final class SwingMainCommandsPanel extends SwingAbstractJPanel implements Standa
     @Override
     public void clear() {
         dicesResultsJLabel.setText(DICES_RESULTS_PH);
-        dicesTotalJLabel.setText(TOOL_TIP_TEXT_KEY);
+        dicesTotalJLabel.setText(DICES_TOTAL_PH);
     }
 
     @Override
