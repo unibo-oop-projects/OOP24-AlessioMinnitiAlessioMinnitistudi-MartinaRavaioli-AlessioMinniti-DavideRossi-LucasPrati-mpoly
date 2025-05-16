@@ -3,9 +3,7 @@ package it.unibo.monopoly.view.api;
 import java.util.Set;
 
 import it.unibo.monopoly.controller.api.GameController;
-import it.unibo.monopoly.model.transactions.api.BankAccount;
 import it.unibo.monopoly.model.transactions.api.TitleDeed;
-import it.unibo.monopoly.model.turnation.api.Player;
 
 /**
  * Interface for the game view.

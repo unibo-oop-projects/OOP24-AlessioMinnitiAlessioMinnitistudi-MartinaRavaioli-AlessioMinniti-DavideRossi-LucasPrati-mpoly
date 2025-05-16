@@ -30,7 +30,6 @@ final class SwingMainCommandsPanel extends SwingAbstractJPanel implements Standa
         final GridBagLayout turnPanelLayout = new GridBagLayout();
         turnJPanel.setLayout(turnPanelLayout);
 
-        //final JButton handlePropertiesButton = new JButton("Gestione proprietà");
         final JButton rulesButton = new JButton("?");
         final JButton endTurnButton = new JButton("Termina turno");
         endTurnButton.addActionListener(e -> controller.endTurn());
@@ -42,7 +41,6 @@ final class SwingMainCommandsPanel extends SwingAbstractJPanel implements Standa
         final GridBagConstraints fixedButtonsConstraints = new GridBagConstraints();
         fixedButtonsConstraints.fill = GridBagConstraints.BOTH;
         fixedButtonsConstraints.weighty = 1.0;
-        //turnPanelLayout.setConstraints(handlePropertiesButton, fixedButtonsConstraints);
         turnPanelLayout.setConstraints(rulesButton, fixedButtonsConstraints);
 
         final GridBagConstraints endTurnButtonConstraints = new GridBagConstraints();

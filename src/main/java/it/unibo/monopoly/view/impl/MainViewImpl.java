@@ -3,6 +3,7 @@ package it.unibo.monopoly.view.impl;
 import java.awt.BorderLayout;
 import java.util.Set;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -73,13 +74,26 @@ public final class MainViewImpl implements MainGameView {
         actionPanel.add(userInfoPanel, BorderLayout.NORTH);
         actionPanel.add(contractPanel.getPanel(), BorderLayout.CENTER);
         actionPanel.add(gameActionsPanel.getPanel(), BorderLayout.WEST);
-        actionPanel.add(mainActionsPanel.getPanel(), BorderLayout.SOUTH);
+
+        final JButton handlePropertiesButton = new JButton("Gestione proprietà");
+        handlePropertiesButton.addActionListener(e -> displayPropertiesView());
+
+        final JPanel southPanel = new JPanel();
+        southPanel.setLayout(new BorderLayout());
+        southPanel.add(handlePropertiesButton, BorderLayout.SOUTH);
+        southPanel.add(mainActionsPanel.getPanel(), BorderLayout.CENTER);
+
+        actionPanel.add(southPanel, BorderLayout.SOUTH);
         return actionPanel;
+    }
+
+    private void displayPropertiesView() {
+        new GUIVendita(controller.getCurrentPlayer(), 100, 100, controller);
     }
 
     @Override
     public void refreshCurrentPlayerInfo() {
-        Player currentPlayer = controller.getCurrentPlayer();
+        final Player currentPlayer = controller.getCurrentPlayer();
         playerInfoPanel.displayPlayer(currentPlayer);
         accountInfoPanel.displayBankAccount(controller.getPlayerAccount(currentPlayer));
         contractPanel.clear();
@@ -97,7 +111,7 @@ public final class MainViewImpl implements MainGameView {
     @Override
     public void showPlayerActions(final Set<GameAction> actions) {
         gameActionsPanel.buildActionButtons(actions);
-        GuiUtils.refresh(mainGameFrame);
+        mainGameFrame.repaint();
     }
 
     public static void main(final String[] args) {
