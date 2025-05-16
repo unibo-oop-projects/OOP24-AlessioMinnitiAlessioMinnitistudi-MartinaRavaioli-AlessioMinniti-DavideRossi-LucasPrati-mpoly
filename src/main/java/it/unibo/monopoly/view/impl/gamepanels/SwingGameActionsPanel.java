@@ -1,6 +1,7 @@
 package it.unibo.monopoly.view.impl.gamepanels;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.util.Set;
 
@@ -32,6 +33,7 @@ final class SwingGameActionsPanel extends SwingAbstractJPanel implements GameAct
         textPlaceholder.setLineWrap(true);
         textPlaceholder.setWrapStyleWord(true);
         textPlaceholder.setEditable(false);
+        textPlaceholder.setPreferredSize(new Dimension(120, 100));
         this.add(textPlaceholder, BorderLayout.CENTER);
     }
 
