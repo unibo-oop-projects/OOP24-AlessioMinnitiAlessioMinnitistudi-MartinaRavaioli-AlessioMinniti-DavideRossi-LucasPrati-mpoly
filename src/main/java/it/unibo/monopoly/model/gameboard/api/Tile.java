@@ -1,6 +1,6 @@
 package it.unibo.monopoly.model.gameboard.api;
 
-import it.unibo.monopoly.model.gameboard.impl.Type;
+import it.unibo.monopoly.model.gameboard.impl.Group;
 import it.unibo.monopoly.model.turnation.api.Position;
 
 /**
@@ -8,15 +8,15 @@ import it.unibo.monopoly.model.turnation.api.Position;
 */
 public interface Tile {
     /**
-    * get the type.
-    * @return Type
+    * get the Group.
+    * @return Group
     */
-    Type getType();
+    Group getGroup();
     /**
-    * set the type.
-    * @param type
+    * set the Group.
+    * @param group
     */
-    void setType(Type type);
+    void setGroup(Group group);
     /**
     * get the position.
     * @return position

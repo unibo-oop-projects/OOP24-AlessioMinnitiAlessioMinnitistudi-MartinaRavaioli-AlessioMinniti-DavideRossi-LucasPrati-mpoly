@@ -1,19 +1,18 @@
 package it.unibo.monopoly.model.transactions;
 
+import java.util.List;
+import java.util.Set;
+import java.util.function.Function;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-
-import java.util.List;
-import java.util.Set;
-import java.util.function.Function;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import it.unibo.monopoly.model.gameboard.impl.Type;
+import it.unibo.monopoly.model.gameboard.impl.Group;
 import it.unibo.monopoly.model.transactions.api.RentOption;
 import it.unibo.monopoly.model.transactions.api.TitleDeed;
 import it.unibo.monopoly.model.transactions.impl.BaseTitleDeed;
@@ -23,7 +22,7 @@ class BaseTitleDeedTest {
 
     private static final String OWNER_NAME = "Bob";
     private static final String SECOND_OWNER_NAME = "Alice";
-    private static final Type GROUP_TYPE = Type.PURPLE;
+    private static final Group GROUP_TYPE = Group.PURPLE;
     private static final String TITLE_DEED_NAME = "vicolo corto";
     private static final int SALE_PRICE = 50;
     private static final Function<Integer, Integer> MORTGAGE_PRICE_FUNCTION = salePrice -> {
@@ -81,7 +80,7 @@ class BaseTitleDeedTest {
     //change to robust group object
    @Test
    void testGetGroup() {
-        assertEquals(GROUP_TYPE, deed.getType());
+        assertEquals(GROUP_TYPE, deed.getGroup());
    }
 
    @Test
@@ -135,7 +134,7 @@ class BaseTitleDeedTest {
    @Test
    void testGetRentPricePassingTitleDeedsOfDifferentGroup() {
 
-        final TitleDeed differentGroupTitleDeed = new BaseTitleDeed(Type.BLUE, 
+        final TitleDeed differentGroupTitleDeed = new BaseTitleDeed(Group.BLUE, 
                                                         "via dante", 
                                                         SALE_PRICE, 
                                                         MORTGAGE_PRICE_FUNCTION,

@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 
 import com.google.common.collect.Maps;
 
-import it.unibo.monopoly.model.gameboard.impl.Type;
+import it.unibo.monopoly.model.gameboard.impl.Group;
 import it.unibo.monopoly.model.transactions.api.Bank;
 import it.unibo.monopoly.model.transactions.api.BankAccount;
 import it.unibo.monopoly.model.transactions.api.TitleDeed;
@@ -54,10 +54,10 @@ public final class BankImpl implements Bank {
         return titleDeeds.get(id);
     }
 
-    private Set<TitleDeed> titleDeedsByGroup(final Type group) {
+    private Set<TitleDeed> titleDeedsByGroup(final Group group) {
         return titleDeeds.values()
                         .stream()
-                        .filter(d -> d.getType().equals(group))
+                        .filter(d -> d.getGroup().equals(group))
                         .collect(Collectors.toSet());
     }
 
@@ -100,7 +100,7 @@ public final class BankImpl implements Bank {
             throw new IllegalStateException("Canot pay rent for property owned by the payer" + playerName);
         }
         final int rentAmount = deed.getRent(
-            titleDeedsByGroup(deed.getType())
+            titleDeedsByGroup(deed.getGroup())
         );
         receiver.deposit(rentAmount);
         try {

@@ -14,10 +14,10 @@ public class PropertyImpl extends TileImpl implements Property {
      * constructor.
      * @param name
      * @param id
-     * @param type
+     * @param group
     */
-    public PropertyImpl(final String name, final Position id, final Type type) { 
-        super(name, id, type);
+    public PropertyImpl(final String name, final Position id, final Group group) { 
+        super(name, id, group);
         this.nHouses = 0;
         this.hotel = false;
     }
