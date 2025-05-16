@@ -128,7 +128,7 @@ public final class GameControllerImpl implements GameController {
         try {
             final Tile currentPlayerTile = board.getTileForPawn(board.getPawn(manager.getIdCurrPlayer()));
             bank.buyTitleDeed(currentPlayerTile.toString(), null);
-        } catch (final Exception e) {
+        } catch (final IllegalStateException e) {
             gameView.displayError(e);
         }
     }
@@ -138,7 +138,7 @@ public final class GameControllerImpl implements GameController {
         try {
             final Tile currentPlayerTile = board.getTileForPawn(board.getPawn(manager.getIdCurrPlayer()));
             bank.payRent(currentPlayerTile.toString(), null);
-        } catch (final Exception e) {
+        } catch (final IllegalStateException e) {
             gameView.displayError(e);
         }
     }
