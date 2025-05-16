@@ -36,7 +36,9 @@ final class SwingContractPanel extends SwingAbstractJPanel implements ContractPa
     private static final long serialVersionUID = 43L;
     private static final int BIG_FONT_SIZE = 15;
     private static final int N_ROWS = 5;
-    private static final int PROPORTION = 5;
+    private static final int INFO_PANEL_PROPORTION = 5;
+    private static final int CONTRACT_PH_WIDTH = 200;
+    private static final int CONTRACT_PH_HEIGHT = 150;
     private static final String CONTRACT_PANEL_PLACEHOLDER = 
             """
             THE CONTRACT OF THE PROPERTY YOU STEPPED ONTO
@@ -55,7 +57,7 @@ final class SwingContractPanel extends SwingAbstractJPanel implements ContractPa
         contractPlaceholder.setLineWrap(true);
         contractPlaceholder.setWrapStyleWord(true);
         contractPlaceholder.setEditable(false);
-        contractPlaceholder.setPreferredSize(new Dimension(200, 150));
+        contractPlaceholder.setPreferredSize(new Dimension(CONTRACT_PH_WIDTH, CONTRACT_PH_HEIGHT));
         this.add(contractPlaceholder);
     }
 
@@ -148,7 +150,7 @@ final class SwingContractPanel extends SwingAbstractJPanel implements ContractPa
         final Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
         final int sw = (int) screen.getWidth();
         final int sh = (int) screen.getHeight();
-        descriptionDialog.setSize(sw / PROPORTION, sh / PROPORTION);
+        descriptionDialog.setSize(sw / INFO_PANEL_PROPORTION, sh / INFO_PANEL_PROPORTION);
         descriptionDialog.setVisible(true);
     }
 

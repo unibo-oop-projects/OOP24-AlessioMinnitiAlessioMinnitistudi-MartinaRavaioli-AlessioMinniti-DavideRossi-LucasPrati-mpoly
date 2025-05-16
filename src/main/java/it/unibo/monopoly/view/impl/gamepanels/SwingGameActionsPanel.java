@@ -15,6 +15,8 @@ import it.unibo.monopoly.view.api.GameAction;
 final class SwingGameActionsPanel extends SwingAbstractJPanel implements GameActionsPanel {
 
     private static final long serialVersionUID = 1L;
+    private static final int BUTTONS_PH_WIDTH = 120;
+    private static final int BUTTONS_PH_HEIGHT = 100;
     private static final String PLACEHOLDER = 
     """
     TIRA I DADI E MUOVI LA PEDINA
@@ -33,7 +35,7 @@ final class SwingGameActionsPanel extends SwingAbstractJPanel implements GameAct
         textPlaceholder.setLineWrap(true);
         textPlaceholder.setWrapStyleWord(true);
         textPlaceholder.setEditable(false);
-        textPlaceholder.setPreferredSize(new Dimension(120, 100));
+        textPlaceholder.setPreferredSize(new Dimension(BUTTONS_PH_WIDTH, BUTTONS_PH_HEIGHT));
         this.add(textPlaceholder, BorderLayout.CENTER);
     }
 
