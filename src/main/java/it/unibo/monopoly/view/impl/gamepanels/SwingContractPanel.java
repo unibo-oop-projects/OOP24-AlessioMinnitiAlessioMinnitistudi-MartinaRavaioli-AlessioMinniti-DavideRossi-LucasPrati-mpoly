@@ -55,6 +55,7 @@ final class SwingContractPanel extends SwingAbstractJPanel implements ContractPa
         contractPlaceholder.setLineWrap(true);
         contractPlaceholder.setWrapStyleWord(true);
         contractPlaceholder.setEditable(false);
+        contractPlaceholder.setPreferredSize(new Dimension(200, 150));
         this.add(contractPlaceholder);
     }
 
