@@ -8,7 +8,7 @@ import it.unibo.monopoly.model.transactions.api.TitleDeed;
 import it.unibo.monopoly.model.turnation.api.Player;
 
 /**
- * interface for game controller of the game
+ * interface for game controller of the game.
  */
 public interface GameController {
     /** 
@@ -64,7 +64,8 @@ public interface GameController {
 
     /**
      * Sell a {@link TitleDeed} back to the bank and refund the owner.
-     * @param titledeedName the name of the {@link TitleDeed} to sell.
+     * @param selectedProperty the name of the {@link TitleDeed} to sell.
+     * @return whether the operation was successful or not
      */
     boolean sellProperty(TitleDeed selectedProperty);
 
@@ -84,14 +85,27 @@ public interface GameController {
 
 
     /**
-     * PLACEHOLDER there will be the method in Tile .
+     * PLACEHOLDER 
+     * there will be the method in Tile .
      * @param selectedProperty
      * @return an object of the class Color
      */
     Color getPropertyColor(TitleDeed selectedProperty);
 
+    /**
+     * Get the {@link Player} who is currently 
+     * playing its turn.
+     * @return an object representing the {@link Player} instance
+     */
     Player getCurrentPlayer();
 
+    /**
+     * Retrieve the {@link BankAccount} associated with a specific player.
+     * @param currentPlayer the player whose {@link BankAccount} wants 
+     * to be retrieved. The association is based on the player's id:
+     * the bank account that shares the same id of the player will be retrieved.
+     * @return an object representing the {@link BankAccount} of the player.
+     */
     BankAccount getPlayerAccount(Player currentPlayer);
 
     /**
