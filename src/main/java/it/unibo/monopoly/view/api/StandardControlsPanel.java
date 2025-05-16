@@ -4,7 +4,9 @@ import java.util.List;
 
 /**
  * A panel that displays the main controls to 
- * conduct the game.
+ * conduct the game (such as end turn, throw dices...)
+ * and information related to these controls (dices result...).
+ * Implementation might need a {@link GameController} upon construction.
  */
 public interface StandardControlsPanel extends GamePanel {
 
