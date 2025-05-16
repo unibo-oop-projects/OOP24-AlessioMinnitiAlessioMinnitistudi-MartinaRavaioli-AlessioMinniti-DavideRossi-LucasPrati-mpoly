@@ -3,6 +3,7 @@ package it.unibo.monopoly.controller.api;
 import java.awt.Color;
 import java.util.List;
 
+import it.unibo.monopoly.model.transactions.api.BankAccount;
 import it.unibo.monopoly.model.transactions.api.TitleDeed;
 import it.unibo.monopoly.model.turnation.api.Player;
 
@@ -88,5 +89,9 @@ public interface GameController {
      * @return an object of the class Color
      */
     Color getPropertyColor(TitleDeed selectedProperty);
+
+    Player getCurrentPlayer();
+
+    BankAccount getPlayerAccount(Player currentPlayer);
 
 }

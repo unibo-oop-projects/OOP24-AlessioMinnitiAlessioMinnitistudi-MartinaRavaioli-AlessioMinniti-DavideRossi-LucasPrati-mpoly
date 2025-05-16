@@ -9,6 +9,7 @@ import it.unibo.monopoly.model.gameboard.api.Tile;
 import it.unibo.monopoly.model.gameboard.impl.Group;
 import it.unibo.monopoly.controller.api.GameController;
 import it.unibo.monopoly.model.transactions.api.Bank;
+import it.unibo.monopoly.model.transactions.api.BankAccount;
 import it.unibo.monopoly.model.transactions.api.TitleDeed;
 import it.unibo.monopoly.model.transactions.impl.BaseTitleDeed;
 import it.unibo.monopoly.model.turnation.api.Player;
@@ -182,5 +183,17 @@ public final class GameControllerImpl implements GameController {
         } catch (Exception e) {
             gameView.displayError(e);
         }
+    }
+
+    @Override
+    public Player getCurrentPlayer() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getCurrentPlayer'");
+    }
+
+    @Override
+    public BankAccount getPlayerAccount(Player currentPlayer) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getPlayerAccount'");
     }
 }
