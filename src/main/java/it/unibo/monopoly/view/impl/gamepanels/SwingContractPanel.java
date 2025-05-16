@@ -45,6 +45,7 @@ final class SwingContractPanel extends SwingAbstractJPanel implements ContractPa
 
     SwingContractPanel() {
         this.setLayout(new BorderLayout());
+        this.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
     }
 
     @Override

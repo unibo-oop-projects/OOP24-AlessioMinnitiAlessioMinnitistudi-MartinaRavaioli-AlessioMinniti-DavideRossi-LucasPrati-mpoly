@@ -4,8 +4,9 @@ import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.util.Set;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
-import javax.swing.JLabel;
+import javax.swing.JTextArea;
 
 import it.unibo.monopoly.view.api.GameActionsPanel;
 import it.unibo.monopoly.view.api.GameAction;
@@ -15,15 +16,23 @@ final class SwingGameActionsPanel extends SwingAbstractJPanel implements GameAct
     private static final long serialVersionUID = 1L;
     private static final String PLACEHOLDER = 
     """
-        TIRA I DADI E MUOVI LA PEDINA
-        PER AGGIORNARE LE AZIONI DISPONIBILI
+    TIRA I DADI E MUOVI LA PEDINA
+    PER AGGIORNARE LE AZIONI DISPONIBILI
     """;
 
+    SwingGameActionsPanel() {
+        this.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+    }
+ 
     @Override
     public void clear() {
         this.removeAll();
         this.setLayout(new BorderLayout());
-        this.add(new JLabel(PLACEHOLDER), BorderLayout.CENTER);
+        final JTextArea textPlaceholder = new JTextArea(PLACEHOLDER);
+        textPlaceholder.setLineWrap(true);
+        textPlaceholder.setWrapStyleWord(true);
+        textPlaceholder.setEditable(false);
+        this.add(textPlaceholder, BorderLayout.CENTER);
     }
 
     @Override
