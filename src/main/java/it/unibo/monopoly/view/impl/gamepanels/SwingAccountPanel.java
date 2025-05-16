@@ -39,7 +39,6 @@ final class SwingAccountPanel extends SwingAbstractJPanel implements AccountPane
         balanceLabelConstraints.fill = GridBagConstraints.BOTH;
         balanceLabelConstraints.gridwidth = GridBagConstraints.REMAINDER;
         balancePanelLayout.setConstraints(balanceJLabel, balanceLabelConstraints);
-        clear();
     }
 
     @Override

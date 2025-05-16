@@ -8,9 +8,7 @@ import javax.swing.JPanel;
 
 import it.unibo.monopoly.controller.api.GameController;
 import it.unibo.monopoly.controller.impl.GameControllerImpl;
-import it.unibo.monopoly.model.gameboard.impl.Group;
 import it.unibo.monopoly.model.transactions.api.TitleDeed;
-import it.unibo.monopoly.model.transactions.impl.BaseTitleDeed;
 import it.unibo.monopoly.model.turnation.api.Player;
 import it.unibo.monopoly.utils.GuiUtils;
 import it.unibo.monopoly.view.api.AccountPanel;
@@ -50,10 +48,15 @@ public final class MainViewImpl implements MainGameView {
         this.controller = controller;
         final GamePanelsFactory fact = new SwingPanelsFactory();
         contractPanel = fact.contractPanel();
+        contractPanel.clear();
         playerInfoPanel = fact.userInfoPanel();
+        playerInfoPanel.clear();
         accountInfoPanel = fact.bankAccountInfoPanel();
+        accountInfoPanel.clear();
         gameActionsPanel = fact.gameActionsPanel();
+        gameActionsPanel.clear();
         mainActionsPanel = fact.standardControlsPanel(controller);
+        mainActionsPanel.clear();
         mainGameFrame.getContentPane().add(buildActionPanelUI(), BorderLayout.CENTER);
         mainGameFrame.pack();
         mainGameFrame.setVisible(true);
@@ -82,7 +85,7 @@ public final class MainViewImpl implements MainGameView {
         contractPanel.clear();
         gameActionsPanel.clear();
         mainActionsPanel.clear();
-        GuiUtils.refresh(mainGameFrame);
+        mainGameFrame.repaint();
     }
 
     @Override

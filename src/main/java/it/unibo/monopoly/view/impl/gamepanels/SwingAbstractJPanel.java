@@ -10,7 +10,6 @@ abstract class SwingAbstractJPanel extends JPanel implements GamePanel {
 
     private static final long serialVersionUID = 1L;
 
-
     @Override
     public Component getPanel() {
         return this;
