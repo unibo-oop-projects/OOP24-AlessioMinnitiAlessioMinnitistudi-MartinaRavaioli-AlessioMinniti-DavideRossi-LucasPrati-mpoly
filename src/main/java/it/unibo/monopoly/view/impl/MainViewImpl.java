@@ -140,8 +140,4 @@ public final class MainViewImpl implements MainGameView {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'displayError'");
     }
-
-    public static void main(String[] args) {
-        new MainViewImpl(new GameControllerImpl(null));
-    }
 }
