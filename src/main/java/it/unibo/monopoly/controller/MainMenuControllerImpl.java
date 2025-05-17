@@ -10,20 +10,23 @@ import java.util.Objects;
 import java.util.Set;
 
 import it.unibo.monopoly.controller.api.MainMenuController;
+import it.unibo.monopoly.model.gameboard.api.Board;
 import it.unibo.monopoly.model.gameboard.api.Tile;
+import it.unibo.monopoly.model.gameboard.impl.BoardImpl;
 import it.unibo.monopoly.model.gameboard.impl.TileImpl;
-// import it.unibo.monopoly.model.transactions.api.Bank;
+import it.unibo.monopoly.model.transactions.api.Bank;
 import it.unibo.monopoly.model.transactions.api.BankAccount;
 import it.unibo.monopoly.model.transactions.api.BankAccountFactory;
 import it.unibo.monopoly.model.transactions.api.BankAccountType;
 import it.unibo.monopoly.model.transactions.api.TitleDeed;
 import it.unibo.monopoly.model.transactions.impl.BaseTitleDeed;
-// import it.unibo.monopoly.model.transactions.impl.BankImpl;
+import it.unibo.monopoly.model.transactions.impl.BankImpl;
 import it.unibo.monopoly.model.transactions.impl.bankaccount.BankAccountFactoryImpl;
 import it.unibo.monopoly.model.turnation.api.Player;
-// import it.unibo.monopoly.model.turnation.api.TurnationManager;
+import it.unibo.monopoly.model.turnation.api.TurnationManager;
+import it.unibo.monopoly.model.turnation.impl.DiceImpl;
 import it.unibo.monopoly.model.turnation.impl.PlayerImpl;
-// import it.unibo.monopoly.model.turnation.impl.TurnationManagerImpl;
+import it.unibo.monopoly.model.turnation.impl.TurnationManagerImpl;
 import it.unibo.monopoly.utils.Configuration;
 import it.unibo.monopoly.utils.Identifiable;
 import it.unibo.monopoly.utils.ResourceLoader;
@@ -81,7 +84,7 @@ public final class MainMenuControllerImpl implements MainMenuController {
         // init all the game (Player, Pawn, BankAccount according to the type chosen)
         final List<Player> players = new ArrayList<>();
         final Set<BankAccount> accounts = new HashSet<>();
-        // final List<Pawn> pawns = new ArrayList<>();
+        final List<Pawn> pawns = new ArrayList<>();
         final Set<TitleDeed> titleDeeds = new HashSet<>();
         final List<Tile> tiles = new ArrayList<>();
 
@@ -96,20 +99,23 @@ public final class MainMenuControllerImpl implements MainMenuController {
             id++;
             players.add(index, PlayerImpl.of(id, name, color));
             accounts.add(createBankAccountByType(id, name));
-            // TODO create pawns
-            // pawns.add(index, PawnsImpl.of(id, color));
+            pawns.add(index, PawnsImpl.createBasic(id, 0, color));
         }
 
         // import titledeeds and tiles from json
-        titleDeeds.addAll(Set.copyOf(ResourceLoader.loadJsonList(config.getTitleDeedsPath(), BaseTitleDeed.class)));
+        titleDeeds.addAll(ResourceLoader.loadTitleDeeds(config.getTitleDeedsPath()));
         tiles.addAll(List.copyOf(ResourceLoader.loadJsonList(config.getTilesPath(), TileImpl.class)));
 
-        // create the bankImpl with provided sets of accounts and titles
-        // final Bank bank = new BankImpl(accounts, titleDeeds);
-        // create Board
-        // final Board board = new BoardImpl(List<Tile>, pawns);
-        // create TurnationManager
-        // final TurnationManager turnationManager = new TurnationManagerImpl(config, players);
+        // create the Bank, Board, TurnationManager 
+        final Bank bank = new BankImpl(accounts, titleDeeds);
+        final Board board = new BoardImpl(tiles, pawns);
+        final TurnationManager turnationManager = new TurnationManagerImpl(
+            players,
+            new DiceImpl(
+                config.getNumDice(),
+                config.getSidesPerDie()
+            )
+        );
 
 
         // TODO launch a new GUI for the game and put all these data to it
