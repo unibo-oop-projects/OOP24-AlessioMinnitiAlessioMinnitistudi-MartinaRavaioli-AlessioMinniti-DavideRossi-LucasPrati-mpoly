@@ -3,17 +3,18 @@ package it.unibo.monopoly.controller.impl;
 import java.awt.Color;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
-import it.unibo.monopoly.model.gameboard.api.Board;
-import it.unibo.monopoly.model.gameboard.api.Tile;
+
 import it.unibo.monopoly.model.gameboard.impl.Group;
 import it.unibo.monopoly.controller.api.GameController;
 import it.unibo.monopoly.model.transactions.api.Bank;
 import it.unibo.monopoly.model.transactions.api.TitleDeed;
+import it.unibo.monopoly.model.transactions.impl.BankImpl;
 import it.unibo.monopoly.model.transactions.impl.BaseTitleDeed;
 import it.unibo.monopoly.model.turnation.api.Player;
-import it.unibo.monopoly.model.turnation.api.TurnationManager;
 import it.unibo.monopoly.view.api.MainGameView;
+import it.unibo.monopoly.view.impl.MainViewImpl;
 
 /**
  * implementation of game controller.
@@ -21,18 +22,10 @@ import it.unibo.monopoly.view.api.MainGameView;
 public final class GameControllerImpl implements GameController {
 
     private static final int NUM = 0;
-    private final Bank bank; 
-    private  Board board;
-    private  MainGameView gameView;
-    private TurnationManager manager;
 
-    /**
-     * constructor for this class.
-     * @param bank
-     */
-    public GameControllerImpl(final Bank bank) {
-        this.bank = bank; 
-    }
+    //PLACHEOLDER ENTITIES, SUBSTITUTE WITH MORE ROBUST CONSTRUCTOR
+    private final Bank bank = new BankImpl(Set.of(), Set.of()); 
+    private  final MainGameView gameView = new MainViewImpl(this);
 
     @Override
     public boolean areThereHouses(final TitleDeed prop) {
@@ -126,9 +119,10 @@ public final class GameControllerImpl implements GameController {
     public void buyProperty() {
         try {
             //MISSING IDENTIFIER INTEGRATION WITH  BANK
-            final Tile currentPlayerTile = board.getTileForPawn(board.getPawn(manager.getIdCurrPlayer()));
-            bank.buyTitleDeed(currentPlayerTile.toString(), null);
+            //final Tile currentPlayerTile = board.getTileForPawn(board.getPawn(manager.getIdCurrPlayer()));
+            //bank.buyTitleDeed(currentPlayerTile.toString(), null);
             gameView.displayMessage("Purchase of title deed successful");
+            throw new UnsupportedOperationException("Unimplemented method 'buyProperty'");
         } catch (final IllegalStateException e) {
             gameView.displayError(e);
         }
@@ -138,9 +132,10 @@ public final class GameControllerImpl implements GameController {
     public void payPropertyOwner() {
         try {
             //MISSING IDENTIFIER INTEGRATION WITH  BANK
-            final Tile currentPlayerTile = board.getTileForPawn(board.getPawn(manager.getIdCurrPlayer()));
-            bank.payRent(currentPlayerTile.toString(), null);
+            //final Tile currentPlayerTile = board.getTileForPawn(board.getPawn(manager.getIdCurrPlayer()));
+            //bank.payRent(currentPlayerTile.toString(), null);
             gameView.displayMessage("Rent payment successful");
+            throw new UnsupportedOperationException("Unimplemented method 'payPropertyOwner'");
         } catch (final IllegalStateException e) {
             gameView.displayError(e);
         }
