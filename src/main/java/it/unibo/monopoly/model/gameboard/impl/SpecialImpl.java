@@ -8,7 +8,7 @@ import it.unibo.monopoly.model.gameboard.api.Special;
 import it.unibo.monopoly.model.turnation.api.Position;
 
 /**
- * special tile implementation.
+ * {@link Special} tile implementation.
 */
 public class SpecialImpl extends TileImpl implements Special {
 

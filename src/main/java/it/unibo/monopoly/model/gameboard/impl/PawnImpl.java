@@ -9,7 +9,7 @@ import it.unibo.monopoly.model.turnation.impl.AbstractIdPlayerImpl;
 import it.unibo.monopoly.model.turnation.impl.PositionImpl;
 
 /**
- * pawn implementation.
+ * {@link Pawn} implementation.
 */
 public class PawnImpl extends AbstractIdPlayerImpl implements Pawn, PawnFactory {
     private Position pos;

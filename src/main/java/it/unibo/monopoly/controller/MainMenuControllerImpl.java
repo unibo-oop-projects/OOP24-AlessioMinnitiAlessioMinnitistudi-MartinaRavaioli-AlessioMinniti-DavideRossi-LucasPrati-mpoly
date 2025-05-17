@@ -11,8 +11,10 @@ import java.util.Set;
 
 import it.unibo.monopoly.controller.api.MainMenuController;
 import it.unibo.monopoly.model.gameboard.api.Board;
+import it.unibo.monopoly.model.gameboard.api.Pawn;
 import it.unibo.monopoly.model.gameboard.api.Tile;
 import it.unibo.monopoly.model.gameboard.impl.BoardImpl;
+import it.unibo.monopoly.model.gameboard.impl.PawnImpl;
 import it.unibo.monopoly.model.gameboard.impl.TileImpl;
 import it.unibo.monopoly.model.transactions.api.Bank;
 import it.unibo.monopoly.model.transactions.api.BankAccount;
@@ -99,7 +101,7 @@ public final class MainMenuControllerImpl implements MainMenuController {
             id++;
             players.add(index, PlayerImpl.of(id, name, color));
             accounts.add(createBankAccountByType(id, name));
-            pawns.add(index, PawnsImpl.createBasic(id, 0, color));
+            pawns.add(index, PawnImpl.createBasic(id, 0, color));
         }
 
         // import titledeeds and tiles from json
