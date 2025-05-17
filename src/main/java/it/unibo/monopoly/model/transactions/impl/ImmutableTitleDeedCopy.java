@@ -124,4 +124,9 @@ public final class ImmutableTitleDeedCopy implements TitleDeed {
         throw new UnsupportedOperationException("Unimplemented method 'houseNum'");
     }
 
+    @Override
+    public boolean isOwned() {
+        return this.deed.isOwned();
+    }
+
 }

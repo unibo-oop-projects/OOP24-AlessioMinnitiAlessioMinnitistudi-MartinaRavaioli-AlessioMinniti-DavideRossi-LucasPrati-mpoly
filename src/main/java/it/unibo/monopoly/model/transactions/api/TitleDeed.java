@@ -17,6 +17,15 @@ import it.unibo.monopoly.model.gameboard.impl.Group;
  */
 public interface TitleDeed {
 
+    /**
+     * Tells whether this Title deed
+     * is owned by a player or not. Meaning 
+     * a player bought it from the {@link Bank} or the Title deed
+     * was assigned to a player at the beginning of the game.
+     * @return {@code true} if a player owns the Title deed and {@code false} if
+     * the Title deed has no ownership
+     */
+    boolean isOwned();
 
     /**
      * @return {@link Optional} containing the name 

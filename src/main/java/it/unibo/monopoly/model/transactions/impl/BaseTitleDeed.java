@@ -232,4 +232,14 @@ public class BaseTitleDeed implements TitleDeed {
         return 0;
     }
 
+    /**
+     * This is implementation checks whether there is a value in
+     * the {@link Optional} {@code owner} or if it is empty, and
+     * returns that as a boolean.
+     */
+    @Override
+    public boolean isOwned() {
+        return owner.isPresent();
+    }
+
 }
