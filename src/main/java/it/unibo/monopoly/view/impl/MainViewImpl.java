@@ -11,9 +11,9 @@ import javax.swing.JPanel;
 
 import it.unibo.monopoly.controller.api.GameController;
 import it.unibo.monopoly.controller.impl.GameControllerImpl;
+import it.unibo.monopoly.model.transactions.api.BankAccount;
 import it.unibo.monopoly.model.transactions.api.TitleDeed;
 import it.unibo.monopoly.model.turnation.api.Player;
-import it.unibo.monopoly.utils.GuiUtils;
 import it.unibo.monopoly.view.api.AccountPanel;
 import it.unibo.monopoly.view.api.ContractPanel;
 import it.unibo.monopoly.view.api.GameAction;
@@ -30,6 +30,8 @@ import it.unibo.monopoly.view.impl.gamepanels.SwingPanelsFactory;
  * its graphical UI by using a combination of {@link JFrame} {@code objects}.
  */
 public final class MainViewImpl implements MainGameView {
+
+    private static final int PL_DATA_VIEW_PROPORTION = 5;
 
     private final JFrame mainGameFrame = new JFrame();
 
@@ -90,10 +92,9 @@ public final class MainViewImpl implements MainGameView {
     }
 
     @Override
-    public void refreshCurrentPlayerInfo() {
-        final Player currentPlayer = controller.getCurrentPlayer();
-        playerInfoPanel.displayPlayer(currentPlayer);
-        accountInfoPanel.displayBankAccount(controller.getPlayerAccount(currentPlayer));
+    public void refreshCurrentPlayerInfo(final Player player, final BankAccount account) {
+        playerInfoPanel.displayPlayer(player);
+        accountInfoPanel.displayBankAccount(account);
         contractPanel.clear();
         gameActionsPanel.clear();
         mainActionsPanel.clear();
@@ -113,12 +114,6 @@ public final class MainViewImpl implements MainGameView {
     }
 
     @Override
-    public void displayError(final Exception e) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'displayError'");
-    }
-
-    @Override
     public void showRules(final String rules) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'showRules'");
@@ -127,13 +122,23 @@ public final class MainViewImpl implements MainGameView {
     @Override
     public void displayPlayerStats(final Player player) {
         final Dimension screenDimension = Toolkit.getDefaultToolkit().getScreenSize();
-        new GUIVendita(player, (int) screenDimension.getWidth() / 5, (int) screenDimension.getHeight() / 5, controller);
+        new GUIVendita(player,
+            (int) screenDimension.getWidth() / PL_DATA_VIEW_PROPORTION, 
+            (int) screenDimension.getHeight() / PL_DATA_VIEW_PROPORTION, 
+            controller
+        );
     }
 
     @Override
     public void displayMessage(final String message) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'displayMessage'");
+    }
+
+    @Override
+    public void displayError(final Exception e) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'displayError'");
     }
 
     public static void main(String[] args) {

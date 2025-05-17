@@ -3,6 +3,7 @@ package it.unibo.monopoly.view.api;
 import java.util.Set;
 
 import it.unibo.monopoly.controller.api.GameController;
+import it.unibo.monopoly.model.transactions.api.BankAccount;
 import it.unibo.monopoly.model.transactions.api.TitleDeed;
 import it.unibo.monopoly.model.turnation.api.Player;
 
@@ -16,11 +17,12 @@ public interface MainGameView {
     /**
      * Ask the {@code view} to refresh the information related
      * to the player that is currently playing. 
-     * Usually this involves a series of calls 
-     * to controller methods to retrieve the data and then
-     * display it.
+     * This method requires the {@link Player} instance and its 
+     * associated {@link BankAccount} to be passed as input.
+     * @param player an object containing generic information of a player
+     * @param account an object containing all information related to the {@code balance} of a specific player
      */
-    void refreshCurrentPlayerInfo();
+    void refreshCurrentPlayerInfo(Player player, BankAccount account);
 
     /**
      * Display information of the {@link TitleDeed}
