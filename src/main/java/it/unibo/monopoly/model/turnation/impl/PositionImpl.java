@@ -1,5 +1,7 @@
 package it.unibo.monopoly.model.turnation.impl;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+
 import it.unibo.monopoly.model.turnation.api.Position;
 import it.unibo.monopoly.utils.GuiUtils;
 
@@ -14,6 +16,7 @@ public class PositionImpl implements Position, Comparable<Position> {
      * constructor.
      * @param value
     */
+    @JsonCreator
     public PositionImpl(final Integer value) {
         this.value = value;
     }

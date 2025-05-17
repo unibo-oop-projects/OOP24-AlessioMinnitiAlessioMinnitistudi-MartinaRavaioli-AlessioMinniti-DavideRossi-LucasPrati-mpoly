@@ -164,7 +164,7 @@ public final class ResourceLoader {
                     .constructCollectionLikeType(List.class, type);
             out = MAPPER.readValue(fileJson, outType);
         } catch (final IOException e) {
-            throw new UncheckedIOException("Failed to convert the Json file", e);
+            throw new UncheckedIOException("Failed to convert the Json file '" + path + "': ", e);
         }
         return out;
     }
