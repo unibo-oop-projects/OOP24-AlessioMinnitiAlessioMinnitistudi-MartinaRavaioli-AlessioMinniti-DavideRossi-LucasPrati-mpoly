@@ -10,7 +10,6 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import it.unibo.monopoly.controller.api.GameController;
-import it.unibo.monopoly.controller.impl.GameControllerImpl;
 import it.unibo.monopoly.model.transactions.api.BankAccount;
 import it.unibo.monopoly.model.transactions.api.TitleDeed;
 import it.unibo.monopoly.model.turnation.api.Player;
@@ -53,15 +52,15 @@ public final class MainViewImpl implements MainGameView {
         this.controller = controller;
         final GamePanelsFactory fact = new SwingPanelsFactory();
         contractPanel = fact.contractPanel();
-        contractPanel.clear();
+        contractPanel.renderDefaultUI();
         playerInfoPanel = fact.userInfoPanel();
-        playerInfoPanel.clear();
+        playerInfoPanel.renderDefaultUI();
         accountInfoPanel = fact.bankAccountInfoPanel();
-        accountInfoPanel.clear();
+        accountInfoPanel.renderDefaultUI();
         gameActionsPanel = fact.gameActionsPanel();
-        gameActionsPanel.clear();
+        gameActionsPanel.renderDefaultUI();
         mainActionsPanel = fact.standardControlsPanel(controller);
-        mainActionsPanel.clear();
+        mainActionsPanel.renderDefaultUI();
         mainGameFrame.getContentPane().add(buildActionPanelUI(controller), BorderLayout.CENTER);
         mainGameFrame.pack();
         mainGameFrame.setVisible(true);
@@ -95,9 +94,9 @@ public final class MainViewImpl implements MainGameView {
     public void refreshCurrentPlayerInfo(final Player player, final BankAccount account) {
         playerInfoPanel.displayPlayer(player);
         accountInfoPanel.displayBankAccount(account);
-        contractPanel.clear();
-        gameActionsPanel.clear();
-        mainActionsPanel.clear();
+        contractPanel.renderDefaultUI();
+        gameActionsPanel.renderDefaultUI();
+        mainActionsPanel.renderDefaultUI();
         mainGameFrame.repaint();
     }
 

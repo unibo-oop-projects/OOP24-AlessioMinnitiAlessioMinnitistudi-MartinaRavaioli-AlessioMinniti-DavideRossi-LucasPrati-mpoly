@@ -37,7 +37,7 @@ final class SwingPlayerPanel extends SwingAbstractJPanel implements PlayerPanel 
 
 
     @Override
-    public void clear() {
+    public void renderDefaultUI() {
         this.removeAll();
         this.setLayout(new BorderLayout());
         final JLabel userInfoLabel = new JLabel(NO_PLAYER_PH);

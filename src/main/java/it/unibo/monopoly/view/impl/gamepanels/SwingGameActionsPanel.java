@@ -28,7 +28,7 @@ final class SwingGameActionsPanel extends SwingAbstractJPanel implements GameAct
     }
  
     @Override
-    public void clear() {
+    public void renderDefaultUI() {
         this.removeAll();
         this.setLayout(new BorderLayout());
         final JTextArea textPlaceholder = new JTextArea(PLACEHOLDER);

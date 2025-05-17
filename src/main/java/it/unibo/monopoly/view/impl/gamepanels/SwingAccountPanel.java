@@ -42,7 +42,7 @@ final class SwingAccountPanel extends SwingAbstractJPanel implements AccountPane
     }
 
     @Override
-    public void clear() {
+    public void renderDefaultUI() {
         balanceJLabel.setText(BL_PLACEHOLDER);
     }
 

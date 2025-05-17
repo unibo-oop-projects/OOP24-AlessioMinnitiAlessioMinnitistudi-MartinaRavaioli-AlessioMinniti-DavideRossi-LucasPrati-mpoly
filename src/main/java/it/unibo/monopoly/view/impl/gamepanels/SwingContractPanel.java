@@ -51,7 +51,7 @@ final class SwingContractPanel extends SwingAbstractJPanel implements ContractPa
     }
 
     @Override
-    public void clear() {
+    public void renderDefaultUI() {
         this.removeAll();
         final JTextArea contractPlaceholder = new JTextArea(CONTRACT_PANEL_PLACEHOLDER);
         contractPlaceholder.setLineWrap(true);

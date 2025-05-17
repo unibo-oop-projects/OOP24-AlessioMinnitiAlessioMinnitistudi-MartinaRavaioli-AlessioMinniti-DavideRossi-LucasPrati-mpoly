@@ -18,12 +18,13 @@ public interface GamePanel {
      * to a default state.
      * The specific operations that are executed 
      * depend on the implementation. 
-     * Generally speaking, invoking this method {@code clear}
-     * usually corresponds to a re-render of the panel's ui. 
+     * Generally speaking, invoking this method
+     * usually corresponds to a re-render of the panel's ui, displaying what 
+     * would be considered a default state. 
      * The components that constitute the panel may change, 
      * as well as their displayed information or their functionality
      */
-    void clear();
+    void renderDefaultUI();
 
     /**
      * Returns this panel as a {@link Component}.
