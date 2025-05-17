@@ -21,7 +21,7 @@ public final class RentOptionFactoryImpl implements RentOptionFactory {
         startRent * 2,
         (deeds, o) -> deeds
                         .stream()
-                        .allMatch(d -> d.getOwner().isPresent() && o.equals(d.getOwner().get())));
+                        .allMatch(d -> d.isOwned() && o.equals(d.getOwner())));
     }
 
     @Override
@@ -32,7 +32,7 @@ public final class RentOptionFactoryImpl implements RentOptionFactory {
                     "",
                     p.getRight(),
                     (deeds, owner) -> deeds.stream()
-                                            .filter(d -> d.getOwner().isPresent() && owner.equals(d.getOwner().get()))
+                                            .filter(d -> d.isOwned() && owner.equals(d.getOwner()))
                                             .count() >= p.getLeft()))
                     .collect(Collectors.toList());
     }

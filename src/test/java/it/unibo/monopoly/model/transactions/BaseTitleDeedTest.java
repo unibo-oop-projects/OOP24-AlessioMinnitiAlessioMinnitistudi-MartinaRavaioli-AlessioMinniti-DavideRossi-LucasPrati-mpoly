@@ -40,14 +40,24 @@ class BaseTitleDeedTest {
 
 
     @Test
-    void testGetOwnerReturnsNullIfNoOwnerIsSet() {
-        assertTrue(deed.getOwner().isEmpty());
+    void testIsOwnedFalseIfNoOwnerIsSet() {
+        assertFalse(deed.isOwned());
+    }
+
+    @Test
+    void testGetOwnerThrowsExceptionIfNoOwnerIsSet() {
+        final IllegalStateException noOwnerException = assertThrows(
+            IllegalStateException.class, 
+            deed::getOwner
+        );
+        testExceptionFormat(noOwnerException);
     }
 
     @Test
     void testSetOwnerSuccessful() {
         deed.setOwner(OWNER_NAME);
-        assertEquals(OWNER_NAME, deed.getOwner().get());
+        assertTrue(deed.isOwned());
+        assertEquals(OWNER_NAME, deed.getOwner());
     }
 
     @Test
@@ -72,12 +82,12 @@ class BaseTitleDeedTest {
     @Test
     void removeOwnerSuccessful() {
         deed.setOwner(OWNER_NAME);
-        assertEquals(OWNER_NAME, deed.getOwner().get());
+        assertTrue(deed.isOwned());
+        assertEquals(OWNER_NAME, deed.getOwner());
         deed.removeOwner();
-        assertTrue(deed.getOwner().isEmpty());
+        assertFalse(deed.isOwned());
     }
 
-    //change to robust group object
    @Test
    void testGetGroup() {
         assertEquals(GROUP_TYPE, deed.getGroup());
@@ -106,10 +116,8 @@ class BaseTitleDeedTest {
                                                                 "", 
                                                                 BASE_RENT_PRICE * 2, 
                                                                 (deeds, o) -> deeds.stream()
-                                                                                .allMatch(d -> d.getOwner()
-                                                                                                .isPresent() 
-                                                                                                && o.equals(d.getOwner()
-                                                                                                .get())
+                                                                                .allMatch(d -> d.isOwned() 
+                                                                                                && o.equals(d.getOwner())
                                                                                                 )
                                                                 );
         final TitleDeed shortStreetDeed = new BaseTitleDeed(GROUP_TYPE,

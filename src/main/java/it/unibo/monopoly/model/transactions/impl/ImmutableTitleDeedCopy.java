@@ -2,7 +2,6 @@ package it.unibo.monopoly.model.transactions.impl;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 
 import it.unibo.monopoly.model.gameboard.impl.Group;
@@ -32,13 +31,13 @@ public final class ImmutableTitleDeedCopy implements TitleDeed {
                                     d -> deed.getMortgagePrice(), 
                                     deed.getRentOptions().getFirst().getPrice(),
                                     rentOptionCopy);
-        if (deed.getOwner().isPresent()) {
-            this.deed.setOwner(deed.getOwner().get());
+        if (deed.isOwned()) {
+            this.deed.setOwner(deed.getOwner());
         }
     }
 
     @Override
-    public Optional<String> getOwner() {
+    public String getOwner() {
         return this.deed.getOwner();
     }
 

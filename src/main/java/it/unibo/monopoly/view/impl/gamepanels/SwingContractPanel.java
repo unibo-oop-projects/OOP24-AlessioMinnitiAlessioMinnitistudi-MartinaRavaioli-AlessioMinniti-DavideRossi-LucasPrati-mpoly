@@ -84,7 +84,7 @@ final class SwingContractPanel extends SwingAbstractJPanel implements ContractPa
         final JPanel ownerPanel = new JPanel();
         ownerPanel.setLayout(new BorderLayout());
         final JLabel ownerDesc = new JLabel("Proprietario: ");
-        final JLabel ownerInfo = new JLabel(deed.getOwner().isPresent() ? deed.getOwner().get() : "NO OWNER", 
+        final JLabel ownerInfo = new JLabel(deed.isOwned() ? deed.getOwner() : "NO OWNER", 
                                             SwingConstants.RIGHT);
         ownerPanel.add(ownerDesc, BorderLayout.WEST);
         ownerPanel.add(ownerInfo, BorderLayout.CENTER);

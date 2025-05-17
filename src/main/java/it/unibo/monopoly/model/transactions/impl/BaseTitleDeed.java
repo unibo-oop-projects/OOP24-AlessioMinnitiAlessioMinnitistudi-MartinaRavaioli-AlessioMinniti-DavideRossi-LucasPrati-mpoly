@@ -73,8 +73,11 @@ public class BaseTitleDeed implements TitleDeed {
     }
 
     @Override
-    public final Optional<String> getOwner() {
-        return owner;
+    public final String getOwner() {
+        if (owner.isEmpty()) {
+            throw new IllegalStateException("This title deed has no owner");
+        }
+        return owner.get();
     }
 
     @Override

@@ -68,8 +68,8 @@ public final class BankImpl implements Bank {
         final BankAccount buyer = findAccount(playerName);
         final TitleDeed td = findTitleDeed(titleDeedName);
 
-        if (td.getOwner().isPresent()) {
-            throw new IllegalStateException("Property is already owned by player" + td.getOwner().get());
+        if (td.isOwned()) {
+            throw new IllegalStateException("Property is already owned by player" + td.getOwner());
         }
 
         buyer.withdraw(td.getSalePrice());
@@ -92,10 +92,10 @@ public final class BankImpl implements Bank {
         Objects.requireNonNull(playerName);
         final TitleDeed deed = findTitleDeed(titleDeedName);
         final BankAccount payer = findAccount(playerName);
-        if (deed.getOwner().isEmpty()) {
+        if (!deed.isOwned()) {
             throw new IllegalStateException("Cannot pay rent for title deed with no owner");
         }
-        final BankAccount receiver = findAccount(deed.getOwner().get());
+        final BankAccount receiver = findAccount(deed.getOwner());
         if (receiver.equals(payer)) {
             throw new IllegalStateException("Canot pay rent for property owned by the payer" + playerName);
         }
@@ -115,10 +115,10 @@ public final class BankImpl implements Bank {
     public void sellTitleDeed(final String titleDeedName) {
         Objects.requireNonNull(titleDeedName);
         final TitleDeed deed = findTitleDeed(titleDeedName);
-        if (deed.getOwner().isEmpty()) {
+        if (!deed.isOwned()) {
             throw new IllegalStateException("Cannot sell a title deed with no owner");
         }
-        final BankAccount seller = findAccount(deed.getOwner().get());
+        final BankAccount seller = findAccount(deed.getOwner());
         seller.deposit(deed.getMortgagePrice());
         deed.removeOwner();
     }
@@ -131,7 +131,8 @@ public final class BankImpl implements Bank {
         }
         return titleDeeds.values()
                         .stream()
-                        .filter(d -> d.getOwner().isPresent() && ownerName.equals(d.getOwner().get()))
+                        .filter(TitleDeed::isOwned)
+                        .filter(d -> ownerName.equals(d.getOwner()))
                         .collect(Collectors.toSet());
     }
 

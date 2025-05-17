@@ -143,7 +143,8 @@ class BankTest {
     @Test
     void payRentForPropertyPossessedByThePayer() {
         bank.buyTitleDeed(TITLE_DEED_NAME1, PLAYER1_NAME);
-        assertEquals(PLAYER1_NAME, bank.getTitleDeed(TITLE_DEED_NAME1).getOwner().get());
+        assertTrue(bank.getTitleDeed(TITLE_DEED_NAME1).isOwned());
+        assertEquals(PLAYER1_NAME, bank.getTitleDeed(TITLE_DEED_NAME1).getOwner());
         final IllegalStateException propertyPossessedByPlayerException = assertThrows(
             IllegalStateException.class,
             () -> bank.payRent(TITLE_DEED_NAME1, PLAYER1_NAME)
@@ -210,7 +211,8 @@ class BankTest {
     @Test
     void buyAlreadyBoughtProperty() {
         bank.buyTitleDeed(TITLE_DEED_NAME1, PLAYER1_NAME);
-        assertEquals(PLAYER1_NAME, bank.getTitleDeed(TITLE_DEED_NAME1).getOwner().get());
+        assertTrue(bank.getTitleDeed(TITLE_DEED_NAME1).isOwned());
+        assertEquals(PLAYER1_NAME, bank.getTitleDeed(TITLE_DEED_NAME1).getOwner());
         final IllegalStateException alreadyBoughtPropertyException = assertThrows(
             IllegalStateException.class,
             () -> bank.buyTitleDeed(TITLE_DEED_NAME1, PLAYER1_NAME)
@@ -231,7 +233,8 @@ class BankTest {
     void buyingPropertySuccessful() {
         final int previousBalance = bank.getBankAccount(PLAYER1_NAME).getBalance();
         bank.buyTitleDeed(TITLE_DEED_NAME1, PLAYER1_NAME);
-        assertEquals(PLAYER1_NAME, bank.getTitleDeed(TITLE_DEED_NAME1).getOwner().get());
+        assertTrue(bank.getTitleDeed(TITLE_DEED_NAME1).isOwned());
+        assertEquals(PLAYER1_NAME, bank.getTitleDeed(TITLE_DEED_NAME1).getOwner());
         final int expectedBalanceAfterPurchase = previousBalance - bank.getTitleDeed(TITLE_DEED_NAME1).getSalePrice();
         assertEquals(expectedBalanceAfterPurchase, bank.getBankAccount(PLAYER1_NAME).getBalance());
     }
@@ -257,13 +260,14 @@ class BankTest {
     void sellPropertySuccessful() {
         final int previousBalance = bank.getBankAccount(PLAYER1_NAME).getBalance();
         bank.buyTitleDeed(TITLE_DEED_NAME1, PLAYER1_NAME);
-        assertEquals(PLAYER1_NAME, bank.getTitleDeed(TITLE_DEED_NAME1).getOwner().get());
+        assertTrue(bank.getTitleDeed(TITLE_DEED_NAME1).isOwned());
+        assertEquals(PLAYER1_NAME, bank.getTitleDeed(TITLE_DEED_NAME1).getOwner());
         final int expectedBalanceAfterPurchase = previousBalance - bank.getTitleDeed(TITLE_DEED_NAME1).getSalePrice();
         assertEquals(expectedBalanceAfterPurchase, bank.getBankAccount(PLAYER1_NAME).getBalance());
         bank.sellTitleDeed(TITLE_DEED_NAME1);
         final int expectedBalanceAfterSale = expectedBalanceAfterPurchase + bank.getTitleDeed(TITLE_DEED_NAME1)
                                                                                 .getMortgagePrice();
-        assertTrue(bank.getTitleDeed(TITLE_DEED_NAME1).getOwner().isEmpty());
+        assertFalse(bank.getTitleDeed(TITLE_DEED_NAME1).isOwned());
         assertEquals(expectedBalanceAfterSale, bank.getBankAccount(PLAYER1_NAME).getBalance());
     }
 
@@ -272,7 +276,7 @@ class BankTest {
         bank.buyTitleDeed(TITLE_DEED_NAME1, PLAYER1_NAME);
         final Set<TitleDeed> deeds = bank.getTitleDeedsByOwner(PLAYER1_NAME);
         assertFalse(deeds.isEmpty());
-        assertTrue(deeds.stream().allMatch(d -> d.getOwner().isPresent() && PLAYER1_NAME.equals(d.getOwner().get())));
+        assertTrue(deeds.stream().allMatch(d -> d.isOwned() && PLAYER1_NAME.equals(d.getOwner())));
     }
 
     private void testExceptionFormat(final Exception exception) {
