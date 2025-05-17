@@ -65,7 +65,7 @@ public class GameboardView extends JFrame{
             panel.add(stripe, BorderLayout.NORTH);
         }
 
-        for (int i =0; i<players.size();i++){
+        for (int i =0; i<4;i++){
             pawnPositions.put(i, new PositionImpl(0));
         }
 

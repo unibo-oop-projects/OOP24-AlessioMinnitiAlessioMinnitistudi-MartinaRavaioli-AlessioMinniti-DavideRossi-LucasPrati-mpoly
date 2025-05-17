@@ -17,4 +17,9 @@ public class PlayerImpl implements Player {
     public final boolean isAlive() { 
         return false; 
     }
+    @Override
+    public int getID() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getID'");
+    }
 }
