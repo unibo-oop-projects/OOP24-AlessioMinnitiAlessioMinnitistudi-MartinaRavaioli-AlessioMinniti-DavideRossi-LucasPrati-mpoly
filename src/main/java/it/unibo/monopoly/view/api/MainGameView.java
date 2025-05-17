@@ -4,6 +4,7 @@ import java.util.Set;
 
 import it.unibo.monopoly.controller.api.GameController;
 import it.unibo.monopoly.model.transactions.api.TitleDeed;
+import it.unibo.monopoly.model.turnation.api.Player;
 
 /**
  * Interface for the game view.
@@ -39,15 +40,31 @@ public interface MainGameView {
     void showPlayerActions(Set<GameAction> actions);
 
     /**
+     * Displays the game rules and general information
+     * to play the game.
+     * @param rules the text of the game rules
+     */
+    void showRules(String rules);
+
+
+    /**
+     * Displays all statistics related to the {@link Player}, its {@link BankAccount}
+     * and the {@code titledeeds} owned by that player.
+     * @param player The player whose statistics have to be displayed
+     * The view will then make subsequent calls to controller methods to retrieve
+     * all information related to that player.
+     */
+    void displayPlayerStats(Player player);
+
+    /**
      * Displays an error on the UI.
      * @param e the {@code exception} thrown and whose information has to be displayed.
      */
     void displayError(Exception e);
 
     /**
-     * Displays the game rules and general information
-     * to play the game.
-     * @param rules the text of the game rules
+     * Displays a generic message to the user.
+     * @param message The message to display
      */
-    void showRules(String rules);
+    void displayMessage(String message);
 }

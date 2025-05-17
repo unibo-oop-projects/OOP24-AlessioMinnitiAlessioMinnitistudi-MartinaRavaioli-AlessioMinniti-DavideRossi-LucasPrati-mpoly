@@ -1,6 +1,8 @@
 package it.unibo.monopoly.view.impl;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.util.Set;
 
 import javax.swing.JButton;
@@ -8,6 +10,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import it.unibo.monopoly.controller.api.GameController;
+import it.unibo.monopoly.controller.impl.GameControllerImpl;
 import it.unibo.monopoly.model.transactions.api.TitleDeed;
 import it.unibo.monopoly.model.turnation.api.Player;
 import it.unibo.monopoly.utils.GuiUtils;
@@ -57,12 +60,12 @@ public final class MainViewImpl implements MainGameView {
         gameActionsPanel.clear();
         mainActionsPanel = fact.standardControlsPanel(controller);
         mainActionsPanel.clear();
-        mainGameFrame.getContentPane().add(buildActionPanelUI(), BorderLayout.CENTER);
+        mainGameFrame.getContentPane().add(buildActionPanelUI(controller), BorderLayout.CENTER);
         mainGameFrame.pack();
         mainGameFrame.setVisible(true);
     }
 
-    private JPanel buildActionPanelUI() {
+    private JPanel buildActionPanelUI(final GameController controller) {
         final JPanel actionPanel = new JPanel();
         actionPanel.setLayout(new BorderLayout());
         final JPanel userInfoPanel = new JPanel();
@@ -75,7 +78,7 @@ public final class MainViewImpl implements MainGameView {
         actionPanel.add(gameActionsPanel.getPanel(), BorderLayout.WEST);
 
         final JButton handlePropertiesButton = new JButton("Gestione proprietà");
-        handlePropertiesButton.addActionListener(e -> displayPropertiesView());
+        handlePropertiesButton.addActionListener(e -> controller.loadCurrentPlayerInformation());
 
         final JPanel southPanel = new JPanel();
         southPanel.setLayout(new BorderLayout());
@@ -84,10 +87,6 @@ public final class MainViewImpl implements MainGameView {
 
         actionPanel.add(southPanel, BorderLayout.SOUTH);
         return actionPanel;
-    }
-
-    private void displayPropertiesView() {
-        new GUIVendita(controller.getCurrentPlayer(), 100, 100, controller);
     }
 
     @Override
@@ -104,7 +103,7 @@ public final class MainViewImpl implements MainGameView {
     @Override
     public void displayPropertyContract(final TitleDeed propertyContract) {
         contractPanel.displayPropertyContract(propertyContract);
-        GuiUtils.refresh(mainGameFrame);
+        mainGameFrame.repaint();
     }
 
     @Override
@@ -123,5 +122,21 @@ public final class MainViewImpl implements MainGameView {
     public void showRules(final String rules) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'showRules'");
+    }
+
+    @Override
+    public void displayPlayerStats(final Player player) {
+        final Dimension screenDimension = Toolkit.getDefaultToolkit().getScreenSize();
+        new GUIVendita(player, (int) screenDimension.getWidth() / 5, (int) screenDimension.getHeight() / 5, controller);
+    }
+
+    @Override
+    public void displayMessage(final String message) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'displayMessage'");
+    }
+
+    public static void main(String[] args) {
+        new MainViewImpl(new GameControllerImpl(null));
     }
 }
