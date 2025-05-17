@@ -114,4 +114,12 @@ public interface GameController {
      */
     void loadRules();
 
+    /**
+     * Retrieves the player that is 
+     * currently playing its turn and
+     * asks the {@link MainGameView} to display
+     * its information.
+     */
+    void loadCurrentPlayerInformation();
+
 }

@@ -160,4 +160,15 @@ public final class GameControllerImpl implements GameController {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'loadRules'");
     }
+
+    @Override
+    public void loadCurrentPlayerInformation() {
+        try {
+            //Missing integration with model
+            //gameView.displayPlayerStats();
+            throw new UnsupportedOperationException("Unimplemented method 'loadCurrentPlayerInformation'");
+        } catch (final IllegalStateException e) {
+            gameView.displayError(e);
+        }
+    }
 }
