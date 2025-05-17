@@ -108,4 +108,12 @@ public class TurnationManagerImpl implements TurnationManager {
     public final int getIdCurrPlayer() {
         return this.currPlayer.getID();
     }
+    /**
+     * return the current player.
+     * @return Player
+    */
+    @Override
+    public final Player getCurrPlayer() {
+        return this.currPlayer;
+    }
 }
