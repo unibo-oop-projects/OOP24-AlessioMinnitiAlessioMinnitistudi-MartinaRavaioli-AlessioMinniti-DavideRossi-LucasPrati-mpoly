@@ -1,4 +1,4 @@
-package it.unibo.monopoly.resources;
+package it.unibo.monopoly.utils;
 
 /**
  * node for the linked lists.

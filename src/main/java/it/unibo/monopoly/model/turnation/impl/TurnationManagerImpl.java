@@ -7,7 +7,7 @@ import java.util.List;
 import it.unibo.monopoly.model.turnation.api.Dice;
 import it.unibo.monopoly.model.turnation.api.Player;
 import it.unibo.monopoly.model.turnation.api.TurnationManager;
-import it.unibo.monopoly.resources.CircularLinkedList;
+import it.unibo.monopoly.utils.CircularLinkedList;
 
 
 /**
