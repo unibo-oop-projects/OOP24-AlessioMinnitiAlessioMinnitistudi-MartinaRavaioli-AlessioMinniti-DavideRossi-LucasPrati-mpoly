@@ -21,12 +21,12 @@ import it.unibo.monopoly.model.turnation.impl.TurnationManagerImpl;
 public class TurnationManagerTest {
     private TurnationManager turnManager;
     private Dice dice;
-    private List<Player> players = List.of(PlayerImpl.of(1,"a",Color.RED),PlayerImpl.of(2,"b",Color.GREEN),PlayerImpl.of(3,"c",Color.BLUE));
+    private List<Player> players = List.of(PlayerImpl.of(1, "a", Color.RED),PlayerImpl.of(2, "b", Color.GREEN),PlayerImpl.of(3, "c", Color.BLUE));
     
     @BeforeEach
     void setUp() {
         dice = new DiceImpl(2);
-        turnManager = new TurnationManagerImpl(players,dice);
+        turnManager = new TurnationManagerImpl(players, dice);
     }
     
     @Test
@@ -52,15 +52,15 @@ public class TurnationManagerTest {
     void testGetPlayerListIsUnmodifiable() {
         List<Player> playersTest = turnManager.getPlayerList();
         assertEquals(players.size(), playersTest.size());
-        final UnsupportedOperationException unmodifiableListError = assertThrows(
+        final UnsupportedOperationException unmodifiableListError = assertThrows (
             UnsupportedOperationException.class,
-            () -> playersTest.add(PlayerImpl.of(4,null,null)));
+            () -> playersTest.add(PlayerImpl.of(4, null, null)));
         testExceptionFormat(unmodifiableListError);
     }
 
     @Test
     void testAddPlayer() {
-        Player p4 = PlayerImpl.of(4,"d",Color.YELLOW);
+        Player p4 = PlayerImpl.of(4, "d", Color.YELLOW);
         turnManager.addPlayer(p4);
         assertTrue(turnManager.getPlayerList().contains(p4), "New player should be in the list");
     }
