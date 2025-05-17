@@ -3,7 +3,6 @@ package it.unibo.monopoly.controller.api;
 import java.awt.Color;
 import java.util.List;
 
-import it.unibo.monopoly.model.transactions.api.BankAccount;
 import it.unibo.monopoly.model.transactions.api.TitleDeed;
 import it.unibo.monopoly.model.turnation.api.Player;
 
@@ -91,22 +90,6 @@ public interface GameController {
      * @return an object of the class Color
      */
     Color getPropertyColor(TitleDeed selectedProperty);
-
-    /**
-     * Get the {@link Player} who is currently 
-     * playing its turn.
-     * @return an object representing the {@link Player} instance
-     */
-    Player getCurrentPlayer();
-
-    /**
-     * Retrieve the {@link BankAccount} associated with a specific player.
-     * @param currentPlayer the player whose {@link BankAccount} wants 
-     * to be retrieved. The association is based on the player's id:
-     * the bank account that shares the same id of the player will be retrieved.
-     * @return an object representing the {@link BankAccount} of the player.
-     */
-    BankAccount getPlayerAccount(Player currentPlayer);
 
     /**
      * Loads the game rules from the file

@@ -9,7 +9,6 @@ import it.unibo.monopoly.model.gameboard.api.Tile;
 import it.unibo.monopoly.model.gameboard.impl.Group;
 import it.unibo.monopoly.controller.api.GameController;
 import it.unibo.monopoly.model.transactions.api.Bank;
-import it.unibo.monopoly.model.transactions.api.BankAccount;
 import it.unibo.monopoly.model.transactions.api.TitleDeed;
 import it.unibo.monopoly.model.transactions.impl.BaseTitleDeed;
 import it.unibo.monopoly.model.turnation.api.Player;
@@ -126,8 +125,10 @@ public final class GameControllerImpl implements GameController {
     @Override
     public void buyProperty() {
         try {
+            //MISSING IDENTIFIER INTEGRATION WITH  BANK
             final Tile currentPlayerTile = board.getTileForPawn(board.getPawn(manager.getIdCurrPlayer()));
             bank.buyTitleDeed(currentPlayerTile.toString(), null);
+            gameView.displayMessage("Purchase of title deed successful");
         } catch (final IllegalStateException e) {
             gameView.displayError(e);
         }
@@ -136,23 +137,13 @@ public final class GameControllerImpl implements GameController {
     @Override
     public void payPropertyOwner() {
         try {
+            //MISSING IDENTIFIER INTEGRATION WITH  BANK
             final Tile currentPlayerTile = board.getTileForPawn(board.getPawn(manager.getIdCurrPlayer()));
             bank.payRent(currentPlayerTile.toString(), null);
+            gameView.displayMessage("Rent payment successful");
         } catch (final IllegalStateException e) {
             gameView.displayError(e);
         }
-    }
-
-    @Override
-    public Player getCurrentPlayer() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getCurrentPlayer'");
-    }
-
-    @Override
-    public BankAccount getPlayerAccount(final Player currentPlayer) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getPlayerAccount'");
     }
 
     @Override
@@ -164,7 +155,7 @@ public final class GameControllerImpl implements GameController {
     @Override
     public void loadCurrentPlayerInformation() {
         try {
-            //Missing integration with model
+            //Missing method to get current player
             //gameView.displayPlayerStats();
             throw new UnsupportedOperationException("Unimplemented method 'loadCurrentPlayerInformation'");
         } catch (final IllegalStateException e) {
