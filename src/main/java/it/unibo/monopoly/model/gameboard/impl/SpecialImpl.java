@@ -18,14 +18,14 @@ public class SpecialImpl extends TileImpl implements Special {
     * get the type.
     * @param name
     * @param position
-    * @param type
+    * @param effect
     */
     @JsonCreator
     public SpecialImpl(
         @JsonProperty("name") final String name,
         @JsonProperty("position") final Position position,
         @JsonProperty("effect") final String effect
-    ){
+    ) {
         super(name, position, Type.SPECIAL);
         this.effect = effect;
     }
@@ -38,6 +38,11 @@ public class SpecialImpl extends TileImpl implements Special {
         return null; 
     }
 
+    /**
+     * //TODO
+     * TO DELETE THIS METHOD, IS TEMPORARY FOR THE INITIALIZATION AND DEBUG OF THE @PARAM effect
+     * @return simple debug for TEMPORARY 'String' effect
+     */
     public String debugEffectTODELETE() {
         return effect;
     }

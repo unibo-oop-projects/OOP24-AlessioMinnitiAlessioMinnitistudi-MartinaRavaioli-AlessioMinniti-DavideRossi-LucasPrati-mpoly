@@ -279,12 +279,6 @@ public final class MainMenuView extends JFrame {
                 "Error loading Json"
                 );
 
-        } catch (final NullPointerException e) {
-            GuiUtils.showErrorAndExit(
-                this,
-                e.getMessage(),
-                "Something is null during the initialization of the game"
-                );
         }
         this.dispose();
     }

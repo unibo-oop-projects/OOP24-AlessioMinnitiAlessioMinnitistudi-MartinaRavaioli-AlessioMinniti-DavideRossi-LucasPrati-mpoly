@@ -18,8 +18,8 @@ public class PropertyImpl extends TileImpl implements Property {
     /**
      * constructor.
      * @param name
-     * @param id
-     * @param type
+     * @param position
+     * @param group
     */
     @JsonCreator
     public PropertyImpl(

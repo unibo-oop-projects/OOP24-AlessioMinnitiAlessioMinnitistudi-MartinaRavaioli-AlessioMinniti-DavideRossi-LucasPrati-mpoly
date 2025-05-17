@@ -91,33 +91,32 @@ public final class MainMenuControllerImpl implements MainMenuController {
         final List<Tile> tiles = new ArrayList<>();
 
         // create a id for each Player (his Pawn and BankAccount must have the same id)
-        int id = 0;
+        int id = 1;
 
         // create a Player, his Pawn and his BankAccount according to the type chosen
         for (final var p : playersSetup.entrySet()) {
             final String name = p.getValue();
             final Color color = p.getKey();
-            final int index = id;     // used for collocate players and pawns in the right order, following the ids
-            id++;
-            players.add(index, PlayerImpl.of(id, name, color));
+            players.add(PlayerImpl.of(id, name, color));
             accounts.add(createBankAccountByType(id, name));
-            pawns.add(index, PawnImpl.createBasic(id, 0, color));
+            // pawns.add(PawnImpl.createBasic(id, 0, color));
+            id++;
         }
 
         // import titledeeds and tiles from json
         titleDeeds.addAll(ResourceLoader.loadTitleDeeds(config.getTitleDeedsPath()));
-        tiles.addAll(List.copyOf(ResourceLoader.loadJsonList(config.getTilesPath(), TileImpl.class)));
+        tiles.addAll(List.copyOf(ResourceLoader.loadJsonList(config.getTilesPath(), Tile.class)));
 
         // create the Bank, Board, TurnationManager 
         final Bank bank = new BankImpl(accounts, titleDeeds);
-        final Board board = new BoardImpl(tiles, pawns);
-        final TurnationManager turnationManager = new TurnationManagerImpl(
-            players,
-            new DiceImpl(
-                config.getNumDice(),
-                config.getSidesPerDie()
-            )
-        );
+        // final Board board = new BoardImpl(tiles, pawns);
+        // final TurnationManager turnationManager = new TurnationManagerImpl(
+        //     players,
+        //     new DiceImpl(
+        //         config.getNumDice(),
+        //         config.getSidesPerDie()
+        //     )
+        // );
 
 
         // TODO launch a new GUI for the game and put all these data to it

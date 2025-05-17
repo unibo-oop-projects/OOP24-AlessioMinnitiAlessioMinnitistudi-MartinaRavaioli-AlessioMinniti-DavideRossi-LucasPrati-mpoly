@@ -15,7 +15,7 @@ import it.unibo.monopoly.utils.ResourceLoader;
 public interface MainMenuController {
 
     /**
-     * Must initialize all the game, starting from the given {@code playerSetup}
+     * Must initialize all the game, starting from the given {@code playerSetup}.
      * @param playersSetup the list of player data, create players according to this
      * @throws IOException if the loading from {@code JSON}s failed
      * @throws NullPointerException if {@code id}, {@code name} or {@code color} are {@code null}
@@ -23,12 +23,12 @@ public interface MainMenuController {
     void onClickStart(Map<Color, String> playersSetup) throws IOException;
 
     /**
-     * Decrease the selected number of players
+     * Decrease the selected number of players.
      */
     void decreaseNumPlayer();
 
     /**
-     * Increase the selected number of players
+     * Increase the selected number of players.
      */
     void increaseNumPlayer();
 
