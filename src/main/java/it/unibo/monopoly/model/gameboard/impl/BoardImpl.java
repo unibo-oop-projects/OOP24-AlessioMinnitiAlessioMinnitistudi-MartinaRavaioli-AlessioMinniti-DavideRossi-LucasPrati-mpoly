@@ -79,7 +79,7 @@ public class BoardImpl implements Board {
     public List<Pawn> getPawninTile(final Tile tile) {
         final List<Pawn> pawnsInTile = new ArrayList<>();
 
-        for (final Pawn p : pawnsInTile) {
+        for (final Pawn p : this.pawns) {
             if (((PositionImpl) p.getPosition()).equals((PositionImpl) tile.getPosition())) {
                 pawnsInTile.add(p);
             }
