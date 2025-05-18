@@ -24,15 +24,14 @@ import it.unibo.monopoly.model.turnation.impl.PositionImpl;
 class BoardTest {
     private Board board;
     private Pawn pawn1, pawn2;
-    private Tile tile1, tile2, tile3;
     private List<Tile> tiles;
     private List<Pawn> pawns;
 
     @BeforeEach
     void setUp() {
-        tile1 = new PropertyImpl("a", new PositionImpl(0), Group.RED);
-        tile2 = new PropertyImpl("b", new PositionImpl(1), Group.BLUE);
-        tile3 = new PropertyImpl("c", new PositionImpl(2), Group.YELLOW);
+        Tile tile1 = new PropertyImpl("a", new PositionImpl(0), Group.RED);
+        Tile tile2 = new PropertyImpl("b", new PositionImpl(1), Group.BLUE);
+        Tile tile3 = new PropertyImpl("c", new PositionImpl(2), Group.YELLOW);
         tiles = List.of(tile1, tile2, tile3);
 
         pawn1 = new PawnImpl(1, new PositionImpl(0), Color.RED);
@@ -44,7 +43,7 @@ class BoardTest {
 
      @Test
     void testAddAndRemovePawn() {
-        Pawn newPawn = new PawnImpl(3, new PositionImpl(2), Color.GREEN);
+        final Pawn newPawn = new PawnImpl(3, new PositionImpl(2), Color.GREEN);
         board.addPawn(newPawn);
         assertEquals(3, ((PawnImpl) board.getPawn(3)).getID());
 
@@ -54,13 +53,13 @@ class BoardTest {
 
     @Test
     void testGetTileByPosition() {
-        Tile tile = board.getTile(new PositionImpl(1));
+        final Tile tile = board.getTile(new PositionImpl(1));
         assertEquals(1, tile.getPosition().getPos());
     }
 
     @Test
     void testGetTileForPawn() {
-        Tile tile = board.getTileForPawn(pawn2);
+        final Tile tile = board.getTileForPawn(pawn2);
         assertEquals(0, tile.getPosition().getPos());
     }
 
@@ -72,7 +71,7 @@ class BoardTest {
 
     @Test
     void testGetPawnById() {
-        Pawn foundPawn = board.getPawn(2);
+        final Pawn foundPawn = board.getPawn(2);
         assertEquals(Color.BLUE, foundPawn.getColor());
     }
 
@@ -83,7 +82,7 @@ class BoardTest {
 
     @Test
     void testGetPawnInTile() {
-        List<Pawn> pawnsInTile1 = board.getPawninTile(tile1);
+        final List<Pawn> pawnsInTile1 = board.getPawninTile(board.getTile(new PositionImpl(0)));
         assertEquals(2, pawnsInTile1.size());
         assertEquals(((PawnImpl) pawn1).getID(), ((PawnImpl) pawnsInTile1.get(0)).getID());
         assertEquals(((PawnImpl) pawn2).getID(), ((PawnImpl) pawnsInTile1.get(1)).getID());
@@ -91,17 +90,17 @@ class BoardTest {
 
     @Test
     void testGetPawnInEmptyTile() {
-        Tile emptyTile = new PropertyImpl("d", new PositionImpl(5), Group.BLACK);
-        List<Pawn> pawns = board.getPawninTile(emptyTile);
+        final Tile emptyTile = new PropertyImpl("d", new PositionImpl(5), Group.BLACK);
+        final List<Pawn> pawns = board.getPawninTile(emptyTile);
         assertTrue(pawns.isEmpty());
     }
 
     @Test
     void testSortTiles() {
-        TileImpl t1 = new PropertyImpl("t1", new PositionImpl(12), Group.BLACK);
-        TileImpl t2 = new PropertyImpl("t2", new PositionImpl(4), Group.BLUE);
-        TileImpl t3 = new PropertyImpl("t3", new PositionImpl(7), Group.CYAN);
-        BoardImpl unsortedBoard = new BoardImpl(Arrays.asList(t1, t2, t3), Collections.emptyList());
+        final TileImpl t1 = new PropertyImpl("t1", new PositionImpl(12), Group.BLACK);
+        final TileImpl t2 = new PropertyImpl("t2", new PositionImpl(4), Group.BLUE);
+        final TileImpl t3 = new PropertyImpl("t3", new PositionImpl(7), Group.CYAN);
+        final BoardImpl unsortedBoard = new BoardImpl(Arrays.asList(t1, t2, t3), Collections.emptyList());
 
         unsortedBoard.sortTiles();
         assertEquals(4, unsortedBoard.getTile(new PositionImpl(0)).getPosition().getPos());
