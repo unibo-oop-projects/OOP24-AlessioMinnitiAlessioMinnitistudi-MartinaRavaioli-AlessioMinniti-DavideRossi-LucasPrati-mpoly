@@ -1,9 +1,15 @@
 package it.unibo.monopoly.model.turnation;
 
 import java.awt.Color;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import it.unibo.monopoly.model.gameboard.api.Board;
 import it.unibo.monopoly.model.gameboard.api.Pawn;
@@ -12,6 +18,7 @@ import it.unibo.monopoly.model.gameboard.impl.BoardImpl;
 import it.unibo.monopoly.model.gameboard.impl.Group;
 import it.unibo.monopoly.model.gameboard.impl.PawnImpl;
 import it.unibo.monopoly.model.gameboard.impl.PropertyImpl;
+import it.unibo.monopoly.model.gameboard.impl.TileImpl;
 import it.unibo.monopoly.model.turnation.impl.PositionImpl;
 
 class BoardTest {
@@ -35,4 +42,70 @@ class BoardTest {
         board = new BoardImpl(tiles, pawns);
     }
 
+     @Test
+    void testAddAndRemovePawn() {
+        Pawn newPawn = new PawnImpl(3, new PositionImpl(2), Color.GREEN);
+        board.addPawn(newPawn);
+        assertEquals(3, ((PawnImpl) board.getPawn(3)).getID());
+
+        board.removePawn(newPawn);
+        assertThrows(IllegalArgumentException.class, () -> board.getPawn(3));
+    }
+
+    @Test
+    void testGetTileByPosition() {
+        Tile tile = board.getTile(new PositionImpl(1));
+        assertEquals(1, tile.getPosition().getPos());
+    }
+
+    @Test
+    void testGetTileForPawn() {
+        Tile tile = board.getTileForPawn(pawn2);
+        assertEquals(0, tile.getPosition().getPos());
+    }
+
+    @Test
+    void testMovePawn() {
+        board.movePawn(pawn1, List.of(2, 3)); // Move 5 steps
+        assertEquals(5, pawn1.getPosition().getPos());
+    }
+
+    @Test
+    void testGetPawnById() {
+        Pawn foundPawn = board.getPawn(2);
+        assertEquals(Color.BLUE, foundPawn.getColor());
+    }
+
+    @Test
+    void testGetPawnThrowsIfIdNotFound() {
+        assertThrows(IllegalArgumentException.class, () -> board.getPawn(99));
+    }
+
+    @Test
+    void testGetPawnInTile() {
+        List<Pawn> pawnsInTile1 = board.getPawninTile(tile1);
+        assertEquals(2, pawnsInTile1.size());
+        assertEquals(((PawnImpl) pawn1).getID(), ((PawnImpl) pawnsInTile1.get(0)).getID());
+        assertEquals(((PawnImpl) pawn2).getID(), ((PawnImpl) pawnsInTile1.get(1)).getID());
+    }
+
+    @Test
+    void testGetPawnInEmptyTile() {
+        Tile emptyTile = new PropertyImpl("d", new PositionImpl(5), Group.BLACK);
+        List<Pawn> pawns = board.getPawninTile(emptyTile);
+        assertTrue(pawns.isEmpty());
+    }
+
+    @Test
+    void testSortTiles() {
+        TileImpl t1 = new PropertyImpl("t1", new PositionImpl(12), Group.BLACK);
+        TileImpl t2 = new PropertyImpl("t2", new PositionImpl(4), Group.BLUE);
+        TileImpl t3 = new PropertyImpl("t3", new PositionImpl(7), Group.CYAN);
+        BoardImpl unsortedBoard = new BoardImpl(Arrays.asList(t1, t2, t3), Collections.emptyList());
+
+        unsortedBoard.sortTiles();
+        assertEquals(4, unsortedBoard.getTile(new PositionImpl(0)).getPosition().getPos());
+        assertEquals(7, unsortedBoard.getTile(new PositionImpl(1)).getPosition().getPos());
+        assertEquals(12, unsortedBoard.getTile(new PositionImpl(2)).getPosition().getPos());
+    }
 }
