@@ -18,7 +18,6 @@ import it.unibo.monopoly.model.turnation.impl.TurnationManagerImpl;
 
 class TurnationManagerTest {
     private TurnationManager turnManager;
-    private Dice dice;
     private final List<Player> players = List.of(
         PlayerImpl.of(1, "a", Color.RED),
         PlayerImpl.of(2, "b", Color.GREEN),
@@ -27,7 +26,7 @@ class TurnationManagerTest {
 
     @BeforeEach
     void setUp() {
-        dice = new DiceImpl(2);
+        final Dice dice = new DiceImpl(2);
         turnManager = new TurnationManagerImpl(players, dice);
     }
 

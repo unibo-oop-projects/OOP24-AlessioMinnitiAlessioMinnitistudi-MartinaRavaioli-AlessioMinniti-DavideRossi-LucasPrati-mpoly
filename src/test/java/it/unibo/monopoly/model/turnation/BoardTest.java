@@ -22,21 +22,21 @@ import it.unibo.monopoly.model.gameboard.impl.TileImpl;
 import it.unibo.monopoly.model.turnation.impl.PositionImpl;
 
 class BoardTest {
+    private static final int STEPS = 5;
+    private static final int UNUSED_ID = 99;
     private Board board;
     private Pawn pawn1, pawn2;
-    private List<Tile> tiles;
-    private List<Pawn> pawns;
 
     @BeforeEach
     void setUp() {
-        Tile tile1 = new PropertyImpl("a", new PositionImpl(0), Group.RED);
-        Tile tile2 = new PropertyImpl("b", new PositionImpl(1), Group.BLUE);
-        Tile tile3 = new PropertyImpl("c", new PositionImpl(2), Group.YELLOW);
-        tiles = List.of(tile1, tile2, tile3);
+        final Tile tile1 = new PropertyImpl("a", new PositionImpl(0), Group.RED);
+        final Tile tile2 = new PropertyImpl("b", new PositionImpl(1), Group.BLUE);
+        final Tile tile3 = new PropertyImpl("c", new PositionImpl(2), Group.YELLOW);
+        final List<Tile> tiles = List.of(tile1, tile2, tile3);
 
         pawn1 = new PawnImpl(1, new PositionImpl(0), Color.RED);
         pawn2 = new PawnImpl(2, new PositionImpl(0), Color.BLUE);
-        pawns = List.of(pawn1, pawn2);
+        final List<Pawn> pawns = List.of(pawn1, pawn2);
 
         board = new BoardImpl(tiles, pawns);
     }
@@ -66,7 +66,7 @@ class BoardTest {
     @Test
     void testMovePawn() {
         board.movePawn(pawn1, List.of(2, 3)); // Move 5 steps
-        assertEquals(5, pawn1.getPosition().getPos());
+        assertEquals(STEPS, pawn1.getPosition().getPos());
     }
 
     @Test
@@ -77,7 +77,7 @@ class BoardTest {
 
     @Test
     void testGetPawnThrowsIfIdNotFound() {
-        assertThrows(IllegalArgumentException.class, () -> board.getPawn(99));
+        assertThrows(IllegalArgumentException.class, () -> board.getPawn(UNUSED_ID));
     }
 
     @Test
@@ -103,8 +103,8 @@ class BoardTest {
         final BoardImpl unsortedBoard = new BoardImpl(Arrays.asList(t1, t2, t3), Collections.emptyList());
 
         unsortedBoard.sortTiles();
-        assertEquals(4, unsortedBoard.getTile(new PositionImpl(0)).getPosition().getPos());
-        assertEquals(7, unsortedBoard.getTile(new PositionImpl(1)).getPosition().getPos());
-        assertEquals(12, unsortedBoard.getTile(new PositionImpl(2)).getPosition().getPos());
+        assertEquals(t2.getPosition().getPos(), unsortedBoard.getTile(new PositionImpl(0)).getPosition().getPos());
+        assertEquals(t3.getPosition().getPos(), unsortedBoard.getTile(new PositionImpl(1)).getPosition().getPos());
+        assertEquals(t1.getPosition().getPos(), unsortedBoard.getTile(new PositionImpl(2)).getPosition().getPos());
     }
 }

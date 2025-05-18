@@ -59,6 +59,7 @@ public interface Board {
     void sortTiles();
     /**
      * get a list with all the tiles.
+     * @return List of tiles
     */
     List<Tile> getTiles();
 }
