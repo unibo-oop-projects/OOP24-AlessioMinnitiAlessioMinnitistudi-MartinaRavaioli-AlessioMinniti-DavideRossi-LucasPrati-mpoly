@@ -54,7 +54,7 @@ public abstract class TileImpl implements Tile, Identifiable<String>, Comparable
     */
     @Override
     public int compareTo(final TileImpl o) {
-        return this.getID().compareTo(o.getID());
+        return Integer.compare(this.getPosition().getPos(), o.getPosition().getPos());
     }
     /**
     * get the Group.
