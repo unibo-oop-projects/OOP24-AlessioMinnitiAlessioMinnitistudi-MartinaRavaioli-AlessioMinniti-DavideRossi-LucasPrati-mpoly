@@ -16,8 +16,8 @@ public class PropertyImpl extends TileImpl implements Property {
      * @param id
      * @param group
     */
-    public PropertyImpl(final String name, final Position id, final Group group) { 
-        super(name, id, group);
+    public PropertyImpl(final String name, final Position pos, final Group group) { 
+        super(name, pos, group);
         this.nHouses = 0;
         this.hotel = false;
     }

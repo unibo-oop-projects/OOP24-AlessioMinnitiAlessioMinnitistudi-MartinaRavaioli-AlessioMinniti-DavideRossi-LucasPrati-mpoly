@@ -7,9 +7,9 @@ import it.unibo.monopoly.resources.Identifiable;
 /**
 * tile implementation.
 */
-public abstract class TileImpl implements Tile, Identifiable<Position>, Comparable<TileImpl> {
-    private final String name;
-    private Position pos; 
+public abstract class TileImpl implements Tile, Identifiable<String>, Comparable<TileImpl> {
+    private String name;
+    private final Position pos; 
     private Group group;
     /**
     * constructor.
@@ -36,16 +36,16 @@ public abstract class TileImpl implements Tile, Identifiable<Position>, Comparab
     * @return Position
     */
     @Override
-    public Position getID() {
-        return new PositionImpl(this.pos.getPos());
+    public String getID() {
+        return this.getName();
     }
     /**
     * set ID.
     * @param value
     */
     @Override
-    public void setID(final Position value) {
-        this.pos = new PositionImpl(value.getPos());
+    public void setID(final String value) {
+        this.name = value;
     }
     /**
     * compare to.
@@ -54,7 +54,7 @@ public abstract class TileImpl implements Tile, Identifiable<Position>, Comparab
     */
     @Override
     public int compareTo(final TileImpl o) {
-        return Integer.compare(this.getID().getPos(), o.getID().getPos());
+        return this.getID().compareTo(o.getID());
     }
     /**
     * get the Group.
