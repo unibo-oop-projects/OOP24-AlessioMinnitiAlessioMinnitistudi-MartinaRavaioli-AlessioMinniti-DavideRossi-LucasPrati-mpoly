@@ -13,7 +13,7 @@ public class PropertyImpl extends TileImpl implements Property {
     /**
      * constructor.
      * @param name
-     * @param id
+     * @param pos
      * @param group
     */
     public PropertyImpl(final String name, final Position pos, final Group group) { 

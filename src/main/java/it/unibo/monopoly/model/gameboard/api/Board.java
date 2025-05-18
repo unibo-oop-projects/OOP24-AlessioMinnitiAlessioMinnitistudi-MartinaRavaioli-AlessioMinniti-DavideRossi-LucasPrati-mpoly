@@ -41,18 +41,18 @@ public interface Board {
      * remove a pawn.
      * @param p
     */
-    void removePawn(final Pawn p);
+    void removePawn(Pawn p);
     /**
      * add a pawn.
      * @param p
     */
-    void addPawn(final Pawn p);
+    void addPawn(Pawn p);
     /**
      * get all the pawns in a tile.
      * @param tile
      * @return List of Pawn
     */
-    List<Pawn> getPawninTile(final Tile tile);
+    List<Pawn> getPawninTile(Tile tile);
     /**
      * sort the tiles.
     */

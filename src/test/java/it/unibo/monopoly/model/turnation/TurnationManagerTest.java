@@ -16,17 +16,21 @@ import it.unibo.monopoly.model.turnation.impl.DiceImpl;
 import it.unibo.monopoly.model.turnation.impl.PlayerImpl;
 import it.unibo.monopoly.model.turnation.impl.TurnationManagerImpl;
 
-public class TurnationManagerTest {
+class TurnationManagerTest {
     private TurnationManager turnManager;
     private Dice dice;
-    private List<Player> players = List.of(PlayerImpl.of(1, "a", Color.RED),PlayerImpl.of(2, "b", Color.GREEN),PlayerImpl.of(3, "c", Color.BLUE));
-    
+    private final List<Player> players = List.of(
+        PlayerImpl.of(1, "a", Color.RED),
+        PlayerImpl.of(2, "b", Color.GREEN),
+        PlayerImpl.of(3, "c", Color.BLUE)
+    );
+
     @BeforeEach
     void setUp() {
         dice = new DiceImpl(2);
         turnManager = new TurnationManagerImpl(players, dice);
     }
-    
+
     @Test
     void testInitialCurrentPlayer() {
         assertEquals(players.get(0), turnManager.getCurrPlayer(), "Initial player should be the first one");
@@ -48,15 +52,14 @@ public class TurnationManagerTest {
 
     @Test
     void testGetPlayerListIsUnmodifiable() {
-        List<Player> playersTest = turnManager.getPlayerList();
+        final List<Player> playersTest = turnManager.getPlayerList();
         assertEquals(players.size(), playersTest.size());
         assertThrows(NullPointerException.class, () -> playersTest.add(PlayerImpl.of(4, null, null)));
-        
     }
 
     @Test
     void testAddPlayer() {
-        Player p4 = PlayerImpl.of(4, "d", Color.YELLOW);
+        final Player p4 = PlayerImpl.of(4, "d", Color.YELLOW);
         turnManager.addPlayer(p4);
         assertTrue(turnManager.getPlayerList().contains(p4), "New player should be in the list");
     }
