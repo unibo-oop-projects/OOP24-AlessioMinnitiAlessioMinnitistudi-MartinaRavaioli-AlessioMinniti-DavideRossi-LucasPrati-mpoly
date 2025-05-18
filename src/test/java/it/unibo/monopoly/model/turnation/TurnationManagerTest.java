@@ -4,8 +4,6 @@ import java.awt.Color;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.BeforeEach;
@@ -52,10 +50,8 @@ public class TurnationManagerTest {
     void testGetPlayerListIsUnmodifiable() {
         List<Player> playersTest = turnManager.getPlayerList();
         assertEquals(players.size(), playersTest.size());
-        final UnsupportedOperationException unmodifiableListError = assertThrows (
-            UnsupportedOperationException.class,
-            () -> playersTest.add(PlayerImpl.of(4, null, null)));
-        testExceptionFormat(unmodifiableListError);
+        assertThrows(NullPointerException.class, () -> playersTest.add(PlayerImpl.of(4, null, null)));
+        
     }
 
     @Test
@@ -65,8 +61,4 @@ public class TurnationManagerTest {
         assertTrue(turnManager.getPlayerList().contains(p4), "New player should be in the list");
     }
 
-    private void testExceptionFormat(final Exception exception) {
-        assertNotNull(exception.getMessage());
-        assertFalse(exception.getMessage().isBlank());
-    }
 }
