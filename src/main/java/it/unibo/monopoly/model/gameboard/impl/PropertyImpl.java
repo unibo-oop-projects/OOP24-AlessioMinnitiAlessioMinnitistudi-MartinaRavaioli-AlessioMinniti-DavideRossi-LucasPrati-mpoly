@@ -26,6 +26,7 @@ public class PropertyImpl extends TileImpl implements Property {
      * get the number of houses.
      * @return int
     */
+    @Override
     public int getNHouses() {
         return this.nHouses;
     }
@@ -56,6 +57,7 @@ public class PropertyImpl extends TileImpl implements Property {
      * control if it has an hotel.
      * @return bool
     */
+    @Override
     public boolean hasHotel() {
         return this.hotel;
     }
