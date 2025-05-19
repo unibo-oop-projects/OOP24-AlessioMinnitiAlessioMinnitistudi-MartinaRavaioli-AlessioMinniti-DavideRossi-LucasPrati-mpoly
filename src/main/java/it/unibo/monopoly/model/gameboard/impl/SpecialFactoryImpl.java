@@ -50,13 +50,12 @@ public class SpecialFactoryImpl implements SpecialFactory{
         return new SpecialImpl("GoToPrison", pos, Type.SPECIAL, new Effect() {
 
             private final Board movementM = board;
-            private final static Collection<Integer> STEPS_TO_PRISON = Set.of(13);
-            //fallo con la differenza 
+            //TODO fallo con la differenza !!
 
             @Override
             public void activate(Player palyer) {
                 palyer.putInPrison();
-                movementM.movePawn( movementM.getPawn(palyer.getID()), STEPS_TO_PRISON);            
+                movementM.movePawn( movementM.getPawn(palyer.getID()), Set.of(1 - pos.getPos()) );            
             }
             
         });
