@@ -1,7 +1,6 @@
 package it.unibo.monopoly.controller.impl;
 
 import java.awt.Color;
-import java.awt.Window;
 import java.util.List;
 import java.util.Optional;
 
