@@ -7,7 +7,7 @@ import it.unibo.monopoly.model.turnation.api.Player;
 import it.unibo.monopoly.utils.Identifiable;
 
 /**
- * Player implementation.
+ * {@link Player}'s implementation.
 */
 public final class PlayerImpl implements Player {
 
@@ -26,6 +26,7 @@ public final class PlayerImpl implements Player {
         this.id = id;
         this.name = name;
         this.color = color;
+
     }
 
     /**
@@ -52,7 +53,6 @@ public final class PlayerImpl implements Player {
         return id;
     }
 
-
     /**
      * Static factory method for creating a new {@link PlayerImpl} instance.
      * <p>
@@ -75,4 +75,5 @@ public final class PlayerImpl implements Player {
         }
         return new PlayerImpl(id, name, color);
     }
+
 }

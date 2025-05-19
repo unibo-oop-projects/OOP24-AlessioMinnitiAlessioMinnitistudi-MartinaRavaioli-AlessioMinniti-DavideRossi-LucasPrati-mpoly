@@ -25,7 +25,7 @@ public class PropertyImpl extends TileImpl implements Property {
     public PropertyImpl(
         @JsonProperty("name") final String name,
         @JsonProperty("position") final Position position,
-        @JsonProperty("group") final Type group
+        @JsonProperty("group") final Group group
     ) { 
         super(name, position, group);
         this.nHouses = 0;

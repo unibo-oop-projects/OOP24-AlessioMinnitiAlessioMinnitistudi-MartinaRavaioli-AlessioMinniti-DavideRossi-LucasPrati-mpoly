@@ -12,18 +12,18 @@ import it.unibo.monopoly.utils.Identifiable;
 public abstract class TileImpl implements Tile, Identifiable<Position>, Comparable<TileImpl> {
     private final String name;
     private final Position pos; 
-    private Type type;
+    private Group group;
 
     /**
     * constructor.
     * @param name
     * @param pos
-    * @param type
+    * @param group
     */
-    protected TileImpl(final String name, final Position pos, final Type type) {
+    protected TileImpl(final String name, final Position pos, final Group group) {
         this.name = name;
         this.pos = pos;
-        this.type = type;
+        this.group = group;
     }
 
     /**
@@ -54,16 +54,16 @@ public abstract class TileImpl implements Tile, Identifiable<Position>, Comparab
      * {@inheritDoc}
      */
     @Override
-    public Type getType() {
-        return this.type;
+    public Group getGroup() {
+        return this.group;
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void setType(final Type type) {
-        this.type = type;
+    public void setGroup(final Group group) {
+        this.group = group;
     }
 
     /**
@@ -82,7 +82,7 @@ public abstract class TileImpl implements Tile, Identifiable<Position>, Comparab
         final int prime = 31;
         int result = 1;
         result = prime * result + ((pos == null) ? 0 : pos.hashCode());
-        result = prime * result + ((type == null) ? 0 : type.hashCode());
+        result = prime * result + ((group == null) ? 0 : group.hashCode());
         return result;
     }
 
@@ -108,6 +108,6 @@ public abstract class TileImpl implements Tile, Identifiable<Position>, Comparab
         } else if (!pos.equals(other.pos)) {
             return false;
         }
-        return this.type == other.type;
+        return this.group == other.group;
     }
 }

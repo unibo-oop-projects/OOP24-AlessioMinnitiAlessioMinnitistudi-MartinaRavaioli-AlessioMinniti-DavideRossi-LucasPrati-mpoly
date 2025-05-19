@@ -3,7 +3,7 @@ package it.unibo.monopoly.model.gameboard.impl;
 import java.awt.Color;
 
 import it.unibo.monopoly.model.gameboard.api.Pawn;
-import it.unibo.monopoly.model.gameboard.api.PawnFactory;
+
 import it.unibo.monopoly.model.turnation.api.Position;
 import it.unibo.monopoly.model.turnation.impl.AbstractIdPlayerImpl;
 import it.unibo.monopoly.model.turnation.impl.PositionImpl;
@@ -11,7 +11,7 @@ import it.unibo.monopoly.model.turnation.impl.PositionImpl;
 /**
  * {@link Pawn} implementation.
 */
-public class PawnImpl extends AbstractIdPlayerImpl implements Pawn, PawnFactory {
+public class PawnImpl extends AbstractIdPlayerImpl implements Pawn {
     private Position pos;
     private Color color;
     private String shape;
@@ -100,28 +100,5 @@ public class PawnImpl extends AbstractIdPlayerImpl implements Pawn, PawnFactory 
     @Override
     public void move(final int steps) {
         this.pos.setPos(this.pos.getPos() + steps);
-    }
-    /**
-     * factory method to create basic pawns.
-     * @param id
-     * @param pos
-     * @param color
-     * @return Pawn
-    */
-    @Override
-    public Pawn createBasic(final int id, final Position pos, final Color color) {
-        return new PawnImpl(id, pos, color);
-    }
-    /**
-     * factory method to create advanced pawns.
-     * @param id
-     * @param pos
-     * @param color
-     * @param shape
-     * @return Pawn
-    */
-    @Override
-    public Pawn createAdvanced(final int id, final Position pos, final Color color, final String shape) {
-        return  new PawnImpl(id, pos, color, shape);
     }
 }

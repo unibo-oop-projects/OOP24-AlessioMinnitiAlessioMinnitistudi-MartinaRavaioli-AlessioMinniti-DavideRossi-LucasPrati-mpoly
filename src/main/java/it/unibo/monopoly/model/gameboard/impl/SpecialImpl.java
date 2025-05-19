@@ -26,7 +26,7 @@ public class SpecialImpl extends TileImpl implements Special {
         @JsonProperty("position") final Position position,
         @JsonProperty("effect") final String effect
     ) {
-        super(name, position, Type.SPECIAL);
+        super(name, position, Group.SPECIAL);
         this.effect = effect;
     }
     /**
