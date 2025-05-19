@@ -1,4 +1,4 @@
-package it.unibo.monopoly.controller;
+package it.unibo.monopoly.controller.impl;
 
 import java.awt.Color;
 import java.io.IOException;
@@ -10,7 +10,6 @@ import java.util.Objects;
 import java.util.Set;
 
 import it.unibo.monopoly.controller.api.MainMenuController;
-import it.unibo.monopoly.controller.impl.GameControllerImpl;
 import it.unibo.monopoly.model.gameboard.api.Board;
 import it.unibo.monopoly.model.gameboard.api.Pawn;
 import it.unibo.monopoly.model.gameboard.api.PawnFactory;
