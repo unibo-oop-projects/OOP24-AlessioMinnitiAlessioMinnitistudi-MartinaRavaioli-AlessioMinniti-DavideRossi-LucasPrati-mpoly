@@ -8,6 +8,7 @@ import it.unibo.monopoly.model.gameboard.impl.Type;
 
 import it.unibo.monopoly.controller.api.GameController;
 import it.unibo.monopoly.model.transactions.api.Bank;
+import it.unibo.monopoly.model.transactions.api.BankAccount;
 import it.unibo.monopoly.model.transactions.api.TitleDeed;
 import it.unibo.monopoly.model.transactions.impl.BaseTitleDeed;
 import it.unibo.monopoly.model.turnation.api.Player;
@@ -111,8 +112,8 @@ public final class GameControllerImpl implements GameController {
     }
 
     @Override
-    public int getPlayerBalance(final Player player) {
-        return bank.getBankAccount(player.getName()).getBalance();
+    public BankAccount getPlayerBalance(final Player player) {
+        return bank.getBankAccount(player.getName());
     }
 
     @Override

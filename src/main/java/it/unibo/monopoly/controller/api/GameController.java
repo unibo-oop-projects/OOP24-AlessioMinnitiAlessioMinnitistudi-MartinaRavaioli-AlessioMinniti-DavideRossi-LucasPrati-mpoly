@@ -3,6 +3,7 @@ package it.unibo.monopoly.controller.api;
 import java.awt.Color;
 import java.util.List;
 
+import it.unibo.monopoly.model.transactions.api.BankAccount;
 import it.unibo.monopoly.model.transactions.api.TitleDeed;
 import it.unibo.monopoly.model.turnation.api.Player;
 
@@ -55,7 +56,7 @@ public interface GameController {
      * @param player
      * @return its balance
      */
-    int getPlayerBalance(Player player);
+    BankAccount getPlayerBalance(Player player);
 
 
     /**

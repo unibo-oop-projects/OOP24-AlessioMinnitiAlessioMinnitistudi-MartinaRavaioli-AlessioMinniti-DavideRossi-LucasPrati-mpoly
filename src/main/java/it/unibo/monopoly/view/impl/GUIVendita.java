@@ -87,7 +87,7 @@ public final class GUIVendita extends JFrame {
         final JButton sellProperty = new JButton("sell Property");
         sellProperty.setEnabled(false);
         final JLabel balance = new JLabel("your balance is: ");
-        final JLabel balanceValue = new JLabel(String.valueOf(logic.getPlayerBalance(player)));
+        final JLabel balanceValue = new JLabel(String.valueOf(logic.getPlayerBalance(player).getBalance()));
 
 // create the Component for the listPane
         final JLabel selectProperty = new JLabel("select the property you want to manage");
@@ -133,7 +133,7 @@ public final class GUIVendita extends JFrame {
                 final int houses = property.houseNum();
                 final PaymentDialog paymentComplete = new PaymentDialog(property.housePrice(), true);
                 paymentComplete.setVisible(true);
-                balanceValue.setText(String.valueOf(logic.getPlayerBalance(player)));
+                balanceValue.setText(String.valueOf(logic.getPlayerBalance(player).getBalance()));
                 if (houses == 0) {
                     housesNumValue.setText(Integer.toString(houses));
                     sellHouse.setEnabled(false);
@@ -159,7 +159,7 @@ public final class GUIVendita extends JFrame {
                 rentValue.setText("0");
                 housesNumValue.setText("0");
                 colorValue.setColor(Color.BLACK);
-                balanceValue.setText(String.valueOf(logic.getPlayerBalance(player)));
+                balanceValue.setText(String.valueOf(logic.getPlayerBalance(player).getBalance()));
 
                 if (logic.getProperties(player).isEmpty()) {
                     selectProperty.setText("you have no properties to manage");
