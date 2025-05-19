@@ -1,7 +1,6 @@
 package it.unibo.monopoly.model.gameboard.impl;
 
 
-import java.util.Collection;
 import java.util.Set;
 
 import it.unibo.monopoly.model.gameboard.api.Board;
@@ -18,62 +17,53 @@ import it.unibo.monopoly.model.turnation.impl.PositionImpl;
 
 public class SpecialFactoryImpl implements SpecialFactory{
 
-    private final Bank bank;
-    private final TurnationManager turnationManager;
-    private final Board board;
 
-    public SpecialFactoryImpl(Bank bank, TurnationManager turnationManager, Board board) {
-        this.turnationManager = turnationManager;
-        this.bank = bank;
-        this.board = board;
+    public SpecialFactoryImpl() {
     }
 
     @Override
-    public Special start() {
+    public Special start(final Bank bank) {
 
         return new SpecialImpl("Start", new PositionImpl(0), Type.SPECIAL, new Effect() {
 
-            private final Bank transactiontionM = bank;
             private final static int START_AMOUNT = 200;
 
             //DA CAMBIARE CON IL METODO PER AVERE IL NOME CHE ORA NON C'E'
             @Override
             public void activate(Player palyer) {
-                transactiontionM.depositTo(palyer.toString(), START_AMOUNT);
+                bank.depositTo(palyer.toString(), START_AMOUNT);
             }
             
         });
     }
 
     @Override
-    public Special goToPrison(Position pos) {
+    public Special goToPrison(Position pos, final Board board) {
         return new SpecialImpl("GoToPrison", pos, Type.SPECIAL, new Effect() {
 
-            private final Board movementM = board;
             //TODO fallo con la differenza !!
+            //o con il metodo da chiedere ad ale 
 
             @Override
             public void activate(Player palyer) {
                 palyer.putInPrison();
-                movementM.movePawn( movementM.getPawn(palyer.getID()), Set.of(1 - pos.getPos()) );            
+                board.movePawn( board.getPawn(palyer.getID()), Set.of(1 - pos.getPos()) );
             }
             
         });
     }
 
     @Override
-    public Special prison(Position pos) {
+    public Special prison(Position pos, final Board board, final TurnationManager turnationManager) {
         return new SpecialImpl(null, pos, null, null) {
-            private final TurnationManager turnM = turnationManager;
-            private final Board boarD = board;
             private boolean validThrow=false;
 
             @Override
             public void activateEffect(Player player) {
                 
-                turnM.moveByDices().forEach(p->turnM.moveByDices().forEach(g -> {if(g.equals(p)){validThrow=true;}}));
+                turnationManager.moveByDices().forEach(p->turnationManager.moveByDices().forEach(g -> {if(g.equals(p)){validThrow=true;}}));
                 if (validThrow) {
-                    boarD.movePawn(boarD.getPawn(player.getID()), turnM.moveByDices());
+                    board.movePawn(board.getPawn(player.getID()), turnationManager.moveByDices());
                     
                 }
             }
@@ -93,20 +83,22 @@ public class SpecialFactoryImpl implements SpecialFactory{
     }
 
     @Override
-    public Special taxes(Position pos) {
+    public Special taxes(Position pos, final Bank bank) {
         return new SpecialImpl("taxes", pos, Type.SPECIAL, new Effect() {
 
-            private final Bank transationM = bank;
             private final static int TAXES_AMOUNT = 100;
 
             //DA CAMBIARE CON IL METODO PER AVERE IL NOME CHE ORA NON C'E'
             @Override
             public void activate(Player palyer) {
-                transationM.withdrawFrom(palyer.toString(), TAXES_AMOUNT);
+                bank.withdrawFrom(palyer.toString(), TAXES_AMOUNT);
             }
             
         });
     }
 
+    public Special bho( final Bank bank){
+        return new SpecialImpl(null, null, null, p -> {bank.withdrawFrom(p.toString(), 10);});
+    }
 
 }
