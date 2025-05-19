@@ -10,6 +10,7 @@ import java.util.Objects;
 import java.util.Set;
 
 import it.unibo.monopoly.controller.api.MainMenuController;
+import it.unibo.monopoly.controller.impl.GameControllerImpl;
 import it.unibo.monopoly.model.gameboard.api.Board;
 import it.unibo.monopoly.model.gameboard.api.Pawn;
 import it.unibo.monopoly.model.gameboard.api.PawnFactory;
@@ -32,6 +33,7 @@ import it.unibo.monopoly.model.turnation.impl.TurnationManagerImpl;
 import it.unibo.monopoly.utils.Configuration;
 import it.unibo.monopoly.utils.Identifiable;
 import it.unibo.monopoly.utils.ResourceLoader;
+import it.unibo.monopoly.view.impl.MainViewImpl;
 
 
 /**
@@ -124,6 +126,9 @@ public final class MainMenuControllerImpl implements MainMenuController {
         // !!! la configurazione forse non serve più da qui in poi
         // !!! creare sia controller che view, poi usare .attach()
         // launch C_Game_Manager(config, board) //alessio
+        var controllerGameManager = new GameControllerImpl(bank);
+        var mainView = new MainViewImpl(controllerGameManager);
+        controllerGameManager.attachView(mainView);
         // launch controller di davide (config, bank, )
     }
 

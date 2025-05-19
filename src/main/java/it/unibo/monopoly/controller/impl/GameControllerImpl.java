@@ -1,32 +1,35 @@
 package it.unibo.monopoly.controller.impl;
 
 import java.awt.Color;
+import java.awt.Window;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
-
 
 import it.unibo.monopoly.model.gameboard.impl.Group;
 import it.unibo.monopoly.controller.api.GameController;
 import it.unibo.monopoly.model.transactions.api.Bank;
 import it.unibo.monopoly.model.transactions.api.BankAccount;
 import it.unibo.monopoly.model.transactions.api.TitleDeed;
-import it.unibo.monopoly.model.transactions.impl.BankImpl;
 import it.unibo.monopoly.model.transactions.impl.BaseTitleDeed;
 import it.unibo.monopoly.model.turnation.api.Player;
 import it.unibo.monopoly.view.api.MainGameView;
-import it.unibo.monopoly.view.impl.MainViewImpl;
+
 
 /**
- * implementation of game controller.
+ * Implementation of {@link GameController}.
  */
 public final class GameControllerImpl implements GameController {
 
     private static final int NUM = 0;
 
-    //PLACHEOLDER ENTITIES, SUBSTITUTE WITH MORE ROBUST CONSTRUCTOR
-    private final Bank bank = new BankImpl(Set.of(), Set.of()); 
-    private  final MainGameView gameView = new MainViewImpl(this);
+    // TODO PLACHEOLDER ENTITIES, SUBSTITUTE WITH MORE ROBUST CONSTRUCTOR
+    private final Bank bank;
+    private MainGameView gameView;
+
+    // TODO CHECK THIS COSNTRUCTOR AND METHOD "attachView()" (from Lucas)
+    public GameControllerImpl(final Bank bank) {
+        this.bank = bank;
+    }
 
     @Override
     public boolean areThereHouses(final TitleDeed prop) {
@@ -157,5 +160,10 @@ public final class GameControllerImpl implements GameController {
         } catch (final IllegalStateException e) {
             gameView.displayError(e);
         }
+    }
+
+    @Override
+    public void attachView(MainGameView view) {
+        this.gameView = view;
     }
 }

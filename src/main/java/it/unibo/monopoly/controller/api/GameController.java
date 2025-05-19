@@ -6,6 +6,7 @@ import java.util.List;
 import it.unibo.monopoly.model.transactions.api.BankAccount;
 import it.unibo.monopoly.model.transactions.api.TitleDeed;
 import it.unibo.monopoly.model.turnation.api.Player;
+import it.unibo.monopoly.view.api.MainGameView;
 
 /**
  * interface for game controller of the game.
@@ -23,7 +24,6 @@ public interface GameController {
      * Throw the dices and update the position of the pawn on the gameBoard.
      */
     void throwDices();
-
 
     /**
      * Buy the property occupied by the player’s pawn
@@ -105,5 +105,10 @@ public interface GameController {
      * its information.
      */
     void loadCurrentPlayerInformation();
+
+    /**
+     * Allow to attach {@link MainGameView}s to the controller
+     */
+    void attachView(MainGameView view);
 
 }

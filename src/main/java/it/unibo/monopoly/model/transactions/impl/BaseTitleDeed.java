@@ -36,7 +36,7 @@ public class BaseTitleDeed implements TitleDeed {
      * <p>
      * The {@code mortageFunction} is a default {@code 50%} of the original {@code salePrice}.
      * 
-     * @param type The type of group of title deeds this deed is part of
+     * @param group The group of title deeds this deed is part of
      * @param name The name of the deed
      * @param salePrice The price to pay to buy the deed
      * @param baseRent The standard rent fee
