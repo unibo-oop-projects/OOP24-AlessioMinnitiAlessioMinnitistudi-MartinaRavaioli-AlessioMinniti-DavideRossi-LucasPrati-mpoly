@@ -1,18 +1,14 @@
 package it.unibo.monopoly.model.gameboard.impl;
 
-import java.util.List;
-import java.util.Optional;
+
+import java.util.Collection;
 import java.util.Set;
-import java.util.function.Function;
 
 import it.unibo.monopoly.model.gameboard.api.Board;
 import it.unibo.monopoly.model.gameboard.api.Effect;
 import it.unibo.monopoly.model.gameboard.api.Special;
 import it.unibo.monopoly.model.gameboard.api.SpecialFactory;
 import it.unibo.monopoly.model.transactions.api.Bank;
-import it.unibo.monopoly.model.transactions.api.RentOption;
-import it.unibo.monopoly.model.transactions.api.TitleDeed;
-import it.unibo.monopoly.model.transactions.impl.BaseTitleDeed;
 import it.unibo.monopoly.model.turnation.api.Player;
 import it.unibo.monopoly.model.turnation.api.Position;
 import it.unibo.monopoly.model.turnation.api.TurnationManager;
@@ -34,7 +30,8 @@ public class SpecialFactoryImpl implements SpecialFactory{
 
     @Override
     public Special start() {
-        return new SpecialImpl(new PositionImpl(0), new Effect() {
+
+        return new SpecialImpl("Start", new PositionImpl(0), Type.SPECIAL, new Effect() {
 
             private final Bank transactiontionM = bank;
             private final static int START_AMOUNT = 200;
@@ -50,16 +47,16 @@ public class SpecialFactoryImpl implements SpecialFactory{
 
     @Override
     public Special goToPrison(Position pos) {
-        return new SpecialImpl(pos, new Effect() {
+        return new SpecialImpl("GoToPrison", pos, Type.SPECIAL, new Effect() {
 
             private final Board movementM = board;
-            private final static Integer STEPS_TO_PRISON = 13;
+            private final static Collection<Integer> STEPS_TO_PRISON = Set.of(13);
             //fallo con la differenza 
 
             @Override
             public void activate(Player palyer) {
                 palyer.putInPrison();
-                movementM.movePawn( /* manca la pawn */, STEPS_TO_PRISON);            
+                movementM.movePawn( movementM.getPawn(palyer.getID()), STEPS_TO_PRISON);            
             }
             
         });
@@ -67,31 +64,26 @@ public class SpecialFactoryImpl implements SpecialFactory{
 
     @Override
     public Special prison(Position pos) {
-        return new Special() {
+        return new SpecialImpl(null, pos, null, null) {
             private final TurnationManager turnM = turnationManager;
             private final Board boarD = board;
-            private int steps;
-            private final Position position;
+            private boolean validThrow=false;
 
             @Override
             public void activateEffect(Player player) {
-                if (turnM.moveByDices().getRight()==turnM.moveByDices().getLeft()) {
-                    steps = turnM.moveByDices().getRight() + turnM.moveByDices().getLeft();
-                    board.muovi //non c'è il metodo!!
+                
+                turnM.moveByDices().forEach(p->turnM.moveByDices().forEach(g -> {if(g.equals(p)){validThrow=true;}}));
+                if (validThrow) {
+                    boarD.movePawn(boarD.getPawn(player.getID()), turnM.moveByDices());
+                    
                 }
-
-            @Override
-            public Position getPosition() {
-                // TODO Auto-generated method stub
-                throw new UnsupportedOperationException("Unimplemented method 'getPosition'");
-            }
             }
         };
     }
 
     @Override
     public Special parking(Position pos) {
-        return new SpecialImpl(pos, new Effect() {
+        return new SpecialImpl("parking", pos, Type.SPECIAL, new Effect() {
 
             @Override
             public void activate(Player palyer) {
@@ -103,7 +95,7 @@ public class SpecialFactoryImpl implements SpecialFactory{
 
     @Override
     public Special taxes(Position pos) {
-        return new SpecialImpl(pos, new Effect() {
+        return new SpecialImpl("taxes", pos, Type.SPECIAL, new Effect() {
 
             private final Bank transationM = bank;
             private final static int TAXES_AMOUNT = 100;
