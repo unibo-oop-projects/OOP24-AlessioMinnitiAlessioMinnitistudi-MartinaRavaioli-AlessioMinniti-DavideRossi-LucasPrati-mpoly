@@ -10,17 +10,17 @@ import it.unibo.monopoly.resources.Identifiable;
 public abstract class TileImpl implements Tile, Identifiable<Position>, Comparable<TileImpl> {
     private final String name;
     private Position pos; 
-    private Type type;
+    private Group group;
     /**
     * constructor.
     * @param name
     * @param pos
-    * @param type
+    * @param group
     */
-    protected TileImpl(final String name, final Position pos, final Type type) {
+    protected TileImpl(final String name, final Position pos, final Group group) {
         this.name = name;
         this.pos = pos;
-        this.type = type;
+        this.group = group;
     }
     /**
     * get the name.
@@ -57,20 +57,20 @@ public abstract class TileImpl implements Tile, Identifiable<Position>, Comparab
         return Integer.compare(this.getID().getPos(), o.getID().getPos());
     }
     /**
-    * get the type.
-    * @return Type
+    * get the Group.
+    * @return Group
     */
     @Override
-    public Type getType() {
-        return this.type;
+    public Group getGroup() {
+        return this.group;
     }
     /**
-    * set the type.
-    * @param type
+    * set the Group.
+    * @param group
     */
     @Override
-    public void setType(final Type type) {
-        this.type = type;
+    public void setGroup(final Group group) {
+        this.group = group;
     }
     /**
     * get the position.
@@ -89,7 +89,7 @@ public abstract class TileImpl implements Tile, Identifiable<Position>, Comparab
         final int prime = 31;
         int result = 1;
         result = prime * result + ((pos == null) ? 0 : pos.hashCode());
-        result = prime * result + ((type == null) ? 0 : type.hashCode());
+        result = prime * result + ((group == null) ? 0 : group.hashCode());
         return result;
     }
     /**
@@ -116,6 +116,6 @@ public abstract class TileImpl implements Tile, Identifiable<Position>, Comparab
         } else if (!pos.equals(other.pos)) {
             return false;
         }
-        return this.type == other.type;
+        return this.group == other.group;
     }
 }

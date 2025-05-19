@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
-import it.unibo.monopoly.model.gameboard.impl.Type;
+import it.unibo.monopoly.model.gameboard.impl.Group;
 
 /**
  * The title deed card of a specific {@link Property}.
@@ -17,14 +17,26 @@ import it.unibo.monopoly.model.gameboard.impl.Type;
  */
 public interface TitleDeed {
 
+    /**
+     * Tells whether this Title deed
+     * is owned by a player or not. Meaning 
+     * a player bought it from the {@link Bank} or the Title deed
+     * was assigned to a player at the beginning of the game.
+     * @return {@code true} if a player owns the Title deed and {@code false} if
+     * the Title deed has no ownership
+     */
+    boolean isOwned();
 
     /**
-     * @return {@link Optional} containing the name 
+     * @return the name 
      * associated with the player that currently holds
      * ownership of this {@link TitleDeed}; or an empty optional 
      * if no player owns the property.
+     * @throws IllegalStateException if no player has ownership of this
+     * Title deed, meaning the title deed was never bought, never assigned
+     * to a player at the beginning of the game or it was sold back to the bank.
      */
-    Optional<String> getOwner();
+    String getOwner();
 
     /**
      * Sets the passed player as the owner of 
@@ -46,7 +58,7 @@ public interface TitleDeed {
     /**
      * @return the name of the group this {@link TitleDeed} is part of.
      */
-    Type getType();
+    Group getGroup();
 
     /**
      * @return the name of this {@link TitleDeed}
@@ -75,7 +87,7 @@ public interface TitleDeed {
      * title deeds that will be checked to determine the final 
      * rent price. 
      * The tile deeds should be part of the same group,
-     * a call on {@link #getType()} should give the same {@code String}
+     * a call on {@link #getGroup()} should give the same {@code String}
      * for each of the deeds that are part of this {@link Set}
      * @return the final rent that should be paid as an {@code Integer}
      */

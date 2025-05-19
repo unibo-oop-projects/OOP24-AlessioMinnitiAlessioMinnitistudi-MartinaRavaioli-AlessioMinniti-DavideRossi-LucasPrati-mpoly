@@ -23,4 +23,9 @@ public interface TurnationManager {
      * @return int
      */
     int getIdCurrPlayer();
+    /**
+     * return the current player.
+     * @return Player
+     */
+    Player getCurrPlayer();
 }
