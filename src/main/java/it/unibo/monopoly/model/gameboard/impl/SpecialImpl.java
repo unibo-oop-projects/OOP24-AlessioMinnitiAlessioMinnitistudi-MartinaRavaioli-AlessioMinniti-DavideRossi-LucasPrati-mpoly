@@ -39,8 +39,8 @@ public class SpecialImpl extends TileImpl implements Special {
     }
 
     /**
-     * //TODO
-     * TO DELETE THIS METHOD, IS TEMPORARY FOR THE INITIALIZATION AND DEBUG OF THE @PARAM effect
+     * //TODO.
+     * TO DELETE THIS METHOD, IS TEMPORARY FOR THE INITIALIZATION AND DEBUG OF THE @PARAM effect.
      * @return simple debug for TEMPORARY 'String' effect
      */
     public String debugEffectTODELETE() {

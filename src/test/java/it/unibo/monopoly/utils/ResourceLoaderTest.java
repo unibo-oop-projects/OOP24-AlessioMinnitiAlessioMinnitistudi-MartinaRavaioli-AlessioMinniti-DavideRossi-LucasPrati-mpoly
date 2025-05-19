@@ -24,11 +24,14 @@ class ResourceLoaderTest {
     private static final String VALID_COLOR_NAME = "red";
     private static final String INVALID_COLOR_NAME = "notacolor";
     private static final String INVALID_PATH = "nonexistent";
-    private static final String VALID_RULES_TXT = "rules/rules.txt";
-    private static final String VALID_TITLE_DEEDS_JSON = "cards/title_deeds.json";
-    private static final String VALID_TILES_JSON = "cards/tiles.json";
+    private static final String VALID_CONFIG_YML = "debug/config/debug_config.yml";
+    private static final String VALID_RULES_TXT = "debug/rules/debug_rules.txt";
+    private static final String VALID_TITLE_DEEDS_JSON = "debug/cards/debug_title_deeds.json";
+    private static final String VALID_TILES_JSON = "debug/cards/debug_tiles.json";
     private static final int EXPECTED_NUM_TITLE_DEEDS = 28;
     private static final String EXPECTED_TITLE_DEED = "Boardwalk";
+    private static final int EXPECTED_NUM_TILES = GuiUtils.NUM_TILES;
+    private static final String EXPECTED_TILE = "Go";
 
     private static final List<String> VALID_FILENAMES = List.of(
         VALID_RULES_TXT,
@@ -37,15 +40,9 @@ class ResourceLoaderTest {
     );
 
     @Test
-    void testCheckFilenameWithExistingFiles() {
-        for (final String string : VALID_FILENAMES) {
-            assertFileExists(string);
-        }
-    }
-
-    @Test
-    void testCheckFilenameWithMissingFile() {
-        assertFileNotExists(INVALID_PATH);
+    void testCheckPathMethod() {
+        testCheckFilenameWithExistingFiles();
+        testCheckFilenameWithMissingFile();
     }
 
     @Test
@@ -64,10 +61,34 @@ class ResourceLoaderTest {
     }
 
     @Test
+    void testGetRequiredReaderValidPath() throws IOException {
+        try (var reader = ResourceLoader.getRequiredReader(VALID_RULES_TXT)) {
+            assertNotNull(reader, "BufferedReader should not be null for a valid resource path");
+            assertTrue(reader.ready(), "Reader should be ready to read content");
+            assertFalse(reader.readLine().isBlank(), "The file should contain some non-blank content");
+        }
+    }
+
+    @Test
+    void testGetRequiredReaderInvalidPathThrowsIOException() {
+        assertThrows(IOException.class,
+            () -> ResourceLoader.getRequiredReader(INVALID_PATH),
+            "Expected IOException when trying to read a non-existent file"
+        );
+    }
+
+    @Test
     void testLoadConfigurationFileFallback() {
         final Configuration config = ResourceLoader.loadConfigurationFile(INVALID_PATH);
         assertNotNull(config, "Fallback configuration should not be null");
         // The consistence of the configuration should be check in ConfigurationTest, not here
+    }
+
+    @Test
+    void testLoadConfigurationFileValid() {
+        final Configuration config = ResourceLoader.loadConfigurationFile(VALID_CONFIG_YML); 
+        assertNotNull(config);
+        assertTrue(config.getMaxPlayer() > 0, "Should load real config values");
     }
 
     @Test
@@ -83,6 +104,22 @@ class ResourceLoaderTest {
         assertTrue(
             titleDeeds.stream().anyMatch(td -> EXPECTED_TITLE_DEED.equalsIgnoreCase(td.getName())),
             "Expected to find a title deed with name '" + EXPECTED_TITLE_DEED + "'"
+        );
+    }
+
+    @Test
+    void testLoadTilesReturnCorrectSize() throws IOException {
+        final List<Tile> tiles = ResourceLoader.loadJsonList(VALID_TILES_JSON, Tile.class);
+        assertEquals(EXPECTED_NUM_TILES, tiles.size(), 
+                    "Expected " + EXPECTED_NUM_TILES + " tiles to be loaded");
+    }
+
+    @Test
+    void loadTilesContainsExpectedTile() {
+        final List<Tile> tiles = ResourceLoader.loadJsonList(VALID_TILES_JSON, Tile.class);
+        assertTrue(
+            tiles.stream().anyMatch(td -> EXPECTED_TILE.equalsIgnoreCase(td.getName())),
+            "Expected to find a tile with name '" + EXPECTED_TILE + "'"
         );
     }
 
@@ -127,9 +164,19 @@ class ResourceLoaderTest {
         assertFalse(exception.getMessage().isBlank());
     }
 
+    private void testCheckFilenameWithExistingFiles() {
+        for (final String string : VALID_FILENAMES) {
+            assertFileExists(string);
+        }
+    }
+
+    private void testCheckFilenameWithMissingFile() {
+        assertFileNotExists(INVALID_PATH);
+    }
+
     private void assertFileExists(final String filename) {
         assertTrue(ResourceLoader.checkPath(filename),
-                   "File not found: " + filename);
+                   "File should exist: " + filename);
     }
 
     private void assertFileNotExists(final String filename) {

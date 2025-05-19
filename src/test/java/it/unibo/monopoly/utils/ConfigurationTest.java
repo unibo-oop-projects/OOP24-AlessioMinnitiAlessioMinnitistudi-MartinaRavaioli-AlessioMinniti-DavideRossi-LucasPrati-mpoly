@@ -14,6 +14,7 @@ import org.junit.jupiter.api.Test;
 
 class ConfigurationTest {
 
+    private static final String VALID_CONFIG_YML = "debug/configuration/debug_valid_config.yml";
     private static final String MESSAGE_INVALID_CONFIG = "Invalid configuration should not be consistent: ";
     private static final int VALID_MIN = 2;
     private static final int VALID_MAX = 4;
@@ -23,9 +24,9 @@ class ConfigurationTest {
     private static final int VALID_BIG_FONT = 24;
     private static final int VALID_SMALL_FONT = 16;
     private static final int VALID_STARTER_BALANCE = 1500;
-    private static final String VALID_RULES_PATH = "rules/rules.txt";
-    private static final String VALID_TITLE_DEEDS_PATH = "cards/title_deeds.json";
-    private static final String VALID_TILES_PATH = "cards/tiles.json";
+    private static final String VALID_RULES_PATH = "debug/rules/debug_rules.txt";
+    private static final String VALID_TITLE_DEEDS_PATH = "debug/cards/debug_title_deeds.json";
+    private static final String VALID_TILES_PATH = "debug/cards/debug_tiles.json";
     private static final List<Color> VALID_COLORS = List.of(
         Color.RED,
         Color.BLUE,
@@ -169,8 +170,7 @@ class ConfigurationTest {
     void integrationConfigureFromFileWorksWithValidFile() {
         // Integration test: verifies that Configuration can be correctly loaded from a file
         // using ResourceLoader and parsed into a consistent object
-        final String filename = "configuration/valid_config.yml";
-        final Configuration config = Configuration.configureFromFile(filename);
+        final Configuration config = Configuration.configureFromFile(VALID_CONFIG_YML);
         assertNotNull(config);
         assertTrue(config.isConsistent());
     }
