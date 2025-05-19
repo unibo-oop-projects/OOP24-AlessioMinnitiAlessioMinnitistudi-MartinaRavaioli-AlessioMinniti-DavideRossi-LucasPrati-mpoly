@@ -1,6 +1,7 @@
 package it.unibo.monopoly.model.gameboard.api;
 
 import java.util.Collection;
+import java.util.List;
 
 import it.unibo.monopoly.model.turnation.api.Position;
 
@@ -36,4 +37,9 @@ public interface Board {
      * @return Pawn
     */
     Pawn getPawn(int id);
+    /**
+     * get all the tiles.
+     * @return List of Tiles
+    */
+    List<Tile> getTiles();
 }

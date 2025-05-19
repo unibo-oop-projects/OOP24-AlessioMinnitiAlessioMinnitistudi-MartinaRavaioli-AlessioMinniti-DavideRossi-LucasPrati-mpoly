@@ -2,6 +2,7 @@ package it.unibo.monopoly.model.gameboard.impl;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import it.unibo.monopoly.model.gameboard.api.Board;
@@ -107,5 +108,13 @@ public class BoardImpl implements Board {
         }
 
         throw new IllegalArgumentException("id not present");
+    }
+    /**
+     * get all the tiles.
+     * @return List of Tiles
+    */
+    @Override
+    public List<Tile> getTiles() {
+        return Collections.unmodifiableList(this.tiles);
     }
 }
