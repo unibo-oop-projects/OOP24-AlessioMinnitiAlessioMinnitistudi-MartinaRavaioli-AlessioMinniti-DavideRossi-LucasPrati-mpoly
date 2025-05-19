@@ -2,6 +2,7 @@ package it.unibo.monopoly.model.gameboard.impl;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import it.unibo.monopoly.model.gameboard.api.Board;
@@ -16,6 +17,7 @@ import it.unibo.monopoly.model.turnation.impl.PositionImpl;
 public class BoardImpl implements Board {
     private final List<Tile> tiles;
     private final List<Pawn> pawns;
+
     /**
      * constructor.
     */
@@ -23,6 +25,7 @@ public class BoardImpl implements Board {
         this.tiles = new ArrayList<>();
         this.pawns = new ArrayList<>();
     }
+
     /**
      * constructor.
      * @param tiles
@@ -32,6 +35,7 @@ public class BoardImpl implements Board {
         this.tiles = new ArrayList<>(tiles);
         this.pawns = new ArrayList<>(pawns);
     }
+
     /**
      * sort the tiles.
     */
@@ -43,6 +47,7 @@ public class BoardImpl implements Board {
     public final Tile getTile(final Position pos) { 
         return tiles.get(pos.getPos());
     }
+
     /**
      * remove a pawn.
      * @param p
@@ -50,6 +55,7 @@ public class BoardImpl implements Board {
     public void removePawn(final Pawn p) {
         this.pawns.remove(p);
     }
+
     /**
      * add a pawn.
      * @param p
@@ -67,6 +73,7 @@ public class BoardImpl implements Board {
     public final Tile getTileForPawn(final Pawn p) {
         return tiles.get(p.getPosition().getPos());
     }
+
     /**
      * get the pawn on a tile.
      * @param tile
@@ -83,6 +90,7 @@ public class BoardImpl implements Board {
 
         return pawnsInTile;
     }
+
     /**
      * move the pawn.
      * @param player
@@ -93,6 +101,7 @@ public class BoardImpl implements Board {
         final int steps = value.stream().mapToInt(Integer::intValue).sum();
         player.move(steps);
     }
+
     /**
      * get the pawn of the id given.
      * @param id
@@ -107,5 +116,14 @@ public class BoardImpl implements Board {
         }
 
         throw new IllegalArgumentException("id not present");
+    }
+
+    /**
+     * get all the tiles.
+     * @return List of Tiles
+    */
+    @Override
+    public List<Tile> getTiles() {
+        return Collections.unmodifiableList(this.tiles);
     }
 }
