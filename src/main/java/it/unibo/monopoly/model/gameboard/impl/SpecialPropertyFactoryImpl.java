@@ -74,7 +74,7 @@ public class SpecialPropertyFactoryImpl implements SpecialPropertyFactory{
     
             @Override
             public Integer getRent(Set<TitleDeed> groupTitleDeeds) {
-                return titleDeed.getRent(groupTitleDeeds) * (tunrM.moveByDices().getLeft()+tunrM.moveByDices().getRight());
+                return titleDeed.getRent(groupTitleDeeds) * (tunrM.moveByDices().stream().mapToInt(Integer::intValue).sum());
             }
     
             @Override
