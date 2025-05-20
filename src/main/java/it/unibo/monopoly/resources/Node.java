@@ -1,9 +1,12 @@
 package it.unibo.monopoly.resources;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 /**
  * node for the linked lists.
  * @param <T>
 */
+@SuppressFBWarnings(value = "EI_EXPOSE_REP", justification = "Node is internal and safe to expose in this context")
 public class Node<T> {
 
     private T value;
