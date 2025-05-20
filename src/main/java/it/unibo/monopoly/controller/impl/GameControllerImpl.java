@@ -9,6 +9,7 @@ import java.util.Set;
 import it.unibo.monopoly.model.gameboard.impl.Group;
 import it.unibo.monopoly.controller.api.GameController;
 import it.unibo.monopoly.model.transactions.api.Bank;
+import it.unibo.monopoly.model.transactions.api.BankAccount;
 import it.unibo.monopoly.model.transactions.api.TitleDeed;
 import it.unibo.monopoly.model.transactions.impl.BankImpl;
 import it.unibo.monopoly.model.transactions.impl.BaseTitleDeed;
@@ -68,8 +69,8 @@ public final class GameControllerImpl implements GameController {
     }
 
     @Override
-    public int getPlayerBalance(final Player player) {
-        return bank.getBankAccount(player.getName()).getBalance();
+    public BankAccount getPlayerBalance(final Player player) {
+        return bank.getBankAccount(player.getName());
     }
 
     @Override
