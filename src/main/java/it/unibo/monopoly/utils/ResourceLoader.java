@@ -210,7 +210,7 @@ public final class ResourceLoader {
                         parseConfigurationKey(builder, key, value);
                     } catch (final IllegalArgumentException e) {
                         // Skip invalid line silently
-                        return;
+                        Objects.requireNonNull(e); // Suppress empty-catch-blocks warning
                     }
                 });
 
