@@ -35,6 +35,7 @@ public class TurnationManagerImpl implements TurnationManager {
      * constructor.
      * @param plList
     */
+    @Override
     public void setList(final List<Player> plList) {
         this.players = new CircularLinkedList<>();
         for (final Player p : plList) {
@@ -45,6 +46,7 @@ public class TurnationManagerImpl implements TurnationManager {
      * set Dice.
      * @param dice
     */
+    @Override
     public final void setDice(final Dice dice) {
         this.dice = dice;
     }
@@ -52,6 +54,7 @@ public class TurnationManagerImpl implements TurnationManager {
      * get dice.
      * @return Dice
     */
+    @Override
     public Dice getDice() {
         return this.dice;
     }
@@ -59,6 +62,7 @@ public class TurnationManagerImpl implements TurnationManager {
      * get player list.
      * @return List of player
     */
+    @Override
     public List<Player> getPlayerList() {
         return Collections.unmodifiableList(this.players.toList());
     }
@@ -66,12 +70,14 @@ public class TurnationManagerImpl implements TurnationManager {
      * add a player.
      * @param p
     */
+    @Override
     public void addPlayer(final Player p) {
         this.players.addNode(p);
     }
     /**
      * set game over.
     */
+    @Override
     public void setOver() {
         this.isOver = true;
     }

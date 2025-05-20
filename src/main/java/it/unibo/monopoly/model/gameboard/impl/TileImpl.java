@@ -9,8 +9,8 @@ import it.unibo.monopoly.utils.Identifiable;
 /**
 * {@link Tile} implementation.
 */
-public abstract class TileImpl implements Tile, Identifiable<Position>, Comparable<TileImpl> {
-    private final String name;
+public abstract class TileImpl implements Tile, Identifiable<String>, Comparable<TileImpl> {
+    private String name;
     private final Position pos; 
     private Group group;
 
@@ -38,16 +38,18 @@ public abstract class TileImpl implements Tile, Identifiable<Position>, Comparab
      * {@inheritDoc}
      */
     @Override
-    public Position getID() {
-        return new PositionImpl(this.pos.getPos());
+    public String getID() {
+        return this.getName();
     }
 
     /**
-     * {@inheritDoc}
-     */
+    * compare to.
+    * @param o
+    * @return int
+    */
     @Override
     public int compareTo(final TileImpl o) {
-        return Integer.compare(this.getID().getPos(), o.getID().getPos());
+        return Integer.compare(this.getPosition().getPos(), o.getPosition().getPos());
     }
 
     /**

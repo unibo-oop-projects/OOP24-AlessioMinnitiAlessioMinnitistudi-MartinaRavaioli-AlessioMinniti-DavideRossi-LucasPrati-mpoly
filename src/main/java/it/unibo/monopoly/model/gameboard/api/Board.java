@@ -31,15 +31,41 @@ public interface Board {
      * @param value
     */
     void movePawn(Pawn player, Collection<Integer> value);
+
     /**
      * get the pawn with the given id.
      * @param id
      * @return Pawn
     */
     Pawn getPawn(int id);
+
     /**
-     * get all the tiles.
-     * @return List of Tiles
+     * remove a pawn.
+     * @param p
+    */
+    void removePawn(Pawn p);
+
+    /**
+     * add a pawn.
+     * @param p
+    */
+    void addPawn(Pawn p);
+
+    /**
+     * get all the pawns in a tile.
+     * @param tile
+     * @return List of Pawn
+    */
+    List<Pawn> getPawninTile(Tile tile);
+
+    /**
+     * sort the tiles.
+    */
+    void sortTiles();
+
+    /**
+     * get a list with all the tiles.
+     * @return List of tiles
     */
     List<Tile> getTiles();
 }
