@@ -53,7 +53,7 @@ public final class CircularLinkedList<T> {
         }
         Node<T> current = this.head;
         do {
-            if (!list.contains(current)) {
+            if (!list.contains(current.getValue())) {
                 list.add(current.getValue());
             }
             current = current.getNextNode();
