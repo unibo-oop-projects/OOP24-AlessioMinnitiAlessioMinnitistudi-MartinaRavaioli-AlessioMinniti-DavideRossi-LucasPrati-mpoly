@@ -107,7 +107,8 @@ public interface GameController {
     void loadCurrentPlayerInformation();
 
     /**
-     * Allow to attach {@link MainGameView}s to the controller
+     * Allow to attach {@link MainGameView}s to the controller.
+     * @param view the view we want to attach to this controller
      */
     void attachView(MainGameView view);
 

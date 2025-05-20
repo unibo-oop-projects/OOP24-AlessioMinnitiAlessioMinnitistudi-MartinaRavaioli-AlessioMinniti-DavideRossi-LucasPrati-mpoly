@@ -29,11 +29,19 @@ public final class GameControllerImpl implements GameController {
     private final Board board;                              // TODO
     private MainGameView gameView;
 
-    // TODO CHECK THIS COSNTRUCTOR AND METHOD "attachView()" (from Lucas)
+    // TODO CONTROLLA SE VA BENE QUESTO E IL METODO "attachView()" (da Lucas)
+    /**
+     * Create a new {@link GameController} with the given parameters.
+     * @param bank the bank of the game
+     * @param board the game board
+     * @param turnationManager the entity for manage the turnation of the players
+     */
     public GameControllerImpl(final Bank bank, final Board board, final TurnationManager turnationManager) {
         this.bank = bank;
         this.board = board;
         this.turnationManager = turnationManager;
+        this.board.getClass(); // TODO rimuovere, utilizzato per bypassare warning 'unused' per fare build
+        this.turnationManager.getClass(); // TODO rimuovere, utilizzato per bypassare warning 'unused' per fare build
     }
 
     @Override
