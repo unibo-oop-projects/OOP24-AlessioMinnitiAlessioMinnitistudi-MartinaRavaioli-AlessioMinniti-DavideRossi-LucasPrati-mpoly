@@ -86,10 +86,11 @@ public final class MainMenuControllerImpl implements MainMenuController {
     public void onClickStart(final Map<Color, String> playersSetup) throws IOException {
         // init all the game (Player, Pawn, BankAccount according to the type chosen)
         final List<Player> players = new ArrayList<>();
-        final Set<BankAccount> accounts = new HashSet<>();
         final List<Pawn> pawns = new ArrayList<>();
-        final Set<TitleDeed> titleDeeds = new HashSet<>();
         final List<Tile> tiles = new ArrayList<>();
+        final Set<TitleDeed> titleDeeds = new HashSet<>();
+        final Set<BankAccount> accounts = new HashSet<>();
+
         final PawnFactory pawnFactory = new PawnFactoryImpl();
 
         // create a id for each Player (his Pawn and BankAccount must have the same id)
@@ -109,7 +110,7 @@ public final class MainMenuControllerImpl implements MainMenuController {
         titleDeeds.addAll(ResourceLoader.loadTitleDeeds(config.getTitleDeedsPath()));
         tiles.addAll(List.copyOf(ResourceLoader.loadJsonList(config.getTilesPath(), Tile.class)));
 
-        // create the Bank, Board, TurnationManager 
+        // create Bank, Board and TurnationManager 
         final Bank bank = new BankImpl(accounts, titleDeeds);
         final Board board = new BoardImpl(tiles, pawns);
         final TurnationManager turnationManager = new TurnationManagerImpl(
@@ -120,15 +121,11 @@ public final class MainMenuControllerImpl implements MainMenuController {
             )
         );
 
-
-        // TODO launch a new GUI for the game and put all these data to it
-        // !!! la configurazione forse non serve più da qui in poi
-        // !!! creare sia controller che view, poi usare .attach()
-        // launch C_Game_Manager(config, board) //alessio
-        var controllerGameManager = new GameControllerImpl(bank);
+        // start the game
+        var controllerGameManager = new GameControllerImpl(bank, board, turnationManager);
         var mainView = new MainViewImpl(controllerGameManager);
         controllerGameManager.attachView(mainView);
-        // launch controller di davide (config, bank, )
+        mainView.start();
     }
 
     /**

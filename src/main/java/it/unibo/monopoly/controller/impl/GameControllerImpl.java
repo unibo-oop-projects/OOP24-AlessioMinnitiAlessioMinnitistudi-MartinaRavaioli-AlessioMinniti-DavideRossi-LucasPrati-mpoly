@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.util.List;
 import java.util.Optional;
 
+import it.unibo.monopoly.model.gameboard.api.Board;
 import it.unibo.monopoly.model.gameboard.impl.Group;
 import it.unibo.monopoly.controller.api.GameController;
 import it.unibo.monopoly.model.transactions.api.Bank;
@@ -11,6 +12,7 @@ import it.unibo.monopoly.model.transactions.api.BankAccount;
 import it.unibo.monopoly.model.transactions.api.TitleDeed;
 import it.unibo.monopoly.model.transactions.impl.BaseTitleDeed;
 import it.unibo.monopoly.model.turnation.api.Player;
+import it.unibo.monopoly.model.turnation.api.TurnationManager;
 import it.unibo.monopoly.view.api.MainGameView;
 
 
@@ -23,11 +25,15 @@ public final class GameControllerImpl implements GameController {
 
     // TODO PLACHEOLDER ENTITIES, SUBSTITUTE WITH MORE ROBUST CONSTRUCTOR
     private final Bank bank;
+    private final TurnationManager turnationManager;        // TODO
+    private final Board board;
     private MainGameView gameView;
 
     // TODO CHECK THIS COSNTRUCTOR AND METHOD "attachView()" (from Lucas)
-    public GameControllerImpl(final Bank bank) {
+    public GameControllerImpl(final Bank bank, final Board board, final TurnationManager turnationManager) {
         this.bank = bank;
+        this.board = board;
+        this.turnationManager = turnationManager;
     }
 
     @Override
