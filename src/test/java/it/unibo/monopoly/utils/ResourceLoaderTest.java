@@ -30,7 +30,7 @@ class ResourceLoaderTest {
     private static final String VALID_TILES_JSON = "debug/cards/debug_tiles.json";
     private static final int EXPECTED_NUM_TITLE_DEEDS = 28;
     private static final String EXPECTED_TITLE_DEED = "Boardwalk";
-    private static final int EXPECTED_NUM_TILES = GuiUtils.NUM_TILES;
+    private static final int EXPECTED_NUM_TILES = 40;
     private static final String EXPECTED_TILE = "Go";
 
     private static final List<String> VALID_FILENAMES = List.of(
