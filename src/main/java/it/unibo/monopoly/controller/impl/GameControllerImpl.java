@@ -26,7 +26,7 @@ public final class GameControllerImpl implements GameController {
     // TODO PLACHEOLDER ENTITIES, SUBSTITUTE WITH MORE ROBUST CONSTRUCTOR
     private final Bank bank;
     private final TurnationManager turnationManager;        // TODO
-    private final Board board;
+    private final Board board;                              // TODO
     private MainGameView gameView;
 
     // TODO CHECK THIS COSNTRUCTOR AND METHOD "attachView()" (from Lucas)

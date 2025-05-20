@@ -125,7 +125,7 @@ public final class MainMenuControllerImpl implements MainMenuController {
         var controllerGameManager = new GameControllerImpl(bank, board, turnationManager);
         var mainView = new MainViewImpl(controllerGameManager);
         controllerGameManager.attachView(mainView);
-        mainView.start();
+        // mainView.start(); //TODO
     }
 
     /**
