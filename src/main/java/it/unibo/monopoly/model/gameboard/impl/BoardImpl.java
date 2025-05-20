@@ -112,9 +112,13 @@ public class BoardImpl implements Board {
 
         throw new IllegalArgumentException("id not present");
     }
-
+    /**
+     * get all the tiles.
+     * @return List of Tiles
+    */
     @Override
     public final List<Tile> getTiles() {
         return List.copyOf(this.tiles);
     }
+
 }
