@@ -19,7 +19,6 @@ import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.monopoly.model.transactions.api.TitleDeed;
 import it.unibo.monopoly.model.transactions.impl.BaseTitleDeed;
 
@@ -196,36 +195,25 @@ public final class ResourceLoader {
      * @param path relative path of the resource
      * @return a {@link Configuration} object, or a default one if loading fails
      */
-    @SuppressWarnings("PMD.AssignmentInOperand") // intentional: idiomatic BufferedReader usage
-    @SuppressFBWarnings(
-            value = "ASSIGNMENT_IN_CONDITION",
-            justification = "Intentional use of assignment in the while condition — "
-                            + "a standard practice for reading lines from a BufferedReader in a compact way."
-    )
     public static Configuration loadConfigurationFile(final String path) {
         try (BufferedReader reader = getRequiredReader(path)) {
             final Configuration.Builder builder = new Configuration.Builder();
 
-            String line;
-            while ((line = reader.readLine()) != null) {
-                if (isSkippable(line)) {
-                    continue;
-                }
+            reader.lines()
+                .filter(line -> !isSkippable(line))
+                .map(line -> line.split(":", 2))
+                .filter(parts -> !isMalformed(parts))
+                .forEach(parts -> {
+                    final String key = parts[0].trim().toUpperCase(Locale.ENGLISH);
+                    final String value = parts[1].trim();
+                    try {
+                        parseConfigurationKey(builder, key, value);
+                    } catch (final IllegalArgumentException e) {
+                        // Skip invalid line silently
+                        return;
+                    }
+                });
 
-                final String[] parts  = line.split(":", 2);
-                if (isMalformed(parts)) {
-                    continue;
-                }
-
-                final String key = parts[0].trim().toUpperCase(Locale.ENGLISH);
-                final String value = parts[1].trim();
-                try {
-                    parseConfigurationKey(builder, key, value);
-                } catch (final IllegalArgumentException e) {
-                    // Skipping unsupported or invalid configuration entry
-                    continue;
-                }
-            }
             return builder.build();
 
         } catch (final IOException e) {
