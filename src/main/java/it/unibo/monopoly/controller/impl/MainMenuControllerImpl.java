@@ -122,10 +122,10 @@ public final class MainMenuControllerImpl implements MainMenuController {
         );
 
         // start the game
-        var controllerGameManager = new GameControllerImpl(bank, board, turnationManager);
-        var mainView = new MainViewImpl(controllerGameManager);
+        final var controllerGameManager = new GameControllerImpl(bank, board, turnationManager);
+        final var mainView = new MainViewImpl(controllerGameManager);
         controllerGameManager.attachView(mainView);
-        // mainView.start(); //TODO
+        // mainView.start(); //TODO implementare il metodo e rimuovere il commento
     }
 
     /**

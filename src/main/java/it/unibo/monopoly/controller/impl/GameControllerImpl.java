@@ -168,7 +168,7 @@ public final class GameControllerImpl implements GameController {
     }
 
     @Override
-    public void attachView(MainGameView view) {
+    public void attachView(final MainGameView view) {
         this.gameView = view;
     }
 }

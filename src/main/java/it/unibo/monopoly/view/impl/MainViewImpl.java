@@ -13,6 +13,7 @@ import it.unibo.monopoly.controller.api.GameController;
 import it.unibo.monopoly.model.transactions.api.BankAccount;
 import it.unibo.monopoly.model.transactions.api.TitleDeed;
 import it.unibo.monopoly.model.turnation.api.Player;
+
 import it.unibo.monopoly.view.api.AccountPanel;
 import it.unibo.monopoly.view.api.ContractPanel;
 import it.unibo.monopoly.view.api.GameAction;
@@ -120,6 +121,9 @@ public final class MainViewImpl implements MainGameView {
 
     @Override
     public void displayPlayerStats(final Player player) {
+        // TODO (si può anche impostare una percentuale personalizzata con valori double)
+        // final Dimension screenDimension = GuiUtils.getDimensionWindow(0.5, 0.5); // percentuale personalizzata dello schermo
+        // final Dimension screenDimension = GuiUtils.getDimensionWindow(); // default il 50% proporzionato
         final Dimension screenDimension = Toolkit.getDefaultToolkit().getScreenSize();
         new GUIVendita(player,
             (int) screenDimension.getWidth() / PL_DATA_VIEW_PROPORTION, 
