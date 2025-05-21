@@ -1,9 +1,12 @@
 package it.unibo.monopoly.resources;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 /**
  * node for the linked lists.
  * @param <T>
 */
+@SuppressFBWarnings(value = "EI_EXPOSE_REP", justification = "Node is internal and safe to expose in this context")
 public class Node<T> {
 
     private T value;
@@ -17,6 +20,15 @@ public class Node<T> {
         this.nextNode = null;
     }
     /**
+     * constructor.
+     * @param value
+     * @param nextNode
+    */
+    public Node(final T value, final Node<T> nextNode) {
+        this.value = value;
+        this.nextNode = nextNode;
+    }
+    /**
      * get the value.
      * @return T
     */
@@ -28,7 +40,7 @@ public class Node<T> {
      * @return Node
     */
     public Node<T> getNextNode() {
-        return new Node<>(this.nextNode.getValue());
+        return this.nextNode;
     }
     /**
      * set the value.
@@ -42,6 +54,6 @@ public class Node<T> {
      * @param node
     */
     public void setNextNode(final Node<T> node) {
-        this.nextNode = new Node<>(node.getValue());
+        this.nextNode = node;
     }
 }

@@ -19,6 +19,7 @@ import it.unibo.monopoly.model.gameboard.api.Board;
 import it.unibo.monopoly.model.gameboard.api.Special;
 import it.unibo.monopoly.model.gameboard.api.SpecialFactory;
 import it.unibo.monopoly.model.gameboard.impl.BoardImpl;
+import it.unibo.monopoly.model.gameboard.impl.Group;
 import it.unibo.monopoly.model.gameboard.impl.SpecialFactoryImpl;
 import it.unibo.monopoly.model.transactions.api.Bank;
 import it.unibo.monopoly.model.transactions.api.BankAccount;
@@ -63,8 +64,8 @@ public class FactoryTest {
                                     )
     );
     private final Set<TitleDeed> deeds = Set.of(
-        new BaseTitleDeed("viola", TITLE_DEED_NAME1, 50, s -> s / 2, 10),
-        new BaseTitleDeed("viola", TITLE_DEED_NAME2, 60, s -> s / 2, 10)
+        new BaseTitleDeed(Group.PURPLE, TITLE_DEED_NAME1, 50, s -> s / 2, 10),
+        new BaseTitleDeed(Group.PURPLE, TITLE_DEED_NAME2, 60, s -> s / 2, 10)
 
     );
 

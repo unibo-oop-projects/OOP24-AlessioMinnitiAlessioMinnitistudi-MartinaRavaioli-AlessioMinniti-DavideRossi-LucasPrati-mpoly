@@ -13,11 +13,11 @@ public class PropertyImpl extends TileImpl implements Property {
     /**
      * constructor.
      * @param name
-     * @param id
-     * @param type
+     * @param pos
+     * @param group
     */
-    public PropertyImpl(final String name, final Position id, final Type type) { 
-        super(name, id, type);
+    public PropertyImpl(final String name, final Position pos, final Group group) { 
+        super(name, pos, group);
         this.nHouses = 0;
         this.hotel = false;
     }
@@ -26,6 +26,7 @@ public class PropertyImpl extends TileImpl implements Property {
      * get the number of houses.
      * @return int
     */
+    @Override
     public int getNHouses() {
         return this.nHouses;
     }
@@ -56,6 +57,7 @@ public class PropertyImpl extends TileImpl implements Property {
      * control if it has an hotel.
      * @return bool
     */
+    @Override
     public boolean hasHotel() {
         return this.hotel;
     }

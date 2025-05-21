@@ -35,6 +35,7 @@ public class BoardImpl implements Board {
     /**
      * sort the tiles.
     */
+    @Override
     public void sortTiles() {
         this.tiles.sort((a, b) -> ((TileImpl) a).compareTo((TileImpl) b));
     }
@@ -47,6 +48,7 @@ public class BoardImpl implements Board {
      * remove a pawn.
      * @param p
     */
+    @Override
     public void removePawn(final Pawn p) {
         this.pawns.remove(p);
     }
@@ -54,6 +56,7 @@ public class BoardImpl implements Board {
      * add a pawn.
      * @param p
     */
+    @Override
     public void addPawn(final Pawn p) {
         this.pawns.add(p);
     }
@@ -72,10 +75,11 @@ public class BoardImpl implements Board {
      * @param tile
      * @return List of Pawn
     */
+    @Override
     public List<Pawn> getPawninTile(final Tile tile) {
         final List<Pawn> pawnsInTile = new ArrayList<>();
 
-        for (final Pawn p : pawnsInTile) {
+        for (final Pawn p : this.pawns) {
             if (((PositionImpl) p.getPosition()).equals((PositionImpl) tile.getPosition())) {
                 pawnsInTile.add(p);
             }
@@ -108,4 +112,13 @@ public class BoardImpl implements Board {
 
         throw new IllegalArgumentException("id not present");
     }
+    /**
+     * get all the tiles.
+     * @return List of Tiles
+    */
+    @Override
+    public final List<Tile> getTiles() {
+        return List.copyOf(this.tiles);
+    }
+
 }

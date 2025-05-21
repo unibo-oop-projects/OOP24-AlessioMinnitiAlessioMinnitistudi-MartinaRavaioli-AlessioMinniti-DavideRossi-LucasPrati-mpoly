@@ -35,6 +35,7 @@ public final class PlayerImpl implements Player {
         this.id = id;
         this.name = name;
         this.color = color;
+
     }
 
     @Override
@@ -74,7 +75,6 @@ public final class PlayerImpl implements Player {
         }
         return new PlayerImpl(id, name, color);
     }
-
     @Override
     public boolean isAlive() {
         // TODO Auto-generated method stub

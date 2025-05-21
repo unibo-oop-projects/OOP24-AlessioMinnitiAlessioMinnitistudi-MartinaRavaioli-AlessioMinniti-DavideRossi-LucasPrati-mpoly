@@ -13,16 +13,16 @@ public class SpecialImpl extends TileImpl implements Special {
 
     private Effect effetto;
     /**
-    * get the type.
+    * get the Group.
     * @param name
     * @param pos
-    * @param type
+    * @param group
     */
-    public SpecialImpl(final String name, final Position pos, final Type type, Effect effetto) {
-        super(name, pos, type);
+    public SpecialImpl(final String name, final Position pos, final Group group) {
+        super(name, pos, group);
     }
     /**
-    * get the type.
+    * get the Group.
     * @return Effect
     */
 

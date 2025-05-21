@@ -31,12 +31,16 @@ public final class CircularLinkedList<T> {
     public void addNode(final T value) {
         final Node<T> newNode = new Node<>(value);
         if (this.head == null) {
-            this.head = newNode;
-        } else {
-            tail.setNextNode(newNode);
-        }
+        // Lista vuota: inizializza head e tail, e collega a sé stessa
+        this.head = newNode;
         this.tail = newNode;
-        this.tail.setNextNode(this.head);
+        newNode.setNextNode(newNode);
+        } else {
+        // Aggiunta in coda
+        this.tail.setNextNode(newNode);
+        newNode.setNextNode(this.head);
+        this.tail = newNode;
+        }
     }
     /**
      * convert to a list.
@@ -49,7 +53,9 @@ public final class CircularLinkedList<T> {
         }
         Node<T> current = this.head;
         do {
-            list.add(current.getValue());
+            if (!list.contains(current.getValue())) {
+                list.add(current.getValue());
+            }
             current = current.getNextNode();
         } while (!current.equals(this.head));
         return list;
