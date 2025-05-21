@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.util.List;
 import java.util.Optional;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.monopoly.model.gameboard.api.Board;
 import it.unibo.monopoly.model.gameboard.impl.Group;
 import it.unibo.monopoly.controller.api.GameController;
@@ -32,10 +33,19 @@ public final class GameControllerImpl implements GameController {
     // TODO CONTROLLA SE VA BENE QUESTO E IL METODO "attachView()" (da Lucas)
     /**
      * Create a new {@link GameController} with the given parameters.
+     * <p>
+     * This constructor uses dependency injection to receive shared components of the game architecture.
+     * {@link Board} and {@link TurnationManager} are mutable and intentionally injected without defensive copies,
+     * as they are expected to maintain consistent shared state across the application.
+     * 
      * @param bank the bank of the game
      * @param board the game board
      * @param turnationManager the entity for manage the turnation of the players
      */
+    @SuppressFBWarnings(
+        value = "EI_EXPOSE_REP2",
+        justification = "Injection of shared mutable dependencies is intentional and controlled in this architecture."
+    )
     public GameControllerImpl(final Bank bank, final Board board, final TurnationManager turnationManager) {
         this.bank = bank;
         this.board = board;
