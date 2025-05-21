@@ -17,6 +17,7 @@ import javax.swing.JPanel;
 
 import it.unibo.monopoly.controller.api.GameboardLogic;
 import it.unibo.monopoly.controller.impl.GameboardLogicImpl;
+import it.unibo.monopoly.model.gameboard.api.Pawn;
 import it.unibo.monopoly.model.gameboard.api.Property;
 import it.unibo.monopoly.model.gameboard.api.Tile;
 import it.unibo.monopoly.model.turnation.api.Player;
@@ -67,6 +68,7 @@ public class GameboardView extends JFrame {
             panel.add(stripe, BorderLayout.NORTH);
             JLabel label = new JLabel("prova");/*tiles.get(i).getName();*/
             panel.add(label, BorderLayout.CENTER);
+            panel.setName(label.getText());
         }
 
         for (int i =0; i<4;i++) {
@@ -105,7 +107,11 @@ public class GameboardView extends JFrame {
         }
     }
 
-    public void buyProperty(Property prop) {
-
+    public void buyProperty(Property prop, Pawn currPlayer) {
+        for (JPanel p : tilesView) {
+            if (p.getName().equals(prop.getName())) {
+                p.setBackground(currPlayer.getColor());
+            }
+        }
     }
 }

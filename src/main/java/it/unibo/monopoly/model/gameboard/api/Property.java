@@ -21,4 +21,5 @@ public interface Property extends Tile {
      * @return price
      */
     int getRent();
+    Object getName();
 }
