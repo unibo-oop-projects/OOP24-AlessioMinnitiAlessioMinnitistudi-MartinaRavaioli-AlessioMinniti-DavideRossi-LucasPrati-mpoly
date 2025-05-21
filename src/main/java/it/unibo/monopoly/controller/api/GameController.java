@@ -6,6 +6,7 @@ import java.util.List;
 import it.unibo.monopoly.model.transactions.api.BankAccount;
 import it.unibo.monopoly.model.transactions.api.TitleDeed;
 import it.unibo.monopoly.model.turnation.api.Player;
+import it.unibo.monopoly.utils.Configuration;
 import it.unibo.monopoly.view.api.MainGameView;
 
 /**
@@ -97,6 +98,12 @@ public interface GameController {
      * and asks the {@link MainGameView} to display them.
      */
     void loadRules();
+
+    /**
+     * Get the {@link Configuration} for game settings.
+     * @return the {@link Configuration} associated to this controller
+     */
+    Configuration getConfiguration();
 
     /**
      * Retrieves the player that is 
