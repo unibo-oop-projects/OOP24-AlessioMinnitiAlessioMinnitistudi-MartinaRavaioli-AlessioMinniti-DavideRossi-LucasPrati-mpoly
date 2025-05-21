@@ -14,7 +14,7 @@ import org.junit.jupiter.api.Test;
 
 class ConfigurationTest {
 
-    private static final String VALID_CONFIG_YML = "debug/configuration/debug_valid_config.yml";
+    private static final String VALID_CONFIG_YML = "debug/configuration/debug_config.yml";
     private static final String MESSAGE_INVALID_CONFIG = "Invalid configuration should not be consistent: ";
     private static final int VALID_MIN = 2;
     private static final int VALID_MAX = 4;

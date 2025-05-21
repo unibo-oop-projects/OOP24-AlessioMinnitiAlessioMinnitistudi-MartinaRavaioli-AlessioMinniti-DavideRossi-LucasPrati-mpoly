@@ -76,7 +76,7 @@ class ResourceLoaderTest {
     }
 
     @Test
-    void testGetRequiredReaderInvalidPathThrowsIOException() {
+    void testGetRequiredReaderInvalidPathThrows() {
         assertThrows(IOException.class,
             () -> ResourceLoader.getRequiredReader(INVALID_PATH),
             "Expected IOException when trying to read a non-existent file"
