@@ -24,13 +24,11 @@ public final class GameControllerImpl implements GameController {
 
     private static final int NUM = 0;
 
-    // TODO PLACHEOLDER ENTITIES, SUBSTITUTE WITH MORE ROBUST CONSTRUCTOR
     private final Bank bank;
     private final TurnationManager turnationManager;        // TODO
     private final Board board;                              // TODO
     private MainGameView gameView;
 
-    // TODO CONTROLLA SE VA BENE QUESTO E IL METODO "attachView()" (da Lucas)
     /**
      * Create a new {@link GameController} with the given parameters.
      * <p>
