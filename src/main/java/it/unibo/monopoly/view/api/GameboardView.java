@@ -12,27 +12,29 @@ import java.util.Map;
 
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import it.unibo.monopoly.controller.api.GameboardLogic;
 import it.unibo.monopoly.controller.impl.GameboardLogicImpl;
+import it.unibo.monopoly.model.gameboard.api.Property;
 import it.unibo.monopoly.model.gameboard.api.Tile;
 import it.unibo.monopoly.model.turnation.api.Player;
 import it.unibo.monopoly.model.turnation.api.Position;
 import it.unibo.monopoly.model.turnation.impl.PositionImpl;
 
-public class GameboardView extends JFrame{
+public class GameboardView extends JFrame {
     private GameboardLogic logic;
     private final List<JPanel> shapes=List.of(new PawnCircle(Color.RED),new PawnTriangle(Color.BLUE),new PawnSquare(Color.GREEN),new PawnSquare(Color.YELLOW));
     private final List<JPanel> tilesView=new ArrayList<>();
     private final int size;
     private final Map<Integer,Position> pawnPositions=new HashMap<>();
 
-    public GameboardView(int size){
+    public GameboardView(int size) {
         this.size = size;
     }
 
-    public final void show(List<Player> players, List<Tile> tiles){
+    public final void show(List<Player> players, List<Tile> tiles) {
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         this.setSize(Toolkit.getDefaultToolkit().getScreenSize());
@@ -42,7 +44,7 @@ public class GameboardView extends JFrame{
         this.getContentPane().add(board);
 
         for (int i = 0; i < this.size; i++) {
-            for(int j=0; j<this.size;j++){
+            for(int j=0; j<this.size;j++) {
                 JPanel tile = new JPanel();
                 
                 if (logic.isBoardTile(i,j,this.size)) {
@@ -57,19 +59,21 @@ public class GameboardView extends JFrame{
             }
         }
 
-        for (int i=0;i<40;i++){
+        for (int i=0;i<40;i++) {
             JPanel panel=this.tilesView.get(i);
             JPanel stripe = new JPanel();
-            stripe.setPreferredSize(new Dimension(50, 10));
+            stripe.setPreferredSize(new Dimension(150, 10));
             // stripe.setBackground(logic.getTileColor(tiles.get(i).getType()));
             panel.add(stripe, BorderLayout.NORTH);
+            JLabel label = new JLabel("prova");/*tiles.get(i).getName();*/
+            panel.add(label, BorderLayout.CENTER);
         }
 
-        for (int i =0; i<4;i++){
+        for (int i =0; i<4;i++) {
             pawnPositions.put(i, new PositionImpl(0));
         }
 
-        for (int i=0; i < 4; i++){
+        for (int i=0; i < 4; i++) {
             JPanel panel = this.tilesView.get(pawnPositions.get(i).getPos());
             panel.add(shapes.get(i));
         }
@@ -77,27 +81,31 @@ public class GameboardView extends JFrame{
         this.setVisible(true);
     }
 
-    public void addHouse(){
+    public void addHouse() {
 
     }
 
-    public void addHotel(){
+    public void addHotel() {
 
     }
 
-    public void changePos(int currPlayer, Position newPos){
+    public void changePos(int currPlayer, Position newPos) {
         pawnPositions.replace(currPlayer, pawnPositions.get(currPlayer), newPos);
         
-        for (int i=0; i < 4; i++){
+        for (int i=0; i < 4; i++) {
             JPanel panel = this.tilesView.get(pawnPositions.get(i).getPos());
             panel.add(shapes.get(i));
         }
     }
 
-    public void clearPanel(){
-        for (int i=0; i < 4; i++){
+    public void clearPanel() {
+        for (int i=0; i < 4; i++) {
             JPanel panel = this.tilesView.get(pawnPositions.get(i).getPos());
             panel.remove(shapes.get(i));
         }
+    }
+
+    public void buyProperty(Property prop) {
+
     }
 }
