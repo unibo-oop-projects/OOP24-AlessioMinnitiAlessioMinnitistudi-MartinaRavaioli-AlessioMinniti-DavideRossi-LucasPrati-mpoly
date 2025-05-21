@@ -74,7 +74,8 @@ public final class ResourceLoader {
      * 
      * @param name the name of the color (case-insensitive)
      * @return a {@link Color} object matching the given name
-     * @throws IllegalArgumentException if the color name is unknown or {@code null}
+     * @throws IllegalArgumentException if the color name is unknown
+     * @throws NullPointerException if the name of the color is {@code null}
      */
     public static Color parseColor(final String name) {
         return switch (name.toUpperCase(Locale.ENGLISH)) {

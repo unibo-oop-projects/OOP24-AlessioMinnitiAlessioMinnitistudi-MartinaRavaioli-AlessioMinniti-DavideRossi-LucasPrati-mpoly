@@ -22,10 +22,6 @@ import javax.swing.WindowConstants;
  */
 public final class GuiUtils {
 
-    /**
-     * The total number of tiles on the game board.
-     * This value determines the maximun valid position for a pawn
-     */
     private static final double WIDTH_PERC = 0.5;
     private static final double HEIGHT_PERC = 0.5;
     private static final int FONT_STYLE = Font.BOLD;

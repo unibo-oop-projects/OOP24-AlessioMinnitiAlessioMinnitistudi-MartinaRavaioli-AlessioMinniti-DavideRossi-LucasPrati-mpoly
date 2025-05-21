@@ -164,11 +164,11 @@ public final class Configuration {
 
     /**
      * Builder pattern is used here because.
-     * 
-     * - All parameters have sensible defaults
-     * - Overloading constructors would be confusing and verbose
-     * - It allows readable, flexible, chainable configuration setup
-     * 
+     * <ul>
+     *      <li> All parameters have sensible defaults </li>
+     *      <li> Overloading constructors would be confusing and verbose </li>
+     *      <li> It allows readable, flexible, chainable configuration setup </li>
+     * </ul>
      */
     public static class Builder {
 
@@ -316,7 +316,7 @@ public final class Configuration {
 
         /**
          * Sets the list of player colors. If {@code playerColors} is {@code null},
-         * this method does nothing and retains the default configuration.
+         * this method keep defaults values.
          * 
          * @param playerColors the list of player colors, or {@code null} to keep defaults
          * @return this builder, for method chaining

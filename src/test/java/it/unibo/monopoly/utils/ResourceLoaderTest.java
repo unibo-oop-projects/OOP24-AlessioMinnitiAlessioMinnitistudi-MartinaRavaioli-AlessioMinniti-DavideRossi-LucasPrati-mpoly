@@ -53,11 +53,17 @@ class ResourceLoaderTest {
 
     @Test
     void testParseColorInvalidThrows() {
-        final IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
+        final IllegalArgumentException IAE = assertThrows(IllegalArgumentException.class,
             () -> ResourceLoader.parseColor(INVALID_COLOR_NAME),
             "Expected exception for unknown color: " + INVALID_COLOR_NAME
         );
-        testExceptionFormat(exception);
+        testExceptionFormat(IAE);
+
+        final NullPointerException NPE = assertThrows(NullPointerException.class,
+            () -> ResourceLoader.parseColor(null),
+            "Expected exception for null color"
+        );
+        testExceptionFormat(NPE);
     }
 
     @Test
