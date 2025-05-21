@@ -1,9 +1,9 @@
-package it.unibo.monopoly.view.api;
+package it.unibo.monopoly.view.impl;
 
 public class Test {
 
     public static void main(String[] args) {
-        GameboardView g = new GameboardView(11); 
+        GameboardViewImpl g = new GameboardViewImpl(11); 
         g.show(null,null);
     }
     

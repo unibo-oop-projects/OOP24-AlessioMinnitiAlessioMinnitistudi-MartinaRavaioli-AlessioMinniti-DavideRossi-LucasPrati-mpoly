@@ -12,18 +12,18 @@ import it.unibo.monopoly.model.turnation.api.Dice;
 import it.unibo.monopoly.model.turnation.api.Player;
 import it.unibo.monopoly.model.turnation.api.TurnationManager;
 import it.unibo.monopoly.model.turnation.impl.TurnationManagerImpl;
-import it.unibo.monopoly.view.api.GameboardView;
+import it.unibo.monopoly.view.impl.GameboardViewImpl;
 
 public class GameboardActionControllerImpl implements GameboardActionController{
     private Board board;
     private TurnationManager turnManager;
-    private GameboardView gameboardView;
+    private GameboardViewImpl gameboardView;
         
     @Override
     public void startGame(int size, List<Player> players, List<Tile> tiles, Dice dice, List<Pawn> pawns) {
         turnManager = new TurnationManagerImpl(players,dice);
         board = new BoardImpl(tiles, pawns);
-        gameboardView = new GameboardView(10); 
+        gameboardView = new GameboardViewImpl(10); 
         gameboardView.show(players,tiles);
     }
 
@@ -40,8 +40,8 @@ public class GameboardActionControllerImpl implements GameboardActionController{
     @Override
     public void changePositions() {
         List<Integer> res = (List<Integer>) turnManager.moveByDices();
-        ((BoardImpl) this.board).movePawn(((BoardImpl) this.board).getPawn(((TurnationManagerImpl) this.turnManager).getIdCurrPlayer()),res);
-        gameboardView.changePos(((TurnationManagerImpl) this.turnManager).getIdCurrPlayer(),((BoardImpl) this.board).getPawn(((TurnationManagerImpl) this.turnManager).getIdCurrPlayer()).getPosition());
+        this.board.movePawn(this.board.getPawn(this.turnManager.getIdCurrPlayer()),res);
+        gameboardView.changePos(this.turnManager.getIdCurrPlayer(),this.board.getPawn(this.turnManager.getIdCurrPlayer()).getPosition());
     }
 
     @Override

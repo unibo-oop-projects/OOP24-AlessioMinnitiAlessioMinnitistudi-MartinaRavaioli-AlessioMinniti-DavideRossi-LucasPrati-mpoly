@@ -1,4 +1,4 @@
-package it.unibo.monopoly.view.api;
+package it.unibo.monopoly.view.impl;
 
 import java.awt.Color;
 import java.awt.Dimension;
