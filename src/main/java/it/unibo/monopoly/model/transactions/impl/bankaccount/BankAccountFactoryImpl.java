@@ -8,7 +8,7 @@ import it.unibo.monopoly.model.transactions.api.BankAccount;
 import it.unibo.monopoly.model.transactions.api.BankAccountFactory;
 
 /**
- * Implementation of the {@link BankAccountFactory} interface.
+ * Implementation of {@link BankAccountFactory}.
  */
 public final class BankAccountFactoryImpl implements BankAccountFactory {
 

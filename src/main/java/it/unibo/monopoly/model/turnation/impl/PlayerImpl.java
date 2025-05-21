@@ -19,7 +19,7 @@ public final class PlayerImpl implements Player {
      * Private constructor used internally by the static factory method {@link #of(int, String, Color)}.
      *
      * @param id the {@link Identifiable} representing the {@link Player}
-     * @param name the {@code name} chosen by the {@link Player} for himself
+     * @param name the name chosen by the {@link Player} for himself
      * @param color the {@link Color} representing the {@link Player}
      */
     private PlayerImpl(final int id, final String name, final Color color) {
