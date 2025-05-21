@@ -42,6 +42,7 @@ public final class GameControllerImpl implements GameController {
      * @param bank the bank of the game
      * @param board the game board
      * @param turnationManager the entity for manage the turnation of the players
+     * @param config a consistent configuration for settings
      */
     @SuppressFBWarnings(
         value = "EI_EXPOSE_REP2",
