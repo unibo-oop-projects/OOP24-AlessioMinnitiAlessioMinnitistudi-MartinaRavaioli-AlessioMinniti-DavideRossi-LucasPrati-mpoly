@@ -1,18 +1,18 @@
 package it.unibo.monopoly.model.transactions;
 
+import java.util.Set;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-
-import java.util.Set;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import com.google.common.collect.Sets;
 
+import it.unibo.monopoly.model.gameboard.impl.Group;
 import it.unibo.monopoly.model.transactions.api.Bank;
 import it.unibo.monopoly.model.transactions.api.BankAccount;
 import it.unibo.monopoly.model.transactions.api.TitleDeed;
@@ -30,22 +30,24 @@ import it.unibo.monopoly.model.transactions.impl.bankaccount.WithdrawCheckBankAc
 class BankTest {
 
     private static final int AMOUNT = 100;
+    private static final int ID_1 = 21;
+    private static final int ID_2 = 42;
     private static final String PLAYER1_NAME = "Alice";
     private static final String PLAYER2_NAME = "Bob";
     private static final String TITLE_DEED_NAME1 = "Bastoni Gran Sasso";
     private static final String TITLE_DEED_NAME2 = "Viale Monterosa";
 
     private final Set<BankAccount> accounts = Set.of(
-        new WithdrawCheckBankAccount(new SimpleBankAccountImpl(AMOUNT, PLAYER1_NAME),
+        new WithdrawCheckBankAccount(new SimpleBankAccountImpl(ID_1, AMOUNT, PLAYER1_NAME),
                                     (b, a) -> a <= b.getBalance()
                                     ),
-        new WithdrawCheckBankAccount(new SimpleBankAccountImpl(AMOUNT, PLAYER2_NAME),
+        new WithdrawCheckBankAccount(new SimpleBankAccountImpl(ID_2, AMOUNT, PLAYER2_NAME),
                                     (b, a) -> a <= b.getBalance()
                                     )
     );
     private final Set<TitleDeed> deeds = Set.of(
-        new BaseTitleDeed("viola", TITLE_DEED_NAME1, 50, s -> s / 2, 10),
-        new BaseTitleDeed("viola", TITLE_DEED_NAME2, 60, s -> s / 2, 10)
+        new BaseTitleDeed(Group.GREEN, TITLE_DEED_NAME1, 50, s -> s / 2, 10),
+        new BaseTitleDeed(Group.GREEN, TITLE_DEED_NAME2, 60, s -> s / 2, 10)
 
     );
     private Bank bank;
@@ -143,7 +145,8 @@ class BankTest {
     @Test
     void payRentForPropertyPossessedByThePayer() {
         bank.buyTitleDeed(TITLE_DEED_NAME1, PLAYER1_NAME);
-        assertEquals(PLAYER1_NAME, bank.getTitleDeed(TITLE_DEED_NAME1).getOwner().get());
+        assertTrue(bank.getTitleDeed(TITLE_DEED_NAME1).isOwned());
+        assertEquals(PLAYER1_NAME, bank.getTitleDeed(TITLE_DEED_NAME1).getOwner());
         final IllegalStateException propertyPossessedByPlayerException = assertThrows(
             IllegalStateException.class,
             () -> bank.payRent(TITLE_DEED_NAME1, PLAYER1_NAME)
@@ -210,7 +213,8 @@ class BankTest {
     @Test
     void buyAlreadyBoughtProperty() {
         bank.buyTitleDeed(TITLE_DEED_NAME1, PLAYER1_NAME);
-        assertEquals(PLAYER1_NAME, bank.getTitleDeed(TITLE_DEED_NAME1).getOwner().get());
+        assertTrue(bank.getTitleDeed(TITLE_DEED_NAME1).isOwned());
+        assertEquals(PLAYER1_NAME, bank.getTitleDeed(TITLE_DEED_NAME1).getOwner());
         final IllegalStateException alreadyBoughtPropertyException = assertThrows(
             IllegalStateException.class,
             () -> bank.buyTitleDeed(TITLE_DEED_NAME1, PLAYER1_NAME)
@@ -231,7 +235,8 @@ class BankTest {
     void buyingPropertySuccessful() {
         final int previousBalance = bank.getBankAccount(PLAYER1_NAME).getBalance();
         bank.buyTitleDeed(TITLE_DEED_NAME1, PLAYER1_NAME);
-        assertEquals(PLAYER1_NAME, bank.getTitleDeed(TITLE_DEED_NAME1).getOwner().get());
+        assertTrue(bank.getTitleDeed(TITLE_DEED_NAME1).isOwned());
+        assertEquals(PLAYER1_NAME, bank.getTitleDeed(TITLE_DEED_NAME1).getOwner());
         final int expectedBalanceAfterPurchase = previousBalance - bank.getTitleDeed(TITLE_DEED_NAME1).getSalePrice();
         assertEquals(expectedBalanceAfterPurchase, bank.getBankAccount(PLAYER1_NAME).getBalance());
     }
@@ -257,13 +262,14 @@ class BankTest {
     void sellPropertySuccessful() {
         final int previousBalance = bank.getBankAccount(PLAYER1_NAME).getBalance();
         bank.buyTitleDeed(TITLE_DEED_NAME1, PLAYER1_NAME);
-        assertEquals(PLAYER1_NAME, bank.getTitleDeed(TITLE_DEED_NAME1).getOwner().get());
+        assertTrue(bank.getTitleDeed(TITLE_DEED_NAME1).isOwned());
+        assertEquals(PLAYER1_NAME, bank.getTitleDeed(TITLE_DEED_NAME1).getOwner());
         final int expectedBalanceAfterPurchase = previousBalance - bank.getTitleDeed(TITLE_DEED_NAME1).getSalePrice();
         assertEquals(expectedBalanceAfterPurchase, bank.getBankAccount(PLAYER1_NAME).getBalance());
         bank.sellTitleDeed(TITLE_DEED_NAME1);
         final int expectedBalanceAfterSale = expectedBalanceAfterPurchase + bank.getTitleDeed(TITLE_DEED_NAME1)
                                                                                 .getMortgagePrice();
-        assertTrue(bank.getTitleDeed(TITLE_DEED_NAME1).getOwner().isEmpty());
+        assertFalse(bank.getTitleDeed(TITLE_DEED_NAME1).isOwned());
         assertEquals(expectedBalanceAfterSale, bank.getBankAccount(PLAYER1_NAME).getBalance());
     }
 
@@ -272,7 +278,7 @@ class BankTest {
         bank.buyTitleDeed(TITLE_DEED_NAME1, PLAYER1_NAME);
         final Set<TitleDeed> deeds = bank.getTitleDeedsByOwner(PLAYER1_NAME);
         assertFalse(deeds.isEmpty());
-        assertTrue(deeds.stream().allMatch(d -> d.getOwner().isPresent() && PLAYER1_NAME.equals(d.getOwner().get())));
+        assertTrue(deeds.stream().allMatch(d -> d.isOwned() && PLAYER1_NAME.equals(d.getOwner())));
     }
 
     private void testExceptionFormat(final Exception exception) {

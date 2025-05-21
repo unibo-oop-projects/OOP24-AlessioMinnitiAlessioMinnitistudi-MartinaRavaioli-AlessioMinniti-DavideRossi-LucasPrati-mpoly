@@ -25,39 +25,20 @@ public final class WithdrawCheckBankAccount extends BankAccountDecorator {
     @Override
     public void withdraw(final int amount) {
         if (!withdrawCheck.test(getAccount(), amount)) {
-            throw new IllegalStateException("Cannot withdraw money because twithdraw conditions were violated");
+            throw new IllegalStateException("Cannot withdraw money because withdraw conditions were violated");
         }
         getAccount().withdraw(amount);
     }
 
     @Override
     public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((getAccount() == null) ? 0 : getAccount().hashCode());
-        return result;
+        return getAccount().hashCode();
     }
 
     @Override
     public boolean equals(final Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final WithdrawCheckBankAccount other = (WithdrawCheckBankAccount) obj;
-        if (getAccount() == null) {
-            if (other.getAccount() != null) {
-                return false;
-            }
-        } else if (!getAccount().equals(other.getAccount()) || withdrawCheck.equals(other.withdrawCheck)) {
-            return false;
-        }
-        return true;
+        return obj instanceof WithdrawCheckBankAccount other
+                && this.getAccount().equals(other.getAccount());
     }
 
     @Override

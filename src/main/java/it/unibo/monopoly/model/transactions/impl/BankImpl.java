@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 
 import com.google.common.collect.Maps;
 
+import it.unibo.monopoly.model.gameboard.impl.Group;
 import it.unibo.monopoly.model.transactions.api.Bank;
 import it.unibo.monopoly.model.transactions.api.BankAccount;
 import it.unibo.monopoly.model.transactions.api.TitleDeed;
@@ -26,10 +27,11 @@ public final class BankImpl implements Bank {
 
 
     /**
-     * Creates a new instance of {@link BankImpl} that 
+     * Creates a new instance of {@link BankImpl} that
      * operates with the given {@code accounts} and {@code title deeds}.
      * @param accounts the palyers' {@link BankAccount}
      * @param titleDeeds {@link List} of {@link TitleDeed} present in the game
+     * @throws IllegalArgumentException if {@code accounts} or {@code titleDeeds} are {@code null}
      */
     public BankImpl(final Set<BankAccount> accounts, final Set<TitleDeed> titleDeeds) {
         if (accounts.isEmpty() || titleDeeds.isEmpty()) {
@@ -53,7 +55,7 @@ public final class BankImpl implements Bank {
         return titleDeeds.get(id);
     }
 
-    private Set<TitleDeed> titleDeedsByGroup(final String group) {
+    private Set<TitleDeed> titleDeedsByGroup(final Group group) {
         return titleDeeds.values()
                         .stream()
                         .filter(d -> d.getGroup().equals(group))
@@ -67,8 +69,8 @@ public final class BankImpl implements Bank {
         final BankAccount buyer = findAccount(playerName);
         final TitleDeed td = findTitleDeed(titleDeedName);
 
-        if (td.getOwner().isPresent()) {
-            throw new IllegalStateException("Property is already owned by player" + td.getOwner().get());
+        if (td.isOwned()) {
+            throw new IllegalStateException("Property is already owned by player" + td.getOwner());
         }
 
         buyer.withdraw(td.getSalePrice());
@@ -91,10 +93,10 @@ public final class BankImpl implements Bank {
         Objects.requireNonNull(playerName);
         final TitleDeed deed = findTitleDeed(titleDeedName);
         final BankAccount payer = findAccount(playerName);
-        if (deed.getOwner().isEmpty()) {
+        if (!deed.isOwned()) {
             throw new IllegalStateException("Cannot pay rent for title deed with no owner");
         }
-        final BankAccount receiver = findAccount(deed.getOwner().get());
+        final BankAccount receiver = findAccount(deed.getOwner());
         if (receiver.equals(payer)) {
             throw new IllegalStateException("Canot pay rent for property owned by the payer" + playerName);
         }
@@ -114,10 +116,10 @@ public final class BankImpl implements Bank {
     public void sellTitleDeed(final String titleDeedName) {
         Objects.requireNonNull(titleDeedName);
         final TitleDeed deed = findTitleDeed(titleDeedName);
-        if (deed.getOwner().isEmpty()) {
+        if (!deed.isOwned()) {
             throw new IllegalStateException("Cannot sell a title deed with no owner");
         }
-        final BankAccount seller = findAccount(deed.getOwner().get());
+        final BankAccount seller = findAccount(deed.getOwner());
         seller.deposit(deed.getMortgagePrice());
         deed.removeOwner();
     }
@@ -130,7 +132,8 @@ public final class BankImpl implements Bank {
         }
         return titleDeeds.values()
                         .stream()
-                        .filter(d -> d.getOwner().isPresent() && ownerName.equals(d.getOwner().get()))
+                        .filter(TitleDeed::isOwned)
+                        .filter(d -> ownerName.equals(d.getOwner()))
                         .collect(Collectors.toSet());
     }
 

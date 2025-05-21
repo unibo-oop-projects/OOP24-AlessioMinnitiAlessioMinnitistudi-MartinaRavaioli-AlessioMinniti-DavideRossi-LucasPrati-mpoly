@@ -1,0 +1,19 @@
+# For tests: VALID CONFIGURATION (not a default one)
+
+MIN_PLAYERS: 2
+MAX_PLAYERS: 5
+
+NUM_DICE: 1
+SIDES_PER_DIE: 6
+
+FONT_NAME: ARIAL
+BIG_FONT: 32
+SMALL_FONT: 20
+
+INIT_BALANCE: 1000
+
+RULES_FILE: rules/debug_rules.txt
+TITLE_DEEDS_FILE: cards/debug_title_deeds.json
+TILES_FILE: cards/debug_tiles.json
+
+COLORS: RED, BLUE, ORANGE, GREEN, MAGENTA

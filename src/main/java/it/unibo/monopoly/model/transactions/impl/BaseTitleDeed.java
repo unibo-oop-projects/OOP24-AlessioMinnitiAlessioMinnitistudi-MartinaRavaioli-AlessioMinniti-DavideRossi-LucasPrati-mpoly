@@ -7,8 +7,13 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.function.Function;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import it.unibo.monopoly.model.gameboard.impl.Group;
 import it.unibo.monopoly.model.transactions.api.RentOption;
 import it.unibo.monopoly.model.transactions.api.TitleDeed;
+
 
 /**
  * Standard implementation of the TitleDeed interface 
@@ -18,24 +23,44 @@ import it.unibo.monopoly.model.transactions.api.TitleDeed;
  */
 public class BaseTitleDeed implements TitleDeed {
 
-    private final String group;
+    private static final int HPRICE = 55;
+    private final Group group;
     private final String name;
     private final int salePrice;
     private final Function<Integer, Integer> mortgageFunction; 
     private final List<RentOption> rentOptions;
     private Optional<String> owner = Optional.empty();
 
+    /**
+     * Creates a new {@link BaseTitleDeed} that has only one standard rent fee.
+     * <p>
+     * The {@code mortageFunction} is a default {@code 50%} of the original {@code salePrice}.
+     * 
+     * @param group The group of title deeds this deed is part of
+     * @param name The name of the deed
+     * @param salePrice The price to pay to buy the deed
+     * @param baseRent The standard rent fee
+     */
+    @JsonCreator
+    public BaseTitleDeed(
+        @JsonProperty("group") final Group group,
+        @JsonProperty("name") final String name,
+        @JsonProperty("price") final int salePrice,
+        @JsonProperty("rent") final int baseRent
+    ) {
+        this(group, name, salePrice, p -> p / 2, baseRent);
+    }
 
     /**
      * Creates a new {@link BaseTitleDeed} that 
      * has only one standard rent fee.
-     * @param group The group this deed is part of
+     * @param group The Group of title deeds this deed is part of
      * @param name The name of the deed
      * @param salePrice The price to pay to buy the deed
      * @param mortgageFunction The 
      * @param baseRent The standard rent fee
      */
-    public BaseTitleDeed(final String group, 
+    public BaseTitleDeed(final Group group, 
                         final String name, 
                         final int salePrice, 
                         final Function<Integer, Integer> mortgageFunction, 
@@ -51,7 +76,7 @@ public class BaseTitleDeed implements TitleDeed {
      * Creates a new {@link BaseTitleDeed}
      * with a standard rent fee and a list of additional
      * rent options.
-     * @param group The group this deed is part of
+     * @param group The Group of title deeds this deed is part of
      * @param name The name of the deed
      * @param salePrice The price to pay to buy the deed
      * @param mortgageFunction The 
@@ -59,7 +84,7 @@ public class BaseTitleDeed implements TitleDeed {
      * @param additionalRentOptions The other rent options
      * that could be applied when having to pay the rent
      */
-    public BaseTitleDeed(final String group, 
+    public BaseTitleDeed(final Group group, 
                         final String name, 
                         final int salePrice, 
                         final Function<Integer, Integer> mortgageFunction, 
@@ -70,8 +95,11 @@ public class BaseTitleDeed implements TitleDeed {
     }
 
     @Override
-    public final Optional<String> getOwner() {
-        return owner;
+    public final String getOwner() {
+        if (owner.isEmpty()) {
+            throw new IllegalStateException("This title deed has no owner");
+        }
+        return owner.get();
     }
 
     @Override
@@ -96,7 +124,7 @@ public class BaseTitleDeed implements TitleDeed {
     }
 
     @Override
-    public final String getGroup() {
+    public final Group getGroup() {
         return this.group;
     }
 
@@ -180,7 +208,7 @@ public class BaseTitleDeed implements TitleDeed {
 
     /**
      * Default IDE generated implementation of the equals method 
-     * based on the parameters {@code name} and {@code group}.
+     * based on the parameters {@code name} and {@code Group}.
      */
     @Override
     public boolean equals(final Object obj) {
@@ -210,4 +238,33 @@ public class BaseTitleDeed implements TitleDeed {
         }
         return true;
     }
+    /* PLACE HOLDER FOR ATUAL METHOD */
+    /**
+     * place holder. 
+     * @return price of houses
+     */
+    @Override
+    public int housePrice() {
+        return HPRICE;
+    }
+    /* PLACE HOLDER FOR ATUAL METHOD */
+    /**
+     * place holder. 
+     * @return number of houses
+     */
+    @Override
+    public int houseNum() {
+        return 0;
+    }
+
+    /**
+     * This is implementation checks whether there is a value in
+     * the {@link Optional} {@code owner} or if it is empty, and
+     * returns that as a boolean.
+     */
+    @Override
+    public boolean isOwned() {
+        return owner.isPresent();
+    }
+
 }

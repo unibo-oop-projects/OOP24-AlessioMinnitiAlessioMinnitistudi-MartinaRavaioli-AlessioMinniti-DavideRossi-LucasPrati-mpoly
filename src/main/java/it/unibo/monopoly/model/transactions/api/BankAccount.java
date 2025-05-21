@@ -1,9 +1,11 @@
 package it.unibo.monopoly.model.transactions.api;
 
+import it.unibo.monopoly.utils.Identifiable;
+
 /**
  * The bank account associated with each player in the game.
 */
-public interface BankAccount {
+public interface BankAccount extends Identifiable<Integer> {
     /**
      * Increases the current amount of money in the account.
      * @param amount the amount of money to add to the account
@@ -13,6 +15,7 @@ public interface BankAccount {
      * conditions applied by the implementation
      */
     void deposit(int amount);
+
     /** 
      * Decreases the current amount of money in the account.
      * @param amount the amount of money to pull from the account

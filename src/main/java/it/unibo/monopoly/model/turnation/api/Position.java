@@ -1,8 +1,23 @@
 package it.unibo.monopoly.model.turnation.api;
 
-/**
- * position interface.
-*/
-public interface Position {
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
-    int getPos(); }
+import it.unibo.monopoly.model.turnation.impl.PositionImpl;
+
+/**
+ * {@link PositionImpl} interface.
+*/
+@JsonDeserialize(as = PositionImpl.class)
+public interface Position {
+    /**
+     * get the position.
+     * @return int
+    */
+    int getPos();
+
+    /**
+     * set the position.
+     * @param value
+    */
+    void setPos(int value);
+}

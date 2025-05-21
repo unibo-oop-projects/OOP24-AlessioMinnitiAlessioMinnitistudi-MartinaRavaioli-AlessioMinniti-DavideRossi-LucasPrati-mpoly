@@ -1,18 +1,18 @@
 package it.unibo.monopoly.model.transactions;
 
+import java.util.List;
+import java.util.Set;
+import java.util.function.Function;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-
-import java.util.List;
-import java.util.Set;
-import java.util.function.Function;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import it.unibo.monopoly.model.gameboard.impl.Group;
 import it.unibo.monopoly.model.transactions.api.RentOption;
 import it.unibo.monopoly.model.transactions.api.TitleDeed;
 import it.unibo.monopoly.model.transactions.impl.BaseTitleDeed;
@@ -22,7 +22,7 @@ class BaseTitleDeedTest {
 
     private static final String OWNER_NAME = "Bob";
     private static final String SECOND_OWNER_NAME = "Alice";
-    private static final String GROUP_NAME = "viola";
+    private static final Group GROUP_NAME = Group.GREEN;
     private static final String TITLE_DEED_NAME = "vicolo corto";
     private static final int SALE_PRICE = 50;
     private static final Function<Integer, Integer> MORTGAGE_PRICE_FUNCTION = salePrice -> {
@@ -40,14 +40,24 @@ class BaseTitleDeedTest {
 
 
     @Test
-    void testGetOwnerReturnsNullIfNoOwnerIsSet() {
-        assertTrue(deed.getOwner().isEmpty());
+    void testIsOwnedFalseIfNoOwnerIsSet() {
+        assertFalse(deed.isOwned());
+    }
+
+    @Test
+    void testGetOwnerThrowsExceptionIfNoOwnerIsSet() {
+        final IllegalStateException noOwnerException = assertThrows(
+            IllegalStateException.class, 
+            deed::getOwner
+        );
+        testExceptionFormat(noOwnerException);
     }
 
     @Test
     void testSetOwnerSuccessful() {
         deed.setOwner(OWNER_NAME);
-        assertEquals(OWNER_NAME, deed.getOwner().get());
+        assertTrue(deed.isOwned());
+        assertEquals(OWNER_NAME, deed.getOwner());
     }
 
     @Test
@@ -72,12 +82,12 @@ class BaseTitleDeedTest {
     @Test
     void removeOwnerSuccessful() {
         deed.setOwner(OWNER_NAME);
-        assertEquals(OWNER_NAME, deed.getOwner().get());
+        assertTrue(deed.isOwned());
+        assertEquals(OWNER_NAME, deed.getOwner());
         deed.removeOwner();
-        assertTrue(deed.getOwner().isEmpty());
+        assertFalse(deed.isOwned());
     }
 
-    //change to robust group object
    @Test
    void testGetGroup() {
         assertEquals(GROUP_NAME, deed.getGroup());
@@ -106,10 +116,8 @@ class BaseTitleDeedTest {
                                                                 "", 
                                                                 BASE_RENT_PRICE * 2, 
                                                                 (deeds, o) -> deeds.stream()
-                                                                                .allMatch(d -> d.getOwner()
-                                                                                                .isPresent() 
-                                                                                                && o.equals(d.getOwner()
-                                                                                                .get())
+                                                                                .allMatch(d -> d.isOwned() 
+                                                                                                && o.equals(d.getOwner())
                                                                                                 )
                                                                 );
         final TitleDeed shortStreetDeed = new BaseTitleDeed(GROUP_NAME,
@@ -134,7 +142,7 @@ class BaseTitleDeedTest {
    @Test
    void testGetRentPricePassingTitleDeedsOfDifferentGroup() {
 
-        final TitleDeed differentGroupTitleDeed = new BaseTitleDeed("marrone", 
+        final TitleDeed differentGroupTitleDeed = new BaseTitleDeed(Group.BLUE, 
                                                         "via dante", 
                                                         SALE_PRICE, 
                                                         MORTGAGE_PRICE_FUNCTION,
@@ -162,14 +170,6 @@ class BaseTitleDeedTest {
             assertTrue(rentOption.getPrice() > 0);
         }
    }
-
-   /*
-   Verify if such control can be implemented with the enums implementation
-   @Test
-   void testGetRentPriceNotPassingAllTitleDeedsOfGroup () {
-
-   }
-    */
 
     private void testExceptionFormat(final Exception exception) {
         assertNotNull(exception.getMessage());
