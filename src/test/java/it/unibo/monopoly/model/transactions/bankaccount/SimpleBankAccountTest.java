@@ -37,17 +37,8 @@ class SimpleBankAccountTest {
     }
 
     @Test
-    void createAccountWithNoOwner() {
-        final NullPointerException negativeAmountException = assertThrows(
-            NullPointerException.class,
-            () -> bankAccount = new SimpleBankAccountImpl(ID, -(INITIAL_BALANCE + 1), ""),
-            "Creating a bankAccount with no owner should have thrown an error");
-        testExceptionFormat(negativeAmountException);
-    }
-
-    @Test
-    void checkOwnerNameIsCorrect() {
-        assertEquals(bankAccount.getPlayerName(), PLAYER_NAME);
+    void checkOwnerIdIsCorrect() {
+        assertEquals(bankAccount.getID(), ID);
     }
 
     @Test
