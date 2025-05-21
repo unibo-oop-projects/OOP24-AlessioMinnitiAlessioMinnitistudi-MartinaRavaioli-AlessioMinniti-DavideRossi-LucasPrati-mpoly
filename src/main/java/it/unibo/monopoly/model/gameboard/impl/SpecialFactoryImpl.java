@@ -12,6 +12,7 @@ import it.unibo.monopoly.model.turnation.api.Player;
 import it.unibo.monopoly.model.turnation.api.Position;
 import it.unibo.monopoly.model.turnation.api.TurnationManager;
 import it.unibo.monopoly.model.turnation.impl.PositionImpl;
+import it.unibo.monopoly.model.gameboard.impl.Group;
 
 
 
@@ -24,7 +25,7 @@ public class SpecialFactoryImpl implements SpecialFactory{
     @Override
     public Special start(final Bank bank) {
 
-        return new SpecialImpl("Start", new PositionImpl(0), Type.SPECIAL, new Effect() {
+        return new SpecialImpl("Start", new PositionImpl(0), Group.SPECIAL, new Effect() {
 
             private final static int START_AMOUNT = 200;
 
@@ -39,7 +40,7 @@ public class SpecialFactoryImpl implements SpecialFactory{
 
     @Override
     public Special goToPrison(Position pos, final Board board) {
-        return new SpecialImpl("GoToPrison", pos, Type.SPECIAL, new Effect() {
+        return new SpecialImpl("GoToPrison", pos, Group.SPECIAL, new Effect() {
 
             //TODO fallo con la differenza !!
             //o con il metodo da chiedere ad ale 
@@ -55,24 +56,24 @@ public class SpecialFactoryImpl implements SpecialFactory{
 
     @Override
     public Special prison(Position pos, final Board board, final TurnationManager turnationManager) {
-        return new SpecialImpl(null, pos, null, null) {
+        return new SpecialImpl(null, pos, null, new Effect() {
             private boolean validThrow=false;
 
             @Override
-            public void activateEffect(Player player) {
-                
+            public void activate(Player player) {
                 turnationManager.moveByDices().forEach(p->turnationManager.moveByDices().forEach(g -> {if(g.equals(p)){validThrow=true;}}));
                 if (validThrow) {
                     board.movePawn(board.getPawn(player.getID()), turnationManager.moveByDices());
                     
                 }
             }
-        };
+
+        });
     }
 
     @Override
     public Special parking(Position pos) {
-        return new SpecialImpl("parking", pos, Type.SPECIAL, new Effect() {
+        return new SpecialImpl("parking", pos, Group.SPECIAL, new Effect() {
 
             @Override
             public void activate(Player palyer) {
@@ -84,7 +85,7 @@ public class SpecialFactoryImpl implements SpecialFactory{
 
     @Override
     public Special taxes(Position pos, final Bank bank) {
-        return new SpecialImpl("taxes", pos, Type.SPECIAL, new Effect() {
+        return new SpecialImpl("taxes", pos, Group.SPECIAL, new Effect() {
 
             private final static int TAXES_AMOUNT = 100;
 

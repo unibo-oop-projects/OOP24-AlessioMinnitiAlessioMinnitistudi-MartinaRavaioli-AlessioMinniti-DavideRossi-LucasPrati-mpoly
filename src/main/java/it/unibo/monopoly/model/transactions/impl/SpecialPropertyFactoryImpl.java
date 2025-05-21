@@ -5,6 +5,7 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.function.Function;
 
+import it.unibo.monopoly.model.gameboard.impl.Group;
 import it.unibo.monopoly.model.transactions.api.RentOption;
 import it.unibo.monopoly.model.transactions.api.RentOptionFactory;
 import it.unibo.monopoly.model.transactions.api.SpecialPropertyFactory;
@@ -23,7 +24,7 @@ public class SpecialPropertyFactoryImpl implements SpecialPropertyFactory{
 
     
     @Override
-    public TitleDeed Station(String group, String name, int salePrice, Function<Integer, Integer> mortgageFunction,
+    public TitleDeed Station(Group group, String name, int salePrice, Function<Integer, Integer> mortgageFunction,
                                 int baseRent) {
 
         List<RentOption> rentO = f.progressivelyIncreasingPrice(50, 2, 4);
@@ -33,7 +34,7 @@ public class SpecialPropertyFactoryImpl implements SpecialPropertyFactory{
     }
 
     @Override
-    public TitleDeed Society(String group, String name, int salePrice, Function<Integer, Integer> mortgageFunction,
+    public TitleDeed Society(Group group, String name, int salePrice, Function<Integer, Integer> mortgageFunction,
             int baseRent) {
         List<RentOption> rentO = f.progressivelyIncreasingPrice(5, 2, 2);
         List<RentOption> rent = rentO.subList(1, rentO.size());
@@ -44,7 +45,7 @@ public class SpecialPropertyFactoryImpl implements SpecialPropertyFactory{
             
     
             @Override
-            public Optional<String> getOwner() {
+            public String getOwner() {
                 return titleDeed.getOwner();
             }
     
@@ -59,7 +60,7 @@ public class SpecialPropertyFactoryImpl implements SpecialPropertyFactory{
             }
     
             @Override
-            public String getGroup() {
+            public Group getGroup() {
                 return titleDeed.getGroup();
             }
     
@@ -86,6 +87,21 @@ public class SpecialPropertyFactoryImpl implements SpecialPropertyFactory{
             @Override
             public List<RentOption> getRentOptions() {
                 return titleDeed.getRentOptions();
+            }
+
+            @Override
+            public boolean isOwned() {
+                return titleDeed.isOwned();
+            }
+
+            @Override
+            public int housePrice() {
+                return titleDeed.housePrice();
+            }
+
+            @Override
+            public int houseNum() {
+                return titleDeed.houseNum();
             }
                 
             };

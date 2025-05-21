@@ -18,9 +18,11 @@ public class SpecialImpl extends TileImpl implements Special {
     * @param pos
     * @param group
     */
-    public SpecialImpl(final String name, final Position pos, final Group group) {
+    public SpecialImpl(final String name, final Position pos, final Group group, Effect effetto) {
         super(name, pos, group);
+        this.effetto = effetto;
     }
+
     /**
     * get the Group.
     * @return Effect
