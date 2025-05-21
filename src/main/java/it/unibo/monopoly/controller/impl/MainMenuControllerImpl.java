@@ -84,18 +84,15 @@ public final class MainMenuControllerImpl implements MainMenuController {
      */
     @Override
     public void onClickStart(final Map<Color, String> playersSetup) throws IOException {
-        // init all the game (Player, Pawn, BankAccount according to the type chosen)
         final List<Player> players = new ArrayList<>();
         final List<Pawn> pawns = new ArrayList<>();
         final List<Tile> tiles = new ArrayList<>();
         final Set<TitleDeed> titleDeeds = new HashSet<>();
         final Set<BankAccount> accounts = new HashSet<>();
-
         final PawnFactory pawnFactory = new PawnFactoryImpl();
 
         // create a id for each Player (his Pawn and BankAccount must have the same id)
         int id = 1;
-
         // create a Player, his Pawn and his BankAccount according to the type chosen
         for (final var p : playersSetup.entrySet()) {
             final String name = p.getValue();
