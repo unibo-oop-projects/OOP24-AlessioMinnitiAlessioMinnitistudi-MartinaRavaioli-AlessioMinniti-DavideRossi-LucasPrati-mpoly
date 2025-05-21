@@ -38,10 +38,4 @@ public interface BankAccount extends Identifiable<Integer> {
      * that doesn't allow the continuation of the game 
      */
     boolean canContinue(); 
-
-    /**
-     * Get the name of the player associated with the BankAccount.
-     * @return the name of the player
-     */
-    String getPlayerName();
 }
