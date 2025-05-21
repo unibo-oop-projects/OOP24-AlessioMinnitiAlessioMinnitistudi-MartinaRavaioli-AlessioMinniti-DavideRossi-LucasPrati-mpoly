@@ -9,7 +9,8 @@ import it.unibo.monopoly.model.turnation.api.Player;
 public interface Special extends Tile {
     //get the own effect
     /**
-     * @return effect
+     * this method activates the effect of this special card.
+     * @param player the player that triggered the effect
      */
     void activateEffect(Player player);
 }

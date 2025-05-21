@@ -9,6 +9,10 @@ import it.unibo.monopoly.model.turnation.api.Player;
 @FunctionalInterface
 public interface Effect { 
 
+    /**
+     * this method activates the effect.
+     * @param player the player tha triggered the effect
+     */
     void activate(Player player);
 }
 

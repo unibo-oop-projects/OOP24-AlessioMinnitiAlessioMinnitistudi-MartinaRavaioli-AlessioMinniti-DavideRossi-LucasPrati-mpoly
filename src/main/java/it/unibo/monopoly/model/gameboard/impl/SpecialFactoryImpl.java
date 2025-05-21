@@ -12,22 +12,19 @@ import it.unibo.monopoly.model.turnation.api.Player;
 import it.unibo.monopoly.model.turnation.api.Position;
 import it.unibo.monopoly.model.turnation.api.TurnationManager;
 import it.unibo.monopoly.model.turnation.impl.PositionImpl;
-import it.unibo.monopoly.model.gameboard.impl.Group;
 
 
-
-public class SpecialFactoryImpl implements SpecialFactory{
-
-
-    public SpecialFactoryImpl() {
-    }
+/**
+ * a factory for special tiles of the board, each one with it's specific effect.
+ */
+public final class SpecialFactoryImpl implements SpecialFactory {
 
     @Override
     public Special start(final Bank bank) {
 
         return new SpecialImpl("Start", new PositionImpl(0), Group.SPECIAL, new Effect() {
 
-            private final static int START_AMOUNT = 200;
+            private final int START_AMOUNT = 200;
 
             //DA CAMBIARE CON IL METODO PER AVERE IL NOME CHE ORA NON C'E'
             @Override
