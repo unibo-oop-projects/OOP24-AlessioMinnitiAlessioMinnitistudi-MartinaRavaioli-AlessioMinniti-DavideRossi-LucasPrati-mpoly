@@ -264,7 +264,7 @@ public final class MainMenuView extends JFrame {
         final Map<Color, String> playersSetup = playersInfo.entrySet().stream()
             .collect(Collectors.toMap(
                 Map.Entry::getKey,                      // chiave: Color
-                e -> e.getValue().getText().trim(),     // valore: testo dal JTextField pulito da spazi extra con trim()
+                e -> e.getValue().getText().trim(),     // valore: testo dal JTextField pulito da spazi extra
                 (a, b) -> b,                            // risolve eventuali duplicati Colore mantenendo l'ultimo valore
                 LinkedHashMap::new                      // preservo l'ordine di inserimento
             ));

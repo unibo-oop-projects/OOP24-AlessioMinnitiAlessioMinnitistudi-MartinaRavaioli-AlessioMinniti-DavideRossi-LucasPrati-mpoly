@@ -35,9 +35,9 @@ public final class RulesWindowView extends JDialog {
 
     /**
      * Creates a view that displays the game rules, importing them from a file.
-     * 
+     * <p>
      * The behavior of the view adapts to the provided {@link Configuration},
-     * which defines essential game settings such as window size, font size
+     * which defines font size and type
      *
      * @param parent the parent frame that owns this dialog and will be blocked while the dialog is visible
      * @param config the configuration object containing the base settings for the game
