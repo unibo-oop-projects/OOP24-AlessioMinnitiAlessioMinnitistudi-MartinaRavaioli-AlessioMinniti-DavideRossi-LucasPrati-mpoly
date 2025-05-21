@@ -24,11 +24,6 @@ abstract class BankAccountDecorator implements BankAccount {
     }
 
     @Override
-    public String getPlayerName() {
-        return this.account.getPlayerName();
-    }
-
-    @Override
     public void deposit(final int amount) {
         this.account.deposit(amount);
     }
