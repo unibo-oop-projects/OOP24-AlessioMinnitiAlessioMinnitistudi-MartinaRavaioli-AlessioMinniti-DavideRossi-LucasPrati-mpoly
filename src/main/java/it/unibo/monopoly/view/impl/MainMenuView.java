@@ -1,4 +1,4 @@
-package it.unibo.monopoly.view;
+package it.unibo.monopoly.view.impl;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
