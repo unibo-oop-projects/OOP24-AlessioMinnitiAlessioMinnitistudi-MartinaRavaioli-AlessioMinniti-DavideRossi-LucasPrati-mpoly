@@ -10,12 +10,15 @@ import java.util.Objects;
 import java.util.Set;
 
 import it.unibo.monopoly.controller.api.MainMenuController;
+import it.unibo.monopoly.view.impl.MainViewImpl;
+
 import it.unibo.monopoly.model.gameboard.api.Board;
 import it.unibo.monopoly.model.gameboard.api.Pawn;
 import it.unibo.monopoly.model.gameboard.api.PawnFactory;
 import it.unibo.monopoly.model.gameboard.api.Tile;
 import it.unibo.monopoly.model.gameboard.impl.BoardImpl;
 import it.unibo.monopoly.model.gameboard.impl.PawnFactoryImpl;
+
 import it.unibo.monopoly.model.transactions.api.Bank;
 import it.unibo.monopoly.model.transactions.api.BankAccount;
 import it.unibo.monopoly.model.transactions.api.BankAccountFactory;
@@ -23,16 +26,17 @@ import it.unibo.monopoly.model.transactions.api.BankAccountType;
 import it.unibo.monopoly.model.transactions.api.TitleDeed;
 import it.unibo.monopoly.model.transactions.impl.BankImpl;
 import it.unibo.monopoly.model.transactions.impl.bankaccount.BankAccountFactoryImpl;
+
 import it.unibo.monopoly.model.turnation.api.Player;
 import it.unibo.monopoly.model.turnation.api.TurnationManager;
 import it.unibo.monopoly.model.turnation.impl.DiceImpl;
 import it.unibo.monopoly.model.turnation.impl.PlayerImpl;
 import it.unibo.monopoly.model.turnation.impl.PositionImpl;
 import it.unibo.monopoly.model.turnation.impl.TurnationManagerImpl;
+
 import it.unibo.monopoly.utils.Configuration;
 import it.unibo.monopoly.utils.Identifiable;
 import it.unibo.monopoly.utils.ResourceLoader;
-import it.unibo.monopoly.view.impl.MainViewImpl;
 
 
 /**
@@ -103,11 +107,10 @@ public final class MainMenuControllerImpl implements MainMenuController {
             id++;
         }
 
-        // import titledeeds and tiles from json
+        // import from json
         titleDeeds.addAll(ResourceLoader.loadTitleDeeds(config.getTitleDeedsPath()));
         tiles.addAll(List.copyOf(ResourceLoader.loadJsonList(config.getTilesPath(), Tile.class)));
 
-        // create Bank, Board and TurnationManager 
         final Bank bank = new BankImpl(accounts, titleDeeds);
         final Board board = new BoardImpl(tiles, pawns);
         final TurnationManager turnationManager = new TurnationManagerImpl(
@@ -176,9 +179,8 @@ public final class MainMenuControllerImpl implements MainMenuController {
 
     /**
      * Use {@link BankAccountFactory} to create a new {@link BankAccount} istances according to the {@code bankAccountType}.
-     * 
      * @param id the {@link Identifiable} representing the {@link BankAccount}
-     * @param owner the {@code name} of the {@link Player} that owns the {@link BankAccount} 
+     * @param owner the name of the {@link Player} that owns the {@link BankAccount} 
      * @return a new istance of {@link BankAccount} according to the {@code bankAccountType}
      * @throws NullPointerException if {@code owner} is {@code null}
      */

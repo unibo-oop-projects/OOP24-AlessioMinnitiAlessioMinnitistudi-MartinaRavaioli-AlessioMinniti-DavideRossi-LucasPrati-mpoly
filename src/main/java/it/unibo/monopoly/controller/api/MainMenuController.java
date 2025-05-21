@@ -15,9 +15,9 @@ import it.unibo.monopoly.utils.ResourceLoader;
 public interface MainMenuController {
 
     /**
-     * Must initialize all the game, starting from the given {@code playerSetup}.
-     * @param playersSetup the list of player data, create players according to this
-     * @throws IOException if the loading from {@code JSON}s failed
+     * Must initialize all the game, starting from the given list of players'data {@code playersSetup}.
+     * @param playersSetup the players'data, create players according to this
+     * @throws IOException if the loading from {@code JSON} failed
      * @throws NullPointerException if {@code id}, {@code name} or {@code color} are {@code null}
      */
     void onClickStart(Map<Color, String> playersSetup) throws IOException;
@@ -59,7 +59,6 @@ public interface MainMenuController {
 
     /**
      * Use a {@link ResourceLoader} for getting a {@link String} with all the rules of the game.
-     * 
      * @return a {@link String} with all the rules of the game
      */
     String getRules();
