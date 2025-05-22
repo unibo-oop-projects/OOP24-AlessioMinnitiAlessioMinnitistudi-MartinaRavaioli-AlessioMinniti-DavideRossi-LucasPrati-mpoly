@@ -11,8 +11,6 @@ import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 
 import it.unibo.monopoly.controller.api.GameController;
-import it.unibo.monopoly.controller.api.GameboardActionController;
-import it.unibo.monopoly.controller.impl.GameboardActionControllerImpl;
 import it.unibo.monopoly.model.transactions.api.BankAccount;
 import it.unibo.monopoly.model.transactions.api.TitleDeed;
 import it.unibo.monopoly.model.turnation.api.Player;
@@ -47,7 +45,6 @@ public final class MainViewImpl implements MainGameView {
     private final GameboardView gameBoardPanel;
 
     private final GameController controller;
-    private final GameboardActionController gameBoardController;
     /**
      * Assembles the UI of the game interface and adds all components to {@code mainFrame} object.
      * The {@code mainFrame} is a {@link JFrame}. 
@@ -56,8 +53,7 @@ public final class MainViewImpl implements MainGameView {
      * will be captured and handled by the {@code controller} provided to this constructor. 
      */
     public MainViewImpl(final GameController controller) {
-        this.gameBoardController=new GameboardActionControllerImpl(null,null);
-        this.gameBoardPanel = new GameboardViewImpl(11);
+        this.gameBoardPanel = new GameboardViewImpl(11,controller);
         this.controller = controller;
         final GamePanelsFactory fact = new SwingPanelsFactory();
         contractPanel = fact.contractPanel();

@@ -12,36 +12,35 @@ import java.util.List;
 import java.util.Map;
 
 import javax.swing.BorderFactory;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import it.unibo.monopoly.controller.api.GameController;
 import it.unibo.monopoly.controller.api.GameboardLogic;
 import it.unibo.monopoly.controller.impl.GameboardLogicImpl;
 import it.unibo.monopoly.model.gameboard.api.Pawn;
 import it.unibo.monopoly.model.gameboard.api.Property;
-import it.unibo.monopoly.model.gameboard.api.Tile;
-import it.unibo.monopoly.model.turnation.api.Player;
 import it.unibo.monopoly.model.turnation.api.Position;
 import it.unibo.monopoly.model.turnation.impl.PositionImpl;
 import it.unibo.monopoly.view.api.GameboardView;
 
 /**
-    * board view.
+    * board view implementation.
 */
-public class GameboardViewImpl extends JPanel implements GameboardView {
-    private GameboardLogic logic;
+public final class GameboardViewImpl extends JPanel implements GameboardView {
+    private final GameboardLogic logic;
+    private final GameController controller;
     private final List<JPanel> shapes=List.of(new PawnCircle(Color.RED),new PawnTriangle(Color.BLUE),new PawnSquare(Color.GREEN),new PawnSquare(Color.YELLOW));
     private final List<JPanel> tilesView=new ArrayList<>();
     private final int size;
     private final Map<Integer,Position> pawnPositions=new HashMap<>();
 
-    public GameboardViewImpl(int size) {
+    public GameboardViewImpl(final int size, final GameController controller) {
         this.size = size;
         this.logic=new GameboardLogicImpl();
+        this.controller = controller;
         renderDefaultUI();
     }
-
 
     @Override
     public void addHouse() {
@@ -103,13 +102,13 @@ public class GameboardViewImpl extends JPanel implements GameboardView {
             }
         }
 
-        for (int i=0;i<40;i++) {
+        for (int i=0;i<controller.getTiles().size();i++) {
             JPanel panel=this.tilesView.get(i);
             JPanel stripe = new JPanel();
             stripe.setPreferredSize(new Dimension(150, 10));
-            // stripe.setBackground(logic.getTileColor(tiles.get(i).getType()));
+            stripe.setBackground(controller.getTiles().get(i).getGroup().getColor());
             panel.add(stripe, BorderLayout.NORTH);
-            JLabel label = new JLabel("prova");/*tiles.get(i).getName();*/
+            JLabel label = new JLabel(controller.getTiles().get(i).getName());/*tiles.get(i).getName();*/
             panel.add(label, BorderLayout.CENTER);
             panel.setName(label.getText());
         }

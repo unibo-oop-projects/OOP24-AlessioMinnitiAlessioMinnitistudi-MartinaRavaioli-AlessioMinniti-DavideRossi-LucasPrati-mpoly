@@ -1,13 +1,16 @@
 package it.unibo.monopoly.controller.impl;
 
 import java.awt.Color;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-import it.unibo.monopoly.model.gameboard.api.Board;
-import it.unibo.monopoly.model.gameboard.impl.Group;
 import it.unibo.monopoly.controller.api.GameController;
+import it.unibo.monopoly.model.gameboard.api.Board;
+import it.unibo.monopoly.model.gameboard.api.Property;
+import it.unibo.monopoly.model.gameboard.api.Tile;
+import it.unibo.monopoly.model.gameboard.impl.Group;
 import it.unibo.monopoly.model.transactions.api.Bank;
 import it.unibo.monopoly.model.transactions.api.BankAccount;
 import it.unibo.monopoly.model.transactions.api.TitleDeed;
@@ -16,6 +19,7 @@ import it.unibo.monopoly.model.turnation.api.Player;
 import it.unibo.monopoly.model.turnation.api.TurnationManager;
 import it.unibo.monopoly.utils.Configuration;
 import it.unibo.monopoly.utils.ResourceLoader;
+import it.unibo.monopoly.view.api.GameboardView;
 import it.unibo.monopoly.view.api.MainGameView;
 
 
@@ -31,6 +35,7 @@ public final class GameControllerImpl implements GameController {
     private final Board board;                              // TODO
     private final Configuration config;
     private MainGameView gameView;
+    private GameboardView gameboardView;
 
     /**
      * Create a new {@link GameController} with the given parameters.
@@ -201,5 +206,44 @@ public final class GameControllerImpl implements GameController {
     @Override
     public void attachView(final MainGameView view) {
         this.gameView = view;
+    }
+
+    @Override
+    public void playerGameOver() {
+        
+    }
+
+    @Override
+    public void changePositions() {
+        List<Integer> res = (List<Integer>) turnationManager.moveByDices();
+        this.board.movePawn(this.board.getPawn(this.turnationManager.getIdCurrPlayer()),res);
+        gameboardView.changePos(this.turnationManager.getIdCurrPlayer(),this.board.getPawn(this.turnationManager.getIdCurrPlayer()).getPosition());
+    }
+
+    @Override
+    public void addHouse(Property prop) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'addHouse'");
+    }
+
+    @Override
+    public void addHotel(Property prop) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'addHotel'");
+    }
+
+    @Override
+    public int getSize(int numTiles) {
+        return numTiles/4 + 1;
+    }
+
+    @Override
+    public void gameOver() {
+        this.turnationManager.setOver();
+    }
+
+    @Override
+    public List<Tile> getTiles() {
+        return Collections.unmodifiableList(this.board.getTiles());
     }
 }

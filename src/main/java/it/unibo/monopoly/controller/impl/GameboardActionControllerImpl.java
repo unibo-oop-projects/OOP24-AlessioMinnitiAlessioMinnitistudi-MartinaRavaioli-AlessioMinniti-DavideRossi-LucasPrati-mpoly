@@ -18,11 +18,11 @@ public class GameboardActionControllerImpl implements GameboardActionController{
         this.turnManager = turnManager;
     }
 
-    @Override
-    public void startGame(int size) {
-        gameboardView = new GameboardViewImpl(11); 
-        // gameboardView.show(this.turnManager.getPlayerList(),this.board.getTiles());
-    }
+    // @Override
+    // public void startGame(int size) {
+    //     gameboardView = new GameboardViewImpl(11); 
+    //     // gameboardView.show(this.turnManager.getPlayerList(),this.board.getTiles());
+    // }
 
     @Override
     public void gameOver() {

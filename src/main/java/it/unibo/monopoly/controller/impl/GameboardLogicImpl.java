@@ -6,6 +6,9 @@ import java.util.function.Predicate;
 import it.unibo.monopoly.controller.api.GameboardLogic;
 import it.unibo.monopoly.model.gameboard.impl.Type;
 
+/**
+    * board logic implementation.
+*/
 public class GameboardLogicImpl implements GameboardLogic{
 
     @Override

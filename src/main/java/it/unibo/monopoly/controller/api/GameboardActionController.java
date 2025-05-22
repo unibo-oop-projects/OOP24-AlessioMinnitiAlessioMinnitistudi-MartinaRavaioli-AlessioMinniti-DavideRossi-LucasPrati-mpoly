@@ -10,7 +10,7 @@ public interface GameboardActionController {
      * start the board.
      * @param size
     */
-    void startGame(int size);
+    // void startGame(int size);
     /**
      * set the game over.
     */
