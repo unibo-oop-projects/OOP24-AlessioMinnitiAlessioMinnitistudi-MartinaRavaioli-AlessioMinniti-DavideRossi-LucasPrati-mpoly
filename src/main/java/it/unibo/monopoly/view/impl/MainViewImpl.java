@@ -70,9 +70,10 @@ public final class MainViewImpl implements MainGameView {
         gameActionsPanel.renderDefaultUI();
         mainActionsPanel = fact.standardControlsPanel(controller);
         mainActionsPanel.renderDefaultUI();
-        mainGameFrame.getContentPane().add(buildActionPanelUI(controller), BorderLayout.EAST);
+        final JPanel actionPanel = buildActionPanelUI(controller);
+        mainGameFrame.getContentPane().add(actionPanel, BorderLayout.EAST);
         mainGameFrame.getContentPane().add(this.gameBoardPanel.getPanel(), BorderLayout.WEST);
-        JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, gameBoardPanel.getPanel(), buildActionPanelUI(controller));
+        JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, gameBoardPanel.getPanel(), actionPanel);
         splitPane.setResizeWeight(0.3); // 30% a sinistra, 70% a destra
         splitPane.setDividerSize(2);    // Spessore del divisore
         splitPane.setEnabled(false);    // Rendi il divisore fisso, se vuoi
