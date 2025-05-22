@@ -28,7 +28,7 @@ import it.unibo.monopoly.view.api.GameboardView;
 /**
     * board view.
 */
-public class GameboardViewImpl extends JFrame implements GameboardView {
+public class GameboardViewImpl extends JPanel implements GameboardView {
     private GameboardLogic logic;
     private final List<JPanel> shapes=List.of(new PawnCircle(Color.RED),new PawnTriangle(Color.BLUE),new PawnSquare(Color.GREEN),new PawnSquare(Color.YELLOW));
     private final List<JPanel> tilesView=new ArrayList<>();
@@ -37,17 +37,14 @@ public class GameboardViewImpl extends JFrame implements GameboardView {
 
     public GameboardViewImpl(int size) {
         this.size = size;
+        this.logic=new GameboardLogicImpl();
     }
 
     @Override
     public final void show(List<Player> players, List<Tile> tiles) {
-        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-        this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         this.setSize(Toolkit.getDefaultToolkit().getScreenSize());
-        this.logic=new GameboardLogicImpl();
-
         JPanel board = new JPanel(new GridLayout(this.size,this.size));
-        this.getContentPane().add(board);
+        this.add(board);
 
         for (int i = 0; i < this.size; i++) {
             for(int j=0; j<this.size;j++) {

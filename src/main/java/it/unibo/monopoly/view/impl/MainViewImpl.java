@@ -10,15 +10,17 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import it.unibo.monopoly.controller.api.GameController;
+import it.unibo.monopoly.controller.api.GameboardActionController;
+import it.unibo.monopoly.controller.impl.GameboardActionControllerImpl;
 import it.unibo.monopoly.model.transactions.api.BankAccount;
 import it.unibo.monopoly.model.transactions.api.TitleDeed;
 import it.unibo.monopoly.model.turnation.api.Player;
-
 import it.unibo.monopoly.view.api.AccountPanel;
 import it.unibo.monopoly.view.api.ContractPanel;
 import it.unibo.monopoly.view.api.GameAction;
 import it.unibo.monopoly.view.api.GameActionsPanel;
 import it.unibo.monopoly.view.api.GamePanelsFactory;
+import it.unibo.monopoly.view.api.GameboardView;
 import it.unibo.monopoly.view.api.MainGameView;
 import it.unibo.monopoly.view.api.PlayerPanel;
 import it.unibo.monopoly.view.api.StandardControlsPanel;
@@ -33,6 +35,7 @@ public final class MainViewImpl implements MainGameView {
 
     private static final int PL_DATA_VIEW_PROPORTION = 5;
 
+
     private final JFrame mainGameFrame = new JFrame();
 
     private final PlayerPanel playerInfoPanel;
@@ -40,8 +43,10 @@ public final class MainViewImpl implements MainGameView {
     private final ContractPanel contractPanel;
     private final GameActionsPanel gameActionsPanel;
     private final StandardControlsPanel mainActionsPanel;
+    private final GameboardView gameBoardPanel;
 
     private final GameController controller;
+    private final GameboardActionController gameBoardController;
     /**
      * Assembles the UI of the game interface and adds all components to {@code mainFrame} object.
      * The {@code mainFrame} is a {@link JFrame}. 
@@ -50,6 +55,8 @@ public final class MainViewImpl implements MainGameView {
      * will be captured and handled by the {@code controller} provided to this constructor. 
      */
     public MainViewImpl(final GameController controller) {
+        this.gameBoardController=new GameboardActionControllerImpl();
+        this.gameBoardPanel = new GameboardViewImpl(11);
         this.controller = controller;
         final GamePanelsFactory fact = new SwingPanelsFactory();
         contractPanel = fact.contractPanel();
@@ -65,9 +72,11 @@ public final class MainViewImpl implements MainGameView {
         mainGameFrame.getContentPane().add(buildActionPanelUI(controller), BorderLayout.CENTER);
         mainGameFrame.pack();
         mainGameFrame.setVisible(true);
+        mainGameFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
     }
 
     private JPanel buildActionPanelUI(final GameController controller) {
+        gameBoardPanel.show()
         final JPanel actionPanel = new JPanel();
         actionPanel.setLayout(new BorderLayout());
         final JPanel userInfoPanel = new JPanel();
