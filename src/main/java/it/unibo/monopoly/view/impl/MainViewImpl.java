@@ -55,7 +55,7 @@ public final class MainViewImpl implements MainGameView {
      * will be captured and handled by the {@code controller} provided to this constructor. 
      */
     public MainViewImpl(final GameController controller) {
-        this.gameBoardController=new GameboardActionControllerImpl();
+        this.gameBoardController=new GameboardActionControllerImpl(null,null);
         this.gameBoardPanel = new GameboardViewImpl(11);
         this.controller = controller;
         final GamePanelsFactory fact = new SwingPanelsFactory();
@@ -70,13 +70,13 @@ public final class MainViewImpl implements MainGameView {
         mainActionsPanel = fact.standardControlsPanel(controller);
         mainActionsPanel.renderDefaultUI();
         mainGameFrame.getContentPane().add(buildActionPanelUI(controller), BorderLayout.CENTER);
+        mainGameFrame.getContentPane().add(this.gameBoardPanel.getPanel(), BorderLayout.WEST);
         mainGameFrame.pack();
         mainGameFrame.setVisible(true);
-        mainGameFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        // mainGameFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
     }
 
     private JPanel buildActionPanelUI(final GameController controller) {
-        gameBoardPanel.show()
         final JPanel actionPanel = new JPanel();
         actionPanel.setLayout(new BorderLayout());
         final JPanel userInfoPanel = new JPanel();

@@ -11,13 +11,7 @@ import it.unibo.monopoly.model.turnation.api.Position;
 /**
     * board view interface.
 */
-public interface GameboardView {
-    /**
-     * show the board.
-     * @param players
-     * @param tiles
-    */
-    void show(List<Player> players, List<Tile> tiles);
+public interface GameboardView extends GamePanel{
     /**
      * add houses' players.
     */

@@ -33,5 +33,10 @@ public interface GameboardActionController {
      * @param prop
     */
     void addHotel(Property prop);
-    
+    /**
+     * get the size of the board.
+     * @param numTiles
+     * @return int
+    */
+    int getSize(int numTiles);
 }

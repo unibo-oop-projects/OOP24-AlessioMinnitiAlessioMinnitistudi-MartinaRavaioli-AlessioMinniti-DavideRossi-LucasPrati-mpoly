@@ -2,6 +2,7 @@ package it.unibo.monopoly.view.impl;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.Toolkit;
@@ -38,10 +39,49 @@ public class GameboardViewImpl extends JPanel implements GameboardView {
     public GameboardViewImpl(int size) {
         this.size = size;
         this.logic=new GameboardLogicImpl();
+        renderDefaultUI();
+    }
+
+
+    @Override
+    public void addHouse() {
+
     }
 
     @Override
-    public final void show(List<Player> players, List<Tile> tiles) {
+    public void addHotel() {
+
+    }
+
+    @Override
+    public void changePos(int currPlayer, Position newPos) {
+        pawnPositions.replace(currPlayer, pawnPositions.get(currPlayer), newPos);
+        
+        for (int i=0; i < 4; i++) {
+            JPanel panel = this.tilesView.get(pawnPositions.get(i).getPos());
+            panel.add(shapes.get(i));
+        }
+    }
+
+    @Override
+    public void clearPanel() {
+        for (int i=0; i < 4; i++) {
+            JPanel panel = this.tilesView.get(pawnPositions.get(i).getPos());
+            panel.remove(shapes.get(i));
+        }
+    }
+
+    @Override
+    public void buyProperty(Property prop, Pawn currPlayer) {
+        for (JPanel p : tilesView) {
+            if (p.getName().equals(prop.getName())) {
+                p.setBackground(currPlayer.getColor());
+            }
+        }
+    }
+
+    @Override
+    public void renderDefaultUI() {
         this.setSize(Toolkit.getDefaultToolkit().getScreenSize());
         JPanel board = new JPanel(new GridLayout(this.size,this.size));
         this.add(board);
@@ -86,39 +126,7 @@ public class GameboardViewImpl extends JPanel implements GameboardView {
     }
 
     @Override
-    public void addHouse() {
-
-    }
-
-    @Override
-    public void addHotel() {
-
-    }
-
-    @Override
-    public void changePos(int currPlayer, Position newPos) {
-        pawnPositions.replace(currPlayer, pawnPositions.get(currPlayer), newPos);
-        
-        for (int i=0; i < 4; i++) {
-            JPanel panel = this.tilesView.get(pawnPositions.get(i).getPos());
-            panel.add(shapes.get(i));
-        }
-    }
-
-    @Override
-    public void clearPanel() {
-        for (int i=0; i < 4; i++) {
-            JPanel panel = this.tilesView.get(pawnPositions.get(i).getPos());
-            panel.remove(shapes.get(i));
-        }
-    }
-
-    @Override
-    public void buyProperty(Property prop, Pawn currPlayer) {
-        for (JPanel p : tilesView) {
-            if (p.getName().equals(prop.getName())) {
-                p.setBackground(currPlayer.getColor());
-            }
-        }
+    public Component getPanel() {
+        return this;
     }
 }

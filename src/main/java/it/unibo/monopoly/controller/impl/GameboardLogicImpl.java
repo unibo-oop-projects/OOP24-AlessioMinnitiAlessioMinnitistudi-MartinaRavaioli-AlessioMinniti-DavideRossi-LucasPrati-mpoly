@@ -46,10 +46,5 @@ public class GameboardLogicImpl implements GameboardLogic{
             }
         }
     }
-
-    @Override
-    public int getSize(int numTiles) {
-        return numTiles/4 + 1;
-    }
     
 }

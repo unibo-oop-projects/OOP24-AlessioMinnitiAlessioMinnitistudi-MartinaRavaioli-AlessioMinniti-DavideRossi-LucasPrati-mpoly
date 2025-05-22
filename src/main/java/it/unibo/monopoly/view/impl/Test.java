@@ -4,7 +4,7 @@ public class Test {
 
     public static void main(String[] args) {
         GameboardViewImpl g = new GameboardViewImpl(11); 
-        g.show(null,null);
+        g.show();
     }
     
 }

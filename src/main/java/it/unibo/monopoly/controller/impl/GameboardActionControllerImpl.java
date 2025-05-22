@@ -53,5 +53,10 @@ public class GameboardActionControllerImpl implements GameboardActionController{
         throw new UnsupportedOperationException("Unimplemented method 'addHotel'");
     }
 
+    @Override
+    public int getSize(int numTiles) {
+        return numTiles/4 + 1;
+    }
+
     
 }

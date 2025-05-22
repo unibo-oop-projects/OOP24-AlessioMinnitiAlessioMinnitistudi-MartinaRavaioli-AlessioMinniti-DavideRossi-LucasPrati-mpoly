@@ -9,5 +9,4 @@ public interface GameboardLogic {
 
     Color getTileColor(Type type);
 
-    int getSize(int numTiles);
 }
