@@ -82,6 +82,7 @@ public class GameboardViewImpl extends JPanel implements GameboardView {
 
     @Override
     public void renderDefaultUI() {
+        this.setLayout(new BorderLayout());
         this.setSize(Toolkit.getDefaultToolkit().getScreenSize());
         JPanel board = new JPanel(new GridLayout(this.size,this.size));
         this.add(board);

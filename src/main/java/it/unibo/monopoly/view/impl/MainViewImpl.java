@@ -8,6 +8,7 @@ import java.util.Set;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JSplitPane;
 
 import it.unibo.monopoly.controller.api.GameController;
 import it.unibo.monopoly.controller.api.GameboardActionController;
@@ -71,9 +72,16 @@ public final class MainViewImpl implements MainGameView {
         mainActionsPanel.renderDefaultUI();
         mainGameFrame.getContentPane().add(buildActionPanelUI(controller), BorderLayout.EAST);
         mainGameFrame.getContentPane().add(this.gameBoardPanel.getPanel(), BorderLayout.WEST);
+        JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, gameBoardPanel.getPanel(), buildActionPanelUI(controller));
+        splitPane.setResizeWeight(0.3); // 30% a sinistra, 70% a destra
+        splitPane.setDividerSize(2);    // Spessore del divisore
+        splitPane.setEnabled(false);    // Rendi il divisore fisso, se vuoi
+
+        mainGameFrame.add(splitPane);
         mainGameFrame.pack();
         mainGameFrame.setVisible(true);
-        // mainGameFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        mainGameFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        mainGameFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
     }
 
     private JPanel buildActionPanelUI(final GameController controller) {
