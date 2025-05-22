@@ -1,4 +1,4 @@
-package it.unibo.monopoly.model.gameboard.impl;
+ package it.unibo.monopoly.model.gameboard.impl;
 
 
 import java.util.Set;

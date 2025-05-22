@@ -18,8 +18,8 @@ public final class PlayerImpl implements Player {
     private final int id;
     private final String name;
     private final Color color;
-    private Optional<Prisonable> prison;
-    private Optional<Parkable> parking;
+    private Optional<Prisonable> prison = Optional.empty();
+    private Optional<Parkable> parking = Optional.empty();
 
     /**
      * Private constructor used internally by the static factory method {@link #of(int, String, Color)}.
@@ -32,6 +32,16 @@ public final class PlayerImpl implements Player {
         this.id = id;
         this.name = name;
         this.color = color;
+
+    }
+
+    private PlayerImpl(final int id, final String name, final Color color, 
+                        final Optional<Parkable> parking, final Optional<Prisonable> prison) {
+        this.id = id;
+        this.name = name;
+        this.color = color;
+        this.parking = parking;
+        this.prison = prison;
 
     }
 
