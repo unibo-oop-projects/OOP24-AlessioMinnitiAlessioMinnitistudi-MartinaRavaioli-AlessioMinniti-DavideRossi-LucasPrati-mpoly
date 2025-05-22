@@ -1,7 +1,6 @@
 package it.unibo.monopoly.model.transactions.impl;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 import java.util.function.Function;
 
@@ -12,78 +11,87 @@ import it.unibo.monopoly.model.transactions.api.SpecialPropertyFactory;
 import it.unibo.monopoly.model.transactions.api.TitleDeed;
 import it.unibo.monopoly.model.turnation.api.TurnationManager;
 
-public class SpecialPropertyFactoryImpl implements SpecialPropertyFactory{
+/**
+ * implementation of the special property factory interface.
+ */
+public final class SpecialPropertyFactoryImpl implements SpecialPropertyFactory {
 
     private final TurnationManager turnationManager;
     private final RentOptionFactory f = new RentOptionFactoryImpl();
 
-    public SpecialPropertyFactoryImpl(TurnationManager tunrnationmanager){
+    /**
+     * constructor for the factory tha takes the turnation manager.
+     * for the rent function of socuìiety tile
+     * @param tunrnationmanager
+     */
+    public SpecialPropertyFactoryImpl(final TurnationManager tunrnationmanager) {
         this.turnationManager = tunrnationmanager;
 
     }
 
-    
     @Override
-    public TitleDeed Station(Group group, String name, int salePrice, Function<Integer, Integer> mortgageFunction,
-                                int baseRent) {
+    public TitleDeed station(final Group group, final String name, final int salePrice, 
+                                final Function<Integer, Integer> mortgageFunction,
+                                final int baseRent) {
 
-        List<RentOption> rentO = f.progressivelyIncreasingPrice(50, 2, 4);
-        List<RentOption> rent = rentO.subList(1, rentO.size());
+        final int startRent = 50;
+        final List<RentOption> rentO = f.progressivelyIncreasingPrice(startRent, 2, 4);
+        final List<RentOption> rent = rentO.subList(1, rentO.size());
         return new BaseTitleDeed(group, name, salePrice, mortgageFunction, baseRent, rent);
-        
     }
 
     @Override
-    public TitleDeed Society(Group group, String name, int salePrice, Function<Integer, Integer> mortgageFunction,
-            int baseRent) {
-        List<RentOption> rentO = f.progressivelyIncreasingPrice(5, 2, 2);
-        List<RentOption> rent = rentO.subList(1, rentO.size());
+    public TitleDeed society(final Group group, final String name, final int salePrice, 
+                                final Function<Integer, Integer> mortgageFunction,
+                                final int baseRent) {
+        final int startRent = 5;
+        final List<RentOption> rentO = f.progressivelyIncreasingPrice(startRent, 2, 2);
+        final List<RentOption> rent = rentO.subList(1, rentO.size());
         return new TitleDeed() {
 
-            private final TitleDeed titleDeed = new BaseTitleDeed(group, name, salePrice, mortgageFunction, baseRent,rent);
+            private final TitleDeed titleDeed = new BaseTitleDeed(group, name, salePrice, mortgageFunction, baseRent, rent);
             private final TurnationManager tunrM = turnationManager;
-            
-    
+
             @Override
             public String getOwner() {
                 return titleDeed.getOwner();
             }
-    
+
             @Override
-            public void setOwner(String ownerName) {
+            public void setOwner(final String ownerName) {
                 titleDeed.setOwner(ownerName);
             }
-    
+
             @Override
             public void removeOwner() {
                 titleDeed.removeOwner();
             }
-    
+
             @Override
             public Group getGroup() {
                 return titleDeed.getGroup();
             }
-    
+
             @Override
             public String getName() {
                 return titleDeed.getName();
             }
-    
+
             @Override
             public Integer getSalePrice() {
                 return titleDeed.getSalePrice();
             }
-    
+
             @Override
             public Integer getMortgagePrice() {
                 return titleDeed.getMortgagePrice();
             }
-    
+
             @Override
-            public Integer getRent(Set<TitleDeed> groupTitleDeeds) {
+            public Integer getRent(final Set<TitleDeed> groupTitleDeeds) {
                 return titleDeed.getRent(groupTitleDeeds) * (tunrM.moveByDices().stream().mapToInt(Integer::intValue).sum());
             }
-    
+
             @Override
             public List<RentOption> getRentOptions() {
                 return titleDeed.getRentOptions();
@@ -103,9 +111,8 @@ public class SpecialPropertyFactoryImpl implements SpecialPropertyFactory{
             public int houseNum() {
                 return titleDeed.houseNum();
             }
-                
+
             };
-    
     }
 
 }

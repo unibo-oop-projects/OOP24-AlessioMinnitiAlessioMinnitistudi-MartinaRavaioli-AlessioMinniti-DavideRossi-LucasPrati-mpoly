@@ -4,12 +4,10 @@ import java.util.Optional;
 
 import it.unibo.monopoly.model.turnation.api.Parkable;
 import it.unibo.monopoly.model.turnation.api.Player;
-import it.unibo.monopoly.model.turnation.api.Position;
 import it.unibo.monopoly.model.turnation.api.Prisonable;
 import java.awt.Color;
 import java.util.Objects;
 
-import it.unibo.monopoly.model.turnation.api.Player;
 import it.unibo.monopoly.utils.Identifiable;
 
 /**

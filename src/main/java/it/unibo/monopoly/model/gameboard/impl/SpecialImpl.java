@@ -9,7 +9,7 @@ import it.unibo.monopoly.model.turnation.api.Position;
  * special tile implementation.
 */
 
-public class SpecialImpl extends TileImpl implements Special {
+public final class SpecialImpl extends TileImpl implements Special {
 
     private Effect effetto;
     /**

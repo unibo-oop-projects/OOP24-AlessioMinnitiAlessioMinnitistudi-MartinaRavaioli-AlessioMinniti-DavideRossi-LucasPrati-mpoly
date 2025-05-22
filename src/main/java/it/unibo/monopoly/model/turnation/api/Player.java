@@ -32,16 +32,16 @@ public interface Player extends Identifiable<Integer> {
      */
     boolean isParked();
     /**
-     * put the player in parked status and set the turns it has to wait 
+     * put the player in parked status and set the turns it has to wait.
      */
     void park();
     /**
      * tells whether the player is in prison.
-     * @return
+     * @return whether the player is in prison 
      */
     boolean isInPrison();
     /**
-     * put the player in prison and set the turns he has to wait
+     * put the player in prison and set the turns he has to wait.
      */
     void putInPrison();
 

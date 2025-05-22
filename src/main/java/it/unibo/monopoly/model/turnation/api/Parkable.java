@@ -1,7 +1,11 @@
 package it.unibo.monopoly.model.turnation.api;
 
 
-
+/**
+ * interface of parkabel quality for a player.
+ * if added on a player it has the possibility to end up in the parking lot 
+ * and be put in stasis for a turn
+ */
 public interface Parkable {
 
     /**
@@ -11,7 +15,7 @@ public interface Parkable {
     boolean isParked();
 
     /**
-     * put the player in parked status and set the turns it has to wait 
+     * put the player in parked status and set the turns it has to wait.
      */
     void park();
 

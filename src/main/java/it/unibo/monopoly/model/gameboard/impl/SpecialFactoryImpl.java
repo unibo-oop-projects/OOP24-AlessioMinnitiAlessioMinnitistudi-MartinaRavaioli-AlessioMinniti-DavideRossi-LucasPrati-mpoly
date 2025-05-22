@@ -57,7 +57,8 @@ public final class SpecialFactoryImpl implements SpecialFactory {
             @Override
             public void activate(final Player player) {
                 turnationManager.moveByDices().forEach(p -> turnationManager.moveByDices()
-                                                .forEach(g -> { if (g.equals(p)) { 
+                                                .forEach(g -> { 
+                                                                if (g.equals(p)) { 
                                                                     validThrow = true; 
                                                                 }
                                                             }
@@ -101,7 +102,8 @@ public final class SpecialFactoryImpl implements SpecialFactory {
      * @return bho
      */
     public Special bho(final Bank bank) {
-        return new SpecialImpl(null, null, null, p -> { bank.withdrawFrom(p.toString(), 10); });
+        return new SpecialImpl(null, null, null, p -> { 
+                                    bank.withdrawFrom(p.toString(), 10); });
     }
 
 }
