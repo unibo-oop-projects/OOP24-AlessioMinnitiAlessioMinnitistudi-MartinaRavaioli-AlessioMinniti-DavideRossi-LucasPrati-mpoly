@@ -8,6 +8,7 @@ import java.util.Optional;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.monopoly.controller.api.GameController;
 import it.unibo.monopoly.model.gameboard.api.Board;
+import it.unibo.monopoly.model.gameboard.api.Pawn;
 import it.unibo.monopoly.model.gameboard.api.Property;
 import it.unibo.monopoly.model.gameboard.api.Tile;
 import it.unibo.monopoly.model.gameboard.impl.Group;
@@ -245,5 +246,10 @@ public final class GameControllerImpl implements GameController {
     @Override
     public List<Tile> getTiles() {
         return Collections.unmodifiableList(this.board.getTiles());
+    }
+
+    @Override
+    public List<Pawn> getPawns() {
+        return Collections.unmodifiableList(this.board.getPawns());
     }
 }

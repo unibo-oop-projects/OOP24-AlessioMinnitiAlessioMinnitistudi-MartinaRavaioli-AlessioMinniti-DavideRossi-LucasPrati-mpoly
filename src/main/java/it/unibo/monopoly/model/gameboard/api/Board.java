@@ -68,4 +68,10 @@ public interface Board {
      * @return List of tiles
     */
     List<Tile> getTiles();
+
+    /**
+     * get a list with all the pawns.
+     * @return List of Pawns
+    */
+    List<Pawn> getPawns();
 }

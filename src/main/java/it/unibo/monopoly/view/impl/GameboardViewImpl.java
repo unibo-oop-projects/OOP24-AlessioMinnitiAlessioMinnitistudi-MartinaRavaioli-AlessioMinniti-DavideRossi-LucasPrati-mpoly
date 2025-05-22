@@ -30,7 +30,7 @@ import it.unibo.monopoly.view.api.GameboardView;
 public final class GameboardViewImpl extends JPanel implements GameboardView {
     private final GameboardLogic logic;
     private final GameController controller;
-    private final List<JPanel> shapes=List.of(new PawnCircle(Color.RED),new PawnTriangle(Color.BLUE),new PawnSquare(Color.GREEN),new PawnSquare(Color.YELLOW));
+    // private final List<JPanel> shapes=List.of(new PawnCircle(Color.RED),new PawnTriangle(Color.BLUE),new PawnSquare(Color.GREEN),new PawnSquare(Color.YELLOW));
     private final List<JPanel> tilesView=new ArrayList<>();
     private final int size;
     private final Map<Integer,Position> pawnPositions=new HashMap<>();
@@ -58,7 +58,7 @@ public final class GameboardViewImpl extends JPanel implements GameboardView {
         
         for (int i=0; i < 4; i++) {
             JPanel panel = this.tilesView.get(pawnPositions.get(i).getPos());
-            panel.add(shapes.get(i));
+            // panel.add(shapes.get(i));
         }
     }
 
@@ -66,7 +66,7 @@ public final class GameboardViewImpl extends JPanel implements GameboardView {
     public void clearPanel() {
         for (int i=0; i < 4; i++) {
             JPanel panel = this.tilesView.get(pawnPositions.get(i).getPos());
-            panel.remove(shapes.get(i));
+            // panel.remove(shapes.get(i));
         }
     }
 
@@ -113,13 +113,13 @@ public final class GameboardViewImpl extends JPanel implements GameboardView {
             panel.setName(label.getText());
         }
 
-        for (int i =0; i<4;i++) {
+        for (int i =0; i<controller.getPawns().size();i++) {
             pawnPositions.put(i, new PositionImpl(0));
         }
 
-        for (int i=0; i < 4; i++) {
+        for (int i=0; i < controller.getPawns().size(); i++) {
             JPanel panel = this.tilesView.get(pawnPositions.get(i).getPos());
-            panel.add(shapes.get(i));
+            panel.add(new PawnCircle(this.controller.getPawns().get(i).getColor()));
         }
 
         this.setVisible(true);
