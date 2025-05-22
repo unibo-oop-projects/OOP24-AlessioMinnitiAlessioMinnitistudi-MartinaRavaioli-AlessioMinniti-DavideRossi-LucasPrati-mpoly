@@ -69,7 +69,7 @@ public final class MainViewImpl implements MainGameView {
         gameActionsPanel.renderDefaultUI();
         mainActionsPanel = fact.standardControlsPanel(controller);
         mainActionsPanel.renderDefaultUI();
-        mainGameFrame.getContentPane().add(buildActionPanelUI(controller), BorderLayout.CENTER);
+        mainGameFrame.getContentPane().add(buildActionPanelUI(controller), BorderLayout.EAST);
         mainGameFrame.getContentPane().add(this.gameBoardPanel.getPanel(), BorderLayout.WEST);
         mainGameFrame.pack();
         mainGameFrame.setVisible(true);
