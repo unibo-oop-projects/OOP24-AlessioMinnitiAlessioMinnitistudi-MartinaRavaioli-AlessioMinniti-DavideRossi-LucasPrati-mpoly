@@ -13,23 +13,19 @@ public class SpecialImpl extends TileImpl implements Special {
 
     private Effect effetto;
     /**
-    * get the Group.
-    * @param name
-    * @param pos
-    * @param group
-    */
-    public SpecialImpl(final String name, final Position pos, final Group group, Effect effetto) {
+     * contruvtor for special impl.
+     * @param name of the special tile
+     * @param pos of the special tile
+     * @param group of the special tile
+     * @param effetto of the special tile
+     */
+    public SpecialImpl(final String name, final Position pos, final Group group, final Effect effetto) {
         super(name, pos, group);
         this.effetto = effetto;
     }
 
-    /**
-    * get the Group.
-    * @return Effect
-    */
-
     @Override
-    public void activateEffect(Player player) {
+    public void activateEffect(final Player player) {
         this.effetto.activate(player);
     }
 

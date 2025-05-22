@@ -24,44 +24,46 @@ public final class SpecialFactoryImpl implements SpecialFactory {
 
         return new SpecialImpl("Start", new PositionImpl(0), Group.SPECIAL, new Effect() {
 
-            private final int START_AMOUNT = 200;
+            private final int startAmount = 200;
 
             //DA CAMBIARE CON IL METODO PER AVERE IL NOME CHE ORA NON C'E'
             @Override
-            public void activate(Player palyer) {
-                bank.depositTo(palyer.toString(), START_AMOUNT);
+            public void activate(final Player palyer) {
+                bank.depositTo(palyer.toString(), startAmount);
             }
-            
         });
     }
 
     @Override
-    public Special goToPrison(Position pos, final Board board) {
+    public Special goToPrison(final Position pos, final Board board) {
         return new SpecialImpl("GoToPrison", pos, Group.SPECIAL, new Effect() {
 
             //TODO fallo con la differenza !!
             //o con il metodo da chiedere ad ale 
 
             @Override
-            public void activate(Player palyer) {
+            public void activate(final Player palyer) {
                 palyer.putInPrison();
-                board.movePawn( board.getPawn(palyer.getID()), Set.of(1 - pos.getPos()) );
+                board.movePawn(board.getPawn(palyer.getID()), Set.of(1 - pos.getPos()));
             }
-            
         });
     }
 
     @Override
-    public Special prison(Position pos, final Board board, final TurnationManager turnationManager) {
+    public Special prison(final Position pos, final Board board, final TurnationManager turnationManager) {
         return new SpecialImpl(null, pos, null, new Effect() {
-            private boolean validThrow=false;
+            private boolean validThrow;
 
             @Override
-            public void activate(Player player) {
-                turnationManager.moveByDices().forEach(p->turnationManager.moveByDices().forEach(g -> {if(g.equals(p)){validThrow=true;}}));
+            public void activate(final Player player) {
+                turnationManager.moveByDices().forEach(p -> turnationManager.moveByDices()
+                                                .forEach(g -> { if (g.equals(p)) { 
+                                                                    validThrow = true; 
+                                                                }
+                                                            }
+                                                        ));
                 if (validThrow) {
                     board.movePawn(board.getPawn(player.getID()), turnationManager.moveByDices());
-                    
                 }
             }
 
@@ -69,34 +71,37 @@ public final class SpecialFactoryImpl implements SpecialFactory {
     }
 
     @Override
-    public Special parking(Position pos) {
+    public Special parking(final Position pos) {
         return new SpecialImpl("parking", pos, Group.SPECIAL, new Effect() {
 
             @Override
-            public void activate(Player palyer) {
+            public void activate(final Player palyer) {
                 palyer.park();
             }
-            
         });
     }
 
     @Override
-    public Special taxes(Position pos, final Bank bank) {
+    public Special taxes(final Position pos, final Bank bank) {
         return new SpecialImpl("taxes", pos, Group.SPECIAL, new Effect() {
 
-            private final static int TAXES_AMOUNT = 100;
+            private final int taxesAmount = 100;
 
             //DA CAMBIARE CON IL METODO PER AVERE IL NOME CHE ORA NON C'E'
             @Override
-            public void activate(Player palyer) {
-                bank.withdrawFrom(palyer.toString(), TAXES_AMOUNT);
+            public void activate(final Player palyer) {
+                bank.withdrawFrom(palyer.toString(), taxesAmount);
             }
-            
         });
     }
 
-    public Special bho( final Bank bank){
-        return new SpecialImpl(null, null, null, p -> {bank.withdrawFrom(p.toString(), 10);});
+    /**
+     * metodo fatto ab cazzum.
+     * @param bank banca
+     * @return bho
+     */
+    public Special bho(final Bank bank) {
+        return new SpecialImpl(null, null, null, p -> { bank.withdrawFrom(p.toString(), 10); });
     }
 
 }
