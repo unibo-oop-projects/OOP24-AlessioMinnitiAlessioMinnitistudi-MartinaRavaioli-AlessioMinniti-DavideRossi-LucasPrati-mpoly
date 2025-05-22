@@ -22,7 +22,7 @@ import it.unibo.monopoly.model.transactions.impl.bankaccount.ImmutableBankAccoun
  */
 public final class BankImpl implements Bank {
 
-    private final Map<String, BankAccount> accounts;
+    private final Map<Integer, BankAccount> accounts;
     private final Map<String, TitleDeed> titleDeeds;
 
 
@@ -37,11 +37,11 @@ public final class BankImpl implements Bank {
         if (accounts.isEmpty() || titleDeeds.isEmpty()) {
             throw new IllegalArgumentException("Input lists cannot be empty");
         }
-        this.accounts = Maps.uniqueIndex(accounts, BankAccount::getPlayerName);
+        this.accounts = Maps.uniqueIndex(accounts, BankAccount::getID);
         this.titleDeeds = Maps.uniqueIndex(titleDeeds, TitleDeed::getName);
     }
 
-    private BankAccount findAccount(final String id) {
+    private BankAccount findAccount(final Integer id) {
         if (!accounts.containsKey(id)) {
             throw new IllegalArgumentException("The account of the player " + id + "is not present in the system");
         }
@@ -63,23 +63,23 @@ public final class BankImpl implements Bank {
     }
 
     @Override
-    public void buyTitleDeed(final String titleDeedName, final String playerName) {
+    public void buyTitleDeed(final String titleDeedName, final int playerId) {
         Objects.requireNonNull(titleDeedName);
-        Objects.requireNonNull(playerName);
-        final BankAccount buyer = findAccount(playerName);
+        Objects.requireNonNull(playerId);
+        final BankAccount buyer = findAccount(playerId);
         final TitleDeed td = findTitleDeed(titleDeedName);
 
         if (td.isOwned()) {
-            throw new IllegalStateException("Property is already owned by player" + td.getOwner());
+            throw new IllegalStateException("Property is already owned by player" + td.getOwnerId());
         }
 
         buyer.withdraw(td.getSalePrice());
-        td.setOwner(playerName);
+        td.setOwner(playerId);
     }
 
     @Override
-    public BankAccount getBankAccount(final String playerName) {
-        return new ImmutableBankAccountCopy(findAccount(playerName));
+    public BankAccount getBankAccount(final int playerId) {
+        return new ImmutableBankAccountCopy(findAccount(playerId));
     }
 
     @Override
@@ -88,17 +88,17 @@ public final class BankImpl implements Bank {
     }
 
     @Override
-    public void payRent(final String titleDeedName, final String playerName) {
+    public void payRent(final String titleDeedName, final int playerId) {
         Objects.requireNonNull(titleDeedName);
-        Objects.requireNonNull(playerName);
+        Objects.requireNonNull(playerId);
         final TitleDeed deed = findTitleDeed(titleDeedName);
-        final BankAccount payer = findAccount(playerName);
+        final BankAccount payer = findAccount(playerId);
         if (!deed.isOwned()) {
             throw new IllegalStateException("Cannot pay rent for title deed with no owner");
         }
-        final BankAccount receiver = findAccount(deed.getOwner());
+        final BankAccount receiver = findAccount(deed.getOwnerId());
         if (receiver.equals(payer)) {
-            throw new IllegalStateException("Canot pay rent for property owned by the payer" + playerName);
+            throw new IllegalStateException("Canot pay rent for property owned by the payer" + playerId);
         }
         final int rentAmount = deed.getRent(
             titleDeedsByGroup(deed.getGroup())
@@ -119,35 +119,35 @@ public final class BankImpl implements Bank {
         if (!deed.isOwned()) {
             throw new IllegalStateException("Cannot sell a title deed with no owner");
         }
-        final BankAccount seller = findAccount(deed.getOwner());
+        final BankAccount seller = findAccount(deed.getOwnerId());
         seller.deposit(deed.getMortgagePrice());
         deed.removeOwner();
     }
 
     @Override
-    public Set<TitleDeed> getTitleDeedsByOwner(final String ownerName) {
-        Objects.requireNonNull(ownerName);
-        if (!accounts.keySet().contains(ownerName)) {
-            throw new IllegalArgumentException("The player " + ownerName + "is not present in the system");
+    public Set<TitleDeed> getTitleDeedsByOwner(final int ownerId) {
+        Objects.requireNonNull(ownerId);
+        if (!accounts.keySet().contains(ownerId)) {
+            throw new IllegalArgumentException("The player " + ownerId + "is not present in the system");
         }
         return titleDeeds.values()
                         .stream()
                         .filter(TitleDeed::isOwned)
-                        .filter(d -> ownerName.equals(d.getOwner()))
+                        .filter(d -> ownerId==d.getOwnerId())
                         .collect(Collectors.toSet());
     }
 
     @Override
-    public void receivePaymentFromBank(final String ownerName, final int amount) {
-        Objects.requireNonNull(ownerName);
-        final BankAccount account = findAccount(ownerName);
+    public void receivePaymentFromBank(final int ownerId, final int amount) {
+        Objects.requireNonNull(ownerId);
+        final BankAccount account = findAccount(ownerId);
         account.deposit(amount);
     }
 
     @Override
-    public void makePaymentToBank(final String ownerName, final int amount) {
-        Objects.requireNonNull(ownerName);
-        final BankAccount account = findAccount(ownerName);
+    public void makePaymentToBank(final int ownerId, final int amount) {
+        Objects.requireNonNull(ownerId);
+        final BankAccount account = findAccount(ownerId);
         account.withdraw(amount);
     }
 }
