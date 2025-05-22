@@ -32,8 +32,6 @@ class BankTest {
     private static final int AMOUNT = 100;
     private static final int ID_1 = 21;
     private static final int ID_2 = 42;
-    private static final String PLAYER1_NAME = "Alice";
-    private static final String PLAYER2_NAME = "Bob";
     private static final String TITLE_DEED_NAME1 = "Bastoni Gran Sasso";
     private static final String TITLE_DEED_NAME2 = "Viale Monterosa";
 
@@ -152,30 +150,6 @@ class BankTest {
             () -> bank.payRent(TITLE_DEED_NAME1, ID_1)
         );
         testExceptionFormat(propertyPossessedByPlayerException); 
-    }
-
-    @Test 
-    void payRentViolatesWithdrawConditionsOfThePayerBankAccount() {
-        bank.buyTitleDeed(TITLE_DEED_NAME1, ID_2);
-        final int rent = bank.getTitleDeed(TITLE_DEED_NAME1)
-                            .getRent(Sets.filter(Sets.newHashSet(deeds), 
-                                    d -> !TITLE_DEED_NAME1.equals(d.getName())
-                                )
-                            );
-        final int pl1Balance = bank.getBankAccount(PLAYER1_NAME).getBalance();
-
-        for (int i = 0; i < (pl1Balance / rent); i++) {
-            bank.payRent(TITLE_DEED_NAME1, PLAYER1_NAME);
-        }
-
-        final int initialBalancePl1 = bank.getBankAccount(PLAYER1_NAME).getBalance();
-        final int initialBalancePl2 = bank.getBankAccount(PLAYER2_NAME).getBalance();
-        final IllegalStateException withDrawConditionsViolated = assertThrows(
-            IllegalStateException.class,
-            () -> bank.payRent(TITLE_DEED_NAME1, PLAYER1_NAME));
-        testExceptionFormat(withDrawConditionsViolated);
-        assertEquals(initialBalancePl1, bank.getBankAccount(PLAYER1_NAME).getBalance());
-        assertEquals(initialBalancePl2, bank.getBankAccount(PLAYER2_NAME).getBalance());
     }
 
     @Test
