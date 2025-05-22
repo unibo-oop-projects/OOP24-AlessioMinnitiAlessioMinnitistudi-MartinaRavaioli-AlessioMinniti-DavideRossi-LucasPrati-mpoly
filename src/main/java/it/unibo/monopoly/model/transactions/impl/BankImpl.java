@@ -31,6 +31,7 @@ public final class BankImpl implements Bank {
      * operates with the given {@code accounts} and {@code title deeds}.
      * @param accounts the palyers' {@link BankAccount}
      * @param titleDeeds {@link List} of {@link TitleDeed} present in the game
+     * @throws IllegalArgumentException if {@code accounts} or {@code titleDeeds} are {@code null}
      */
     public BankImpl(final Set<BankAccount> accounts, final Set<TitleDeed> titleDeeds) {
         if (accounts.isEmpty() || titleDeeds.isEmpty()) {

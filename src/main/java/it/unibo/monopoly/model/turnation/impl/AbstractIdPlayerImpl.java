@@ -1,12 +1,12 @@
 package it.unibo.monopoly.model.turnation.impl;
 
-import it.unibo.monopoly.resources.Identifiable;
+import it.unibo.monopoly.utils.Identifiable;
 
 /**
  * abstract player id implementation.
 */
 public abstract class AbstractIdPlayerImpl implements Identifiable<Integer> {
-    private int id;
+    private final int id;
     /**
      * constructor.
      * @param id
@@ -21,13 +21,5 @@ public abstract class AbstractIdPlayerImpl implements Identifiable<Integer> {
     @Override
     public final Integer getID() {
         return this.id;
-    }
-    /**
-     * set the ID.
-     * @param value
-    */
-    @Override
-    public final void setID(final Integer value) {
-        this.id = value;
     }
 }

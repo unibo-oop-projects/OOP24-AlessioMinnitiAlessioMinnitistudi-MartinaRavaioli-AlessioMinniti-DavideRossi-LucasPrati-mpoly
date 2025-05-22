@@ -4,7 +4,9 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.LayoutManager;
+import java.awt.Toolkit;
 import java.awt.Window;
 
 import java.util.Objects;
@@ -12,6 +14,7 @@ import java.util.Objects;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.WindowConstants;
 
 /**
@@ -19,30 +22,38 @@ import javax.swing.WindowConstants;
  */
 public final class GuiUtils {
 
+    private static final double WIDTH_PERC = 0.5;
+    private static final double HEIGHT_PERC = 0.5;
+    private static final int FONT_STYLE = Font.BOLD;
+
     private GuiUtils() { }
 
     /**
-     * Utility method to create a fixed-size square colored label.
-     * Useful for player color boxes.
+     * Create a fixed-size square colored label.
+     * If the {@code size} is invalid (zero or negative), returns a placeholder label
+     * with an error message instead of throwing an exception.
+     * <p>
+     * This behavior is intentional to allow graceful failure in GUI contexts where
+     * exception handling would be excessive or intrusive.
      *
      * @param color the background color
      * @param size the width and height in pixels
-     * @return a square JLabel with the given background color
+     * @return a square JLabel or an error label if size is invalid
      */
     public static JLabel colorBoxFactory(final Color color, final int size) {
-        if (size > 0) {
-            final JLabel colorBox = new JLabel();
-            colorBox.setOpaque(true);
-            colorBox.setBackground(color);
-            colorBox.setPreferredSize(new Dimension(size, size));
-            return colorBox;
+        if (size < 0) {
+            return new JLabel("Error size box");
         }
-        return new JLabel("Error size box");
+        final JLabel colorBox = new JLabel();
+        colorBox.setOpaque(true);
+        colorBox.setBackground(color);
+        colorBox.setPreferredSize(new Dimension(size, size));
+        return colorBox;
     }
 
     /**
      * Configures a window with default layout and location, along with standard behaviors.
-     * <p>
+     * 
      * This version applies default values for layout and location:
      * <ul>
      *   <li>{@code BorderLayout} is used as default layout manager</li>
@@ -71,8 +82,8 @@ public final class GuiUtils {
 
     /**
      * Configures common properties for a window (either {@link JFrame} or {@link JDialog}).
-     * <p>
-     * @apiNote Some properties are automatically enforced and cannot be customized through parameters:
+     * 
+     * @implNote Some properties are automatically enforced and cannot be customized through parameters:
      *   <ul>
      *    <li>{@code setResizable(true)} is always applied</li>
      *    <li>{@code setModal(true)} is enforced for {@link JDialog}</li>
@@ -143,5 +154,68 @@ public final class GuiUtils {
             window.repaint();
             window.setVisible(true);
         }
+    }
+
+    /**
+     * Shows an error message dialog and then terminates the entire application.
+     * 
+     * @param parent  the parent component for the dialog; may be {@code null}
+     *                in which case a default frame is used
+     * @param title   the title to display on the dialog window
+     * @param message the error message text to show to the user
+     */
+    public static void showErrorAndExit(final Window parent, final String title, final String message) {
+        JOptionPane.showMessageDialog(
+            parent,
+            message,
+            title,
+            JOptionPane.ERROR_MESSAGE
+        );
+        System.exit(0);
+    }
+
+    /**
+     * Get a default percentage {@link Dimension} of the screen size.
+     * 
+     * @return a {@link Dimension} based the screen size with default percentage
+     */
+    public static Dimension getDimensionWindow() {
+        return getDimensionWindow(WIDTH_PERC, HEIGHT_PERC);
+    }
+
+    /**
+     * Get a custom percentage {@link Dimension} of the screen size.
+     * 
+     * @param widthPerc the percentage of the full screen's width
+     * @param heightPerc the percentage of the full screen's height
+     * @return a {@link Dimension} based the screen size and the provided percentage
+     */
+    public static Dimension getDimensionWindow(final double widthPerc, final double heightPerc) {
+        final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        return new Dimension((int) (screenSize.getWidth() * widthPerc), (int) (screenSize.getHeight() * heightPerc));
+    }
+
+    /**
+     * Get a new {@link Font} with a small size, according to the {@link Configuration}.
+     * 
+     * @param config a consistent {@link Configuration} for upload {@code size} and {@code name} parameters
+     * @return a new {@link Font} according to the {@link Configuration} parameters
+     */
+    public static Font getSmallFontFromConfiguration(final Configuration config) {
+        return createFont(config.getFontName(), config.getSmallFont());
+    }
+
+    /**
+     * Get a new {@link Font} with a big size, according to the {@link Configuration}.
+     * 
+     * @param config a consistent {@link Configuration} for upload {@code size} and {@code name} parameters
+     * @return a new {@link Font} according to the {@link Configuration} parameters
+     */
+    public static Font getBigFontFromConfiguration(final Configuration config) {
+        return createFont(config.getFontName(), config.getBigFont());
+    }
+
+    private static Font createFont(final String name, final int size) {
+        return new Font(name, FONT_STYLE, size);
     }
 }

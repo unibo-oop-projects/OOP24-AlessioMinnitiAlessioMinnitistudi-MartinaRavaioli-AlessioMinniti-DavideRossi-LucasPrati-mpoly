@@ -1,44 +1,49 @@
 package it.unibo.monopoly.controller.api;
 
-
 import java.awt.Color;
+import java.io.IOException;
 import java.util.Map;
 
+import it.unibo.monopoly.controller.impl.MainMenuControllerImpl;
 import it.unibo.monopoly.model.transactions.api.BankAccountType;
+import it.unibo.monopoly.utils.ResourceLoader;
 
 
 /**
- * MainMenuLogic interface.
+ * {@link MainMenuControllerImpl} interface.
  */
 public interface MainMenuController {
-    /**
-     * @implSpec must create players according the factory template with PlayerFactoryImpl, based on the { @param players } 
-     * @param playersSetup the list of player data, create players according to this
-     */
-    void onClickStart(Map<Color, String> playersSetup);
 
     /**
-     * @implSpec decreases the field numPlayer
+     * Must initialize all the game, starting from the given list of players'data {@code playersSetup}.
+     * @param playersSetup the players'data, create players according to this
+     * @throws IOException if the loading from {@code JSON} failed
+     * @throws NullPointerException if {@code id}, {@code name} or {@code color} are {@code null}
+     */
+    void onClickStart(Map<Color, String> playersSetup) throws IOException;
+
+    /**
+     * Decrease the selected number of players.
      */
     void decreaseNumPlayer();
 
     /**
-     * @implSpec increases the field numPlayer
+     * Increase the selected number of players.
      */
     void increaseNumPlayer();
 
     /**
-     * @return the amount of numPlayer
+     * @return the the selected number of players
      */
     int getNumPlayers();
 
     /**
-     * @return true if numPlayer reach the minimum, false otherwise
+     * @return true if the selected number of players reach the minimum, false otherwise
      */
     boolean alreadyMinPlayers();
 
     /**
-     * @return true if numPlayer reach the maximum, false otherwise
+     * @return true if the selected number of players reach the maximum, false otherwise
      */
     boolean alreadyMaxPlayers();
 
@@ -51,5 +56,11 @@ public interface MainMenuController {
      * @param bankAccountType the {@link BankAccountType} to set
      */
     void setBankAccountType(BankAccountType bankAccountType);
+
+    /**
+     * Use a {@link ResourceLoader} for getting a {@link String} with all the rules of the game.
+     * @return a {@link String} with all the rules of the game
+     */
+    String getRules();
 
 }

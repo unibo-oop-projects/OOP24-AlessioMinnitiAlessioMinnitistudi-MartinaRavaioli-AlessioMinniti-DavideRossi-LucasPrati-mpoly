@@ -30,22 +30,24 @@ import it.unibo.monopoly.model.transactions.impl.bankaccount.WithdrawCheckBankAc
 class BankTest {
 
     private static final int AMOUNT = 100;
+    private static final int ID_1 = 21;
+    private static final int ID_2 = 42;
     private static final String PLAYER1_NAME = "Alice";
     private static final String PLAYER2_NAME = "Bob";
     private static final String TITLE_DEED_NAME1 = "Bastoni Gran Sasso";
     private static final String TITLE_DEED_NAME2 = "Viale Monterosa";
 
     private final Set<BankAccount> accounts = Set.of(
-        new WithdrawCheckBankAccount(new SimpleBankAccountImpl(AMOUNT, PLAYER1_NAME),
+        new WithdrawCheckBankAccount(new SimpleBankAccountImpl(ID_1, AMOUNT, PLAYER1_NAME),
                                     (b, a) -> a <= b.getBalance()
                                     ),
-        new WithdrawCheckBankAccount(new SimpleBankAccountImpl(AMOUNT, PLAYER2_NAME),
+        new WithdrawCheckBankAccount(new SimpleBankAccountImpl(ID_2, AMOUNT, PLAYER2_NAME),
                                     (b, a) -> a <= b.getBalance()
                                     )
     );
     private final Set<TitleDeed> deeds = Set.of(
-        new BaseTitleDeed(Group.PURPLE, TITLE_DEED_NAME1, 50, s -> s / 2, 10),
-        new BaseTitleDeed(Group.PURPLE, TITLE_DEED_NAME2, 60, s -> s / 2, 10)
+        new BaseTitleDeed(Group.GREEN, TITLE_DEED_NAME1, 50, s -> s / 2, 10),
+        new BaseTitleDeed(Group.GREEN, TITLE_DEED_NAME2, 60, s -> s / 2, 10)
 
     );
     private Bank bank;

@@ -36,8 +36,8 @@ class RentOptionFactoryTest {
     void allTitleDeedsOfAGroupOwned() {
         final RentOption doubledPrice = rentOptionFactory.allDeedsOfGroupWithSameOwner(START_RENT);
         final List<TitleDeed> deeds = List.of(
-            new BaseTitleDeed(Group.PURPLE, "vicolo corto", START_RENT * 10, s -> s / 2, START_RENT, List.of(doubledPrice)),
-            new BaseTitleDeed(Group.PURPLE, "vicolo stretto", START_RENT * 10, s -> s / 2, START_RENT, List.of(doubledPrice))
+            new BaseTitleDeed(Group.GREEN, "vicolo corto", START_RENT * 10, s -> s / 2, START_RENT, List.of(doubledPrice)),
+            new BaseTitleDeed(Group.GREEN, "vicolo stretto", START_RENT * 10, s -> s / 2, START_RENT, List.of(doubledPrice))
         );
         deeds.getFirst().setOwner(OWNER_NAME);
         assertFalse(doubledPrice.canBeApplied(Set.copyOf(deeds), OWNER_NAME));

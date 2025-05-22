@@ -34,9 +34,21 @@ public enum Group {
     */
     CYAN,
     /**
+     * pink.
+     */
+    PINK,
+    /**
+     * magenta.
+     */
+    MAGENTA,
+    /**
      * black.
     */
     BLACK,
+    /**
+     * light gray.
+     */
+    LIGHT_GRAY,
     /**
      * station.
     */
@@ -79,6 +91,15 @@ public enum Group {
             }
             case BLACK -> {
                 return Color.BLACK;
+            }
+            case PINK -> {
+                return Color.PINK;
+            }
+            case MAGENTA -> {
+                return Color.MAGENTA;
+            }
+            case LIGHT_GRAY -> {
+                return Color.LIGHT_GRAY;
             }
             default -> {
                 return Color.WHITE;

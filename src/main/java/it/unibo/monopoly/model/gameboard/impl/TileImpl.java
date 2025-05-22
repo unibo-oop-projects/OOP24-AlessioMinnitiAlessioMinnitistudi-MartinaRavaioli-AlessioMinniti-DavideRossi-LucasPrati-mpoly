@@ -3,14 +3,17 @@ package it.unibo.monopoly.model.gameboard.impl;
 import it.unibo.monopoly.model.gameboard.api.Tile;
 import it.unibo.monopoly.model.turnation.api.Position;
 import it.unibo.monopoly.model.turnation.impl.PositionImpl;
-import it.unibo.monopoly.resources.Identifiable;
+import it.unibo.monopoly.utils.Identifiable;
+
+
 /**
-* tile implementation.
+* {@link Tile} implementation.
 */
 public abstract class TileImpl implements Tile, Identifiable<String>, Comparable<TileImpl> {
-    private String name;
+    private final String name;
     private final Position pos; 
     private Group group;
+
     /**
     * constructor.
     * @param name
@@ -22,31 +25,23 @@ public abstract class TileImpl implements Tile, Identifiable<String>, Comparable
         this.pos = pos;
         this.group = group;
     }
+
     /**
-    * get the name.
-    * @return String
-    */
+     * {@inheritDoc}
+     */
     @Override
     public String getName() {
         return this.name;
     }
 
     /**
-    * get ID.
-    * @return Position
-    */
+     * {@inheritDoc}
+     */
     @Override
     public String getID() {
         return this.getName();
     }
-    /**
-    * set ID.
-    * @param value
-    */
-    @Override
-    public void setID(final String value) {
-        this.name = value;
-    }
+
     /**
     * compare to.
     * @param o
@@ -56,34 +51,34 @@ public abstract class TileImpl implements Tile, Identifiable<String>, Comparable
     public int compareTo(final TileImpl o) {
         return Integer.compare(this.getPosition().getPos(), o.getPosition().getPos());
     }
+
     /**
-    * get the Group.
-    * @return Group
-    */
+     * {@inheritDoc}
+     */
     @Override
     public Group getGroup() {
         return this.group;
     }
+
     /**
-    * set the Group.
-    * @param group
-    */
+     * {@inheritDoc}
+     */
     @Override
     public void setGroup(final Group group) {
         this.group = group;
     }
+
     /**
-    * get the position.
-    * @return Position
-    */
+     * {@inheritDoc}
+     */
     @Override
     public Position getPosition() {
         return new PositionImpl(pos.getPos());
     }
+
     /**
-    * hash code.
-    * @return int
-    */
+     * {@inheritDoc}
+     */
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -92,11 +87,10 @@ public abstract class TileImpl implements Tile, Identifiable<String>, Comparable
         result = prime * result + ((group == null) ? 0 : group.hashCode());
         return result;
     }
+
     /**
-    * equals method.
-    * @param obj
-    * @return bool
-    */
+     * {@inheritDoc}
+     */
     @Override
     public boolean equals(final Object obj) {
         if (this == obj) {

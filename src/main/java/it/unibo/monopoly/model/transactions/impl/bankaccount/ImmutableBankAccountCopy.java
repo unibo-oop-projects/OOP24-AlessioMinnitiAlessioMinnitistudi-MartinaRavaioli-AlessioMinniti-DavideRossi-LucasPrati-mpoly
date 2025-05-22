@@ -11,14 +11,15 @@ public final class ImmutableBankAccountCopy implements BankAccount {
 
     private final BankAccount account;
 
-
     /**
      * Creates a new {@link ImmutableBankAccountCopy}.
      * @param account the account to wrap and to regulate access to
      */
     public ImmutableBankAccountCopy(final BankAccount account) {
-        this.account = new CheckValidityBankAccount(new SimpleBankAccountImpl(account.getBalance(), account.getPlayerName()), 
-                        b -> account.canContinue());
+        this.account = new CheckValidityBankAccount(new SimpleBankAccountImpl(account.getID(),
+                                                                            account.getBalance(),
+                                                                            account.getPlayerName()),
+                                                    b -> account.canContinue());
     }
 
     @Override
@@ -45,6 +46,13 @@ public final class ImmutableBankAccountCopy implements BankAccount {
     public String getPlayerName() {
         return this.account.getPlayerName();
     }
+
+    @Override
+    public Integer getID() {
+        return this.account.getID();
+    }
+
+
 
     @Override
     public int hashCode() {
@@ -75,6 +83,4 @@ public final class ImmutableBankAccountCopy implements BankAccount {
         }
         return true;
     }
-
-
 }

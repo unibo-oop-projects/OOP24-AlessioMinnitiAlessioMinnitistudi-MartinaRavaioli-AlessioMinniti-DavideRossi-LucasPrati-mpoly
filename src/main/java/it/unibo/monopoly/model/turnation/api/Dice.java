@@ -3,7 +3,7 @@ package it.unibo.monopoly.model.turnation.api;
 import java.util.Collection;
 
 /**
- * dice interface.
+ * {@link DiceImpl} interface.
 */
 public interface Dice {
     /**

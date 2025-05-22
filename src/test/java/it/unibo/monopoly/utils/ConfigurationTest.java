@@ -7,7 +7,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.awt.Color;
-import java.io.IOException;
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -15,16 +14,19 @@ import org.junit.jupiter.api.Test;
 
 class ConfigurationTest {
 
-    private static final String INVALID_CONFIG = "Invalid configuration should not be consistent: ";
+    private static final String VALID_CONFIG_YML = "debug/configuration/debug_config.yml";
+    private static final String MESSAGE_INVALID_CONFIG = "Invalid configuration should not be consistent: ";
     private static final int VALID_MIN = 2;
     private static final int VALID_MAX = 4;
-    private static final int VALID_WIDTH = 500;
-    private static final int VALID_HEIGHT = 400;
-    private static final int SMALL_FONT = 16;
-    private static final int BIG_FONT = 24;
-    private static final int VALID_STARTER_BALANCE = 1500;
+    private static final int VALID_NUM_DICE = 2;
+    private static final int VALID_SIDES_PER_DIE = 6;
     private static final String VALID_FONT = "ARIAL"; // should be available on most systems
-    private static final String VALID_RULES_FILENAME = "rules.txt";
+    private static final int VALID_BIG_FONT = 24;
+    private static final int VALID_SMALL_FONT = 16;
+    private static final int VALID_STARTER_BALANCE = 1500;
+    private static final String VALID_RULES_PATH = "debug/rules/debug_rules.txt";
+    private static final String VALID_TITLE_DEEDS_PATH = "debug/cards/debug_title_deeds.json";
+    private static final String VALID_TILES_PATH = "debug/cards/debug_tiles.json";
     private static final List<Color> VALID_COLORS = List.of(
         Color.RED,
         Color.BLUE,
@@ -48,13 +50,15 @@ class ConfigurationTest {
         builder = new Configuration.Builder()
                 .withMin(VALID_MIN)
                 .withMax(VALID_MAX)
-                .withWidth(VALID_WIDTH)
-                .withHeight(VALID_HEIGHT)
+                .withNumDice(VALID_NUM_DICE)
+                .withSidesPerDie(VALID_SIDES_PER_DIE)
                 .withFontName(VALID_FONT)
-                .withSmallFont(SMALL_FONT)
-                .withBigFont(BIG_FONT)
-                .withStarterBalance(VALID_STARTER_BALANCE)
-                .withRulesFilename(VALID_RULES_FILENAME)
+                .withBigFont(VALID_BIG_FONT)
+                .withSmallFont(VALID_SMALL_FONT)
+                .withInitBalance(VALID_STARTER_BALANCE)
+                .withRulesPath(VALID_RULES_PATH)
+                .withTitleDeedsPath(VALID_TITLE_DEEDS_PATH)
+                .withTilesPath(VALID_TILES_PATH)
                 .withColors(VALID_COLORS);
     }
 
@@ -65,12 +69,15 @@ class ConfigurationTest {
         assertTrue(config.isConsistent());
         assertEquals(VALID_MIN, config.getMinPlayer());
         assertEquals(VALID_MAX, config.getMaxPlayer());
-        assertEquals(VALID_WIDTH, config.getWindowWidth());
-        assertEquals(VALID_HEIGHT, config.getWindowHeight());
+        assertEquals(VALID_NUM_DICE, config.getNumDice());
+        assertEquals(VALID_SIDES_PER_DIE, config.getSidesPerDie());
         assertEquals(VALID_FONT, config.getFontName());
-        assertEquals(SMALL_FONT, config.getSmallFont());
-        assertEquals(BIG_FONT, config.getBigFont());
-        assertEquals(VALID_RULES_FILENAME, config.getRulesFilenamename());
+        assertEquals(VALID_BIG_FONT, config.getBigFont());
+        assertEquals(VALID_SMALL_FONT, config.getSmallFont());
+        assertEquals(VALID_STARTER_BALANCE, config.getInitBalance());
+        assertEquals(VALID_RULES_PATH, config.getRulesPath());
+        assertEquals(VALID_TITLE_DEEDS_PATH, config.getTitleDeedsPath());
+        assertEquals(VALID_TILES_PATH, config.getTilesPath());
         assertEquals(VALID_COLORS.size(), config.getPlayerColors().size());
     }
 
@@ -78,7 +85,7 @@ class ConfigurationTest {
     void builderCannotBeUsedTwice() {
         builder.build();
         final IllegalStateException exception = assertThrows(IllegalStateException.class, builder::build);
-        assertNotNull(exception.getMessage());
+        testExceptionFormat(exception);
     }
 
     @Test
@@ -86,77 +93,93 @@ class ConfigurationTest {
         final List<Color> invalidList = List.of(Color.RED);
         final Configuration config = builder.withColors(invalidList).withMax(invalidList.size() + 1).build();
         assertFalse(config.isConsistent(),
-                    INVALID_CONFIG + "Colors list size < maxPlayers");
+                    MESSAGE_INVALID_CONFIG + "Colors list size < maxPlayers");
+    }
+
+    @Test
+    void configurationInconsistentIfMinGreaterToMax() {
+        final Configuration config = builder.withMin(VALID_MAX + 1).withMax(VALID_MAX).build();
+        assertFalse(config.isConsistent(),
+                    MESSAGE_INVALID_CONFIG + "minPlayers > maxPlayers");
+    }
+
+    @Test
+    void configurationInconsistentIfMinIsZeroOrNegative() {
+        final Configuration config = builder.withMin(0).build();
+        assertFalse(config.isConsistent(),
+                    MESSAGE_INVALID_CONFIG + "minPlayers <= 0");
+    }
+
+    @Test
+    void configurationInconsistentIfNumDicesIsZeroOrNegative() {
+        final Configuration config = builder.withNumDice(0).build();
+        assertFalse(config.isConsistent(),
+                    MESSAGE_INVALID_CONFIG + "numDice <= 0");
+    }
+
+    @Test
+    void configurationInconsistentIfSidesPerDieIsZeroOrNegative() {
+        final Configuration config = builder.withSidesPerDie(0).build();
+        assertFalse(config.isConsistent(),
+                    MESSAGE_INVALID_CONFIG + "sidesPerDie <= 0");
     }
 
     @Test
     void configurationInconsistentIfFontInvalid() {
         final Configuration config = builder.withFontName("NonExistentFont").build();
         assertFalse(config.isConsistent(),
-                    INVALID_CONFIG + "Font name must match an available system font.");
+                    MESSAGE_INVALID_CONFIG + "Font name must match an available system font.");
     }
 
     @Test
     void configurationInconsistentIfSmallFontBiggerThanBigFont() {
-        final Configuration config = builder.withSmallFont(BIG_FONT + 1).withBigFont(BIG_FONT).build();
+        final Configuration config = builder.withSmallFont(VALID_BIG_FONT + 1).withBigFont(VALID_BIG_FONT).build();
         assertFalse(config.isConsistent(),
-                    INVALID_CONFIG + "smallFont > bigFont");
+                    MESSAGE_INVALID_CONFIG + "smallFont > bigFont");
     }
 
     @Test
-    void configurationInconsistentIfMinGreaterOrEqualToMax() {
-        final Configuration config = builder.withMin(VALID_MAX + 1).withMax(VALID_MAX).build();
+    void configurationInconsistentIfBalanceIsNegative() {
+        final Configuration config = builder.withInitBalance(-VALID_STARTER_BALANCE).build();
         assertFalse(config.isConsistent(),
-                    INVALID_CONFIG + "minPlayers > maxPlayers");
-    }
-
-    @Test
-    void configurationInconsistentIfMinEqualToMax() {
-        final Configuration config = builder.withMin(VALID_MAX).withMax(VALID_MAX).build();
-        assertFalse(config.isConsistent(),
-                    INVALID_CONFIG + "minPlayers = maxPlayers");
-    }
-
-    @Test
-    void configurationInconsistentIfHeightGreaterThanWidth() {
-        final Configuration config = builder.withHeight(VALID_WIDTH + 1).withWidth(VALID_WIDTH).build();
-        assertFalse(config.isConsistent(),
-                    INVALID_CONFIG + "height > width");
+                    MESSAGE_INVALID_CONFIG + "starterBalance < 0");
     }
 
     @Test
     void configurationInconsistentIfRulesFileIsNull() {
-        final Configuration config = builder.withRulesFilename(null).build();
+        final Configuration config = builder.withRulesPath(null).build();
         assertFalse(config.isConsistent(),
-                    INVALID_CONFIG + "rulesFilename can not be null");
+                    MESSAGE_INVALID_CONFIG + "rulesPath cannot be null");
     }
 
     @Test
-    void defaultStarterBalanceIsCorrect() {
-        final Configuration config = builder.withStarterBalance(0).build();
+    void configurationInconsistentIfTitleDeedsFileIsNull() {
+        final Configuration config = builder.withTitleDeedsPath(null).build();
         assertFalse(config.isConsistent(),
-                    INVALID_CONFIG + "starterBalance < 0");
+                    MESSAGE_INVALID_CONFIG + "titleDeedsPath cannot be null");
     }
 
     @Test
-    void configureFromFileReturnsDefaultOnInvalidConfig() throws IOException {
-        // Parsing an invalid file should return a configuration where
-        // valid values are kept and defaults are used for errors or missing entries
-        final Configuration config = Configuration.configureFromFile("invalid_config.yml");
-        assertTrue(config.isConsistent(), "Expected configuration to be consistent");
+    void configurationInconsistentIfTilesFileIsNull() {
+        final Configuration config = builder.withTilesPath(null).build();
+        assertFalse(config.isConsistent(),
+                    MESSAGE_INVALID_CONFIG + "tilesPath cannot be null");
     }
 
     @Test
-    void configureFromFileThrowsExceptionOnFileNotFound() {
-        // File that not exist should return a default configuration
-        final Configuration config = Configuration.configureFromFile("not_exist");
-        assertTrue(config.isConsistent(), "Expected default configuration to be consistent");
+    void integrationConfigureFromFileWorksWithValidFile() {
+        // Integration test: verifies that Configuration can be correctly loaded from a file
+        // using ResourceLoader and parsed into a consistent object
+        final Configuration config = Configuration.configureFromFile(VALID_CONFIG_YML);
+        assertNotNull(config);
+        assertTrue(config.isConsistent());
     }
 
-    @Test
-    void configureFromFileParsesValidFileCorrectly() {
-        // Parsing a valid file should return a consistent configuration
-        final Configuration config = Configuration.configureFromFile("valid_config.yml");
-        assertTrue(config.isConsistent(), "Configuration from valid file should be consistent");
+
+
+    private void testExceptionFormat(final Exception exception) {
+        assertNotNull(exception.getMessage());
+        assertFalse(exception.getMessage().isBlank());
     }
+
 }

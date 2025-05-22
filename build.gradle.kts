@@ -25,6 +25,8 @@ dependencies {
 
     // Maven dependencies are composed by a group name, a name and a version, separated by colons
     implementation("com.omertron:API-OMDB:1.5")
+    implementation("com.fasterxml.jackson.core:jackson-databind:2.18.2")
+    implementation("com.fasterxml.jackson.datatype:jackson-datatype-jdk8:2.18.2")
     implementation("org.jooq:jool:0.9.15")
 
     /*
@@ -56,7 +58,7 @@ dependencies {
 
 application {
     // Define the main class for the application.
-    mainClass.set("it.unibo.monopoly.view.LaunchApp")
+    mainClass.set("it.unibo.monopoly.LaunchApp")
 }
 
 tasks.test {

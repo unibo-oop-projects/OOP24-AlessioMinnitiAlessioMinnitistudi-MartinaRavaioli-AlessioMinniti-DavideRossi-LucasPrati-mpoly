@@ -1,49 +1,53 @@
 package it.unibo.monopoly.utils;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Locale;
-import java.util.Objects;
-import java.util.stream.Collectors;
 import java.awt.Color;
-import java.awt.GraphicsEnvironment;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.nio.charset.StandardCharsets;
+import java.util.List;
 
 /**
- * Represents the game's configuration parameters,
- * including player limits, window size, and color assignments.
+ * Represents the game's configuration parameters. 
  */
 public final class Configuration {
 
-    private final int maxPlayer; 
     private final int minPlayer;
+    private final int maxPlayer;
+    private final int numDice;
+    private final int sidesPerDie;
     private final String fontName;
-    private final int smallFont;
     private final int bigFont;
-    private final int windowHeight;
-    private final int windowWidth;
-    private final int starterBalance;
-    private final String rulesFilename;
+    private final int smallFont;
+    private final int initBalance;
+    private final String rulesPath;
+    private final String titleDeedsPath;
+    private final String tilesPath;
     private final List<Color> playerColors;
 
 
-    private Configuration(final int maxPlayer, final int minPlayer, final String fontName, final int smallFont,
-                          final int bigFont, final int windowHeight, final int windowWidth, final int starterBalance,
-                          final String rulesFilename, final List<Color> playerColors) {
-        this.maxPlayer = maxPlayer;
+
+    private Configuration(final int minPlayer, final int maxPlayer, final int numDice, final int sidesPerDie,
+                            final String fontName, final int bigFont, final int smallFont, final int initBalance,
+                            final String rulesPath, final String titleDeedsPath, final String tilesPath,
+                            final List<Color> playerColors) {
         this.minPlayer = minPlayer;
+        this.maxPlayer = maxPlayer;
+        this.numDice = numDice;
+        this.sidesPerDie = sidesPerDie;
         this.fontName = fontName;
-        this.smallFont = smallFont;
         this.bigFont = bigFont;
-        this.windowHeight = windowHeight;
-        this.windowWidth = windowWidth;
-        this.starterBalance = starterBalance;
-        this.rulesFilename = rulesFilename;
+        this.smallFont = smallFont;
+        this.initBalance = initBalance;
+        this.rulesPath = rulesPath;
+        this.titleDeedsPath = titleDeedsPath;
+        this.tilesPath = tilesPath;
         this.playerColors = playerColors;
+    }
+
+
+
+    /**
+     * @return the minimum number of players
+     */
+    public int getMinPlayer() {
+        return minPlayer;
     }
 
     /**
@@ -54,10 +58,17 @@ public final class Configuration {
     }
 
     /**
-     * @return the minimum number of players
+     * @return the number of dice
      */
-    public int getMinPlayer() {
-        return minPlayer;
+    public int getNumDice() {
+        return numDice;
+    }
+
+    /**
+     * @return the number of sides for each die
+     */
+    public int getSidesPerDie() {
+        return sidesPerDie;
     }
 
     /**
@@ -68,13 +79,6 @@ public final class Configuration {
     }
 
     /**
-     * @return the minimum size of the font
-     */
-    public int getSmallFont() {
-        return smallFont;
-    }
-
-    /**
      * @return the maximum size of the font
      */
     public int getBigFont() {
@@ -82,31 +86,38 @@ public final class Configuration {
     }
 
     /**
-     * @return the height of the window
+     * @return the minimum size of the font
      */
-    public int getWindowHeight() {
-        return windowHeight;
-    }
-
-    /**
-     * @return the width of the window
-     */
-    public int getWindowWidth() {
-        return windowWidth;
+    public int getSmallFont() {
+        return smallFont;
     }
 
     /**
      * @return the initial amount of each bank account
      */
-    public int getStarterBalance() {
-        return starterBalance;
+    public int getInitBalance() {
+        return initBalance;
     }
 
     /**
-     * @return the name of the file which contains all the rules of the game
+     * @return the path of the file which contains all the rules of the game
      */
-    public String getRulesFilenamename() {
-        return rulesFilename;
+    public String getRulesPath() {
+        return rulesPath;
+    }
+
+    /**
+     * @return the path of the file which contains all the title deeds of the game
+     */
+    public String getTitleDeedsPath() {
+        return titleDeedsPath;
+    }
+
+    /**
+     * @return the path of the file which contains alla the tiles of the game
+     */
+    public String getTilesPath() {
+        return tilesPath;
     }
 
     /**
@@ -121,147 +132,57 @@ public final class Configuration {
      */
     public boolean isConsistent() {
         return playerColors.size() >= maxPlayer
-                && minPlayer < maxPlayer
-                && windowHeight <= windowWidth
+                && minPlayer > 0
+                && minPlayer <= maxPlayer
+                && numDice > 0
+                && sidesPerDie > 0
+                && ResourceLoader.isValidFontName(fontName)
                 && smallFont < bigFont
-                && Objects.nonNull(rulesFilename)
-                && isValidFontName(fontName)
-                && starterBalance > 0;
-    }
-
-    /**
-     * Parses a string representing a color name and returns the corresponding {@link Color} object.
-     *
-     * @param name the name of the color (case-insensitive)
-     * @return the {@link Color} object corresponding to the given name
-     * @throws IllegalArgumentException if the given {@param name} does not match any supported color
-    */
-    private static Color parseColor(final String name) {
-        return switch (name.toUpperCase(Locale.ENGLISH)) {
-            case "BLACK" -> Color.BLACK;
-            case "BLUE" -> Color.BLUE;
-            case "CYAN" -> Color.CYAN;
-            case "DARK_GRAY" -> Color.DARK_GRAY;
-            case "GRAY" -> Color.GRAY;
-            case "GREEN" -> Color.GREEN;
-            case "LIGHT_GRAY" -> Color.LIGHT_GRAY;
-            case "MAGENTA" -> Color.MAGENTA;
-            case "ORANGE" -> Color.ORANGE;
-            case "PINK" -> Color.PINK;
-            case "RED" -> Color.RED;
-            case "WHITE" -> Color.WHITE;
-            case "YELLOW" -> Color.YELLOW;
-            default -> throw new IllegalArgumentException("Unknown color: " + name);
-        };
-    }
-
-    private static boolean isValidFontName(final String fontName) {
-        return  Arrays.stream(GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames())
-                               .anyMatch(name -> name.equalsIgnoreCase(fontName)) && Objects.nonNull(fontName);
+                && initBalance >= 0
+                && ResourceLoader.checkPath(rulesPath)
+                && ResourceLoader.checkPath(titleDeedsPath)
+                && ResourceLoader.checkPath(tilesPath);
     }
 
 
     /**
-     * @param configFile the name of the configuration file
-     * @return a configuration according to { @param configFile } if consistent, otherwise a default configuration
+     * Set some values of the application according to the file for the configuration.
+     * 
+     * @param configFile the path of the configuration file
+     * @return a {@link Configuration} according to {@code configFile} if consistent. Otherwise a default {@link Configuration}
      */
     public static Configuration configureFromFile(final String configFile) {
-        // try to find the file
-        final InputStream is = Configuration.class.getClassLoader().getResourceAsStream(configFile);
+        final Configuration configuration = ResourceLoader.loadConfigurationFile(configFile);
 
-        // if not found, return a consistent default configuration
-        if (Objects.isNull(is)) {
-            return new Configuration.Builder().build();
-        }
-
-        // if found, read it
-        final Configuration.Builder configurationBuilder = new Configuration.Builder();
-        try (var contents = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8))) {
-
-            for (String configLine = contents.readLine(); configLine != null; configLine = contents.readLine()) {
-                if (configLine.isBlank() || configLine.startsWith("#")) {
-                    continue;   // Skip empty lines and comments
-                }
-
-                final String[] lineElements = configLine.split(":", 2);
-                if (lineElements.length != 2) {
-                    continue;   // Skip invalid lines
-                }
-
-                final String key = lineElements[0].trim().toUpperCase(Locale.ENGLISH);
-                final String value = lineElements[1].trim();
-                try {
-                    switch (key) {
-                        case "MIN_PLAYERS" -> configurationBuilder.withMin(Integer.parseInt(value));
-                        case "MAX_PLAYERS" -> configurationBuilder.withMax(Integer.parseInt(value));
-                        case "WINDOW_WIDTH" -> configurationBuilder.withWidth(Integer.parseInt(value));
-                        case "WINDOW_HEIGHT" -> configurationBuilder.withHeight(Integer.parseInt(value));
-                        case "FONT_NAME" -> configurationBuilder.withFontName(value);
-                        case "BIG_FONT" -> configurationBuilder.withBigFont(Integer.parseInt(value));
-                        case "SMALL_FONT" -> configurationBuilder.withSmallFont(Integer.parseInt(value));
-                        case "STARTER_BALANCE" -> configurationBuilder.withStarterBalance(Integer.parseInt(value));
-                        case "RULES_FILE" -> configurationBuilder.withRulesFilename(value);
-                        case "COLORS" -> {
-                            final List<Color> colors = Arrays.stream(value.split(","))
-                                .map(String::trim)
-                                .map(Configuration::parseColor)
-                                .collect(Collectors.toList());
-
-                            configurationBuilder.withColors(colors);
-                        }
-                        default -> { /* Ignore unknown key */ }
-                    }
-                } catch (final IllegalArgumentException e) {
-                    // Error during parseColor
-                    continue;
-                }
-            }
-
-        } catch (final IOException  e) {    // Error during reading the file
-            // return a consistent default configuration
-            return new Configuration.Builder().build();
-        }
-
-        // If the configuration is consistent, return it. Otherwise return a consistent default configuration
-        final Configuration configuration = configurationBuilder.build();
         if (configuration.isConsistent()) {
             return configuration;
-
-        } else {
-            return new Configuration.Builder().build();
         }
+        return new Configuration.Builder().build();
     }
 
 
 
     /**
-     * Pattern builder: used here because:
-     * 
-     * - all the parameters of the {@link Configuration} class have a default value, which
-     * means that we would like to have all the possible combinations of
-     * constructors (one with three parameters, three with two parameters, three
-     * with a single parameter), which are way too many and confusing to use
-     * 
-     * - moreover, it would be impossible to provide all of them, because they are
-     * all of the same type, and only a single constructor can exist with a given
-     * list of parameter types.
-     * 
-     * - the Configuration class has three parameters of the same type, and it is
-     * unclear to understand, in a call to its contructor, which is which. By using
-     * the builder, we emulate the so-called "named arguments".
-     * 
+     * Builder pattern is used here because.
+     * <ul>
+     *      <li> All parameters have sensible defaults </li>
+     *      <li> Overloading constructors would be confusing and verbose </li>
+     *      <li> It allows readable, flexible, chainable configuration setup </li>
+     * </ul>
      */
     public static class Builder {
 
-        private static final int MAX_PLAYER = 4; 
         private static final int MIN_PLAYER = 2;
+        private static final int MAX_PLAYER = 4; 
+        private static final int NUM_DICE = 2;
+        private static final int SIDES_PER_DIE = 6;
         private static final String FONT_NAME = "ARIAL";
         private static final int BIG_FONT = 24;
         private static final int SMALL_FONT = 16;
-        private static final int WINDOW_HEIGHT = 400;
-        private static final int WINDOW_WIDTH = 500;
-        private static final int STARTER_BALANCE = 2000;
-        private static final String RULES_FILENAME = "rules.txt";
+        private static final int INIT_BALANCE = 2000;
+        private static final String RULES_PATH = "rules/rules.txt";
+        private static final String TITLE_DEEDS_PATH = "cards/title_deeds.json";
+        private static final String TILES_PATH = "cards/tiles.json";
         private static final List<Color> PLAYER_COLORS = List.of(
             Color.RED,
             Color.BLUE,
@@ -279,15 +200,17 @@ public final class Configuration {
         );
 
         // Builder's default fields
-        private int maxPlayer = MAX_PLAYER;
         private int minPlayer = MIN_PLAYER;
+        private int maxPlayer = MAX_PLAYER;
+        private int numDice = NUM_DICE;
+        private int sidesPerDie = SIDES_PER_DIE;
         private String fontName = FONT_NAME;
         private int bigFont = BIG_FONT;
         private int smallFont = SMALL_FONT;
-        private int windowHeight = WINDOW_HEIGHT;
-        private int windowWidth = WINDOW_WIDTH;
-        private int starterBalance = STARTER_BALANCE;
-        private String rulesFilename = RULES_FILENAME;
+        private int initBalance = INIT_BALANCE;
+        private String rulesPath = RULES_PATH;
+        private String titleDeedsPath = TITLE_DEEDS_PATH;
+        private String tilesPath = TILES_PATH;
         private List<Color> playerColors = List.copyOf(PLAYER_COLORS);
         private boolean consumed;
 
@@ -310,20 +233,30 @@ public final class Configuration {
         }
 
         /**
-         * @param fontName the name of the font to use
+         * @param numDice the number of dice
          * @return this builder, for method chaining
          */
-        public Builder withFontName(final String fontName) {
-            this.fontName = fontName;
+        public Builder withNumDice(final int numDice) {
+            this.numDice = numDice;
             return this;
         }
 
         /**
-         * @param smallFont the minimum size of the font
+         * @param sidesPerDie the number of sides for each die
          * @return this builder, for method chaining
          */
-        public Builder withSmallFont(final int smallFont) {
-            this.smallFont = smallFont;
+        public Builder withSidesPerDie(final int sidesPerDie) {
+            this.sidesPerDie = sidesPerDie;
+            return this;
+        }
+
+        /**
+         * @param fontName the name of the font to use;
+         * if null, consistency check will fail and default configuration will be used
+         * @return this builder, for method chaining
+         */
+        public Builder withFontName(final String fontName) {
+            this.fontName = fontName;
             return this;
         }
 
@@ -337,61 +270,81 @@ public final class Configuration {
         }
 
         /**
-         * @param windowHeight the height of the window
+         * @param smallFont the minimum size of the font
          * @return this builder, for method chaining
          */
-        public Builder withHeight(final int windowHeight) {
-            this.windowHeight = windowHeight;
+        public Builder withSmallFont(final int smallFont) {
+            this.smallFont = smallFont;
             return this;
         }
 
         /**
-         * @param windowWidth the width of the window
+         * @param initBalance the initial balance of each bank account
          * @return this builder, for method chaining
          */
-        public Builder withWidth(final int windowWidth) {
-            this.windowWidth = windowWidth;
+        public Builder withInitBalance(final int initBalance) {
+            this.initBalance = initBalance;
             return this;
         }
 
         /**
-         * @param starterBalance the initial balance of each bank account
+         * @param rulesPath the path of the file which contains all the rules of the game
          * @return this builder, for method chaining
          */
-        public Builder withStarterBalance(final int starterBalance) {
-            this.starterBalance = starterBalance;
+        public Builder withRulesPath(final String rulesPath) {
+            this.rulesPath = rulesPath;
             return this;
         }
 
         /**
+         * @param titleDeedsPath the path of the file which contains all the title deeds of the game
+         * @return this builder, for method chaining
+         */
+        public Builder withTitleDeedsPath(final String titleDeedsPath) {
+            this.titleDeedsPath = titleDeedsPath;
+            return this;
+        }
+
+        /**
+         * @param tilesPath the path of the file which contains all the tiles of the game
+         * @return this builder, for method chaining
+         */
+        public Builder withTilesPath(final String tilesPath) {
+            this.tilesPath = tilesPath;
+            return this;
+        }
+
+        /**
+         * Sets the list of player colors. If {@code playerColors} is {@code null},
+         * this method keep defaults values.
          * 
-         * @param rulesFilename the name of the file which contains all the rules of the game
-         * @return this builder, for method chaining
-         */
-        public Builder withRulesFilename(final String rulesFilename) {
-            this.rulesFilename = rulesFilename;
-            return this;
-        }
-
-        /**
-         * @param playerColors the colors of the players
+         * @param playerColors the list of player colors, or {@code null} to keep defaults
          * @return this builder, for method chaining
          */
         public Builder withColors(final List<Color> playerColors) {
-            this.playerColors = List.copyOf(playerColors);
+            if (playerColors != null) {
+                this.playerColors = List.copyOf(playerColors);
+            }
             return this;
         }
 
         /**
-         * @return a configuration
+         * Builds a new {@link Configuration} instance using the parameters specified so far.
+         * <p>
+         * This builder is single-use: after this method is called once, further calls will throw
+         * an {@link IllegalStateException}.
+         * 
+         * @return the constructed {@link Configuration}
+         * @throws IllegalStateException if this method is called more than once
          */
         public final Configuration build() {
             if (consumed) {
                 throw new IllegalStateException("The builder can only be used once");
             }
             consumed = true;
-            return new Configuration(maxPlayer, minPlayer, fontName, smallFont, bigFont, 
-                                    windowHeight, windowWidth, starterBalance, rulesFilename, playerColors);
+            return new Configuration(minPlayer, maxPlayer, numDice, sidesPerDie,
+                                    fontName, bigFont, smallFont, initBalance,
+                                    rulesPath, titleDeedsPath, tilesPath, playerColors);
         }
     }
 }

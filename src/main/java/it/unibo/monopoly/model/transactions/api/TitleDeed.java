@@ -87,7 +87,7 @@ public interface TitleDeed {
      * title deeds that will be checked to determine the final 
      * rent price. 
      * The tile deeds should be part of the same group,
-     * a call on {@link #getGroup()} should give the same {@code String}
+     * a call on {@link #getType()} should give the same {@code String}
      * for each of the deeds that are part of this {@link Set}
      * @return the final rent that should be paid as an {@code Integer}
      */

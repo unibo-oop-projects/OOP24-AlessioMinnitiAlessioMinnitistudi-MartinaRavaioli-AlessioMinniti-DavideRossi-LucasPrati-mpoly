@@ -22,7 +22,7 @@ class BaseTitleDeedTest {
 
     private static final String OWNER_NAME = "Bob";
     private static final String SECOND_OWNER_NAME = "Alice";
-    private static final Group GROUP_TYPE = Group.PURPLE;
+    private static final Group GROUP_NAME = Group.GREEN;
     private static final String TITLE_DEED_NAME = "vicolo corto";
     private static final int SALE_PRICE = 50;
     private static final Function<Integer, Integer> MORTGAGE_PRICE_FUNCTION = salePrice -> {
@@ -35,7 +35,7 @@ class BaseTitleDeedTest {
 
     @BeforeEach
     void setUp() {
-        deed = new BaseTitleDeed(GROUP_TYPE, TITLE_DEED_NAME, SALE_PRICE, MORTGAGE_PRICE_FUNCTION, BASE_RENT_PRICE);
+        deed = new BaseTitleDeed(GROUP_NAME, TITLE_DEED_NAME, SALE_PRICE, MORTGAGE_PRICE_FUNCTION, BASE_RENT_PRICE);
     }
 
 
@@ -90,7 +90,7 @@ class BaseTitleDeedTest {
 
    @Test
    void testGetGroup() {
-        assertEquals(GROUP_TYPE, deed.getGroup());
+        assertEquals(GROUP_NAME, deed.getGroup());
    }
 
    @Test
@@ -120,14 +120,14 @@ class BaseTitleDeedTest {
                                                                                                 && o.equals(d.getOwner())
                                                                                                 )
                                                                 );
-        final TitleDeed shortStreetDeed = new BaseTitleDeed(GROUP_TYPE,
+        final TitleDeed shortStreetDeed = new BaseTitleDeed(GROUP_NAME,
                                         "vicolo corto", 
                                         SALE_PRICE, 
                                         MORTGAGE_PRICE_FUNCTION, 
                                         BASE_RENT_PRICE, 
                                         List.of(allPropertiesOwned)
                                     );
-        final TitleDeed longStreetDeed = new BaseTitleDeed(GROUP_TYPE, 
+        final TitleDeed longStreetDeed = new BaseTitleDeed(GROUP_NAME, 
                                         "vicolo lungo",
                                         SALE_PRICE, 
                                         MORTGAGE_PRICE_FUNCTION, 

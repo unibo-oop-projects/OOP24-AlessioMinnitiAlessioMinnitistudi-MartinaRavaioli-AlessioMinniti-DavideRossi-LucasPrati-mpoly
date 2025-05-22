@@ -1,12 +1,13 @@
 package it.unibo.monopoly.model.gameboard.impl;
 
+
 import it.unibo.monopoly.model.gameboard.api.Effect;
 import it.unibo.monopoly.model.gameboard.api.Special;
 import it.unibo.monopoly.model.turnation.api.Player;
 import it.unibo.monopoly.model.turnation.api.Position;
 
 /**
- * special tile implementation.
+ * {@link Special} tile implementation.
 */
 
 public final class SpecialImpl extends TileImpl implements Special {
@@ -27,6 +28,7 @@ public final class SpecialImpl extends TileImpl implements Special {
     @Override
     public void activateEffect(final Player player) {
         this.effetto.activate(player);
+
     }
 
 }

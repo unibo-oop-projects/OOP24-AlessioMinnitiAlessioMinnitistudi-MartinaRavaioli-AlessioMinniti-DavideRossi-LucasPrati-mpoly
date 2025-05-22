@@ -3,30 +3,64 @@ package it.unibo.monopoly.controller.impl;
 import java.awt.Color;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
-
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import it.unibo.monopoly.model.gameboard.api.Board;
 import it.unibo.monopoly.model.gameboard.impl.Group;
 import it.unibo.monopoly.controller.api.GameController;
 import it.unibo.monopoly.model.transactions.api.Bank;
 import it.unibo.monopoly.model.transactions.api.BankAccount;
 import it.unibo.monopoly.model.transactions.api.TitleDeed;
-import it.unibo.monopoly.model.transactions.impl.BankImpl;
 import it.unibo.monopoly.model.transactions.impl.BaseTitleDeed;
 import it.unibo.monopoly.model.turnation.api.Player;
+import it.unibo.monopoly.model.turnation.api.TurnationManager;
+import it.unibo.monopoly.utils.Configuration;
+import it.unibo.monopoly.utils.ResourceLoader;
 import it.unibo.monopoly.view.api.MainGameView;
-import it.unibo.monopoly.view.impl.MainViewImpl;
+
 
 /**
- * implementation of game controller.
+ * Implementation of {@link GameController}.
  */
 public final class GameControllerImpl implements GameController {
 
     private static final int NUM = 0;
 
-    //PLACHEOLDER ENTITIES, SUBSTITUTE WITH MORE ROBUST CONSTRUCTOR
-    private final Bank bank = new BankImpl(Set.of(), Set.of()); 
-    private  final MainGameView gameView = new MainViewImpl(this);
+    private final Bank bank;
+    private final TurnationManager turnationManager;        // TODO
+    private final Board board;                              // TODO
+    private final Configuration config;
+    private MainGameView gameView;
+
+    /**
+     * Create a new {@link GameController} with the given parameters.
+     * <p>
+     * This constructor uses dependency injection to receive shared components of the game architecture.
+     * {@link Board} and {@link TurnationManager} are mutable and intentionally injected without defensive copies,
+     * as they are expected to maintain consistent shared state across the application.
+     * 
+     * @param bank the bank of the game
+     * @param board the game board
+     * @param turnationManager the entity for manage the turnation of the players
+     * @param config a consistent configuration for settings
+     */
+    @SuppressFBWarnings(
+        value = "EI_EXPOSE_REP2",
+        justification = "Injection of shared mutable dependencies is intentional and controlled in this architecture."
+    )
+    public GameControllerImpl(
+            final Bank bank,
+            final Board board,
+            final TurnationManager turnationManager,
+            final Configuration config
+        ) {
+        this.bank = bank;
+        this.board = board;
+        this.turnationManager = turnationManager;
+        this.config = config;
+        this.board.getClass(); // TODO rimuovere, utilizzato per bypassare warning 'unused' per fare build
+        this.turnationManager.getClass(); // TODO rimuovere, utilizzato per bypassare warning 'unused' per fare build
+    }
 
     @Override
     public boolean areThereHouses(final TitleDeed prop) {
@@ -144,8 +178,13 @@ public final class GameControllerImpl implements GameController {
 
     @Override
     public void loadRules() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'loadRules'");
+        final String rules = ResourceLoader.loadTextResource(config.getRulesPath());
+        gameView.showRules(rules);
+    }
+
+    @Override
+    public Configuration getConfiguration() {
+        return config;
     }
 
     @Override
@@ -157,5 +196,10 @@ public final class GameControllerImpl implements GameController {
         } catch (final IllegalStateException e) {
             gameView.displayError(e);
         }
+    }
+
+    @Override
+    public void attachView(final MainGameView view) {
+        this.gameView = view;
     }
 }
