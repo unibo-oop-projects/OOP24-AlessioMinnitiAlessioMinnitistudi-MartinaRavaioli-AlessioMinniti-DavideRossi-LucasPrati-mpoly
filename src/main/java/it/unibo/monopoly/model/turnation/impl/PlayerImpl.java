@@ -18,9 +18,9 @@ public final class PlayerImpl implements Player {
 
     private final int id;
     private final String name;
-    private final Color color;    
-    Optional<Prisonable> prison;
-    Optional<Parkable> parking;
+    private final Color color;
+    private Optional<Prisonable> prison;
+    private Optional<Parkable> parking;
 
     /**
      * Private constructor used internally by the static factory method {@link #of(int, String, Color)}.
@@ -81,11 +81,7 @@ public final class PlayerImpl implements Player {
 
     @Override
     public boolean isParked() {
-        if (parking.isPresent()) {
-            return parking.get().isParked();
-        }else{
-            return false;
-        }
+        return parking.isPresent() && parking.get().isParked();
     }
 
     @Override
@@ -97,11 +93,7 @@ public final class PlayerImpl implements Player {
 
     @Override
     public boolean isInPrison() {
-        if (prison.isPresent()) {
-            return prison.get().isInPrison();
-        }else{
-            return false;
-        }
+        return prison.isPresent() && prison.get().isInPrison();
     }
 
     @Override
@@ -110,5 +102,4 @@ public final class PlayerImpl implements Player {
             prison.get().putInPrison();
         }
     }
-   
 }

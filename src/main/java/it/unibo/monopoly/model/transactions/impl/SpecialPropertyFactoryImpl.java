@@ -16,18 +16,7 @@ import it.unibo.monopoly.model.turnation.api.TurnationManager;
  */
 public final class SpecialPropertyFactoryImpl implements SpecialPropertyFactory {
 
-    private final TurnationManager turnationManager;
     private final RentOptionFactory f = new RentOptionFactoryImpl();
-
-    /**
-     * constructor for the factory tha takes the turnation manager.
-     * for the rent function of socuìiety tile
-     * @param tunrnationmanager
-     */
-    public SpecialPropertyFactoryImpl(final TurnationManager tunrnationmanager) {
-        this.turnationManager = tunrnationmanager;
-
-    }
 
     @Override
     public TitleDeed station(final Group group, final String name, final int salePrice, 
@@ -43,14 +32,14 @@ public final class SpecialPropertyFactoryImpl implements SpecialPropertyFactory 
     @Override
     public TitleDeed society(final Group group, final String name, final int salePrice, 
                                 final Function<Integer, Integer> mortgageFunction,
-                                final int baseRent) {
+                                final int baseRent, final TurnationManager tunrnationmanager) {
         final int startRent = 5;
         final List<RentOption> rentO = f.progressivelyIncreasingPrice(startRent, 2, 2);
         final List<RentOption> rent = rentO.subList(1, rentO.size());
         return new TitleDeed() {
 
             private final TitleDeed titleDeed = new BaseTitleDeed(group, name, salePrice, mortgageFunction, baseRent, rent);
-            private final TurnationManager tunrM = turnationManager;
+            private final TurnationManager tunrM = tunrnationmanager;
 
             @Override
             public String getOwner() {
@@ -89,7 +78,7 @@ public final class SpecialPropertyFactoryImpl implements SpecialPropertyFactory 
 
             @Override
             public Integer getRent(final Set<TitleDeed> groupTitleDeeds) {
-                return titleDeed.getRent(groupTitleDeeds) * (tunrM.moveByDices().stream().mapToInt(Integer::intValue).sum());
+                return titleDeed.getRent(groupTitleDeeds) * tunrM.moveByDices().stream().mapToInt(Integer::intValue).sum();
             }
 
             @Override

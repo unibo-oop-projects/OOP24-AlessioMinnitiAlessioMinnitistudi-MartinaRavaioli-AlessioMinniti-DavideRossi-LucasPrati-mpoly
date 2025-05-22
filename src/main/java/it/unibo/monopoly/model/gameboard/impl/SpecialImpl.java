@@ -11,7 +11,7 @@ import it.unibo.monopoly.model.turnation.api.Position;
 
 public final class SpecialImpl extends TileImpl implements Special {
 
-    private Effect effetto;
+    private final Effect effetto;
     /**
      * contruvtor for special impl.
      * @param name of the special tile

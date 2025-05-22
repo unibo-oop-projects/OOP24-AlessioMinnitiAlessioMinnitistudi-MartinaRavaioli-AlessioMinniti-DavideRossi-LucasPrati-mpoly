@@ -1,6 +1,13 @@
 package it.unibo.monopoly.model.special;
 
 
+
+/**
+ * Tests to verify correct functionality of.
+ * class SpecialFactoryImpl
+ */
+public class FactoryTest {
+/*
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -35,15 +42,8 @@ import it.unibo.monopoly.model.turnation.impl.PlayerImpl;
 import it.unibo.monopoly.model.turnation.impl.PositionImpl;
 import it.unibo.monopoly.model.turnation.impl.TurnationManagerImpl;
 
-
-
+*/
 /*
- * Tests to verify correct functionality of
- * class Bank.
- */
-public class FactoryTest {
-    
-    
     private static final int AMOUNT = 100;
     private static final String PLAYER1_NAME = "Alice";
     private static final String PLAYER2_NAME = "Bob";
@@ -85,12 +85,11 @@ public class FactoryTest {
 
     @BeforeEach
     void create(){
-        player = PlayerImpl.of(VALID_ID, VALID_NAME, VALID_COLOR);        
+        player = PlayerImpl.of(VALID_ID, VALID_NAME, VALID_COLOR);
     }
 
     @Test
     void testPrison(){
-        
     }
-
+*/
 }

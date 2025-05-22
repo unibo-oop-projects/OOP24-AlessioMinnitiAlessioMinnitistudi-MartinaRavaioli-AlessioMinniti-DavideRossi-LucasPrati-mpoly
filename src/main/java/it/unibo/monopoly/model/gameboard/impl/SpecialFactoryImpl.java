@@ -24,12 +24,12 @@ public final class SpecialFactoryImpl implements SpecialFactory {
 
         return new SpecialImpl("Start", new PositionImpl(0), Group.SPECIAL, new Effect() {
 
-            private final int startAmount = 200;
+            private static final int START_AMOUNT = 200;
 
             //DA CAMBIARE CON IL METODO PER AVERE IL NOME CHE ORA NON C'E'
             @Override
             public void activate(final Player palyer) {
-                bank.depositTo(palyer.toString(), startAmount);
+                bank.depositTo(palyer.toString(), START_AMOUNT);
             }
         });
     }
@@ -86,12 +86,12 @@ public final class SpecialFactoryImpl implements SpecialFactory {
     public Special taxes(final Position pos, final Bank bank) {
         return new SpecialImpl("taxes", pos, Group.SPECIAL, new Effect() {
 
-            private final int taxesAmount = 100;
+            private static final int TAXES_AMOUNT = 100;
 
             //DA CAMBIARE CON IL METODO PER AVERE IL NOME CHE ORA NON C'E'
             @Override
             public void activate(final Player palyer) {
-                bank.withdrawFrom(palyer.toString(), taxesAmount);
+                bank.withdrawFrom(palyer.toString(), TAXES_AMOUNT);
             }
         });
     }

@@ -1,21 +1,39 @@
 package it.unibo.monopoly.model.gameboard.impl;
 
-public class Pair<X,Y> {
+/**
+ * Pair Class.
+ * @param <X> type of the first value
+ * @param <Y> type of the second value
+ */
+public final class Pair<X, Y> {
 
     private final X a;
     private final Y b;
 
-    public Pair(X a, Y b){
+    /**
+     * constructor for class Pair.
+     * assing the 2 value
+     * @param a
+     * @param b
+     */
+    public Pair(final X a, final Y b) {
         this.a = a;
         this.b = b;
     }
 
-    public X a(){
+    /**
+     * getter.
+     * @return the first value
+     */
+    public X a() {
         return this.a;
     }
 
-    public Y b(){
+    /**
+     * getter.
+     * @return the second value
+     */
+    public Y b() {
         return this.b;
     }
-    
 }

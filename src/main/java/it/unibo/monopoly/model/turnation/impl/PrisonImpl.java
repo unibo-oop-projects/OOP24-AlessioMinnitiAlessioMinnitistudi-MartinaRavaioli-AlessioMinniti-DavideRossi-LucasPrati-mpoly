@@ -2,10 +2,12 @@ package it.unibo.monopoly.model.turnation.impl;
 
 
 import it.unibo.monopoly.model.turnation.api.Prisonable;
+/**
+ * implementation for prisonable quality of player.
+ */
+public final class PrisonImpl implements Prisonable {
 
-public class PrisonImpl implements Prisonable{
-
-    private final static int PRISON_TURNS = 3;
+    private static final int PRISON_TURNS = 3;
     private int turns;
 
     @Override
@@ -13,7 +15,7 @@ public class PrisonImpl implements Prisonable{
         if (turns > 0) {
             turns -= 1;
             return true;
-        }else{
+        } else {
             return false;
         }
     }

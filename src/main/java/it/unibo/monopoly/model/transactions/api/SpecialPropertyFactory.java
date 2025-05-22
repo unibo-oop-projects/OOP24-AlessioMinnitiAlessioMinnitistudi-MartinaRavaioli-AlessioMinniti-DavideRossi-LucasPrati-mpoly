@@ -3,6 +3,7 @@ package it.unibo.monopoly.model.transactions.api;
 import java.util.function.Function;
 
 import it.unibo.monopoly.model.gameboard.impl.Group;
+import it.unibo.monopoly.model.turnation.api.TurnationManager;
 
 /**
  * interface for a factory of special property tiles. 
@@ -36,11 +37,12 @@ public interface SpecialPropertyFactory {
      * @param salePrice of the society
      * @param mortgageFunction of the society
      * @param baseRent of the society
+     * @param tunrnationmanager to aquire the dices value
      * @return the special property society
      */
     TitleDeed society(Group group, 
                         String name, 
                         int salePrice, 
                         Function<Integer, Integer> mortgageFunction, 
-                        int baseRent);
+                        int baseRent, TurnationManager tunrnationmanager);
 }
