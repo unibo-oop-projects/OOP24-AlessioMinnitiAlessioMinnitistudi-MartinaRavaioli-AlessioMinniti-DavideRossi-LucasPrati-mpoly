@@ -1,14 +1,11 @@
  package it.unibo.monopoly.model.gameboard.impl;
 
 
-import java.util.Set;
-
 import it.unibo.monopoly.model.gameboard.api.Board;
-import it.unibo.monopoly.model.gameboard.api.Effect;
+import it.unibo.monopoly.model.gameboard.api.EffectFactory;
 import it.unibo.monopoly.model.gameboard.api.Special;
 import it.unibo.monopoly.model.gameboard.api.SpecialFactory;
 import it.unibo.monopoly.model.transactions.api.Bank;
-import it.unibo.monopoly.model.turnation.api.Player;
 import it.unibo.monopoly.model.turnation.api.Position;
 import it.unibo.monopoly.model.turnation.impl.PositionImpl;
 
@@ -18,70 +15,34 @@ import it.unibo.monopoly.model.turnation.impl.PositionImpl;
  */
 public final class SpecialFactoryImpl implements SpecialFactory {
 
+    private final EffectFactory factory = new EffectFactoryImpl(); 
     @Override
     public Special start(final Bank bank) {
+            final int START_AMOUNT = 200;
 
-        return new SpecialImpl("Start", new PositionImpl(0), Group.SPECIAL, new Effect() {
-
-            private static final int START_AMOUNT = 200;
-
-            //DA CAMBIARE CON IL METODO PER AVERE IL NOME CHE ORA NON C'E'
-            @Override
-            public void activate(final Player palyer) {
-                bank.depositTo(palyer.toString(), START_AMOUNT);
-            }
-        });
+        return new SpecialImpl("Start", new PositionImpl(0), Group.SPECIAL, factory.depositMoney(START_AMOUNT, bank));
     }
 
     @Override
     public Special goToPrison(final Position pos, final Board board) {
-        return new SpecialImpl("GoToPrison", pos, Group.SPECIAL, new Effect() {
-
-            //TODO fallo con la differenza !!
-            //o con il metodo da chiedere ad ale 
-
-            @Override
-            public void activate(final Player palyer) {
-                palyer.putInPrison();
-                board.movePawn(board.getPawn(palyer.getID()), Set.of(1 - pos.getPos()));
-            }
-        });
+        return new SpecialImpl("GoToPrison", pos, Group.SPECIAL, factory.putInPrison(board));
     }
 
     @Override
     public Special prison(final Position pos) {
-        return new SpecialImpl("prison", pos, null, new Effect() {
-            @Override
-            public void activate(final Player player) {
-                //se chiamassi qui il metodo da player?
-            }
-
-        });
+        return new SpecialImpl("prison", pos, null, factory.still());
     }
 
     @Override
     public Special parking(final Position pos) {
-        return new SpecialImpl("parking", pos, Group.SPECIAL, new Effect() {
-
-            @Override
-            public void activate(final Player palyer) {
-                palyer.park();
-            }
-        });
+        return new SpecialImpl("parking", pos, Group.SPECIAL, factory.park());
     }
 
     @Override
     public Special taxes(final Position pos, final Bank bank) {
-        return new SpecialImpl("taxes", pos, Group.SPECIAL, new Effect() {
-
-            private static final int TAXES_AMOUNT = 100;
-
-            //DA CAMBIARE CON IL METODO PER AVERE IL NOME CHE ORA NON C'E'
-            @Override
-            public void activate(final Player palyer) {
-                bank.withdrawFrom(palyer.toString(), TAXES_AMOUNT);
-            }
-        });
+        
+        final int TAXES_AMOUNT = 100;
+        return new SpecialImpl("taxes", pos, Group.SPECIAL, factory.withdrawMoney(TAXES_AMOUNT, bank));
     }
 
     /**
