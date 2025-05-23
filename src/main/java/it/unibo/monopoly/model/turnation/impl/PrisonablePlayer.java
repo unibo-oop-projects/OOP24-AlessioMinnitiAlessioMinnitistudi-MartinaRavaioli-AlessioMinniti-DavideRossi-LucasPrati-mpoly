@@ -3,6 +3,7 @@ package it.unibo.monopoly.model.turnation.impl;
 
 import java.awt.Color;
 import java.util.Collection;
+import java.util.List;
 
 import it.unibo.monopoly.model.gameboard.api.Board;
 import it.unibo.monopoly.model.turnation.api.Player;
@@ -42,19 +43,28 @@ public final class PrisonablePlayer implements Prisonable, Player {
 
     @Override
     public boolean canExit(final Collection<Integer> dices, final Board board, final Player player) {
-        dices.forEach(p -> dices.forEach(g -> { 
+        final List<Integer> l = List.copyOf(dices);
+        for (int i = 0; i < l.size(); i++) {
+            for (int j = 0; j < l.size(); j++) {
+                if (i!=j && l.get(i).equals(l.get(j))) {
+                    validThrow = true; 
+                }
+            }
+        }
+        
+        /*dices.forEach(p -> dices.forEach(g -> { 
                                                 if (g.equals(p)) { 
                                                     validThrow = true; 
                                                 }
                                             }
-                                        ));
+                                        ));*/
+                                    
         if (validThrow) {
             board.movePawn(board.getPawn(player.getID()), dices);
         }
         return validThrow;
     }
 
-    
     @Override
     public Integer getID() {
         return player.getID();
@@ -62,7 +72,7 @@ public final class PrisonablePlayer implements Prisonable, Player {
 
     @Override
     public String getName() {
-        return player.getName();    
+        return player.getName();
     }
 
     @Override

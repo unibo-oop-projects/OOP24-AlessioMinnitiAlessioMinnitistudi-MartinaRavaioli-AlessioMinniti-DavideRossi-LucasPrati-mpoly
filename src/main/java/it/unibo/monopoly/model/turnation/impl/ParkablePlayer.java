@@ -38,7 +38,6 @@ public final class ParkablePlayer implements Parkable, Player {
         in = true;
     }
 
-    
     @Override
     public Integer getID() {
         return player.getID();
@@ -46,7 +45,7 @@ public final class ParkablePlayer implements Parkable, Player {
 
     @Override
     public String getName() {
-        return player.getName();    
+        return player.getName();
     }
 
     @Override
