@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 
 
 import java.awt.Color;
+import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
@@ -47,15 +48,11 @@ public class FactoryTest {
 
     private static final int AMOUNT = 100;
     private static final String PLAYER1_NAME = "Alice";
-    private static final String PLAYER2_NAME = "Bob";
     private static final String TITLE_DEED_NAME1 = "Bastoni Gran Sasso";
     private static final String TITLE_DEED_NAME2 = "Viale Monterosa";
     private static final int VALID_ID1 = 1;
     private static final Color VALID_COLOR1 = Color.GREEN;
-    private static final int VALID_ID2 = 2;
-    private static final Color VALID_COLOR2 = Color.RED;
 
-    private final Player p1 = PlayerImpl.of(VALID_ID1, PLAYER1_NAME, VALID_COLOR1);
 
 
     private final SpecialFactory factory = new SpecialFactoryImpl();
@@ -68,9 +65,10 @@ public class FactoryTest {
     private final Position pos5 = new PositionImpl(5);
     private final Position pos6 = new PositionImpl(6);
 
+    private final Player p1 = PlayerImpl.of(VALID_ID1, PLAYER1_NAME, VALID_COLOR1);
+
     private final Set<BankAccount> accounts = Set.of(
-        new SimpleBankAccountImpl(AMOUNT, PLAYER1_NAME),
-        new SimpleBankAccountImpl(AMOUNT, PLAYER2_NAME)
+        new SimpleBankAccountImpl(AMOUNT, PLAYER1_NAME)
     );
     private final Set<TitleDeed> deeds = Set.of(
         new BaseTitleDeed(Group.PURPLE, TITLE_DEED_NAME1, 50, s -> s / 2, 10),
@@ -78,8 +76,7 @@ public class FactoryTest {
 
     );
     private final List<Pawn> pawns = List.of(
-        pF.createAdvanced(VALID_ID1, pos1, VALID_COLOR1, PLAYER1_NAME),
-        pF.createAdvanced(VALID_ID2, pos2, VALID_COLOR2, PLAYER2_NAME)
+        pF.createAdvanced(VALID_ID1, pos1, VALID_COLOR1, PLAYER1_NAME)
     );
     
     private Bank bank = new BankImpl(accounts, deeds);
@@ -91,8 +88,8 @@ public class FactoryTest {
         new PropertyImpl("b", pos1, Group.BLUE),
         new PropertyImpl("c", pos2, Group.YELLOW),
         factory.goToPrison(pos3, board),
-        factory.parking(pos4),
-        factory.prison(pos5),
+        factory.parking(pos5),
+        factory.prison(pos4),
         factory.start(bank),
         factory.taxes(pos6, bank)
     );
@@ -104,8 +101,18 @@ public class FactoryTest {
     }
 
     @Test
-    void testGoToPrison(){
-
+    void testGoToPrison(){        
+        final Special s = factory.goToPrison(pos3, board);        
+        final Collection<Integer> dice1 = Set.of(1,2);
+        final Collection<Integer> dice2 = Set.of(1,1);
+        s.activateEffect(p1);
+        assertEquals(pos5, board.getPawn(p1.getID()).getPosition());
+        assertTrue(p1.isInPrison());
+        assertFalse(p1.canExitPrison(dice1, board, p1));
+        assertTrue(p1.isInPrison());
+        assertTrue(p1.canExitPrison(dice2, board, p1));
+        assertFalse(p1.isInPrison());
+        assertEquals(pos6, board.getPawn(p1.getID()).getPosition());
     }
 
     @Test

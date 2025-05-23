@@ -60,6 +60,7 @@ public final class PrisonablePlayer implements Prisonable, Player {
                                         ));*/
                                     
         if (validThrow) {
+            this.turns = 0;
             board.movePawn(board.getPawn(player.getID()), dices);
         }
         return validThrow;
