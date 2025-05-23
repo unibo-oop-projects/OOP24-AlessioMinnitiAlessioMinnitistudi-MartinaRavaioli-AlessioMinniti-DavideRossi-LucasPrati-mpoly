@@ -23,7 +23,6 @@ class BankAccountFactoryImplTest {
     private static final int VALID_INITIAL_BALANCE = 1_000;
     private static final int NEGATIVE_INITIAL_BALANCE = -1;
     private static final int PLAYER_ID = 42;
-    private static final String PLAYER_NAME = "Alice";
 
     private BankAccountFactory factory;
 
