@@ -120,6 +120,6 @@ public class TurnationManagerImpl implements TurnationManager {
     */
     @Override
     public final Player getCurrPlayer() {
-        return PlayerImpl.of(this.currPlayer.getID(),this.currPlayer.getName(),this.currPlayer.getColor());
+        return PlayerImpl.of(this.currPlayer.getID(), this.currPlayer.getName(), this.currPlayer.getColor());
     }
 }
