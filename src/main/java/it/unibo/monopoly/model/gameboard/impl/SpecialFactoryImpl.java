@@ -53,7 +53,7 @@ public final class SpecialFactoryImpl implements SpecialFactory {
         return new SpecialImpl("prison", pos, null, new Effect() {
             @Override
             public void activate(final Player player) {
-                
+                //se chiamassi qui il metodo da player?
             }
 
         });

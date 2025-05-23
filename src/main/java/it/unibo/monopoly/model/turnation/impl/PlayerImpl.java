@@ -2,10 +2,12 @@ package it.unibo.monopoly.model.turnation.impl;
 
 import java.util.Optional;
 
+import it.unibo.monopoly.model.gameboard.api.Board;
 import it.unibo.monopoly.model.turnation.api.Parkable;
 import it.unibo.monopoly.model.turnation.api.Player;
 import it.unibo.monopoly.model.turnation.api.Prisonable;
 import java.awt.Color;
+import java.util.Collection;
 import java.util.Objects;
 
 import it.unibo.monopoly.utils.Identifiable;
@@ -119,5 +121,13 @@ public final class PlayerImpl implements Player {
         if (prison.isPresent()) {
             prison.get().putInPrison();
         }
+    }
+
+    @Override
+    public boolean canExitPrison(Collection<Integer> dices, Board board, Player player) {
+        if (prison.isPresent()) {
+            return prison.get().canExit(dices, board, player);
+        }
+        return true;
     }
 }

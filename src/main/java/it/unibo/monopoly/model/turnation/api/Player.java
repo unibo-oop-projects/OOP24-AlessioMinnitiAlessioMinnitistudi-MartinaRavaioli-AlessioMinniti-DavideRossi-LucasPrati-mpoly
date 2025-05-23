@@ -1,7 +1,9 @@
 package it.unibo.monopoly.model.turnation.api;
 
 import java.awt.Color;
+import java.util.Collection;
 
+import it.unibo.monopoly.model.gameboard.api.Board;
 import it.unibo.monopoly.utils.Identifiable;
 
 /**
@@ -45,5 +47,5 @@ public interface Player extends Identifiable<Integer> {
      */
     void putInPrison();
 
-    // boolean isAlive();
+    boolean canExitPrison(Collection<Integer> dices, Board board, Player player);
 }
