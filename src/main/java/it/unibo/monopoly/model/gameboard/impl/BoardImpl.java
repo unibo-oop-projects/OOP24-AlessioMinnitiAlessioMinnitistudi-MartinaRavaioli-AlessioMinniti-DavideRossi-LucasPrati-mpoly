@@ -2,6 +2,7 @@ package it.unibo.monopoly.model.gameboard.impl;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import it.unibo.monopoly.model.gameboard.api.Board;
@@ -127,7 +128,7 @@ public class BoardImpl implements Board {
     */
     @Override
     public final List<Tile> getTiles() {
-        return List.copyOf(this.tiles);
+        return Collections.unmodifiableList(this.tiles);
     }
 
 }

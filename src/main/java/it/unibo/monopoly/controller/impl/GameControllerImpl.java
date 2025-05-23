@@ -14,6 +14,8 @@ import it.unibo.monopoly.model.transactions.api.TitleDeed;
 import it.unibo.monopoly.model.transactions.impl.BaseTitleDeed;
 import it.unibo.monopoly.model.turnation.api.Player;
 import it.unibo.monopoly.model.turnation.api.TurnationManager;
+import it.unibo.monopoly.utils.Configuration;
+import it.unibo.monopoly.utils.ResourceLoader;
 import it.unibo.monopoly.view.api.MainGameView;
 
 
@@ -27,6 +29,7 @@ public final class GameControllerImpl implements GameController {
     private final Bank bank;
     private final TurnationManager turnationManager;        // TODO
     private final Board board;                              // TODO
+    private final Configuration config;
     private MainGameView gameView;
 
     /**
@@ -39,15 +42,22 @@ public final class GameControllerImpl implements GameController {
      * @param bank the bank of the game
      * @param board the game board
      * @param turnationManager the entity for manage the turnation of the players
+     * @param config a consistent configuration for settings
      */
     @SuppressFBWarnings(
         value = "EI_EXPOSE_REP2",
         justification = "Injection of shared mutable dependencies is intentional and controlled in this architecture."
     )
-    public GameControllerImpl(final Bank bank, final Board board, final TurnationManager turnationManager) {
+    public GameControllerImpl(
+            final Bank bank,
+            final Board board,
+            final TurnationManager turnationManager,
+            final Configuration config
+        ) {
         this.bank = bank;
         this.board = board;
         this.turnationManager = turnationManager;
+        this.config = config;
         this.board.getClass(); // TODO rimuovere, utilizzato per bypassare warning 'unused' per fare build
         this.turnationManager.getClass(); // TODO rimuovere, utilizzato per bypassare warning 'unused' per fare build
     }
@@ -168,8 +178,13 @@ public final class GameControllerImpl implements GameController {
 
     @Override
     public void loadRules() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'loadRules'");
+        final String rules = ResourceLoader.loadTextResource(config.getRulesPath());
+        gameView.showRules(rules);
+    }
+
+    @Override
+    public Configuration getConfiguration() {
+        return config;
     }
 
     @Override

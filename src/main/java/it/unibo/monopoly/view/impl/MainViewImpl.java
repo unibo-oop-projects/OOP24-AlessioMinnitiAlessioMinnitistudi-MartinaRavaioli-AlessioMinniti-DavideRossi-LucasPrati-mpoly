@@ -115,8 +115,7 @@ public final class MainViewImpl implements MainGameView {
 
     @Override
     public void showRules(final String rules) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'showRules'");
+        new RulesWindowView(this.mainGameFrame, controller.getConfiguration(), rules);
     }
 
     @Override
