@@ -10,14 +10,14 @@ import it.unibo.monopoly.model.turnation.api.Prisonable;
 /**
  * implementation for prisonable quality of player.
  */
-public final class PrisonImpl implements Prisonable, Player {
+public final class PrisonablePlayer implements Prisonable, Player {
 
     private static final int PRISON_TURNS = 3;
     private int turns;
     private boolean validThrow;
     private final Player player;
 
-    public PrisonImpl(Player player){
+    public PrisonablePlayer(Player player){
         this.player = player;
     }
 
