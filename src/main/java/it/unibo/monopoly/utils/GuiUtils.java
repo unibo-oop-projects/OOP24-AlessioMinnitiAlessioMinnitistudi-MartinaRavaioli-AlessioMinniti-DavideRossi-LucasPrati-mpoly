@@ -28,23 +28,60 @@ public final class GuiUtils {
 
     private GuiUtils() { }
 
+    /**
+     * Enum representing the types of message dialogs supported by {@link JOptionPane}.
+     * Each constant encapsulates the corresponding integer code defined in {@link JOptionPane}.
+     */
     public enum MessageType {
-        ERROR   (JOptionPane.ERROR_MESSAGE),
-        INFO    (JOptionPane.INFORMATION_MESSAGE),
-        WARNING (JOptionPane.WARNING_MESSAGE),
-        QUESTION(JOptionPane.QUESTION_MESSAGE),
-        PLAIN   (JOptionPane.PLAIN_MESSAGE);
+        /**
+         * Error message type. Displays the error icon.
+         */
+        ERROR(JOptionPane.ERROR_MESSAGE),
 
+        /**
+         * Information message type. Displays the information icon.
+         */
+        INFO(JOptionPane.INFORMATION_MESSAGE),
+
+        /**
+         * Warning message type. Displays the warning icon.
+         */
+        WARNING(JOptionPane.WARNING_MESSAGE),
+
+        /**
+         * Question message type. Displays the question icon.
+         */
+        QUESTION(JOptionPane.QUESTION_MESSAGE),
+
+        /**
+         * Plain message type. Displays no icon.
+         */
+        PLAIN(JOptionPane.PLAIN_MESSAGE);
+
+        /** The integer code corresponding to this message type in {@link JOptionPane}. */
         private final int code;
-        
-        MessageType(int code) {
+
+        /**
+         * Constructs a MessageType wrapping the given {@link JOptionPane} code.
+         *
+         * @param code the JOptionPane.*_MESSAGE constant for this type
+         */
+        MessageType(final int code) {
             this.code = code;
         }
-        
+
+        /**
+         * Returns the integer code associated with this message type,
+         * suitable for passing to
+         * {@link JOptionPane#showMessageDialog(java.awt.Component, Object, String, int)}.
+         *
+         * @return the JOptionPane.*_MESSAGE constant
+         */
         public int getCode() {
             return code;
         }
     }
+
 
     /**
      * Create a fixed-size square colored label.
@@ -179,7 +216,7 @@ public final class GuiUtils {
      * @param parent  the parent component for the dialog; may be {@code null}
      *                in which case a default frame is used
      * @param title   the title to display on the dialog window
-     * @param message the error message text to show to the user
+     * @param message the message text to show to the user
      * @param type the category of the message provided by {@link MessageType}
      */
     public static void showMessageDialog(final Window parent,
@@ -190,7 +227,7 @@ public final class GuiUtils {
                                       message,
                                       title, 
                                       type.getCode());
-        if(type == MessageType.ERROR) {
+        if (type.getCode() == 0) {
             System.exit(0);
         }
     }
