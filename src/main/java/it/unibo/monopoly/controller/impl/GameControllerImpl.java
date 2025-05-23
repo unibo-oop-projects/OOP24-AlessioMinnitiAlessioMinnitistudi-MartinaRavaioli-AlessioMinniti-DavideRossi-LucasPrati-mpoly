@@ -27,8 +27,8 @@ public final class GameControllerImpl implements GameController {
     private static final int NUM = 0;
 
     private final Bank bank;
-    private final TurnationManager turnationManager;        // TODO
-    private final Board board;                              // TODO
+    private final TurnationManager turnationManager;
+    private final Board board;
     private final Configuration config;
     private MainGameView gameView;
 
@@ -96,15 +96,15 @@ public final class GameControllerImpl implements GameController {
 
     @Override
     public List<TitleDeed> getProperties(final Player player) {
-        if (bank.getTitleDeedsByOwner(player.getName()).isEmpty()) {
+        if (bank.getTitleDeedsByOwner(player.getID()).isEmpty()) {
             return List.of();
         }
-        return bank.getTitleDeedsByOwner(player.getName()).stream().toList();
+        return bank.getTitleDeedsByOwner(player.getID()).stream().toList();
     }
 
     @Override
     public BankAccount getPlayerBalance(final Player player) {
-        return bank.getBankAccount(player.getName());
+        return bank.getBankAccount(player.getID());
     }
 
     @Override
