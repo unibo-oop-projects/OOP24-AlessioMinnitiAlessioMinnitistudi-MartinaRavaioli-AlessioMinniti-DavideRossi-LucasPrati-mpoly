@@ -63,4 +63,8 @@ class TurnationManagerTest {
         assertTrue(turnManager.getPlayerList().contains(p4), "New player should be in the list");
     }
 
+    public List<Player> getPlayers() {
+        return players;
+    }
+
 }
