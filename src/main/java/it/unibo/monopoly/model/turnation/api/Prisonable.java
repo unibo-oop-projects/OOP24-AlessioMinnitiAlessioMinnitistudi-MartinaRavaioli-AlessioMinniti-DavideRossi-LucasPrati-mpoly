@@ -1,5 +1,8 @@
 package it.unibo.monopoly.model.turnation.api;
 
+import java.util.Collection;
+
+import it.unibo.monopoly.model.gameboard.api.Board;
 
 /**
  * interface of prisonable quality for a player.
@@ -19,5 +22,15 @@ public interface Prisonable {
      * put the player in prison and set the turns he has to wait.
     */
     void putInPrison();
+
+    /**
+     * based on the dices throw it tells.
+     * if the player is free
+     * @param dices to check the throw
+     * @param board to move the pawn in case the throw is valid
+     * @param player that shal move 
+     * @return whether the player can go on with its turn     
+     */
+    boolean canExit(Collection<Integer> dices, Board board, Player player);
 
 }
