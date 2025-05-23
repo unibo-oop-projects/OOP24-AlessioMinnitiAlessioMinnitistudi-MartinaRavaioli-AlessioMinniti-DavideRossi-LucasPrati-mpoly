@@ -28,23 +28,6 @@ public final class GuiUtils {
 
     private GuiUtils() { }
 
-    public enum MessageType {
-        ERROR   (JOptionPane.ERROR_MESSAGE),
-        INFO    (JOptionPane.INFORMATION_MESSAGE),
-        WARNING (JOptionPane.WARNING_MESSAGE),
-        QUESTION(JOptionPane.QUESTION_MESSAGE),
-        PLAIN   (JOptionPane.PLAIN_MESSAGE);
-
-        private final int code;
-        
-        MessageType(int code) {
-            this.code = code;
-        }
-        
-        public int getCode() {
-            return code;
-        }
-    }
 
     /**
      * Create a fixed-size square colored label.
@@ -179,20 +162,25 @@ public final class GuiUtils {
      * @param parent  the parent component for the dialog; may be {@code null}
      *                in which case a default frame is used
      * @param title   the title to display on the dialog window
-     * @param message the error message text to show to the user
-     * @param type the category of the message provided by {@link MessageType}
+     * @param message the message text to show to the user
      */
-    public static void showMessageDialog(final Window parent,
+    public static void showInfoMessage(final Window parent,
                                          final String title,
-                                         final String message,
-                                         final MessageType type) {
-        JOptionPane.showMessageDialog(parent,
-                                      message,
-                                      title, 
-                                      type.getCode());
-        if(type == MessageType.ERROR) {
-            System.exit(0);
-        }
+                                         final String message) {
+        showMessageDialog(parent, message, title, JOptionPane.INFORMATION_MESSAGE);
+
+    }
+
+    /**
+     * Shows an error message dialog and then terminates the entire application.
+     * @param parent  the parent component for the dialog; may be {@code null}
+     *                in which case a default frame is used
+     * @param title   the title to display on the dialog window
+     * @param message the error message text to show to the user
+     */
+    public static void showErrorAndExit(final Window parent, final String title, final String message) {
+        showMessageDialog(parent, title, message, JOptionPane.ERROR_MESSAGE);
+        System.exit(0);
     }
 
     /**
@@ -238,5 +226,12 @@ public final class GuiUtils {
 
     private static Font createFont(final String name, final int size) {
         return new Font(name, FONT_STYLE, size);
+    }
+
+    private static void showMessageDialog(final Window parent,
+                                          final String title,
+                                          final String message,
+                                          final int type) {
+        JOptionPane.showMessageDialog(parent, message, title, type);
     }
 }
