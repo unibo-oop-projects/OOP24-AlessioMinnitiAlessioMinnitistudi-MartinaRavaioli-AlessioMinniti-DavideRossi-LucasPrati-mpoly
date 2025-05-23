@@ -33,7 +33,7 @@ public final class SimpleBankAccountImpl implements BankAccount {
      * Creates a new {@link BankAccount} with a default, positive and non-zero amount of money.
      * 
      * @param id the {@code Integer} used as the {@link Identifiable} for the {@link BankAccount}
-     * Each {@link BankAccount} has an id that corresponds to a specific player.     
+     * Each {@link BankAccount} has an id that corresponds to a specific player.
      */
     public SimpleBankAccountImpl(final int id) {
         this(id, DEFAULT_BALANCE);

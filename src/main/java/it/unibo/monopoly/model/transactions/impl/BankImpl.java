@@ -133,7 +133,7 @@ public final class BankImpl implements Bank {
         return titleDeeds.values()
                         .stream()
                         .filter(TitleDeed::isOwned)
-                        .filter(d -> ownerId==d.getOwnerId())
+                        .filter(d -> ownerId == d.getOwnerId())
                         .collect(Collectors.toSet());
     }
 

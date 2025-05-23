@@ -88,7 +88,7 @@ class BankTest {
         final BankAccount account = bank.getBankAccount(ID_1);
         assertEquals(accounts
                     .stream()
-                    .filter(a -> ID_1==a.getID())
+                    .filter(a -> ID_1 == a.getID())
                     .map(a -> new ImmutableBankAccountCopy(a))
                     .toList()
                     .getFirst(), account);
@@ -252,7 +252,7 @@ class BankTest {
         bank.buyTitleDeed(TITLE_DEED_NAME1, ID_1);
         final Set<TitleDeed> deeds = bank.getTitleDeedsByOwner(ID_1);
         assertFalse(deeds.isEmpty());
-        assertTrue(deeds.stream().allMatch(d -> d.isOwned() && ID_1==d.getOwnerId()));
+        assertTrue(deeds.stream().allMatch(d -> d.isOwned() && ID_1 == d.getOwnerId()));
     }
 
     private void testExceptionFormat(final Exception exception) {
