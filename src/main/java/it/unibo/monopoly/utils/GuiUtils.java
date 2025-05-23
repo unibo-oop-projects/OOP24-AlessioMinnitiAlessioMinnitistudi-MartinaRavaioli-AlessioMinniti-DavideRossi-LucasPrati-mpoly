@@ -28,6 +28,24 @@ public final class GuiUtils {
 
     private GuiUtils() { }
 
+    public enum MessageType {
+        ERROR   (JOptionPane.ERROR_MESSAGE),
+        INFO    (JOptionPane.INFORMATION_MESSAGE),
+        WARNING (JOptionPane.WARNING_MESSAGE),
+        QUESTION(JOptionPane.QUESTION_MESSAGE),
+        PLAIN   (JOptionPane.PLAIN_MESSAGE);
+
+        private final int code;
+        
+        MessageType(int code) {
+            this.code = code;
+        }
+        
+        public int getCode() {
+            return code;
+        }
+    }
+
     /**
      * Create a fixed-size square colored label.
      * If the {@code size} is invalid (zero or negative), returns a placeholder label
@@ -157,21 +175,24 @@ public final class GuiUtils {
     }
 
     /**
-     * Shows an error message dialog and then terminates the entire application.
-     * 
+     * Shows a message dialog.
      * @param parent  the parent component for the dialog; may be {@code null}
      *                in which case a default frame is used
      * @param title   the title to display on the dialog window
      * @param message the error message text to show to the user
+     * @param type the category of the message provided by {@link MessageType}
      */
-    public static void showErrorAndExit(final Window parent, final String title, final String message) {
-        JOptionPane.showMessageDialog(
-            parent,
-            message,
-            title,
-            JOptionPane.ERROR_MESSAGE
-        );
-        System.exit(0);
+    public static void showMessageDialog(final Window parent,
+                                         final String title,
+                                         final String message,
+                                         final MessageType type) {
+        JOptionPane.showMessageDialog(parent,
+                                      message,
+                                      title, 
+                                      type.getCode());
+        if(type == MessageType.ERROR) {
+            System.exit(0);
+        }
     }
 
     /**

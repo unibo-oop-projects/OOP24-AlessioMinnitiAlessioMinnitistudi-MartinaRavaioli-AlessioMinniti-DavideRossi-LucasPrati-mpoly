@@ -273,10 +273,11 @@ public final class MainMenuView extends JFrame {
             controller.onClickStart(playersSetup);
 
         } catch (final IOException e) {
-            GuiUtils.showErrorAndExit(
+            GuiUtils.showMessageDialog(
                 this,
                 e.getMessage(),
-                "Error loading Json"
+                "Error loading Json",
+                GuiUtils.MessageType.ERROR
                 );
 
         }
