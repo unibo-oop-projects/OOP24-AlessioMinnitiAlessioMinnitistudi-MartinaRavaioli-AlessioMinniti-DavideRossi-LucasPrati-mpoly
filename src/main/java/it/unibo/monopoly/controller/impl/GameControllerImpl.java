@@ -109,32 +109,7 @@ public final class GameControllerImpl implements GameController {
 
     @Override
     public Color getPropertyColor(final TitleDeed selectedProperty) {
-        final Group colorS = selectedProperty.getGroup();
-        final Color color;
-        switch (colorS) {
-            case Group.BLUE:
-                color = Color.BLUE;
-                break;
-            case Group.RED:
-                color = Color.RED;
-                break;
-            case Group.GREEN:
-                color = Color.GREEN;
-                break;
-            case Group.YELLOW:
-                color = Color.YELLOW;
-                break;
-            case Group.ORANGE:
-                color = Color.ORANGE;
-                break;
-            case Group.BLACK:
-                color = Color.BLACK;
-                break;
-            default:
-                color = Color.WHITE;
-                break;
-        }
-        return color;
+        return selectedProperty.getGroup().getColor();
     }
 
 
