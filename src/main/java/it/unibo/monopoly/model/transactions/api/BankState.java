@@ -1,0 +1,65 @@
+package it.unibo.monopoly.model.transactions.api;
+
+import java.util.List;
+
+import org.apache.commons.lang3.tuple.Pair;
+
+import it.unibo.monopoly.model.turnation.api.Player;
+import it.unibo.monopoly.model.turnation.api.TurnationManager;
+
+/**
+ * An object used by {@link TurnationManager} to check on the 
+ * finantial situation of the players. {@link TurnationManager}, in order to arbitrate
+ * the game, may have the necessity to retrieve information related to the finantial situation of a player
+ * (ask if a player is bankrupt, rank the players based on their properties, ask if a player has executed
+ * all mandatory payments...). Also, {@link TurnationManager} may need to be able to command specific operations
+ * (for instance when a player gets eliminated all the {@link TitleDeed} that were owned become available
+ * for purchase).
+ * This interface describes all operations that are necessary for {@link TurnationManager} to
+ * pilot the game flow.
+*/
+public interface BankState {
+
+    /**
+     * Checks if a player's finantial situation is valid for the
+     * continuation of the game. 
+     * @param player The player whose {@link BankAccount} to check
+     * @return {@code true} if the player's {@link BankAccount} is in a
+     * state that is valid for the continuation of the game, false otherwise
+     */
+    boolean canContinuePlay(Player player);
+
+    /**
+     * Checks if the {@link Player} that is currently playing its turn
+     * has performed all transactions that are redeemed as mandatory.
+     * For instance, if a player has to pay the rent for stepping onto 
+     * a property owned by another player this method will return {@code false}
+     * until the player does so. 
+     * Generally speaking, the only type of transaction that is considered mandatory
+     * is the payment of the rent, in the original version of Monopoly. However, this
+     * implementation enables the modification of the game easily. 
+     * @return {@code true} if the player has performed all the transactions 
+     * that he was meant to in its turn and can therefore end its turn, {@code false}
+     * otherwise.
+     */
+    boolean allMandatoryTransactionsCompleted();
+
+    /**
+     * Ranks the players based on the state of their {@link BankAccount}
+     * and the {@link TitleDeed} they own.
+     * The ranking algorithm is given to the bank on construction
+     * and it is responsible for calculating the total monetary 
+     * value of a player.
+     * In the default version of the algorithm the total monetary value
+     * is given by summing the {@code balance} of the player's {@link BankAccount}
+     * and the {@code mortgageValue} of each {@link TitleDeed} owned.
+     * However different versions of the algorithm may give more importance
+     * to a value more than another or may simply do different calculations,
+     * resulting in a different ranking
+     * @return a {@link List} of {@link Pair} where the first element is 
+     * the player's name and the second is its monetary value. 
+     * The values of the list are sorted in ascending order based on monetary
+     * value.
+     */
+    List<Pair<String, Integer>> rankPlayers();
+}
