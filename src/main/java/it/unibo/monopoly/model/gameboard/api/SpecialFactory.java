@@ -2,7 +2,6 @@ package it.unibo.monopoly.model.gameboard.api;
 
 import it.unibo.monopoly.model.transactions.api.Bank;
 import it.unibo.monopoly.model.turnation.api.Position;
-import it.unibo.monopoly.model.turnation.api.TurnationManager;
 
 /**
  * this is SpecialFactory interface, defines which special tiles you can create. 
@@ -31,7 +30,7 @@ public interface SpecialFactory {
      * @param turnationManager used to get the throw 
      * @return the special tile prison
      */
-    Special prison(Position pos, Board board, TurnationManager turnationManager);
+    Special prison(Position pos);
 
     /**
      * ccreates the tile parking that keeps the player in stasis for 1 turn.

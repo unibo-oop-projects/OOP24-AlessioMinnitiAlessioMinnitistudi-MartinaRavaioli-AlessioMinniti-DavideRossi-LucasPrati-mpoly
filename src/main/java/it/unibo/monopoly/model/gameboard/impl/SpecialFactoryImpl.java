@@ -10,7 +10,6 @@ import it.unibo.monopoly.model.gameboard.api.SpecialFactory;
 import it.unibo.monopoly.model.transactions.api.Bank;
 import it.unibo.monopoly.model.turnation.api.Player;
 import it.unibo.monopoly.model.turnation.api.Position;
-import it.unibo.monopoly.model.turnation.api.TurnationManager;
 import it.unibo.monopoly.model.turnation.impl.PositionImpl;
 
 
@@ -50,22 +49,11 @@ public final class SpecialFactoryImpl implements SpecialFactory {
     }
 
     @Override
-    public Special prison(final Position pos, final Board board, final TurnationManager turnationManager) {
-        return new SpecialImpl(null, pos, null, new Effect() {
-            private boolean validThrow;
-
+    public Special prison(final Position pos) {
+        return new SpecialImpl("prison", pos, null, new Effect() {
             @Override
             public void activate(final Player player) {
-                turnationManager.moveByDices().forEach(p -> turnationManager.moveByDices()
-                                                .forEach(g -> { 
-                                                                if (g.equals(p)) { 
-                                                                    validThrow = true; 
-                                                                }
-                                                            }
-                                                        ));
-                if (validThrow) {
-                    board.movePawn(board.getPawn(player.getID()), turnationManager.moveByDices());
-                }
+                
             }
 
         });
