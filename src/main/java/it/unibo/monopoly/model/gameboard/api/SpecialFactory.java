@@ -26,8 +26,6 @@ public interface SpecialFactory {
     /**
      * creates the tile prison that keeps the player in stasis for 3 turns unless he gets the same number on two dices.
      * @param pos position of the tile
-     * @param board used to move the player pawn
-     * @param turnationManager used to get the throw 
      * @return the special tile prison
      */
     Special prison(Position pos);
