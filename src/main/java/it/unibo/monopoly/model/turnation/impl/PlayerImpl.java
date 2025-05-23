@@ -144,7 +144,7 @@ public final class PlayerImpl implements Player {
     }
 
     @Override
-    public boolean canExitPrison(Collection<Integer> dices, Board board, Player player) {
+    public boolean canExitPrison(final Collection<Integer> dices, final Board board, final Player player) {
         return true;
     }
 }

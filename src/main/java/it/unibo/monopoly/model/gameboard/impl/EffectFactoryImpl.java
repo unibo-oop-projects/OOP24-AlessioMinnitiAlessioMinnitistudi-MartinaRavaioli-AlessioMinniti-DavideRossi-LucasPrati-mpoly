@@ -20,7 +20,6 @@ public final class EffectFactoryImpl implements EffectFactory {
             public void activate(final Player player) {
                 bank.depositTo(player.toString(), amount);
             }
-            
         };
     }
 
@@ -32,7 +31,6 @@ public final class EffectFactoryImpl implements EffectFactory {
             public void activate(final Player player) {
                 bank.withdrawFrom(player.toString(), amount);
             }
-            
         };
     }
 
@@ -66,7 +64,6 @@ public final class EffectFactoryImpl implements EffectFactory {
             @Override
             public void activate(final Player player) {
             }
-            
         };
     }
 

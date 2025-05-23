@@ -40,7 +40,6 @@ public final class SpecialFactoryImpl implements SpecialFactory {
 
     @Override
     public Special taxes(final Position pos, final Bank bank) {
-        
         final int taxesAmount = 100;
         return new SpecialImpl("taxes", pos, Group.SPECIAL, factory.withdrawMoney(taxesAmount, bank));
     }

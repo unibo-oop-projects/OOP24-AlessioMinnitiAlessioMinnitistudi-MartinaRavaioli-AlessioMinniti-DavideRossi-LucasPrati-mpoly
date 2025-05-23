@@ -17,7 +17,11 @@ public final class PrisonablePlayer implements Prisonable, Player {
     private boolean validThrow;
     private final Player player;
 
-    public PrisonablePlayer(Player player){
+    /**
+     * constructor for ParkablePlayer.
+     * @param player the base player.
+     */
+    public PrisonablePlayer(final Player player) {
         this.player = player;
     }
 
@@ -37,7 +41,7 @@ public final class PrisonablePlayer implements Prisonable, Player {
     }
 
     @Override
-    public boolean canExit(Collection<Integer> dices, Board board, Player player) {
+    public boolean canExit(final Collection<Integer> dices, final Board board, final Player player) {
         dices.forEach(p -> dices.forEach(g -> { 
                                                 if (g.equals(p)) { 
                                                     validThrow = true; 
@@ -82,7 +86,7 @@ public final class PrisonablePlayer implements Prisonable, Player {
     }
 
     @Override
-    public boolean canExitPrison(Collection<Integer> dices, Board board, Player player) {
+    public boolean canExitPrison(final Collection<Integer> dices, final Board board, final Player player) {
         return player.canExitPrison(dices, board, player);
     }
 }

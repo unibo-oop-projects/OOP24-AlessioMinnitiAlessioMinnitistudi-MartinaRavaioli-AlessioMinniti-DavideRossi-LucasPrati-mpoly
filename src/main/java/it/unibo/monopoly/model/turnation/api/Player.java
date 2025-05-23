@@ -28,7 +28,7 @@ public interface Player extends Identifiable<Integer> {
      */
 
     boolean isAlive();
-    
+
     /**
      * tells whether and how long the player is parked.
      * @return if the player is parked

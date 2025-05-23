@@ -15,7 +15,11 @@ public final class ParkablePlayer implements Parkable, Player {
     private boolean in;
     private final Player player;
 
-    public ParkablePlayer(Player player){
+    /**
+     * constructor for Parkable player.
+     * @param player the base player 
+     */
+    public ParkablePlayer(final Player player) {
         this.player = player;
     }
 
@@ -66,7 +70,7 @@ public final class ParkablePlayer implements Parkable, Player {
     }
 
     @Override
-    public boolean canExitPrison(Collection<Integer> dices, Board board, Player player) {
+    public boolean canExitPrison(final Collection<Integer> dices, final Board board, final Player player) {
         return player.canExitPrison(dices, board, player);
     }
 }
