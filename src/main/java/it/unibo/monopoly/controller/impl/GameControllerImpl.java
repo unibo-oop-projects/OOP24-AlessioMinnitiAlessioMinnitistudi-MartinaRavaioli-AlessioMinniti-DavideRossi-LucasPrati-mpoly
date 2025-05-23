@@ -5,18 +5,21 @@ import java.util.List;
 import java.util.Optional;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import it.unibo.monopoly.model.gameboard.api.Board;
-import it.unibo.monopoly.model.gameboard.impl.Group;
-import it.unibo.monopoly.controller.api.GameController;
 import it.unibo.monopoly.model.transactions.api.Bank;
 import it.unibo.monopoly.model.transactions.api.BankAccount;
 import it.unibo.monopoly.model.transactions.api.TitleDeed;
 import it.unibo.monopoly.model.transactions.impl.BaseTitleDeed;
 import it.unibo.monopoly.model.turnation.api.Player;
 import it.unibo.monopoly.model.turnation.api.TurnationManager;
+
+import it.unibo.monopoly.controller.api.GameController;
+
+import it.unibo.monopoly.view.api.MainGameView;
+
 import it.unibo.monopoly.utils.Configuration;
 import it.unibo.monopoly.utils.ResourceLoader;
-import it.unibo.monopoly.view.api.MainGameView;
 
 
 /**
@@ -109,32 +112,7 @@ public final class GameControllerImpl implements GameController {
 
     @Override
     public Color getPropertyColor(final TitleDeed selectedProperty) {
-        final Group colorS = selectedProperty.getGroup();
-        final Color color;
-        switch (colorS) {
-            case Group.BLUE:
-                color = Color.BLUE;
-                break;
-            case Group.RED:
-                color = Color.RED;
-                break;
-            case Group.GREEN:
-                color = Color.GREEN;
-                break;
-            case Group.YELLOW:
-                color = Color.YELLOW;
-                break;
-            case Group.ORANGE:
-                color = Color.ORANGE;
-                break;
-            case Group.BLACK:
-                color = Color.BLACK;
-                break;
-            default:
-                color = Color.WHITE;
-                break;
-        }
-        return color;
+        return selectedProperty.getGroup().getColor();
     }
 
 
