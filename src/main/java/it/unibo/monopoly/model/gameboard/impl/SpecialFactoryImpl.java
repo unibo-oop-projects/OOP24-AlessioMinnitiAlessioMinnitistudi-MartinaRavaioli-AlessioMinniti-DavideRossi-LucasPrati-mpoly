@@ -18,9 +18,9 @@ public final class SpecialFactoryImpl implements SpecialFactory {
     private final EffectFactory factory = new EffectFactoryImpl(); 
     @Override
     public Special start(final Bank bank) {
-            final int START_AMOUNT = 200;
+            final int startAmount = 200;
 
-        return new SpecialImpl("Start", new PositionImpl(0), Group.SPECIAL, factory.depositMoney(START_AMOUNT, bank));
+        return new SpecialImpl("Start", new PositionImpl(0), Group.SPECIAL, factory.depositMoney(startAmount, bank));
     }
 
     @Override
@@ -41,8 +41,8 @@ public final class SpecialFactoryImpl implements SpecialFactory {
     @Override
     public Special taxes(final Position pos, final Bank bank) {
         
-        final int TAXES_AMOUNT = 100;
-        return new SpecialImpl("taxes", pos, Group.SPECIAL, factory.withdrawMoney(TAXES_AMOUNT, bank));
+        final int taxesAmount = 100;
+        return new SpecialImpl("taxes", pos, Group.SPECIAL, factory.withdrawMoney(taxesAmount, bank));
     }
 
     /**

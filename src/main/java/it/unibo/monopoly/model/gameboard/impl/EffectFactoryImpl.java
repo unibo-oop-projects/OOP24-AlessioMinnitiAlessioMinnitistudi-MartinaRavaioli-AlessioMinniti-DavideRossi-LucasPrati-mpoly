@@ -7,14 +7,17 @@ import it.unibo.monopoly.model.gameboard.api.EffectFactory;
 import it.unibo.monopoly.model.transactions.api.Bank;
 import it.unibo.monopoly.model.turnation.api.Player;
 
-public class EffectFactoryImpl implements EffectFactory {
+/**
+ * implementation for EffectFactory.
+ */
+public final class EffectFactoryImpl implements EffectFactory {
 
     @Override
-    public Effect depositMoney(int amount, final Bank bank) {
+    public Effect depositMoney(final int amount, final Bank bank) {
         return new Effect() {
 
             @Override
-            public void activate(Player player) {
+            public void activate(final Player player) {
                 bank.depositTo(player.toString(), amount);
             }
             
@@ -22,11 +25,11 @@ public class EffectFactoryImpl implements EffectFactory {
     }
 
     @Override
-    public Effect withdrawMoney(int amount, final Bank bank) {
+    public Effect withdrawMoney(final int amount, final Bank bank) {
         return new Effect() {
 
             @Override
-            public void activate(Player player) {
+            public void activate(final Player player) {
                 bank.withdrawFrom(player.toString(), amount);
             }
             
@@ -61,7 +64,7 @@ public class EffectFactoryImpl implements EffectFactory {
         return new Effect() {
 
             @Override
-            public void activate(Player player) {
+            public void activate(final Player player) {
             }
             
         };

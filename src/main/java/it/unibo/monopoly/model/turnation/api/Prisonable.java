@@ -29,7 +29,7 @@ public interface Prisonable {
      * @param dices to check the throw
      * @param board to move the pawn in case the throw is valid
      * @param player that shal move 
-     * @return whether the player can go on with its turn     
+     * @return whether the player can go on with its turn
      */
     boolean canExit(Collection<Integer> dices, Board board, Player player);
 
