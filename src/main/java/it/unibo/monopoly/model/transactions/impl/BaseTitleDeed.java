@@ -29,7 +29,7 @@ public class BaseTitleDeed implements TitleDeed {
     private final int salePrice;
     private final Function<Integer, Integer> mortgageFunction; 
     private final List<RentOption> rentOptions;
-    private Optional<String> owner = Optional.empty();
+    private Optional<Integer> owner = Optional.empty();
 
     /**
      * Creates a new {@link BaseTitleDeed} that has only one standard rent fee.
@@ -95,7 +95,7 @@ public class BaseTitleDeed implements TitleDeed {
     }
 
     @Override
-    public final String getOwner() {
+    public final int getOwnerId() {
         if (owner.isEmpty()) {
             throw new IllegalStateException("This title deed has no owner");
         }
@@ -103,8 +103,8 @@ public class BaseTitleDeed implements TitleDeed {
     }
 
     @Override
-    public final void setOwner(final String ownerName) {
-        Objects.requireNonNull(ownerName);
+    public final void setOwner(final int ownerId) {
+        Objects.requireNonNull(ownerId);
         if (owner.isPresent()) {
             throw new IllegalStateException("Cannot set a new owner for" 
                                             + "the title deed because the owner" 
@@ -112,7 +112,7 @@ public class BaseTitleDeed implements TitleDeed {
                                             + " already owns it"
                                             );
         }
-        owner = Optional.of(ownerName);
+        owner = Optional.of(ownerId);
     }
 
     @Override

@@ -32,17 +32,17 @@ public final class ImmutableTitleDeedCopy implements TitleDeed {
                                     deed.getRentOptions().getFirst().getPrice(),
                                     rentOptionCopy);
         if (deed.isOwned()) {
-            this.deed.setOwner(deed.getOwner());
+            this.deed.setOwner(deed.getOwnerId());
         }
     }
 
     @Override
-    public String getOwner() {
-        return this.deed.getOwner();
+    public int getOwnerId() {
+        return this.deed.getOwnerId();
     }
 
     @Override
-    public void setOwner(final String ownerName) {
+    public void setOwner(final int ownerId) {
         throw new UnsupportedOperationException("setOwner operation is not supported on an ImmutableTitleDeedView");
     }
 
