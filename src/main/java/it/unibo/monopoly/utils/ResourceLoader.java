@@ -218,9 +218,6 @@ public final class ResourceLoader {
             return builder.build();
 
         } catch (final IOException e) {
-            GuiUtils.showInfoMessage(null,
-                                     e.getMessage(),
-                                     "Custom configuration not found, using default data");
             return new Configuration.Builder().build();
         }
     }
