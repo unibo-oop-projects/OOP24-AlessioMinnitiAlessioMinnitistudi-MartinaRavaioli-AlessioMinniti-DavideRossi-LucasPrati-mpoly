@@ -3,12 +3,9 @@ package it.unibo.monopoly.model.special;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 
@@ -25,23 +22,18 @@ import it.unibo.monopoly.model.gameboard.api.Tile;
 import it.unibo.monopoly.model.gameboard.impl.BoardImpl;
 import it.unibo.monopoly.model.gameboard.impl.Group;
 import it.unibo.monopoly.model.gameboard.impl.PawnFactoryImpl;
-import it.unibo.monopoly.model.gameboard.impl.PawnImpl;
 import it.unibo.monopoly.model.gameboard.impl.PropertyImpl;
 import it.unibo.monopoly.model.gameboard.impl.SpecialFactoryImpl;
-import it.unibo.monopoly.model.gameboard.impl.TileImpl;
 import it.unibo.monopoly.model.transactions.api.Bank;
 import it.unibo.monopoly.model.transactions.api.BankAccount;
 import it.unibo.monopoly.model.transactions.api.TitleDeed;
 import it.unibo.monopoly.model.transactions.impl.BankImpl;
 import it.unibo.monopoly.model.transactions.impl.BaseTitleDeed;
 import it.unibo.monopoly.model.transactions.impl.bankaccount.SimpleBankAccountImpl;
-import it.unibo.monopoly.model.transactions.impl.bankaccount.WithdrawCheckBankAccount;
 import it.unibo.monopoly.model.turnation.api.Player;
 import it.unibo.monopoly.model.turnation.api.Position;
-import it.unibo.monopoly.model.turnation.api.TurnationManager;
 import it.unibo.monopoly.model.turnation.impl.PlayerImpl;
 import it.unibo.monopoly.model.turnation.impl.PositionImpl;
-import it.unibo.monopoly.model.turnation.impl.TurnationManagerImpl;
 
 
 
