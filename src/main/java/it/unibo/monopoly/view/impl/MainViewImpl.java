@@ -14,6 +14,8 @@ import it.unibo.monopoly.model.transactions.api.BankAccount;
 import it.unibo.monopoly.model.transactions.api.TitleDeed;
 import it.unibo.monopoly.model.turnation.api.Player;
 
+import it.unibo.monopoly.utils.GuiUtils;
+
 import it.unibo.monopoly.view.api.AccountPanel;
 import it.unibo.monopoly.view.api.ContractPanel;
 import it.unibo.monopoly.view.api.GameAction;
@@ -133,12 +135,14 @@ public final class MainViewImpl implements MainGameView {
 
     @Override
     public void displayMessage(final String message) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'displayMessage'");
+        GuiUtils.showInfoMessage(mainGameFrame, message, message);  // TODO può andare bene?
     }
 
     @Override
     public void displayError(final Exception e) {
+        // TODO se ti può andare bene questo termina anche l'applicazione, altrimenti fai con GuiUtils.showInfoMessage()
+        // GuiUtils.showErrorAndExit(mainGameFrame, null, e.getMessage());
+
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'displayError'");
     }
