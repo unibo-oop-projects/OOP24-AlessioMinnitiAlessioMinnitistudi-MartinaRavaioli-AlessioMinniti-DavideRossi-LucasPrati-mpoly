@@ -1,11 +1,7 @@
 package it.unibo.monopoly.model.turnation.impl;
 
-import java.util.Optional;
-
 import it.unibo.monopoly.model.gameboard.api.Board;
-import it.unibo.monopoly.model.turnation.api.Parkable;
 import it.unibo.monopoly.model.turnation.api.Player;
-import it.unibo.monopoly.model.turnation.api.Prisonable;
 import java.awt.Color;
 import java.util.Collection;
 import java.util.Objects;
@@ -20,8 +16,6 @@ public final class PlayerImpl implements Player {
     private final int id;
     private final String name;
     private final Color color;
-    private Optional<Prisonable> prison = Optional.empty();
-    private Optional<Parkable> parking = Optional.empty();
 
     /**
      * Private constructor used internally by the static factory method {@link #of(int, String, Color)}.
@@ -34,16 +28,6 @@ public final class PlayerImpl implements Player {
         this.id = id;
         this.name = name;
         this.color = color;
-
-    }
-
-    private PlayerImpl(final int id, final String name, final Color color, 
-                        final Optional<Parkable> parking, final Optional<Prisonable> prison) {
-        this.id = id;
-        this.name = name;
-        this.color = color;
-        this.parking = parking;
-        this.prison = prison;
 
     }
 
@@ -101,33 +85,24 @@ public final class PlayerImpl implements Player {
 
     @Override
     public boolean isParked() {
-        return parking.isPresent() && parking.get().isParked();
+        return true;
     }
 
     @Override
     public void park() {
-        if (parking.isPresent()) {
-            parking.get().park();
-        }
     }
 
     @Override
     public boolean isInPrison() {
-        return prison.isPresent() && prison.get().isInPrison();
+        return true;
     }
 
     @Override
     public void putInPrison() {
-        if (prison.isPresent()) {
-            prison.get().putInPrison();
-        }
     }
 
     @Override
     public boolean canExitPrison(Collection<Integer> dices, Board board, Player player) {
-        if (prison.isPresent()) {
-            return prison.get().canExit(dices, board, player);
-        }
         return true;
     }
 }

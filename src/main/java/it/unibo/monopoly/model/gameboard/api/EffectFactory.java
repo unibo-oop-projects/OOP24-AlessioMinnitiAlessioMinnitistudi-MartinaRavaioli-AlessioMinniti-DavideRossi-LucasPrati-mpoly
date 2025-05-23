@@ -9,4 +9,6 @@ public interface EffectFactory {
 
     Effect putInPrison();
 
+    Effect park();
+
 }
