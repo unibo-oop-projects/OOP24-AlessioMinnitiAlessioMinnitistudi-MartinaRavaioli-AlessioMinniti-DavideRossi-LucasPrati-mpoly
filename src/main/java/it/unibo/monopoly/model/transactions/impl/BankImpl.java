@@ -11,6 +11,8 @@ import com.google.common.collect.Maps;
 import it.unibo.monopoly.model.gameboard.impl.Group;
 import it.unibo.monopoly.model.transactions.api.Bank;
 import it.unibo.monopoly.model.transactions.api.BankAccount;
+import it.unibo.monopoly.model.transactions.api.BankAction;
+import it.unibo.monopoly.model.transactions.api.BankActionFactory;
 import it.unibo.monopoly.model.transactions.api.TitleDeed;
 import it.unibo.monopoly.model.transactions.impl.bankaccount.ImmutableBankAccountCopy;
 
@@ -24,6 +26,7 @@ public final class BankImpl implements Bank {
 
     private final Map<Integer, BankAccount> accounts;
     private final Map<String, TitleDeed> titleDeeds;
+    private final BankActionFactory bankActionFactory = new BankActionFactoryImpl();
 
 
     /**
@@ -149,5 +152,19 @@ public final class BankImpl implements Bank {
         Objects.requireNonNull(ownerId);
         final BankAccount account = findAccount(ownerId);
         account.withdraw(amount);
+    }
+
+    @Override
+    public Set<BankAction> setTurnTransactions(final int currentPlayerId, final String titleDeedName, final int diceThrow) {
+        final TitleDeed selected = findTitleDeed(titleDeedName);
+
+        if (!selected.isOwned()) {
+            return Set.of(bankActionFactory.createBuy(currentPlayerId, titleDeedName));
+        } else if (selected.getOwnerId() == currentPlayerId){
+            return Set.of(bankActionFactory.createSell(titleDeedName));
+            //TODO build houses
+        } else {
+            return Set.of(bankActionFactory.createPayRent(titleDeedName, currentPlayerId, diceThrow));
+        }
     }
 }
