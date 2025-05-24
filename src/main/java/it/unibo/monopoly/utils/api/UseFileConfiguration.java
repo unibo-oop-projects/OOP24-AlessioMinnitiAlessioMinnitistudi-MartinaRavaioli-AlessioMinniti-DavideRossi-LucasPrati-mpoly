@@ -3,10 +3,10 @@ package it.unibo.monopoly.utils.api;
 import it.unibo.monopoly.utils.Configuration;
 
 /**
- * Specialization of {@link UseFile} for loading a {@link Configuration} object
- * from a custom key-value configuration file.
+ * Specialization of {@link UseFile} for loading configuration key-value pairs.
  * <p>
- * The file must follow a simple {@code KEY: VALUE} format, with optional comments and blank lines.
+ * Expected format: each line must follow the {@code KEY: VALUE} pattern.
+ * Lines that are blank or start with {@code #} are ignored.
  */
 public interface UseFileConfiguration extends UseFile {
 

@@ -6,10 +6,10 @@ import java.io.InputStream;
 
 
 /**
- * Represents a generic file loader capable of opening and accessing resources from the classpath.
+ * Generic contract for accessing file-based resources from the classpath.
  * <p>
- * This is a generic marker interface for internal use.
- * Clients should use specific interfaces like {@link UseFileTxt}, {@link UseFileConfiguration}, {@link UseFileJson}.
+ * Clients should use one of the more specific interfaces instead: 
+ * {@link UseFileTxt}, {@link UseFileConfiguration}, {@link UseFileJson}.
  */
 public interface UseFile {
 

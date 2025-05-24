@@ -9,11 +9,7 @@ import it.unibo.monopoly.model.transactions.impl.BaseTitleDeed;
 
 
 /**
- * Specialization of {@link UseFile} for reading Json-based resources.
- * <p>
- * This interface defines a generic method for deserializing a list of objects
- * from a JSON file located in the classpath. Each JSON array element should
- * be compatible with the provided class type.
+ * Specialization of {@link UseFile} for reading and deserializing JSON files.
  */
 public interface UseFileJson extends UseFile {
 
