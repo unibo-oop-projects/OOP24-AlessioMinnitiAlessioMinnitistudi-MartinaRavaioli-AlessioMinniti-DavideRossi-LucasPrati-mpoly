@@ -2,6 +2,7 @@ package it.unibo.monopoly.controller.api;
 
 import java.awt.Color;
 import java.util.List;
+import java.util.Set;
 
 import it.unibo.monopoly.model.transactions.api.BankAccount;
 import it.unibo.monopoly.model.transactions.api.TitleDeed;
@@ -118,5 +119,13 @@ public interface GameController {
      * @param view the view we want to attach to this controller
      */
     void attachView(MainGameView view);
+
+    /**
+     * return the String version of the rent based on the type of property.
+     * @param selectedProperty of which you want to get the rent
+     * @param collect the property of the player that owns the selected property
+     * @return the string
+     */
+    String getRentString(TitleDeed selectedProperty, Set<TitleDeed> collect);
 
 }

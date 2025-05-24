@@ -3,10 +3,12 @@ package it.unibo.monopoly.controller.impl;
 import java.awt.Color;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 import it.unibo.monopoly.model.gameboard.api.Board;
+import it.unibo.monopoly.model.gameboard.impl.Group;
 import it.unibo.monopoly.model.transactions.api.Bank;
 import it.unibo.monopoly.model.transactions.api.BankAccount;
 import it.unibo.monopoly.model.transactions.api.TitleDeed;
@@ -179,5 +181,16 @@ public final class GameControllerImpl implements GameController {
     @Override
     public void attachView(final MainGameView view) {
         this.gameView = view;
+    }
+
+    @Override
+    public String getRentString(final TitleDeed selectedProperty, final Set<TitleDeed> collect) {
+        final List<Integer> l = List.of(1);
+        final int rent = selectedProperty.getRent(collect, l);
+        if (selectedProperty.getGroup().equals(Group.SOCIETY)) {
+
+            return rent + " times dice result";
+        }
+        return Integer.toString(rent);
     }
 }

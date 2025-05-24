@@ -2,14 +2,13 @@ package it.unibo.monopoly.model.transactions.impl;
 
 import java.util.List;
 import java.util.Set;
-import java.util.function.Function;
+import java.util.Collection;
 
 import it.unibo.monopoly.model.gameboard.impl.Group;
 import it.unibo.monopoly.model.transactions.api.RentOption;
 import it.unibo.monopoly.model.transactions.api.RentOptionFactory;
 import it.unibo.monopoly.model.transactions.api.SpecialPropertyFactory;
 import it.unibo.monopoly.model.transactions.api.TitleDeed;
-import it.unibo.monopoly.model.turnation.api.TurnationManager;
 
 /**
  * implementation of the special property factory interface.
@@ -19,28 +18,25 @@ public final class SpecialPropertyFactoryImpl implements SpecialPropertyFactory 
     private final RentOptionFactory f = new RentOptionFactoryImpl();
 
     @Override
-    public TitleDeed station(final Group group, final String name, final int salePrice, 
-                                final Function<Integer, Integer> mortgageFunction,
-                                final int baseRent) {
+    public TitleDeed station(final String name) {
 
         final int startRent = 50;
+        final int salePrice = 200;
         final List<RentOption> rentO = f.progressivelyIncreasingPrice(startRent, 2, 4);
         final List<RentOption> rent = rentO.subList(1, rentO.size());
-        return new BaseTitleDeed(group, name, salePrice, mortgageFunction, baseRent, rent);
+        return new BaseTitleDeed(Group.STATION, name, salePrice, p -> (p/4)*3, startRent, rent);
     }
 
     @Override
-    public TitleDeed society(final Group group, final String name, final int salePrice, 
-                                final Function<Integer, Integer> mortgageFunction,
-                                final int baseRent, final TurnationManager tunrnationmanager) {
-        final int startRent = 5;
-        final List<RentOption> rentO = f.progressivelyIncreasingPrice(startRent, 2, 2);
+    public TitleDeed society(final String name) {
+        final int salePrice = 120;
+        final int startFactor = 5;
+        final List<RentOption> rentO = f.progressivelyIncreasingPrice(startFactor, 2, 2);
         final List<RentOption> rent = rentO.subList(1, rentO.size());
         return new TitleDeed() {
 
-            private final TitleDeed titleDeed = new BaseTitleDeed(group, name, salePrice, mortgageFunction, baseRent, rent);
-            private final TurnationManager tunrM = tunrnationmanager;
-
+            private final TitleDeed titleDeed = new BaseTitleDeed(Group.SOCIETY, name, salePrice, p -> (p/4)*3, startFactor, rent);
+            
             @Override
             public String getOwner() {
                 return titleDeed.getOwner();
@@ -77,8 +73,8 @@ public final class SpecialPropertyFactoryImpl implements SpecialPropertyFactory 
             }
 
             @Override
-            public Integer getRent(final Set<TitleDeed> groupTitleDeeds) {
-                return titleDeed.getRent(groupTitleDeeds) * tunrM.moveByDices().stream().mapToInt(Integer::intValue).sum();
+            public Integer getRent(final Set<TitleDeed> groupTitleDeeds, Collection<Integer> dices) {
+                return titleDeed.getRent(groupTitleDeeds, dices) * dices.stream().mapToInt(Integer::intValue).sum();
             }
 
             @Override
