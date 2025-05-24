@@ -1,23 +1,28 @@
 package it.unibo.monopoly.utils.impl;
 
+
 import java.io.BufferedReader;
 import java.io.IOException;
+
 import java.util.stream.Collectors;
 
 import it.unibo.monopoly.utils.api.UseFileTxt;
 
 
 /**
- * Implementation of {@link UseFileTxt} for loading text-based resources.
+ * Implementation of {@link UseFileTxt} that provides functionality
+ * to read plain text resources from the classpath.
  * <p>
  * It handles I/O errors gracefully by returning the exception message instead of failing.
  * <p>
  * Inherits file access utilities from {@link AbstractUseFileImpl}.
  */
-public class UseFileTxtImpl extends AbstractUseFileImpl implements UseFileTxt{
+public final class UseFileTxtImpl extends AbstractUseFileImpl implements UseFileTxt{
 
     /**
      * {@inheritDoc}
+     * <p>
+     * If the resource cannot be loaded, returns the exception message instead of throwing.
      */
     @Override
     public String loadTextResource(String path) {

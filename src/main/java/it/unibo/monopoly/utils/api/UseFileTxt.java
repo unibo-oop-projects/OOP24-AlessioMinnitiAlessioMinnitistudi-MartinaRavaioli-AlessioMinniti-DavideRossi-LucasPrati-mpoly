@@ -1,5 +1,6 @@
 package it.unibo.monopoly.utils.api;
 
+
 /**
  * Specialization of {@link UseFile} for loading plain text files.
  * <p>

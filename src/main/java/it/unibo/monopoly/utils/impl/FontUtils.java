@@ -1,5 +1,6 @@
 package it.unibo.monopoly.utils.impl;
 
+
 import java.awt.Font;
 import java.awt.GraphicsEnvironment;
 
@@ -17,7 +18,7 @@ public final class FontUtils {
 
     /**
      * Checks whether the given font name is available in the local graphics environment.
-     * Ignoring case consideration.
+     * The comparison is case-insensitive.
      * @param fontName the name of the font to check
      * @return {@code true} if the font is available; {@code false} otherwise
      */

@@ -1,8 +1,10 @@
 package it.unibo.monopoly.utils.impl;
 
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UncheckedIOException;
+
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
@@ -13,17 +15,17 @@ import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 
 import it.unibo.monopoly.model.transactions.api.TitleDeed;
 import it.unibo.monopoly.model.transactions.impl.BaseTitleDeed;
+
 import it.unibo.monopoly.utils.api.UseFileJson;
 
 
 /**
- * Implementation of {@link UseFileJson} for loading JSON arrays from resources.
+ * Implementation of {@link UseFileJson} responsible for deserializing JSON files
+ * into Java collections using Jackson.
  * <p>
- * This class uses Jackson's {@link ObjectMapper} for deserialization.
- * It supports generic types and automatically registers the {@link Jdk8Module}
- * to handle optional and JDK8+ features.
+ * Relies on a shared {@link ObjectMapper} and type-safe deserialization strategy.
  */
-public class UseFileJsonImpl extends AbstractUseFileImpl implements UseFileJson{
+public final class UseFileJsonImpl extends AbstractUseFileImpl implements UseFileJson{
 
     private final ObjectMapper MAPPER = new ObjectMapper()
                                             .registerModule(new Jdk8Module());

@@ -1,8 +1,11 @@
 package it.unibo.monopoly.utils.impl;
 
+
 import java.awt.Color;
+
 import java.io.BufferedReader;
 import java.io.IOException;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
@@ -16,10 +19,9 @@ import it.unibo.monopoly.utils.api.UseFileConfiguration;
  * Implementation of {@link UseFileConfiguration} for parsing
  * a structured configuration file into a {@link Configuration} object.
  * <p>
- * This class supports comment lines, blank lines, and validates known configuration keys.
- * Malformed or unknown entries are skipped silently.
+ * The file must follow a key-value format with colon-separated pairs.
  */
-public class UseConfigurationFileImpl extends AbstractUseFileImpl implements UseFileConfiguration{
+public final class UseConfigurationFileImpl extends AbstractUseFileImpl implements UseFileConfiguration{
     
     /**
      * Loads a {@link Configuration} object from a configuration file in the classpath.

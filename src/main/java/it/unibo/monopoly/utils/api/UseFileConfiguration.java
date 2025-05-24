@@ -1,6 +1,8 @@
 package it.unibo.monopoly.utils.api;
 
+
 import it.unibo.monopoly.utils.Configuration;
+
 
 /**
  * Specialization of {@link UseFile} for loading configuration key-value pairs.

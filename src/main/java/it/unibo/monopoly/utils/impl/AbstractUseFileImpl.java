@@ -1,13 +1,17 @@
 package it.unibo.monopoly.utils.impl;
 
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+
 import java.nio.charset.StandardCharsets;
+
 import java.util.Objects;
 
 import it.unibo.monopoly.utils.api.UseFile;
+
 
 /**
  * Abstract base implementation of the {@link UseFile} interface, providing common logic 
