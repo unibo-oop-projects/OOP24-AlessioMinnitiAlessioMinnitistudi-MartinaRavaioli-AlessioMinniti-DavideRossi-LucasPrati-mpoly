@@ -93,10 +93,13 @@ public interface Bank {
      * @param titleDeedName the name  of the {@link TitleDeed}
      * associated with the {@link Property} the player's {@link Pawn}
      * has currently stepped onto.
+     * @param diceThrow the total result of the dices thrown by the user, summed together. 
+     * Some {@link BankAction} might utilise it to function. For instance an action that calls 
+     * the method {@link Bank#payRent(String, int)}
      * @return a {@link Set} of {@link BankAction} that can, or have to be performed 
      * by the player that is currently playing its turn. The {@code actions} wil be performed
      * on the requested {@link TitleDeed}, through the {@link BankAccount} of the player whose id
      * was given.
      */
-    Set<BankAction> setTurnTransactions(int currentPlayerId, String titleDeedName);
+    Set<BankAction> setTurnTransactions(int currentPlayerId, String titleDeedName, int diceThrow);
 }
