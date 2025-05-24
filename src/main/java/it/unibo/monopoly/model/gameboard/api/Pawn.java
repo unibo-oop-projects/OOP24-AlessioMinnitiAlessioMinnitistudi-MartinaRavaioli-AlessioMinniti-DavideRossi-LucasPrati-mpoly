@@ -24,6 +24,7 @@ public interface Pawn {
 
     /**
      * set the position.
+     * @param pos
     */
     void setPosition(Position pos);
     /**
