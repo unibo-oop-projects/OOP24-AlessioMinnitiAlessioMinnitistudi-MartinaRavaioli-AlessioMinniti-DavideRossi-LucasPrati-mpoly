@@ -3,6 +3,11 @@ package it.unibo.monopoly.utils;
 import java.awt.Color;
 import java.util.List;
 
+import it.unibo.monopoly.utils.api.UseFileConfiguration;
+import it.unibo.monopoly.utils.impl.FileChecker;
+import it.unibo.monopoly.utils.impl.FontUtils;
+import it.unibo.monopoly.utils.impl.UseConfigurationFileImpl;
+
 /**
  * Represents the game's configuration parameters. 
  */
@@ -136,12 +141,12 @@ public final class Configuration {
                 && minPlayer <= maxPlayer
                 && numDice > 0
                 && sidesPerDie > 0
-                && ResourceLoader.isValidFontName(fontName)
+                && FontUtils.isValidFontName(fontName)
                 && smallFont < bigFont
                 && initBalance >= 0
-                && ResourceLoader.checkPath(rulesPath)
-                && ResourceLoader.checkPath(titleDeedsPath)
-                && ResourceLoader.checkPath(tilesPath);
+                && FileChecker.checkPath(rulesPath)
+                && FileChecker.checkPath(titleDeedsPath)
+                && FileChecker.checkPath(tilesPath);
     }
 
 
@@ -152,7 +157,8 @@ public final class Configuration {
      * @return a {@link Configuration} according to {@code configFile} if consistent. Otherwise a default {@link Configuration}
      */
     public static Configuration configureFromFile(final String configFile) {
-        final Configuration configuration = ResourceLoader.loadConfigurationFile(configFile);
+        final UseFileConfiguration useFileConfig = new UseConfigurationFileImpl();
+        final Configuration configuration = useFileConfig.loadConfigurationFile(configFile);
 
         if (configuration.isConsistent()) {
             return configuration;

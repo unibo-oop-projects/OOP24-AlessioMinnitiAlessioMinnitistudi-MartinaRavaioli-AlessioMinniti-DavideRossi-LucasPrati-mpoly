@@ -17,6 +17,8 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.WindowConstants;
 
+import it.unibo.monopoly.utils.impl.FontUtils;
+
 /**
  * Utility class for common GUI operations.
  */
@@ -24,9 +26,8 @@ public final class GuiUtils {
 
     private static final double WIDTH_PERC = 0.5;
     private static final double HEIGHT_PERC = 0.5;
-    private static final int FONT_STYLE = Font.BOLD;
 
-    private GuiUtils() { }
+    private GuiUtils() { /* Prevent instantiation */ }
 
 
     /**
@@ -211,7 +212,7 @@ public final class GuiUtils {
      * @return a new {@link Font} according to the {@link Configuration} parameters
      */
     public static Font getSmallFontFromConfiguration(final Configuration config) {
-        return createFont(config.getFontName(), config.getSmallFont());
+        return FontUtils.createFont(config.getFontName(), config.getSmallFont());
     }
 
     /**
@@ -221,11 +222,7 @@ public final class GuiUtils {
      * @return a new {@link Font} according to the {@link Configuration} parameters
      */
     public static Font getBigFontFromConfiguration(final Configuration config) {
-        return createFont(config.getFontName(), config.getBigFont());
-    }
-
-    private static Font createFont(final String name, final int size) {
-        return new Font(name, FONT_STYLE, size);
+        return FontUtils.createFont(config.getFontName(), config.getBigFont());
     }
 
     private static void showMessageDialog(final Window parent,
