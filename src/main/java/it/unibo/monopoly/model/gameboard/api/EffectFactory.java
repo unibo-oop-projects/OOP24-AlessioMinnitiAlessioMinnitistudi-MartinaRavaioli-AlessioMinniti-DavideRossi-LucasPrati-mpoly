@@ -31,7 +31,7 @@ public interface EffectFactory {
      * @param board to tip the players pawn to the prison tile
      * @return the effect
      */
-    Effect putInPrison(final Board board);
+    Effect putInPrison(Board board);
 
     /**
      * an effect that park the player.

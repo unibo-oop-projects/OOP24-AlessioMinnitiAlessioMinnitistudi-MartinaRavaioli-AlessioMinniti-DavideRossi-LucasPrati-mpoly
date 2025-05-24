@@ -54,42 +54,50 @@ class FactoryTest {
     private static final int VALID_ID1 = 1;
     private static final Color VALID_COLOR1 = Color.GREEN;
 
+    private static final int VALID_SALE_PRICE1 = 60;
+    private static final int VALID_SALE_PRICE2 = 50;
+    private static final int VALID_BASE_RENT = 10;
 
+    private static final int PO0 = 0;
+    private static final int PO1 = 1;
+    private static final int PO2 = 2;
+    private static final int PO3 = 3;
+    private static final int PO4 = 4;
+    private static final int PO5 = 5;
+    private static final int PO6 = 6;
 
-    private SpecialFactory factory = new SpecialFactoryImpl();
-    private PawnFactory pF = new PawnFactoryImpl();
-    private Position pos0 = new PositionImpl(0);
-    private Position pos1 = new PositionImpl(1);
-    private Position pos2 = new PositionImpl(2);
-    private Position pos3 = new PositionImpl(3);
-    private Position pos4 = new PositionImpl(4);
-    private Position pos5 = new PositionImpl(5);
-    private Position pos6 = new PositionImpl(6);
-
-    private Player p1 = new PrisonablePlayer(new ParkablePlayer(PlayerImpl.of(VALID_ID1, PLAYER1_NAME, VALID_COLOR1)));
-
-    private Set<BankAccount> accounts = Set.of(
-        new SimpleBankAccountImpl(VALID_ID1, PLAYER1_NAME)
-    );
-    private Set<TitleDeed> deeds = Set.of(
-        new BaseTitleDeed(Group.PURPLE, TITLE_DEED_NAME1, 50, s -> s / 2, 10),
-        new BaseTitleDeed(Group.PURPLE, TITLE_DEED_NAME2, 60, s -> s / 2, 10)
-
-    );
-    private List<Pawn> pawns = List.of(
-        pF.createAdvanced(VALID_ID1, pos1, VALID_COLOR1, PLAYER1_NAME)
-    );
-    
-    private Bank bank = new BankImpl(accounts, deeds);
+    private Bank bank;
     private Board board;
 
+    private final SpecialFactory factory = new SpecialFactoryImpl();
+    private final PawnFactory pF = new PawnFactoryImpl();
+    private final Position pos0 = new PositionImpl(PO0);
+    private final Position pos1 = new PositionImpl(PO1);
+    private final Position pos2 = new PositionImpl(PO2);
+    private final Position pos3 = new PositionImpl(PO3);
+    private final Position pos4 = new PositionImpl(PO4);
+    private final Position pos5 = new PositionImpl(PO5);
+    private final Position pos6 = new PositionImpl(PO6);
 
-    private List<Tile> tiles;
+    private final Player p1 = new PrisonablePlayer(new ParkablePlayer(PlayerImpl.of(VALID_ID1, PLAYER1_NAME, VALID_COLOR1)));
+
+    private final Set<BankAccount> accounts = Set.of(
+        new SimpleBankAccountImpl(VALID_ID1, PLAYER1_NAME)
+    );
+    private final Set<TitleDeed> deeds = Set.of(
+        new BaseTitleDeed(Group.PURPLE, TITLE_DEED_NAME1, VALID_SALE_PRICE1, s -> s / 2, VALID_BASE_RENT),
+        new BaseTitleDeed(Group.PURPLE, TITLE_DEED_NAME2, VALID_SALE_PRICE2, s -> s / 2, VALID_BASE_RENT)
+
+    );
+    private final List<Pawn> pawns = List.of(
+        pF.createAdvanced(VALID_ID1, pos1, VALID_COLOR1, PLAYER1_NAME)
+    );
 
 
     @BeforeEach
-    void setAll(){
-        tiles  = List.of(    
+    void setAll() {
+        bank = new BankImpl(accounts, deeds);
+        final List<Tile> tiles = List.of(
         new PropertyImpl("a", pos0, Group.RED),
         new PropertyImpl("b", pos1, Group.BLUE),
         new PropertyImpl("c", pos2, Group.YELLOW),
@@ -103,10 +111,10 @@ class FactoryTest {
     }
 
     @Test
-    void testGoToPrison(){        
-        final Special s = factory.goToPrison(pos3, board);        
-        final Collection<Integer> dice1 = List.of(1,2);
-        final Collection<Integer> dice2 = List.of(1,1);
+    void testGoToPrison() {
+        final Special s = factory.goToPrison(pos3, board);
+        final Collection<Integer> dice1 = List.of(1, 2);
+        final Collection<Integer> dice2 = List.of(1, 1);
         s.activateEffect(p1);
         //assertEquals(pos5, board.getPawn(p1.getID()).getPosition());
         assertTrue(p1.isInPrison());
@@ -118,23 +126,25 @@ class FactoryTest {
     }
 
     @Test
-    void testStart(){
+    void testStart() {
         final Special s = factory.start(bank);
+        final int expectedBalance = 1200;
         s.activateEffect(p1);
-        assertEquals(1200, bank.getBankAccount(p1.getName()).getBalance());
+        assertEquals(expectedBalance, bank.getBankAccount(p1.getName()).getBalance());
 
     }
 
     @Test
-    void testTaxes(){
+    void testTaxes() {
+        final int expectedBalance = 900;
         final Special s = factory.taxes(pos1, bank);
         s.activateEffect(p1);
-        assertEquals(900, bank.getBankAccount(p1.getName()).getBalance());
+        assertEquals(expectedBalance, bank.getBankAccount(p1.getName()).getBalance());
 
     }
 
     @Test
-    void testPark(){
+    void testPark() {
         final Special s = factory.parking(pos2);
         s.activateEffect(p1);
         assertTrue(p1.isParked());
