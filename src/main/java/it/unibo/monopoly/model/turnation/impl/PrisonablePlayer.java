@@ -42,28 +42,23 @@ public final class PrisonablePlayer implements Prisonable, Player {
     }
 
     @Override
-    public boolean canExit(final Collection<Integer> dices, final Board board, final Player player) {
+    public boolean canExitPrison(final Collection<Integer> dices, final Board board, final Player player) {
         final List<Integer> l = List.copyOf(dices);
         for (int i = 0; i < l.size(); i++) {
             for (int j = 0; j < l.size(); j++) {
-                if (i!=j && l.get(i).equals(l.get(j))) {
+                if (i != j && l.get(i).equals(l.get(j))) {
                     validThrow = true; 
                 }
             }
         }
-        
-        /*dices.forEach(p -> dices.forEach(g -> { 
-                                                if (g.equals(p)) { 
-                                                    validThrow = true; 
-                                                }
-                                            }
-                                        ));*/
-                                    
+
         if (validThrow) {
             this.turns = 0;
             board.movePawn(board.getPawn(player.getID()), dices);
+            validThrow = false;
+            return true;
         }
-        return validThrow;
+        return false;
     }
 
     @Override
@@ -94,10 +89,5 @@ public final class PrisonablePlayer implements Prisonable, Player {
     @Override
     public void park() {
         player.park();
-    }
-
-    @Override
-    public boolean canExitPrison(final Collection<Integer> dices, final Board board, final Player player) {
-        return player.canExitPrison(dices, board, player);
     }
 }

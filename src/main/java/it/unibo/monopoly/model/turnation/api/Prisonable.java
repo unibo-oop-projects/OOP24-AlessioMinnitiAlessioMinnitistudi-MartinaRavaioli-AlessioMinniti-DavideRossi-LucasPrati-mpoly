@@ -31,6 +31,6 @@ public interface Prisonable {
      * @param player that shal move 
      * @return whether the player can go on with its turn
      */
-    boolean canExit(Collection<Integer> dices, Board board, Player player);
+    boolean canExitPrison(Collection<Integer> dices, Board board, Player player);
 
 }
