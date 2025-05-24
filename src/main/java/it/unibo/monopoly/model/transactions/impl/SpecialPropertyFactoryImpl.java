@@ -24,7 +24,7 @@ public final class SpecialPropertyFactoryImpl implements SpecialPropertyFactory 
         final int salePrice = 200;
         final List<RentOption> rentO = f.progressivelyIncreasingPrice(startRent, 2, 4);
         final List<RentOption> rent = rentO.subList(1, rentO.size());
-        return new BaseTitleDeed(Group.STATION, name, salePrice, p -> (p/4)*3, startRent, rent);
+        return new BaseTitleDeed(Group.STATION, name, salePrice, p -> p / 4 * 3, startRent, rent);
     }
 
     @Override
@@ -35,8 +35,9 @@ public final class SpecialPropertyFactoryImpl implements SpecialPropertyFactory 
         final List<RentOption> rent = rentO.subList(1, rentO.size());
         return new TitleDeed() {
 
-            private final TitleDeed titleDeed = new BaseTitleDeed(Group.SOCIETY, name, salePrice, p -> (p/4)*3, startFactor, rent);
-            
+            private final TitleDeed titleDeed = new BaseTitleDeed(Group.SOCIETY, name, salePrice,
+                                                             p -> p / 4 * 3, startFactor, rent);
+
             @Override
             public String getOwner() {
                 return titleDeed.getOwner();
@@ -73,7 +74,7 @@ public final class SpecialPropertyFactoryImpl implements SpecialPropertyFactory 
             }
 
             @Override
-            public Integer getRent(final Set<TitleDeed> groupTitleDeeds, Collection<Integer> dices) {
+            public Integer getRent(final Set<TitleDeed> groupTitleDeeds, final Collection<Integer> dices) {
                 return titleDeed.getRent(groupTitleDeeds, dices) * dices.stream().mapToInt(Integer::intValue).sum();
             }
 
