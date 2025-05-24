@@ -7,6 +7,7 @@ import java.util.List;
 
 import it.unibo.monopoly.model.gameboard.api.Board;
 import it.unibo.monopoly.model.gameboard.api.Pawn;
+import it.unibo.monopoly.model.gameboard.api.Property;
 import it.unibo.monopoly.model.gameboard.api.Tile;
 import it.unibo.monopoly.model.turnation.api.Position;
 import it.unibo.monopoly.model.turnation.impl.PositionImpl;
@@ -134,14 +135,23 @@ public class BoardImpl implements Board {
     @Override
     public void movePawnInTile(Pawn pawn, String name) {
         final Tile tile = getTile(name);
-
         pawn.setPosition(tile.getPosition());
     }
 
     @Override
-    public Tile getTileFromName(String name) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getTileFromName'");
+    public Tile getTile(String name) {
+        for (Tile t : this.tiles) {
+            if (t.getName().equals(name)) {
+                if (t instanceof Property) {
+                    return new PropertyImpl(t.getName(), t.getPosition(), t.getGroup());
+                } 
+                else {
+                    return new SpecialImpl(t.getName(), t.getPosition(), t.getGroup());
+                }
+            }
+        }
+
+        throw new IllegalArgumentException("name not found");
     }
 
 }
