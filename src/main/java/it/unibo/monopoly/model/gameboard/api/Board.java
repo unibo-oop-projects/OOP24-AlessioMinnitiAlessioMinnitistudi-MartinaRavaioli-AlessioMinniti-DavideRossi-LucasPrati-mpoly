@@ -68,4 +68,9 @@ public interface Board {
      * @return List of tiles
     */
     List<Tile> getTiles();
+
+    /**
+     * move a pawn in a selected tile.
+    */
+    void movePawnInTile(Pawn pawn, String name);
 }
