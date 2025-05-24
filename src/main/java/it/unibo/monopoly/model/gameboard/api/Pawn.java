@@ -21,4 +21,24 @@ public interface Pawn {
      * @return the own color.
     */
     Color getColor();
+
+    /**
+     * set the position.
+    */
+    void setPosition(Position pos);
+    /**
+     * get the shape.
+     * @return String
+    */
+    String getShape();
+    /**
+     * set the shape.
+     * @param shape
+    */
+    void setShape(String shape);
+    /**
+     * set the color.
+     * @param color
+    */
+    void setColor(Color color);
 }
