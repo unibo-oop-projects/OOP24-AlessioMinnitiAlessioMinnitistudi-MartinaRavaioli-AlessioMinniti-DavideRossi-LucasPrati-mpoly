@@ -79,5 +79,5 @@ public interface Board {
      * @param name
      * @return Tile
     */
-    Tile getTileFromName(String name);
+    Tile getTile(String name);
 }

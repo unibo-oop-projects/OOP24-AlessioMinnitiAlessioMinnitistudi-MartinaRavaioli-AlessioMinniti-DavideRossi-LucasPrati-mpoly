@@ -131,4 +131,17 @@ public class BoardImpl implements Board {
         return Collections.unmodifiableList(this.tiles);
     }
 
+    @Override
+    public void movePawnInTile(Pawn pawn, String name) {
+        final Tile tile = getTile(name);
+
+        pawn.setPosition(tile.getPosition());
+    }
+
+    @Override
+    public Tile getTileFromName(String name) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getTileFromName'");
+    }
+
 }
