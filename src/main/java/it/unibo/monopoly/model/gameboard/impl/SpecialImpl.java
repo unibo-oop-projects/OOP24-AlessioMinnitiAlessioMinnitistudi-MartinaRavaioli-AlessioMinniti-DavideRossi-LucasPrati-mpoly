@@ -12,7 +12,7 @@ import it.unibo.monopoly.model.turnation.api.Position;
 */
 public class SpecialImpl extends TileImpl implements Special {
 
-    private final String effect;
+    private final Effect effect;
 
     /**
     * get the type.
@@ -24,7 +24,7 @@ public class SpecialImpl extends TileImpl implements Special {
     public SpecialImpl(
         @JsonProperty("name") final String name,
         @JsonProperty("position") final Position position,
-        @JsonProperty("effect") final String effect
+        @JsonProperty("effect") final Effect effect
     ) {
         super(name, position, Group.SPECIAL);
         this.effect = effect;
@@ -43,7 +43,7 @@ public class SpecialImpl extends TileImpl implements Special {
      * TO DELETE THIS METHOD, IS TEMPORARY FOR THE INITIALIZATION AND DEBUG OF THE @PARAM effect.
      * @return simple debug for TEMPORARY 'String' effect
      */
-    public String debugEffectTODELETE() {
+    public Effect debugEffectTODELETE() {
         return effect;
     }
 }
