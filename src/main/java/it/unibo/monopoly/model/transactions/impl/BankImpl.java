@@ -26,7 +26,7 @@ public final class BankImpl implements Bank {
 
     private final Map<Integer, BankAccount> accounts;
     private final Map<String, TitleDeed> titleDeeds;
-    private final BankActionFactory bankActionFactory = new BankActionFactoryImpl();
+    private final BankActionFactory bankActionFactory = new BankActionFactoryImpl(this);
 
 
     /**
