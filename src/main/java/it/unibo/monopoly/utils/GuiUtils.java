@@ -1,23 +1,29 @@
 package it.unibo.monopoly.utils;
 
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.LayoutManager;
 import java.awt.Toolkit;
 import java.awt.Window;
 
+import java.util.List;
 import java.util.Objects;
 
+import javax.swing.AbstractButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.WindowConstants;
+import javax.swing.text.JTextComponent;
 
 import it.unibo.monopoly.utils.impl.FontUtils;
+
 
 /**
  * Utility class for common GUI operations.
@@ -230,5 +236,29 @@ public final class GuiUtils {
                                           final String message,
                                           final int type) {
         JOptionPane.showMessageDialog(parent, message, title, type);
+    }
+
+    // TODO funzione ricorsiva per impostare tutti i font di elementi testuali come desiderato
+    public static void setAllFonts(final Component comp, final Configuration config, final List<Component> exclude) {
+        // controlla se è da escludere
+        if (exclude.contains(comp)) {
+            return;
+        }
+
+        // Imposta il font su componenti con testo
+        if (comp instanceof JLabel label) {
+            label.setFont(getSmallFontFromConfiguration(config));
+        } else if (comp instanceof AbstractButton button) { // include JButton, JToggleButton, ecc.
+            button.setFont(getSmallFontFromConfiguration(config));
+        } else if (comp instanceof JTextComponent textComp) { // include JTextField, JTextArea, ecc.
+            textComp.setFont(getSmallFontFromConfiguration(config));
+        }
+
+        // Se è un contenitore, ricorri sui figli
+        if (comp instanceof Container container) {
+            for (Component child : container.getComponents()) {
+                setAllFonts(child, config, exclude);
+            }
+        }
     }
 }
