@@ -17,7 +17,7 @@ class FileCheckerTest {
 
     @Test
     void checkPath_nonexistentPath_returnsFalse() {
-        assertFalse(FileChecker.checkPath("a"));
+        assertFalse(FileChecker.checkPath("nonexistent"));
     }
 
     @Test
