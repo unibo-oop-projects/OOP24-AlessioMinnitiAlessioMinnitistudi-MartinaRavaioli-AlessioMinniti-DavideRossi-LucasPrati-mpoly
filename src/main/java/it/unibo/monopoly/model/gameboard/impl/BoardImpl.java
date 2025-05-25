@@ -155,7 +155,7 @@ public class BoardImpl implements Board {
     }
 
     @Override
-    public void addTile(Tile tile) {
+    public final void addTile(final Tile tile) {
         this.tiles.add(tile);
     }
 
