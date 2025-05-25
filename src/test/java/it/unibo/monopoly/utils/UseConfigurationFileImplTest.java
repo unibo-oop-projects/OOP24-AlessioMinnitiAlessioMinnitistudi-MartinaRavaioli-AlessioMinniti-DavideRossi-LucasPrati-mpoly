@@ -33,13 +33,14 @@ class UseConfigurationFileImplTest {
         Configuration config = configLoader.loadConfigurationFile("nonexistent");
         assertTrue(Configuration.Builder.isDefault(config),
                    "The default configuration should be the default-one");
+        assertTrue(config.isConsistent());
     }
 
     @Test
     void loadConfigurationFile_validFile_returnsParsedConfig() {
         Configuration config = configLoader.loadConfigurationFile(PATH_CONFIGURATION);
         assertFalse(Configuration.Builder.isDefault(config),
-                   "The default configuration should not be the default-one."
+                   "The configuration should not be the default-one."
                    + "Maybe the file does not have a consistent configuration or is equals to the default-one");
     }
 }
