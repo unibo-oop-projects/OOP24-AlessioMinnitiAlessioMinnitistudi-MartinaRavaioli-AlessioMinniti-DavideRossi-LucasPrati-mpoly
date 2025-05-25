@@ -82,4 +82,9 @@ public interface Board {
      * @return Tile
     */
     Tile getTile(String name);
+    /**
+     * add a tile.
+     * @param tile
+    */
+    void addTile(Tile tile);
 }
