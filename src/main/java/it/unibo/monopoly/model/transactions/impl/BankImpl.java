@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.BiFunction;
 import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.tuple.Pair;
@@ -31,7 +32,9 @@ public final class BankImpl implements Bank {
 
     private final Map<Integer, BankAccount> accounts;
     private final Map<String, TitleDeed> titleDeeds;
+    private final BiFunction<BankAccount, Set<TitleDeed>, Integer> rankingBiFunction; 
     private final BankActionFactory bankActionFactory = new BankActionFactoryImpl(this);
+    
 
 
     /**
@@ -41,12 +44,14 @@ public final class BankImpl implements Bank {
      * @param titleDeeds {@link List} of {@link TitleDeed} present in the game
      * @throws IllegalArgumentException if {@code accounts} or {@code titleDeeds} are {@code null}
      */
-    public BankImpl(final Set<BankAccount> accounts, final Set<TitleDeed> titleDeeds) {
+    public BankImpl(final Set<BankAccount> accounts, final Set<TitleDeed> titleDeeds,
+    final BiFunction<BankAccount, Set<TitleDeed>, Integer> rankingBiFunction) {
         if (accounts.isEmpty() || titleDeeds.isEmpty()) {
             throw new IllegalArgumentException("Input lists cannot be empty");
         }
         this.accounts = Maps.uniqueIndex(accounts, BankAccount::getID);
         this.titleDeeds = Maps.uniqueIndex(titleDeeds, TitleDeed::getName);
+        this.rankingBiFunction = rankingBiFunction;
     }
 
     private BankAccount findAccount(final Integer id) {
@@ -68,6 +73,15 @@ public final class BankImpl implements Bank {
                         .stream()
                         .filter(d -> d.getGroup().equals(group))
                         .collect(Collectors.toSet());
+    }
+
+    private int rankPlayer(final int playerId) {
+        final Set<TitleDeed> playerDeeds = titleDeeds.values()
+                                        .stream()
+                                        .filter(t -> t.isOwned()
+                                                    && playerId == t.getOwnerId())
+                                        .collect(Collectors.toSet());
+        return rankingBiFunction.apply(findAccount(playerId), playerDeeds);
     }
 
     @Override
@@ -176,9 +190,8 @@ public final class BankImpl implements Bank {
     private class BankStateAdapter implements BankState {
 
         @Override
-        public boolean canContinuePlay(Player player) {
-            // TODO Auto-generated method stub
-            throw new UnsupportedOperationException("Unimplemented method 'canContinuePlay'");
+        public boolean canContinuePlay(final Player player) {
+            return findAccount(player.getID()).canContinue();
         }
 
         @Override
@@ -188,9 +201,17 @@ public final class BankImpl implements Bank {
         }
 
         @Override
-        public List<Pair<String, Integer>> rankPlayers() {
-            // TODO Auto-generated method stub
-            throw new UnsupportedOperationException("Unimplemented method 'rankPlayers'");
+        public List<Pair<Integer, Integer>> rankPlayers() {
+            final Map<Integer, Integer> ranks = accounts.values()
+                                    .stream()
+                                    .collect(Collectors.toMap(BankAccount::getID, 
+                                            e1 -> rankPlayer(e1.getID())
+                                        )
+                                    );
+            return ranks.entrySet().stream()
+                                    .map(Pair::of)
+                                    .sorted((e1, e2) -> Integer.compare(e1.getRight(), e2.getRight()))
+                                    .toList();
         }
 
     }
