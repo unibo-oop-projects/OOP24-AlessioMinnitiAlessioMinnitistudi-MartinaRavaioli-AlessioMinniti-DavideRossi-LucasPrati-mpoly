@@ -12,7 +12,7 @@ import it.unibo.monopoly.model.turnation.api.Position;
 
 public final class SpecialImpl extends TileImpl implements Special {
 
-    private final Effect effetto;
+    private final Effect effect;
     /**
      * contruvtor for special impl.
      * @param name of the special tile
@@ -22,12 +22,12 @@ public final class SpecialImpl extends TileImpl implements Special {
      */
     public SpecialImpl(final String name, final Position pos, final Group group, final Effect effetto) {
         super(name, pos, group);
-        this.effetto = effetto;
+        this.effect = effetto;
     }
 
     @Override
     public void activateEffect(final Player player) {
-        this.effetto.activate(player);
+        this.effect.activate(player);
 
     }
 

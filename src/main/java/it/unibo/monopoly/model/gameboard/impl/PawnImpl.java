@@ -3,7 +3,6 @@ package it.unibo.monopoly.model.gameboard.impl;
 import java.awt.Color;
 
 import it.unibo.monopoly.model.gameboard.api.Pawn;
-
 import it.unibo.monopoly.model.turnation.api.Position;
 import it.unibo.monopoly.model.turnation.impl.AbstractIdPlayerImpl;
 import it.unibo.monopoly.model.turnation.impl.PositionImpl;
@@ -44,6 +43,7 @@ public class PawnImpl extends AbstractIdPlayerImpl implements Pawn {
      * set color.
      * @param color
     */
+    @Override
     public final void setColor(final Color color) {
         this.color = color;
     }
@@ -52,6 +52,7 @@ public class PawnImpl extends AbstractIdPlayerImpl implements Pawn {
      * set the shape.
      * @param shape
     */
+    @Override
     public final void setShape(final String shape) {
         if (shape.isEmpty() || shape.isBlank()) {
             throw new IllegalArgumentException();
@@ -72,6 +73,7 @@ public class PawnImpl extends AbstractIdPlayerImpl implements Pawn {
      * get the shape.
      * @return String
     */
+    @Override
     public String getShape() {
         return this.shape;
     }
@@ -89,6 +91,7 @@ public class PawnImpl extends AbstractIdPlayerImpl implements Pawn {
      * set the position.
      * @param pos
     */
+    @Override
     public void setPosition(final Position pos) {
         this.pos = new PositionImpl(pos.getPos());
     }
