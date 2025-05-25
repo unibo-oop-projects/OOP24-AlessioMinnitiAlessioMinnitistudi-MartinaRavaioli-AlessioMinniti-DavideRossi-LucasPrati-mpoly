@@ -39,13 +39,13 @@ public final class SpecialPropertyFactoryImpl implements SpecialPropertyFactory 
                                                              p -> p / 4 * 3, startFactor, rent);
 
             @Override
-            public String getOwner() {
-                return titleDeed.getOwner();
+            public int getOwnerId() {
+                return titleDeed.getOwnerId();
             }
 
             @Override
-            public void setOwner(final String ownerName) {
-                titleDeed.setOwner(ownerName);
+            public void setOwner(final int ownerId) {
+                titleDeed.setOwner(ownerId);
             }
 
             @Override
