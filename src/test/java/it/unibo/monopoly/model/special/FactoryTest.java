@@ -115,14 +115,17 @@ class FactoryTest {
         final Special s = factory.goToPrison(pos3, board);
         final Collection<Integer> dice1 = List.of(1, 2);
         final Collection<Integer> dice2 = List.of(1, 1);
+        board.movePawn(board.getPawn(p1.getID()), dice2);
+        assertEquals(pos3.getPos(), board.getPawn(p1.getID()).getPosition().getPos());
+        
         s.activateEffect(p1);
-        //assertEquals(pos5, board.getPawn(p1.getID()).getPosition());
+        assertEquals(pos4.getPos(), board.getPawn(p1.getID()).getPosition().getPos());
         assertTrue(p1.isInPrison());
         assertFalse(p1.canExitPrison(dice1, board, p1));
         assertTrue(p1.isInPrison());
         assertTrue(p1.canExitPrison(dice2, board, p1));
         assertFalse(p1.isInPrison());
-        //assertEquals(pos6, board.getPawn(p1.getID()).getPosition());
+        assertEquals(pos6.getPos(), board.getPawn(p1.getID()).getPosition().getPos());
     }
 
     @Test

@@ -147,7 +147,7 @@ public class BoardImpl implements Board {
                     return new PropertyImpl(t.getName(), t.getPosition(), t.getGroup());
                 } 
                 else {
-                    return new SpecialImpl(t.getName(), t.getPosition(), ((Special) t).getEffect());
+                    return new SpecialImpl(t.getName(), t.getPosition(), Group.SPECIAL , ((Special) t).getEffect());
                 }
             }
         }

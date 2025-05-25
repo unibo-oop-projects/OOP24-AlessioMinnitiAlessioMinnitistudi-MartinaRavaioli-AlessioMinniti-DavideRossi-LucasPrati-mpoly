@@ -31,4 +31,9 @@ public final class SpecialImpl extends TileImpl implements Special {
 
     }
 
+    @Override
+    public Effect getEffect() {
+        return this.effect;
+    }
+
 }
