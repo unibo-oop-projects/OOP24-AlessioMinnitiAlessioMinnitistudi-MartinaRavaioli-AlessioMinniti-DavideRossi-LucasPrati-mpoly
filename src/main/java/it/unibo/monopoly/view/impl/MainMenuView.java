@@ -6,6 +6,7 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.io.IOException;
+import java.io.UncheckedIOException;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -277,6 +278,12 @@ public final class MainMenuView extends JFrame {
                 this,
                 e.getMessage(),
                 "Error loading Json");
+
+        } catch (final UncheckedIOException e) {
+            GuiUtils.showErrorAndExit(
+                this,
+                e.getMessage(),
+                "Error parsing Json");
 
         }
         this.dispose();

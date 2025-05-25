@@ -42,7 +42,7 @@ public final class UseFileJsonImpl extends AbstractUseFileImpl implements UseFil
                     .constructCollectionLikeType(List.class, type);
             out = mapper.readValue(fileJson, outType);
         } catch (final IOException e) {
-            throw new UncheckedIOException("Failed to convert the Json file '" + path + "': ", e);
+            throw new UncheckedIOException("Failed to convert the Json file '" + path + "'", e);
         }
         return out;
     }
