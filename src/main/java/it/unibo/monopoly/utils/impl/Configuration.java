@@ -1,12 +1,9 @@
-package it.unibo.monopoly.utils;
+package it.unibo.monopoly.utils.impl;
 
 import java.awt.Color;
 import java.util.List;
 
 import it.unibo.monopoly.utils.api.UseFileConfiguration;
-import it.unibo.monopoly.utils.impl.FileChecker;
-import it.unibo.monopoly.utils.impl.FontUtils;
-import it.unibo.monopoly.utils.impl.UseConfigurationFileImpl;
 
 /**
  * Represents the game's configuration parameters. 

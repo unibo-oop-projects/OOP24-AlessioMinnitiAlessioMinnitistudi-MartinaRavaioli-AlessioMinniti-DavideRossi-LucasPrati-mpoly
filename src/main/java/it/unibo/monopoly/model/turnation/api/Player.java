@@ -2,7 +2,7 @@ package it.unibo.monopoly.model.turnation.api;
 
 import java.awt.Color;
 
-import it.unibo.monopoly.utils.Identifiable;
+import it.unibo.monopoly.utils.api.Identifiable;
 
 /**
  * Player interface.

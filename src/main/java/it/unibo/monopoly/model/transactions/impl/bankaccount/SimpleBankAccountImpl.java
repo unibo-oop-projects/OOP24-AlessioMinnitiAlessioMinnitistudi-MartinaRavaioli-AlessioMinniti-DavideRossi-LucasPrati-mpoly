@@ -5,7 +5,7 @@ import java.util.Objects;
 import com.google.common.base.Strings;
 
 import it.unibo.monopoly.model.transactions.api.BankAccount;
-import it.unibo.monopoly.utils.Identifiable;
+import it.unibo.monopoly.utils.api.Identifiable;
 
 /**
  * Simple implementation of the {@link BankAccount} interface.

@@ -25,8 +25,8 @@ import it.unibo.monopoly.controller.api.MainMenuController;
 import it.unibo.monopoly.controller.impl.MainMenuControllerImpl;
 import it.unibo.monopoly.model.transactions.api.BankAccountType;
 import it.unibo.monopoly.model.turnation.impl.PlayerImpl;
-import it.unibo.monopoly.utils.Configuration;
-import it.unibo.monopoly.utils.GuiUtils;
+import it.unibo.monopoly.utils.impl.Configuration;
+import it.unibo.monopoly.utils.impl.GuiUtils;
 
 /**
  * MainMenuGUI view.

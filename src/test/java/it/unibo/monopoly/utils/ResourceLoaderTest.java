@@ -16,6 +16,7 @@ import org.junit.jupiter.api.Test;
 
 import it.unibo.monopoly.model.gameboard.api.Tile;
 import it.unibo.monopoly.model.transactions.api.TitleDeed;
+import it.unibo.monopoly.utils.impl.Configuration;
 
 class ResourceLoaderTest {
 

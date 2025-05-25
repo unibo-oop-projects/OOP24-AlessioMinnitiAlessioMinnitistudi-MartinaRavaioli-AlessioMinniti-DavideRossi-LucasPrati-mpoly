@@ -1,7 +1,7 @@
 package it.unibo.monopoly.utils.api;
 
 
-import it.unibo.monopoly.utils.Configuration;
+import it.unibo.monopoly.utils.impl.Configuration;
 
 
 /**

@@ -1,4 +1,4 @@
-package it.unibo.monopoly.utils;
+package it.unibo.monopoly.utils.impl;
 
 
 import java.awt.BorderLayout;
@@ -21,8 +21,6 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.WindowConstants;
 import javax.swing.text.JTextComponent;
-
-import it.unibo.monopoly.utils.impl.FontUtils;
 
 
 /**

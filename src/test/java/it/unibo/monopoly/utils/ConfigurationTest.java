@@ -12,6 +12,8 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import it.unibo.monopoly.utils.impl.Configuration;
+
 class ConfigurationTest {
 
     private static final String VALID_CONFIG_YML = "debug/configuration/debug_config.yml";

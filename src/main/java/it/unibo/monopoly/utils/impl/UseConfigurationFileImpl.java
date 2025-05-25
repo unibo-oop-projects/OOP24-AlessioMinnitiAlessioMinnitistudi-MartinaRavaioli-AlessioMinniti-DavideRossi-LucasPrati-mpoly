@@ -12,7 +12,6 @@ import java.util.Locale;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-import it.unibo.monopoly.utils.Configuration;
 import it.unibo.monopoly.utils.api.UseFileConfiguration;
 
 /**

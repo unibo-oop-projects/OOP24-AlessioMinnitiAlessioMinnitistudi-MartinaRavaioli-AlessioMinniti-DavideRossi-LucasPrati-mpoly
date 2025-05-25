@@ -4,7 +4,7 @@ import java.awt.Color;
 import java.util.Objects;
 
 import it.unibo.monopoly.model.turnation.api.Player;
-import it.unibo.monopoly.utils.Identifiable;
+import it.unibo.monopoly.utils.api.Identifiable;
 
 /**
  * {@link Player}'s implementation.

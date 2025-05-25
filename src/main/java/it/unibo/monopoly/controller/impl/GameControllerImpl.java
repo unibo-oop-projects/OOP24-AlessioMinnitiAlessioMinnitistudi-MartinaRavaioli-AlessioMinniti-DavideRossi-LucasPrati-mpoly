@@ -17,9 +17,7 @@ import it.unibo.monopoly.model.turnation.api.TurnationManager;
 import it.unibo.monopoly.controller.api.GameController;
 
 import it.unibo.monopoly.view.api.MainGameView;
-
-import it.unibo.monopoly.utils.Configuration;
-import it.unibo.monopoly.utils.ResourceLoader;
+import it.unibo.monopoly.utils.impl.Configuration;
 
 
 /**

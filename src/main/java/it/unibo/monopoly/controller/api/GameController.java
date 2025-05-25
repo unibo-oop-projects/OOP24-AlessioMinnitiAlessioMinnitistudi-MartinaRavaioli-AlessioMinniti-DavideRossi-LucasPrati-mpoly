@@ -6,7 +6,7 @@ import java.util.List;
 import it.unibo.monopoly.model.transactions.api.BankAccount;
 import it.unibo.monopoly.model.transactions.api.TitleDeed;
 import it.unibo.monopoly.model.turnation.api.Player;
-import it.unibo.monopoly.utils.Configuration;
+import it.unibo.monopoly.utils.impl.Configuration;
 import it.unibo.monopoly.view.api.MainGameView;
 
 /**

@@ -1,4 +1,4 @@
-package it.unibo.monopoly.utils;
+package it.unibo.monopoly.utils.api;
 
 /**
  * Generic interface for Identification.

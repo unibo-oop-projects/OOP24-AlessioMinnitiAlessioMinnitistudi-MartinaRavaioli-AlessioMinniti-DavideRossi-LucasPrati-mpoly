@@ -13,9 +13,7 @@ import it.unibo.monopoly.controller.api.GameController;
 import it.unibo.monopoly.model.transactions.api.BankAccount;
 import it.unibo.monopoly.model.transactions.api.TitleDeed;
 import it.unibo.monopoly.model.turnation.api.Player;
-
-import it.unibo.monopoly.utils.GuiUtils;
-
+import it.unibo.monopoly.utils.impl.GuiUtils;
 import it.unibo.monopoly.view.api.AccountPanel;
 import it.unibo.monopoly.view.api.ContractPanel;
 import it.unibo.monopoly.view.api.GameAction;

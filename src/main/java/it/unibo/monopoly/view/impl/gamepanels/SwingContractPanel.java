@@ -25,7 +25,7 @@ import javax.swing.SwingConstants;
 
 import it.unibo.monopoly.model.transactions.api.RentOption;
 import it.unibo.monopoly.model.transactions.api.TitleDeed;
-import it.unibo.monopoly.utils.GuiUtils;
+import it.unibo.monopoly.utils.impl.GuiUtils;
 import it.unibo.monopoly.view.api.ContractPanel;
 
 /**

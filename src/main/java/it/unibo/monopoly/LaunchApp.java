@@ -4,7 +4,7 @@ import java.io.FileNotFoundException;
 
 import javax.swing.SwingUtilities;
 
-import it.unibo.monopoly.utils.Configuration;
+import it.unibo.monopoly.utils.impl.Configuration;
 import it.unibo.monopoly.view.impl.MainMenuView;
 
 /**
