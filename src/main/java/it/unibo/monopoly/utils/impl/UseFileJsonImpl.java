@@ -35,7 +35,7 @@ public final class UseFileJsonImpl extends AbstractUseFileImpl implements UseFil
      */
     @Override
     public <T> List<T> loadJsonList(String path, Class<T> type) {
-        Objects.requireNonNull(type);
+        Objects.requireNonNull(type, "The type of deserialization must not be null");
         final List<T> out;
         try (InputStream fileJson = getRequiredStream(path)) {
             final JavaType outType = MAPPER.getTypeFactory()
