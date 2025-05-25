@@ -1,5 +1,6 @@
 package it.unibo.monopoly.utils;
 
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -13,6 +14,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import it.unibo.monopoly.utils.impl.Configuration;
+
 
 class ConfigurationTest {
 
@@ -46,6 +48,7 @@ class ConfigurationTest {
     );
 
     private Configuration.Builder builder;
+
 
     @BeforeEach
     void initBuilder() {
@@ -90,7 +93,8 @@ class ConfigurationTest {
             IllegalStateException.class,
             builder::build
         );
-        testExceptionFormat(exception);
+        assertNotNull(exception.getMessage());
+        assertFalse(exception.getMessage().isBlank());
     }
 
     @Test
@@ -180,7 +184,6 @@ class ConfigurationTest {
             "The default configuration should be consistent");
     }
 
-
     @Test
     void integrationConfigureFromFileWorksWithValidFile() {
         // Integration test: verifies that Configuration can be correctly loaded from a file
@@ -190,12 +193,4 @@ class ConfigurationTest {
                    + "Maybe the file does not have a consistent configuration or is equals to the default-one");
         assertTrue(config.isConsistent());
     }
-
-
-
-    private void testExceptionFormat(final Exception exception) {
-        assertNotNull(exception.getMessage());
-        assertFalse(exception.getMessage().isBlank());
-    }
-
 }
