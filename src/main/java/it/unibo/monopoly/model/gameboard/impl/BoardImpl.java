@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.monopoly.model.gameboard.api.Board;
 import it.unibo.monopoly.model.gameboard.api.Pawn;
 import it.unibo.monopoly.model.gameboard.api.Property;
@@ -113,11 +114,13 @@ public class BoardImpl implements Board {
      * @param id
      * @return Pawn
     */
+    @SuppressFBWarnings(value = "EI_EXPOSE_REP"
+        , justification = "must return reference to the object instead of a copy")
     @Override
     public Pawn getPawn(final int id) {
         for (final Pawn p : this.pawns) {
             if (((PawnImpl) p).getID() == id) {
-                return new PawnImpl(id, p.getPosition(), p.getColor());
+                return p;//new PawnImpl(id, p.getPosition(), p.getColor());
             }
         }
 

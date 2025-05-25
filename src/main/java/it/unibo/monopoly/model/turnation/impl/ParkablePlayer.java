@@ -20,7 +20,7 @@ public final class ParkablePlayer implements Parkable, Player {
      * @param player the base player 
      */
     public ParkablePlayer(final Player player) {
-        this.player = player;
+        this.player = PlayerImpl.of(player.getID(), player.getName(), player.getColor());
     }
 
     @Override

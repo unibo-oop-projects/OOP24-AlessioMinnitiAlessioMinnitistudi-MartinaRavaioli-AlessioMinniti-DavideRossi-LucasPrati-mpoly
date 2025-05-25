@@ -58,26 +58,26 @@ class FactoryTest {
     private static final int VALID_SALE_PRICE2 = 50;
     private static final int VALID_BASE_RENT = 10;
 
-    private static final int PO0 = 0;
-    private static final int PO1 = 1;
-    private static final int PO2 = 2;
-    private static final int PO3 = 3;
-    private static final int PO4 = 4;
-    private static final int PO5 = 5;
-    private static final int PO6 = 6;
+    private int PO0 = 0;
+    private int PO1 = 1;
+    private int PO2 = 2;
+    private int PO3 = 3;
+    private int PO4 = 4;
+    private int PO5 = 5;
+    private int PO6 = 6;
 
     private Bank bank;
     private Board board;
 
     private final SpecialFactory factory = new SpecialFactoryImpl();
     private final PawnFactory pF = new PawnFactoryImpl();
-    private final Position pos0 = new PositionImpl(PO0);
-    private final Position pos1 = new PositionImpl(PO1);
-    private final Position pos2 = new PositionImpl(PO2);
-    private final Position pos3 = new PositionImpl(PO3);
-    private final Position pos4 = new PositionImpl(PO4);
-    private final Position pos5 = new PositionImpl(PO5);
-    private final Position pos6 = new PositionImpl(PO6);
+    private Position pos0 = new PositionImpl(PO0);
+    private Position pos1 = new PositionImpl(PO1);
+    private Position pos2 = new PositionImpl(PO2);
+    private Position pos3 = new PositionImpl(PO3);
+    private Position pos4 = new PositionImpl(PO4);
+    private Position pos5 = new PositionImpl(PO5);
+    private Position pos6 = new PositionImpl(PO6);
 
     private final Player p1 = new PrisonablePlayer(new ParkablePlayer(PlayerImpl.of(VALID_ID1, PLAYER1_NAME, VALID_COLOR1)));
 
@@ -90,7 +90,7 @@ class FactoryTest {
 
     );
     private final List<Pawn> pawns = List.of(
-        pF.createAdvanced(VALID_ID1, pos1, VALID_COLOR1, PLAYER1_NAME)
+        pF.createBasic(VALID_ID1, pos0, VALID_COLOR1)
     );
 
 
@@ -115,7 +115,8 @@ class FactoryTest {
         final Special s = factory.goToPrison(pos3, board);
         final Collection<Integer> dice1 = List.of(1, 2);
         final Collection<Integer> dice2 = List.of(1, 1);
-        board.movePawn(board.getPawn(p1.getID()), dice2);
+
+        board.movePawn(board.getPawn(p1.getID()), dice1);
         assertEquals(pos3.getPos(), board.getPawn(p1.getID()).getPosition().getPos());
         
         s.activateEffect(p1);

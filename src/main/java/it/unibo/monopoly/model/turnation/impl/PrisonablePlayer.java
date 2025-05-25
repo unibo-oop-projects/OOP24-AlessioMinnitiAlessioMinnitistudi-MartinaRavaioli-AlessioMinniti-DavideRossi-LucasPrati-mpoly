@@ -23,7 +23,7 @@ public final class PrisonablePlayer implements Prisonable, Player {
      * @param player the base player.
      */
     public PrisonablePlayer(final Player player) {
-        this.player = player;
+        this.player =  PlayerImpl.of(player.getID(), player.getName(), player.getColor());
     }
 
     @Override
