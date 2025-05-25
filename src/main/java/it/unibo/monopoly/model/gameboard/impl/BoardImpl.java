@@ -114,8 +114,8 @@ public class BoardImpl implements Board {
      * @param id
      * @return Pawn
     */
-    @SuppressFBWarnings(value = "EI_EXPOSE_REP"
-        , justification = "must return reference to the object instead of a copy")
+    @SuppressFBWarnings(value = "EI_EXPOSE_REP",
+                justification = "must return reference to the object instead of a copy")
     @Override
     public Pawn getPawn(final int id) {
         for (final Pawn p : this.pawns) {
@@ -144,13 +144,13 @@ public class BoardImpl implements Board {
 
     @Override
     public Tile getTile(String name) {
-        for (Tile t : this.tiles) {
+        for (final Tile t : this.tiles) {
             if (t.getName().equals(name)) {
                 if (t instanceof Property) {
                     return new PropertyImpl(t.getName(), t.getPosition(), t.getGroup());
-                } 
-                else {
-                    return new SpecialImpl(t.getName(), t.getPosition(), Group.SPECIAL , ((Special) t).getEffect());
+                } else {
+                    return new SpecialImpl(t.getName(), t.getPosition(), Group.SPECIAL, 
+                                                                ((Special) t).getEffect());
                 }
             }
         }
