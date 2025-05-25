@@ -44,14 +44,4 @@ public final class SpecialFactoryImpl implements SpecialFactory {
         return new SpecialImpl("taxes", pos, Group.SPECIAL, factory.withdrawMoney(taxesAmount, bank));
     }
 
-    /**
-     * metodo fatto ab cazzum.
-     * @param bank banca
-     * @return bho
-     */
-    public Special bho(final Bank bank) {
-        return new SpecialImpl(null, null, null, p -> { 
-                                    bank.withdrawFrom(p.toString(), 10); });
-    }
-
 }
