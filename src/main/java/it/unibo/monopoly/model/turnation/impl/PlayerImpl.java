@@ -1,12 +1,12 @@
 package it.unibo.monopoly.model.turnation.impl;
 
-import it.unibo.monopoly.model.gameboard.api.Board;
-import it.unibo.monopoly.model.turnation.api.Player;
 import java.awt.Color;
 import java.util.Collection;
 import java.util.Objects;
 
-import it.unibo.monopoly.utils.Identifiable;
+import it.unibo.monopoly.model.gameboard.api.Board;
+import it.unibo.monopoly.model.turnation.api.Player;
+import it.unibo.monopoly.utils.api.Identifiable;
 
 /**
  * {@link Player}'s implementation.
@@ -19,7 +19,6 @@ public final class PlayerImpl implements Player {
 
     /**
      * Private constructor used internally by the static factory method {@link #of(int, String, Color)}.
-     *
      * @param id the {@link Identifiable} representing the {@link Player}
      * @param name the name chosen by the {@link Player} for himself
      * @param color the {@link Color} representing the {@link Player}
@@ -119,6 +118,7 @@ public final class PlayerImpl implements Player {
         }
         return new PlayerImpl(id, name, color);
     }
+
     @Override
     public boolean isAlive() {
         // TODO Auto-generated method stub

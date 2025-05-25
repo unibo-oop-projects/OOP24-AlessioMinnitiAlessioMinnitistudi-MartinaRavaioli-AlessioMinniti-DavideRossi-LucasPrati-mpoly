@@ -19,9 +19,9 @@ import it.unibo.monopoly.model.turnation.api.TurnationManager;
 import it.unibo.monopoly.controller.api.GameController;
 
 import it.unibo.monopoly.view.api.MainGameView;
-
-import it.unibo.monopoly.utils.Configuration;
-import it.unibo.monopoly.utils.ResourceLoader;
+import it.unibo.monopoly.utils.api.UseFileTxt;
+import it.unibo.monopoly.utils.impl.Configuration;
+import it.unibo.monopoly.utils.impl.UseFileTxtImpl;
 
 
 /**
@@ -158,7 +158,8 @@ public final class GameControllerImpl implements GameController {
 
     @Override
     public void loadRules() {
-        final String rules = ResourceLoader.loadTextResource(config.getRulesPath());
+        final UseFileTxt importRules = new UseFileTxtImpl();
+        final String rules = importRules.loadTextResource(config.getRulesPath());
         gameView.showRules(rules);
     }
 

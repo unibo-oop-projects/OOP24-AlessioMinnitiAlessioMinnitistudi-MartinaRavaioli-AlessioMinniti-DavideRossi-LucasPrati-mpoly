@@ -1,6 +1,6 @@
 package it.unibo.monopoly.model.transactions.api;
 
-import it.unibo.monopoly.utils.Identifiable;
+import it.unibo.monopoly.utils.api.Identifiable;
 
 /**
  * The bank account associated with each player in the game.

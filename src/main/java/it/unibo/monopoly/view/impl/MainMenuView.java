@@ -6,6 +6,7 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.io.IOException;
+import java.io.UncheckedIOException;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -25,8 +26,8 @@ import it.unibo.monopoly.controller.api.MainMenuController;
 import it.unibo.monopoly.controller.impl.MainMenuControllerImpl;
 import it.unibo.monopoly.model.transactions.api.BankAccountType;
 import it.unibo.monopoly.model.turnation.impl.PlayerImpl;
-import it.unibo.monopoly.utils.Configuration;
-import it.unibo.monopoly.utils.GuiUtils;
+import it.unibo.monopoly.utils.impl.Configuration;
+import it.unibo.monopoly.utils.impl.GuiUtils;
 
 /**
  * MainMenuGUI view.
@@ -277,6 +278,12 @@ public final class MainMenuView extends JFrame {
                 this,
                 e.getMessage(),
                 "Error loading Json");
+
+        } catch (final UncheckedIOException e) {
+            GuiUtils.showErrorAndExit(
+                this,
+                e.getMessage(),
+                "Error parsing Json");
 
         }
         this.dispose();
