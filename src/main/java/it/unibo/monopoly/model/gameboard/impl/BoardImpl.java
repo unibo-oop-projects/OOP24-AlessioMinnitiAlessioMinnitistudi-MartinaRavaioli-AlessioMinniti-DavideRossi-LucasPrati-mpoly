@@ -159,4 +159,9 @@ public class BoardImpl implements Board {
         throw new IllegalArgumentException("name not found");
     }
 
+    @Override
+    public final void addTile(final Tile tile) {
+        this.tiles.add(tile);
+    }
+
 }
