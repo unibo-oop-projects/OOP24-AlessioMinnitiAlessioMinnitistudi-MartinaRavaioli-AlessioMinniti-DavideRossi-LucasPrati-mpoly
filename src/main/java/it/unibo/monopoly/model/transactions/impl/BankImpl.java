@@ -7,6 +7,8 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import org.apache.commons.lang3.tuple.Pair;
+
 import com.google.common.collect.Maps;
 
 import it.unibo.monopoly.model.gameboard.impl.Group;
@@ -14,8 +16,10 @@ import it.unibo.monopoly.model.transactions.api.Bank;
 import it.unibo.monopoly.model.transactions.api.BankAccount;
 import it.unibo.monopoly.model.transactions.api.BankAction;
 import it.unibo.monopoly.model.transactions.api.BankActionFactory;
+import it.unibo.monopoly.model.transactions.api.BankState;
 import it.unibo.monopoly.model.transactions.api.TitleDeed;
 import it.unibo.monopoly.model.transactions.impl.bankaccount.ImmutableBankAccountCopy;
+import it.unibo.monopoly.model.turnation.api.Player;
 
 /**
  * This implementation hadles all operations
@@ -167,5 +171,27 @@ public final class BankImpl implements Bank {
         } else {
             return Set.of(bankActionFactory.createPayRent(titleDeedName, currentPlayerId, diceThrow));
         }
+    }
+
+    private class BankStateAdapter implements BankState {
+
+        @Override
+        public boolean canContinuePlay(Player player) {
+            // TODO Auto-generated method stub
+            throw new UnsupportedOperationException("Unimplemented method 'canContinuePlay'");
+        }
+
+        @Override
+        public boolean allMandatoryTransactionsCompleted() {
+            // TODO Auto-generated method stub
+            throw new UnsupportedOperationException("Unimplemented method 'allMandatoryTransactionsCompleted'");
+        }
+
+        @Override
+        public List<Pair<String, Integer>> rankPlayers() {
+            // TODO Auto-generated method stub
+            throw new UnsupportedOperationException("Unimplemented method 'rankPlayers'");
+        }
+
     }
 }
