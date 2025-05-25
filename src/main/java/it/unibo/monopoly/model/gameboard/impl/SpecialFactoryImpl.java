@@ -30,9 +30,13 @@ public final class SpecialFactoryImpl implements SpecialFactory {
         /*return new Special() {
 
             private Group group = Group.SPECIAL;
+            private Board board;
+            private final Position pos = pos;
+            private final String name = "goToPrison";
 
-
-        public setBoard(Board board)
+            public setBoard(Board board) {
+                this.board = board;
+            }
 
             @Override
             public void setGroup(Group group) {
@@ -41,31 +45,27 @@ public final class SpecialFactoryImpl implements SpecialFactory {
 
             @Override
             public Position getPosition() {
-                // TODO Auto-generated method stub
-                throw new UnsupportedOperationException("Unimplemented method 'getPosition'");
+                return this.pos;
             }
 
             @Override
             public String getName() {
-                // TODO Auto-generated method stub
-                throw new UnsupportedOperationException("Unimplemented method 'getName'");
+                return this.name; 
             }
 
             @Override
             public void activateEffect(Player player) {
-                // TODO Auto-generated method stub
-                throw new UnsupportedOperationException("Unimplemented method 'activateEffect'");
+                this.effect.activate;
             }
 
             @Override
             public Effect getEffect() {
-                // TODO Auto-generated method stub
-                throw new UnsupportedOperationException("Unimplemented method 'getEffect'");
+                return this.effect;
             }
 
             @Override
             public Group getGroup() {
-                return this .
+                return this.group;
             }
             
         }; */

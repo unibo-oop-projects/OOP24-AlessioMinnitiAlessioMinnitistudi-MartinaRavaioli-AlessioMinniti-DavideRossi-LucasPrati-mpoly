@@ -97,11 +97,12 @@ class FactoryTest {
     @BeforeEach
     void setAll() {
         bank = new BankImpl(accounts, deeds);
+        board = new BoardImpl();
         final List<Tile> tiles = List.of(
         new PropertyImpl("a", pos0, Group.RED),
         new PropertyImpl("b", pos1, Group.BLUE),
         new PropertyImpl("c", pos2, Group.YELLOW),
-        factory.goToPrison(pos3, null),
+        factory.goToPrison(pos3, board),
         factory.parking(pos5),
         factory.prison(pos4),
         factory.start(bank),
@@ -112,7 +113,7 @@ class FactoryTest {
 
     @Test
     void testGoToPrison() {
-        final Special s = factory.goToPrison(pos3, board);
+        final Special s = (Special)board.getTile("GoToPrison"); //factory.goToPrison(pos3, board);
         final Collection<Integer> dice1 = List.of(1, 2);
         final Collection<Integer> dice2 = List.of(1, 1);
 

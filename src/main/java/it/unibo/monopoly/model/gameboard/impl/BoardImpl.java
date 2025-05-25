@@ -120,7 +120,7 @@ public class BoardImpl implements Board {
     public Pawn getPawn(final int id) {
         for (final Pawn p : this.pawns) {
             if (((PawnImpl) p).getID() == id) {
-                return p;//new PawnImpl(id, p.getPosition(), p.getColor());
+                return p; //new PawnImpl(id, p.getPosition(), p.getColor());
             }
         }
 
