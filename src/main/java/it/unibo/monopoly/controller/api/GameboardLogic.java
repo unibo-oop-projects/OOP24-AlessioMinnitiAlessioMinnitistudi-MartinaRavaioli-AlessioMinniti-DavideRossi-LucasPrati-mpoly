@@ -10,12 +10,18 @@ import it.unibo.monopoly.model.gameboard.impl.Type;
 public interface GameboardLogic {
     /**
     * control if the tile created is on the board.
+    * @param i
+    * @param j
+    * @param size
     */
     boolean isBoardTile(int i, int j, int size);
 
     /**
-    * board view interface.
+    * control if the tile is a card.
+    * @param i
+    * @param j
+    * @param size
     */
-    Color getTileColor(Type type);
+    int isCard(int i, int j, int size);
 
 }
