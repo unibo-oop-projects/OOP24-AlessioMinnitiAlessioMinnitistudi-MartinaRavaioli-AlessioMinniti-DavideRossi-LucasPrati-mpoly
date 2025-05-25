@@ -1,5 +1,6 @@
 package it.unibo.monopoly.model.transactions;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 import java.util.function.Function;
@@ -29,6 +30,7 @@ class BaseTitleDeedTest {
         return salePrice / 10;
     };
     private static final int BASE_RENT_PRICE = 2;
+    private static final Collection<Integer> DICE = List.of(1);
     private TitleDeed deed;
 
 
@@ -111,7 +113,7 @@ class BaseTitleDeedTest {
    @Test
    void testGetCorrectRentPrice() {
         deed.setOwner(OWNER_ID);
-        assertEquals(BASE_RENT_PRICE, deed.getRent(Set.of()));
+        assertEquals(BASE_RENT_PRICE, deed.getRent(Set.of(), DICE));
         final RentOption allPropertiesOwned = new RentOptionImpl("Si possiede tutte le proprietà del gruppo", 
                                                                 "", 
                                                                 BASE_RENT_PRICE * 2, 
@@ -136,7 +138,7 @@ class BaseTitleDeedTest {
                                         );
         shortStreetDeed.setOwner(OWNER_ID);
         longStreetDeed.setOwner(OWNER_ID);
-        assertEquals(BASE_RENT_PRICE * 2, shortStreetDeed.getRent(Set.of(longStreetDeed)));
+        assertEquals(BASE_RENT_PRICE * 2, shortStreetDeed.getRent(Set.of(longStreetDeed), DICE));
     }
 
    @Test
@@ -152,7 +154,7 @@ class BaseTitleDeedTest {
 
         final IllegalArgumentException titleDeedsOfDifferentGroup = assertThrows(
             IllegalArgumentException.class,
-            () -> deed.getRent(Set.of(differentGroupTitleDeed))
+            () -> deed.getRent(Set.of(differentGroupTitleDeed), DICE)
         );
         testExceptionFormat(titleDeedsOfDifferentGroup);
    }

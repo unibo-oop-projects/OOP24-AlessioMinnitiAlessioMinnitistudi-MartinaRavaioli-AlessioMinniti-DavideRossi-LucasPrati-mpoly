@@ -1,5 +1,6 @@
 package it.unibo.monopoly.model.transactions;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Stream;
@@ -25,6 +26,7 @@ class RentOptionFactoryTest {
     private static final int MULTIPLY_FACTOR = 2;
     private static final int N_STATIONS = 4;
     private static final Group GROUP_TYPE = Group.STATION;
+    private static final Collection<Integer> DICE = List.of(1);
     private RentOptionFactory rentOptionFactory;
 
     @BeforeEach
@@ -41,10 +43,10 @@ class RentOptionFactoryTest {
         );
         deeds.getFirst().setOwner(OWNER_ID);
         assertFalse(doubledPrice.canBeApplied(Set.copyOf(deeds), OWNER_ID));
-        assertEquals(START_RENT, deeds.getFirst().getRent(Set.copyOf(deeds)));
+        assertEquals(START_RENT, deeds.getFirst().getRent(Set.copyOf(deeds), DICE));
         deeds.getLast().setOwner(OWNER_ID);
         assertTrue(doubledPrice.canBeApplied(Set.copyOf(deeds), OWNER_ID));
-        assertEquals(START_RENT * 2, deeds.getFirst().getRent(Set.copyOf(deeds)));
+        assertEquals(START_RENT * 2, deeds.getFirst().getRent(Set.copyOf(deeds), DICE));
     }
 
     @Test

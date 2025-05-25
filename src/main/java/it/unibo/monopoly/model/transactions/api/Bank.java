@@ -1,5 +1,6 @@
 package it.unibo.monopoly.model.transactions.api;
 
+import java.util.Collection;
 import java.util.Set;
 
 import it.unibo.monopoly.model.turnation.impl.PlayerImpl;
@@ -37,11 +38,12 @@ public interface Bank {
      * The rent will vary based on the {@link RentOption} chose by the system
      * @param playerId the id, returned by {@link it.unibo.monopoly.utils.Identifiable#getID()}, 
      * associated to the {@link BankAccount} of the player that has to pay the rent
+     * @param dices the value of the throw used to get some specific rent
      * @throws IllegalStateException if the object, and the content it manages, is in
      * a state that does not allow the execution of this operation. These checks
      * are specific of the underlying implementation
      */
-    void payRent(String titleDeedName, int playerId);
+    void payRent(String titleDeedName, int playerId, Collection<Integer> dices);
 
 
     /**
@@ -73,14 +75,14 @@ public interface Bank {
      * @param ownerId the player that will receive the payment
      * @param amount the amount of money to deposit
      */
-    void receivePaymentFromBank(int ownerId, int amount);
+    void depositTo(int ownerId, int amount);
 
     /**
      * make a withdraw from a player's {@link BankAccount}.
      * @param ownerId the player that has to pay the bank
      * @param amount the amount of money to withdraw
      */
-    void makePaymentToBank(int ownerId, int amount);
+    void withdrawFrom(int ownerId, int amount);
 
     /**
      * This method can be called exterally to ask the {@link Bank} which actions,

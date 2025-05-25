@@ -1,9 +1,11 @@
 package it.unibo.monopoly.model.turnation.impl;
 
+import it.unibo.monopoly.model.gameboard.api.Board;
+import it.unibo.monopoly.model.turnation.api.Player;
 import java.awt.Color;
+import java.util.Collection;
 import java.util.Objects;
 
-import it.unibo.monopoly.model.turnation.api.Player;
 import it.unibo.monopoly.utils.Identifiable;
 
 /**
@@ -117,5 +119,32 @@ public final class PlayerImpl implements Player {
         }
         return new PlayerImpl(id, name, color);
     }
+    @Override
+    public boolean isAlive() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'isAlive'");
+    }
 
+    @Override
+    public boolean isParked() {
+        return true;
+    }
+
+    @Override
+    public void park() {
+    }
+
+    @Override
+    public boolean isInPrison() {
+        return true;
+    }
+
+    @Override
+    public void putInPrison() {
+    }
+
+    @Override
+    public boolean canExitPrison(final Collection<Integer> dices, final Board board) {
+        return true;
+    }
 }
