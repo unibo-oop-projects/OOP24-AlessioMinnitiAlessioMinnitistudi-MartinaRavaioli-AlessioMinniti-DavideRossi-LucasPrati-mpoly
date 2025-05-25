@@ -1,10 +1,8 @@
 package it.unibo.monopoly.controller.impl;
 
-import java.awt.Color;
 import java.util.function.Predicate;
 
 import it.unibo.monopoly.controller.api.GameboardLogic;
-import it.unibo.monopoly.model.gameboard.impl.Type;
 
 /**
     * board logic implementation.
@@ -18,35 +16,13 @@ public class GameboardLogicImpl implements GameboardLogic{
     }
 
     @Override
-    public Color getTileColor(Type type) {
-        switch (type) {
-            case Type.RED -> {
-                return Color.RED;
-            }
-            case Type.BLUE -> {
-                return Color.BLUE;
-            }
-            case Type.GREEN -> {
-                return Color.GREEN;
-            }
-            case Type.YELLOW -> {
-                return Color.YELLOW;
-            }
-            case Type.PURPLE -> {
-                return Color.MAGENTA;
-            }
-            case Type.ORANGE -> {
-                return Color.ORANGE;
-            }
-            case Type.CYAN -> {
-                return Color.CYAN;
-            }
-            case Type.BLACK -> {
-                return Color.BLACK;
-            }
-            default -> {
-                return Color.WHITE;
-            }
+    public int isCard(int i, int j, int size) {
+        if ((j == size / 2 - 1) && (i == size / 2)) {
+            return 0;
+        } else if ((j == size / 2 + 1) && (i == size / 2)) {
+            return 1;
+        } else {
+            return -1;
         }
     }
     
