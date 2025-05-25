@@ -35,21 +35,55 @@ public class BankActionFactoryImpl implements BankActionFactory {
     }
 
     @Override
-    public BankAction createBuy(int currentPlayerId, String titleDeedName) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'createBuy'");
+    public BankAction createBuy(final int currentPlayerId, final String titleDeedName) {
+        return new BankAction() {
+
+            @Override
+            public String getName() {
+                return "Buy " + titleDeedName;
+            }
+
+            @Override
+            public void executeTransaction() {
+                bank.buyTitleDeed(titleDeedName, currentPlayerId);
+            }
+            
+        };
     }
 
     @Override
-    public BankAction createSell(String titleDeedName) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'createSell'");
+    public BankAction createSell(final String titleDeedName) {
+        return new BankAction() {
+
+            @Override
+            public String getName() {
+                return "Sell " + titleDeedName;
+            }
+
+            @Override
+            public void executeTransaction() {
+                bank.sellTitleDeed(titleDeedName);
+            }
+            
+        };
     }
 
     @Override
-    public BankAction createPayRent(String titleDeedName, int currentPlayerId, int diceThrow) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'createPayRent'");
+    public BankAction createPayRent(final String titleDeedName, final int currentPlayerId, final int diceThrow) {
+        return new BankAction() {
+
+            @Override
+            public String getName() {
+                return "Pay rent for " + titleDeedName;
+            }
+
+            @Override
+            public void executeTransaction() {
+                //TODO add diceThrow after modification to payRent
+                bank.payRent(titleDeedName, currentPlayerId);
+            }
+            
+        };
     }
 
 }
