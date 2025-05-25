@@ -1,5 +1,6 @@
 package it.unibo.monopoly.model.gameboard.api;
 
+import it.unibo.monopoly.model.gameboard.impl.Group;
 import it.unibo.monopoly.model.turnation.api.Player;
 
 //interface for the Special tiles
@@ -13,4 +14,6 @@ public interface Special extends Tile {
      * @param player the player that triggered the effect
      */
     void activateEffect(Player player);
+
+    Effect getEffect();
 }
