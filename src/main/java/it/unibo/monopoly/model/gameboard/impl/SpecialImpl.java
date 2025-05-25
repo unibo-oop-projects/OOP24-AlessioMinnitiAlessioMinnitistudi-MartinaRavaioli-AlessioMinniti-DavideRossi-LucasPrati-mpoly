@@ -1,49 +1,39 @@
 package it.unibo.monopoly.model.gameboard.impl;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 import it.unibo.monopoly.model.gameboard.api.Effect;
 import it.unibo.monopoly.model.gameboard.api.Special;
+import it.unibo.monopoly.model.turnation.api.Player;
 import it.unibo.monopoly.model.turnation.api.Position;
 
 /**
  * {@link Special} tile implementation.
 */
-public class SpecialImpl extends TileImpl implements Special {
 
-    private final String effect;
+public final class SpecialImpl extends TileImpl implements Special {
 
+    private final Effect effect;
     /**
-    * get the type.
-    * @param name
-    * @param position
-    * @param effect
-    */
-    @JsonCreator
-    public SpecialImpl(
-        @JsonProperty("name") final String name,
-        @JsonProperty("position") final Position position,
-        @JsonProperty("effect") final String effect
-    ) {
-        super(name, position, Group.SPECIAL);
-        this.effect = effect;
-    }
-    /**
-    * get the effect.
-    * @return Effect
-    */
-    @Override
-    public final Effect getEffect() { 
-        return null; 
-    }
-
-    /**
-     * //TODO.
-     * TO DELETE THIS METHOD, IS TEMPORARY FOR THE INITIALIZATION AND DEBUG OF THE @PARAM effect.
-     * @return simple debug for TEMPORARY 'String' effect
+     * contruvtor for special impl.
+     * @param name of the special tile
+     * @param pos of the special tile
+     * @param group of the special tile
+     * @param effetto of the special tile
      */
-    public String debugEffectTODELETE() {
-        return effect;
+    public SpecialImpl(final String name, final Position pos, final Group group, final Effect effetto) {
+        super(name, pos, group);
+        this.effect = effetto;
     }
+
+    @Override
+    public void activateEffect(final Player player) {
+        this.effect.activate(player);
+
+    }
+
+    @Override
+    public Effect getEffect() {
+        return this.effect;
+    }
+
 }

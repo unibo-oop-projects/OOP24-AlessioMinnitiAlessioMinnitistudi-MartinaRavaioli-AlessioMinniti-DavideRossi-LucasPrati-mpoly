@@ -96,7 +96,7 @@ public class TurnationManagerImpl implements TurnationManager {
     @Override
     public final Player getNextPlayer() { 
         this.currPlayer = players.giveNextNode(this.currPlayer);
-        return this.currPlayer;
+        return PlayerImpl.of(this.currPlayer.getID(), this.currPlayer.getName(), this.currPlayer.getColor());
     }
     /**
      * throw the dices.
