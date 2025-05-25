@@ -100,8 +100,11 @@ public final class GameboardViewImpl extends JPanel implements GameboardView {
                     if (logic.isCard(i, j, this.size) == 0) {
                         this.setBackground(Color.RED);
                         JLabel label = new JLabel("IMPREVISTI");
+                        tile.add(label,BorderLayout.CENTER);
                     } else {
-                        
+                        this.setBackground(Color.YELLOW);
+                        JLabel label = new JLabel("PROBABILITA'");
+                        tile.add(label,BorderLayout.CENTER);
                     }
                 } else {
                     tile.setBackground(Color.lightGray); // Centro non giocabile
