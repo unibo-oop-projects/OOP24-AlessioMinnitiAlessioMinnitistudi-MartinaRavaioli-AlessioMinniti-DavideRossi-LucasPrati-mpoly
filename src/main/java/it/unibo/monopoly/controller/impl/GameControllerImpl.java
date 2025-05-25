@@ -1,6 +1,7 @@
 package it.unibo.monopoly.controller.impl;
 
 import java.awt.Color;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -152,8 +153,9 @@ public final class GameControllerImpl implements GameController {
 
     @Override
     public void throwDices() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'throwDices'");
+        final Collection<Integer> result = this.turnationManager.moveByDices();
+        this.board.movePawn(this.board.getPawn(this.turnationManager.getIdCurrPlayer()), result);
+        this.gameboardView.changePos(this.turnationManager.getIdCurrPlayer(), this.board.getPawn(this.turnationManager.getIdCurrPlayer()).getPosition());
     }
 
     @Override
@@ -251,5 +253,10 @@ public final class GameControllerImpl implements GameController {
     @Override
     public List<Pawn> getPawns() {
         return Collections.unmodifiableList(this.board.getPawns());
+    }
+
+    @Override
+    public void setBoardView(GameboardView view) {
+        this.gameboardView = view;
     }
 }

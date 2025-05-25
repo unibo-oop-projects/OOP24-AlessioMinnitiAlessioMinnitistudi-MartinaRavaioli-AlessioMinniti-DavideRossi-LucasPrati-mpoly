@@ -10,6 +10,7 @@ import it.unibo.monopoly.model.transactions.api.BankAccount;
 import it.unibo.monopoly.model.transactions.api.TitleDeed;
 import it.unibo.monopoly.model.turnation.api.Player;
 import it.unibo.monopoly.utils.Configuration;
+import it.unibo.monopoly.view.api.GameboardView;
 import it.unibo.monopoly.view.api.MainGameView;
 
 /**
@@ -160,4 +161,10 @@ public interface GameController {
      * @return List Pawn
     */
     List<Pawn> getPawns();
+
+    /**
+     * set the gameboard view.
+     * @param view
+    */
+    void setBoardView(GameboardView view);
 }

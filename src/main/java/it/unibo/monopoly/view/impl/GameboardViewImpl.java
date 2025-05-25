@@ -53,13 +53,20 @@ public final class GameboardViewImpl extends JPanel implements GameboardView {
     }
 
     @Override
-    public void changePos(int currPlayer, Position newPos) {
-        pawnPositions.replace(currPlayer, pawnPositions.get(currPlayer), newPos);
-        
-        for (int i=0; i < 4; i++) {
-            JPanel panel = this.tilesView.get(pawnPositions.get(i).getPos());
-            // panel.add(shapes.get(i));
+    public void changePos(final int currPlayer, final Position newPos) {
+
+        JPanel prePanel = this.tilesView.get(pawnPositions.get(currPlayer).getPos());
+
+        for (Component c : prePanel.getComponents()) {
+            if (c instanceof PawnCircle) {
+                prePanel.remove(c);
+                break;
+            }
         }
+        pawnPositions.replace(currPlayer, pawnPositions.get(currPlayer), newPos);
+        JPanel postPanel = this.tilesView.get(pawnPositions.get(currPlayer).getPos());
+        postPanel.add(new PawnCircle(controller.getPawns().get(currPlayer).getColor()));
+        
     }
 
     @Override
@@ -98,16 +105,16 @@ public final class GameboardViewImpl extends JPanel implements GameboardView {
                     tile.setBorder(BorderFactory.createLineBorder(Color.black));
 
                     if (logic.isCard(i, j, this.size) == 0) {
-                        this.setBackground(Color.RED);
+                        tile.setBackground(Color.RED);
                         JLabel label = new JLabel("IMPREVISTI");
                         tile.add(label,BorderLayout.CENTER);
                     } else {
-                        this.setBackground(Color.YELLOW);
+                        tile.setBackground(Color.YELLOW);
                         JLabel label = new JLabel("PROBABILITA'");
                         tile.add(label,BorderLayout.CENTER);
                     }
                 } else {
-                    tile.setBackground(Color.lightGray); // Centro non giocabile
+                    tile.setBackground(Color.lightGray);
                 }
                 board.add(tile);
                 
@@ -131,7 +138,9 @@ public final class GameboardViewImpl extends JPanel implements GameboardView {
 
         for (int i=0; i < controller.getPawns().size(); i++) {
             JPanel panel = this.tilesView.get(pawnPositions.get(i).getPos());
-            panel.add(new PawnCircle(this.controller.getPawns().get(i).getColor()));
+            PawnCircle pawnGUI = new PawnCircle(this.controller.getPawns().get(i).getColor());
+            pawnGUI.setName("pawn"+i);
+            panel.add(pawnGUI);
         }
 
         this.setVisible(true);

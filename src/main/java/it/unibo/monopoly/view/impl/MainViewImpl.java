@@ -55,6 +55,7 @@ public final class MainViewImpl implements MainGameView {
     public MainViewImpl(final GameController controller) {
         this.gameBoardPanel = new GameboardViewImpl(11,controller);
         this.controller = controller;
+        this.controller.setBoardView(this.gameBoardPanel);
         final GamePanelsFactory fact = new SwingPanelsFactory();
         contractPanel = fact.contractPanel();
         contractPanel.renderDefaultUI();
