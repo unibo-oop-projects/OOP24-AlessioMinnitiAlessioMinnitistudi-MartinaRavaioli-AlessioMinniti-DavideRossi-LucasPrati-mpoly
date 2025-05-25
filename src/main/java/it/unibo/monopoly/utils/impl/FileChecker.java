@@ -3,6 +3,7 @@ package it.unibo.monopoly.utils.impl;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Objects;
 
 
 /**
@@ -28,8 +29,10 @@ public final class FileChecker {
         }
 
         try (InputStream ignored = ClassLoader.getSystemResourceAsStream(path)) {
-            return true;
+            // return true only if the InputStream exist
+            return Objects.nonNull(ignored);
         } catch (final IOException e) {
+            // here only if the close operation failed
             return false;
         }
     }
