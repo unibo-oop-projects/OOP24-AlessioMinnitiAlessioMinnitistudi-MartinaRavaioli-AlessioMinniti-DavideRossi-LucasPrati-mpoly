@@ -51,6 +51,27 @@ class UseFileJsonImplTest {
     }
 
     @Test
+    void loadTitleDeedsFieldsShouldNotBeNull() {
+        final Set<TitleDeed> deeds = jsonLoader.loadTitleDeeds(PATH_TITLE_DEEDS);
+        deeds.forEach(deed -> {
+            assertNotNull(deed.getName(), "TitleDeed name should not be null");
+            assertNotNull(deed.getGroup(), "TitleDeed group should not be null");
+            assertNotNull(deed.getSalePrice(), "TitleDeed sale price should not be null");
+            assertNotNull(deed.getRentOptions(), "TitleDeed rent options should not be null");
+        });
+    }
+
+    @Test
+    void loadTilesFieldsShouldNotBeNull() {
+        final List<Tile> tiles = jsonLoader.loadJsonList(PATH_TILES, Tile.class);
+        tiles.forEach(tile -> {
+            assertNotNull(tile.getName(), "Tile name should not be null");
+            assertNotNull(tile.getPosition(), "Tile position should not be null");
+            assertNotNull(tile.getGroup(), "Tile group should not be null");
+        });
+    }
+
+    @Test
     void loadExistingTilesReturnsList() {
         final List<Tile> tiles = jsonLoader.loadJsonList(PATH_TILES, Tile.class);
         testCollection(
