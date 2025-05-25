@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.util.Collection;
 import java.util.List;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.monopoly.model.gameboard.api.Board;
 import it.unibo.monopoly.model.turnation.api.Player;
 import it.unibo.monopoly.model.turnation.api.Prisonable;
@@ -22,8 +23,10 @@ public final class PrisonablePlayer implements Prisonable, Player {
      * constructor for ParkablePlayer.
      * @param player the base player.
      */
+    @SuppressFBWarnings(value = "EI_EXPOSE_REP", 
+        justification = "must keep reference to the object, not a copy")
     public PrisonablePlayer(final Player player) {
-        this.player =  PlayerImpl.of(player.getID(), player.getName(), player.getColor());
+        this.player = player;
     }
 
     @Override
@@ -42,7 +45,7 @@ public final class PrisonablePlayer implements Prisonable, Player {
     }
 
     @Override
-    public boolean canExitPrison(final Collection<Integer> dices, final Board board, final Player player) {
+    public boolean canExitPrison(final Collection<Integer> dices, final Board board) {
         final List<Integer> l = List.copyOf(dices);
         for (int i = 0; i < l.size(); i++) {
             for (int j = 0; j < l.size(); j++) {
@@ -54,7 +57,7 @@ public final class PrisonablePlayer implements Prisonable, Player {
 
         if (validThrow) {
             this.turns = 0;
-            board.movePawn(board.getPawn(player.getID()), dices);
+            board.movePawn(board.getPawn(this.getID()), dices);
             validThrow = false;
             return true;
         }

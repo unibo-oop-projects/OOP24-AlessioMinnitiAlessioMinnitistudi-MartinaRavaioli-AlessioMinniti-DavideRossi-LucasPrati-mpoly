@@ -3,6 +3,7 @@ package it.unibo.monopoly.model.turnation.impl;
 import java.awt.Color;
 import java.util.Collection;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.monopoly.model.gameboard.api.Board;
 import it.unibo.monopoly.model.turnation.api.Parkable;
 import it.unibo.monopoly.model.turnation.api.Player;
@@ -13,14 +14,16 @@ import it.unibo.monopoly.model.turnation.api.Player;
 public final class ParkablePlayer implements Parkable, Player {
 
     private boolean in;
-    private final Player player;
+    private final Player pl;
 
     /**
      * constructor for Parkable player.
      * @param player the base player 
      */
+    @SuppressFBWarnings(value = "EI_EXPOSE_REP", 
+        justification = "must keep reference to the object, not a copy")
     public ParkablePlayer(final Player player) {
-        this.player = PlayerImpl.of(player.getID(), player.getName(), player.getColor());
+        this.pl = player;
     }
 
     @Override
@@ -40,36 +43,36 @@ public final class ParkablePlayer implements Parkable, Player {
 
     @Override
     public Integer getID() {
-        return player.getID();
+        return pl.getID();
     }
 
     @Override
     public String getName() {
-        return player.getName();
+        return pl.getName();
     }
 
     @Override
     public Color getColor() {
-        return player.getColor();
+        return pl.getColor();
     }
 
     @Override
     public boolean isAlive() {
-        return player.isAlive();
+        return pl.isAlive();
     }
 
     @Override
     public boolean isInPrison() {
-        return player.isInPrison();
+        return pl.isInPrison();
     }
 
     @Override
     public void putInPrison() {
-        player.putInPrison();
+        pl.putInPrison();
     }
 
     @Override
-    public boolean canExitPrison(final Collection<Integer> dices, final Board board, final Player player) {
-        return player.canExitPrison(dices, board, player);
+    public boolean canExitPrison(final Collection<Integer> dices, final Board board) {
+        return pl.canExitPrison(dices, board);
     }
 }

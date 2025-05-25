@@ -2,12 +2,10 @@
 
 
 import it.unibo.monopoly.model.gameboard.api.Board;
-import it.unibo.monopoly.model.gameboard.api.Effect;
 import it.unibo.monopoly.model.gameboard.api.EffectFactory;
 import it.unibo.monopoly.model.gameboard.api.Special;
 import it.unibo.monopoly.model.gameboard.api.SpecialFactory;
 import it.unibo.monopoly.model.transactions.api.Bank;
-import it.unibo.monopoly.model.turnation.api.Player;
 import it.unibo.monopoly.model.turnation.api.Position;
 import it.unibo.monopoly.model.turnation.impl.PositionImpl;
 
@@ -27,48 +25,6 @@ public final class SpecialFactoryImpl implements SpecialFactory {
 
     @Override
     public Special goToPrison(final Position pos, final Board board) {
-        /*return new Special() {
-
-            private Group group = Group.SPECIAL;
-            private Board board;
-            private final Position pos = pos;
-            private final String name = "goToPrison";
-
-            public setBoard(Board board) {
-                this.board = board;
-            }
-
-            @Override
-            public void setGroup(Group group) {
-                this.group = group;
-            }
-
-            @Override
-            public Position getPosition() {
-                return this.pos;
-            }
-
-            @Override
-            public String getName() {
-                return this.name; 
-            }
-
-            @Override
-            public void activateEffect(Player player) {
-                this.effect.activate;
-            }
-
-            @Override
-            public Effect getEffect() {
-                return this.effect;
-            }
-
-            @Override
-            public Group getGroup() {
-                return this.group;
-            }
-            
-        }; */
         return new SpecialImpl("GoToPrison", pos, Group.SPECIAL, factory.putInPrison(board));
     }
 
