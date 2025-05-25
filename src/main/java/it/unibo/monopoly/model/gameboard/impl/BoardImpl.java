@@ -137,13 +137,14 @@ public class BoardImpl implements Board {
     }
 
     @Override
-    public void movePawnInTile(Pawn pawn, String name) {
+    public final void movePawnInTile(final Pawn pawn, final String name) {
         final Tile tile = getTile(name);
         pawn.setPosition(tile.getPosition());
     }
 
     @Override
-    public Tile getTile(String name) {
+
+    public final Tile getTile(final String name) {
         for (final Tile t : this.tiles) {
             if (t.getName().equals(name)) {
                 if (t instanceof Property) {
@@ -151,7 +152,7 @@ public class BoardImpl implements Board {
                 } else {
                     return new SpecialImpl(t.getName(), t.getPosition(), Group.SPECIAL, 
                                                                 ((Special) t).getEffect());
-                }
+              }
             }
         }
 
