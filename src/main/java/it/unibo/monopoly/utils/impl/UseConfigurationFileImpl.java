@@ -12,15 +12,15 @@ import java.util.Locale;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-import it.unibo.monopoly.utils.api.UseFileConfiguration;
+import it.unibo.monopoly.utils.api.UseConfigurationFile;
 
 /**
- * Implementation of {@link UseFileConfiguration} for parsing
+ * Implementation of {@link UseConfigurationFile} for parsing
  * a structured configuration file into a {@link Configuration} object.
  * <p>
  * The file must follow a key-value format with colon-separated pairs.
  */
-public final class UseConfigurationFileImpl extends AbstractUseFileImpl implements UseFileConfiguration{
+public final class UseConfigurationFileImpl extends AbstractUseFileImpl implements UseConfigurationFile{
     
     /**
      * Loads a {@link Configuration} object from a configuration file in the classpath.

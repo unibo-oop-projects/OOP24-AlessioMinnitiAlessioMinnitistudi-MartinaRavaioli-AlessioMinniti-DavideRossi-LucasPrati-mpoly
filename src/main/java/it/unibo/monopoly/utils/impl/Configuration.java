@@ -2,8 +2,9 @@ package it.unibo.monopoly.utils.impl;
 
 import java.awt.Color;
 import java.util.List;
+import java.util.Objects;
 
-import it.unibo.monopoly.utils.api.UseFileConfiguration;
+import it.unibo.monopoly.utils.api.UseConfigurationFile;
 
 /**
  * Represents the game's configuration parameters. 
@@ -154,7 +155,7 @@ public final class Configuration {
      * @return a {@link Configuration} according to {@code configFile} if consistent. Otherwise a default {@link Configuration}
      */
     public static Configuration configureFromFile(final String configFile) {
-        final UseFileConfiguration useFileConfig = new UseConfigurationFileImpl();
+        final UseConfigurationFile useFileConfig = new UseConfigurationFileImpl();
         final Configuration configuration = useFileConfig.loadConfigurationFile(configFile);
 
         if (configuration.isConsistent()) {
@@ -348,6 +349,28 @@ public final class Configuration {
             return new Configuration(minPlayer, maxPlayer, numDice, sidesPerDie,
                                     fontName, bigFont, smallFont, initBalance,
                                     rulesPath, titleDeedsPath, tilesPath, playerColors);
+        }
+
+        /**
+         * Check if the provided {@link Configuration} is equals to the default-one.
+         * @param config the {@link Configuration} to check
+         * @return true if the provided {@link Configuration} is equals to the default-one, false otherwise
+         * @throws NullPointerException if {@code config} is {@code null}
+         */
+        public static boolean isDefault(final Configuration config) {
+            Objects.requireNonNull(config, "Configuration must not be null");
+            return MIN_PLAYER    ==  config.getMinPlayer()
+                && MAX_PLAYER    ==  config.getMaxPlayer()
+                && NUM_DICE      ==  config.getNumDice()
+                && SIDES_PER_DIE ==  config.getSidesPerDie()
+                && FONT_NAME.equals(config.getFontName())
+                && BIG_FONT      ==  config.getBigFont()
+                && SMALL_FONT    ==  config.getSmallFont()
+                && INIT_BALANCE  ==  config.getInitBalance()
+                && RULES_PATH.equals(config.getRulesPath())
+                && TITLE_DEEDS_PATH.equals(config.getTitleDeedsPath())
+                && TILES_PATH.equals(config.getTilesPath())
+                && PLAYER_COLORS.containsAll(config.getPlayerColors());
         }
     }
 }

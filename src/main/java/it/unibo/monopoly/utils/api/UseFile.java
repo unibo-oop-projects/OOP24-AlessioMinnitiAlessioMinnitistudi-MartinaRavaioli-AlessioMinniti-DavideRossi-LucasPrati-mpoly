@@ -10,7 +10,7 @@ import java.io.InputStream;
  * Generic contract for accessing file-based resources from the classpath.
  * <p>
  * Clients should use one of the more specific interfaces instead: 
- * {@link UseFileTxt}, {@link UseFileConfiguration}, {@link UseFileJson}.
+ * {@link UseFileTxt}, {@link UseConfigurationFile}, {@link UseFileJson}.
  */
 public interface UseFile {
 

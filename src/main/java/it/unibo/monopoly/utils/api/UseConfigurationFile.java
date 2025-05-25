@@ -10,7 +10,7 @@ import it.unibo.monopoly.utils.impl.Configuration;
  * Expected format: each line must follow the {@code KEY: VALUE} pattern.
  * Lines that are blank or start with {@code #} are ignored.
  */
-public interface UseFileConfiguration extends UseFile {
+public interface UseConfigurationFile extends UseFile {
 
     /**
      * Loads a {@link Configuration} object from a configuration file in the classpath.

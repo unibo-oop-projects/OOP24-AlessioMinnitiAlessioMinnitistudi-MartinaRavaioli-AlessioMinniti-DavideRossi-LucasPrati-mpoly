@@ -12,12 +12,12 @@ import it.unibo.monopoly.utils.impl.UseFileTxtImpl;
 
 class UseFileTxtImplTest {
     
-    private final String rulesPath = "debug/rules/debug_rules.txt";
+    private static final String PATH_RULES = "debug/rules/debug_rules.txt";
     private final UseFileTxt txtLoader = new UseFileTxtImpl();
 
     @Test
     void loadTextResource_existingPath_returnsContent() {
-        String content = txtLoader.loadTextResource(rulesPath);
+        String content = txtLoader.loadTextResource(PATH_RULES);
         testMessageFormat(content);
     }
 
