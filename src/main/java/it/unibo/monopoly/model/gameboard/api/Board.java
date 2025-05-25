@@ -71,6 +71,8 @@ public interface Board {
 
     /**
      * move a pawn in a selected tile.
+     * @param pawn
+     * @param name
     */
     void movePawnInTile(Pawn pawn, String name);
 
@@ -80,4 +82,9 @@ public interface Board {
      * @return Tile
     */
     Tile getTile(String name);
+    /**
+     * add a tile.
+     * @param tile
+    */
+    void addTile(Tile tile);
 }

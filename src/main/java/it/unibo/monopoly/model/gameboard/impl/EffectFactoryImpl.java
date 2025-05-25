@@ -41,7 +41,7 @@ public final class EffectFactoryImpl implements EffectFactory {
             @Override
             public void activate(final Player player) {
                 player.putInPrison();
-                //board.movePawn(board.getPawn(player.getID()), Set.of(1 - pos.getPos()));
+                board.movePawnInTile(board.getPawn(player.getID()), "prison");
             }
         };
     }

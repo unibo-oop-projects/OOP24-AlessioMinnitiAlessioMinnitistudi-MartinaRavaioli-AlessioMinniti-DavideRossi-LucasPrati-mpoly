@@ -57,8 +57,7 @@ public interface Player extends Identifiable<Integer> {
      * If he can then it moves the players pawn
      * @param dices to get the result
      * @param board to move the pawn
-     * @param player to get the pawn
      * @return whether he can
      */
-    boolean canExitPrison(Collection<Integer> dices, Board board, Player player);
+    boolean canExitPrison(Collection<Integer> dices, Board board);
 }

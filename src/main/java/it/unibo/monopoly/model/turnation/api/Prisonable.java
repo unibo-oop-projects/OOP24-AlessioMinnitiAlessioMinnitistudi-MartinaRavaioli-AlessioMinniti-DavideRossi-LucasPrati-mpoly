@@ -28,9 +28,8 @@ public interface Prisonable {
      * if the player is free
      * @param dices to check the throw
      * @param board to move the pawn in case the throw is valid
-     * @param player that shal move 
      * @return whether the player can go on with its turn
      */
-    boolean canExitPrison(Collection<Integer> dices, Board board, Player player);
+    boolean canExitPrison(Collection<Integer> dices, Board board);
 
 }

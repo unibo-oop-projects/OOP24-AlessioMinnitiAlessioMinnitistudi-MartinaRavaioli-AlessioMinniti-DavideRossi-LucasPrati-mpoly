@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.monopoly.model.gameboard.api.Board;
 import it.unibo.monopoly.model.gameboard.api.Pawn;
 import it.unibo.monopoly.model.gameboard.api.Property;
@@ -113,11 +114,13 @@ public class BoardImpl implements Board {
      * @param id
      * @return Pawn
     */
+    @SuppressFBWarnings(value = "EI_EXPOSE_REP",
+                justification = "must return reference to the object instead of a copy")
     @Override
     public Pawn getPawn(final int id) {
         for (final Pawn p : this.pawns) {
             if (((PawnImpl) p).getID() == id) {
-                return new PawnImpl(id, p.getPosition(), p.getColor());
+                return p; //new PawnImpl(id, p.getPosition(), p.getColor());
             }
         }
 
@@ -134,25 +137,31 @@ public class BoardImpl implements Board {
     }
 
     @Override
-    public void movePawnInTile(Pawn pawn, String name) {
+    public final void movePawnInTile(final Pawn pawn, final String name) {
         final Tile tile = getTile(name);
         pawn.setPosition(tile.getPosition());
     }
 
     @Override
-    public Tile getTile(String name) {
-        for (Tile t : this.tiles) {
+
+    public final Tile getTile(final String name) {
+        for (final Tile t : this.tiles) {
             if (t.getName().equals(name)) {
                 if (t instanceof Property) {
                     return new PropertyImpl(t.getName(), t.getPosition(), t.getGroup());
-                } 
-                else {
-                    return new SpecialImpl(t.getName(), t.getPosition(),Group.SPECIAL , ((Special) t).getEffect());
-                }
+                } else {
+                    return new SpecialImpl(t.getName(), t.getPosition(), Group.SPECIAL, 
+                                                                ((Special) t).getEffect());
+              }
             }
         }
 
         throw new IllegalArgumentException("name not found");
+    }
+
+    @Override
+    public final void addTile(final Tile tile) {
+        this.tiles.add(tile);
     }
 
 }
