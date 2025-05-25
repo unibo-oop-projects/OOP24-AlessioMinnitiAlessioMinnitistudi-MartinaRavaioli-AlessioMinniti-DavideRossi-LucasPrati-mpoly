@@ -19,5 +19,5 @@ public interface UseConfigurationFile extends UseFile {
      * @param path relative path of the resource
      * @return a {@link Configuration} object, or a default one if loading fails
      */
-    Configuration loadConfigurationFile(final String path);
+    Configuration loadConfiguration(String path);
 }

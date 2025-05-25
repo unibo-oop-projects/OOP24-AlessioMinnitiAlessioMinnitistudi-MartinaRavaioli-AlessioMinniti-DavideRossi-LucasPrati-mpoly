@@ -26,7 +26,7 @@ abstract class AbstractUseFileImpl implements UseFile {
      * {@inheritDoc}
      */
     @Override
-    public InputStream getRequiredStream(String path) throws IOException {
+    public InputStream getRequiredStream(final String path) throws IOException {
         Objects.requireNonNull(path, "path must not be null");
         final InputStream stream = ClassLoader.getSystemResourceAsStream(path);
         if (stream == null) {
@@ -40,8 +40,8 @@ abstract class AbstractUseFileImpl implements UseFile {
      * {@inheritDoc}
      */
     @Override
-    public BufferedReader getRequiredReader(String path) throws IOException {
+    public BufferedReader getRequiredReader(final String path) throws IOException {
         return new BufferedReader(new InputStreamReader(getRequiredStream(path), StandardCharsets.UTF_8));
     }
-    
+
 }

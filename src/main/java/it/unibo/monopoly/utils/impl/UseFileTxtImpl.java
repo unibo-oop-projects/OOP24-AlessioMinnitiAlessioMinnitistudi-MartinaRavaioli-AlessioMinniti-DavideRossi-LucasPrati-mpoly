@@ -17,7 +17,7 @@ import it.unibo.monopoly.utils.api.UseFileTxt;
  * <p>
  * Inherits file access utilities from {@link AbstractUseFileImpl}.
  */
-public final class UseFileTxtImpl extends AbstractUseFileImpl implements UseFileTxt{
+public final class UseFileTxtImpl extends AbstractUseFileImpl implements UseFileTxt {
 
     /**
      * {@inheritDoc}
@@ -25,12 +25,12 @@ public final class UseFileTxtImpl extends AbstractUseFileImpl implements UseFile
      * If the resource cannot be loaded, returns the exception message instead of throwing.
      */
     @Override
-    public String loadTextResource(String path) {
+    public String loadTextResource(final String path) {
         try (BufferedReader reader = getRequiredReader(path)) {
             return reader.lines().collect(Collectors.joining("\n"));
         } catch (final IOException e) {
             return e.getMessage();
         }
     }
-    
+
 }

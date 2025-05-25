@@ -33,7 +33,7 @@ class UseFileJsonImplTest {
 
 
     @Test
-    void loadJsonList_nullType_throwsNullPointerException() {
+    void loadNullTypeThrows() {
         final NullPointerException exception = assertThrows(
             NullPointerException.class,
             () -> jsonLoader.loadJsonList(PATH_TILES, null)
@@ -42,7 +42,7 @@ class UseFileJsonImplTest {
     }
 
     @Test
-    void loadJsonList_nonexistentPath_throwsUncheckedIOException() {
+    void loadNonExistentPathThrows() {
         final UncheckedIOException exception = assertThrows(
             UncheckedIOException.class,
             () -> jsonLoader.loadJsonList("nonexistent", Tile.class)
@@ -51,8 +51,8 @@ class UseFileJsonImplTest {
     }
 
     @Test
-    void loadJsonList_existingTiles_returnsList() {
-        List<Tile> tiles = jsonLoader.loadJsonList(PATH_TILES, Tile.class);
+    void loadExistingTilesReturnsList() {
+        final List<Tile> tiles = jsonLoader.loadJsonList(PATH_TILES, Tile.class);
         testCollection(
             tiles,
             EXPECTED_NUM_TILES,
@@ -62,8 +62,8 @@ class UseFileJsonImplTest {
     }
 
     @Test
-    void loadTitleDeeds_existingJson_returnsSet() {
-        Set<TitleDeed> deeds = jsonLoader.loadTitleDeeds(PATH_TITLE_DEEDS);
+    void loadExistingTitleDeedsReturnsSet() {
+        final Set<TitleDeed> deeds = jsonLoader.loadTitleDeeds(PATH_TITLE_DEEDS);
         testCollection(
             deeds,
             EXPECTED_NUM_TITLE_DEEDS,
@@ -87,7 +87,7 @@ class UseFileJsonImplTest {
         assertTrue(
             collection.stream()
                       .map(nameExtractor)
-                      .anyMatch(name -> expectedName.equalsIgnoreCase(name)),
+                      .anyMatch(expectedName::equalsIgnoreCase),
             "Should contains '" + expectedName + "'"
         );
     }

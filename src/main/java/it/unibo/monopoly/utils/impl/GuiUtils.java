@@ -33,7 +33,6 @@ public final class GuiUtils {
 
     private GuiUtils() { /* Prevent instantiation */ }
 
-
     /**
      * Create a fixed-size square colored label.
      * If the {@code size} is invalid (zero or negative), returns a placeholder label
@@ -56,6 +55,7 @@ public final class GuiUtils {
         colorBox.setPreferredSize(new Dimension(size, size));
         return colorBox;
     }
+
 
     /**
      * Configures a window with default layout and location, along with standard behaviors.
@@ -126,26 +126,6 @@ public final class GuiUtils {
                 dialog.setModal(true);
             }
         }
-    }
-
-    /**
-     * Checks whether the provided parameters represent a valid and consistent configuration for a Swing window setup.
-     * 
-     * @param window the window to configure (must be a {@link JFrame} or {@link JDialog})
-     * @param width the width in pixels
-     * @param height the height in pixels
-     * @param title the window title
-     * @param layout the layout manager to apply
-     * @return true if the provided parameters form a consistent configuration
-     */
-    private static boolean isConsistent(final Window window, final int width, final int height, 
-                                        final String title, final LayoutManager layout) {
-        return Objects.nonNull(window)
-                && Objects.nonNull(title)
-                && Objects.nonNull(layout)
-                && (window instanceof JDialog || window instanceof JFrame)
-                && width > 0
-                && height > 0;
     }
 
     /**
@@ -229,14 +209,12 @@ public final class GuiUtils {
         return FontUtils.createFont(config.getFontName(), config.getBigFont());
     }
 
-    private static void showMessageDialog(final Window parent,
-                                          final String title,
-                                          final String message,
-                                          final int type) {
-        JOptionPane.showMessageDialog(parent, message, title, type);
-    }
-
-    // TODO funzione ricorsiva per impostare tutti i font di elementi testuali come desiderato
+    /**
+     * TODO funzione ricorsiva  per impostare tutti i font di elementi testuali come desiderato.
+     * @param comp the {@link Component} where we want to set the font
+     * @param config a consistent {@link Configuration} for get the font dimension
+     * @param exclude a {@link List} of {@link Component}s to exclude from the font set
+     */
     public static void setAllFonts(final Component comp, final Configuration config, final List<Component> exclude) {
         // controlla se è da escludere
         if (exclude.contains(comp)) {
@@ -244,19 +222,46 @@ public final class GuiUtils {
         }
 
         // Imposta il font su componenti con testo
-        if (comp instanceof JLabel label) {
+        if (comp instanceof final JLabel label) {
             label.setFont(getSmallFontFromConfiguration(config));
-        } else if (comp instanceof AbstractButton button) { // include JButton, JToggleButton, ecc.
+        } else if (comp instanceof final AbstractButton button) { // include JButton, JToggleButton, ecc.
             button.setFont(getSmallFontFromConfiguration(config));
-        } else if (comp instanceof JTextComponent textComp) { // include JTextField, JTextArea, ecc.
+        } else if (comp instanceof final JTextComponent textComp) { // include JTextField, JTextArea, ecc.
             textComp.setFont(getSmallFontFromConfiguration(config));
         }
 
         // Se è un contenitore, ricorri sui figli
-        if (comp instanceof Container container) {
-            for (Component child : container.getComponents()) {
+        if (comp instanceof final Container container) {
+            for (final Component child : container.getComponents()) {
                 setAllFonts(child, config, exclude);
             }
         }
+    }
+
+    /**
+     * Checks whether the provided parameters represent a valid and consistent configuration for a Swing window setup.
+     * 
+     * @param window the window to configure (must be a {@link JFrame} or {@link JDialog})
+     * @param width the width in pixels
+     * @param height the height in pixels
+     * @param title the window title
+     * @param layout the layout manager to apply
+     * @return true if the provided parameters form a consistent configuration
+     */
+    private static boolean isConsistent(final Window window, final int width, final int height, 
+                                        final String title, final LayoutManager layout) {
+        return Objects.nonNull(window)
+                && Objects.nonNull(title)
+                && Objects.nonNull(layout)
+                && (window instanceof JDialog || window instanceof JFrame)
+                && width > 0
+                && height > 0;
+    }
+
+    private static void showMessageDialog(final Window parent,
+                                          final String title,
+                                          final String message,
+                                          final int type) {
+        JOptionPane.showMessageDialog(parent, message, title, type);
     }
 }

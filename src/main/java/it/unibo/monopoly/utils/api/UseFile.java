@@ -22,7 +22,7 @@ public interface UseFile {
      * @throws IOException if the resource cannot be found or loaded
      * @throws NullPointerException if {@code path} is {@code null}
      */
-    InputStream getRequiredStream(final String path) throws IOException;
+    InputStream getRequiredStream(String path) throws IOException;
 
 
     /**
@@ -33,6 +33,6 @@ public interface UseFile {
      * @throws IOException if the resource cannot be found
      * @throws NullPointerException if {@code path} is {@code null}
      */
-    BufferedReader getRequiredReader(final String path) throws IOException;
+    BufferedReader getRequiredReader(String path) throws IOException;
 
 }

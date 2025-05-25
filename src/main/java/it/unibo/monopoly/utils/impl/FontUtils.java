@@ -36,7 +36,7 @@ public final class FontUtils {
      * @throws IllegalArgumentException if the name of the font is not available
      */
     public static Font createFont(final String name, final int size) {
-        if(!isValidFontName(name)) {
+        if (!isValidFontName(name)) {
             throw new IllegalArgumentException("The given font name is not available in the local graphics environment");
         }
         return new Font(name, FONT_STYLE, size);

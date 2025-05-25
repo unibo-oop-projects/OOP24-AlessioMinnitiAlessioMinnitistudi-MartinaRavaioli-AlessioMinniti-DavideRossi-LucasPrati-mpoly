@@ -25,22 +25,22 @@ import it.unibo.monopoly.utils.api.UseFileJson;
  * <p>
  * Relies on a shared {@link ObjectMapper} and type-safe deserialization strategy.
  */
-public final class UseFileJsonImpl extends AbstractUseFileImpl implements UseFileJson{
+public final class UseFileJsonImpl extends AbstractUseFileImpl implements UseFileJson {
 
-    private final ObjectMapper MAPPER = new ObjectMapper()
+    private final ObjectMapper mapper = new ObjectMapper()
                                             .registerModule(new Jdk8Module());
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public <T> List<T> loadJsonList(String path, Class<T> type) {
+    public <T> List<T> loadJsonList(final String path, final Class<T> type) {
         Objects.requireNonNull(type, "The type of deserialization must not be null");
         final List<T> out;
         try (InputStream fileJson = getRequiredStream(path)) {
-            final JavaType outType = MAPPER.getTypeFactory()
+            final JavaType outType = mapper.getTypeFactory()
                     .constructCollectionLikeType(List.class, type);
-            out = MAPPER.readValue(fileJson, outType);
+            out = mapper.readValue(fileJson, outType);
         } catch (final IOException e) {
             throw new UncheckedIOException("Failed to convert the Json file '" + path + "': ", e);
         }
@@ -51,8 +51,8 @@ public final class UseFileJsonImpl extends AbstractUseFileImpl implements UseFil
      * {@inheritDoc}
      */
     @Override
-    public Set<TitleDeed> loadTitleDeeds(String path) {
+    public Set<TitleDeed> loadTitleDeeds(final String path) {
         return Set.copyOf(loadJsonList(path, BaseTitleDeed.class));
     }
-    
+
 }

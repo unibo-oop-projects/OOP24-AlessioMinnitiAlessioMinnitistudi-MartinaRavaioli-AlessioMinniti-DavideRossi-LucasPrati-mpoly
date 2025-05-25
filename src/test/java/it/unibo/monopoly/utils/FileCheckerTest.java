@@ -11,22 +11,27 @@ import it.unibo.monopoly.utils.impl.FileChecker;
 class FileCheckerTest {
 
     @Test
-    void checkPath_nullPath_returnsFalse() {
+    void checkNullPath() {
         assertFalse(FileChecker.checkPath(null));
     }
 
     @Test
-    void checkPath_nonexistentPath_returnsFalse() {
+    void checkNonExistentPath() {
         assertFalse(FileChecker.checkPath("nonexistent"));
     }
 
     @Test
-    void checkPath_existingDebugRules_returnsTrue() {
+    void checkExistingDebugRules() {
         assertTrue(FileChecker.checkPath("debug/rules/debug_rules.txt"));
     }
 
     @Test
-    void checkPath_existingDebugTiles_returnsTrue() {
+    void checkExistingDebugTiles() {
+        assertTrue(FileChecker.checkPath("debug/cards/debug_tiles.json"));
+    }
+
+    @Test
+    void checkExistingDebugTitleDeeds() {
         assertTrue(FileChecker.checkPath("debug/cards/debug_tiles.json"));
     }
 }

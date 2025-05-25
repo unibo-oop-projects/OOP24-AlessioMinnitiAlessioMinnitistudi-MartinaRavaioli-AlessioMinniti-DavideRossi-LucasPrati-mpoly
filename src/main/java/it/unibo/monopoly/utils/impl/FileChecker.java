@@ -36,5 +36,5 @@ public final class FileChecker {
             return false;
         }
     }
-    
+
 }

@@ -7,7 +7,7 @@ package it.unibo.monopoly.utils.api;
  * The file is expected to contain textual content encoded in UTF-8.
  */
 public interface UseFileTxt extends UseFile {
-    
+
     /**
      * Reads a text resource from the classpath and returns its contents as a single string.
      * <p>
@@ -16,5 +16,5 @@ public interface UseFileTxt extends UseFile {
      * @return a {@link String} containing the full contents of the file,
      *         or the error message if the resource could not be loaded
      */
-    String loadTextResource(final String path);
+    String loadTextResource(String path);
 }

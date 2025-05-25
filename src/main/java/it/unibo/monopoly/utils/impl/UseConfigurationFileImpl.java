@@ -20,16 +20,13 @@ import it.unibo.monopoly.utils.api.UseConfigurationFile;
  * <p>
  * The file must follow a key-value format with colon-separated pairs.
  */
-public final class UseConfigurationFileImpl extends AbstractUseFileImpl implements UseConfigurationFile{
-    
+public final class UseConfigurationFileImpl extends AbstractUseFileImpl implements UseConfigurationFile {
+
     /**
-     * Loads a {@link Configuration} object from a configuration file in the classpath.
-     * Skips malformed or unknown entries gracefully.
-     * 
-     * @param path relative path of the resource
-     * @return a {@link Configuration} object, or a default one if loading fails
+     * {@inheritDoc}
      */
-    public Configuration loadConfigurationFile(final String path) {
+    @Override
+    public Configuration loadConfiguration(final String path) {
         try (BufferedReader reader = getRequiredReader(path)) {
             final Configuration.Builder builder = new Configuration.Builder();
 

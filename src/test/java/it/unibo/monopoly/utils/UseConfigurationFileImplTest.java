@@ -19,26 +19,26 @@ class UseConfigurationFileImplTest {
     private final UseConfigurationFile configLoader = new UseConfigurationFileImpl();
 
     @Test
-    void loadConfigurationFile_nullPath_throwsNullPointerException() {
+    void loadNullPathThrows() {
         final NullPointerException exception = assertThrows(
             NullPointerException.class,
-            () -> configLoader.loadConfigurationFile(null)
+            () -> configLoader.loadConfiguration(null)
         );
         assertNotNull(exception.getMessage());
         assertFalse(exception.getMessage().isBlank());
     }
 
     @Test
-    void loadConfigurationFile_nonexistentPath_returnsDefaultConfig() {
-        Configuration config = configLoader.loadConfigurationFile("nonexistent");
+    void loadNonExistentPathReturnsDefaultConfig() {
+        final Configuration config = configLoader.loadConfiguration("nonexistent");
         assertTrue(Configuration.Builder.isDefault(config),
                    "The default configuration should be the default-one");
         assertTrue(config.isConsistent());
     }
 
     @Test
-    void loadConfigurationFile_validFile_returnsParsedConfig() {
-        Configuration config = configLoader.loadConfigurationFile(PATH_CONFIGURATION);
+    void loadValidFileReturnsParsedConfig() {
+        final Configuration config = configLoader.loadConfiguration(PATH_CONFIGURATION);
         assertFalse(Configuration.Builder.isDefault(config),
                    "The configuration should not be the default-one."
                    + "Maybe the file does not have a consistent configuration or is equals to the default-one");

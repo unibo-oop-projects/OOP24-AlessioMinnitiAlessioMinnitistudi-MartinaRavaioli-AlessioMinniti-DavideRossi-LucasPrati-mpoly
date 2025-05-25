@@ -27,7 +27,7 @@ public interface UseFileJson extends UseFile {
      * @throws NullPointerException if {@code path} or {@code type} is {@code null}
      * @throws UncheckedIOException if the file cannot be read or parsed
      */
-    <T> List<T> loadJsonList(final String path, final Class<T> type);
+    <T> List<T> loadJsonList(String path, Class<T> type);
 
 
     /**
@@ -44,5 +44,5 @@ public interface UseFileJson extends UseFile {
      * @throws NullPointerException if {@code path} is {@code null}
      * @throws UncheckedIOException if the file cannot be read or parsed
      */
-    Set<TitleDeed> loadTitleDeeds(final String path);
+    Set<TitleDeed> loadTitleDeeds(String path);
 }

@@ -156,7 +156,7 @@ public final class Configuration {
      */
     public static Configuration configureFromFile(final String configFile) {
         final UseConfigurationFile useFileConfig = new UseConfigurationFileImpl();
-        final Configuration configuration = useFileConfig.loadConfigurationFile(configFile);
+        final Configuration configuration = useFileConfig.loadConfiguration(configFile);
 
         if (configuration.isConsistent()) {
             return configuration;
