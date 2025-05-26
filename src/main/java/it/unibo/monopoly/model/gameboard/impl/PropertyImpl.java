@@ -1,13 +1,10 @@
 package it.unibo.monopoly.model.gameboard.impl;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 import it.unibo.monopoly.model.gameboard.api.Property;
 import it.unibo.monopoly.model.turnation.api.Position;
 
 /**
- * property implementation.
+ * {@link Property} implementation.
 */
 public class PropertyImpl extends TileImpl implements Property {
 
@@ -21,12 +18,7 @@ public class PropertyImpl extends TileImpl implements Property {
      * @param position
      * @param group
     */
-    @JsonCreator
-    public PropertyImpl(
-        @JsonProperty("name") final String name,
-        @JsonProperty("position") final Position position,
-        @JsonProperty("group") final Group group
-    ) { 
+    public PropertyImpl(final String name, final Position position, final Group group) { 
         super(name, position, group);
         this.nHouses = 0;
         this.hotel = false;
