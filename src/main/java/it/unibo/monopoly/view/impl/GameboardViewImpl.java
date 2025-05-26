@@ -19,7 +19,6 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.monopoly.controller.api.GameController;
 import it.unibo.monopoly.controller.api.GameboardLogic;
 import it.unibo.monopoly.controller.impl.GameboardLogicImpl;
-import it.unibo.monopoly.model.gameboard.api.Pawn;
 import it.unibo.monopoly.model.gameboard.api.Property;
 import it.unibo.monopoly.model.turnation.api.Position;
 import it.unibo.monopoly.model.turnation.impl.PositionImpl;
@@ -97,12 +96,22 @@ public final class GameboardViewImpl extends JPanel implements GameboardView {
     }
 
     @Override
-    public void buyProperty(final Property prop, final Pawn currPlayer) {
-        for (final JPanel p : tilesView) {
-            if (p.getName().equals(prop.getName())) {
-                p.setBackground(currPlayer.getColor());
+    public void buyProperty(final Property prop, final int currPlayer) {
+        for (final Map.Entry<JPanel, Position> entry : this.tilePositions.entrySet()) {
+            if (entry.getValue().equals(pawnPositions.get(currPlayer - 1))) { 
+                final JPanel p = entry.getKey();
+                final PawnSquare propertyGUI = new PawnSquare(controller.getCurrPlayer().getColor());
+                p.add(propertyGUI);
+                p.revalidate();  // AGGIUNTO
+                p.repaint(); 
+                break;
             }
         }
+        // for (final JPanel p : tilesView) {
+        //     if (p.getName().equals(prop.getName())) {
+        //         p.setBackground(currPlayer.getColor());
+        //     }
+        // }
     }
 
     @Override

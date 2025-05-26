@@ -1,6 +1,5 @@
 package it.unibo.monopoly.view.api;
 
-import it.unibo.monopoly.model.gameboard.api.Pawn;
 import it.unibo.monopoly.model.gameboard.api.Property;
 import it.unibo.monopoly.model.turnation.api.Position;
 
@@ -27,5 +26,5 @@ public interface GameboardView extends GamePanel {
      *  @param prop
      *  @param currPlayer
     */
-    void buyProperty(Property prop, Pawn currPlayer);
+    void buyProperty(Property prop, int currPlayer);
 }
