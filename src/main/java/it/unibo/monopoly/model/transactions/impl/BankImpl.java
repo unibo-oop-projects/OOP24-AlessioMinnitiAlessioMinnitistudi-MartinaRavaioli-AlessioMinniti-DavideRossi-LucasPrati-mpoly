@@ -1,6 +1,7 @@
 package it.unibo.monopoly.model.transactions.impl;
 
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -19,6 +20,7 @@ import it.unibo.monopoly.model.transactions.api.BankAction;
 import it.unibo.monopoly.model.transactions.api.BankActionFactory;
 import it.unibo.monopoly.model.transactions.api.BankState;
 import it.unibo.monopoly.model.transactions.api.TitleDeed;
+import it.unibo.monopoly.model.transactions.api.TransactionLedger;
 import it.unibo.monopoly.model.transactions.impl.bankaccount.ImmutableBankAccountCopy;
 import it.unibo.monopoly.model.turnation.api.Player;
 
@@ -34,7 +36,17 @@ public final class BankImpl implements Bank {
     private final Map<String, TitleDeed> titleDeeds;
     private final BiFunction<BankAccount, Set<TitleDeed>, Integer> rankingBiFunction; 
     private final BankActionFactory bankActionFactory = new BankActionFactoryImpl(this);
-    
+    private final TransactionLedger transactionLedger = new TransactionLedgerImpl();
+
+    /**
+     * Creates a new instance of {@link BankImpl} that
+     * operates with the given {@code accounts} and {@code title deeds}.
+     * @param accounts the palyers' {@link BankAccount}
+     * @param titleDeeds {@link List} of {@link TitleDeed} present in the game
+     */
+    public BankImpl(final Set<BankAccount> accounts, final Set<TitleDeed> titleDeeds) {
+        this(accounts, titleDeeds, DEFAULT_RANKING_FUNCTION);
+    }
 
 
     /**
@@ -97,6 +109,7 @@ public final class BankImpl implements Bank {
 
         buyer.withdraw(td.getSalePrice());
         td.setOwner(playerId);
+        transactionLedger.markExecution("buy");
     }
 
     @Override
@@ -122,14 +135,19 @@ public final class BankImpl implements Bank {
         if (receiver.equals(payer)) {
             throw new IllegalStateException("Canot pay rent for property owned by the payer" + playerId);
         }
+
+
         final int rentAmount = deed.getRent(
             titleDeedsByGroup(deed.getGroup()), dices
         );
+
+        transactionLedger.markExecution("pay");
         receiver.deposit(rentAmount);
         try {
             payer.withdraw(rentAmount);
         } catch (final IllegalStateException e) {
             receiver.withdraw(rentAmount);
+            transactionLedger.unmarkExecution("pay");
             throw e;
         }
     }
@@ -144,6 +162,7 @@ public final class BankImpl implements Bank {
         final BankAccount seller = findAccount(deed.getOwnerId());
         seller.deposit(deed.getMortgagePrice());
         deed.removeOwner();
+        transactionLedger.markExecution("sell");
     }
 
     @Override
@@ -175,16 +194,25 @@ public final class BankImpl implements Bank {
 
     @Override
     public Set<BankAction> setTurnTransactions(final int currentPlayerId, final String titleDeedName, final int diceThrow) {
+        
+        final Set<BankAction> returnSet = new HashSet<>();
         final TitleDeed selected = findTitleDeed(titleDeedName);
 
+        transactionLedger.reset();
+
         if (!selected.isOwned()) {
-            return Set.of(bankActionFactory.createBuy(currentPlayerId, titleDeedName));
+            returnSet.add(bankActionFactory.createBuy(currentPlayerId, titleDeedName));
+            transactionLedger.registerTransaction("buy", false, 1);
         } else if (selected.getOwnerId() == currentPlayerId){
-            return Set.of(bankActionFactory.createSell(titleDeedName));
+            returnSet.add(bankActionFactory.createSell(titleDeedName));
+            transactionLedger.registerTransaction("sell", false, 1);
             //TODO build houses
         } else {
-            return Set.of(bankActionFactory.createPayRent(titleDeedName, currentPlayerId, diceThrow));
+            returnSet.add(bankActionFactory.createPayRent(titleDeedName, currentPlayerId, diceThrow));
+            transactionLedger.registerTransaction("pay", true, 1);
         }
+
+        return returnSet;
     }
 
     private class BankStateAdapter implements BankState {
@@ -196,8 +224,7 @@ public final class BankImpl implements Bank {
 
         @Override
         public boolean allMandatoryTransactionsCompleted() {
-            // TODO Auto-generated method stub
-            throw new UnsupportedOperationException("Unimplemented method 'allMandatoryTransactionsCompleted'");
+            return transactionLedger.checkAllMandatoryTransactionsCompleted();
         }
 
         @Override
