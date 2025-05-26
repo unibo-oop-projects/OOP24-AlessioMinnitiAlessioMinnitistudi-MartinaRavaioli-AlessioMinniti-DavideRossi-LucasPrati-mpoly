@@ -108,7 +108,7 @@ public final class MainViewImpl implements MainGameView {
     }
 
     @Override
-    public void displaySpecialInfo(Special tile) {
+    public void displaySpecialInfo(final Special tile) {
         contractPanel.displaySpecialInfo(tile);
         mainGameFrame.repaint();
     }
