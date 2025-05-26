@@ -18,7 +18,7 @@ public final class EffectFactoryImpl implements EffectFactory {
 
             @Override
             public void activate(final Player player) {
-                bank.depositTo(player.getName(), amount);
+                bank.depositTo(player.getID(), amount);
             }
         };
     }
@@ -29,7 +29,7 @@ public final class EffectFactoryImpl implements EffectFactory {
 
             @Override
             public void activate(final Player player) {
-                bank.withdrawFrom(player.getName(), amount);
+                bank.withdrawFrom(player.getID(), amount);
             }
         };
     }

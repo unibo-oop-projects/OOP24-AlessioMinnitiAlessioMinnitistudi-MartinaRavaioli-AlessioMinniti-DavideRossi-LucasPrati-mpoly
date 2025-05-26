@@ -51,7 +51,7 @@ public final class SpecialFactoryImpl implements SpecialFactory {
      */
     public Special bho(final Bank bank) {
         return new SpecialImpl(null, null, null, p -> { 
-                                    bank.withdrawFrom(p.toString(), 10); });
+                                    bank.withdrawFrom(p.getID(), 10); });
     }
 
 }
