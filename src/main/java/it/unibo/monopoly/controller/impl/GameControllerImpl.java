@@ -147,8 +147,7 @@ public final class GameControllerImpl implements GameController {
 
     @Override
     public void endTurn() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'endTurn'");
+        this.turnationManager.getNextPlayer();
     }
 
     @Override
@@ -218,7 +217,7 @@ public final class GameControllerImpl implements GameController {
 
     @Override
     public void changePositions() {
-        List<Integer> res = (List<Integer>) turnationManager.moveByDices();
+        Collection<Integer> res = turnationManager.moveByDices();
         this.board.movePawn(this.board.getPawn(this.turnationManager.getIdCurrPlayer()),res);
         gameboardView.changePos(this.turnationManager.getIdCurrPlayer(),this.board.getPawn(this.turnationManager.getIdCurrPlayer()).getPosition());
     }
@@ -258,5 +257,10 @@ public final class GameControllerImpl implements GameController {
     @Override
     public void setBoardView(GameboardView view) {
         this.gameboardView = view;
+    }
+
+    @Override
+    public Player getCurrPlayer() {
+        return this.turnationManager.getCurrPlayer();
     }
 }

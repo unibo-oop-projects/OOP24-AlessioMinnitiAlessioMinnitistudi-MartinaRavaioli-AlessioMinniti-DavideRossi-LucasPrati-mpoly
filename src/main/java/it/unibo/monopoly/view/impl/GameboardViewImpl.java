@@ -13,6 +13,7 @@ import java.util.Map;
 
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import it.unibo.monopoly.controller.api.GameController;
@@ -31,9 +32,10 @@ public final class GameboardViewImpl extends JPanel implements GameboardView {
     private final GameboardLogic logic;
     private final GameController controller;
     // private final List<JPanel> shapes=List.of(new PawnCircle(Color.RED),new PawnTriangle(Color.BLUE),new PawnSquare(Color.GREEN),new PawnSquare(Color.YELLOW));
-    private final List<JPanel> tilesView=new ArrayList<>();
+    private final List<JPanel> tilesView = new ArrayList<>();
     private final int size;
-    private final Map<Integer,Position> pawnPositions=new HashMap<>();
+    private final Map<Integer, Position> pawnPositions = new HashMap<>();
+    private final Map<JPanel, Position> tilePositions = new HashMap<>();
 
     public GameboardViewImpl(final int size, final GameController controller) {
         this.size = size;
@@ -54,27 +56,35 @@ public final class GameboardViewImpl extends JPanel implements GameboardView {
 
     @Override
     public void changePos(final int currPlayer, final Position newPos) {
+        JOptionPane.showMessageDialog(null, "Operazione completata con successo! "+newPos.getPos(), "Info", JOptionPane.INFORMATION_MESSAGE);
+        for (JPanel p : this.tilePositions.keySet()) {
+            if (this.tilePositions.get(p).equals(pawnPositions.get(currPlayer-1))) {
+                for (Component c : p.getComponents()) {
+                    if (c instanceof PawnCircle pawnCircle) {
+                        if (pawnCircle.getColor().equals(controller.getCurrPlayer().getColor())) {
+                            p.remove(c);
+                            p.revalidate();  // AGGIUNTO
+                            p.repaint(); 
+                            break;
+                        }
+                        
+                    }
+                }
+            }
+        }
 
-        JPanel prePanel = this.tilesView.get(pawnPositions.get(currPlayer).getPos());
+        pawnPositions.replace(currPlayer-1, pawnPositions.get(currPlayer-1), newPos);
 
-        for (Component c : prePanel.getComponents()) {
-            if (c instanceof PawnCircle) {
-                prePanel.remove(c);
+        for (JPanel p : this.tilePositions.keySet()) {
+            if (this.tilePositions.get(p).equals(pawnPositions.get(currPlayer-1))) {
+                PawnCircle pawnGUI = new PawnCircle(controller.getCurrPlayer().getColor());
+                p.add(pawnGUI);
+                p.revalidate();  // AGGIUNTO
+                p.repaint(); 
                 break;
             }
         }
-        pawnPositions.replace(currPlayer, pawnPositions.get(currPlayer), newPos);
-        JPanel postPanel = this.tilesView.get(pawnPositions.get(currPlayer).getPos());
-        postPanel.add(new PawnCircle(controller.getPawns().get(currPlayer).getColor()));
         
-    }
-
-    @Override
-    public void clearPanel() {
-        for (int i=0; i < 4; i++) {
-            JPanel panel = this.tilesView.get(pawnPositions.get(i).getPos());
-            // panel.remove(shapes.get(i));
-        }
     }
 
     @Override
@@ -123,14 +133,16 @@ public final class GameboardViewImpl extends JPanel implements GameboardView {
 
         for (int i=0;i<controller.getTiles().size();i++) {
             JPanel panel=this.tilesView.get(i);
+            tilePositions.put(panel, controller.getTiles().get(i).getPosition());
             JPanel stripe = new JPanel();
             stripe.setPreferredSize(new Dimension(150, 10));
             stripe.setBackground(controller.getTiles().get(i).getGroup().getColor());
             panel.add(stripe, BorderLayout.NORTH);
-            JLabel label = new JLabel(controller.getTiles().get(i).getName());/*tiles.get(i).getName();*/
+            JLabel label = new JLabel(controller.getTiles().get(i).getName());
             panel.add(label, BorderLayout.CENTER);
-            panel.setName(label.getText());
+            panel.setName(controller.getTiles().get(i).getName());
         }
+
 
         for (int i =0; i<controller.getPawns().size();i++) {
             pawnPositions.put(i, new PositionImpl(0));

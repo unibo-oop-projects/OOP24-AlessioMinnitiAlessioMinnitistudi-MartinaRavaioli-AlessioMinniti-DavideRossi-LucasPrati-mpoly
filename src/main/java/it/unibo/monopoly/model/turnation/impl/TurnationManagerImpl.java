@@ -29,7 +29,7 @@ public class TurnationManagerImpl implements TurnationManager {
             this.players.addNode(p);
         }
         this.dice = dice;
-        this.currPlayer = this.players.getHead();
+        this.currPlayer = plList.get(0);
     }
     /**
      * constructor.
@@ -94,9 +94,8 @@ public class TurnationManagerImpl implements TurnationManager {
      * @return player
     */
     @Override
-    public final Player getNextPlayer() { 
+    public final void getNextPlayer() { 
         this.currPlayer = players.giveNextNode(this.currPlayer);
-        return this.currPlayer;
     }
     /**
      * throw the dices.

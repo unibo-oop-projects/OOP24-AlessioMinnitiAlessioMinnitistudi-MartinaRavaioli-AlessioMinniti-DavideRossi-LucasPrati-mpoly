@@ -21,4 +21,8 @@ public class PawnCircle extends JPanel {
         g.setColor(color);
         g.fillOval(0, 0, getWidth(), getHeight());
     }
+
+    public Color getColor() {
+        return this.color;
+    }
 }

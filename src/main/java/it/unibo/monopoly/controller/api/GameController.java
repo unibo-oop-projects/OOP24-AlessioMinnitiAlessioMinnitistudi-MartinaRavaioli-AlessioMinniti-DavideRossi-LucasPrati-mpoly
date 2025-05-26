@@ -167,4 +167,10 @@ public interface GameController {
      * @param view
     */
     void setBoardView(GameboardView view);
+
+    /**
+     * get the current player.
+     * @return Player
+    */
+    Player getCurrPlayer();
 }
