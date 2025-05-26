@@ -3,6 +3,7 @@ package it.unibo.monopoly.view.api;
 import java.util.Set;
 
 import it.unibo.monopoly.controller.api.GameController;
+import it.unibo.monopoly.model.gameboard.api.Special;
 import it.unibo.monopoly.model.transactions.api.BankAccount;
 import it.unibo.monopoly.model.transactions.api.TitleDeed;
 import it.unibo.monopoly.model.turnation.api.Player;
@@ -32,6 +33,13 @@ public interface MainGameView {
      */
     void displayPropertyContract(TitleDeed propertyContract);
 
+    /**
+     * Display information of the {@link Special}
+     * corresponding to the {@link Tile} the player's {@link Pawn}
+     * is currently on.
+     * @param tile the tile to display
+     */
+    void displaySpecialInfo(Special tile);
 
     /**
      * Display interactable UI elements that show the possible actions for a player.

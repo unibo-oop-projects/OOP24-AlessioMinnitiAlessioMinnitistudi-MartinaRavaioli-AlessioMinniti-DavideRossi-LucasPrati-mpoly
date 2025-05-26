@@ -9,6 +9,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import it.unibo.monopoly.controller.api.GameController;
+import it.unibo.monopoly.model.gameboard.api.Special;
 import it.unibo.monopoly.model.transactions.api.BankAccount;
 import it.unibo.monopoly.model.transactions.api.TitleDeed;
 import it.unibo.monopoly.model.turnation.api.Player;
@@ -107,6 +108,12 @@ public final class MainViewImpl implements MainGameView {
     }
 
     @Override
+    public void displaySpecialInfo(Special tile) {
+        contractPanel.displaySpecialInfo(tile);
+        mainGameFrame.repaint();
+    }
+
+    @Override
     public void showPlayerActions(final Set<GameAction> actions) {
         gameActionsPanel.buildActionButtons(actions);
         mainGameFrame.repaint();
@@ -141,4 +148,5 @@ public final class MainViewImpl implements MainGameView {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'displayError'");
     }
+
 }
