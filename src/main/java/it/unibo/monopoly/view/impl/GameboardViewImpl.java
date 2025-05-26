@@ -13,7 +13,6 @@ import java.util.Map;
 
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import it.unibo.monopoly.controller.api.GameController;
@@ -31,15 +30,17 @@ import it.unibo.monopoly.view.api.GameboardView;
 public final class GameboardViewImpl extends JPanel implements GameboardView {
     private final GameboardLogic logic;
     private final GameController controller;
-    // private final List<JPanel> shapes=List.of(new PawnCircle(Color.RED),new PawnTriangle(Color.BLUE),new PawnSquare(Color.GREEN),new PawnSquare(Color.YELLOW));
     private final List<JPanel> tilesView = new ArrayList<>();
     private final int size;
     private final Map<Integer, Position> pawnPositions = new HashMap<>();
     private final Map<JPanel, Position> tilePositions = new HashMap<>();
 
+    /**
+    * start view.
+    */
     public GameboardViewImpl(final int size, final GameController controller) {
         this.size = size;
-        this.logic=new GameboardLogicImpl();
+        this.logic = new GameboardLogicImpl();
         this.controller = controller;
         renderDefaultUI();
     }
@@ -56,9 +57,10 @@ public final class GameboardViewImpl extends JPanel implements GameboardView {
 
     @Override
     public void changePos(final int currPlayer, final Position newPos) {
-        JOptionPane.showMessageDialog(null, "Operazione completata con successo! "+newPos.getPos(), "Info", JOptionPane.INFORMATION_MESSAGE);
+        //JOptionPane.showMessageDialog(null, "Operazione completata con successo! "+newPos.getPos(), 
+                                        //"Info", JOptionPane.INFORMATION_MESSAGE);
         for (JPanel p : this.tilePositions.keySet()) {
-            if (this.tilePositions.get(p).equals(pawnPositions.get(currPlayer-1))) {
+            if (this.tilePositions.get(p).equals(pawnPositions.get(currPlayer - 1))) {
                 for (Component c : p.getComponents()) {
                     if (c instanceof PawnCircle pawnCircle) {
                         if (pawnCircle.getColor().equals(controller.getCurrPlayer().getColor())) {
@@ -73,10 +75,10 @@ public final class GameboardViewImpl extends JPanel implements GameboardView {
             }
         }
 
-        pawnPositions.replace(currPlayer-1, pawnPositions.get(currPlayer-1), newPos);
+        pawnPositions.replace(currPlayer - 1, pawnPositions.get(currPlayer - 1), newPos);
 
         for (JPanel p : this.tilePositions.keySet()) {
-            if (this.tilePositions.get(p).equals(pawnPositions.get(currPlayer-1))) {
+            if (this.tilePositions.get(p).equals(pawnPositions.get(currPlayer - 1))) {
                 PawnCircle pawnGUI = new PawnCircle(controller.getCurrPlayer().getColor());
                 p.add(pawnGUI);
                 p.revalidate();  // AGGIUNTO
@@ -88,7 +90,7 @@ public final class GameboardViewImpl extends JPanel implements GameboardView {
     }
 
     @Override
-    public void buyProperty(Property prop, Pawn currPlayer) {
+    public void buyProperty(final Property prop, final Pawn currPlayer) {
         for (JPanel p : tilesView) {
             if (p.getName().equals(prop.getName())) {
                 p.setBackground(currPlayer.getColor());
@@ -100,14 +102,14 @@ public final class GameboardViewImpl extends JPanel implements GameboardView {
     public void renderDefaultUI() {
         this.setLayout(new BorderLayout());
         this.setSize(Toolkit.getDefaultToolkit().getScreenSize());
-        JPanel board = new JPanel(new GridLayout(this.size,this.size));
+        final JPanel board = new JPanel(new GridLayout(this.size,this.size));
         this.add(board);
 
         for (int i = 0; i < this.size; i++) {
-            for(int j=0; j<this.size;j++) {
+            for(int j = 0; j < this.size; j++) {
                 JPanel tile = new JPanel();
                 
-                if (logic.isBoardTile(i,j,this.size)) {
+                if (logic.isBoardTile(i, j, this.size)) {
                     tile.setBorder(BorderFactory.createLineBorder(Color.black));
                     tile.setBackground(Color.white);
                     this.tilesView.add(tile);
@@ -117,11 +119,11 @@ public final class GameboardViewImpl extends JPanel implements GameboardView {
                     if (logic.isCard(i, j, this.size) == 0) {
                         tile.setBackground(Color.RED);
                         JLabel label = new JLabel("IMPREVISTI");
-                        tile.add(label,BorderLayout.CENTER);
+                        tile.add(label, BorderLayout.CENTER);
                     } else {
                         tile.setBackground(Color.YELLOW);
                         JLabel label = new JLabel("PROBABILITA'");
-                        tile.add(label,BorderLayout.CENTER);
+                        tile.add(label, BorderLayout.CENTER);
                     }
                 } else {
                     tile.setBackground(Color.lightGray);
@@ -131,8 +133,8 @@ public final class GameboardViewImpl extends JPanel implements GameboardView {
             }
         }
 
-        for (int i=0;i<controller.getTiles().size();i++) {
-            JPanel panel=this.tilesView.get(i);
+        for (int i = 0; i < controller.getTiles().size(); i++) {
+            JPanel panel = this.tilesView.get(i);
             tilePositions.put(panel, controller.getTiles().get(i).getPosition());
             JPanel stripe = new JPanel();
             stripe.setPreferredSize(new Dimension(150, 10));
@@ -144,14 +146,14 @@ public final class GameboardViewImpl extends JPanel implements GameboardView {
         }
 
 
-        for (int i =0; i<controller.getPawns().size();i++) {
+        for (int i = 0; i < controller.getPawns().size(); i++) {
             pawnPositions.put(i, new PositionImpl(0));
         }
 
-        for (int i=0; i < controller.getPawns().size(); i++) {
+        for (int i = 0; i < controller.getPawns().size(); i++) {
             JPanel panel = this.tilesView.get(pawnPositions.get(i).getPos());
             PawnCircle pawnGUI = new PawnCircle(this.controller.getPawns().get(i).getColor());
-            pawnGUI.setName("pawn"+i);
+            pawnGUI.setName("pawn" + i);
             panel.add(pawnGUI);
         }
 

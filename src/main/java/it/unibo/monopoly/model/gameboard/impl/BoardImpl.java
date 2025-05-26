@@ -142,13 +142,13 @@ public class BoardImpl implements Board {
         return Collections.unmodifiableList(this.pawns);
     }
 
+    @Override
     public final void movePawnInTile(final Pawn pawn, final String name) {
         final Tile tile = getTile(name);
         pawn.setPosition(tile.getPosition());
     }
 
     @Override
-
     public final Tile getTile(final String name) {
         for (final Tile t : this.tiles) {
             if (t.getName().equals(name)) {

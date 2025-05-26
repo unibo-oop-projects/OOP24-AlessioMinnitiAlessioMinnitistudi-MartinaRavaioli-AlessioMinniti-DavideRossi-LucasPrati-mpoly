@@ -7,7 +7,7 @@ import it.unibo.monopoly.model.turnation.api.Position;
 /**
     * board view interface.
 */
-public interface GameboardView extends GamePanel{
+public interface GameboardView extends GamePanel {
     /**
      * add houses' players.
     */
@@ -18,7 +18,7 @@ public interface GameboardView extends GamePanel{
     void addHotel();
     /**
      * change the positions.
-     * @param currPlayers
+     * @param currPlayer
      * @param newPos
     */
     void changePos(int currPlayer, Position newPos);

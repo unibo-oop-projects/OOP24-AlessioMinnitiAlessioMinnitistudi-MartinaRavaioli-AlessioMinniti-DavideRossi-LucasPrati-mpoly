@@ -174,7 +174,7 @@ public interface GameController {
      * @return Player
     */
     Player getCurrPlayer();
-    /* 
+    /**
      * return the String version of the rent based on the type of property.
      * @param selectedProperty of which you want to get the rent
      * @param collect the property of the player that owns the selected property

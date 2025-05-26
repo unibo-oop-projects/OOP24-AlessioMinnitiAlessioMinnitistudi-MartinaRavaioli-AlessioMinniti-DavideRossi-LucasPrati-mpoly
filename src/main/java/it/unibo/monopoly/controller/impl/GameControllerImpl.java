@@ -244,6 +244,7 @@ public final class GameControllerImpl implements GameController {
         return this.turnationManager.getCurrPlayer();
     }
 
+    @Override
     public String getRentString(final TitleDeed selectedProperty, final Set<TitleDeed> collect) {
         final List<Integer> l = List.of(1);
         final int rent = selectedProperty.getRent(collect, l);
