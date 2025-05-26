@@ -1,4 +1,4 @@
-package it.unibo.monopoly.model.special;
+package it.unibo.monopoly.model.gameboard.special;
 
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
