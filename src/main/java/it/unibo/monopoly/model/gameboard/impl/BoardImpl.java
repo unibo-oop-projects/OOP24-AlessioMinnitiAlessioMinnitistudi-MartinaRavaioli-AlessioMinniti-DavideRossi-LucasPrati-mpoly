@@ -9,6 +9,8 @@ import java.util.List;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.monopoly.model.gameboard.api.Board;
 import it.unibo.monopoly.model.gameboard.api.Pawn;
+import it.unibo.monopoly.model.gameboard.api.Property;
+import it.unibo.monopoly.model.gameboard.api.Special;
 import it.unibo.monopoly.model.gameboard.api.Tile;
 import it.unibo.monopoly.model.turnation.api.Position;
 import it.unibo.monopoly.model.turnation.impl.PositionImpl;
@@ -138,6 +140,33 @@ public class BoardImpl implements Board {
     @Override
     public final List<Pawn> getPawns() {
         return Collections.unmodifiableList(this.pawns);
+    }
+
+    public final void movePawnInTile(final Pawn pawn, final String name) {
+        final Tile tile = getTile(name);
+        pawn.setPosition(tile.getPosition());
+    }
+
+    @Override
+
+    public final Tile getTile(final String name) {
+        for (final Tile t : this.tiles) {
+            if (t.getName().equals(name)) {
+                if (t instanceof Property) {
+                    return new PropertyImpl(t.getName(), t.getPosition(), t.getGroup());
+                } else {
+                    return new SpecialImpl(t.getName(), t.getPosition(), Group.SPECIAL, 
+                                                                ((Special) t).getEffect());
+              }
+            }
+        }
+
+        throw new IllegalArgumentException("name not found");
+    }
+
+    @Override
+    public final void addTile(final Tile tile) {
+        this.tiles.add(tile);
     }
 
 }

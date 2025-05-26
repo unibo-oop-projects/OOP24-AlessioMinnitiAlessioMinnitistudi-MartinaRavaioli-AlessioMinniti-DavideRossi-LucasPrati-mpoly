@@ -1,5 +1,7 @@
 package it.unibo.monopoly.model.transactions;
 
+import java.util.Collection;
+import java.util.List;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -36,6 +38,7 @@ class BankTest {
     private static final String PLAYER2_NAME = "Bob";
     private static final String TITLE_DEED_NAME1 = "Bastoni Gran Sasso";
     private static final String TITLE_DEED_NAME2 = "Viale Monterosa";
+        private static final Collection<Integer> DICE = List.of(1);
 
     private final Set<BankAccount> accounts = Set.of(
         new WithdrawCheckBankAccount(new SimpleBankAccountImpl(ID_1, AMOUNT, PLAYER1_NAME),
@@ -119,7 +122,7 @@ class BankTest {
     void payRentInexistentPlayer() {
         final IllegalArgumentException inexistentPropertyException = assertThrows(
             IllegalArgumentException.class,
-            () -> bank.payRent(TITLE_DEED_NAME1, "")
+            () -> bank.payRent(TITLE_DEED_NAME1, "", DICE)
         );
         testExceptionFormat(inexistentPropertyException);
     }
@@ -128,7 +131,7 @@ class BankTest {
     void payRentInexistentProperty() {
         final IllegalArgumentException inexistentPropertyException = assertThrows(
             IllegalArgumentException.class,
-            () -> bank.payRent("", PLAYER1_NAME)
+            () -> bank.payRent("", PLAYER1_NAME, DICE)
         );
         testExceptionFormat(inexistentPropertyException); 
     }
@@ -137,7 +140,7 @@ class BankTest {
     void payRentOfPropertyWithNoOwner() {
         final IllegalStateException propertyHasNoOwnerException = assertThrows(
             IllegalStateException.class,
-            () -> bank.payRent(TITLE_DEED_NAME1, PLAYER1_NAME)
+            () -> bank.payRent(TITLE_DEED_NAME1, PLAYER1_NAME, DICE)
         );
         testExceptionFormat(propertyHasNoOwnerException); 
     }
@@ -149,7 +152,7 @@ class BankTest {
         assertEquals(PLAYER1_NAME, bank.getTitleDeed(TITLE_DEED_NAME1).getOwner());
         final IllegalStateException propertyPossessedByPlayerException = assertThrows(
             IllegalStateException.class,
-            () -> bank.payRent(TITLE_DEED_NAME1, PLAYER1_NAME)
+            () -> bank.payRent(TITLE_DEED_NAME1, PLAYER1_NAME, DICE)
         );
         testExceptionFormat(propertyPossessedByPlayerException); 
     }
@@ -160,19 +163,20 @@ class BankTest {
         final int rent = bank.getTitleDeed(TITLE_DEED_NAME1)
                             .getRent(Sets.filter(Sets.newHashSet(deeds), 
                                     d -> !TITLE_DEED_NAME1.equals(d.getName())
-                                )
+                                ), 
+                            DICE
                             );
         final int pl1Balance = bank.getBankAccount(PLAYER1_NAME).getBalance();
 
         for (int i = 0; i < (pl1Balance / rent); i++) {
-            bank.payRent(TITLE_DEED_NAME1, PLAYER1_NAME);
+            bank.payRent(TITLE_DEED_NAME1, PLAYER1_NAME, DICE);
         }
 
         final int initialBalancePl1 = bank.getBankAccount(PLAYER1_NAME).getBalance();
         final int initialBalancePl2 = bank.getBankAccount(PLAYER2_NAME).getBalance();
         final IllegalStateException withDrawConditionsViolated = assertThrows(
             IllegalStateException.class,
-            () -> bank.payRent(TITLE_DEED_NAME1, PLAYER1_NAME));
+            () -> bank.payRent(TITLE_DEED_NAME1, PLAYER1_NAME, DICE));
         testExceptionFormat(withDrawConditionsViolated);
         assertEquals(initialBalancePl1, bank.getBankAccount(PLAYER1_NAME).getBalance());
         assertEquals(initialBalancePl2, bank.getBankAccount(PLAYER2_NAME).getBalance());
@@ -183,11 +187,12 @@ class BankTest {
         bank.buyTitleDeed(TITLE_DEED_NAME1, PLAYER2_NAME);
         final int rent = bank.getTitleDeed(TITLE_DEED_NAME1)
                                                 .getRent(Sets.filter(Sets.newHashSet(deeds), 
-                                                        d -> !TITLE_DEED_NAME1.equals(d.getName()))
+                                                        d -> !TITLE_DEED_NAME1.equals(d.getName())),
+                                                DICE
                                                 );
         final int initialBalancePl1 = bank.getBankAccount(PLAYER1_NAME).getBalance();
         final int initialBalancePl2 = bank.getBankAccount(PLAYER2_NAME).getBalance();
-        bank.payRent(TITLE_DEED_NAME1, PLAYER1_NAME);
+        bank.payRent(TITLE_DEED_NAME1, PLAYER1_NAME, DICE);
         assertEquals(initialBalancePl1 - rent, bank.getBankAccount(PLAYER1_NAME).getBalance());
         assertEquals(initialBalancePl2 + rent, bank.getBankAccount(PLAYER2_NAME).getBalance());
     }

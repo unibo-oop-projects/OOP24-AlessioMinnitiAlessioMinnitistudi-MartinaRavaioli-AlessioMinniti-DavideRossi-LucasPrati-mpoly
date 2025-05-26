@@ -1,5 +1,6 @@
 package it.unibo.monopoly.model.transactions.impl;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -88,7 +89,7 @@ public final class BankImpl implements Bank {
     }
 
     @Override
-    public void payRent(final String titleDeedName, final String playerName) {
+    public void payRent(final String titleDeedName, final String playerName, final Collection<Integer> dices) {
         Objects.requireNonNull(titleDeedName);
         Objects.requireNonNull(playerName);
         final TitleDeed deed = findTitleDeed(titleDeedName);
@@ -101,7 +102,7 @@ public final class BankImpl implements Bank {
             throw new IllegalStateException("Canot pay rent for property owned by the payer" + playerName);
         }
         final int rentAmount = deed.getRent(
-            titleDeedsByGroup(deed.getGroup())
+            titleDeedsByGroup(deed.getGroup()), dices
         );
         receiver.deposit(rentAmount);
         try {
@@ -138,14 +139,14 @@ public final class BankImpl implements Bank {
     }
 
     @Override
-    public void receivePaymentFromBank(final String ownerName, final int amount) {
+    public void depositTo(final String ownerName, final int amount) {
         Objects.requireNonNull(ownerName);
         final BankAccount account = findAccount(ownerName);
         account.deposit(amount);
     }
 
     @Override
-    public void makePaymentToBank(final String ownerName, final int amount) {
+    public void withdrawFrom(final String ownerName, final int amount) {
         Objects.requireNonNull(ownerName);
         final BankAccount account = findAccount(ownerName);
         account.withdraw(amount);

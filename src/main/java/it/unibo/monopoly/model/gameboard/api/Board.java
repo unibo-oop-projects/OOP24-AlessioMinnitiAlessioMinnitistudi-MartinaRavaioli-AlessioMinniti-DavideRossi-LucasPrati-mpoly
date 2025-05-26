@@ -74,4 +74,23 @@ public interface Board {
      * @return List of Pawns
     */
     List<Pawn> getPawns();
+    /**
+     * move a pawn in a selected tile.
+     * @param pawn
+     * @param name
+    */
+    void movePawnInTile(Pawn pawn, String name);
+
+    /**
+     * get a tile searched by the name given.
+     * @param name
+     * @return Tile
+    */
+    Tile getTile(String name);
+    /**
+     * add a tile.
+     * @param tile
+    */
+    void addTile(Tile tile);
+
 }

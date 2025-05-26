@@ -1,4 +1,4 @@
-package it.unibo.monopoly.utils;
+package it.unibo.monopoly.utils.impl;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -7,7 +7,7 @@ import java.util.List;
 import it.unibo.monopoly.model.turnation.api.Dice;
 import it.unibo.monopoly.model.turnation.api.Player;
 import it.unibo.monopoly.model.turnation.api.TurnationManager;
-import it.unibo.monopoly.utils.CircularLinkedList;
+import it.unibo.monopoly.utils.impl.CircularLinkedList;
 
 
 /**
@@ -96,7 +96,7 @@ public class TurnationManagerImpl implements TurnationManager {
     @Override
     public final Player getNextPlayer() { 
         this.currPlayer = players.giveNextNode(this.currPlayer);
-        return this.currPlayer;
+        return PlayerImpl.of(this.currPlayer.getID(), this.currPlayer.getName(), this.currPlayer.getColor());
     }
     /**
      * throw the dices.
@@ -120,7 +120,7 @@ public class TurnationManagerImpl implements TurnationManager {
     */
     @Override
     public final Player getCurrPlayer() {
-        return this.currPlayer;
+        return PlayerImpl.of(this.currPlayer.getID(), this.currPlayer.getName(), this.currPlayer.getColor());
     }
 
 }

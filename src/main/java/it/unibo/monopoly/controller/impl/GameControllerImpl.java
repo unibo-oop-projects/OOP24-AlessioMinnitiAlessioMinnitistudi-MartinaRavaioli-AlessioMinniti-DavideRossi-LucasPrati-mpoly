@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.monopoly.controller.api.GameController;
@@ -19,8 +20,9 @@ import it.unibo.monopoly.model.transactions.api.TitleDeed;
 import it.unibo.monopoly.model.transactions.impl.BaseTitleDeed;
 import it.unibo.monopoly.model.turnation.api.Player;
 import it.unibo.monopoly.model.turnation.api.TurnationManager;
-import it.unibo.monopoly.utils.Configuration;
-import it.unibo.monopoly.utils.ResourceLoader;
+import it.unibo.monopoly.utils.api.UseFileTxt;
+import it.unibo.monopoly.utils.impl.Configuration;
+import it.unibo.monopoly.utils.impl.UseFileTxtImpl;
 import it.unibo.monopoly.view.api.GameboardView;
 import it.unibo.monopoly.view.api.MainGameView;
 
@@ -116,32 +118,7 @@ public final class GameControllerImpl implements GameController {
 
     @Override
     public Color getPropertyColor(final TitleDeed selectedProperty) {
-        final Group colorS = selectedProperty.getGroup();
-        final Color color;
-        switch (colorS) {
-            case Group.BLUE:
-                color = Color.BLUE;
-                break;
-            case Group.RED:
-                color = Color.RED;
-                break;
-            case Group.GREEN:
-                color = Color.GREEN;
-                break;
-            case Group.YELLOW:
-                color = Color.YELLOW;
-                break;
-            case Group.ORANGE:
-                color = Color.ORANGE;
-                break;
-            case Group.BLACK:
-                color = Color.BLACK;
-                break;
-            default:
-                color = Color.WHITE;
-                break;
-        }
-        return color;
+        return selectedProperty.getGroup().getColor();
     }
 
 
@@ -186,7 +163,8 @@ public final class GameControllerImpl implements GameController {
 
     @Override
     public void loadRules() {
-        final String rules = ResourceLoader.loadTextResource(config.getRulesPath());
+        final UseFileTxt importRules = new UseFileTxtImpl();
+        final String rules = importRules.loadTextResource(config.getRulesPath());
         gameView.showRules(rules);
     }
 
@@ -264,5 +242,15 @@ public final class GameControllerImpl implements GameController {
     @Override
     public Player getCurrPlayer() {
         return this.turnationManager.getCurrPlayer();
+    }
+
+    public String getRentString(final TitleDeed selectedProperty, final Set<TitleDeed> collect) {
+        final List<Integer> l = List.of(1);
+        final int rent = selectedProperty.getRent(collect, l);
+        if (selectedProperty.getGroup().equals(Group.SOCIETY)) {
+
+            return rent + " times dice result";
+        }
+        return Integer.toString(rent);
     }
 }

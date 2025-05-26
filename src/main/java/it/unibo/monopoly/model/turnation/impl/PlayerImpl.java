@@ -1,10 +1,12 @@
 package it.unibo.monopoly.model.turnation.impl;
 
 import java.awt.Color;
+import java.util.Collection;
 import java.util.Objects;
 
+import it.unibo.monopoly.model.gameboard.api.Board;
 import it.unibo.monopoly.model.turnation.api.Player;
-import it.unibo.monopoly.utils.Identifiable;
+import it.unibo.monopoly.utils.api.Identifiable;
 
 /**
  * {@link Player}'s implementation.
@@ -17,7 +19,6 @@ public final class PlayerImpl implements Player {
 
     /**
      * Private constructor used internally by the static factory method {@link #of(int, String, Color)}.
-     *
      * @param id the {@link Identifiable} representing the {@link Player}
      * @param name the name chosen by the {@link Player} for himself
      * @param color the {@link Color} representing the {@link Player}
@@ -53,6 +54,48 @@ public final class PlayerImpl implements Player {
         return id;
     }
 
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + id;
+        result = prime * result + ((name == null) ? 0 : name.hashCode());
+        result = prime * result + ((color == null) ? 0 : color.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(final Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final PlayerImpl other = (PlayerImpl) obj;
+        if (id != other.id) {
+            return false;
+        } 
+        if (name == null) {
+            if (other.name != null) {
+                return false;
+            }
+        } else if (!name.equals(other.name)) {
+            return false;
+        }
+        if (color == null) {
+            if (other.color != null) {
+                return false;
+            }
+        } else if (!color.equals(other.color)) {
+            return false;
+        }
+        return true;
+    }
+
     /**
      * Static factory method for creating a new {@link PlayerImpl} instance.
      * <p>
@@ -76,4 +119,32 @@ public final class PlayerImpl implements Player {
         return new PlayerImpl(id, name, color);
     }
 
+    @Override
+    public boolean isAlive() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'isAlive'");
+    }
+
+    @Override
+    public boolean isParked() {
+        return true;
+    }
+
+    @Override
+    public void park() {
+    }
+
+    @Override
+    public boolean isInPrison() {
+        return true;
+    }
+
+    @Override
+    public void putInPrison() {
+    }
+
+    @Override
+    public boolean canExitPrison(final Collection<Integer> dices, final Board board) {
+        return true;
+    }
 }

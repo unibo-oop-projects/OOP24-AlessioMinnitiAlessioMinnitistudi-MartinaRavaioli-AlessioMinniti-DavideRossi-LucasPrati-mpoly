@@ -111,8 +111,8 @@ public final class GUIVendita extends JFrame {
             final TitleDeed selectedProperty = logic.getProperty(logic.getProperties(player), propertiesList.getSelectedValue());
             housesCostValue.setText(Integer.toString(selectedProperty.housePrice()));
             mortageValue.setText(Integer.toString(selectedProperty.getMortgagePrice()));
-            rentValue.setText(Integer.toString(selectedProperty.getRent(logic.getProperties(player)
-                                                                            .stream().collect(Collectors.toSet()))));
+            rentValue.setText(logic.getRentString(selectedProperty, logic.getProperties(player)
+                                    .stream().collect(Collectors.toSet())));
             housesNumValue.setText(Integer.toString(selectedProperty.houseNum()));
             colorValue.setColor(logic.getPropertyColor(selectedProperty));
 

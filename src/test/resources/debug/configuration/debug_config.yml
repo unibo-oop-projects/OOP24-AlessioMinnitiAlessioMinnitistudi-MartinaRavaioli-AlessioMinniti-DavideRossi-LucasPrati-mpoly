@@ -12,8 +12,8 @@ SMALL_FONT: 20
 
 INIT_BALANCE: 1000
 
-RULES_FILE: rules/debug_rules.txt
-TITLE_DEEDS_FILE: cards/debug_title_deeds.json
-TILES_FILE: cards/debug_tiles.json
+RULES_FILE: debug/rules/debug_rules.txt
+TITLE_DEEDS_FILE: debug/cards/debug_title_deeds.json
+TILES_FILE: debug/cards/debug_tiles.json
 
 COLORS: RED, BLUE, ORANGE, GREEN, MAGENTA
