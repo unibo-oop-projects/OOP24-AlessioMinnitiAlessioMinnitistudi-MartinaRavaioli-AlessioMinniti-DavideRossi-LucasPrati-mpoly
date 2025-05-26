@@ -26,12 +26,15 @@ public interface TransactionLedger {
      * by calling the method {@link #markExecution(String)} and passing the corresponding name. As long as a mandatory transaction
      * is marked as not executed the method {@link #checkAllMandatoryTransactionsCompleted()} will return {@code false}
      * @param nTimes number of times the transaction can or has to be executed, depending if {@code mandatory} is true or false
+     * @throws IllegalStateException if this type of transaction already exists in the ledger
      */
     void registerTransaction(String name, boolean mandatory, int nTimes);
 
     /**
      * Register the execution of a transaction in the ledger.
      * @param name the name of the transaction to mark the execution of
+     * @throws IllegalArgumentException if no type of transaction with this name 
+     * has been registered in the ledger
      * @throws IllegalStateException if marking the execution would violated 
      * the ledger's policy. This may happen mainly if you're trying to mark the execution
      * of an action that has already been executed for its maximum number of times.
