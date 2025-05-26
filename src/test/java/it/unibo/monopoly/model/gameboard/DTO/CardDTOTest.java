@@ -55,7 +55,12 @@ class CardDTOTest {
         assertEquals(List.of(50, 200, 600, 1400, 1700, 2000), dto.getRents().get());
 
         assertTrue(dto.getMortgage().isPresent());
-        assertFalse(dto.getEffect().isPresent());
+        assertEquals(200, dto.getMortgage().get());
+
+        assertTrue(dto.getHouseCost().isPresent());
+        assertEquals(200, dto.getHouseCost().get());
+
+        assertFalse(dto.getEffect().isPresent(), "Effect should be empty for PROPERTY type");
     }
 
 
@@ -79,8 +84,36 @@ class CardDTOTest {
         assertTrue(dto.getEffect().isPresent());
         assertEquals("GO_TO_JAIL", dto.getEffect().get());
 
+        // All others should be empty
         assertFalse(dto.getGroup().isPresent());
         assertFalse(dto.getCost().isPresent());
+        assertFalse(dto.getRents().isPresent());
+        assertFalse(dto.getHouseCost().isPresent());
+        assertFalse(dto.getMortgage().isPresent());
+    }
+
+
+    @Test
+    void testDeserializeEmptyOptionals() throws Exception {
+        final String json = """
+            {
+              "name": "Empty Tile",
+              "position": 0,
+              "type": "SPECIAL"
+            }
+            """;
+
+        final CardDTO dto = mapper.readValue(json, CardDTO.class);
+
+        assertEquals("Empty Tile", dto.getName());
+        assertEquals(0, dto.getPosition());
+        assertEquals("SPECIAL", dto.getType());
+
+        assertFalse(dto.getEffect().isPresent());
+        assertFalse(dto.getGroup().isPresent());
+        assertFalse(dto.getCost().isPresent());
+        assertFalse(dto.getHouseCost().isPresent());
+        assertFalse(dto.getMortgage().isPresent());
         assertFalse(dto.getRents().isPresent());
     }
 }
