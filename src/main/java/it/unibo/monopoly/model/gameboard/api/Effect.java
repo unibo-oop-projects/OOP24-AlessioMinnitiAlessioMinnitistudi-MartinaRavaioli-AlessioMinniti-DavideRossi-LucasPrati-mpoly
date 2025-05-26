@@ -6,7 +6,6 @@ import it.unibo.monopoly.model.turnation.api.Player;
 /**
  * effect interface.
 */
-@FunctionalInterface
 public interface Effect { 
 
     /**
@@ -14,6 +13,12 @@ public interface Effect {
      * @param player the player tha triggered the effect
      */
     void activate(Player player);
+
+    /**
+     * gets a description in natural language of the effect.
+     * @return a string that represents 
+     */
+    String getDescription();
 }
 
 

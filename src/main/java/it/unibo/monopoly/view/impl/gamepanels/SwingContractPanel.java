@@ -23,6 +23,7 @@ import javax.swing.JTextArea;
 import javax.swing.ListCellRenderer;
 import javax.swing.SwingConstants;
 
+import it.unibo.monopoly.model.gameboard.api.Special;
 import it.unibo.monopoly.model.transactions.api.RentOption;
 import it.unibo.monopoly.model.transactions.api.TitleDeed;
 import it.unibo.monopoly.utils.impl.GuiUtils;
@@ -113,6 +114,48 @@ final class SwingContractPanel extends SwingAbstractJPanel implements ContractPa
         this.add(rentOptionsList(deed.getRentOptions()), BorderLayout.CENTER);
     }
 
+    @Override
+    public void displaySpecialInfo(final Special tile) {
+        this.removeAll();
+        final JPanel northPanel = new JPanel();
+        northPanel.setLayout(new GridLayout(N_ROWS, 1)); 
+
+        //name label
+        final JLabel name = new JLabel(tile.getName(), SwingConstants.CENTER);
+        name.setFont(new Font(getFont().getName(), Font.BOLD, BIG_FONT_SIZE));
+
+        //group information
+        final JPanel groupPanel = new JPanel();
+        groupPanel.setLayout(new BorderLayout());
+        final JLabel group = new JLabel(tile.getGroup().toString(), SwingConstants.RIGHT);
+
+        final JLabel colorBox = GuiUtils.colorBoxFactory(tile.getGroup().getColor(), 30);
+        groupPanel.add(colorBox, BorderLayout.WEST);
+        groupPanel.add(group, BorderLayout.CENTER);
+
+        //owner information
+        final JPanel ownerPanel = new JPanel();
+        ownerPanel.setLayout(new BorderLayout());
+        final JLabel ownerDesc = new JLabel("Proprietario: ");
+        final JLabel ownerInfo = new JLabel("this type of tile can't be owned");
+        ownerPanel.add(ownerDesc, BorderLayout.WEST);
+        ownerPanel.add(ownerInfo, BorderLayout.CENTER);
+
+        //sale information
+        final JPanel effectPanel = new JPanel();
+        effectPanel.setLayout(new BorderLayout());
+        final JLabel saleDesc = new JLabel("effetto: "); 
+        final JLabel salePrice = new JLabel(tile.getEffect().getDescription());
+        effectPanel.add(saleDesc, BorderLayout.WEST);
+        effectPanel.add(salePrice, BorderLayout.CENTER);
+
+        northPanel.add(name);
+        northPanel.add(groupPanel);
+        northPanel.add(ownerPanel);
+        northPanel.add(effectPanel);
+        this.add(northPanel, BorderLayout.NORTH);
+    }
+
     private Component rentOptionsList(final List<RentOption> options) {
         final JList<RentOption> optJList = new JList<>(
                                         options.stream()
@@ -186,4 +229,6 @@ final class SwingContractPanel extends SwingAbstractJPanel implements ContractPa
             return optionPanel;
         }
     }
+
+
 }
