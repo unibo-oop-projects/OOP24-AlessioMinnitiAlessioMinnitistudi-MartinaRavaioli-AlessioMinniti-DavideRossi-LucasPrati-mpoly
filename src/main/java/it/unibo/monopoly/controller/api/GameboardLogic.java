@@ -21,6 +21,6 @@ public interface GameboardLogic {
     * @param size
     * @return int
     */
-    int isCard(int i, int j, int size);
+    int tileCard(int i, int j, int size);
 
 }

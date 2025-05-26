@@ -10,6 +10,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.monopoly.controller.api.GameController;
 import it.unibo.monopoly.model.transactions.api.BankAccount;
 import it.unibo.monopoly.model.transactions.api.TitleDeed;
@@ -53,9 +54,11 @@ public final class MainViewImpl implements MainGameView {
      * happening on this view, implementing the observer pattern. User events
      * will be captured and handled by the {@code controller} provided to this constructor. 
      */
+    @SuppressFBWarnings(value = "EI_EXPOSE_REP",
+                justification = "must return reference to the object instead of a copy")
     public MainViewImpl(final GameController controller) {
-        this.gameBoardPanel = new GameboardViewImpl(11,controller);
         this.controller = controller;
+        this.gameBoardPanel = new GameboardViewImpl(controller);
         this.controller.setBoardView(this.gameBoardPanel);
         final GamePanelsFactory fact = new SwingPanelsFactory();
         contractPanel = fact.contractPanel();
@@ -71,7 +74,7 @@ public final class MainViewImpl implements MainGameView {
         final JPanel actionPanel = buildActionPanelUI(controller);
         mainGameFrame.getContentPane().add(actionPanel, BorderLayout.EAST);
         mainGameFrame.getContentPane().add(this.gameBoardPanel.getPanel(), BorderLayout.WEST);
-        JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, gameBoardPanel.getPanel(), actionPanel);
+        final JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, gameBoardPanel.getPanel(), actionPanel);
         splitPane.setResizeWeight(0.5); 
         splitPane.setDividerSize(2);    // Spessore del divisore
         splitPane.setEnabled(false);    // Rendi il divisore fisso, se vuoi

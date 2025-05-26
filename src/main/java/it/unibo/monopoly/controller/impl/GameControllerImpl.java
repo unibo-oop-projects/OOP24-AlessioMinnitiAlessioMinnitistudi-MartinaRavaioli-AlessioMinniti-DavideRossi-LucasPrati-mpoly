@@ -234,6 +234,8 @@ public final class GameControllerImpl implements GameController {
         return Collections.unmodifiableList(this.board.getPawns());
     }
 
+    @SuppressFBWarnings(value = "EI_EXPOSE_REP",
+                justification = "must return reference to the object instead of a copy")
     @Override
     public void setBoardView(final GameboardView view) {
         this.gameboardView = view;
