@@ -136,7 +136,7 @@ public class BoardImpl implements Board {
     }
 
     @Override
-    public List<Pawn> getPawns() {
+    public final List<Pawn> getPawns() {
         return Collections.unmodifiableList(this.pawns);
     }
 

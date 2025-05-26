@@ -12,9 +12,9 @@ public interface TurnationManager {
      */
     boolean isOver();
     /**
-     * change player
+     * @return the next player
      */
-    void getNextPlayer();
+    Player getNextPlayer();
     /**
      * @return the dices' result
      */

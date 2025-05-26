@@ -154,7 +154,8 @@ public final class GameControllerImpl implements GameController {
     public void throwDices() {
         final Collection<Integer> result = this.turnationManager.moveByDices();
         this.board.movePawn(this.board.getPawn(this.turnationManager.getIdCurrPlayer()), result);
-        this.gameboardView.changePos(this.turnationManager.getIdCurrPlayer(), this.board.getPawn(this.turnationManager.getIdCurrPlayer()).getPosition());
+        this.gameboardView.changePos(this.turnationManager.getIdCurrPlayer(), 
+                                    this.board.getPawn(this.turnationManager.getIdCurrPlayer()).getPosition());
     }
 
     @Override
@@ -212,31 +213,32 @@ public final class GameControllerImpl implements GameController {
 
     @Override
     public void playerGameOver() {
-        
+
     }
 
     @Override
     public void changePositions() {
-        Collection<Integer> res = turnationManager.moveByDices();
-        this.board.movePawn(this.board.getPawn(this.turnationManager.getIdCurrPlayer()),res);
-        gameboardView.changePos(this.turnationManager.getIdCurrPlayer(),this.board.getPawn(this.turnationManager.getIdCurrPlayer()).getPosition());
+        final Collection<Integer> res = turnationManager.moveByDices();
+        this.board.movePawn(this.board.getPawn(this.turnationManager.getIdCurrPlayer()), res);
+        gameboardView.changePos(this.turnationManager.getIdCurrPlayer(),
+                                this.board.getPawn(this.turnationManager.getIdCurrPlayer()).getPosition());
     }
 
     @Override
-    public void addHouse(Property prop) {
+    public void addHouse(final Property prop) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'addHouse'");
     }
 
     @Override
-    public void addHotel(Property prop) {
+    public void addHotel(final Property prop) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'addHotel'");
     }
 
     @Override
-    public int getSize(int numTiles) {
-        return numTiles/4 + 1;
+    public int getSize(final int numTiles) {
+        return numTiles / 4 + 1;
     }
 
     @Override
@@ -255,7 +257,7 @@ public final class GameControllerImpl implements GameController {
     }
 
     @Override
-    public void setBoardView(GameboardView view) {
+    public void setBoardView(final GameboardView view) {
         this.gameboardView = view;
     }
 

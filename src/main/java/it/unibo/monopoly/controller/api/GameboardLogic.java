@@ -1,8 +1,5 @@
 package it.unibo.monopoly.controller.api;
 
-import java.awt.Color;
-
-import it.unibo.monopoly.model.gameboard.impl.Type;
 
 /**
     * board logic interface.
@@ -13,6 +10,7 @@ public interface GameboardLogic {
     * @param i
     * @param j
     * @param size
+    * @return bool
     */
     boolean isBoardTile(int i, int j, int size);
 
@@ -21,6 +19,7 @@ public interface GameboardLogic {
     * @param i
     * @param j
     * @param size
+    * @return int
     */
     int isCard(int i, int j, int size);
 
