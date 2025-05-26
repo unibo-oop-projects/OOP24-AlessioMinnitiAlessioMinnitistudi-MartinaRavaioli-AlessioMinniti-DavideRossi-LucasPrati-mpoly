@@ -1,0 +1,355 @@
+[
+  {
+    "name": "Go",
+    "position": 0,
+    "type": "SPECIAL",
+    "effect": "INCOME"
+  },
+  {
+    "name": "Mediterranean Avenue",
+    "position": 1,
+    "type": "PROPERTY",
+    "group": "BROWN",
+    "cost": 60,
+    "houseCost": 50,
+    "mortgage": 30,
+    "rents": [2, 10, 30, 90, 160, 250]
+  },
+  {
+    "name": "Community Chest",
+    "position": 2,
+    "type": "SPECIAL",
+    "effect": "CHEST"
+  },
+  {
+    "name": "Baltic Avenue",
+    "position": 3,
+    "type": "PROPERTY",
+    "group": "BROWN",
+    "cost": 60,
+    "houseCost": 50,
+    "mortgage": 30,
+    "rents": [4, 20, 60, 180, 320, 450]
+  },
+  {
+    "name": "Income Tax",
+    "position": 4,
+    "type": "SPECIAL",
+    "effect": "TAX"
+  },
+  {
+    "name": "Reading Railroad",
+    "position": 5,
+    "type": "PROPERTY",
+    "group": "STATION",
+    "cost": 200,
+    "houseCost": 0,
+    "mortgage": 100,
+    "rents": [25, 50, 100, 200]
+  },
+  {
+    "name": "Oriental Avenue",
+    "position": 6,
+    "type": "PROPERTY",
+    "group": "LIGHT_BLUE",
+    "cost": 100,
+    "houseCost": 50,
+    "mortgage": 50,
+    "rents": [6, 30, 90, 270, 400, 550]
+  },
+  {
+    "name": "Chance",
+    "position": 7,
+    "type": "SPECIAL",
+    "effect": "CHANCE"
+  },
+  {
+    "name": "Vermont Avenue",
+    "position": 8,
+    "type": "PROPERTY",
+    "group": "LIGHT_BLUE",
+    "cost": 100,
+    "houseCost": 50,
+    "mortgage": 50,
+    "rents": [6, 30, 90, 270, 400, 550]
+  },
+  {
+    "name": "Connecticut Avenue",
+    "position": 9,
+    "type": "PROPERTY",
+    "group": "LIGHT_BLUE",
+    "cost": 120,
+    "houseCost": 50,
+    "mortgage": 60,
+    "rents": [8, 40, 100, 300, 450, 600]
+  },
+  {
+    "name": "Jail / Just Visiting",
+    "position": 10,
+    "type": "SPECIAL",
+    "effect": "JAIL"
+  },
+  {
+    "name": "St. Charles Place",
+    "position": 11,
+    "type": "PROPERTY",
+    "group": "PINK",
+    "cost": 140,
+    "houseCost": 100,
+    "mortgage": 70,
+    "rents": [10, 50, 150, 450, 625, 750]
+  },
+  {
+    "name": "Electric Company",
+    "position": 12,
+    "type": "PROPERTY",
+    "group": "SOCIETY",
+    "cost": 150,
+    "houseCost": 0,
+    "mortgage": 75,
+    "rents": [4, 10]
+  },
+  {
+    "name": "States Avenue",
+    "position": 13,
+    "type": "PROPERTY",
+    "group": "PINK",
+    "cost": 140,
+    "houseCost": 100,
+    "mortgage": 70,
+    "rents": [10, 50, 150, 450, 625, 750]
+  },
+  {
+    "name": "Virginia Avenue",
+    "position": 14,
+    "type": "PROPERTY",
+    "group": "PINK",
+    "cost": 160,
+    "houseCost": 100,
+    "mortgage": 80,
+    "rents": [12, 60, 180, 500, 700, 900]
+  },
+  {
+    "name": "Pennsylvania Railroad",
+    "position": 15,
+    "type": "PROPERTY",
+    "group": "STATION",
+    "cost": 200,
+    "houseCost": 0,
+    "mortgage": 100,
+    "rents": [25, 50, 100, 200]
+  },
+  {
+    "name": "St. James Place",
+    "position": 16,
+    "type": "PROPERTY",
+    "group": "ORANGE",
+    "cost": 180,
+    "houseCost": 100,
+    "mortgage": 90,
+    "rents": [14, 70, 200, 550, 750, 950]
+  },
+  {
+    "name": "Community Chest",
+    "position": 17,
+    "type": "SPECIAL",
+    "effect": "CHEST"
+  },
+  {
+    "name": "Tennessee Avenue",
+    "position": 18,
+    "type": "PROPERTY",
+    "group": "ORANGE",
+    "cost": 180,
+    "houseCost": 100,
+    "mortgage": 90,
+    "rents": [14, 70, 200, 550, 750, 950]
+  },
+  {
+    "name": "New York Avenue",
+    "position": 19,
+    "type": "PROPERTY",
+    "group": "ORANGE",
+    "cost": 200,
+    "houseCost": 100,
+    "mortgage": 100,
+    "rents": [16, 80, 220, 600, 800, 1000]
+  },
+  {
+    "name": "Free Parking",
+    "position": 20,
+    "type": "SPECIAL",
+    "effect": "PARKING"
+  },
+  {
+    "name": "Kentucky Avenue",
+    "position": 21,
+    "type": "PROPERTY",
+    "group": "RED",
+    "cost": 220,
+    "houseCost": 150,
+    "mortgage": 110,
+    "rents": [18, 90, 250, 700, 875, 1050]
+  },
+  {
+    "name": "Chance",
+    "position": 22,
+    "type": "SPECIAL",
+    "effect": "CHANCE"
+  },
+  {
+    "name": "Indiana Avenue",
+    "position": 23,
+    "type": "PROPERTY",
+    "group": "RED",
+    "cost": 220,
+    "houseCost": 150,
+    "mortgage": 110,
+    "rents": [18, 90, 250, 700, 875, 1050]
+  },
+  {
+    "name": "Illinois Avenue",
+    "position": 24,
+    "type": "PROPERTY",
+    "group": "RED",
+    "cost": 240,
+    "houseCost": 150,
+    "mortgage": 120,
+    "rents": [20, 100, 300, 750, 925, 1100]
+  },
+  {
+    "name": "B. & O. Railroad",
+    "position": 25,
+    "type": "PROPERTY",
+    "group": "STATION",
+    "cost": 200,
+    "houseCost": 0,
+    "mortgage": 100,
+    "rents": [25, 50, 100, 200]
+  },
+  {
+    "name": "Atlantic Avenue",
+    "position": 26,
+    "type": "PROPERTY",
+    "group": "YELLOW",
+    "cost": 260,
+    "houseCost": 150,
+    "mortgage": 130,
+    "rents": [22, 110, 330, 800, 975, 1150]
+  },
+  {
+    "name": "Ventnor Avenue",
+    "position": 27,
+    "type": "PROPERTY",
+    "group": "YELLOW",
+    "cost": 260,
+    "houseCost": 150,
+    "mortgage": 130,
+    "rents": [22, 110, 330, 800, 975, 1150]
+  },
+  {
+    "name": "Water Works",
+    "position": 28,
+    "type": "PROPERTY",
+    "group": "SOCIETY",
+    "cost": 150,
+    "houseCost": 0,
+    "mortgage": 75,
+    "rents": [4, 10]
+  },
+  {
+    "name": "Marvin Gardens",
+    "position": 29,
+    "type": "PROPERTY",
+    "group": "YELLOW",
+    "cost": 280,
+    "houseCost": 150,
+    "mortgage": 140,
+    "rents": [24, 120, 360, 850, 1025, 1200]
+  },
+  {
+    "name": "Go To Jail",
+    "position": 30,
+    "type": "SPECIAL",
+    "effect": "GO_TO_JAIL"
+  },
+  {
+    "name": "Pacific Avenue",
+    "position": 31,
+    "type": "PROPERTY",
+    "group": "GREEN",
+    "cost": 300,
+    "houseCost": 200,
+    "mortgage": 150,
+    "rents": [26, 130, 390, 900, 1100, 1275]
+  },
+  {
+    "name": "North Carolina Avenue",
+    "position": 32,
+    "type": "PROPERTY",
+    "group": "GREEN",
+    "cost": 300,
+    "houseCost": 200,
+    "mortgage": 150,
+    "rents": [26, 130, 390, 900, 1100, 1275]
+  },
+  {
+  "name": "Community Chest",
+  "position": 33,
+  "type": "SPECIAL",
+  "effect": "CHEST"
+},
+{
+  "name": "Pennsylvania Avenue",
+  "position": 34,
+  "type": "PROPERTY",
+  "group": "GREEN",
+  "cost": 320,
+  "houseCost": 200,
+  "mortgage": 160,
+  "rents": [28, 150, 450, 1000, 1200, 1400]
+},
+{
+  "name": "Short Line",
+  "position": 35,
+  "type": "PROPERTY",
+  "group": "STATION",
+  "cost": 200,
+  "houseCost": 0,
+  "mortgage": 100,
+  "rents": [25, 50, 100, 200]
+},
+{
+  "name": "Chance",
+  "position": 36,
+  "type": "SPECIAL",
+  "effect": "CHANCE"
+},
+{
+  "name": "Park Place",
+  "position": 37,
+  "type": "PROPERTY",
+  "group": "BLUE",
+  "cost": 350,
+  "houseCost": 200,
+  "mortgage": 175,
+  "rents": [35, 175, 500, 1100, 1300, 1500]
+},
+{
+  "name": "Luxury Tax",
+  "position": 38,
+  "type": "SPECIAL",
+  "effect": "TAX"
+},
+{
+  "name": "Boardwalk",
+  "position": 39,
+  "type": "PROPERTY",
+  "group": "BLUE",
+  "cost": 400,
+  "houseCost": 200,
+  "mortgage": 200,
+  "rents": [50, 200, 600, 1400, 1700, 2000]
+}
+]
+ 
