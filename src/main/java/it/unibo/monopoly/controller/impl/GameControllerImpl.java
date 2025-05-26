@@ -32,8 +32,8 @@ public final class GameControllerImpl implements GameController {
     private static final int NUM = 0;
 
     private final Bank bank;
-    private final TurnationManager turnationManager;        // TODO
-    private final Board board;                              // TODO
+    private final TurnationManager turnationManager;
+    private final Board board;
     private final Configuration config;
     private MainGameView gameView;
 
