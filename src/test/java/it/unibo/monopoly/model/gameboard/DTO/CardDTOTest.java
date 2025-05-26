@@ -13,6 +13,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 
 import it.unibo.monopoly.model.gameboard.impl.CardDTO;
+import it.unibo.monopoly.model.gameboard.impl.Group;
 
 class CardDTOTest {
 
@@ -31,7 +32,7 @@ class CardDTOTest {
               "name": "Boardwalk",
               "position": 39,
               "type": "PROPERTY",
-              "group": "DARK_BLUE",
+              "group": "BLUE",
               "cost": 400,
               "houseCost": 200,
               "mortgage": 200,
@@ -42,11 +43,11 @@ class CardDTOTest {
         final CardDTO dto = mapper.readValue(json, CardDTO.class);
 
         assertEquals("Boardwalk", dto.getName());
-        assertEquals(39, dto.getPosition());
+        assertEquals(39, dto.getPosition().getPos());
         assertEquals("PROPERTY", dto.getType());
 
         assertTrue(dto.getGroup().isPresent());
-        assertEquals("DARK_BLUE", dto.getGroup().get());
+        assertEquals(Group.BLUE, dto.getGroup().get());
 
         assertTrue(dto.getCost().isPresent());
         assertEquals(400, dto.getCost().get());
@@ -78,7 +79,7 @@ class CardDTOTest {
         final CardDTO dto = mapper.readValue(json, CardDTO.class);
 
         assertEquals("Go to Jail", dto.getName());
-        assertEquals(30, dto.getPosition());
+        assertEquals(30, dto.getPosition().getPos());
         assertEquals("SPECIAL", dto.getType());
 
         assertTrue(dto.getEffect().isPresent());
@@ -106,7 +107,7 @@ class CardDTOTest {
         final CardDTO dto = mapper.readValue(json, CardDTO.class);
 
         assertEquals("Empty Tile", dto.getName());
-        assertEquals(0, dto.getPosition());
+        assertEquals(0, dto.getPosition().getPos());
         assertEquals("SPECIAL", dto.getType());
 
         assertFalse(dto.getEffect().isPresent());

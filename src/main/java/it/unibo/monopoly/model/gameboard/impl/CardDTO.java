@@ -3,6 +3,9 @@ package it.unibo.monopoly.model.gameboard.impl;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import it.unibo.monopoly.model.turnation.api.Position;
+import it.unibo.monopoly.model.turnation.impl.PositionImpl;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -13,11 +16,11 @@ import java.util.Optional;
 public final class CardDTO {
 
     private final String name;
-    private final int position;
+    private final Position position;
     private final String type;
 
     private final Optional<String> effect;
-    private final Optional<String> group;
+    private final Optional<Group> group;
     private final Optional<Integer> cost;
     private final Optional<Integer> houseCost;
     private final Optional<Integer> mortgage;
@@ -29,14 +32,14 @@ public final class CardDTO {
         @JsonProperty("position") final int position,
         @JsonProperty("type") final String type,
         @JsonProperty("effect") final Optional<String> effect,
-        @JsonProperty("group") final Optional<String> group,
+        @JsonProperty("group") final Optional<Group> group,
         @JsonProperty("cost") final Optional<Integer> cost,
         @JsonProperty("houseCost") final Optional<Integer> houseCost,
         @JsonProperty("mortgage") final Optional<Integer> mortgage,
         @JsonProperty("rents") final Optional<List<Integer>> rents
     ) {
         this.name = name;
-        this.position = position;
+        this.position = new PositionImpl(position);
         this.type = type;
         this.effect = effect;
         this.group = group;
@@ -50,7 +53,7 @@ public final class CardDTO {
         return name;
     }
 
-    public int getPosition() {
+    public Position getPosition() {
         return position;
     }
 
@@ -62,7 +65,7 @@ public final class CardDTO {
         return effect;
     }
 
-    public Optional<String> getGroup() {
+    public Optional<Group> getGroup() {
         return group;
     }
 
