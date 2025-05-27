@@ -13,12 +13,16 @@ import it.unibo.monopoly.controller.api.MainMenuController;
 import it.unibo.monopoly.view.impl.MainViewImpl;
 
 import it.unibo.monopoly.model.gameboard.api.Board;
+import it.unibo.monopoly.model.gameboard.api.CardFactory;
 import it.unibo.monopoly.model.gameboard.api.Pawn;
 import it.unibo.monopoly.model.gameboard.api.PawnFactory;
+import it.unibo.monopoly.model.gameboard.api.SpecialFactory;
 import it.unibo.monopoly.model.gameboard.api.Tile;
 import it.unibo.monopoly.model.gameboard.impl.BoardImpl;
+import it.unibo.monopoly.model.gameboard.impl.CardDTO;
+import it.unibo.monopoly.model.gameboard.impl.CardFactoryImpl;
 import it.unibo.monopoly.model.gameboard.impl.PawnFactoryImpl;
-
+import it.unibo.monopoly.model.gameboard.impl.SpecialFactoryImpl;
 import it.unibo.monopoly.model.transactions.api.Bank;
 import it.unibo.monopoly.model.transactions.api.BankAccount;
 import it.unibo.monopoly.model.transactions.api.BankAccountFactory;
@@ -111,13 +115,9 @@ public final class MainMenuControllerImpl implements MainMenuController {
             id++;
         }
 
-        // import from json
-        titleDeeds.addAll(importFileJson.loadTitleDeeds(config.getTitleDeedsPath()));
-        tiles.addAll(List.copyOf(importFileJson.loadJsonList(config.getTilesPath(), Tile.class)));
-
         // creation of Bank, Board and TurnationManager
-        final Bank bank = new BankImpl(accounts, titleDeeds);
-        final Board board = new BoardImpl(tiles, pawns);
+        final Board board = new BoardImpl(pawns);
+        final Bank bank = new BankImpl(accounts);
         final TurnationManager turnationManager = new TurnationManagerImpl(
             players,
             new DiceImpl(
@@ -126,6 +126,21 @@ public final class MainMenuControllerImpl implements MainMenuController {
             )
         );
 
+        // import from json
+        final List<CardDTO> dtos = importFileJson.loadJsonList(config.getCardsPath(), CardDTO.class);
+        final SpecialFactory specialFactory = new SpecialFactoryImpl();
+        final CardFactory cardFactory = new CardFactoryImpl(board , bank); 
+        cardFactory.parse(dtos);
+        titleDeeds = cardFactory.getDeeds();
+        tiles = cardFactory.getTiles();
+
+
+
+        // Add tiles to the board and titleDeeds to the Bank
+        board.setTiles(tiles);
+        //TODO bank.setTitleDeeds(titleDeeds)
+        
+        
         // start the game
         final var controllerGameManager = new GameControllerImpl(bank, board, turnationManager, config);
         final var mainView = new MainViewImpl(controllerGameManager);
@@ -194,9 +209,9 @@ public final class MainMenuControllerImpl implements MainMenuController {
                                                 final String owner) {
         Objects.requireNonNull(owner);
         return switch (bankAccountType) {
-            case CLASSIC -> bankAccountFactory.createWithCheck(id, owner,
+            case CLASSIC    -> bankAccountFactory.createWithCheck(id, owner,
                                                                account -> account.getBalance() > 0);
-            case INFINITY  -> bankAccountFactory.createSimple(id, owner);
+            case INFINITY   -> bankAccountFactory.createSimple(id, owner);
         };
     }
 }
