@@ -63,5 +63,9 @@ public interface TurnationManager {
      * @param plList
      */
     boolean isCurrentPlayerInPrison();
-    
+    /**
+     * tells if the player can exit the prison.
+     * @param plList
+     */
+    boolean canExitPrison(int value);
 }
