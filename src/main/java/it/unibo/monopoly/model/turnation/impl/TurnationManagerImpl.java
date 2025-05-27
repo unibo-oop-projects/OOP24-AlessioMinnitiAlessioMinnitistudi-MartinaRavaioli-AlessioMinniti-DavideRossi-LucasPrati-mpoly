@@ -1,4 +1,5 @@
 package it.unibo.monopoly.model.turnation.impl;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -169,19 +170,26 @@ public class TurnationManagerImpl implements TurnationManager {
 
     @Override
     public final Pair<String, Integer> getWinner() {
-        final Pair<String, Integer> winner = getRanking().get(0);
+        final Pair<Integer, Integer> winner = getRanking().get(0);
+        final Pair<String, Integer> winnerName;
 
-        for (final Pair<String, Integer> p : getRanking()) {
+        for (final Pair<Integer, Integer> p : this.bankState.rankPlayers()) {
             if (p.getRight() > winner.getRight()) {
                 winner.setValue(p.getRight());
             }
         }
 
-        return winner;
+        winnerName = Pair.of(this.players.toList().get(winner.getLeft()).getName(),winner.getRight());
+        return winnerName;
     }
 
     @Override
-    public final List<Pair<String, Integer>> getRanking() {
+    public final List<Pair<Integer, Integer>> getRanking() {
+        final List<Pair<String, Integer>> list = new ArrayList<>();
+        for (final Pair<Integer, Integer> p : this.bankState.rankPlayers()) {
+            list.add(Pair.of(this.players.toList().get(p.getLeft()).getName(),p.getRight()));
+        }
+
         return this.bankState.rankPlayers();
     }
 
