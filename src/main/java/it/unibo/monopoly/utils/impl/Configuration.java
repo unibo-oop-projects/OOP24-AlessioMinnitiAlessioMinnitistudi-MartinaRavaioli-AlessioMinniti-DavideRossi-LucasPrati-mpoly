@@ -20,15 +20,14 @@ public final class Configuration {
     private final int smallFont;
     private final int initBalance;
     private final String rulesPath;
-    private final String titleDeedsPath;
-    private final String tilesPath;
+    private final String cardsPath;
     private final List<Color> playerColors;
 
 
 
     private Configuration(final int minPlayer, final int maxPlayer, final int numDice, final int sidesPerDie,
                             final String fontName, final int bigFont, final int smallFont, final int initBalance,
-                            final String rulesPath, final String titleDeedsPath, final String tilesPath,
+                            final String rulesPath, final String cardsPath,
                             final List<Color> playerColors) {
         this.minPlayer = minPlayer;
         this.maxPlayer = maxPlayer;
@@ -39,8 +38,7 @@ public final class Configuration {
         this.smallFont = smallFont;
         this.initBalance = initBalance;
         this.rulesPath = rulesPath;
-        this.titleDeedsPath = titleDeedsPath;
-        this.tilesPath = tilesPath;
+        this.cardsPath = cardsPath;
         this.playerColors = playerColors;
     }
 
@@ -110,17 +108,10 @@ public final class Configuration {
     }
 
     /**
-     * @return the path of the file which contains all the title deeds of the game
+     * @return the path of the file which contains all the cards of the game
      */
-    public String getTitleDeedsPath() {
-        return titleDeedsPath;
-    }
-
-    /**
-     * @return the path of the file which contains alla the tiles of the game
-     */
-    public String getTilesPath() {
-        return tilesPath;
+    public String getCardsPath() {
+        return cardsPath;
     }
 
     /**
@@ -143,8 +134,7 @@ public final class Configuration {
                 && smallFont < bigFont
                 && initBalance >= 0
                 && FileChecker.checkPath(rulesPath)
-                && FileChecker.checkPath(titleDeedsPath)
-                && FileChecker.checkPath(tilesPath);
+                && FileChecker.checkPath(cardsPath);
     }
 
 
@@ -185,8 +175,7 @@ public final class Configuration {
         private static final int SMALL_FONT = 16;
         private static final int INIT_BALANCE = 2000;
         private static final String RULES_PATH = "rules/rules.txt";
-        private static final String TITLE_DEEDS_PATH = "cards/title_deeds.json";
-        private static final String TILES_PATH = "cards/tiles.json";
+        private static final String CARDS_PATH = "cards/cards.json";
         private static final List<Color> PLAYER_COLORS = List.of(
             Color.RED,
             Color.BLUE,
@@ -213,8 +202,7 @@ public final class Configuration {
         private int smallFont = SMALL_FONT;
         private int initBalance = INIT_BALANCE;
         private String rulesPath = RULES_PATH;
-        private String titleDeedsPath = TITLE_DEEDS_PATH;
-        private String tilesPath = TILES_PATH;
+        private String cardspath = CARDS_PATH;
         private List<Color> playerColors = List.copyOf(PLAYER_COLORS);
         private boolean consumed;
 
@@ -301,20 +289,11 @@ public final class Configuration {
         }
 
         /**
-         * @param titleDeedsPath the path of the file which contains all the title deeds of the game
+         * @param cardspath the path of the file which contains all the cards of the game
          * @return this builder, for method chaining
          */
-        public Builder withTitleDeedsPath(final String titleDeedsPath) {
-            this.titleDeedsPath = titleDeedsPath;
-            return this;
-        }
-
-        /**
-         * @param tilesPath the path of the file which contains all the tiles of the game
-         * @return this builder, for method chaining
-         */
-        public Builder withTilesPath(final String tilesPath) {
-            this.tilesPath = tilesPath;
+        public Builder withCardsPath(final String cardspath) {
+            this.cardspath = cardspath;
             return this;
         }
 
@@ -348,7 +327,7 @@ public final class Configuration {
             consumed = true;
             return new Configuration(minPlayer, maxPlayer, numDice, sidesPerDie,
                                     fontName, bigFont, smallFont, initBalance,
-                                    rulesPath, titleDeedsPath, tilesPath, playerColors);
+                                    rulesPath, cardspath, playerColors);
         }
 
         /**
@@ -368,8 +347,7 @@ public final class Configuration {
                 && SMALL_FONT    ==  config.getSmallFont()
                 && INIT_BALANCE  ==  config.getInitBalance()
                 && RULES_PATH.equals(config.getRulesPath())
-                && TITLE_DEEDS_PATH.equals(config.getTitleDeedsPath())
-                && TILES_PATH.equals(config.getTilesPath())
+                && CARDS_PATH.equals(config.getCardsPath())
                 && PLAYER_COLORS.containsAll(config.getPlayerColors());
         }
     }
