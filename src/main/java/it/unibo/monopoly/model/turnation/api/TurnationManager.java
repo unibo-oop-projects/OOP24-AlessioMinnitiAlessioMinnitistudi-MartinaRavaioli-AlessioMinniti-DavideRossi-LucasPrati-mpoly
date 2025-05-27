@@ -84,6 +84,10 @@ public interface TurnationManager {
      * @return bool
      */
     boolean playerDiesIfTurnPassed();
-
+    /**
+     * get the winner.
+     * @return player
+     */
+    Player getWinner();
     
 }
