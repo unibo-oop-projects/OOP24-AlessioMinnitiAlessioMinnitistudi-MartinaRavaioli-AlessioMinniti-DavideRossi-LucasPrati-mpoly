@@ -187,8 +187,7 @@ public final class GameboardViewImpl extends JPanel implements GameboardView {
             if (entry.getValue().equals(pawnPositions.get(controller.getCurrPlayer().getID() - 1))) { 
                 final JPanel p = entry.getKey();
                 for (final Component c : p.getComponents()) {
-                    if (c instanceof PawnSquare pawnSquare 
-                    && pawnSquare.getColor().equals(controller.getCurrPlayer().getColor())) {
+                    if (c instanceof PawnSquare) {
                         p.remove(c);
                         p.revalidate();  // AGGIUNTO
                         p.repaint();
