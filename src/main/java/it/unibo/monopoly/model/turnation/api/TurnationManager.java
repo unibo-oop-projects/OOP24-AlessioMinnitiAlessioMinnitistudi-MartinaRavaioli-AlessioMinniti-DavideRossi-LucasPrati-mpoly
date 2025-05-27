@@ -58,4 +58,10 @@ public interface TurnationManager {
      * @param plList
      */
     void setList(List<Player> plList);
+    /**
+     * tells if the current player is in prison.
+     * @param plList
+     */
+    boolean isCurrentPlayerInPrison();
+    
 }
