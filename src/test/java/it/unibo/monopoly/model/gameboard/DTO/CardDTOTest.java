@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 
@@ -24,7 +25,7 @@ class CardDTOTest {
     }
 
     @Test
-    void testDeserializeFullPropertyCard() throws Exception {
+    void testDeserializeFullPropertyCard() throws JsonProcessingException {
         final int expectedPos = 39;
         final int expectedCost = 400;
         final int expectedBaseRent = 50;
@@ -58,7 +59,7 @@ class CardDTOTest {
     }
 
     @Test
-    void testDeserializeMinimalSpecialCard() throws Exception {
+    void testDeserializeMinimalSpecialCard() throws JsonProcessingException {
         final int expectedPos = 30;
         final String json = """
             {
@@ -87,7 +88,7 @@ class CardDTOTest {
     }
 
     @Test
-    void testDeserializeEmptyOptionals() throws Exception {
+    void testDeserializeEmptyOptionals() throws JsonProcessingException {
         final int expectedPos = 0;
         final String json = """
             {
