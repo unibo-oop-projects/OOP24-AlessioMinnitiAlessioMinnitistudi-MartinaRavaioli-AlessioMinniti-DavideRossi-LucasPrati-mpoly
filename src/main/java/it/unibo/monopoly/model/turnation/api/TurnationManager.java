@@ -89,5 +89,9 @@ public interface TurnationManager {
      * @return player
      */
     Player getWinner();
-    
+    /**
+     * get the ranking of the players.
+     * @return multiple players
+     */
+    Collection<Player> getRanking();
 }
