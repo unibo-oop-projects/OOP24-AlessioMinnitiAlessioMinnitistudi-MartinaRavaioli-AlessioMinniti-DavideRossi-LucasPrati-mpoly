@@ -15,7 +15,7 @@ import java.util.Optional;
 public final class CardDTO {
 
     private final Optional<String> name;
-    private final Position position;
+    private final int position;
     private final String type;
 
     private final Optional<String> effect;
@@ -44,7 +44,7 @@ public final class CardDTO {
         @JsonProperty("baseRent") final Optional<Integer> baseRent
     ) {
         this.name = name;
-        this.position = new PositionImpl(position);
+        this.position = position;
         this.type = type;
         this.effect = effect;
         this.group = group;
@@ -65,7 +65,7 @@ public final class CardDTO {
      * @return the {@link Position} of the card
      */
     public Position getPosition() {
-        return position;
+        return new PositionImpl(position);
     }
 
     /**
@@ -101,7 +101,7 @@ public final class CardDTO {
     }
 
     /**
-     * Get the initial amount of the card's rent
+     * Get the initial amount of the card's rent.
      * @return an {@link Optional}<{@link Integer}> which represents the card's initial amount of rent
      */
     public Optional<Integer> getBaseRent() {

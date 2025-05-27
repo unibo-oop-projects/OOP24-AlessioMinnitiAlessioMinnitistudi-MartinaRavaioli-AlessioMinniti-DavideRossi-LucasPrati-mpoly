@@ -1,4 +1,4 @@
-package it.unibo.monopoly.model.gameboard.DTO;
+package it.unibo.monopoly.model.gameboard.dto;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -20,10 +20,13 @@ import it.unibo.monopoly.utils.impl.UseFileJsonImpl;
 
 class CardFactoryImplTest {
 
+    private static final int EXPECTED_NUM_TITLE_DEEDS = 28;
+    private static final int EXPECTED_NUM_TILES = 40;
+    private static final String CARDS_JSON = "debug/cards/debug_cards.json";
+
     // An empty-bank-account for bypass the constructor validation (it's unused during tests)
     private final BankAccount emptyBankAccount = new SimpleBankAccountImpl(0, "jonny");
 
-    private static final String CARDS_JSON = "debug/cards/debug_cards.json";
 
     @Test
     void testCardFactoryProducesTilesAndDeedsCorrectly() {
@@ -39,9 +42,13 @@ class CardFactoryImplTest {
         final Set<TitleDeed> deeds = factory.getDeeds();
 
         assertNotNull(tiles, "Tiles should not be null");
-        assertEquals(40, tiles.size(), "There should be exactly 40 tiles");
+        assertEquals(EXPECTED_NUM_TILES, tiles.size(),
+            "There should be exactly " + EXPECTED_NUM_TILES + " tiles"
+        );
 
         assertNotNull(deeds, "Deeds should not be null");
-        assertEquals(28, deeds.size(), "There should be exactly 28 title deeds");
+        assertEquals(EXPECTED_NUM_TITLE_DEEDS, deeds.size(),
+            "There should be exactly " + EXPECTED_NUM_TITLE_DEEDS + " title deeds"
+        );
     }
 }
