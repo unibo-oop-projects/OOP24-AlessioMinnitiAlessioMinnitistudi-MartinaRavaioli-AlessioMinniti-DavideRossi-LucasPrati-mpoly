@@ -102,13 +102,13 @@ class FactoryTest {
         new PropertyImpl("a", pos0, Group.RED),
         new PropertyImpl("b", pos1, Group.BLUE),
         new PropertyImpl("c", pos2, Group.YELLOW),
-        factory.parking("Parking", pos5),
-        factory.prison("Jail", pos4),
-        factory.start("Go", bank),
-        factory.taxes("Luxury tax", pos6, bank)
+        factory.parking(pos5),
+        factory.prison(pos4),
+        factory.start(bank),
+        factory.taxes(pos6, bank)
     );
         board = new BoardImpl(tiles, pawns);
-        board.addTile(factory.goToPrison("GoToJail", pos3, board));
+        board.addTile(factory.goToPrison(pos3, board));
 
     }
 
@@ -133,7 +133,7 @@ class FactoryTest {
 
     @Test
     void testStart() {
-        final Special s = factory.start("Go", bank);
+        final Special s = factory.start(bank);
         final int expectedBalance = 1200;
         s.activateEffect(p1);
         assertEquals(expectedBalance, bank.getBankAccount(p1.getName()).getBalance());
@@ -143,7 +143,7 @@ class FactoryTest {
     @Test
     void testTaxes() {
         final int expectedBalance = 900;
-        final Special s = factory.taxes("Luxury tax", pos1, bank);
+        final Special s = factory.taxes(pos1, bank);
         s.activateEffect(p1);
         assertEquals(expectedBalance, bank.getBankAccount(p1.getName()).getBalance());
 
@@ -151,7 +151,7 @@ class FactoryTest {
 
     @Test
     void testPark() {
-        final Special s = factory.parking("Parking", pos2);
+        final Special s = factory.parking(pos2);
         s.activateEffect(p1);
         assertTrue(p1.isParked());
         assertFalse(p1.isParked());

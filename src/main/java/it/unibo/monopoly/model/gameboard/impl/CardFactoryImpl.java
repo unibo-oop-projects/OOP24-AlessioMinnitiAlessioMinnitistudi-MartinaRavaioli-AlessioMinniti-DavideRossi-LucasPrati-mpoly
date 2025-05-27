@@ -79,18 +79,17 @@ public class CardFactoryImpl implements CardFactory {
 
     private void handleSpecial(final CardDTO dto) {
         final Special tile;
-        final String name = dto.getName();
         final Position position = dto.getPosition();
 
         final String effect = dto.getEffect()
             .orElseThrow(() -> new IllegalArgumentException("Missing 'effect' for SPECIAL card: " + dto.getName()));
 
         switch (effect) {
-            case "JAIL"         -> tile = specialFactory.prison(name, position);
-            case "GO_TO_JAIL"   -> tile = specialFactory.goToPrison(name, position, board);
-            case "INCOME"       -> tile = specialFactory.start(name, bank);
-            case "TAX"          -> tile = specialFactory.taxes(name, position, bank);
-            case "PARKING"      -> tile = specialFactory.parking(name, position);
+            case "JAIL"         -> tile = specialFactory.prison(position);
+            case "GO_TO_JAIL"   -> tile = specialFactory.goToPrison(position, board);
+            case "INCOME"       -> tile = specialFactory.start(bank);
+            case "TAX"          -> tile = specialFactory.taxes(position, bank);
+            case "PARKING"      -> tile = specialFactory.parking(position);
             // case "CHANCE"       -> tile = specialFactory.chance(); 
             // case "CHEST"        -> tile = specialFactory.chest();
             default -> throw new IllegalArgumentException("Unknown effect type: " + effect);
@@ -100,11 +99,14 @@ public class CardFactoryImpl implements CardFactory {
 
 
     private void handleProperty(final CardDTO dto) {
-        final String name = dto.getName();
         final Position position = dto.getPosition();
-
+        
+        final String name = dto.getName()
+            .orElseThrow(() -> new IllegalArgumentException(
+                "Missing 'name' for PROPERTY card at position: " + position.getPos()));
         final Group group = dto.getGroup()
-            .orElseThrow(() -> new IllegalArgumentException("Missing 'group' for PROPERTY card: " + name));
+            .orElseThrow(() -> new IllegalArgumentException(
+                "Missing 'group' for PROPERTY card at position: " + position.getPos()));
 
         final PropertyImpl property = new PropertyImpl(name, position, group);
         final TitleDeed deed;
@@ -114,9 +116,11 @@ public class CardFactoryImpl implements CardFactory {
         
         } else {
             final int cost = dto.getCost()
-                .orElseThrow(() -> new IllegalArgumentException("Missing 'cost' for PROPERTY card: " + name));
+                .orElseThrow(() -> new IllegalArgumentException(
+                    "Missing 'cost' for PROPERTY card at position: " + position.getPos()));
             final int baseRent = dto.getBaseRent()
-                .orElseThrow(() -> new IllegalArgumentException("Missing 'baseRent' for PROPERTY card: " + name));
+                .orElseThrow(() -> new IllegalArgumentException(
+                    "Missing 'baseRent' for PROPERTY card at position: " + position.getPos()));
 
             deed = new BaseTitleDeed(
                 group,
