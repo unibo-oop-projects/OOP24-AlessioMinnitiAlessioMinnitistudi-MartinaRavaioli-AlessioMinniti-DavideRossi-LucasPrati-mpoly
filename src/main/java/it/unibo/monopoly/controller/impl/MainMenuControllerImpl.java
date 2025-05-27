@@ -16,13 +16,11 @@ import it.unibo.monopoly.model.gameboard.api.Board;
 import it.unibo.monopoly.model.gameboard.api.CardFactory;
 import it.unibo.monopoly.model.gameboard.api.Pawn;
 import it.unibo.monopoly.model.gameboard.api.PawnFactory;
-import it.unibo.monopoly.model.gameboard.api.SpecialFactory;
 import it.unibo.monopoly.model.gameboard.api.Tile;
 import it.unibo.monopoly.model.gameboard.impl.BoardImpl;
 import it.unibo.monopoly.model.gameboard.impl.CardDTO;
 import it.unibo.monopoly.model.gameboard.impl.CardFactoryImpl;
 import it.unibo.monopoly.model.gameboard.impl.PawnFactoryImpl;
-import it.unibo.monopoly.model.gameboard.impl.SpecialFactoryImpl;
 import it.unibo.monopoly.model.transactions.api.Bank;
 import it.unibo.monopoly.model.transactions.api.BankAccount;
 import it.unibo.monopoly.model.transactions.api.BankAccountFactory;
@@ -116,8 +114,8 @@ public final class MainMenuControllerImpl implements MainMenuController {
         }
 
         // creation of Bank, Board and TurnationManager
-        final Board board = new BoardImpl(pawns);
-        final Bank bank = new BankImpl(accounts);
+        final Board board = new BoardImpl(List.of(), pawns);
+        final Bank bank = new BankImpl(accounts, Set.of());
         final TurnationManager turnationManager = new TurnationManagerImpl(
             players,
             new DiceImpl(
@@ -128,17 +126,16 @@ public final class MainMenuControllerImpl implements MainMenuController {
 
         // import from json
         final List<CardDTO> dtos = importFileJson.loadJsonList(config.getCardsPath(), CardDTO.class);
-        final SpecialFactory specialFactory = new SpecialFactoryImpl();
         final CardFactory cardFactory = new CardFactoryImpl(board , bank); 
         cardFactory.parse(dtos);
-        titleDeeds = cardFactory.getDeeds();
-        tiles = cardFactory.getTiles();
+        titleDeeds.addAll(cardFactory.getDeeds());
+        tiles.addAll(cardFactory.getTiles());
 
 
 
         // Add tiles to the board and titleDeeds to the Bank
-        board.setTiles(tiles);
-        //TODO bank.setTitleDeeds(titleDeeds)
+        tiles.stream().forEach(board::addTile);
+        titleDeeds.stream().forEach(bank::addTitleDeed);
         
         
         // start the game
