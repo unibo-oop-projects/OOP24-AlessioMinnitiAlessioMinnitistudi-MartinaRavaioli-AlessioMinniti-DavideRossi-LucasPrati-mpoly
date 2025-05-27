@@ -124,8 +124,7 @@ public class TurnationManagerImpl implements TurnationManager {
     }
     @Override
     public boolean isCurrentPlayerInPrison() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'isCurrentPlayerInPrison'");
+        return this.currPlayer.isInPrison();
     }
     @Override
     public boolean canExitPrison(int value) {
