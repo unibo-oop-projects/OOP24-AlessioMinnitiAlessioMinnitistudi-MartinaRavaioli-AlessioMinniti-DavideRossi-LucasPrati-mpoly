@@ -73,6 +73,9 @@ public class BankActionFactoryImpl implements BankActionFactory {
 
     @Override
     public BankAction createPayRent(final String titleDeedName, final int currentPlayerId, final int diceThrow) {
+        if(diceThrow <= 0) {
+            throw new IllegalArgumentException("The dice throw cannot be lower than 1");
+        }
         return new BankAction() {
 
             @Override
