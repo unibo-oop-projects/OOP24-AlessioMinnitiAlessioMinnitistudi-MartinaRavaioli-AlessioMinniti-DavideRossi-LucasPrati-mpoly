@@ -1,5 +1,6 @@
 package it.unibo.monopoly.model.gameboard.impl;
 
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -18,15 +19,25 @@ import it.unibo.monopoly.model.turnation.impl.PositionImpl;
  * board implementation.
 */
 public class BoardImpl implements Board {
-    private List<Tile> tiles;
-    private final List<Pawn> pawns;
 
+    private final List<Tile> tiles;
+    private final List<Pawn> pawns;
     /**
      * constructor.
     */
-    public BoardImpl(List<Pawn> pawns) {
-        this.pawns = new ArrayList<>(pawns);
+    public BoardImpl() {
         this.tiles = new ArrayList<>();
+        this.pawns = new ArrayList<>();
+    }
+
+    /**
+     * constructor.
+     * @param tiles
+     * @param pawns
+    */
+    public BoardImpl(final List<Tile> tiles, final List<Pawn> pawns) {
+        this.tiles = new ArrayList<>(tiles);
+        this.pawns = new ArrayList<>(pawns);
     }
 
     /**
@@ -110,7 +121,7 @@ public class BoardImpl implements Board {
     public Pawn getPawn(final int id) {
         for (final Pawn p : this.pawns) {
             if (((PawnImpl) p).getID() == id) {
-                return p; //new PawnImpl(id, p.getPosition(), p.getColor());
+                return p;
             }
         }
 
@@ -124,6 +135,11 @@ public class BoardImpl implements Board {
     @Override
     public final List<Tile> getTiles() {
         return Collections.unmodifiableList(this.tiles);
+    }
+
+    @Override
+    public final List<Pawn> getPawns() {
+        return Collections.unmodifiableList(this.pawns);
     }
 
     @Override
@@ -153,11 +169,4 @@ public class BoardImpl implements Board {
         this.tiles.add(tile);
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public final void setTiles(final List<Tile> tiles) {
-        this.tiles = List.copyOf(tiles);
-    }
 }
