@@ -4,8 +4,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.util.List;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -34,9 +32,7 @@ class CardDTOTest {
               "type": "PROPERTY",
               "group": "BLUE",
               "cost": 400,
-              "houseCost": 200,
-              "mortgage": 200,
-              "rents": [50, 200, 600, 1400, 1700, 2000]
+              "baseRent": 50
             }
             """;
 
@@ -52,14 +48,8 @@ class CardDTOTest {
         assertTrue(dto.getCost().isPresent());
         assertEquals(400, dto.getCost().get());
 
-        assertTrue(dto.getRents().isPresent());
-        assertEquals(List.of(50, 200, 600, 1400, 1700, 2000), dto.getRents().get());
-
-        assertTrue(dto.getMortgage().isPresent());
-        assertEquals(200, dto.getMortgage().get());
-
-        assertTrue(dto.getHouseCost().isPresent());
-        assertEquals(200, dto.getHouseCost().get());
+        assertTrue(dto.getBaseRent().isPresent());
+        assertEquals(50, dto.getBaseRent().get());
 
         assertFalse(dto.getEffect().isPresent(), "Effect should be empty for PROPERTY type");
     }
@@ -88,9 +78,7 @@ class CardDTOTest {
         // All others should be empty
         assertFalse(dto.getGroup().isPresent());
         assertFalse(dto.getCost().isPresent());
-        assertFalse(dto.getRents().isPresent());
-        assertFalse(dto.getHouseCost().isPresent());
-        assertFalse(dto.getMortgage().isPresent());
+        assertFalse(dto.getBaseRent().isPresent());
     }
 
 
@@ -113,8 +101,6 @@ class CardDTOTest {
         assertFalse(dto.getEffect().isPresent());
         assertFalse(dto.getGroup().isPresent());
         assertFalse(dto.getCost().isPresent());
-        assertFalse(dto.getHouseCost().isPresent());
-        assertFalse(dto.getMortgage().isPresent());
-        assertFalse(dto.getRents().isPresent());
+        assertFalse(dto.getBaseRent().isPresent());
     }
 }
