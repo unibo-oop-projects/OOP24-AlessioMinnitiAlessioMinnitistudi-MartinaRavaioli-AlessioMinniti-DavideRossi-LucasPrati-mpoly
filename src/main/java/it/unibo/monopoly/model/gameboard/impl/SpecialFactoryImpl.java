@@ -17,31 +17,31 @@ public final class SpecialFactoryImpl implements SpecialFactory {
 
     private final EffectFactory factory = new EffectFactoryImpl(); 
     @Override
-    public Special start(final Bank bank) {
+    public Special start(final String name, final Bank bank) {
             final int startAmount = 200;
 
-        return new SpecialImpl("Start", new PositionImpl(0), Group.SPECIAL, factory.depositMoney(startAmount, bank));
+        return new SpecialImpl(name, new PositionImpl(0), Group.SPECIAL, factory.depositMoney(startAmount, bank));
     }
 
     @Override
-    public Special goToPrison(final Position pos, final Board board) {
-        return new SpecialImpl("GoToPrison", pos, Group.SPECIAL, factory.putInPrison(board));
+    public Special goToPrison(final String name, final Position pos, final Board board) {
+        return new SpecialImpl(name, pos, Group.SPECIAL, factory.putInPrison(board));
     }
 
     @Override
-    public Special prison(final Position pos) {
-        return new SpecialImpl("prison", pos, null, factory.still());
+    public Special prison(final String name, final Position pos) {
+        return new SpecialImpl(name, pos, null, factory.still());
     }
 
     @Override
-    public Special parking(final Position pos) {
-        return new SpecialImpl("parking", pos, Group.SPECIAL, factory.park());
+    public Special parking(final String name, final Position pos) {
+        return new SpecialImpl(name, pos, Group.SPECIAL, factory.park());
     }
 
     @Override
-    public Special taxes(final Position pos, final Bank bank) {
+    public Special taxes(final String name, final Position pos, final Bank bank) {
         final int taxesAmount = 100;
-        return new SpecialImpl("taxes", pos, Group.SPECIAL, factory.withdrawMoney(taxesAmount, bank));
+        return new SpecialImpl(name, pos, Group.SPECIAL, factory.withdrawMoney(taxesAmount, bank));
     }
 
 }

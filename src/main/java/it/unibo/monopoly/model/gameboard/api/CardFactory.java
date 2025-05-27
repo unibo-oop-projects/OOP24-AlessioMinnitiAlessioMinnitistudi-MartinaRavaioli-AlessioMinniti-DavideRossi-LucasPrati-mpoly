@@ -1,6 +1,7 @@
 package it.unibo.monopoly.model.gameboard.api;
 
 import java.util.List;
+import java.util.Set;
 
 import it.unibo.monopoly.model.gameboard.impl.CardDTO;
 import it.unibo.monopoly.model.transactions.api.TitleDeed;
@@ -14,10 +15,10 @@ public interface CardFactory {
     
     /**
      * Parses a card DTO and creates corresponding domain objects.
-     * @param dto the card DTO from JSON
-     * @throws IllegalArgumentException if the parsing does not match anything expected or the parsing of the effect failed
+     * @param dtos the card list of DTOs from JSON
+     * @throws IllegalArgumentException if the parsing does not match anything expected or failed
      */
-    void parse(final CardDTO dto);
+    void parse(final List<CardDTO> dtos);
 
     /**
      * Get all the {@link Tile}s parsed.
@@ -29,5 +30,5 @@ public interface CardFactory {
      * Get all the {@link TitleDeed}s parsed.
      * @return the {@link List} of {@link TitleDeed}s pased from the file Json
      */
-    List<TitleDeed> getDeeds();
+    Set<TitleDeed> getDeeds();
 }
