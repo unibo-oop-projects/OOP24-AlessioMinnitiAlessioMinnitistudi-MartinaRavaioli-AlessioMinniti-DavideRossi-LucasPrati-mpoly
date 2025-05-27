@@ -1,6 +1,5 @@
 [
   {
-    "name": "Go",
     "position": 0,
     "type": "SPECIAL",
     "effect": "INCOME"
@@ -14,7 +13,6 @@
     "baseRent": 2
   },
   {
-    "name": "Community Chest",
     "position": 2,
     "type": "SPECIAL",
     "effect": "CHEST"
@@ -28,7 +26,6 @@
     "baseRent": 4
   },
   {
-    "name": "Income Tax",
     "position": 4,
     "type": "SPECIAL",
     "effect": "TAX"
@@ -48,7 +45,6 @@
     "baseRent": 6
   },
   {
-    "name": "Chance",
     "position": 7,
     "type": "SPECIAL",
     "effect": "CHANCE"
@@ -70,7 +66,6 @@
     "baseRent": 8
   },
   {
-    "name": "Jail / Just Visiting",
     "position": 10,
     "type": "SPECIAL",
     "effect": "JAIL"
@@ -122,7 +117,6 @@
     "baseRent": 14
   },
   {
-    "name": "Community Chest",
     "position": 17,
     "type": "SPECIAL",
     "effect": "CHEST"
@@ -144,7 +138,6 @@
     "baseRent": 16
   },
   {
-    "name": "Free Parking",
     "position": 20,
     "type": "SPECIAL",
     "effect": "PARKING"
@@ -158,7 +151,6 @@
     "baseRent": 18
   },
   {
-    "name": "Chance",
     "position": 22,
     "type": "SPECIAL",
     "effect": "CHANCE"
@@ -218,7 +210,6 @@
     "baseRent": 24
   },
   {
-    "name": "Go To Jail",
     "position": 30,
     "type": "SPECIAL",
     "effect": "GO_TO_JAIL"
@@ -240,7 +231,6 @@
     "baseRent": 26
   },
   {
-  "name": "Community Chest",
   "position": 33,
   "type": "SPECIAL",
   "effect": "CHEST"
@@ -260,7 +250,6 @@
   "group": "STATION"
 },
 {
-  "name": "Chance",
   "position": 36,
   "type": "SPECIAL",
   "effect": "CHANCE"
@@ -274,7 +263,6 @@
   "baseRent": 35
 },
 {
-  "name": "Luxury Tax",
   "position": 38,
   "type": "SPECIAL",
   "effect": "TAX"

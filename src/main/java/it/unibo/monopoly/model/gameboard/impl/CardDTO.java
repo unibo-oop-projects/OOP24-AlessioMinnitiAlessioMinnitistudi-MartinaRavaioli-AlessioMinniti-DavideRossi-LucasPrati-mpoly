@@ -14,7 +14,7 @@ import java.util.Optional;
  */
 public final class CardDTO {
 
-    private final String name;
+    private final Optional<String> name;
     private final Position position;
     private final String type;
 
@@ -25,7 +25,7 @@ public final class CardDTO {
 
     @JsonCreator
     public CardDTO(
-        @JsonProperty("name") final String name,
+        @JsonProperty("name") final Optional<String> name,
         @JsonProperty("position") final int position,
         @JsonProperty("type") final String type,
         @JsonProperty("effect") final Optional<String> effect,
@@ -42,7 +42,7 @@ public final class CardDTO {
         this.baseRent = baseRent;
     }
 
-    public String getName() {
+    public Optional<String> getName() {
         return name;
     }
 
