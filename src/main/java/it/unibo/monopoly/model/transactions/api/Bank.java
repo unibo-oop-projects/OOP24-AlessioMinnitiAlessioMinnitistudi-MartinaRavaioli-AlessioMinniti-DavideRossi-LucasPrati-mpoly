@@ -126,20 +126,6 @@ public interface Bank {
      * was given.
      */
     Set<BankAction> getApplicableBankActions(int currentPlayerId, String titleDeedName, int diceThrow);
-
-    /**
-     * Wipes all internal data the {@link Bank} object has stored to track the execution
-     * of transaction requests. 
-     * When calling transactional methods {@link #payRent(String, int, Collection)},
-     * {@link #sellTitleDeed(String)},{@link #buyTitleDeed(String, int)} the {@link Bank} keeps 
-     * track of these method requests. This is done to keep track of the payments invoked by the
-     * player that is currently playing, which is necessary to implement logic regarding the player's turn.
-     * (for instance, you cannot end the turn unless you call payRent, you can only call sellTitleDeed once per turn...).
-     * Calling {@link #resetBankActions()} should be done when the player ends its turn, signaling the {@link Bank}
-     * that the current player has ended its turn and that information related to method requests is no longer
-     * necessary. It prepares the {@link Bank} to be ready to keep track of the transaction requests of a new player.
-     */
-    void resetBankActions();
     
     /**
      * Get a {@link BankState} object that can be used to communicate with this {@link Bank} instance

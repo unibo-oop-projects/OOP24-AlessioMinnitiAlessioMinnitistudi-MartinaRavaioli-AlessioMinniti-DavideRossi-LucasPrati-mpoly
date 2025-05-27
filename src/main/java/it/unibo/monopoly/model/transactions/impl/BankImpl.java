@@ -214,11 +214,6 @@ public final class BankImpl implements Bank {
     }
 
     @Override
-    public void resetBankActions() {
-       transactionLedger.reset();
-    }
-
-    @Override
     public BankState getBankStateObject() {
         return this.new BankStateAdapter();
     }
@@ -247,6 +242,11 @@ public final class BankImpl implements Bank {
                                     .map(Pair::of)
                                     .sorted((e1, e2) -> Integer.compare(e1.getRight(), e2.getRight()))
                                     .toList();
+        }
+
+        @Override
+        public void resetBankActions() {
+            transactionLedger.reset();
         }
     }
 }
