@@ -122,5 +122,40 @@ public class TurnationManagerImpl implements TurnationManager {
     public final Player getCurrPlayer() {
         return PlayerImpl.of(this.currPlayer.getID(), this.currPlayer.getName(), this.currPlayer.getColor());
     }
+    @Override
+    public boolean isCurrentPlayerInPrison() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'isCurrentPlayerInPrison'");
+    }
+    @Override
+    public boolean canExitPrison(int value) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'canExitPrison'");
+    }
+    @Override
+    public boolean canThrowDices() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'canThrowDices'");
+    }
+    @Override
+    public boolean canPassTurn() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'canPassTurn'");
+    }
+    @Override
+    public boolean playerDiesIfTurnPassed() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'playerDiesIfTurnPassed'");
+    }
+    @Override
+    public Player getWinner() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getWinner'");
+    }
+    @Override
+    public Collection<Player> getRanking() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getRanking'");
+    }
 
 }
