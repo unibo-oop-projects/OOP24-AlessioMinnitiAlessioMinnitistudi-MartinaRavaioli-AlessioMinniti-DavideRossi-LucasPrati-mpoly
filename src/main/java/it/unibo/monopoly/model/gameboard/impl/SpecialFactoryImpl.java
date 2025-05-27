@@ -30,7 +30,7 @@ public final class SpecialFactoryImpl implements SpecialFactory {
 
     @Override
     public Special prison(final Position pos) {
-        return new SpecialImpl("Jail / Just Visiting", pos, null, factory.still());
+        return new SpecialImpl("Jail / Just Visiting", pos, Group.SPECIAL, factory.still());
     }
 
     @Override
