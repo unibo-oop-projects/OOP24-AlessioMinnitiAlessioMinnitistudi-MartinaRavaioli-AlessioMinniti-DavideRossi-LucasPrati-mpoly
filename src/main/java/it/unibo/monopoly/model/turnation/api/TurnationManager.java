@@ -3,6 +3,8 @@ package it.unibo.monopoly.model.turnation.api;
 import java.util.Collection;
 import java.util.List;
 
+import it.unibo.monopoly.model.gameboard.api.Board;
+
 /**
  * turnation manager interface.
 */
@@ -68,7 +70,7 @@ public interface TurnationManager {
      * @return bool
      * @param value
      */
-    boolean canExitPrison(int value);
+    boolean canExitPrison(Collection<Integer> value, Board board);
     /**
      * tells if the player can throw the dices.
      * @return bool
@@ -94,4 +96,9 @@ public interface TurnationManager {
      * @return multiple players
      */
     Collection<Player> getRanking();
+    /**
+     * delete the player.
+     * @param player
+     */
+    void deletePlayer(Player player);
 }

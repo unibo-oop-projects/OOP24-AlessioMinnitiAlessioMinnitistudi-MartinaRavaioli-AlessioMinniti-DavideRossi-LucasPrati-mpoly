@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
+import it.unibo.monopoly.model.gameboard.api.Board;
 import it.unibo.monopoly.model.turnation.api.Dice;
 import it.unibo.monopoly.model.turnation.api.Player;
 import it.unibo.monopoly.model.turnation.api.TurnationManager;
@@ -127,9 +128,8 @@ public class TurnationManagerImpl implements TurnationManager {
         return this.currPlayer.isInPrison();
     }
     @Override
-    public boolean canExitPrison(int value) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'canExitPrison'");
+    public boolean canExitPrison(Collection<Integer> value, Board board) {
+        return this.currPlayer.canExitPrison(value, board);
     }
     @Override
     public boolean canThrowDices() {
@@ -155,6 +155,11 @@ public class TurnationManagerImpl implements TurnationManager {
     public Collection<Player> getRanking() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'getRanking'");
+    }
+    @Override
+    public void deletePlayer(Player player) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'deletePlayer'");
     }
 
 }
