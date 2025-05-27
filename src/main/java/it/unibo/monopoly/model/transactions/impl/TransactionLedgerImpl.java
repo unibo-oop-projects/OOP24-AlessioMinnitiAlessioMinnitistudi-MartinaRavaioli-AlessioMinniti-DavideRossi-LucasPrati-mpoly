@@ -19,11 +19,20 @@ public class TransactionLedgerImpl implements TransactionLedger {
     }
 
     @Override
-    public void registerTransaction(final String name, final boolean mandatory, final int nTimes) {
+    public void registerTransaction(final String name, final int minimumExecutions, final int maximumExecutions) {
         if (allowedTransactionTypes.stream().anyMatch(t -> name.equals(t.name()))) {
             throw new IllegalStateException("A transaction type with this name is already present in the ledger");
         }
-        allowedTransactionTypes.add(new TransactionLedgerEntry(name, mandatory, nTimes));
+        allowedTransactionTypes.add(new TransactionLedgerEntry(name, minimumExecutions, maximumExecutions));
+        executions.put(name, 0);
+    }
+
+    @Override
+    public void registerTransaction(String name, int minimumExecutions) {
+        if (allowedTransactionTypes.stream().anyMatch(t -> name.equals(t.name()))) {
+            throw new IllegalStateException("A transaction type with this name is already present in the ledger");
+        }
+        allowedTransactionTypes.add(new TransactionLedgerEntry(name, minimumExecutions, -1));
         executions.put(name, 0);
     }
 
@@ -33,7 +42,7 @@ public class TransactionLedgerImpl implements TransactionLedger {
             throw new IllegalArgumentException("No transaction with this name exists in the ledger. Register the transaction type by calling the method registerTransaction before asking to mark its execution");
         }
         final TransactionLedgerEntry transaction = allowedTransactionTypes.stream().filter(t -> name.equals(t.name())).findFirst().get();
-        if (executions.get(name) >= transaction.nTimes()) {
+        if (transaction.maximumExecutions() > 0 && executions.get(name) >= transaction.maximumExecutions()) {
             throw new IllegalStateException("The player has already executed the transaction" + name + "for the maximum number of times per turn");
         }
         executions.put(name, executions.get(name) + 1);
@@ -52,18 +61,13 @@ public class TransactionLedgerImpl implements TransactionLedger {
 
     @Override
     public boolean checkAllMandatoryTransactionsCompleted() {
-        /*filter all the transactions types that are mandatory and that
-        * were not executed nTimes (which for transactions that are mandatory is the minimum
-        * and maximum number of times of executions required to continue playing). Then count if
-        * if there are any; if that is the case it means that there are still some transactions that are marked
-        * as mandatory but have not been done enough times yet.
-        */
-        //TODO check spelling and meaning of this comment
         return allowedTransactionTypes
         .stream()
-        .filter(t -> t.mandatory())
-        .noneMatch(t -> executions.get(t.name()) < t.nTimes());
+        .allMatch(t -> {
+            final int executionTimes = executions.containsKey(t.name()) ? executions.get(t.name()) : 0;
+            return executionTimes >= t.minimumExecutions();
+        });
     }
 
-    private static record TransactionLedgerEntry(String name, boolean mandatory, int nTimes) {}
+    private static record TransactionLedgerEntry(String name, int minimumExecutions, int maximumExecutions) {}
 }

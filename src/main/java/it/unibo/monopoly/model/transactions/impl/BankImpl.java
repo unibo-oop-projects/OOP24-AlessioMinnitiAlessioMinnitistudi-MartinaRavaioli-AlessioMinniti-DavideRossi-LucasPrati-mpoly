@@ -133,7 +133,7 @@ public final class BankImpl implements Bank {
         }
         final BankAccount receiver = findAccount(deed.getOwnerId());
         if (receiver.equals(payer)) {
-            throw new IllegalStateException("Canot pay rent for property owned by the payer" + playerId);
+            throw new IllegalStateException("Cannot pay rent for property owned by the payer" + playerId);
         }
 
 
@@ -200,17 +200,17 @@ public final class BankImpl implements Bank {
         }
         final Set<BankAction> returnSet = new HashSet<>();
         final TitleDeed selected = findTitleDeed(titleDeedName);
+        transactionLedger.registerTransaction("buy", 0);
+        transactionLedger.registerTransaction("sell", 0);
 
         if (!selected.isOwned()) {
             returnSet.add(bankActionFactory.createBuy(currentPlayerId, titleDeedName));
-            transactionLedger.registerTransaction("buy", false, 1);
         } else if (selected.getOwnerId() == currentPlayerId){
-            returnSet.add(bankActionFactory.createSell(titleDeedName));
-            transactionLedger.registerTransaction("sell", false, 1);
+            returnSet.add(bankActionFactory.createSell(titleDeedName));            
             //TODO build houses
         } else {
             returnSet.add(bankActionFactory.createPayRent(titleDeedName, currentPlayerId, diceThrow));
-            transactionLedger.registerTransaction("pay", true, 1);
+            transactionLedger.registerTransaction("pay", 1, 1);
         }
 
         return returnSet;

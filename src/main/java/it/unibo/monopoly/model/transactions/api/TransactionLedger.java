@@ -14,47 +14,48 @@ package it.unibo.monopoly.model.transactions.api;
 public interface TransactionLedger {
 
     /**
-     * Reset the registered transactions
+     * Reset the registered transaction types
      */
     void reset();
 
     /**
      * Register a new type of transaction that the player can execute in its turn.
-     * @param string
-     * @param mandatory mark the transaction as mandatory, meaning the player has to execute it
-     * in order to be able to conclude its turn. A transaction that is mandatory can be marked as executed 
+     * @param name the name of the type of transaction to register
+     * @param minimumExecutions mark the transaction as mandatory to execute for a minimum number of times before the
+     * player can end its turn. A transaction that is mandatory can be marked as executed 
      * by calling the method {@link #markExecution(String)} and passing the corresponding name. As long as a mandatory transaction
-     * is marked as not executed the method {@link #checkAllMandatoryTransactionsCompleted()} will return {@code false}
-     * @param nTimes number of times the transaction can or has to be executed, depending if {@code mandatory} is true or false
-     * @throws IllegalStateException if this type of transaction already exists in the ledger
+     * hasn't been executed {@code minimumExecutions} times the method {@link #checkAllMandatoryTransactionsCompleted()} will return {@code false}
+     * @param maximumExecutions number of maximum times the transaction type can be executed
      */
-    void registerTransaction(String name, boolean mandatory, int nTimes);
+    void registerTransaction(String name, int minimumExecutions, int maximumExecutions);
+
+
+    /**
+     * Register a new type of transaction that the player can execute in its turn.
+     * This type of transaction has no maximum number of execution times.
+     * @param name the name of the type of transaction to register
+     * @param minimumExecutions mark the transaction as mandatory to execute for a minimum number of times before the
+     * player can end its turn. A transaction that is mandatory can be marked as executed 
+     * by calling the method {@link #markExecution(String)} and passing the corresponding name. As long as a mandatory transaction
+     * hasn't been executed {@code minimumExecutions} times the method {@link #checkAllMandatoryTransactionsCompleted()} will return {@code false}
+     */
+    void registerTransaction(String name, int minimumExecutions);
 
     /**
      * Register the execution of a transaction in the ledger.
      * @param name the name of the transaction to mark the execution of
-     * @throws IllegalArgumentException if no type of transaction with this name 
-     * has been registered in the ledger
-     * @throws IllegalStateException if marking the execution would violated 
-     * the ledger's policy. This may happen mainly if you're trying to mark the execution
-     * of an action that has already been executed for its maximum number of times.
      */
     void markExecution(String name);
 
     /**
      * Deleted a previously registered execution of a transaction in the ledger.
      * @param name the name of the transaction to unmark the execution of
-     * @throws IllegalArgumentException if no type of transaction with this name 
-     * has been registered in the ledger
-     * @throws IllegalStateException if execution of the specified transaction has never 
-     * been marked by the ledger. Unmarking the execution would result in a negative value for
-     * the {@code numberExecutions} of the specified transaction.
      */
     void unmarkExecution(String name);
 
     /**
      * Check if all the transactions that are marked as mandatory have been
-     * executed, for the number of times that was specifcied upon registration of the transaction.
+     * executed, for the number of times that was specifcied upon registration of the transaction (parameter {@code minimumExecutions}).
      * @return {@code true} if all mandatory transactions were completed, {@code false} otherwise
      */
     boolean checkAllMandatoryTransactionsCompleted();
