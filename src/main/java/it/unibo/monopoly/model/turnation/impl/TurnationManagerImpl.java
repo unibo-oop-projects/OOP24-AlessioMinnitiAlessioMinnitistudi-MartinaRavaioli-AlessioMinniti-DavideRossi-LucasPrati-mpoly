@@ -29,7 +29,7 @@ public class TurnationManagerImpl implements TurnationManager {
             this.players.addNode(p);
         }
         this.dice = dice;
-        this.currPlayer = this.players.getHead();
+        this.currPlayer = plList.get(0);
     }
     /**
      * constructor.
@@ -122,4 +122,5 @@ public class TurnationManagerImpl implements TurnationManager {
     public final Player getCurrPlayer() {
         return PlayerImpl.of(this.currPlayer.getID(), this.currPlayer.getName(), this.currPlayer.getColor());
     }
+
 }

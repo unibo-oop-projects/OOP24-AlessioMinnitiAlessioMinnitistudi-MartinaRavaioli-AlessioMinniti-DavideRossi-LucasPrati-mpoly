@@ -4,10 +4,14 @@ import java.awt.Color;
 import java.util.List;
 import java.util.Set;
 
+import it.unibo.monopoly.model.gameboard.api.Pawn;
+import it.unibo.monopoly.model.gameboard.api.Property;
+import it.unibo.monopoly.model.gameboard.api.Tile;
 import it.unibo.monopoly.model.transactions.api.BankAccount;
 import it.unibo.monopoly.model.transactions.api.TitleDeed;
 import it.unibo.monopoly.model.turnation.api.Player;
 import it.unibo.monopoly.utils.impl.Configuration;
+import it.unibo.monopoly.view.api.GameboardView;
 import it.unibo.monopoly.view.api.MainGameView;
 
 /**
@@ -120,6 +124,56 @@ public interface GameController {
      */
     void attachView(MainGameView view);
 
+    /**
+     * set the game over.
+    */
+    void gameOver();
+    /**
+     * remove the player who lose.
+    */
+    void playerGameOver();
+    /**
+     * change the pawns position.
+    */
+    void changePositions();
+    /**
+     * called if a player buy an house.
+     * @param prop
+    */
+    void addHouse(Property prop);
+    /**
+     * called if a player buy an hotel.
+     * @param prop
+    */
+    void addHotel(Property prop);
+    /**
+     * get the size of the board.
+     * @param numTiles
+     * @return int
+    */
+    int getSize(int numTiles);
+    /**
+     * get the tiles.
+     * @return List Tile
+    */
+    List<Tile> getTiles();
+    /**
+     * get the list of the pawns.
+     * @return List Pawn
+    */
+    List<Pawn> getPawns();
+
+    /**
+     * set the gameboard view.
+     * @param view
+    */
+    void setBoardView(GameboardView view);
+
+    /**
+     * get the current player.
+     * @return Player
+    */
+    Player getCurrPlayer();
     /**
      * return the String version of the rent based on the type of property.
      * @param selectedProperty of which you want to get the rent
