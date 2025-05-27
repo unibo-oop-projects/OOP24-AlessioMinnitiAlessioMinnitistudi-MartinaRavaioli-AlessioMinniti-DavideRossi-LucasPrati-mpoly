@@ -140,12 +140,11 @@ public class TurnationManagerImpl implements TurnationManager {
     }
     @Override
     public boolean canPassTurn() {
-        return this.bankState.canContinuePlay(this.currPlayer);
+        return this.bankState.allMandatoryTransactionsCompleted();
     }
     @Override
     public boolean playerDiesIfTurnPassed() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'playerDiesIfTurnPassed'");
+        return this.bankState.canContinuePlay(this.currPlayer);
     }
     @Override
     public Player getWinner() {
