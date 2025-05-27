@@ -29,8 +29,7 @@ class ConfigurationTest {
     private static final int VALID_SMALL_FONT = 18;
     private static final int VALID_STARTER_BALANCE = 1500;
     private static final String VALID_RULES_PATH = "debug/rules/debug_rules.txt";
-    private static final String VALID_TITLE_DEEDS_PATH = "debug/cards/debug_title_deeds.json";
-    private static final String VALID_TILES_PATH = "debug/cards/debug_tiles.json";
+    private static final String VALID_CARDS_PATH = "debug/cards/debug_cards.json";
     private static final List<Color> VALID_COLORS = List.of(
         Color.RED,
         Color.BLUE,
@@ -62,8 +61,7 @@ class ConfigurationTest {
                 .withSmallFont(VALID_SMALL_FONT)
                 .withInitBalance(VALID_STARTER_BALANCE)
                 .withRulesPath(VALID_RULES_PATH)
-                .withTitleDeedsPath(VALID_TITLE_DEEDS_PATH)
-                .withTilesPath(VALID_TILES_PATH)
+                .withCardsPath(VALID_CARDS_PATH)
                 .withColors(VALID_COLORS);
     }
 
@@ -81,8 +79,7 @@ class ConfigurationTest {
         assertEquals(VALID_SMALL_FONT, config.getSmallFont());
         assertEquals(VALID_STARTER_BALANCE, config.getInitBalance());
         assertEquals(VALID_RULES_PATH, config.getRulesPath());
-        assertEquals(VALID_TITLE_DEEDS_PATH, config.getTitleDeedsPath());
-        assertEquals(VALID_TILES_PATH, config.getTilesPath());
+        assertEquals(VALID_CARDS_PATH, config.getCardsPath());
         assertEquals(VALID_COLORS.size(), config.getPlayerColors().size());
     }
 
@@ -163,16 +160,9 @@ class ConfigurationTest {
 
     @Test
     void configurationInconsistentIfTitleDeedsFileIsNull() {
-        final Configuration config = builder.withTitleDeedsPath(null).build();
+        final Configuration config = builder.withCardsPath(null).build();
         assertFalse(config.isConsistent(),
-                    MESSAGE_INVALID_CONFIG + "titleDeedsPath cannot be null");
-    }
-
-    @Test
-    void configurationInconsistentIfTilesFileIsNull() {
-        final Configuration config = builder.withTilesPath(null).build();
-        assertFalse(config.isConsistent(),
-                    MESSAGE_INVALID_CONFIG + "tilesPath cannot be null");
+                    MESSAGE_INVALID_CONFIG + "cardsPath cannot be null");
     }
 
     @Test
