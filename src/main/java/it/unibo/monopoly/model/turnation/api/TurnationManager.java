@@ -60,17 +60,23 @@ public interface TurnationManager {
     void setList(List<Player> plList);
     /**
      * tells if the current player is in prison.
-     * @param plList
+     * @return bool
      */
     boolean isCurrentPlayerInPrison();
     /**
      * tells if the player can exit the prison.
-     * @param plList
+     * @return bool
+     * @param value
      */
     boolean canExitPrison(int value);
     /**
      * tells if the player can throw the dices.
-     * @param plList
+     * @return bool
      */
     boolean canThrowDices();
+    /**
+     * tells if the player can pass the turn.
+     * @return bool
+     */
+    boolean canPassTurn();
 }
