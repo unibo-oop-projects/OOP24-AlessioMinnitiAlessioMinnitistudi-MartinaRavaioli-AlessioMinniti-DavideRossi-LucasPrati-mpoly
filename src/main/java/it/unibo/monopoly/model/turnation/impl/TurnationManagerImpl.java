@@ -147,8 +147,7 @@ public class TurnationManagerImpl implements TurnationManager {
     }
     @Override
     public Player getWinner() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getWinner'");
+        return null;
     }
     @Override
     public Collection<Player> getRanking() {
@@ -157,8 +156,7 @@ public class TurnationManagerImpl implements TurnationManager {
     }
     @Override
     public void deletePlayer(Player player) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'deletePlayer'");
+        this.players.deleteNode(player);
     }
 
 }
