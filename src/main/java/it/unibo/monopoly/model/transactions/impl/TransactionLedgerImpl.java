@@ -7,7 +7,7 @@ import java.util.Set;
 
 import it.unibo.monopoly.model.transactions.api.TransactionLedger;
 
-public class TransactionLedgerImpl implements TransactionLedger {
+final class TransactionLedgerImpl implements TransactionLedger {
 
     private final Set<TransactionLedgerEntry> allowedTransactionTypes = new HashSet<>();
     private final Map<String,Integer> executions = new HashMap<>();

@@ -6,7 +6,7 @@ import it.unibo.monopoly.utils.api.Identifiable;
 /**
  * Simple implementation of the {@link BankAccount} interface.
 */
-public final class SimpleBankAccountImpl implements BankAccount {
+final class SimpleBankAccountImpl implements BankAccount {
 
     private static final int DEFAULT_BALANCE = 1000;
     private int balance;

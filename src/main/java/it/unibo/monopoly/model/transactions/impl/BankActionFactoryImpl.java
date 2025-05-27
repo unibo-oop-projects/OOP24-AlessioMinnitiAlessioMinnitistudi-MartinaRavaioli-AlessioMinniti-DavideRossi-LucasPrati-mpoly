@@ -12,8 +12,7 @@ import it.unibo.monopoly.model.transactions.api.BankActionFactory;
  * {@link BankAction} objects for the {@link Bank} class passed upon
  * construction.
  */
-//TODO refactor visibility of classes in package 
-public class BankActionFactoryImpl implements BankActionFactory {
+final class BankActionFactoryImpl implements BankActionFactory {
 
     private final Bank bank;
 
