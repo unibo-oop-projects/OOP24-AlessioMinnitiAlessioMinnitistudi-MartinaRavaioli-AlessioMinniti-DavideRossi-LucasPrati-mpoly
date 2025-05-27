@@ -79,4 +79,11 @@ public interface TurnationManager {
      * @return bool
      */
     boolean canPassTurn();
+    /**
+     * tells if the player will die if he pass the turn.
+     * @return bool
+     */
+    boolean playerDiesIfTurnPassed();
+
+    
 }
