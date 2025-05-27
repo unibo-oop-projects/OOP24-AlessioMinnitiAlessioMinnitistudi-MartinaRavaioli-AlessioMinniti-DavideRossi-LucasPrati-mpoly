@@ -39,7 +39,7 @@ public final class BankImpl implements Bank {
             throw new IllegalArgumentException("Input lists cannot be empty");
         }
         this.accounts = Maps.uniqueIndex(accounts, BankAccount::getPlayerName);
-        this.titleDeeds = Maps.uniqueIndex(titleDeeds, TitleDeed::getName);
+        this.titleDeeds = titleDeeds.stream().collect(Collectors.toMap(TitleDeed::getName, d -> d));
     }
 
     private BankAccount findAccount(final String id) {
