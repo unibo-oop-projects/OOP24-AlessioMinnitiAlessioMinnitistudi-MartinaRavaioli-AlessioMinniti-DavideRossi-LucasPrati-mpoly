@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.List;
 
 import it.unibo.monopoly.model.gameboard.api.Board;
+import it.unibo.monopoly.model.transactions.api.BankState;
 import it.unibo.monopoly.model.turnation.api.Dice;
 import it.unibo.monopoly.model.turnation.api.Player;
 import it.unibo.monopoly.model.turnation.api.TurnationManager;
@@ -19,12 +20,14 @@ public class TurnationManagerImpl implements TurnationManager {
     private boolean isOver;
     private Player currPlayer;
     private Dice dice;
+    private BankState bankState;
     /**
      * constructor.
      * @param plList
      * @param dice
     */
-    public TurnationManagerImpl(final List<Player> plList, final Dice dice) {
+    public TurnationManagerImpl(final List<Player> plList, final Dice dice, final BankState bankState) {
+        this.bankState = bankState;
         this.players = new CircularLinkedList<>();
         for (final Player p : plList) {
             this.players.addNode(p);
@@ -137,8 +140,7 @@ public class TurnationManagerImpl implements TurnationManager {
     }
     @Override
     public boolean canPassTurn() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'canPassTurn'");
+        return this.bankState.canContinuePlay(this.currPlayer);
     }
     @Override
     public boolean playerDiesIfTurnPassed() {
