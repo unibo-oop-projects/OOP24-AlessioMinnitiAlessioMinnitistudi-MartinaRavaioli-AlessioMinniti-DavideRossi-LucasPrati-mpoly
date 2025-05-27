@@ -18,8 +18,8 @@ import it.unibo.monopoly.model.turnation.impl.PositionImpl;
  * board implementation.
 */
 public class BoardImpl implements Board {
-    private final List<Tile> tiles;
-    private final List<Pawn> pawns;
+    private List<Tile> tiles;
+    private List<Pawn> pawns;
 
     /**
      * constructor.
@@ -27,16 +27,6 @@ public class BoardImpl implements Board {
     public BoardImpl() {
         this.tiles = new ArrayList<>();
         this.pawns = new ArrayList<>();
-    }
-
-    /**
-     * constructor.
-     * @param tiles
-     * @param pawns
-    */
-    public BoardImpl(final List<Tile> tiles, final List<Pawn> pawns) {
-        this.tiles = new ArrayList<>(tiles);
-        this.pawns = new ArrayList<>(pawns);
     }
 
     /**
@@ -143,7 +133,6 @@ public class BoardImpl implements Board {
     }
 
     @Override
-
     public final Tile getTile(final String name) {
         for (final Tile t : this.tiles) {
             if (t.getName().equals(name)) {
@@ -164,4 +153,19 @@ public class BoardImpl implements Board {
         this.tiles.add(tile);
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public final void setTiles(final List<Tile> tiles) {
+        this.tiles = List.copyOf(tiles);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public final void setPawns(final List<Pawn> pawns) {
+        this.pawns = List.copyOf(pawns);
+    }
 }

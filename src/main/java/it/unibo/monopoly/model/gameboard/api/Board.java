@@ -82,9 +82,22 @@ public interface Board {
      * @return Tile
     */
     Tile getTile(String name);
+    
     /**
      * add a tile.
      * @param tile
     */
     void addTile(Tile tile);
+
+    /**
+     * Set the provided {@link List} and overrides the old one.
+     * @param tiles the new {@link List} of {@link Tile} to add to the board
+     */
+    void setTiles(final List<Tile> tiles);
+
+    /**
+     * Set the provided {@link List} and overrides the old one.
+     * @param pawns the new {@link List} of {@link Pawn} to add to the board
+     */
+    void setPawns(final List<Pawn> pawns);
 }
