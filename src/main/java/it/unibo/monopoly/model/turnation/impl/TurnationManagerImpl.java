@@ -133,8 +133,7 @@ public class TurnationManagerImpl implements TurnationManager {
     }
     @Override
     public boolean canThrowDices() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'canThrowDices'");
+        return true;
     }
     @Override
     public boolean canPassTurn() {
