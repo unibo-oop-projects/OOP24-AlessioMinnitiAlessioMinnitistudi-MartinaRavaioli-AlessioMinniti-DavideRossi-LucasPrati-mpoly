@@ -68,4 +68,9 @@ public interface TurnationManager {
      * @param plList
      */
     boolean canExitPrison(int value);
+    /**
+     * tells if the player can throw the dices.
+     * @param plList
+     */
+    boolean canThrowDices();
 }
