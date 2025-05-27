@@ -25,9 +25,9 @@ import it.unibo.monopoly.model.transactions.impl.bankaccount.ImmutableBankAccoun
 import it.unibo.monopoly.model.turnation.api.Player;
 
 /**
- * This implementation hadles all operations
+ * This implementation handles all operations
  * as described in the {@link Bank} interface. 
- * It manages a {@code Collection} of {@link BankAccount} {@code objects}
+ * It manages a {@link Collection} of {@link BankAccount} {@code objects}
  * and of {@link TitleDeed} {@code objects} 
  */
 public final class BankImpl implements Bank {
@@ -216,6 +216,11 @@ public final class BankImpl implements Bank {
     @Override
     public void resetBankActions() {
        transactionLedger.reset();
+    }
+
+    @Override
+    public BankState getBankStateObject() {
+        return this.new BankStateAdapter();
     }
 
     private class BankStateAdapter implements BankState {

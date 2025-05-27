@@ -8,8 +8,11 @@ import it.unibo.monopoly.model.gameboard.api.Pawn;
 import it.unibo.monopoly.model.turnation.impl.PlayerImpl;
 
 /**
- * transaction manager interface.
- * //TODO correct schifosa javadoc
+ * This object handles all payment operations that happen in the game.
+ * It manages a {@link Collection} of {@link BankAccount} and of {@link TitleDeed}
+ * and exposes methods to perform basic payment actions in the game ({@link #payRent(String, int, Collection)},
+ * {@link #buyTitleDeed(String, int)}...)
+ *
 */
 public interface Bank { 
 
@@ -138,4 +141,10 @@ public interface Bank {
      */
     void resetBankActions();
     
+    /**
+     * Get a {@link BankState} object that can be used to communicate with this {@link Bank} instance
+     * and ask for information related to the data that it manages.
+     * @return a {@link BankState} object that refers to this {@link Bank} object
+     */
+    BankState getBankStateObject();
 }
