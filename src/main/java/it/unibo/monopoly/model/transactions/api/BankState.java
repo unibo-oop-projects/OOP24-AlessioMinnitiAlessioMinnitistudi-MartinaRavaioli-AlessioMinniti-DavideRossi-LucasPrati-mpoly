@@ -10,7 +10,7 @@ import it.unibo.monopoly.model.turnation.api.TurnationManager;
 
 /**
  * An object used by {@link TurnationManager} to check on the 
- * finantial situation of the players. {@link TurnationManager}, in order to arbitrate
+ * finantial situation of the players and manage the state of the {@link Bank}. {@link TurnationManager}, in order to arbitrate
  * the game, may have the necessity to retrieve information related to the finantial situation of a player
  * (ask if a player is bankrupt, rank the players based on their properties, ask if a player has executed
  * all mandatory payments...). Also, {@link TurnationManager} may need to be able to command specific operations
@@ -77,4 +77,21 @@ public interface BankState {
      * necessary. It prepares the {@link Bank} to be ready to keep track of the transaction requests of a new player.
      */
     void resetBankActions();
+
+    /**
+     * Revoke ownership of all {@link TitleDeed} possessed
+     * by the given {@link Player} and delete its {@link BankAccount}.
+     * This action does something similar to {@link Bank#sellTitleDeed(String)}, meaning
+     * that {@link TitleDeed#removeOwner()} is called on all the {@code deeds} of the player, and they can
+     * be bought again. However no money is deposited to the player's {@link BankAccount}, so it's a force removal.
+     * Additionally, it removes the {@link BankAccount} with the same {@code id} as the one of the player
+     * (meaning it wipes its {@link BankAccount} from the system). The player will no longer be able to 
+     * call transaction methods after this.
+     * This is a dangerous method, and should only be called by {@link TurnationManager} when a player gets eliminated. 
+     * After the call the player will no longer be able to play the game in its full functionality, which may result in
+     * bugs if not invoked properly
+     * @param pl The player to eliminate, the {@code id} parameter {@link Player#getID()} will be retrieved and used
+     * to perform all cancellation operations.
+     */
+    void deletePlayer(Player pl);
 }

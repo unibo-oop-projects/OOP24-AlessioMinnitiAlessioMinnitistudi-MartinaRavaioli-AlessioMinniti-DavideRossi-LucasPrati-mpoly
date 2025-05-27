@@ -194,7 +194,7 @@ public final class BankImpl implements Bank {
 
     @Override
     public Set<BankAction> getApplicableBankActions(final int currentPlayerId, final String titleDeedName, final int diceThrow) {
-        
+        //TODO check input parameters
         final Set<BankAction> returnSet = new HashSet<>();
         final TitleDeed selected = findTitleDeed(titleDeedName);
 
@@ -218,7 +218,7 @@ public final class BankImpl implements Bank {
         return this.new BankStateAdapter();
     }
 
-    private class BankStateAdapter implements BankState {
+    private final class BankStateAdapter implements BankState {
 
         @Override
         public boolean canContinuePlay(final Player player) {
@@ -247,6 +247,14 @@ public final class BankImpl implements Bank {
         @Override
         public void resetBankActions() {
             transactionLedger.reset();
+        }
+
+        @Override
+        public void deletePlayer(final Player pl) {
+            getTitleDeedsByOwner(pl.getID())
+            .stream()
+            .forEach(t -> t.removeOwner());
+            accounts.remove(pl.getID());
         }
     }
 }
