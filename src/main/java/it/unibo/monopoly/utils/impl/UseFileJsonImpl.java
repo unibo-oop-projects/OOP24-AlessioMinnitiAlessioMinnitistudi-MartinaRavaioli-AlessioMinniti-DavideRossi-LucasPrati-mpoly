@@ -7,14 +7,10 @@ import java.io.UncheckedIOException;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
-
-import it.unibo.monopoly.model.transactions.api.TitleDeed;
-import it.unibo.monopoly.model.transactions.impl.BaseTitleDeed;
 
 import it.unibo.monopoly.utils.api.UseFileJson;
 
@@ -46,13 +42,4 @@ public final class UseFileJsonImpl extends AbstractUseFileImpl implements UseFil
         }
         return out;
     }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Set<TitleDeed> loadTitleDeeds(final String path) {
-        return Set.copyOf(loadJsonList(path, BaseTitleDeed.class));
-    }
-
 }
