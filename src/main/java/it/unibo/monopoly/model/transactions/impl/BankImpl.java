@@ -193,12 +193,10 @@ public final class BankImpl implements Bank {
     }
 
     @Override
-    public Set<BankAction> setTurnTransactions(final int currentPlayerId, final String titleDeedName, final int diceThrow) {
+    public Set<BankAction> getApplicableBankActions(final int currentPlayerId, final String titleDeedName, final int diceThrow) {
         
         final Set<BankAction> returnSet = new HashSet<>();
         final TitleDeed selected = findTitleDeed(titleDeedName);
-
-        transactionLedger.reset();
 
         if (!selected.isOwned()) {
             returnSet.add(bankActionFactory.createBuy(currentPlayerId, titleDeedName));
@@ -213,6 +211,11 @@ public final class BankImpl implements Bank {
         }
 
         return returnSet;
+    }
+
+    @Override
+    public void resetBankActions() {
+       transactionLedger.reset();
     }
 
     private class BankStateAdapter implements BankState {
@@ -240,6 +243,5 @@ public final class BankImpl implements Bank {
                                     .sorted((e1, e2) -> Integer.compare(e1.getRight(), e2.getRight()))
                                     .toList();
         }
-
     }
 }
