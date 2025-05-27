@@ -19,14 +19,14 @@ import it.unibo.monopoly.model.turnation.impl.PositionImpl;
 */
 public class BoardImpl implements Board {
     private List<Tile> tiles;
-    private List<Pawn> pawns;
+    private final List<Pawn> pawns;
 
     /**
      * constructor.
     */
-    public BoardImpl() {
+    public BoardImpl(List<Pawn> pawns) {
+        this.pawns = new ArrayList<>(pawns);
         this.tiles = new ArrayList<>();
-        this.pawns = new ArrayList<>();
     }
 
     /**
@@ -159,13 +159,5 @@ public class BoardImpl implements Board {
     @Override
     public final void setTiles(final List<Tile> tiles) {
         this.tiles = List.copyOf(tiles);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public final void setPawns(final List<Pawn> pawns) {
-        this.pawns = List.copyOf(pawns);
     }
 }
