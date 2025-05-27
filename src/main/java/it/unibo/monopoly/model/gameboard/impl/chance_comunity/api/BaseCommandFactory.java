@@ -22,7 +22,7 @@ public interface BaseCommandFactory {
      * @param tile
      * @param player
      * @param board to move the player pawn
-     * @return
+     * @return the command
      */
     BaseCommand moveIn(Tile tile, Player player, Board board);
 
@@ -31,7 +31,7 @@ public interface BaseCommandFactory {
      * @param ammount
      * @param player
      * @param bank to make the transaction
-     * @return
+     * @return the command
      */
     BaseCommand withdraw(int ammount, Player player, Bank bank);
 
@@ -40,7 +40,16 @@ public interface BaseCommandFactory {
      * @param ammount
      * @param player
      * @param bank to make the transaction
-     * @return
+     * @return the command
      */
     BaseCommand deposit(int ammount, Player player, Bank bank);
+
+    /**
+     * a command that count and 
+     * @param player
+     * @param bank
+     * @return
+     */
+    BaseCommand countProperty(Player player, Bank bank);
+
 }

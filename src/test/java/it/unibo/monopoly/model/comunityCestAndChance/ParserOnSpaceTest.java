@@ -9,8 +9,8 @@ import it.unibo.monopoly.model.gameboard.impl.chance_comunity.impl.ParserOnSpace
 public class ParserOnSpaceTest {
 
     private static final String test1 = "hello";
-    private static final String test2 = "hello world";
-    private static final String test3 = "hello fucking world"; 
+    private static final String test2 = "hello\n world";
+    private static final String test3 = "hello\n fucking\n world"; 
 
 
     @Test
