@@ -1,8 +1,8 @@
 package it.unibo.monopoly.model.turnation.impl;
-
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 import it.unibo.monopoly.model.gameboard.api.Board;
 import it.unibo.monopoly.model.transactions.api.BankState;
@@ -126,35 +126,49 @@ public class TurnationManagerImpl implements TurnationManager {
     public final Player getCurrPlayer() {
         return PlayerImpl.of(this.currPlayer.getID(), this.currPlayer.getName(), this.currPlayer.getColor());
     }
+
     @Override
     public boolean isCurrentPlayerInPrison() {
         return this.currPlayer.isInPrison();
     }
+
     @Override
     public boolean canExitPrison(Collection<Integer> value, Board board) {
         return this.currPlayer.canExitPrison(value, board);
     }
+
     @Override
     public boolean canThrowDices() {
         return true;
     }
+
     @Override
     public boolean canPassTurn() {
         return this.bankState.allMandatoryTransactionsCompleted();
     }
+
     @Override
     public boolean playerDiesIfTurnPassed() {
         return this.bankState.canContinuePlay(this.currPlayer);
     }
+
     @Override
-    public Player getWinner() {
-        return null;
+    public Map.Entry<String,Integer> getWinner() {
+        Map.Entry<String,Integer> winner = Map.entry("",0);
+        for (Map.Entry<String,Integer> p : getRanking().entrySet()) {
+            if (p.getValue() > winner.getValue()) {
+                winner.setValue(p.getValue());
+            }
+        }
+
+        return winner;
     }
+
     @Override
-    public Collection<Player> getRanking() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getRanking'");
+    public Map<String,Integer> getRanking() {
+        return this.bankState.rankPlayers();
     }
+
     @Override
     public void deletePlayer(Player player) {
         this.players.deleteNode(player);

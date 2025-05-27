@@ -1,6 +1,7 @@
 package it.unibo.monopoly.model.transactions.api;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -61,5 +62,5 @@ public interface BankState {
      * The values of the list are sorted in ascending order based on monetary
      * value.
      */
-    List<Pair<String, Integer>> rankPlayers();
+    Map<String,Integer> rankPlayers();
 }
