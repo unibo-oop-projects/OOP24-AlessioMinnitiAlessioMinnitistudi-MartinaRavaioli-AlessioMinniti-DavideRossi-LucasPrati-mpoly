@@ -192,9 +192,12 @@ public final class BankImpl implements Bank {
         account.withdraw(amount);
     }
 
+    //TODO check if exceptions should be in javadoc
     @Override
     public Set<BankAction> getApplicableBankActions(final int currentPlayerId, final String titleDeedName, final int diceThrow) {
-        //TODO check input parameters
+        if (!accounts.containsKey(currentPlayerId)) {
+            throw new IllegalArgumentException("No player with this id is present in the system");
+        }
         final Set<BankAction> returnSet = new HashSet<>();
         final TitleDeed selected = findTitleDeed(titleDeedName);
 
