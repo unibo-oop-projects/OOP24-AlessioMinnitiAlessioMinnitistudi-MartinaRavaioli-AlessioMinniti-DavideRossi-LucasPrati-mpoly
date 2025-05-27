@@ -6,7 +6,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import it.unibo.monopoly.model.turnation.api.Position;
 import it.unibo.monopoly.model.turnation.impl.PositionImpl;
 
-import java.util.List;
 import java.util.Optional;
 
 /**
@@ -22,9 +21,7 @@ public final class CardDTO {
     private final Optional<String> effect;
     private final Optional<Group> group;
     private final Optional<Integer> cost;
-    private final Optional<Integer> houseCost;
-    private final Optional<Integer> mortgage;
-    private final Optional<List<Integer>> rents;
+    private final Optional<Integer> baseRent;
 
     @JsonCreator
     public CardDTO(
@@ -34,9 +31,7 @@ public final class CardDTO {
         @JsonProperty("effect") final Optional<String> effect,
         @JsonProperty("group") final Optional<Group> group,
         @JsonProperty("cost") final Optional<Integer> cost,
-        @JsonProperty("houseCost") final Optional<Integer> houseCost,
-        @JsonProperty("mortgage") final Optional<Integer> mortgage,
-        @JsonProperty("rents") final Optional<List<Integer>> rents
+        @JsonProperty("baseRent") final Optional<Integer> baseRent
     ) {
         this.name = name;
         this.position = new PositionImpl(position);
@@ -44,9 +39,7 @@ public final class CardDTO {
         this.effect = effect;
         this.group = group;
         this.cost = cost;
-        this.houseCost = houseCost;
-        this.mortgage = mortgage;
-        this.rents = rents;
+        this.baseRent = baseRent;
     }
 
     public String getName() {
@@ -73,15 +66,7 @@ public final class CardDTO {
         return cost;
     }
 
-    public Optional<Integer> getHouseCost() {
-        return houseCost;
-    }
-
-    public Optional<Integer> getMortgage() {
-        return mortgage;
-    }
-
-    public Optional<List<Integer>> getRents() {
-        return rents;
+    public Optional<Integer> getBaseRent() {
+        return baseRent;
     }
 }

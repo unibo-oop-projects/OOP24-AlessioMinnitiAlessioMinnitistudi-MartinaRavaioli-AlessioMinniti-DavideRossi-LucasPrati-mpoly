@@ -9,19 +9,17 @@ import java.util.Set;
 
 import it.unibo.monopoly.model.gameboard.api.Board;
 import it.unibo.monopoly.model.gameboard.api.CardFactory;
-import it.unibo.monopoly.model.gameboard.api.Effect;
-import it.unibo.monopoly.model.gameboard.api.EffectFactory;
 import it.unibo.monopoly.model.gameboard.api.Special;
 import it.unibo.monopoly.model.gameboard.api.SpecialFactory;
 import it.unibo.monopoly.model.gameboard.api.Tile;
 import it.unibo.monopoly.model.transactions.api.Bank;
-import it.unibo.monopoly.model.transactions.api.RentOption;
+import it.unibo.monopoly.model.transactions.api.RentOptionFactory;
 import it.unibo.monopoly.model.transactions.api.SpecialPropertyFactory;
 import it.unibo.monopoly.model.transactions.api.TitleDeed;
 import it.unibo.monopoly.model.transactions.impl.BaseTitleDeed;
+import it.unibo.monopoly.model.transactions.impl.RentOptionFactoryImpl;
 import it.unibo.monopoly.model.transactions.impl.SpecialPropertyFactoryImpl;
 import it.unibo.monopoly.model.turnation.api.Position;
-import it.unibo.monopoly.model.turnation.impl.PositionImpl;
 
 /**
  * A {@link CardFactory} implementation, for create entities after the deserialization from the file json.
@@ -30,6 +28,7 @@ public class CardFactoryImpl implements CardFactory {
 
     private final SpecialFactory specialFactory = new SpecialFactoryImpl();
     private final SpecialPropertyFactory specialPropertyFactory = new SpecialPropertyFactoryImpl();
+    private final RentOptionFactory rentOptionFactory = new RentOptionFactoryImpl();
     private final Board board;
     private final Bank bank;
 
@@ -38,7 +37,6 @@ public class CardFactoryImpl implements CardFactory {
 
     /**
      * Create a new {@link CardFactoryImpl}.
-     * @param specialFactory the factory that allows to create {@link Special} tiles
      * @param board the {@link Board} of the game for handle specific effects
      * @param bank the {@link Bank} of the game for handle specific effects
      */
@@ -112,50 +110,44 @@ public class CardFactoryImpl implements CardFactory {
         final TitleDeed deed;
         
         if(isSpecialProperty(group)){
-            deed = handleSpecialProperty(name, group);
+            deed = handleSpecialPropertyTitleDeed(name, group);
         
         } else {
             final int cost = dto.getCost()
                 .orElseThrow(() -> new IllegalArgumentException("Missing 'cost' for PROPERTY card: " + name));
-            final int houseCost = dto.getHouseCost()
-                .orElseThrow(() -> new IllegalArgumentException("Missing 'houseCost' for PROPERTY card: " + name));
-            final int mortgage = dto.getMortgage()
-                .orElseThrow(() -> new IllegalArgumentException("Missing 'mortgage' for PROPERTY card: " + name));
-            final List<Integer> rents = dto.getRents()
-                .orElseThrow(() -> new IllegalArgumentException("Missing 'rents' for PROPERTY card: " + name));
+            final int baseRent = dto.getBaseRent()
+                .orElseThrow(() -> new IllegalArgumentException("Missing 'baseRent' for PROPERTY card: " + name));
 
-            deed = new BaseTitleDeed();
-
+            deed = new BaseTitleDeed(
+                group,
+                name,
+                cost,
+                p -> p / 2,
+                baseRent,
+                List.of(rentOptionFactory.allDeedsOfGroupWithSameOwner(baseRent))
+            );
         }
-
-        
-        
-
-        
-        // final BaseTitleDeed deed = new BaseTitleDeed(
-        //     dto.getName(),
-        //     dto.getGroup(),
-        //     dto.getCost(),
-        //     dto.getHouseCost(),
-        //     dto.getMortgage(),
-        //     // dto.getRents().stream().map( e -> RentOption.baseRentOption(e.))
-        // );
         tiles.add(property);
         deeds.add(deed);
     }
+
 
     private boolean isSpecialProperty(final Group group) {
         return group.equals(Group.STATION) || group.equals(Group.SOCIETY);
     }
 
-    private TitleDeed handleSpecialProperty(final String name, final Group group) {
+
+    private TitleDeed handleSpecialPropertyTitleDeed(final String name, final Group group) {
         if(group.equals(Group.STATION)) {
             return specialPropertyFactory.station(name);
 
         } else if (group.equals(Group.SOCIETY)) {
             return specialPropertyFactory.society(name);
         }
-        return switch(group.name())
+        // unused exception because group just is validated from  #idSpecialProperty()
+        throw new IllegalArgumentException(
+            "The provided group '" + group.name() + "' in '" + name + "' is neither a STATION or a SOCIETY"
+        );        
     }
     
 }
