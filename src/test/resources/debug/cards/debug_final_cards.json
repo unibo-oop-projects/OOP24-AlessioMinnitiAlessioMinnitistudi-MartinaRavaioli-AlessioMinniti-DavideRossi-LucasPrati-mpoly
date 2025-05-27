@@ -14,10 +14,10 @@
     "baseRent": 2
   },
   {
-    "name": "Generic Tax",
+    "name": "Community Chest",
     "position": 2,
     "type": "SPECIAL",
-    "effect": "TAX"
+    "effect": "CHEST"
   },
   {
     "name": "Baltic Avenue",
@@ -48,10 +48,10 @@
     "baseRent": 6
   },
   {
-    "name": "Generic Tax",
+    "name": "Chance",
     "position": 7,
     "type": "SPECIAL",
-    "effect": "TAX"
+    "effect": "CHANCE"
   },
   {
     "name": "Vermont Avenue",
@@ -122,10 +122,10 @@
     "baseRent": 14
   },
   {
-    "name": "Generic Tax",
+    "name": "Community Chest",
     "position": 17,
     "type": "SPECIAL",
-    "effect": "TAX"
+    "effect": "CHEST"
   },
   {
     "name": "Tennessee Avenue",
@@ -158,10 +158,10 @@
     "baseRent": 18
   },
   {
-    "name": "Generic Tax",
+    "name": "Chance",
     "position": 22,
     "type": "SPECIAL",
-    "effect": "TAX"
+    "effect": "CHANCE"
   },
   {
     "name": "Indiana Avenue",
@@ -240,10 +240,10 @@
     "baseRent": 26
   },
   {
-  "name": "Generic Tax",
+  "name": "Community Chest",
   "position": 33,
   "type": "SPECIAL",
-  "effect": "TAX"
+  "effect": "CHEST"
 },
 {
   "name": "Pennsylvania Avenue",
@@ -260,10 +260,10 @@
   "group": "STATION"
 },
 {
-  "name": "Generic Tax",
+  "name": "Chance",
   "position": 36,
   "type": "SPECIAL",
-  "effect": "TAX"
+  "effect": "CHANCE"
 },
 {
   "name": "Park Place",

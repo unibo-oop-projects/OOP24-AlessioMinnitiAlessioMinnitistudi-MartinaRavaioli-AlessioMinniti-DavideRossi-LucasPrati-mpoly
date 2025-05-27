@@ -9,21 +9,21 @@
     "name": "Mediterranean Avenue",
     "position": 1,
     "type": "PROPERTY",
-    "group": "BROWN",
+    "group": "MAGENTA",
     "cost": 60,
     "baseRent": 2
   },
   {
-    "name": "Community Chest",
+    "name": "Generic Tax",
     "position": 2,
     "type": "SPECIAL",
-    "effect": "CHEST"
+    "effect": "TAX"
   },
   {
     "name": "Baltic Avenue",
     "position": 3,
     "type": "PROPERTY",
-    "group": "BROWN",
+    "group": "MAGENTA",
     "cost": 60,
     "baseRent": 4
   },
@@ -43,21 +43,21 @@
     "name": "Oriental Avenue",
     "position": 6,
     "type": "PROPERTY",
-    "group": "LIGHT_BLUE",
+    "group": "CYAN",
     "cost": 100,
     "baseRent": 6
   },
   {
-    "name": "Chance",
+    "name": "Generic Tax",
     "position": 7,
     "type": "SPECIAL",
-    "effect": "CHANCE"
+    "effect": "TAX"
   },
   {
     "name": "Vermont Avenue",
     "position": 8,
     "type": "PROPERTY",
-    "group": "LIGHT_BLUE",
+    "group": "CYAN",
     "cost": 100,
     "baseRent": 6
   },
@@ -65,7 +65,7 @@
     "name": "Connecticut Avenue",
     "position": 9,
     "type": "PROPERTY",
-    "group": "LIGHT_BLUE",
+    "group": "CYAN",
     "cost": 120,
     "baseRent": 8
   },
@@ -122,10 +122,10 @@
     "baseRent": 14
   },
   {
-    "name": "Community Chest",
+    "name": "Generic Tax",
     "position": 17,
     "type": "SPECIAL",
-    "effect": "CHEST"
+    "effect": "TAX"
   },
   {
     "name": "Tennessee Avenue",
@@ -158,10 +158,10 @@
     "baseRent": 18
   },
   {
-    "name": "Chance",
+    "name": "Generic Tax",
     "position": 22,
     "type": "SPECIAL",
-    "effect": "CHANCE"
+    "effect": "TAX"
   },
   {
     "name": "Indiana Avenue",
@@ -240,10 +240,10 @@
     "baseRent": 26
   },
   {
-  "name": "Community Chest",
+  "name": "Generic Tax",
   "position": 33,
   "type": "SPECIAL",
-  "effect": "CHEST"
+  "effect": "TAX"
 },
 {
   "name": "Pennsylvania Avenue",
@@ -260,10 +260,10 @@
   "group": "STATION"
 },
 {
-  "name": "Chance",
+  "name": "Generic Tax",
   "position": 36,
   "type": "SPECIAL",
-  "effect": "CHANCE"
+  "effect": "TAX"
 },
 {
   "name": "Park Place",
