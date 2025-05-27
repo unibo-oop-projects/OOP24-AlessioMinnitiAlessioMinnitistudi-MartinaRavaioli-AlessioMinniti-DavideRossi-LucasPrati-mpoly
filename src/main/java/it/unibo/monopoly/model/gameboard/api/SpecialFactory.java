@@ -10,7 +10,6 @@ public interface SpecialFactory {
 
     /**
      * creates the start tiles that has the effect of transfering 200$ to the player that triggered it.
-     * @param name the name of the card
      * @param bank used to make the transaction
      * @return the special tile start
      */
@@ -18,7 +17,6 @@ public interface SpecialFactory {
 
     /**
      * create the go to prison tiles that moves the player on the tile prison.
-     * @param name the name of the card
      * @param pos position of the tile
      * @param board used to move the player pawn
      * @return the special tile goToPrison
@@ -34,7 +32,6 @@ public interface SpecialFactory {
 
     /**
      * ccreates the tile parking that keeps the player in stasis for 1 turn.
-     * @param name the name of the card
      * @param pos of the tile 
      * @return the special tile parking
      */
@@ -42,7 +39,6 @@ public interface SpecialFactory {
 
     /**
      * creates the tile taxes that witdraws a definite ammount from the palyer that triggered it's effect.
-     * @param name the name of the card
      * @param pos of the tile
      * @param bank used to make the transaction
      * @return the special tile taxes

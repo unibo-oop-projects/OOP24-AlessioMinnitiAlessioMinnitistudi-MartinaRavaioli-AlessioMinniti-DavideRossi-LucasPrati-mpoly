@@ -12,13 +12,13 @@ import it.unibo.monopoly.model.transactions.api.TitleDeed;
  * Also usefull for create {@link TitleDeed}s from the {@link Property}.
  */
 public interface CardFactory {
-    
+
     /**
      * Parses a card DTO and creates corresponding domain objects.
      * @param dtos the card list of DTOs from JSON
      * @throws IllegalArgumentException if the parsing does not match anything expected or failed
      */
-    void parse(final List<CardDTO> dtos);
+    void parse(List<CardDTO> dtos);
 
     /**
      * Get all the {@link Tile}s parsed.

@@ -50,7 +50,7 @@ public class CardFactoryImpl implements CardFactory {
      */
     @Override
     public void parse(final List<CardDTO> dtos) {
-        for (var dto : dtos) {
+        for (final var dto : dtos) {
             switch (dto.getType().toUpperCase(Locale.ENGLISH)) {
                 case "SPECIAL" -> handleSpecial(dto);
                 case "PROPERTY" -> handleProperty(dto);
@@ -100,7 +100,7 @@ public class CardFactoryImpl implements CardFactory {
 
     private void handleProperty(final CardDTO dto) {
         final Position position = dto.getPosition();
-        
+
         final String name = dto.getName()
             .orElseThrow(() -> new IllegalArgumentException(
                 "Missing 'name' for PROPERTY card at position: " + position.getPos()));
@@ -110,10 +110,10 @@ public class CardFactoryImpl implements CardFactory {
 
         final PropertyImpl property = new PropertyImpl(name, position, group);
         final TitleDeed deed;
-        
-        if(isSpecialProperty(group)){
+
+        if (isSpecialProperty(group)) {
             deed = handleSpecialPropertyTitleDeed(name, group);
-        
+
         } else {
             final int cost = dto.getCost()
                 .orElseThrow(() -> new IllegalArgumentException(
@@ -142,7 +142,7 @@ public class CardFactoryImpl implements CardFactory {
 
 
     private TitleDeed handleSpecialPropertyTitleDeed(final String name, final Group group) {
-        if(group.equals(Group.STATION)) {
+        if (group.equals(Group.STATION)) {
             return specialPropertyFactory.station(name);
 
         } else if (group.equals(Group.SOCIETY)) {
@@ -151,7 +151,7 @@ public class CardFactoryImpl implements CardFactory {
         // unused exception because group just is validated from  #idSpecialProperty()
         throw new IllegalArgumentException(
             "The provided group '" + group.name() + "' in '" + name + "' is neither a STATION or a SOCIETY"
-        );        
+        );
     }
-    
+
 }

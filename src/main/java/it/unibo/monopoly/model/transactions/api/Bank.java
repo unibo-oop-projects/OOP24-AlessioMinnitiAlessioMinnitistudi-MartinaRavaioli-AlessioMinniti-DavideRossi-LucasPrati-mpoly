@@ -26,7 +26,7 @@ public interface Bank {
      * as the one returned by the method {@link TitleDeed#getName()}, called on the new {@code titleDeed},
      * is already present in the class internal list of title deeds.
      */
-    void addTitleDeed(final TitleDeed titleDeed);
+    void addTitleDeed(TitleDeed titleDeed);
     /**
      * Purchase a {@link TitleDeed} for a specifc player.
      * @param titleDeedName the name of the {@link TitleDeed} to be purchased 

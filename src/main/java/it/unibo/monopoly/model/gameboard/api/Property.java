@@ -21,7 +21,7 @@ public interface Property extends Tile {
      * @return int
     */
     int getNHouses();
-    
+
     /**
      * control if it has an hotel.
      * @return bool
