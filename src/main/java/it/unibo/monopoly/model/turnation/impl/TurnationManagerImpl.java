@@ -1,9 +1,12 @@
 package it.unibo.monopoly.model.turnation.impl;
-
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
+import org.apache.commons.lang3.tuple.Pair;
+
+import it.unibo.monopoly.model.gameboard.api.Board;
+import it.unibo.monopoly.model.transactions.api.BankState;
 import it.unibo.monopoly.model.turnation.api.Dice;
 import it.unibo.monopoly.model.turnation.api.Player;
 import it.unibo.monopoly.model.turnation.api.TurnationManager;
@@ -18,6 +21,7 @@ public class TurnationManagerImpl implements TurnationManager {
     private boolean isOver;
     private Player currPlayer;
     private Dice dice;
+    private BankState bankState;
     /**
      * constructor.
      * @param plList
@@ -33,6 +37,21 @@ public class TurnationManagerImpl implements TurnationManager {
     }
     /**
      * constructor.
+     * @param plList
+     * @param dice
+     * @param bankState
+    */
+    public TurnationManagerImpl(final List<Player> plList, final Dice dice, final BankState bankState) {
+        this.bankState = bankState;
+        this.players = new CircularLinkedList<>();
+        for (final Player p : plList) {
+            this.players.addNode(p);
+        }
+        this.dice = dice;
+        this.currPlayer = plList.get(0);
+    }
+    /**
+     * set list.
      * @param plList
     */
     @Override
@@ -121,6 +140,54 @@ public class TurnationManagerImpl implements TurnationManager {
     @Override
     public final Player getCurrPlayer() {
         return PlayerImpl.of(this.currPlayer.getID(), this.currPlayer.getName(), this.currPlayer.getColor());
+    }
+
+    @Override
+    public final boolean isCurrentPlayerInPrison() {
+        return this.currPlayer.isInPrison();
+    }
+
+    @Override
+    public final boolean canExitPrison(final Collection<Integer> value, final Board board) {
+        return this.currPlayer.canExitPrison(value, board);
+    }
+
+    @Override
+    public final boolean canThrowDices() {
+        return true;
+    }
+
+    @Override
+    public final boolean canPassTurn() {
+        return this.bankState.allMandatoryTransactionsCompleted();
+    }
+
+    @Override
+    public final boolean playerDiesIfTurnPassed() {
+        return this.bankState.canContinuePlay(this.currPlayer);
+    }
+
+    @Override
+    public final Pair<String, Integer> getWinner() {
+        final Pair<String, Integer> winner = getRanking().get(0);
+
+        for (final Pair<String, Integer> p : getRanking()) {
+            if (p.getRight() > winner.getRight()) {
+                winner.setValue(p.getRight());
+            }
+        }
+
+        return winner;
+    }
+
+    @Override
+    public final List<Pair<String, Integer>> getRanking() {
+        return this.bankState.rankPlayers();
+    }
+
+    @Override
+    public final void deletePlayer(final Player player) {
+        this.players.deleteNode(player);
     }
 
 }

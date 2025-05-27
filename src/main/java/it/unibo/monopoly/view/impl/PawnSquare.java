@@ -41,4 +41,11 @@ public class PawnSquare extends JPanel {
         // Disegna un quadrato pieno che riempie tutto il pannello
         g.fillRect(0, 0, getWidth(), getHeight());
     }
+    /**
+    * get the color.
+    * @return Color
+    */
+    public Color getColor() {
+        return this.color;
+    }
 }

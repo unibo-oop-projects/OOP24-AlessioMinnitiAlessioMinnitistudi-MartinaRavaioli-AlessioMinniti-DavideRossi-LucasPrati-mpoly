@@ -180,4 +180,21 @@ public final class GameboardViewImpl extends JPanel implements GameboardView {
     public Component getPanel() {
         return this;
     }
+
+    @Override
+    public void clearPanel() {
+        for (final Map.Entry<JPanel, Position> entry : this.tilePositions.entrySet()) {
+            if (entry.getValue().equals(pawnPositions.get(controller.getCurrPlayer().getID() - 1))) { 
+                final JPanel p = entry.getKey();
+                for (final Component c : p.getComponents()) {
+                    if (c instanceof PawnSquare) {
+                        p.remove(c);
+                        p.revalidate();  // AGGIUNTO
+                        p.repaint();
+                        break;
+                    }
+                }
+            }
+        }
+    }
 }

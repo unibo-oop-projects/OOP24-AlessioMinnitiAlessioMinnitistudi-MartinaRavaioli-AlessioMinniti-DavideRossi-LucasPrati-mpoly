@@ -65,7 +65,7 @@ public final class BankImpl implements Bank {
 
     @Override
     public void addTitleDeed(final TitleDeed titleDeed) {
-        if(titleDeeds.containsKey(titleDeed.getName())) {
+        if (titleDeeds.containsKey(titleDeed.getName())) {
             throw new IllegalArgumentException("A title deed with this name is already present in the system");
         }
         titleDeeds.put(titleDeed.getName(), titleDeed);
