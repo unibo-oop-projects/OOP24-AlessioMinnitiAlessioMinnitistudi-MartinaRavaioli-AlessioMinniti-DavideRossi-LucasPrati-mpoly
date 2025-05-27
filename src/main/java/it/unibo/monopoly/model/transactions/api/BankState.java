@@ -62,5 +62,5 @@ public interface BankState {
      * The values of the list are sorted in ascending order based on monetary
      * value.
      */
-    Map<String,Integer> rankPlayers();
+    Map<String, Integer> rankPlayers();
 }

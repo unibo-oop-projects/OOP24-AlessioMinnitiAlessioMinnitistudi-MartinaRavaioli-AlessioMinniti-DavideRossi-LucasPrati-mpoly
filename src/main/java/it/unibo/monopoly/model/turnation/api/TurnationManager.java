@@ -69,6 +69,7 @@ public interface TurnationManager {
      * tells if the player can exit the prison.
      * @return bool
      * @param value
+     * @param board
      */
     boolean canExitPrison(Collection<Integer> value, Board board);
     /**
@@ -90,12 +91,12 @@ public interface TurnationManager {
      * get the winner.
      * @return player
      */
-    Map.Entry<String,Integer> getWinner();
+    Map.Entry<String, Integer> getWinner();
     /**
      * get the ranking of the players.
      * @return multiple players
      */
-    Map<String,Integer> getRanking();
+    Map<String, Integer> getRanking();
     /**
      * delete the player.
      * @param player

@@ -26,6 +26,20 @@ public class TurnationManagerImpl implements TurnationManager {
      * @param plList
      * @param dice
     */
+    public TurnationManagerImpl(final List<Player> plList, final Dice dice) {
+        this.players = new CircularLinkedList<>();
+        for (final Player p : plList) {
+            this.players.addNode(p);
+        }
+        this.dice = dice;
+        this.currPlayer = plList.get(0);
+    }
+    /**
+     * constructor.
+     * @param plList
+     * @param dice
+     * @param bankState
+    */
     public TurnationManagerImpl(final List<Player> plList, final Dice dice, final BankState bankState) {
         this.bankState = bankState;
         this.players = new CircularLinkedList<>();
@@ -36,7 +50,7 @@ public class TurnationManagerImpl implements TurnationManager {
         this.currPlayer = plList.get(0);
     }
     /**
-     * constructor.
+     * set list.
      * @param plList
     */
     @Override
@@ -128,34 +142,34 @@ public class TurnationManagerImpl implements TurnationManager {
     }
 
     @Override
-    public boolean isCurrentPlayerInPrison() {
+    public final boolean isCurrentPlayerInPrison() {
         return this.currPlayer.isInPrison();
     }
 
     @Override
-    public boolean canExitPrison(Collection<Integer> value, Board board) {
+    public final boolean canExitPrison(final Collection<Integer> value, final Board board) {
         return this.currPlayer.canExitPrison(value, board);
     }
 
     @Override
-    public boolean canThrowDices() {
+    public final boolean canThrowDices() {
         return true;
     }
 
     @Override
-    public boolean canPassTurn() {
+    public final boolean canPassTurn() {
         return this.bankState.allMandatoryTransactionsCompleted();
     }
 
     @Override
-    public boolean playerDiesIfTurnPassed() {
+    public final boolean playerDiesIfTurnPassed() {
         return this.bankState.canContinuePlay(this.currPlayer);
     }
 
     @Override
-    public Map.Entry<String,Integer> getWinner() {
-        Map.Entry<String,Integer> winner = Map.entry("",0);
-        for (Map.Entry<String,Integer> p : getRanking().entrySet()) {
+    public final Map.Entry<String, Integer> getWinner() {
+        final Map.Entry<String, Integer> winner = Map.entry("", 0);
+        for (final Map.Entry<String, Integer> p : getRanking().entrySet()) {
             if (p.getValue() > winner.getValue()) {
                 winner.setValue(p.getValue());
             }
@@ -165,12 +179,12 @@ public class TurnationManagerImpl implements TurnationManager {
     }
 
     @Override
-    public Map<String,Integer> getRanking() {
+    public final Map<String, Integer> getRanking() {
         return this.bankState.rankPlayers();
     }
 
     @Override
-    public void deletePlayer(Player player) {
+    public final void deletePlayer(final Player player) {
         this.players.deleteNode(player);
     }
 
