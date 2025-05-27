@@ -128,15 +128,13 @@ public final class MainMenuControllerImpl implements MainMenuController {
         final List<CardDTO> dtos = importFileJson.loadJsonList(config.getCardsPath(), CardDTO.class);
         final CardFactory cardFactory = new CardFactoryImpl(board , bank); 
         cardFactory.parse(dtos);
+        // populate elements
         titleDeeds.addAll(cardFactory.getDeeds());
         tiles.addAll(cardFactory.getTiles());
-
-
 
         // Add tiles to the board and titleDeeds to the Bank
         tiles.stream().forEach(board::addTile);
         titleDeeds.stream().forEach(bank::addTitleDeed);
-        
         
         // start the game
         final var controllerGameManager = new GameControllerImpl(bank, board, turnationManager, config);
