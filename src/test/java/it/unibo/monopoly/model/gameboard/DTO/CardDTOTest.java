@@ -1,17 +1,13 @@
 package it.unibo.monopoly.model.gameboard.DTO;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
-
 import it.unibo.monopoly.model.gameboard.impl.CardDTO;
 import it.unibo.monopoly.model.gameboard.impl.Group;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 class CardDTOTest {
 
@@ -38,7 +34,7 @@ class CardDTOTest {
 
         final CardDTO dto = mapper.readValue(json, CardDTO.class);
 
-        assertEquals("Boardwalk", dto.getName());
+        assertEquals("Boardwalk",dto.getName().orElseThrow(), "Name should be present in PROPERTY card");
         assertEquals(39, dto.getPosition().getPos());
         assertEquals("PROPERTY", dto.getType());
 
@@ -54,7 +50,6 @@ class CardDTOTest {
         assertFalse(dto.getEffect().isPresent(), "Effect should be empty for PROPERTY type");
     }
 
-
     @Test
     void testDeserializeMinimalSpecialCard() throws Exception {
         final String json = """
@@ -68,25 +63,25 @@ class CardDTOTest {
 
         final CardDTO dto = mapper.readValue(json, CardDTO.class);
 
-        assertEquals("Go to Jail", dto.getName());
+        // In SPECIAL cards, name may be ignored or missing
+        assertTrue(dto.getName().isPresent(), "Name can still be present for SPECIAL cards");
+        assertEquals("Go to Jail", dto.getName().get());
+
         assertEquals(30, dto.getPosition().getPos());
         assertEquals("SPECIAL", dto.getType());
 
         assertTrue(dto.getEffect().isPresent());
         assertEquals("GO_TO_JAIL", dto.getEffect().get());
 
-        // All others should be empty
         assertFalse(dto.getGroup().isPresent());
         assertFalse(dto.getCost().isPresent());
         assertFalse(dto.getBaseRent().isPresent());
     }
 
-
     @Test
     void testDeserializeEmptyOptionals() throws Exception {
         final String json = """
             {
-              "name": "Empty Tile",
               "position": 0,
               "type": "SPECIAL"
             }
@@ -94,7 +89,7 @@ class CardDTOTest {
 
         final CardDTO dto = mapper.readValue(json, CardDTO.class);
 
-        assertEquals("Empty Tile", dto.getName());
+        assertTrue(dto.getName().isEmpty(), "Name should be empty if not provided");
         assertEquals(0, dto.getPosition().getPos());
         assertEquals("SPECIAL", dto.getType());
 
