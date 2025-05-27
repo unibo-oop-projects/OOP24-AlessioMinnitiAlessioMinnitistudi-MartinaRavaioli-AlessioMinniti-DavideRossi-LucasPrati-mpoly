@@ -97,7 +97,7 @@ public interface TurnationManager {
      * get the ranking of the players.
      * @return multiple players
      */
-    List<Pair<Integer, Integer>> getRanking();
+    List<Pair<String, Integer>> getRanking();
     /**
      * delete the player.
      * @param player

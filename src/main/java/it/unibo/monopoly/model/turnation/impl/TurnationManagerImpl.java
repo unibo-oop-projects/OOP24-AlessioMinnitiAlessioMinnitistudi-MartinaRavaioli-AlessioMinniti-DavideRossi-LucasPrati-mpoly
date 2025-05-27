@@ -184,13 +184,13 @@ public class TurnationManagerImpl implements TurnationManager {
     }
 
     @Override
-    public final List<Pair<Integer, Integer>> getRanking() {
+    public final List<Pair<String, Integer>> getRanking() {
         final List<Pair<String, Integer>> list = new ArrayList<>();
         for (final Pair<Integer, Integer> p : this.bankState.rankPlayers()) {
             list.add(Pair.of(this.players.toList().get(p.getLeft()).getName(),p.getRight()));
         }
 
-        return this.bankState.rankPlayers();
+        return list;
     }
 
     @Override
