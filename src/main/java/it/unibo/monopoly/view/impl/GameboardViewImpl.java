@@ -180,4 +180,10 @@ public final class GameboardViewImpl extends JPanel implements GameboardView {
     public Component getPanel() {
         return this;
     }
+
+    @Override
+    public void clearPanel() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'clearPanel'");
+    }
 }
