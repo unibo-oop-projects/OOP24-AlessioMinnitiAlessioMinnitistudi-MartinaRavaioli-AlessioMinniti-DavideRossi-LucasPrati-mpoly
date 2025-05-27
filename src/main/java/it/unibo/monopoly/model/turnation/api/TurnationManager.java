@@ -1,7 +1,8 @@
 package it.unibo.monopoly.model.turnation.api;
 import java.util.Collection;
 import java.util.List;
-import java.util.Map;
+
+import org.apache.commons.lang3.tuple.Pair;
 
 import it.unibo.monopoly.model.gameboard.api.Board;
 
@@ -91,12 +92,12 @@ public interface TurnationManager {
      * get the winner.
      * @return player
      */
-    Map.Entry<String, Integer> getWinner();
+    Pair<String, Integer> getWinner();
     /**
      * get the ranking of the players.
      * @return multiple players
      */
-    Map<String, Integer> getRanking();
+    List<Pair<String, Integer>> getRanking();
     /**
      * delete the player.
      * @param player

@@ -193,6 +193,7 @@ public final class GameboardViewImpl extends JPanel implements GameboardView {
                         p.repaint();
                         break;
                     }
+                }
             }
         }
     }

@@ -2,7 +2,8 @@ package it.unibo.monopoly.model.turnation.impl;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
+
+import org.apache.commons.lang3.tuple.Pair;
 
 import it.unibo.monopoly.model.gameboard.api.Board;
 import it.unibo.monopoly.model.transactions.api.BankState;
@@ -167,11 +168,12 @@ public class TurnationManagerImpl implements TurnationManager {
     }
 
     @Override
-    public final Map.Entry<String, Integer> getWinner() {
-        final Map.Entry<String, Integer> winner = Map.entry("", 0);
-        for (final Map.Entry<String, Integer> p : getRanking().entrySet()) {
-            if (p.getValue() > winner.getValue()) {
-                winner.setValue(p.getValue());
+    public final Pair<String, Integer> getWinner() {
+        final Pair<String, Integer> winner = getRanking().get(0);
+
+        for (final Pair<String, Integer> p : getRanking()) {
+            if (p.getRight() > winner.getRight()) {
+                winner.setValue(p.getRight());
             }
         }
 
@@ -179,7 +181,7 @@ public class TurnationManagerImpl implements TurnationManager {
     }
 
     @Override
-    public final Map<String, Integer> getRanking() {
+    public final List<Pair<String, Integer>> getRanking() {
         return this.bankState.rankPlayers();
     }
 
