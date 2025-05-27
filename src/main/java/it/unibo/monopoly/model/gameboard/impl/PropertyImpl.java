@@ -71,5 +71,4 @@ public class PropertyImpl extends TileImpl implements Property {
     public boolean hasHotel() {
         return this.hotel;
     }
-
 }

@@ -4,13 +4,12 @@ import java.awt.Color;
 import java.util.Collection;
 
 import it.unibo.monopoly.model.gameboard.api.Board;
-import it.unibo.monopoly.utils.Identifiable;
+import it.unibo.monopoly.utils.api.Identifiable;
 
 /**
  * Player interface.
  * Extends {@link Identifiable} for the identification of the players
 */
-
 public interface Player extends Identifiable<Integer> {
 
     /**
@@ -21,6 +20,7 @@ public interface Player extends Identifiable<Integer> {
     /**
      * @return the player's color
      */
+
     Color getColor();
 
     /**

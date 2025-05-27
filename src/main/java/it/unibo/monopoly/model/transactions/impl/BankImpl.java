@@ -62,7 +62,7 @@ public final class BankImpl implements Bank {
             throw new IllegalArgumentException("Input lists cannot be empty");
         }
         this.accounts = Maps.uniqueIndex(accounts, BankAccount::getID);
-        this.titleDeeds = Maps.uniqueIndex(titleDeeds, TitleDeed::getName);
+        this.titleDeeds = titleDeeds.stream().collect(Collectors.toMap(TitleDeed::getName, d -> d));
         this.rankingBiFunction = rankingBiFunction;
     }
 
@@ -94,6 +94,21 @@ public final class BankImpl implements Bank {
                                                     && playerId == t.getOwnerId())
                                         .collect(Collectors.toSet());
         return rankingBiFunction.apply(findAccount(playerId), playerDeeds);
+    }
+
+    /**
+     * Add a new {@link TitleDeed} to the list of deeds managed
+     * by this instance.
+     * @param titleDeed the {@link TitleDeed} object to add to the system
+     * @throws IllegalArgumentException if a {@link TitleDeed} that has the same name
+     * as the one returned by the method {@link TitleDeed#getName()}, called on the new {@code titleDeed},
+     * is already present in the class internal list of title deeds.
+     */
+    public void addTitleDeed(final TitleDeed titleDeed) {
+        if (titleDeeds.containsKey(titleDeed.getName())) {
+            throw new IllegalArgumentException("A title deed with this name is already present in the system");
+        }
+        titleDeeds.put(titleDeed.getName(), titleDeed);
     }
 
     @Override

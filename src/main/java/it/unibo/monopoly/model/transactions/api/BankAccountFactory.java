@@ -3,7 +3,7 @@ package it.unibo.monopoly.model.transactions.api;
 import java.util.function.Predicate;
 
 import it.unibo.monopoly.model.turnation.api.Player;
-import it.unibo.monopoly.utils.Identifiable;
+import it.unibo.monopoly.utils.api.Identifiable;
 
 /**
  * Factory interface for {@link BankAccount} objects.

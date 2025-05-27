@@ -1,6 +1,6 @@
 package it.unibo.monopoly.model.turnation.impl;
 
-import it.unibo.monopoly.utils.Identifiable;
+import it.unibo.monopoly.utils.api.Identifiable;
 
 /**
  * abstract player id implementation.

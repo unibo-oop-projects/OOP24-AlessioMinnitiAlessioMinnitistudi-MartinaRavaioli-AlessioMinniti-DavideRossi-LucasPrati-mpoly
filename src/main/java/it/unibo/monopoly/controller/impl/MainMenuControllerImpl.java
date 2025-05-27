@@ -33,10 +33,12 @@ import it.unibo.monopoly.model.turnation.impl.DiceImpl;
 import it.unibo.monopoly.model.turnation.impl.PlayerImpl;
 import it.unibo.monopoly.model.turnation.impl.PositionImpl;
 import it.unibo.monopoly.model.turnation.impl.TurnationManagerImpl;
-
-import it.unibo.monopoly.utils.Configuration;
-import it.unibo.monopoly.utils.Identifiable;
-import it.unibo.monopoly.utils.ResourceLoader;
+import it.unibo.monopoly.utils.api.UseFileJson;
+import it.unibo.monopoly.utils.api.UseFileTxt;
+import it.unibo.monopoly.utils.api.Identifiable;
+import it.unibo.monopoly.utils.impl.Configuration;
+import it.unibo.monopoly.utils.impl.UseFileJsonImpl;
+import it.unibo.monopoly.utils.impl.UseFileTxtImpl;
 
 
 /**
@@ -93,7 +95,9 @@ public final class MainMenuControllerImpl implements MainMenuController {
         final List<Tile> tiles = new ArrayList<>();
         final Set<TitleDeed> titleDeeds = new HashSet<>();
         final Set<BankAccount> accounts = new HashSet<>();
+
         final PawnFactory pawnFactory = new PawnFactoryImpl();
+        final UseFileJson importFileJson = new UseFileJsonImpl();
 
         // create a id for each Player (his Pawn and BankAccount must have the same id)
         int id = 1;
@@ -108,9 +112,10 @@ public final class MainMenuControllerImpl implements MainMenuController {
         }
 
         // import from json
-        titleDeeds.addAll(ResourceLoader.loadTitleDeeds(config.getTitleDeedsPath()));
-        tiles.addAll(List.copyOf(ResourceLoader.loadJsonList(config.getTilesPath(), Tile.class)));
+        titleDeeds.addAll(importFileJson.loadTitleDeeds(config.getTitleDeedsPath()));
+        tiles.addAll(List.copyOf(importFileJson.loadJsonList(config.getTilesPath(), Tile.class)));
 
+        // creation of Bank, Board and TurnationManager
         final Bank bank = new BankImpl(accounts, titleDeeds);
         final Board board = new BoardImpl(tiles, pawns);
         final TurnationManager turnationManager = new TurnationManagerImpl(
@@ -173,7 +178,8 @@ public final class MainMenuControllerImpl implements MainMenuController {
      */
     @Override
     public String getRules() {
-        return ResourceLoader.loadTextResource(config.getRulesPath());
+        final UseFileTxt importRules = new UseFileTxtImpl();
+        return importRules.loadTextResource(config.getRulesPath());
     }
 
 

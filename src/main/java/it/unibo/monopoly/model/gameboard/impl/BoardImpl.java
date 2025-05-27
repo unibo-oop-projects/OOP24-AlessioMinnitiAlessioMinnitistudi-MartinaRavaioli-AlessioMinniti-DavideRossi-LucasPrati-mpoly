@@ -1,5 +1,6 @@
 package it.unibo.monopoly.model.gameboard.impl;
 
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -18,9 +19,9 @@ import it.unibo.monopoly.model.turnation.impl.PositionImpl;
  * board implementation.
 */
 public class BoardImpl implements Board {
+
     private final List<Tile> tiles;
     private final List<Pawn> pawns;
-
     /**
      * constructor.
     */
@@ -120,7 +121,7 @@ public class BoardImpl implements Board {
     public Pawn getPawn(final int id) {
         for (final Pawn p : this.pawns) {
             if (((PawnImpl) p).getID() == id) {
-                return p; //new PawnImpl(id, p.getPosition(), p.getColor());
+                return p;
             }
         }
 
@@ -137,13 +138,17 @@ public class BoardImpl implements Board {
     }
 
     @Override
+    public final List<Pawn> getPawns() {
+        return Collections.unmodifiableList(this.pawns);
+    }
+
+    @Override
     public final void movePawnInTile(final Pawn pawn, final String name) {
         final Tile tile = getTile(name);
         pawn.setPosition(tile.getPosition());
     }
 
     @Override
-
     public final Tile getTile(final String name) {
         for (final Tile t : this.tiles) {
             if (t.getName().equals(name)) {

@@ -14,6 +14,7 @@ public interface Property extends Tile {
     */
     void buildHotel();
     /**
+
      * get the number of houses.
      * @return int
     */
@@ -23,4 +24,5 @@ public interface Property extends Tile {
      * @return bool
     */
     boolean hasHotel();
+
 }

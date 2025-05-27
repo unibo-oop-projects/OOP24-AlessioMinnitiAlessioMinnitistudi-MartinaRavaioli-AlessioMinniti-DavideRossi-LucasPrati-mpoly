@@ -1,7 +1,10 @@
 package it.unibo.monopoly.model.turnation.api;
-
 import java.util.Collection;
 import java.util.List;
+
+import org.apache.commons.lang3.tuple.Pair;
+
+import it.unibo.monopoly.model.gameboard.api.Board;
 
 /**
  * turnation manager interface.
@@ -58,4 +61,46 @@ public interface TurnationManager {
      * @param plList
      */
     void setList(List<Player> plList);
+    /**
+     * tells if the current player is in prison.
+     * @return bool
+     */
+    boolean isCurrentPlayerInPrison();
+    /**
+     * tells if the player can exit the prison.
+     * @return bool
+     * @param value
+     * @param board
+     */
+    boolean canExitPrison(Collection<Integer> value, Board board);
+    /**
+     * tells if the player can throw the dices.
+     * @return bool
+     */
+    boolean canThrowDices();
+    /**
+     * tells if the player can pass the turn.
+     * @return bool
+     */
+    boolean canPassTurn();
+    /**
+     * tells if the player will die if he pass the turn.
+     * @return bool
+     */
+    boolean playerDiesIfTurnPassed();
+    /**
+     * get the winner.
+     * @return player
+     */
+    Pair<String, Integer> getWinner();
+    /**
+     * get the ranking of the players.
+     * @return multiple players
+     */
+    List<Pair<String, Integer>> getRanking();
+    /**
+     * delete the player.
+     * @param player
+     */
+    void deletePlayer(Player player);
 }
