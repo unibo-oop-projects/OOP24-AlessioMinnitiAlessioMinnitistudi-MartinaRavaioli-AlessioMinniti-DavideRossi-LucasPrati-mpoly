@@ -183,7 +183,18 @@ public final class GameboardViewImpl extends JPanel implements GameboardView {
 
     @Override
     public void clearPanel() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'clearPanel'");
+        for (final Map.Entry<JPanel, Position> entry : this.tilePositions.entrySet()) {
+            if (entry.getValue().equals(pawnPositions.get(controller.getCurrPlayer().getID() - 1))) { 
+                final JPanel p = entry.getKey();
+                for (final Component c : p.getComponents()) {
+                    if (c instanceof PawnSquare pawnSquare 
+                    && pawnSquare.getColor().equals(controller.getCurrPlayer().getColor())) {
+                        p.remove(c);
+                        p.revalidate();  // AGGIUNTO
+                        p.repaint();
+                        break;
+                    }
+            }
+        }
     }
 }
