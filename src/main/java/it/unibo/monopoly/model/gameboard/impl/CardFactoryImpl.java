@@ -7,6 +7,7 @@ import java.util.Locale;
 import java.util.Objects;
 import java.util.Set;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.monopoly.model.gameboard.api.Board;
 import it.unibo.monopoly.model.gameboard.api.CardFactory;
 import it.unibo.monopoly.model.gameboard.api.Special;
@@ -40,6 +41,10 @@ public class CardFactoryImpl implements CardFactory {
      * @param board the {@link Board} of the game for handle specific effects
      * @param bank the {@link Bank} of the game for handle specific effects
      */
+    @SuppressFBWarnings(
+    value = "EI2",
+    justification = "CardFactoryImpl intentionally holds references to mutable collaborators (Bank and Board) for initial setup."
+    )
     public CardFactoryImpl(final Board board, final Bank bank) {
         this.board = Objects.requireNonNull(board);
         this.bank = Objects.requireNonNull(bank);
