@@ -162,7 +162,7 @@ class BankTest {
         final int initialBalancePl1 = bank.getBankAccount(ID_1).getBalance();
         final int initialBalancePl2 = bank.getBankAccount(ID_2).getBalance();
         bank.getBankStateObject().resetTransactionData();
-        bank.getApplicableBankActions(ID_1, TITLE_DEED_NAME1, DICE_THROW);
+        bank.getApplicableActionsForTitleDeed(ID_1, TITLE_DEED_NAME1, DICE_THROW);
         bank.payRent(TITLE_DEED_NAME1, ID_1, DICE);
         assertEquals(initialBalancePl1 - rent, bank.getBankAccount(ID_1).getBalance());
         assertEquals(initialBalancePl2 + rent, bank.getBankAccount(ID_2).getBalance());

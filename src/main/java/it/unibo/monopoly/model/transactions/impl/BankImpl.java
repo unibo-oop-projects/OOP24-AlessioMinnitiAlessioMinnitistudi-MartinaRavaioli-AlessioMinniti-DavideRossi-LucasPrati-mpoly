@@ -210,7 +210,7 @@ public final class BankImpl implements Bank {
 
     //TODO check if exceptions should be in javadoc
     @Override
-    public Set<BankAction> getApplicableBankActions(final int currentPlayerId, final String titleDeedName, final int diceThrow) {
+    public Set<BankAction> getApplicableActionsForTitleDeed(final int currentPlayerId, final String titleDeedName, final int diceThrow) {
         if (!accounts.containsKey(currentPlayerId)) {
             throw new IllegalArgumentException("No player with this id is present in the system");
         }

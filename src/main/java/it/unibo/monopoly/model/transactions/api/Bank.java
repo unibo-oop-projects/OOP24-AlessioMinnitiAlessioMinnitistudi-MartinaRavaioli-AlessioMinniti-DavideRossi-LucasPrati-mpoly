@@ -134,7 +134,7 @@ public interface Bank {
      * on the requested {@link TitleDeed}, through the {@link BankAccount} of the player whose id
      * was given.
      */
-    Set<BankAction> getApplicableBankActions(int currentPlayerId, String titleDeedName, int diceThrow);
+    Set<BankAction> getApplicableActionsForTitleDeed(int currentPlayerId, String titleDeedName, int diceThrow);
     
     /**
      * Get a {@link BankState} object that can be used to communicate with this {@link Bank} instance
