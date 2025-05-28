@@ -67,8 +67,6 @@ public final class GameControllerImpl implements GameController {
         this.board = board;
         this.turnationManager = turnationManager;
         this.config = config;
-        this.board.getClass(); // TODO rimuovere, utilizzato per bypassare warning 'unused' per fare build
-        this.turnationManager.getClass(); // TODO rimuovere, utilizzato per bypassare warning 'unused' per fare build
     }
 
     @Override
