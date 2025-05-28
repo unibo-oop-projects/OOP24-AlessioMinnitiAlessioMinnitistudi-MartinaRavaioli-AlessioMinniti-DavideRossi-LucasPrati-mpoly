@@ -14,7 +14,7 @@ import it.unibo.monopoly.model.transactions.api.TitleDeed;
  * The class wraps a copy of the object allowing for getter operations, but not 
  * setter operations.
  */
-final class ImmutableTitleDeedCopy implements TitleDeed {
+public final class ImmutableTitleDeedCopy implements TitleDeed {
 
     private final TitleDeed deed;
 

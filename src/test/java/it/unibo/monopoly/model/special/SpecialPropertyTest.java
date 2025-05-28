@@ -18,7 +18,7 @@ import it.unibo.monopoly.model.transactions.impl.SpecialPropertyFactoryImpl;
 
 class SpecialPropertyTest {
 
-    private static final String PLAYER1_NAME = "Alice";
+    private static final int PLAYER1_ID = 1;
 
     private static final String STATION_NAME1 = "Nord";
     private static final String STATION_NAME2 = "Sud";
@@ -43,13 +43,13 @@ class SpecialPropertyTest {
         final int expected3 = 200;
         final int expected4 = 400;
 
-        s1.setOwner(PLAYER1_NAME);
+        s1.setOwner(PLAYER1_ID);
         assertEquals(expected1, s1.getRent(Set.of(s1), dice1));
-        s2.setOwner(PLAYER1_NAME);
+        s2.setOwner(PLAYER1_ID);
         assertEquals(expected2, s1.getRent(Set.of(s2, s1), dice1));
-        s3.setOwner(PLAYER1_NAME);
+        s3.setOwner(PLAYER1_ID);
         assertEquals(expected3, s1.getRent(Set.of(s3, s2, s1), dice1));
-        s4.setOwner(PLAYER1_NAME);
+        s4.setOwner(PLAYER1_ID);
         assertEquals(expected4, s1.getRent(Set.of(s4, s3, s2, s1), dice1));
     }
 
@@ -62,9 +62,9 @@ class SpecialPropertyTest {
         final Collection<Integer> dice1 = List.of(6, 4);
         final Collection<Integer> dice2 = List.of(3, 4);
 
-        s1.setOwner(PLAYER1_NAME);
+        s1.setOwner(PLAYER1_ID);
         assertEquals(expected1, s1.getRent(Set.of(s1), dice1));
-        s2.setOwner(PLAYER1_NAME);
+        s2.setOwner(PLAYER1_ID);
         assertEquals(expected2, s1.getRent(Set.of(s2, s1), dice2));
     }
 }
