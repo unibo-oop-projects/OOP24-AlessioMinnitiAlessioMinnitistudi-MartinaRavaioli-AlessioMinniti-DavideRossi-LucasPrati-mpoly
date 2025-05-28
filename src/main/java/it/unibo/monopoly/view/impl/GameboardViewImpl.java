@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.util.ArrayList;
@@ -14,6 +15,7 @@ import java.util.Map;
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.monopoly.controller.api.GameController;
@@ -29,6 +31,7 @@ import it.unibo.monopoly.view.api.GameboardView;
 */
 public final class GameboardViewImpl extends JPanel implements GameboardView {
     private static final long serialVersionUID = 1L;
+    private static final int PAWN_SIZE = 5;
     private static final int STRIPE_WIDTH = 150;
     private static final int STRIPE_HEIGHT = 10;
     private final transient GameboardLogic logic;
@@ -88,7 +91,8 @@ public final class GameboardViewImpl extends JPanel implements GameboardView {
                 final JPanel p = entry.getKey();
                 final PawnCircle pawnGUI = new PawnCircle(controller.getCurrPlayer().getColor());
                 p.add(pawnGUI);
-                p.revalidate();  // AGGIUNTO
+                p.setLayout(new FlowLayout(FlowLayout.CENTER, PAWN_SIZE, PAWN_SIZE));
+                p.revalidate();
                 p.repaint(); 
                 break;
             }
@@ -102,7 +106,7 @@ public final class GameboardViewImpl extends JPanel implements GameboardView {
                 final JPanel p = entry.getKey();
                 final PawnSquare propertyGUI = new PawnSquare(controller.getCurrPlayer().getColor());
                 p.add(propertyGUI);
-                p.revalidate();  // AGGIUNTO
+                p.revalidate();
                 p.repaint(); 
                 break;
             }
@@ -120,7 +124,61 @@ public final class GameboardViewImpl extends JPanel implements GameboardView {
         this.setSize(Toolkit.getDefaultToolkit().getScreenSize());
         final JPanel board = new JPanel(new GridLayout(this.size, this.size));
         this.add(board);
+        final JPanel[][] grid = new JPanel[this.size][this.size];
 
+        // create the bottom row from right
+        for (int col = this.size - 1; col >= 0; col--) {
+            grid[this.size - 1][col] = createTile();
+        }
+
+        // create in the left column from the bottom
+        for (int row = this.size - 2; row >= 0; row--) {
+            grid[row][0] = createTile();
+        }
+
+        // create in the top row from left
+        for (int col = 1; col < this.size; col++) {
+            grid[0][col] = createTile();
+        }
+
+        // create on the right column from the top
+        for (int row = 1; row < this.size - 1; row++) {
+            grid[row][this.size - 1] = createTile();
+        }
+
+        // fill the tiles which are not in the board with gray layout, and create che community chest and chance tiles
+        for (int i = 0; i < this.size; i++) {
+            for (int j = 0; j < this.size; j++) {
+                if (grid[i][j] == null) {
+                    final JPanel panel = new JPanel();
+                    if (logic.tileCard(i, j, this.size) > -1) {
+                        panel.setBorder(BorderFactory.createLineBorder(Color.black));
+
+                        if (logic.tileCard(i, j, this.size) == 0) {
+                            panel.setBackground(Color.RED);
+                            final JLabel label = new JLabel("COMMUNITY CHEST");
+                            panel.add(label, BorderLayout.CENTER);
+                        } else {
+                            panel.setBackground(Color.YELLOW);
+                            final JLabel label = new JLabel("CHANCE");
+                            panel.add(label, BorderLayout.CENTER);
+                        }
+                    } else {
+                        panel.setBackground(Color.LIGHT_GRAY);
+                    }
+                    grid[i][j] = panel;
+                }
+            }
+        }
+
+        // add the panels in the correct order
+        for (int i = 0; i < this.size; i++) {
+            for (int j = 0; j < this.size; j++) {
+                board.add(grid[i][j]);
+            }
+        }
+
+        /* 
         for (int i = 0; i < this.size; i++) {
             for (int j = 0; j < this.size; j++) {
                 final JPanel tile = new JPanel();
@@ -147,7 +205,7 @@ public final class GameboardViewImpl extends JPanel implements GameboardView {
                 board.add(tile);
 
             }
-        }
+        }*/
 
         for (int i = 0; i < controller.getTiles().size(); i++) {
             final JPanel panel = this.tilesView.get(i);
@@ -157,10 +215,10 @@ public final class GameboardViewImpl extends JPanel implements GameboardView {
             stripe.setBackground(controller.getTiles().get(i).getGroup().getColor());
             panel.add(stripe, BorderLayout.NORTH);
             final JLabel label = new JLabel(controller.getTiles().get(i).getName());
+            label.setHorizontalAlignment(SwingConstants.CENTER);
             panel.add(label, BorderLayout.CENTER);
             panel.setName(controller.getTiles().get(i).getName());
         }
-
 
         for (int i = 0; i < controller.getPawns().size(); i++) {
             pawnPositions.put(i, new PositionImpl(0));
@@ -171,6 +229,7 @@ public final class GameboardViewImpl extends JPanel implements GameboardView {
             final PawnCircle pawnGUI = new PawnCircle(this.controller.getPawns().get(i).getColor());
             pawnGUI.setName("pawn" + i);
             panel.add(pawnGUI);
+            panel.setLayout(new FlowLayout(FlowLayout.CENTER, PAWN_SIZE, PAWN_SIZE));
         }
 
         this.setVisible(true);
@@ -181,6 +240,14 @@ public final class GameboardViewImpl extends JPanel implements GameboardView {
         return this;
     }
 
+    private JPanel createTile() {
+        final JPanel tile = new JPanel(new BorderLayout());
+        tile.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        tile.setBackground(Color.WHITE);
+        this.tilesView.add(tile);
+        return tile;
+    }
+
     @Override
     public void clearPanel() {
         for (final Map.Entry<JPanel, Position> entry : this.tilePositions.entrySet()) {
@@ -189,7 +256,7 @@ public final class GameboardViewImpl extends JPanel implements GameboardView {
                 for (final Component c : p.getComponents()) {
                     if (c instanceof PawnSquare) {
                         p.remove(c);
-                        p.revalidate();  // AGGIUNTO
+                        p.revalidate();
                         p.repaint();
                         break;
                     }
