@@ -4,23 +4,13 @@ import java.util.List;
 import java.util.Set;
 
 import it.unibo.monopoly.model.gameboard.api.Board;
-import it.unibo.monopoly.model.gameboard.api.Tile;
-import it.unibo.monopoly.model.gameboard.impl.chance_comunity.api.ArgsInterpreter;
 import it.unibo.monopoly.model.gameboard.impl.chance_comunity.api.BaseCommandFactory;
 import it.unibo.monopoly.model.transactions.api.Bank;
 import it.unibo.monopoly.model.turnation.api.Player;
-import it.unibo.monopoly.model.turnation.api.TurnationManager;
 
 public class BaseCommandFactoryImpl implements BaseCommandFactory {
 
-    /**
-     * command that moves a player by some steps.
-     * @param steps
-     * @param player 
-     * @param board to move the player pawn
-     * @return the command 
-     */
-    BaseCommand move(Board board){
+    private BaseCommand move(Board board){
         return new BaseCommand() {
 
             private String keyword;
@@ -52,14 +42,7 @@ public class BaseCommandFactoryImpl implements BaseCommandFactory {
         };
     }
 
-    /**
-     * a command that moves a player in to a specific tile.
-     * @param tile
-     * @param player
-     * @param board to move the player pawn
-     * @return the command
-     */
-    BaseCommand moveIn(Board board){
+    private BaseCommand moveIn(Board board){
         return new BaseCommand() {
 
             private String keyword;
@@ -91,14 +74,7 @@ public class BaseCommandFactoryImpl implements BaseCommandFactory {
         };
     }
 
-    /**
-     * a command that withdraw an ammount of money from a player bankaccount.
-     * @param ammount
-     * @param player
-     * @param bank to make the transaction
-     * @return the command
-     */
-    BaseCommand withdraw(Bank bank){
+    private BaseCommand withdraw(Bank bank){
         return new BaseCommand() {
 
             private String keyword;
@@ -130,14 +106,7 @@ public class BaseCommandFactoryImpl implements BaseCommandFactory {
         };
     }
 
-    /**
-     * a command that deposit an ammount of money in a player bankaccount.
-     * @param ammount
-     * @param player
-     * @param bank to make the transaction
-     * @return the command
-     */
-    BaseCommand deposit(Bank bank){
+    private BaseCommand deposit(Bank bank){
         return new BaseCommand() {
 
             private String keyword;
@@ -168,13 +137,7 @@ public class BaseCommandFactoryImpl implements BaseCommandFactory {
         };
     }
 
-    /**
-     * each of the players gives an ammount to another player.
-     * @param bank to make the transaction
-     * @param players
-     * @return
-     */
-    BaseCommand depositFrom(Bank bank){
+    private BaseCommand depositFrom(Bank bank){
         return new BaseCommand() {
 
             private String keyword;
@@ -209,7 +172,7 @@ public class BaseCommandFactoryImpl implements BaseCommandFactory {
             }
         };
     }
-    @Override
+    
     public List<BaseCommand> allCommand(Bank bank, Board board) {
         return List.of(
             this.deposit(bank),

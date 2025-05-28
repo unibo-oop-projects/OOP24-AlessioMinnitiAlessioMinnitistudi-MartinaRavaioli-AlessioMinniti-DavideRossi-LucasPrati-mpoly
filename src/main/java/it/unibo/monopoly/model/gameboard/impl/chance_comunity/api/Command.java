@@ -1,6 +1,5 @@
 package it.unibo.monopoly.model.gameboard.impl.chance_comunity.api;
 
-import it.unibo.monopoly.model.gameboard.api.Tile;
 import it.unibo.monopoly.model.turnation.api.Player;
 
 public interface Command {

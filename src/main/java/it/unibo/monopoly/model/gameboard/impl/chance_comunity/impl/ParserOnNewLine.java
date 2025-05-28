@@ -2,12 +2,11 @@ package it.unibo.monopoly.model.gameboard.impl.chance_comunity.impl;
 
 import it.unibo.monopoly.model.gameboard.impl.chance_comunity.api.Parser;
 
-public class ParserOnSpaces implements Parser{
-
+public class ParserOnNewLine implements Parser{
     private final String toParseString;
     private int index = 0;
 
-    public ParserOnSpaces(final String str){
+    public ParserOnNewLine(final String str){
         this.toParseString = str; 
     }
 
@@ -16,7 +15,7 @@ public class ParserOnSpaces implements Parser{
         String ret=null; 
         for (int i = index; i < toParseString.length(); i++) {
             index = i + 2;
-            if (toParseString.charAt(i) == 32) {
+            if (toParseString.charAt(i) == 10) {
                 
                 return ret;
             }
