@@ -156,18 +156,17 @@ public final class GameboardViewImpl extends JPanel implements GameboardView {
 
                         if (logic.tileCard(i, j, this.size) == 0) {
                             panel.setBackground(Color.RED);
-                            final JLabel label = new JLabel("IMPREVISTI");
+                            final JLabel label = new JLabel("COMMUNITY CHEST");
                             panel.add(label, BorderLayout.CENTER);
                         } else {
                             panel.setBackground(Color.YELLOW);
-                            final JLabel label = new JLabel("PROBABILITA'");
+                            final JLabel label = new JLabel("CHANCE");
                             panel.add(label, BorderLayout.CENTER);
                         }
                     } else {
                         panel.setBackground(Color.LIGHT_GRAY);
-                        grid[i][j] = panel;
                     }
-
+                    grid[i][j] = panel;
                 }
             }
         }
