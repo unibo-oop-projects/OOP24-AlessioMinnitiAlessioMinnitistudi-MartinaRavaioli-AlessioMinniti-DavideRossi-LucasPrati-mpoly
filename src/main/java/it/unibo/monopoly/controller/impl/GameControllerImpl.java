@@ -8,6 +8,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
+
+import com.google.common.collect.Maps;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.monopoly.controller.api.GameController;
@@ -132,9 +135,22 @@ public final class GameControllerImpl implements GameController {
     @Override
     public void throwDices() {
         final Collection<Integer> result = this.turnationManager.moveByDices();
-        this.board.movePawn(this.board.getPawn(this.turnationManager.getIdCurrPlayer()), result);
-        this.gameboardView.changePos(this.turnationManager.getIdCurrPlayer(), 
-                                    this.board.getPawn(this.turnationManager.getIdCurrPlayer()).getPosition());
+        final int currentPlayerId = this.turnationManager.getIdCurrPlayer();
+        this.board.movePawn(this.board.getPawn(currentPlayerId), result);
+        this.gameboardView.changePos(currentPlayerId, 
+                                    this.board.getPawn(currentPlayerId).getPosition());
+        //TODO guardare se è una speciale e in quel caso attivare effetto
+        final Tile currentlySittingTile = this.board.getTileForPawn(this.board.getPawn(currentPlayerId));
+        if (currentlySittingTile instanceof Property) {
+            final String propertyName = currentlySittingTile.getName();
+            this.gameView.displayPropertyContract(this.bank.getTitleDeed(propertyName));
+            this.turnActions.clear();
+            this.turnActions = Maps.uniqueIndex(this.bank.getApplicableActionsForTitleDeed(currentPlayerId, 
+                                    propertyName, 
+                                    result.stream().mapToInt(d -> d).sum()),
+                                    BankAction::getName);
+            this.gameView.showPlayerActions(turnActions.keySet());
+        }
     }
 
     @Override
