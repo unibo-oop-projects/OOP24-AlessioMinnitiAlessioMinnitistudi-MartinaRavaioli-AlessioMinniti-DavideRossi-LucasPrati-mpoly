@@ -14,7 +14,6 @@ import java.util.Map;
 
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
@@ -32,6 +31,7 @@ import it.unibo.monopoly.view.api.GameboardView;
 */
 public final class GameboardViewImpl extends JPanel implements GameboardView {
     private static final long serialVersionUID = 1L;
+    private static final int PAWN_SIZE = 5;
     private static final int STRIPE_WIDTH = 150;
     private static final int STRIPE_HEIGHT = 10;
     private final transient GameboardLogic logic;
@@ -67,8 +67,8 @@ public final class GameboardViewImpl extends JPanel implements GameboardView {
 
     @Override
     public void changePos(final int currPlayer, final Position newPos) {
-        JOptionPane.showMessageDialog(null, "Operazione completata con successo! "+newPos.getPos(), 
-                                        "Info", JOptionPane.INFORMATION_MESSAGE);
+        //JOptionPane.showMessageDialog(null, "Operazione completata con successo! "+newPos.getPos(), 
+                                        //"Info", JOptionPane.INFORMATION_MESSAGE);
         for (final Map.Entry<JPanel, Position> entry : this.tilePositions.entrySet()) {
             if (entry.getValue().equals(pawnPositions.get(currPlayer - 1))) {
                 final JPanel p = entry.getKey();
@@ -91,8 +91,8 @@ public final class GameboardViewImpl extends JPanel implements GameboardView {
                 final JPanel p = entry.getKey();
                 final PawnCircle pawnGUI = new PawnCircle(controller.getCurrPlayer().getColor());
                 p.add(pawnGUI);
-                p.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
-                p.revalidate();  // AGGIUNTO
+                p.setLayout(new FlowLayout(FlowLayout.CENTER, PAWN_SIZE, PAWN_SIZE));
+                p.revalidate();
                 p.repaint(); 
                 break;
             }
@@ -106,7 +106,7 @@ public final class GameboardViewImpl extends JPanel implements GameboardView {
                 final JPanel p = entry.getKey();
                 final PawnSquare propertyGUI = new PawnSquare(controller.getCurrPlayer().getColor());
                 p.add(propertyGUI);
-                p.revalidate();  // AGGIUNTO
+                p.revalidate();
                 p.repaint(); 
                 break;
             }
@@ -126,27 +126,27 @@ public final class GameboardViewImpl extends JPanel implements GameboardView {
         this.add(board);
         final JPanel[][] grid = new JPanel[this.size][this.size];
 
-        // In basso (da sinistra a destra)
+        // create the bottom row from right
         for (int col = this.size - 1; col >= 0; col--) {
             grid[this.size - 1][col] = createTile();
         }
 
-        // A sinistra (dal basso verso l’alto)
+        // create in the left column from the bottom
         for (int row = this.size - 2; row >= 0; row--) {
             grid[row][0] = createTile();
         }
 
-        // In alto (da sinistra a destra)
+        // create in the top row from left
         for (int col = 1; col < this.size; col++) {
             grid[0][col] = createTile();
         }
 
-        // A destra (dall’alto verso il basso)
+        // create on the right column from the top
         for (int row = 1; row < this.size - 1; row++) {
             grid[row][this.size - 1] = createTile();
         }
 
-        // Riempi celle vuote con pannelli grigi (non caselle)
+        // fill the tiles which are not in the board with gray layout, and create che community chest and chance tiles
         for (int i = 0; i < this.size; i++) {
             for (int j = 0; j < this.size; j++) {
                 if (grid[i][j] == null) {
@@ -171,7 +171,7 @@ public final class GameboardViewImpl extends JPanel implements GameboardView {
             }
         }
 
-        // Aggiungi i pannelli al board in ordine
+        // add the panels in the correct order
         for (int i = 0; i < this.size; i++) {
             for (int j = 0; j < this.size; j++) {
                 board.add(grid[i][j]);
@@ -229,7 +229,7 @@ public final class GameboardViewImpl extends JPanel implements GameboardView {
             final PawnCircle pawnGUI = new PawnCircle(this.controller.getPawns().get(i).getColor());
             pawnGUI.setName("pawn" + i);
             panel.add(pawnGUI);
-            panel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+            panel.setLayout(new FlowLayout(FlowLayout.CENTER, PAWN_SIZE, PAWN_SIZE));
         }
 
         this.setVisible(true);
@@ -256,7 +256,7 @@ public final class GameboardViewImpl extends JPanel implements GameboardView {
                 for (final Component c : p.getComponents()) {
                     if (c instanceof PawnSquare) {
                         p.remove(c);
-                        p.revalidate();  // AGGIUNTO
+                        p.revalidate();
                         p.repaint();
                         break;
                     }

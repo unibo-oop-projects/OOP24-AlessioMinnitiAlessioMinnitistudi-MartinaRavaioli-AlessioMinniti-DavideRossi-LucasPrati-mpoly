@@ -42,7 +42,7 @@ public class PositionImpl implements Position, Comparable<Position>, Serializabl
         if (value < MAX_POS) {
             this.value = value;
         } else {
-            int tempVal = value - MAX_POS;
+            final int tempVal = value - MAX_POS;
             this.value = tempVal;
         }
     }
