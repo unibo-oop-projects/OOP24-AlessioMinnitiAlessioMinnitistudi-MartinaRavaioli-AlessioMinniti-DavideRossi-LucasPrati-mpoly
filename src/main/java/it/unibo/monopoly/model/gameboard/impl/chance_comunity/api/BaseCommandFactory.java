@@ -44,12 +44,5 @@ public interface BaseCommandFactory {
      */
     BaseCommand deposit(int ammount, Player player, Bank bank);
 
-    /**
-     * a command that count and 
-     * @param player
-     * @param bank
-     * @return
-     */
-    BaseCommand countProperty(Player player, Bank bank);
 
 }

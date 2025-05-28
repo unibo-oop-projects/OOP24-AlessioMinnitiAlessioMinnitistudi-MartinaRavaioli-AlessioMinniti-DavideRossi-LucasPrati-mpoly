@@ -14,6 +14,7 @@ public class ParserOnSpaces {
         for (int i = index; i < toParseString.length(); i++) {
             index = i + 2;
             if (toParseString.charAt(i) == 10) {
+                
                 return ret;
             }
             ret = ret + toParseString.charAt(i);

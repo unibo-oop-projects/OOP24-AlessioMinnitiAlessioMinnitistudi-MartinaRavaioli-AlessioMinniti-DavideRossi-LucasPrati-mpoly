@@ -9,8 +9,7 @@ public class ComplexInterpreter implements Interpreter {
 
     @Override
     public Command interpret(String toInterpretString) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'interpret'");
+        
     }
 
 }
