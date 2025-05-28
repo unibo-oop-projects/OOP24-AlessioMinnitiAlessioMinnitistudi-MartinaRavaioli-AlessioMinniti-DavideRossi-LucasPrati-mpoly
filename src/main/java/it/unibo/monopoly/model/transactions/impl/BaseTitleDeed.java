@@ -8,9 +8,6 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.function.Function;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 import it.unibo.monopoly.model.gameboard.impl.Group;
 import it.unibo.monopoly.model.transactions.api.RentOption;
 import it.unibo.monopoly.model.transactions.api.TitleDeed;
@@ -31,26 +28,6 @@ public class BaseTitleDeed implements TitleDeed {
     private final Function<Integer, Integer> mortgageFunction; 
     private final List<RentOption> rentOptions;
     private Optional<Integer> owner = Optional.empty();
-
-    /**
-     * Creates a new {@link BaseTitleDeed} that has only one standard rent fee.
-     * <p>
-     * The {@code mortageFunction} is a default {@code 50%} of the original {@code salePrice}.
-     * 
-     * @param group The group of title deeds this deed is part of
-     * @param name The name of the deed
-     * @param salePrice The price to pay to buy the deed
-     * @param baseRent The standard rent fee
-     */
-    @JsonCreator
-    public BaseTitleDeed(
-        @JsonProperty("group") final Group group,
-        @JsonProperty("name") final String name,
-        @JsonProperty("price") final int salePrice,
-        @JsonProperty("rent") final int baseRent
-    ) {
-        this(group, name, salePrice, p -> p / 2, baseRent);
-    }
 
     /**
      * Creates a new {@link BaseTitleDeed} that 

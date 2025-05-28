@@ -43,6 +43,15 @@ public interface Bank {
      */
     void sellTitleDeed(String titleDeedName);
     /**
+     * Add a new {@link TitleDeed} to the list of deeds managed
+     * by this instance.
+     * @param titleDeed the {@link TitleDeed} object to add to the system
+     * @throws IllegalArgumentException if a {@link TitleDeed} that has the same name
+     * as the one returned by the method {@link TitleDeed#getName()}, called on the new {@code titleDeed},
+     * is already present in the class internal list of title deeds.
+     */
+    void addTitleDeed(TitleDeed titleDeed);
+    /**
      * Purchase a {@link TitleDeed} for a specifc player.
      * @param titleDeedName the name of the {@link TitleDeed} to be purchased 
      * @param playerId the id associated with the player that will be the new owner of the property

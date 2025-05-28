@@ -20,7 +20,6 @@ public interface Player extends Identifiable<Integer> {
     /**
      * @return the player's color
      */
-
     Color getColor();
 
     /**

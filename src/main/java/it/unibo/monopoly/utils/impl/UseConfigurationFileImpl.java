@@ -100,8 +100,7 @@ public final class UseConfigurationFileImpl extends AbstractUseFileImpl implemen
             case "SMALL_FONT" -> configurationBuilder.withSmallFont(Integer.parseInt(value));
             case "INIT_BALANCE" -> configurationBuilder.withInitBalance(Integer.parseInt(value));
             case "RULES_FILE" -> configurationBuilder.withRulesPath(value);
-            case "TITLE_DEEDS_FILE" -> configurationBuilder.withTitleDeedsPath(value);
-            case "TILES_FILE" -> configurationBuilder.withTilesPath(value);
+            case "CARDS_FILE" -> configurationBuilder.withCardsPath(value);
             case "COLORS" -> {
                 final List<Color> colors = Arrays.stream(value.split(","))
                     .map(String::trim)

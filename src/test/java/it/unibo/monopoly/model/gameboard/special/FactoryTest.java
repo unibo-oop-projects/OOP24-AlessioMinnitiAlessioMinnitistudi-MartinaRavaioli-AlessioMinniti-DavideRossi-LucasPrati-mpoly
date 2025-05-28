@@ -1,4 +1,4 @@
-package it.unibo.monopoly.model.special;
+package it.unibo.monopoly.model.gameboard.special;
 
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -114,7 +114,7 @@ class FactoryTest {
 
     @Test
     void testGoToPrison() {
-        final Special s = (Special) board.getTile("GoToPrison");
+        final Special s = (Special) board.getTile("GoToJail");
         final Collection<Integer> dice1 = List.of(1, 2);
         final Collection<Integer> dice2 = List.of(1, 1);
 

@@ -26,12 +26,8 @@ class FileCheckerTest {
     }
 
     @Test
-    void checkExistingDebugTiles() {
-        assertTrue(FileChecker.checkPath("debug/cards/debug_tiles.json"));
+    void checkExistingDebugCards() {
+        assertTrue(FileChecker.checkPath("debug/cards/debug_cards.json"));
     }
 
-    @Test
-    void checkExistingDebugTitleDeeds() {
-        assertTrue(FileChecker.checkPath("debug/cards/debug_tiles.json"));
-    }
 }

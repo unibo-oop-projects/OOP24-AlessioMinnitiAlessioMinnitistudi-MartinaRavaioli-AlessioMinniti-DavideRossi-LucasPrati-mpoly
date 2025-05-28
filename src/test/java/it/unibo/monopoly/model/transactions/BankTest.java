@@ -59,14 +59,6 @@ class BankTest {
         bank = new BankImpl(accounts, deeds);
     }
 
-    @Test 
-    void deedsIsEmpty() {
-        final IllegalArgumentException emptyList = assertThrows(
-            IllegalArgumentException.class, 
-            () -> bank = new BankImpl(accounts, Set.of()) 
-        );
-        testExceptionFormat(emptyList);
-    }
 
     @Test
     void accountsIsEmpty() {
