@@ -21,7 +21,6 @@ import it.unibo.monopoly.model.transactions.impl.BaseTitleDeed;
 import it.unibo.monopoly.model.transactions.impl.ImmutableTitleDeedCopy;
 import it.unibo.monopoly.model.transactions.impl.bankaccount.ImmutableBankAccountCopy;
 import it.unibo.monopoly.model.transactions.impl.bankaccount.SimpleBankAccountImpl;
-import it.unibo.monopoly.model.transactions.impl.bankaccount.WithdrawCheckBankAccount;
 
 /*
  * Tests to verify correct functionality of
@@ -37,17 +36,12 @@ class BankTest {
     private static final String TITLE_DEED_NAME2 = "Viale Monterosa";
 
     private final Set<BankAccount> accounts = Set.of(
-        new WithdrawCheckBankAccount(new SimpleBankAccountImpl(ID_1, AMOUNT),
-                                    (b, a) -> a <= b.getBalance()
-                                    ),
-        new WithdrawCheckBankAccount(new SimpleBankAccountImpl(ID_2, AMOUNT),
-                                    (b, a) -> a <= b.getBalance()
-                                    )
+        new SimpleBankAccountImpl(ID_1, AMOUNT),
+        new SimpleBankAccountImpl(ID_2, AMOUNT)
     );
     private final Set<TitleDeed> deeds = Set.of(
         new BaseTitleDeed(Group.GREEN, TITLE_DEED_NAME1, 50, s -> s / 2, 10),
         new BaseTitleDeed(Group.GREEN, TITLE_DEED_NAME2, 60, s -> s / 2, 10)
-
     );
     private Bank bank;
 
@@ -148,7 +142,6 @@ class BankTest {
 
     @Test
     void payRentSuccessful() {
-
         bank.getBankStateObject().resetTransactionData();
         bank.buyTitleDeed(TITLE_DEED_NAME1, ID_2);
         final int rent = bank.getTitleDeed(TITLE_DEED_NAME1)
@@ -195,16 +188,6 @@ class BankTest {
             () -> bank.buyTitleDeed(TITLE_DEED_NAME1, ID_1)
         );
         testExceptionFormat(alreadyBoughtPropertyException);
-    }
-
-    @Test
-    void buyingPropertyViolatesBuyerBankAccountWithdrawConditions() {
-        bank.getBankStateObject().resetTransactionData();
-        bank.buyTitleDeed(TITLE_DEED_NAME1, ID_1);
-        final IllegalStateException withdrawConditionsViolated = assertThrows(
-            IllegalStateException.class, 
-            () -> bank.buyTitleDeed(TITLE_DEED_NAME2, ID_1));
-        testExceptionFormat(withdrawConditionsViolated);
     }
 
     @Test 

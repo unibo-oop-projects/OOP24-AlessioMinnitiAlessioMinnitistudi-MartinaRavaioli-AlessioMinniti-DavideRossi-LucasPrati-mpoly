@@ -1,5 +1,7 @@
 package it.unibo.monopoly.model.transactions.impl.bankaccount;
 
+import java.util.function.Predicate;
+
 import it.unibo.monopoly.model.transactions.api.BankAccount;
 import it.unibo.monopoly.utils.api.Identifiable;
 
@@ -9,8 +11,9 @@ import it.unibo.monopoly.utils.api.Identifiable;
 public final class SimpleBankAccountImpl implements BankAccount {
 
     private static final int DEFAULT_BALANCE = 1000;
-    private int balance;
     private final int id;
+    private final Predicate<BankAccount> canContinue;
+    private int balance;
 
     /**
      * Creates a new {@link BankAccount} with an initial amount of money.
@@ -18,15 +21,17 @@ public final class SimpleBankAccountImpl implements BankAccount {
      * @param id the {@code Integer} used as the {@link Identifiable} for the {@link BankAccount}
      * Each {@link BankAccount} has an id that corresponds to a specific player.
      * @param initialBalance the initial amount of money
-     * @throws IllegalArgumentException if the {@code initialBalance} is negative
+     * @param canContinue strategy to determine if the {@link BankAccount}
+     * can still be used to play based on its state
      */
-    public SimpleBankAccountImpl(final int id, final int initialBalance) {
+    public SimpleBankAccountImpl(final int id, final int initialBalance, final Predicate<BankAccount> canContinue) {
         if (initialBalance < 0) {
             throw new IllegalArgumentException("The initial balance of the account cannot be negative");
         }
 
         this.balance += initialBalance;
         this.id = id;
+        this.canContinue = canContinue;
     }
 
     /**
@@ -34,9 +39,11 @@ public final class SimpleBankAccountImpl implements BankAccount {
      * 
      * @param id the {@code Integer} used as the {@link Identifiable} for the {@link BankAccount}
      * Each {@link BankAccount} has an id that corresponds to a specific player.
+     * @param canContinue strategy to determine if the {@link BankAccount}
+     * can still be used to play based on its state
      */
-    public SimpleBankAccountImpl(final int id) {
-        this(id, DEFAULT_BALANCE);
+    public SimpleBankAccountImpl(final int id, final Predicate<BankAccount> canContinue) {
+        this(id, DEFAULT_BALANCE,canContinue);
     }
 
     @Override
@@ -64,7 +71,7 @@ public final class SimpleBankAccountImpl implements BankAccount {
 
     @Override
     public boolean canContinue() {
-        return true;
+        return this.canContinue.test(this);
     }
 
     @Override
