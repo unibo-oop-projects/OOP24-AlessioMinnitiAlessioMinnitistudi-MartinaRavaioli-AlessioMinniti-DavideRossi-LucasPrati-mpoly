@@ -21,7 +21,6 @@ import it.unibo.monopoly.model.gameboard.impl.BoardImpl;
 import it.unibo.monopoly.model.gameboard.impl.CardDTO;
 import it.unibo.monopoly.model.gameboard.impl.CardFactoryImpl;
 import it.unibo.monopoly.model.gameboard.impl.PawnFactoryImpl;
-import it.unibo.monopoly.model.transactions.api.Bank;
 import it.unibo.monopoly.model.transactions.api.BankAccount;
 import it.unibo.monopoly.model.transactions.api.BankAccountFactory;
 import it.unibo.monopoly.model.transactions.api.BankAccountType;
@@ -115,7 +114,7 @@ public final class MainMenuControllerImpl implements MainMenuController {
 
         // creation of Bank, Board and TurnationManager
         final Board board = new BoardImpl(List.of(), pawns);
-        final Bank bank = new BankImpl(accounts, Set.of());
+        final BankImpl bank = new BankImpl(accounts, Set.of());
         final TurnationManager turnationManager = new TurnationManagerImpl(
             players,
             new DiceImpl(
