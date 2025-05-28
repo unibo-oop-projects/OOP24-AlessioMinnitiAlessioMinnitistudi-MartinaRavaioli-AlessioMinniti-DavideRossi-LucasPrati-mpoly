@@ -87,7 +87,6 @@ public final class BankImpl implements Bank {
                         .collect(Collectors.toSet());
     }
 
-<<<<<<< HEAD
     private int rankPlayer(final int playerId) {
         final Set<TitleDeed> playerDeeds = titleDeeds.values()
                                         .stream()
@@ -105,9 +104,7 @@ public final class BankImpl implements Bank {
      * as the one returned by the method {@link TitleDeed#getName()}, called on the new {@code titleDeed},
      * is already present in the class internal list of title deeds.
      */
-=======
     @Override
->>>>>>> development
     public void addTitleDeed(final TitleDeed titleDeed) {
         if (titleDeeds.containsKey(titleDeed.getName())) {
             throw new IllegalArgumentException("A title deed with this name is already present in the system");
