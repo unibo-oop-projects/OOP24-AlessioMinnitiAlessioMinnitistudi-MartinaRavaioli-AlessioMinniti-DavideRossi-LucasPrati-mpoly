@@ -34,6 +34,7 @@ class BankTest {
     private static final int AMOUNT = 100;
     private static final int ID_1 = 21;
     private static final int ID_2 = 42;
+    private static final int DICE_THROW = 12;
     private static final String TITLE_DEED_NAME1 = "Bastoni Gran Sasso";
     private static final String TITLE_DEED_NAME2 = "Viale Monterosa";
         private static final Collection<Integer> DICE = List.of(1);
@@ -137,6 +138,7 @@ class BankTest {
 
     @Test
     void payRentForPropertyPossessedByThePayer() {
+        bank.getApplicableBankActions(ID_1, TITLE_DEED_NAME1, DICE_THROW);
         bank.buyTitleDeed(TITLE_DEED_NAME1, ID_1);
         assertTrue(bank.getTitleDeed(TITLE_DEED_NAME1).isOwned());
         assertEquals(ID_1, bank.getTitleDeed(TITLE_DEED_NAME1).getOwnerId());
@@ -149,6 +151,7 @@ class BankTest {
 
     @Test
     void payRentSuccessful() {
+        bank.getApplicableBankActions(ID_1, TITLE_DEED_NAME1, DICE_THROW);
         bank.buyTitleDeed(TITLE_DEED_NAME1, ID_2);
         final int rent = bank.getTitleDeed(TITLE_DEED_NAME1)
                                                 .getRent(Sets.filter(Sets.newHashSet(deeds), 
@@ -157,6 +160,8 @@ class BankTest {
                                                 );
         final int initialBalancePl1 = bank.getBankAccount(ID_1).getBalance();
         final int initialBalancePl2 = bank.getBankAccount(ID_2).getBalance();
+        bank.getBankStateObject().resetTransactionData();
+        bank.getApplicableBankActions(ID_1, TITLE_DEED_NAME1, DICE_THROW);
         bank.payRent(TITLE_DEED_NAME1, ID_1, DICE);
         assertEquals(initialBalancePl1 - rent, bank.getBankAccount(ID_1).getBalance());
         assertEquals(initialBalancePl2 + rent, bank.getBankAccount(ID_2).getBalance());
@@ -182,6 +187,7 @@ class BankTest {
 
     @Test
     void buyAlreadyBoughtProperty() {
+        bank.getApplicableBankActions(ID_1, TITLE_DEED_NAME1, DICE_THROW);
         bank.buyTitleDeed(TITLE_DEED_NAME1, ID_1);
         assertTrue(bank.getTitleDeed(TITLE_DEED_NAME1).isOwned());
         assertEquals(ID_1, bank.getTitleDeed(TITLE_DEED_NAME1).getOwnerId());
@@ -194,6 +200,7 @@ class BankTest {
 
     @Test
     void buyingPropertyViolatesBuyerBankAccountWithdrawConditions() {
+        bank.getApplicableBankActions(ID_1, TITLE_DEED_NAME1, DICE_THROW);
         bank.buyTitleDeed(TITLE_DEED_NAME1, ID_1);
         final IllegalStateException withdrawConditionsViolated = assertThrows(
             IllegalStateException.class, 
@@ -204,6 +211,7 @@ class BankTest {
     @Test 
     void buyingPropertySuccessful() {
         final int previousBalance = bank.getBankAccount(ID_1).getBalance();
+        bank.getApplicableBankActions(ID_1, TITLE_DEED_NAME1, DICE_THROW);
         bank.buyTitleDeed(TITLE_DEED_NAME1, ID_1);
         assertTrue(bank.getTitleDeed(TITLE_DEED_NAME1).isOwned());
         assertEquals(ID_1, bank.getTitleDeed(TITLE_DEED_NAME1).getOwnerId());
@@ -231,6 +239,7 @@ class BankTest {
     @Test
     void sellPropertySuccessful() {
         final int previousBalance = bank.getBankAccount(ID_1).getBalance();
+        bank.getApplicableBankActions(ID_1, TITLE_DEED_NAME1, DICE_THROW);
         bank.buyTitleDeed(TITLE_DEED_NAME1, ID_1);
         assertTrue(bank.getTitleDeed(TITLE_DEED_NAME1).isOwned());
         assertEquals(ID_1, bank.getTitleDeed(TITLE_DEED_NAME1).getOwnerId());
@@ -245,6 +254,7 @@ class BankTest {
 
     @Test
     void testGetTitleDeedsByOwner() {
+        bank.getApplicableBankActions(ID_1, TITLE_DEED_NAME1, DICE_THROW);
         bank.buyTitleDeed(TITLE_DEED_NAME1, ID_1);
         final Set<TitleDeed> deeds = bank.getTitleDeedsByOwner(ID_1);
         assertFalse(deeds.isEmpty());

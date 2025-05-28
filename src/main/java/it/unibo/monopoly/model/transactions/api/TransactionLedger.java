@@ -42,6 +42,13 @@ public interface TransactionLedger {
     void registerTransaction(String name, int minimumExecutions);
 
     /**
+     * Removes tracking information regarding a specific transaction if present in the ledger.
+     * Otherwise it does nothing. 
+     * @param name the name of the transaction to wipe data of
+     */
+    void removeIfPresent(String name);
+
+    /**
      * Register the execution of a transaction in the ledger.
      * @param name the name of the transaction to mark the execution of
      */
@@ -59,5 +66,4 @@ public interface TransactionLedger {
      * @return {@code true} if all mandatory transactions were completed, {@code false} otherwise
      */
     boolean checkAllMandatoryTransactionsCompleted();
-
 }

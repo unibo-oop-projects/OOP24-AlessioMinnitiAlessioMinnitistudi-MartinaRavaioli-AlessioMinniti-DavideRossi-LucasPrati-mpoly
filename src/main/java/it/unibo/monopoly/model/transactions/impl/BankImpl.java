@@ -216,8 +216,7 @@ public final class BankImpl implements Bank {
         }
         final Set<BankAction> returnSet = new HashSet<>();
         final TitleDeed selected = findTitleDeed(titleDeedName);
-        transactionLedger.registerTransaction("buy", 0);
-        transactionLedger.registerTransaction("sell", 0);
+        transactionLedger.removeIfPresent("pay");
 
         if (!selected.isOwned()) {
             returnSet.add(bankActionFactory.createBuy(currentPlayerId, titleDeedName));
@@ -264,8 +263,10 @@ public final class BankImpl implements Bank {
         }
 
         @Override
-        public void resetBankActions() {
+        public void resetTransactionData() {
             transactionLedger.reset();
+            transactionLedger.registerTransaction("buy", 0);
+            transactionLedger.registerTransaction("sell", 0);
         }
 
         @Override

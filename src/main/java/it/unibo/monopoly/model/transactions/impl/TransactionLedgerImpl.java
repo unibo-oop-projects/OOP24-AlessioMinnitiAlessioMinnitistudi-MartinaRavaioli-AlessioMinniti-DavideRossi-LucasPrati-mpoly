@@ -28,12 +28,20 @@ final class TransactionLedgerImpl implements TransactionLedger {
     }
 
     @Override
-    public void registerTransaction(String name, int minimumExecutions) {
+    public void registerTransaction(final String name, final int minimumExecutions) {
         if (allowedTransactionTypes.stream().anyMatch(t -> name.equals(t.name()))) {
             throw new IllegalStateException("A transaction type with this name is already present in the ledger");
         }
         allowedTransactionTypes.add(new TransactionLedgerEntry(name, minimumExecutions, -1));
         executions.put(name, 0);
+    }
+
+    @Override
+    public void removeIfPresent(final String name) {
+        allowedTransactionTypes.removeIf(e -> name.equals(e.name()));
+        if (executions.containsKey(name)) {
+            executions.remove(name);
+        }
     }
 
     @Override
