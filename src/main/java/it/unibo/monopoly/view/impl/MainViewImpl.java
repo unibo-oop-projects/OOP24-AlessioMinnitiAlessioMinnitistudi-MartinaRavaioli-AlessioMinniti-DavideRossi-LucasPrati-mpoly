@@ -2,25 +2,26 @@ package it.unibo.monopoly.view.impl;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.Toolkit;
 import java.util.Set;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JSplitPane;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.monopoly.controller.api.GameController;
+import it.unibo.monopoly.model.gameboard.api.Special;
 import it.unibo.monopoly.model.transactions.api.BankAccount;
 import it.unibo.monopoly.model.transactions.api.TitleDeed;
 import it.unibo.monopoly.model.turnation.api.Player;
-
-import it.unibo.monopoly.utils.GuiUtils;
-
+import it.unibo.monopoly.utils.impl.GuiUtils;
 import it.unibo.monopoly.view.api.AccountPanel;
 import it.unibo.monopoly.view.api.ContractPanel;
 import it.unibo.monopoly.view.api.GameAction;
 import it.unibo.monopoly.view.api.GameActionsPanel;
 import it.unibo.monopoly.view.api.GamePanelsFactory;
+import it.unibo.monopoly.view.api.GameboardView;
 import it.unibo.monopoly.view.api.MainGameView;
 import it.unibo.monopoly.view.api.PlayerPanel;
 import it.unibo.monopoly.view.api.StandardControlsPanel;
@@ -33,7 +34,8 @@ import it.unibo.monopoly.view.impl.gamepanels.SwingPanelsFactory;
  */
 public final class MainViewImpl implements MainGameView {
 
-    private static final int PL_DATA_VIEW_PROPORTION = 5;
+    private static final double PL_DATA_VIEW_PROPORTION = 0.5;
+
 
     private final JFrame mainGameFrame = new JFrame();
 
@@ -42,6 +44,7 @@ public final class MainViewImpl implements MainGameView {
     private final ContractPanel contractPanel;
     private final GameActionsPanel gameActionsPanel;
     private final StandardControlsPanel mainActionsPanel;
+    private final GameboardView gameBoardPanel;
 
     private final GameController controller;
     /**
@@ -51,8 +54,12 @@ public final class MainViewImpl implements MainGameView {
      * happening on this view, implementing the observer pattern. User events
      * will be captured and handled by the {@code controller} provided to this constructor. 
      */
+    @SuppressFBWarnings(value = "EI_EXPOSE_REP",
+                justification = "must return reference to the object instead of a copy")
     public MainViewImpl(final GameController controller) {
         this.controller = controller;
+        this.gameBoardPanel = new GameboardViewImpl(controller);
+        this.controller.setBoardView(this.gameBoardPanel);
         final GamePanelsFactory fact = new SwingPanelsFactory();
         contractPanel = fact.contractPanel();
         contractPanel.renderDefaultUI();
@@ -64,9 +71,19 @@ public final class MainViewImpl implements MainGameView {
         gameActionsPanel.renderDefaultUI();
         mainActionsPanel = fact.standardControlsPanel(controller);
         mainActionsPanel.renderDefaultUI();
-        mainGameFrame.getContentPane().add(buildActionPanelUI(controller), BorderLayout.CENTER);
-        mainGameFrame.pack();
+        final JPanel actionPanel = buildActionPanelUI(controller);
+        mainGameFrame.getContentPane().add(actionPanel, BorderLayout.EAST);
+        mainGameFrame.getContentPane().add(this.gameBoardPanel.getPanel(), BorderLayout.WEST);
+        final JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, gameBoardPanel.getPanel(), actionPanel);
+        splitPane.setResizeWeight(0.5); 
+        splitPane.setDividerSize(2);    // Spessore del divisore
+        splitPane.setEnabled(false);    // Rendi il divisore fisso, se vuoi
+
+        mainGameFrame.add(splitPane);
+        //mainGameFrame.pack();
         mainGameFrame.setVisible(true);
+        mainGameFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        mainGameFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
     }
 
     private JPanel buildActionPanelUI(final GameController controller) {
@@ -110,6 +127,12 @@ public final class MainViewImpl implements MainGameView {
     }
 
     @Override
+    public void displaySpecialInfo(final Special tile) {
+        contractPanel.displaySpecialInfo(tile);
+        mainGameFrame.repaint();
+    }
+
+    @Override
     public void showPlayerActions(final Set<GameAction> actions) {
         gameActionsPanel.buildActionButtons(actions);
         mainGameFrame.repaint();
@@ -122,13 +145,11 @@ public final class MainViewImpl implements MainGameView {
 
     @Override
     public void displayPlayerStats(final Player player) {
-        // TODO (si può anche impostare una percentuale personalizzata con valori double)
-        // final Dimension screenDimension = GuiUtils.getDimensionWindow(0.5, 0.5); // percentuale personalizzata dello schermo
-        // final Dimension screenDimension = GuiUtils.getDimensionWindow(); // default il 50% proporzionato
-        final Dimension screenDimension = Toolkit.getDefaultToolkit().getScreenSize();
+        // percentuale personalizzata dello schermo
+        final Dimension screenDimension = GuiUtils.getDimensionWindow(PL_DATA_VIEW_PROPORTION, PL_DATA_VIEW_PROPORTION);
         new GUIVendita(player,
-            (int) screenDimension.getWidth() / PL_DATA_VIEW_PROPORTION, 
-            (int) screenDimension.getHeight() / PL_DATA_VIEW_PROPORTION, 
+            (int) screenDimension.getWidth(), 
+            (int) screenDimension.getHeight(), 
             controller
         );
     }
@@ -141,9 +162,10 @@ public final class MainViewImpl implements MainGameView {
     @Override
     public void displayError(final Exception e) {
         // TODO se ti può andare bene questo termina anche l'applicazione, altrimenti fai con GuiUtils.showInfoMessage()
-        // GuiUtils.showErrorAndExit(mainGameFrame, null, e.getMessage());
+        GuiUtils.showErrorAndExit(mainGameFrame, null, e.getMessage());
 
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'displayError'");
     }
+
 }

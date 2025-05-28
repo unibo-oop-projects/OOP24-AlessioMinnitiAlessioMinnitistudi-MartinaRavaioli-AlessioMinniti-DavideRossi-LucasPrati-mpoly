@@ -1,5 +1,6 @@
 package it.unibo.monopoly.utils;
 
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -12,21 +13,23 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import it.unibo.monopoly.utils.impl.Configuration;
+
+
 class ConfigurationTest {
 
     private static final String VALID_CONFIG_YML = "debug/configuration/debug_config.yml";
     private static final String MESSAGE_INVALID_CONFIG = "Invalid configuration should not be consistent: ";
     private static final int VALID_MIN = 2;
-    private static final int VALID_MAX = 4;
+    private static final int VALID_MAX = 6;
     private static final int VALID_NUM_DICE = 2;
     private static final int VALID_SIDES_PER_DIE = 6;
-    private static final String VALID_FONT = "ARIAL"; // should be available on most systems
-    private static final int VALID_BIG_FONT = 24;
-    private static final int VALID_SMALL_FONT = 16;
+    private static final String VALID_FONT = "ARIAL";
+    private static final int VALID_BIG_FONT = 30;
+    private static final int VALID_SMALL_FONT = 18;
     private static final int VALID_STARTER_BALANCE = 1500;
     private static final String VALID_RULES_PATH = "debug/rules/debug_rules.txt";
-    private static final String VALID_TITLE_DEEDS_PATH = "debug/cards/debug_title_deeds.json";
-    private static final String VALID_TILES_PATH = "debug/cards/debug_tiles.json";
+    private static final String VALID_CARDS_PATH = "debug/cards/debug_cards.json";
     private static final List<Color> VALID_COLORS = List.of(
         Color.RED,
         Color.BLUE,
@@ -45,6 +48,7 @@ class ConfigurationTest {
 
     private Configuration.Builder builder;
 
+
     @BeforeEach
     void initBuilder() {
         builder = new Configuration.Builder()
@@ -57,8 +61,7 @@ class ConfigurationTest {
                 .withSmallFont(VALID_SMALL_FONT)
                 .withInitBalance(VALID_STARTER_BALANCE)
                 .withRulesPath(VALID_RULES_PATH)
-                .withTitleDeedsPath(VALID_TITLE_DEEDS_PATH)
-                .withTilesPath(VALID_TILES_PATH)
+                .withCardsPath(VALID_CARDS_PATH)
                 .withColors(VALID_COLORS);
     }
 
@@ -76,16 +79,19 @@ class ConfigurationTest {
         assertEquals(VALID_SMALL_FONT, config.getSmallFont());
         assertEquals(VALID_STARTER_BALANCE, config.getInitBalance());
         assertEquals(VALID_RULES_PATH, config.getRulesPath());
-        assertEquals(VALID_TITLE_DEEDS_PATH, config.getTitleDeedsPath());
-        assertEquals(VALID_TILES_PATH, config.getTilesPath());
+        assertEquals(VALID_CARDS_PATH, config.getCardsPath());
         assertEquals(VALID_COLORS.size(), config.getPlayerColors().size());
     }
 
     @Test
     void builderCannotBeUsedTwice() {
         builder.build();
-        final IllegalStateException exception = assertThrows(IllegalStateException.class, builder::build);
-        testExceptionFormat(exception);
+        final IllegalStateException exception = assertThrows(
+            IllegalStateException.class,
+            builder::build
+        );
+        assertNotNull(exception.getMessage());
+        assertFalse(exception.getMessage().isBlank());
     }
 
     @Test
@@ -154,32 +160,27 @@ class ConfigurationTest {
 
     @Test
     void configurationInconsistentIfTitleDeedsFileIsNull() {
-        final Configuration config = builder.withTitleDeedsPath(null).build();
+        final Configuration config = builder.withCardsPath(null).build();
         assertFalse(config.isConsistent(),
-                    MESSAGE_INVALID_CONFIG + "titleDeedsPath cannot be null");
+                    MESSAGE_INVALID_CONFIG + "cardsPath cannot be null");
     }
 
     @Test
-    void configurationInconsistentIfTilesFileIsNull() {
-        final Configuration config = builder.withTilesPath(null).build();
-        assertFalse(config.isConsistent(),
-                    MESSAGE_INVALID_CONFIG + "tilesPath cannot be null");
+    void defaultConfigurationShouldBeTheDefaultOne() {
+        final Configuration config = new Configuration.Builder().build();
+        assertTrue(Configuration.Builder.isDefault(config),
+            "The default configuration should be the default-one");
+        assertTrue(config.isConsistent(),
+            "The default configuration should be consistent");
     }
 
     @Test
     void integrationConfigureFromFileWorksWithValidFile() {
         // Integration test: verifies that Configuration can be correctly loaded from a file
-        // using ResourceLoader and parsed into a consistent object
         final Configuration config = Configuration.configureFromFile(VALID_CONFIG_YML);
-        assertNotNull(config);
+        assertFalse(Configuration.Builder.isDefault(config),
+                   "The configuration should not be the default-one."
+                   + "Maybe the file does not have a consistent configuration or is equals to the default-one");
         assertTrue(config.isConsistent());
     }
-
-
-
-    private void testExceptionFormat(final Exception exception) {
-        assertNotNull(exception.getMessage());
-        assertFalse(exception.getMessage().isBlank());
-    }
-
 }

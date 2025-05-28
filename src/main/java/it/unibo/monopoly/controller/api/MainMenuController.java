@@ -2,11 +2,12 @@ package it.unibo.monopoly.controller.api;
 
 import java.awt.Color;
 import java.io.IOException;
+import java.io.UncheckedIOException;
 import java.util.Map;
 
 import it.unibo.monopoly.controller.impl.MainMenuControllerImpl;
 import it.unibo.monopoly.model.transactions.api.BankAccountType;
-import it.unibo.monopoly.utils.ResourceLoader;
+import it.unibo.monopoly.utils.api.UseFileTxt;
 
 
 /**
@@ -18,6 +19,7 @@ public interface MainMenuController {
      * Must initialize all the game, starting from the given list of players'data {@code playersSetup}.
      * @param playersSetup the players'data, create players according to this
      * @throws IOException if the loading from {@code JSON} failed
+     * @throws UncheckedIOException if the parsing from {@code JSON} failed
      * @throws NullPointerException if {@code id}, {@code name} or {@code color} are {@code null}
      */
     void onClickStart(Map<Color, String> playersSetup) throws IOException;
@@ -58,7 +60,7 @@ public interface MainMenuController {
     void setBankAccountType(BankAccountType bankAccountType);
 
     /**
-     * Use a {@link ResourceLoader} for getting a {@link String} with all the rules of the game.
+     * Use a {@link UseFileTxt} for getting a {@link String} with all the rules of the game.
      * @return a {@link String} with all the rules of the game
      */
     String getRules();

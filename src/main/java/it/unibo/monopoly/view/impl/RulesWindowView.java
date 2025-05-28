@@ -13,8 +13,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
 
-import it.unibo.monopoly.utils.Configuration;
-import it.unibo.monopoly.utils.GuiUtils;
+import it.unibo.monopoly.utils.impl.Configuration;
+import it.unibo.monopoly.utils.impl.GuiUtils;
 
 
 /**

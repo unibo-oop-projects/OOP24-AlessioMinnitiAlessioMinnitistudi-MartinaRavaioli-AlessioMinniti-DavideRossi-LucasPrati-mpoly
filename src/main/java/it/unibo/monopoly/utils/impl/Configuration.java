@@ -1,7 +1,10 @@
-package it.unibo.monopoly.utils;
+package it.unibo.monopoly.utils.impl;
 
 import java.awt.Color;
 import java.util.List;
+import java.util.Objects;
+
+import it.unibo.monopoly.utils.api.UseConfigurationFile;
 
 /**
  * Represents the game's configuration parameters. 
@@ -17,15 +20,14 @@ public final class Configuration {
     private final int smallFont;
     private final int initBalance;
     private final String rulesPath;
-    private final String titleDeedsPath;
-    private final String tilesPath;
+    private final String cardsPath;
     private final List<Color> playerColors;
 
 
 
     private Configuration(final int minPlayer, final int maxPlayer, final int numDice, final int sidesPerDie,
                             final String fontName, final int bigFont, final int smallFont, final int initBalance,
-                            final String rulesPath, final String titleDeedsPath, final String tilesPath,
+                            final String rulesPath, final String cardsPath,
                             final List<Color> playerColors) {
         this.minPlayer = minPlayer;
         this.maxPlayer = maxPlayer;
@@ -36,8 +38,7 @@ public final class Configuration {
         this.smallFont = smallFont;
         this.initBalance = initBalance;
         this.rulesPath = rulesPath;
-        this.titleDeedsPath = titleDeedsPath;
-        this.tilesPath = tilesPath;
+        this.cardsPath = cardsPath;
         this.playerColors = playerColors;
     }
 
@@ -107,17 +108,10 @@ public final class Configuration {
     }
 
     /**
-     * @return the path of the file which contains all the title deeds of the game
+     * @return the path of the file which contains all the cards of the game
      */
-    public String getTitleDeedsPath() {
-        return titleDeedsPath;
-    }
-
-    /**
-     * @return the path of the file which contains alla the tiles of the game
-     */
-    public String getTilesPath() {
-        return tilesPath;
+    public String getCardsPath() {
+        return cardsPath;
     }
 
     /**
@@ -136,12 +130,11 @@ public final class Configuration {
                 && minPlayer <= maxPlayer
                 && numDice > 0
                 && sidesPerDie > 0
-                && ResourceLoader.isValidFontName(fontName)
+                && FontUtils.isValidFontName(fontName)
                 && smallFont < bigFont
                 && initBalance >= 0
-                && ResourceLoader.checkPath(rulesPath)
-                && ResourceLoader.checkPath(titleDeedsPath)
-                && ResourceLoader.checkPath(tilesPath);
+                && FileChecker.checkPath(rulesPath)
+                && FileChecker.checkPath(cardsPath);
     }
 
 
@@ -152,7 +145,8 @@ public final class Configuration {
      * @return a {@link Configuration} according to {@code configFile} if consistent. Otherwise a default {@link Configuration}
      */
     public static Configuration configureFromFile(final String configFile) {
-        final Configuration configuration = ResourceLoader.loadConfigurationFile(configFile);
+        final UseConfigurationFile useFileConfig = new UseConfigurationFileImpl();
+        final Configuration configuration = useFileConfig.loadConfiguration(configFile);
 
         if (configuration.isConsistent()) {
             return configuration;
@@ -181,8 +175,7 @@ public final class Configuration {
         private static final int SMALL_FONT = 16;
         private static final int INIT_BALANCE = 2000;
         private static final String RULES_PATH = "rules/rules.txt";
-        private static final String TITLE_DEEDS_PATH = "cards/title_deeds.json";
-        private static final String TILES_PATH = "cards/tiles.json";
+        private static final String CARDS_PATH = "cards/cards.json";
         private static final List<Color> PLAYER_COLORS = List.of(
             Color.RED,
             Color.BLUE,
@@ -209,8 +202,7 @@ public final class Configuration {
         private int smallFont = SMALL_FONT;
         private int initBalance = INIT_BALANCE;
         private String rulesPath = RULES_PATH;
-        private String titleDeedsPath = TITLE_DEEDS_PATH;
-        private String tilesPath = TILES_PATH;
+        private String cardspath = CARDS_PATH;
         private List<Color> playerColors = List.copyOf(PLAYER_COLORS);
         private boolean consumed;
 
@@ -297,20 +289,11 @@ public final class Configuration {
         }
 
         /**
-         * @param titleDeedsPath the path of the file which contains all the title deeds of the game
+         * @param cardspath the path of the file which contains all the cards of the game
          * @return this builder, for method chaining
          */
-        public Builder withTitleDeedsPath(final String titleDeedsPath) {
-            this.titleDeedsPath = titleDeedsPath;
-            return this;
-        }
-
-        /**
-         * @param tilesPath the path of the file which contains all the tiles of the game
-         * @return this builder, for method chaining
-         */
-        public Builder withTilesPath(final String tilesPath) {
-            this.tilesPath = tilesPath;
+        public Builder withCardsPath(final String cardspath) {
+            this.cardspath = cardspath;
             return this;
         }
 
@@ -344,7 +327,28 @@ public final class Configuration {
             consumed = true;
             return new Configuration(minPlayer, maxPlayer, numDice, sidesPerDie,
                                     fontName, bigFont, smallFont, initBalance,
-                                    rulesPath, titleDeedsPath, tilesPath, playerColors);
+                                    rulesPath, cardspath, playerColors);
+        }
+
+        /**
+         * Check if the provided {@link Configuration} is equals to the default-one.
+         * @param config the {@link Configuration} to check
+         * @return true if the provided {@link Configuration} is equals to the default-one, false otherwise
+         * @throws NullPointerException if {@code config} is {@code null}
+         */
+        public static boolean isDefault(final Configuration config) {
+            Objects.requireNonNull(config, "Configuration must not be null");
+            return MIN_PLAYER    ==  config.getMinPlayer()
+                && MAX_PLAYER    ==  config.getMaxPlayer()
+                && NUM_DICE      ==  config.getNumDice()
+                && SIDES_PER_DIE ==  config.getSidesPerDie()
+                && FONT_NAME.equals(config.getFontName())
+                && BIG_FONT      ==  config.getBigFont()
+                && SMALL_FONT    ==  config.getSmallFont()
+                && INIT_BALANCE  ==  config.getInitBalance()
+                && RULES_PATH.equals(config.getRulesPath())
+                && CARDS_PATH.equals(config.getCardsPath())
+                && PLAYER_COLORS.containsAll(config.getPlayerColors());
         }
     }
 }

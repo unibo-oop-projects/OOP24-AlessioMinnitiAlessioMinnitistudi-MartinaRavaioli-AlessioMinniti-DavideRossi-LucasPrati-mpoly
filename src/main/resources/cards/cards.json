@@ -1,0 +1,279 @@
+[
+  {
+    "position": 0,
+    "type": "SPECIAL",
+    "effect": "INCOME"
+  },
+  {
+    "name": "Mediterranean Avenue",
+    "position": 1,
+    "type": "PROPERTY",
+    "group": "MAGENTA",
+    "cost": 60,
+    "baseRent": 2
+  },
+  {
+    "position": 2,
+    "type": "SPECIAL",
+    "effect": "TAX"
+  },
+  {
+    "name": "Baltic Avenue",
+    "position": 3,
+    "type": "PROPERTY",
+    "group": "MAGENTA",
+    "cost": 60,
+    "baseRent": 4
+  },
+  {
+    "position": 4,
+    "type": "SPECIAL",
+    "effect": "TAX"
+  },
+  {
+    "name": "Reading Railroad",
+    "position": 5,
+    "type": "PROPERTY",
+    "group": "STATION"
+  },
+  {
+    "name": "Oriental Avenue",
+    "position": 6,
+    "type": "PROPERTY",
+    "group": "CYAN",
+    "cost": 100,
+    "baseRent": 6
+  },
+  {
+    "position": 7,
+    "type": "SPECIAL",
+    "effect": "TAX"
+  },
+  {
+    "name": "Vermont Avenue",
+    "position": 8,
+    "type": "PROPERTY",
+    "group": "CYAN",
+    "cost": 100,
+    "baseRent": 6
+  },
+  {
+    "name": "Connecticut Avenue",
+    "position": 9,
+    "type": "PROPERTY",
+    "group": "CYAN",
+    "cost": 120,
+    "baseRent": 8
+  },
+  {
+    "position": 10,
+    "type": "SPECIAL",
+    "effect": "JAIL"
+  },
+  {
+    "name": "St. Charles Place",
+    "position": 11,
+    "type": "PROPERTY",
+    "group": "PINK",
+    "cost": 140,
+    "baseRent": 10
+  },
+  {
+    "name": "Electric Company",
+    "position": 12,
+    "type": "PROPERTY",
+    "group": "SOCIETY",
+    "cost": 150,
+    "baseRent": 4
+  },
+  {
+    "name": "States Avenue",
+    "position": 13,
+    "type": "PROPERTY",
+    "group": "PINK",
+    "cost": 140,
+    "baseRent": 10
+  },
+  {
+    "name": "Virginia Avenue",
+    "position": 14,
+    "type": "PROPERTY",
+    "group": "PINK",
+    "cost": 160,
+    "baseRent": 12
+  },
+  {
+    "name": "Pennsylvania Railroad",
+    "position": 15,
+    "type": "PROPERTY",
+    "group": "STATION"
+  },
+  {
+    "name": "St. James Place",
+    "position": 16,
+    "type": "PROPERTY",
+    "group": "ORANGE",
+    "cost": 180,
+    "baseRent": 14
+  },
+  {
+    "position": 17,
+    "type": "SPECIAL",
+    "effect": "TAX"
+  },
+  {
+    "name": "Tennessee Avenue",
+    "position": 18,
+    "type": "PROPERTY",
+    "group": "ORANGE",
+    "cost": 180,
+    "baseRent": 14
+  },
+  {
+    "name": "New York Avenue",
+    "position": 19,
+    "type": "PROPERTY",
+    "group": "ORANGE",
+    "cost": 200,
+    "baseRent": 16
+  },
+  {
+    "position": 20,
+    "type": "SPECIAL",
+    "effect": "PARKING"
+  },
+  {
+    "name": "Kentucky Avenue",
+    "position": 21,
+    "type": "PROPERTY",
+    "group": "RED",
+    "cost": 220,
+    "baseRent": 18
+  },
+  {
+    "position": 22,
+    "type": "SPECIAL",
+    "effect": "TAX"
+  },
+  {
+    "name": "Indiana Avenue",
+    "position": 23,
+    "type": "PROPERTY",
+    "group": "RED",
+    "cost": 220,
+    "baseRent": 18
+  },
+  {
+    "name": "Illinois Avenue",
+    "position": 24,
+    "type": "PROPERTY",
+    "group": "RED",
+    "cost": 240,
+    "baseRent": 20
+  },
+  {
+    "name": "B. & O. Railroad",
+    "position": 25,
+    "type": "PROPERTY",
+    "group": "STATION"
+  },
+  {
+    "name": "Atlantic Avenue",
+    "position": 26,
+    "type": "PROPERTY",
+    "group": "YELLOW",
+    "cost": 260,
+    "baseRent": 22
+  },
+  {
+    "name": "Ventnor Avenue",
+    "position": 27,
+    "type": "PROPERTY",
+    "group": "YELLOW",
+    "cost": 260,
+    "baseRent": 22
+  },
+  {
+    "name": "Water Works",
+    "position": 28,
+    "type": "PROPERTY",
+    "group": "SOCIETY",
+    "cost": 150,
+    "baseRent": 4
+  },
+  {
+    "name": "Marvin Gardens",
+    "position": 29,
+    "type": "PROPERTY",
+    "group": "YELLOW",
+    "cost": 280,
+    "baseRent": 24
+  },
+  {
+    "position": 30,
+    "type": "SPECIAL",
+    "effect": "GO_TO_JAIL"
+  },
+  {
+    "name": "Pacific Avenue",
+    "position": 31,
+    "type": "PROPERTY",
+    "group": "GREEN",
+    "cost": 300,
+    "baseRent": 26
+  },
+  {
+    "name": "North Carolina Avenue",
+    "position": 32,
+    "type": "PROPERTY",
+    "group": "GREEN",
+    "cost": 300,
+    "baseRent": 26
+  },
+  {
+  "position": 33,
+  "type": "SPECIAL",
+  "effect": "TAX"
+},
+{
+  "name": "Pennsylvania Avenue",
+  "position": 34,
+  "type": "PROPERTY",
+  "group": "GREEN",
+  "cost": 320,
+  "baseRent": 28
+},
+{
+  "name": "Short Line",
+  "position": 35,
+  "type": "PROPERTY",
+  "group": "STATION"
+},
+{
+  "position": 36,
+  "type": "SPECIAL",
+  "effect": "TAX"
+},
+{
+  "name": "Park Place",
+  "position": 37,
+  "type": "PROPERTY",
+  "group": "BLUE",
+  "cost": 350,
+  "baseRent": 35
+},
+{
+  "position": 38,
+  "type": "SPECIAL",
+  "effect": "TAX"
+},
+{
+  "name": "Boardwalk",
+  "position": 39,
+  "type": "PROPERTY",
+  "group": "BLUE",
+  "cost": 400,
+  "baseRent": 50
+}
+]
+ 

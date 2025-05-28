@@ -13,12 +13,14 @@ import it.unibo.monopoly.controller.api.MainMenuController;
 import it.unibo.monopoly.view.impl.MainViewImpl;
 
 import it.unibo.monopoly.model.gameboard.api.Board;
+import it.unibo.monopoly.model.gameboard.api.CardFactory;
 import it.unibo.monopoly.model.gameboard.api.Pawn;
 import it.unibo.monopoly.model.gameboard.api.PawnFactory;
 import it.unibo.monopoly.model.gameboard.api.Tile;
 import it.unibo.monopoly.model.gameboard.impl.BoardImpl;
+import it.unibo.monopoly.model.gameboard.impl.CardDTO;
+import it.unibo.monopoly.model.gameboard.impl.CardFactoryImpl;
 import it.unibo.monopoly.model.gameboard.impl.PawnFactoryImpl;
-
 import it.unibo.monopoly.model.transactions.api.Bank;
 import it.unibo.monopoly.model.transactions.api.BankAccount;
 import it.unibo.monopoly.model.transactions.api.BankAccountFactory;
@@ -33,10 +35,12 @@ import it.unibo.monopoly.model.turnation.impl.DiceImpl;
 import it.unibo.monopoly.model.turnation.impl.PlayerImpl;
 import it.unibo.monopoly.model.turnation.impl.PositionImpl;
 import it.unibo.monopoly.model.turnation.impl.TurnationManagerImpl;
-
-import it.unibo.monopoly.utils.Configuration;
-import it.unibo.monopoly.utils.Identifiable;
-import it.unibo.monopoly.utils.ResourceLoader;
+import it.unibo.monopoly.utils.api.UseFileJson;
+import it.unibo.monopoly.utils.api.UseFileTxt;
+import it.unibo.monopoly.utils.api.Identifiable;
+import it.unibo.monopoly.utils.impl.Configuration;
+import it.unibo.monopoly.utils.impl.UseFileJsonImpl;
+import it.unibo.monopoly.utils.impl.UseFileTxtImpl;
 
 
 /**
@@ -93,7 +97,9 @@ public final class MainMenuControllerImpl implements MainMenuController {
         final List<Tile> tiles = new ArrayList<>();
         final Set<TitleDeed> titleDeeds = new HashSet<>();
         final Set<BankAccount> accounts = new HashSet<>();
+
         final PawnFactory pawnFactory = new PawnFactoryImpl();
+        final UseFileJson importFileJson = new UseFileJsonImpl();
 
         // create a id for each Player (his Pawn and BankAccount must have the same id)
         int id = 1;
@@ -107,12 +113,9 @@ public final class MainMenuControllerImpl implements MainMenuController {
             id++;
         }
 
-        // import from json
-        titleDeeds.addAll(ResourceLoader.loadTitleDeeds(config.getTitleDeedsPath()));
-        tiles.addAll(List.copyOf(ResourceLoader.loadJsonList(config.getTilesPath(), Tile.class)));
-
-        final Bank bank = new BankImpl(accounts, titleDeeds);
-        final Board board = new BoardImpl(tiles, pawns);
+        // creation of Bank, Board and TurnationManager
+        final Board board = new BoardImpl(List.of(), pawns);
+        final Bank bank = new BankImpl(accounts, Set.of());
         final TurnationManager turnationManager = new TurnationManagerImpl(
             players,
             new DiceImpl(
@@ -120,6 +123,18 @@ public final class MainMenuControllerImpl implements MainMenuController {
                 config.getSidesPerDie()
             )
         );
+
+        // import from json
+        final List<CardDTO> dtos = importFileJson.loadJsonList(config.getCardsPath(), CardDTO.class);
+        final CardFactory cardFactory = new CardFactoryImpl(board, bank); 
+        cardFactory.parse(dtos);
+        // populate elements
+        titleDeeds.addAll(cardFactory.getDeeds());
+        tiles.addAll(cardFactory.getTiles());
+
+        // Add tiles to the board and titleDeeds to the Bank
+        tiles.stream().forEach(board::addTile);
+        titleDeeds.stream().forEach(bank::addTitleDeed);
 
         // start the game
         final var controllerGameManager = new GameControllerImpl(bank, board, turnationManager, config);
@@ -173,7 +188,8 @@ public final class MainMenuControllerImpl implements MainMenuController {
      */
     @Override
     public String getRules() {
-        return ResourceLoader.loadTextResource(config.getRulesPath());
+        final UseFileTxt importRules = new UseFileTxtImpl();
+        return importRules.loadTextResource(config.getRulesPath());
     }
 
 
@@ -188,9 +204,9 @@ public final class MainMenuControllerImpl implements MainMenuController {
                                                 final String owner) {
         Objects.requireNonNull(owner);
         return switch (bankAccountType) {
-            case CLASSIC -> bankAccountFactory.createWithCheck(id, owner,
+            case CLASSIC    -> bankAccountFactory.createWithCheck(id, owner,
                                                                account -> account.getBalance() > 0);
-            case INFINITY  -> bankAccountFactory.createSimple(id, owner);
+            case INFINITY   -> bankAccountFactory.createSimple(id, owner);
         };
     }
 }

@@ -70,6 +70,12 @@ public interface Board {
     List<Tile> getTiles();
 
     /**
+     * get a list with all the pawns.
+     * @return List of Pawns
+    */
+    List<Pawn> getPawns();
+
+    /**
      * move a pawn in a selected tile.
      * @param pawn
      * @param name
@@ -82,9 +88,11 @@ public interface Board {
      * @return Tile
     */
     Tile getTile(String name);
+
     /**
      * add a tile.
      * @param tile
     */
     void addTile(Tile tile);
+
 }

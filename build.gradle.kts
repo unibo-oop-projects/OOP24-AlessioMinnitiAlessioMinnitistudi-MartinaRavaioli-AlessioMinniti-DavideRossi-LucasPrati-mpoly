@@ -68,3 +68,12 @@ tasks.test {
         showStandardStreams = true
     }
 }
+
+tasks.javadoc {
+    options.encoding = "UTF-8"
+    isFailOnError = false
+}
+
+tasks.build {
+    dependsOn(tasks.shadowJar, tasks.javadoc)
+}

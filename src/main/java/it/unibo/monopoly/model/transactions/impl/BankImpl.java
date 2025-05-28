@@ -35,11 +35,11 @@ public final class BankImpl implements Bank {
      * @throws IllegalArgumentException if {@code accounts} or {@code titleDeeds} are {@code null}
      */
     public BankImpl(final Set<BankAccount> accounts, final Set<TitleDeed> titleDeeds) {
-        if (accounts.isEmpty() || titleDeeds.isEmpty()) {
-            throw new IllegalArgumentException("Input lists cannot be empty");
+        if (accounts.isEmpty()) {
+            throw new IllegalArgumentException("accounts' list cannot be empty");
         }
         this.accounts = Maps.uniqueIndex(accounts, BankAccount::getPlayerName);
-        this.titleDeeds = Maps.uniqueIndex(titleDeeds, TitleDeed::getName);
+        this.titleDeeds = titleDeeds.stream().collect(Collectors.toMap(TitleDeed::getName, d -> d));
     }
 
     private BankAccount findAccount(final String id) {
@@ -61,6 +61,14 @@ public final class BankImpl implements Bank {
                         .stream()
                         .filter(d -> d.getGroup().equals(group))
                         .collect(Collectors.toSet());
+    }
+
+    @Override
+    public void addTitleDeed(final TitleDeed titleDeed) {
+        if (titleDeeds.containsKey(titleDeed.getName())) {
+            throw new IllegalArgumentException("A title deed with this name is already present in the system");
+        }
+        titleDeeds.put(titleDeed.getName(), titleDeed);
     }
 
     @Override
