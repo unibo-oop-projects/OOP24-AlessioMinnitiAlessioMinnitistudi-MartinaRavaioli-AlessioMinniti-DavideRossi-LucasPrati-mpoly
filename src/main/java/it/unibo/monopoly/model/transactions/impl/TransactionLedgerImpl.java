@@ -10,7 +10,7 @@ import it.unibo.monopoly.model.transactions.api.TransactionLedger;
 final class TransactionLedgerImpl implements TransactionLedger {
 
     private final Set<TransactionLedgerEntry> allowedTransactionTypes = new HashSet<>();
-    private final Map<String,Integer> executions = new HashMap<>();
+    private final Map<String, Integer> executions = new HashMap<>();
 
     @Override
     public void reset() {
@@ -47,11 +47,17 @@ final class TransactionLedgerImpl implements TransactionLedger {
     @Override
     public void markExecution(final String name) {
         if (allowedTransactionTypes.stream().noneMatch(t -> name.equals(t.name()))) {
-            throw new IllegalArgumentException("No transaction with this name exists in the ledger. Register the transaction type by calling the method registerTransaction before asking to mark its execution");
+            throw new IllegalArgumentException("No transaction with this name exists in the ledger" 
+            + "Register the transaction type by calling the method registerTransaction before asking to mark its execution");
         }
-        final TransactionLedgerEntry transaction = allowedTransactionTypes.stream().filter(t -> name.equals(t.name())).findFirst().get();
+        final TransactionLedgerEntry transaction = allowedTransactionTypes
+        .stream()
+        .filter(t -> name.equals(t.name()))
+        .findFirst()
+        .get();
         if (transaction.maximumExecutions() > 0 && executions.get(name) >= transaction.maximumExecutions()) {
-            throw new IllegalStateException("The player has already executed the transaction" + name + "for the maximum number of times per turn");
+            throw new IllegalStateException("The player has already executed the transaction" + name 
+            + "for the maximum number of times per turn");
         }
         executions.put(name, executions.get(name) + 1);
     }
@@ -59,10 +65,12 @@ final class TransactionLedgerImpl implements TransactionLedger {
     @Override
     public void unmarkExecution(final String name) {
         if (allowedTransactionTypes.stream().noneMatch(t -> name.equals(t.name()))) {
-            throw new IllegalArgumentException("No transaction with this name exists in the ledger. Register the transaction type by calling the method registerTransaction before asking to mark its execution");
+            throw new IllegalArgumentException("No transaction with this name exists in the ledger." 
+            + "Register the transaction type by calling the method registerTransaction before asking to mark its execution");
         }
         if (executions.get(name) <= 0) {
-            throw new IllegalStateException("The player has never asked to execute the transaction" + name + ". Therefore it is not possible to unmark it");
+            throw new IllegalStateException("The player has never asked to execute the transaction" + name 
+            + ". Therefore it is not possible to unmark it");
         }
         executions.put(name, executions.get(name) - 1);
     }
@@ -77,5 +85,7 @@ final class TransactionLedgerImpl implements TransactionLedger {
         });
     }
 
-    private static record TransactionLedgerEntry(String name, int minimumExecutions, int maximumExecutions) {}
+    private record TransactionLedgerEntry(String name, int minimumExecutions, int maximumExecutions) {
+
+    }
 }

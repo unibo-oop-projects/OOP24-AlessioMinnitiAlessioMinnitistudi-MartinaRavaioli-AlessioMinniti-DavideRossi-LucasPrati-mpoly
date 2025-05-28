@@ -32,6 +32,7 @@ import it.unibo.monopoly.model.turnation.api.Player;
  */
 public final class BankImpl implements Bank {
 
+    private static final String PAY_TRANSACTION = "pay";
     private final Map<Integer, BankAccount> accounts;
     private final Map<String, TitleDeed> titleDeeds;
     private final BiFunction<BankAccount, Set<TitleDeed>, Integer> rankingBiFunction; 
@@ -54,7 +55,8 @@ public final class BankImpl implements Bank {
      * operates with the given {@code accounts} and {@code title deeds}.
      * @param accounts the palyers' {@link BankAccount}
      * @param titleDeeds {@link List} of {@link TitleDeed} present in the game
-     * @throws IllegalArgumentException if {@code accounts} or {@code titleDeeds} are {@code null}
+     * @param rankingBiFunction the function used to rank a player. Takes as input its {@link BankAccount}
+     * and all the {@link TitleDeed} whose ownership is associated with that player.
      */
     public BankImpl(final Set<BankAccount> accounts, final Set<TitleDeed> titleDeeds,
     final BiFunction<BankAccount, Set<TitleDeed>, Integer> rankingBiFunction) {
@@ -157,13 +159,13 @@ public final class BankImpl implements Bank {
             titleDeedsByGroup(deed.getGroup()), dices
         );
 
-        transactionLedger.markExecution("pay");
+        transactionLedger.markExecution(PAY_TRANSACTION);
         receiver.deposit(rentAmount);
         try {
             payer.withdraw(rentAmount);
         } catch (final IllegalStateException e) {
             receiver.withdraw(rentAmount);
-            transactionLedger.unmarkExecution("pay");
+            transactionLedger.unmarkExecution(PAY_TRANSACTION);
             throw e;
         }
     }
@@ -210,22 +212,25 @@ public final class BankImpl implements Bank {
 
     //TODO check if exceptions should be in javadoc
     @Override
-    public Set<BankAction> getApplicableActionsForTitleDeed(final int currentPlayerId, final String titleDeedName, final int diceThrow) {
+    public Set<BankAction> getApplicableActionsForTitleDeed(
+        final int currentPlayerId, 
+        final String titleDeedName, 
+        final int diceThrow) {
         if (!accounts.containsKey(currentPlayerId)) {
             throw new IllegalArgumentException("No player with this id is present in the system");
         }
         final Set<BankAction> returnSet = new HashSet<>();
         final TitleDeed selected = findTitleDeed(titleDeedName);
-        transactionLedger.removeIfPresent("pay");
+        transactionLedger.removeIfPresent(PAY_TRANSACTION);
 
         if (!selected.isOwned()) {
             returnSet.add(bankActionFactory.createBuy(currentPlayerId, titleDeedName));
-        } else if (selected.getOwnerId() == currentPlayerId){
-            returnSet.add(bankActionFactory.createSell(titleDeedName));            
+        } else if (selected.getOwnerId() == currentPlayerId) {
+            returnSet.add(bankActionFactory.createSell(titleDeedName));
             //TODO build houses
         } else {
             returnSet.add(bankActionFactory.createPayRent(titleDeedName, currentPlayerId, diceThrow));
-            transactionLedger.registerTransaction("pay", 1, 1);
+            transactionLedger.registerTransaction(PAY_TRANSACTION, 1, 1);
         }
 
         return returnSet;
@@ -273,7 +278,7 @@ public final class BankImpl implements Bank {
         public void deletePlayer(final Player pl) {
             getTitleDeedsByOwner(pl.getID())
             .stream()
-            .forEach(t -> t.removeOwner());
+            .forEach(TitleDeed::removeOwner);
             accounts.remove(pl.getID());
         }
     }

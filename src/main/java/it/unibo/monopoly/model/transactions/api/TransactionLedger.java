@@ -5,16 +5,17 @@ package it.unibo.monopoly.model.transactions.api;
  * all transactions invoked on a {@link Bank} object during the turn of a player. 
  * This ledger is used to write and retrieve information about the transactions 
  * executed during the the turn of a player; meaning the method invocations the user called
- * on a {@link Bank} object (for example, {@link Bank#buyTitleDeed(String, int)},{@link Bank#payRent(String, int, java.util.Collection)}). 
+ * on a {@link Bank} object (for example, {@link Bank#buyTitleDeed(String, int)},
+ * {@link Bank#payRent(String, int, java.util.Collection)}). 
  * Implementations of the {@link Bank} interface can harness this ledger to apply specific domain logic checks. 
- * For instance, in the original version of the game the method {@link Bank#payRent(String, int, java.util.Collection)} can only be
- * called once per turn, and the player cannot end its turn if it still has to pay a rent.
+ * For instance, in the original version of the game the method {@link Bank#payRent(String, int, java.util.Collection)} 
+ * can only be called once per turn, and the player cannot end its turn if it still has to pay a rent.
  * This ledger enables to track all payment operations with flexibility and room for expandability. 
  */
 public interface TransactionLedger {
 
     /**
-     * Reset the registered transaction types
+     * Reset the registered transaction types.
      */
     void reset();
 
@@ -23,8 +24,9 @@ public interface TransactionLedger {
      * @param name the name of the type of transaction to register
      * @param minimumExecutions mark the transaction as mandatory to execute for a minimum number of times before the
      * player can end its turn. A transaction that is mandatory can be marked as executed 
-     * by calling the method {@link #markExecution(String)} and passing the corresponding name. As long as a mandatory transaction
-     * hasn't been executed {@code minimumExecutions} times the method {@link #checkAllMandatoryTransactionsCompleted()} will return {@code false}
+     * by calling the method {@link #markExecution(String)} and passing the corresponding name. 
+     * As long as a mandatory transaction hasn't been executed {@code minimumExecutions} times 
+     * the method {@link #checkAllMandatoryTransactionsCompleted()} will return {@code false}
      * @param maximumExecutions number of maximum times the transaction type can be executed
      */
     void registerTransaction(String name, int minimumExecutions, int maximumExecutions);
@@ -36,8 +38,9 @@ public interface TransactionLedger {
      * @param name the name of the type of transaction to register
      * @param minimumExecutions mark the transaction as mandatory to execute for a minimum number of times before the
      * player can end its turn. A transaction that is mandatory can be marked as executed 
-     * by calling the method {@link #markExecution(String)} and passing the corresponding name. As long as a mandatory transaction
-     * hasn't been executed {@code minimumExecutions} times the method {@link #checkAllMandatoryTransactionsCompleted()} will return {@code false}
+     * by calling the method {@link #markExecution(String)} and passing the corresponding name. 
+     * As long as a mandatory transaction hasn't been executed {@code minimumExecutions} times 
+     * the method {@link #checkAllMandatoryTransactionsCompleted()} will return {@code false}
      */
     void registerTransaction(String name, int minimumExecutions);
 
@@ -62,7 +65,8 @@ public interface TransactionLedger {
 
     /**
      * Check if all the transactions that are marked as mandatory have been
-     * executed, for the number of times that was specifcied upon registration of the transaction (parameter {@code minimumExecutions}).
+     * executed, for the number of times that was specifcied upon registration of the 
+     * transaction (parameter {@code minimumExecutions}).
      * @return {@code true} if all mandatory transactions were completed, {@code false} otherwise
      */
     boolean checkAllMandatoryTransactionsCompleted();

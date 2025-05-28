@@ -22,7 +22,7 @@ final class BankActionFactoryImpl implements BankActionFactory {
      * @param bank the {@link Bank} object the {@link BankAction} objects will point to
      */
     @SuppressFBWarnings(
-        value = { "EI_EXPOSE_REP2" },
+        value = "EI_EXPOSE_REP2",
         justification = 
         """
         This factory is intended for the creation of command objects 
@@ -32,7 +32,7 @@ final class BankActionFactoryImpl implements BankActionFactory {
         on the orginal Bank instance passed, but rather on its copy
         """
     )
-    public BankActionFactoryImpl(final Bank bank) {
+    BankActionFactoryImpl(final Bank bank) {
         this.bank = bank;
     }
 
@@ -49,7 +49,6 @@ final class BankActionFactoryImpl implements BankActionFactory {
             public void executeTransaction() {
                 bank.buyTitleDeed(titleDeedName, currentPlayerId);
             }
-            
         };
     }
 
@@ -66,13 +65,12 @@ final class BankActionFactoryImpl implements BankActionFactory {
             public void executeTransaction() {
                 bank.sellTitleDeed(titleDeedName);
             }
-            
         };
     }
 
     @Override
     public BankAction createPayRent(final String titleDeedName, final int currentPlayerId, final int diceThrow) {
-        if(diceThrow <= 0) {
+        if (diceThrow <= 0) {
             throw new IllegalArgumentException("The dice throw cannot be lower than 1");
         }
         return new BankAction() {
@@ -87,7 +85,6 @@ final class BankActionFactoryImpl implements BankActionFactory {
                 //TODO refactor dice throw to integer
                 bank.payRent(titleDeedName, currentPlayerId, List.of(diceThrow));
             }
-            
         };
     }
 

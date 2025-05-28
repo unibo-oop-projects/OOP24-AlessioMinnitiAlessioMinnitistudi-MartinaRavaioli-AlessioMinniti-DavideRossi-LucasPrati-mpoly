@@ -14,10 +14,9 @@ public interface BankAction {
     String getName();
 
     /**
-     *    
      * Executes the incapsulated action. 
      * When invoked, it triggers the execution of a method of the
-     * {@link Bank} interface (such as {@link Bank#buyTitleDeed(String, int)}, {@link Bank#payRent(String, int)})  
+     * {@link Bank} interface (such as {@link Bank#buyTitleDeed(String, int)}, {@link Bank#payRent(String, int)})
      */
     void executeTransaction();
 }
