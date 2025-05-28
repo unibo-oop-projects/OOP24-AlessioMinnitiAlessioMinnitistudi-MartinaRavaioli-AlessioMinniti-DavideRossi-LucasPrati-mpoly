@@ -46,7 +46,7 @@ public interface MainGameView {
      * @param actions the names of the actions that the player can do. When a player selects an action
      * this will be executed by asking the {@link GameController} instance
      * that was previously attached to this view to execute the action.
-     * //TODO complete javadoc
+     * This is done by calling the method {@link GameController#executeAction(String)}
      */
     void showPlayerActions(Set<String> actions);
 

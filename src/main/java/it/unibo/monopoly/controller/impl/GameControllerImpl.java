@@ -262,14 +262,15 @@ public final class GameControllerImpl implements GameController {
     public void executeAction(final String actionName) {
         try {
             if (!turnActions.containsKey(actionName)) {
-                throw new IllegalArgumentException("No action with this name was registered");
+                throw new IllegalArgumentException("No action with this name was registered. It is possible that the current"
+                + "player has no permission to execute this action on the selected title deed");
             }
             turnActions.get(actionName).executeTransaction();
+            final Property currentlySittingProperty = (Property) this.board.getTileForPawn(
+                                                        this.board.getPawn(
+                                                            this.turnationManager.getIdCurrPlayer()));
             if (actionName == "buy") {
-                final Property currentProperty = (Property) this.board.getTileForPawn(
-                                                                        this.board.getPawn(
-                                                                            this.turnationManager.getIdCurrPlayer()));
-                gameboardView.buyProperty(currentProperty, this.turnationManager.getIdCurrPlayer());
+                gameboardView.buyProperty(currentlySittingProperty, this.turnationManager.getIdCurrPlayer());
             }
         } catch (final IllegalStateException | IllegalArgumentException e) {
             gameView.displayError(e);
