@@ -1,6 +1,5 @@
 package it.unibo.monopoly.model.transactions.api;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -92,10 +91,10 @@ public interface TitleDeed {
      * The tile deeds should be part of the same group,
      * a call on {@link #getType()} should give the same {@code String}
      * for each of the deeds that are part of this {@link Set}
-     * @param dices the value of the throw used to get some specific rent
+     * @param diceThrow the value of the throw used to get some specific rent
      * @return the final rent that should be paid as an {@code Integer}
      */
-    Integer getRent(Set<TitleDeed> groupTitleDeeds, Collection<Integer> dices);
+    Integer getRent(Set<TitleDeed> groupTitleDeeds, int diceThrow);
 
     /**
      * @return the {@link List} of {@link RentOption} 

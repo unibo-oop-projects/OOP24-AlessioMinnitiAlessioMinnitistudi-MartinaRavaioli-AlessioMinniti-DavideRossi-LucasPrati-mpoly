@@ -1,7 +1,6 @@
 package it.unibo.monopoly.model.transactions.impl;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -132,7 +131,7 @@ public class BaseTitleDeed implements TitleDeed {
      * selects the priciest and returns its value. 
      */
     @Override
-    public Integer getRent(final Set<TitleDeed> groupTitleDeeds, final Collection<Integer> dices) {
+    public Integer getRent(final Set<TitleDeed> groupTitleDeeds, final int diceThrow) {
         if (!groupTitleDeeds.stream().allMatch(d -> d.getGroup().equals(this.group))) {
             throw new IllegalArgumentException("The list of title deeds contains deeds"
                                                 + "that are not part of the group "

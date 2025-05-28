@@ -6,9 +6,9 @@ package it.unibo.monopoly.model.transactions.api;
  * This ledger is used to write and retrieve information about the transactions 
  * executed during the the turn of a player; meaning the method invocations the user called
  * on a {@link Bank} object (for example, {@link Bank#buyTitleDeed(String, int)},
- * {@link Bank#payRent(String, int, java.util.Collection)}). 
+ * {@link Bank#payRent(String, int, int)}). 
  * Implementations of the {@link Bank} interface can harness this ledger to apply specific domain logic checks. 
- * For instance, in the original version of the game the method {@link Bank#payRent(String, int, java.util.Collection)} 
+ * For instance, in the original version of the game the method {@link Bank#payRent(String, int, int)} 
  * can only be called once per turn, and the player cannot end its turn if it still has to pay a rent.
  * This ledger enables to track all payment operations with flexibility and room for expandability. 
  */

@@ -1,7 +1,6 @@
 package it.unibo.monopoly.model.transactions.impl;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
@@ -73,8 +72,8 @@ public final class ImmutableTitleDeedCopy implements TitleDeed {
     }
 
     @Override
-    public Integer getRent(final Set<TitleDeed> groupTitleDeeds, final Collection<Integer> dices) {
-        return this.deed.getRent(groupTitleDeeds, dices);
+    public Integer getRent(final Set<TitleDeed> groupTitleDeeds, final int diceThrow) {
+        return this.deed.getRent(groupTitleDeeds, diceThrow);
     }
 
     @Override

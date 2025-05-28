@@ -1,6 +1,5 @@
 package it.unibo.monopoly.model.transactions;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 import java.util.function.Function;
@@ -30,7 +29,7 @@ class BaseTitleDeedTest {
         return salePrice / 10;
     };
     private static final int BASE_RENT_PRICE = 2;
-    private static final Collection<Integer> DICE = List.of(1);
+    private static final int DICE = 1;
     private TitleDeed deed;
 
 

@@ -1,7 +1,5 @@
 package it.unibo.monopoly.model.transactions.impl;
 
-import java.util.List;
-
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.monopoly.model.transactions.api.Bank;
 import it.unibo.monopoly.model.transactions.api.BankAction;
@@ -82,8 +80,7 @@ final class BankActionFactoryImpl implements BankActionFactory {
 
             @Override
             public void executeTransaction() {
-                //TODO refactor dice throw to integer
-                bank.payRent(titleDeedName, currentPlayerId, List.of(diceThrow));
+                bank.payRent(titleDeedName, currentPlayerId, diceThrow);
             }
         };
     }

@@ -248,8 +248,7 @@ public final class GameControllerImpl implements GameController {
 
     @Override
     public String getRentString(final TitleDeed selectedProperty, final Set<TitleDeed> collect) {
-        final List<Integer> l = List.of(1);
-        final int rent = selectedProperty.getRent(collect, l);
+        final int rent = selectedProperty.getRent(collect, 1);
         if (selectedProperty.getGroup().equals(Group.SOCIETY)) {
 
             return rent + " times dice result";

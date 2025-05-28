@@ -1,6 +1,5 @@
 package it.unibo.monopoly.model.transactions.api;
 
-import java.util.Collection;
 import java.util.List;
 
 import org.apache.commons.lang3.tuple.Pair;
@@ -67,7 +66,7 @@ public interface BankState {
     /**
      * Wipes all internal data the {@link Bank} object has stored to track the execution
      * of transaction requests. 
-     * When calling transactional methods {@link #payRent(String, int, Collection)},
+     * When calling transactional methods {@link #payRent(String, int, int)},
      * {@link #sellTitleDeed(String)},{@link #buyTitleDeed(String, int)} the {@link Bank} keeps 
      * track of these method requests. This is done to keep track of the payments invoked by the
      * player that is currently playing, which is necessary to implement logic regarding the player's turn.

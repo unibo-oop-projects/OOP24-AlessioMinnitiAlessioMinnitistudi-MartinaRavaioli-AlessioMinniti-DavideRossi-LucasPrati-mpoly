@@ -1,7 +1,5 @@
 package it.unibo.monopoly.model.transactions;
 
-import java.util.Collection;
-import java.util.List;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -37,7 +35,6 @@ class BankTest {
     private static final int DICE_THROW = 12;
     private static final String TITLE_DEED_NAME1 = "Bastoni Gran Sasso";
     private static final String TITLE_DEED_NAME2 = "Viale Monterosa";
-        private static final Collection<Integer> DICE = List.of(1);
 
     private final Set<BankAccount> accounts = Set.of(
         new WithdrawCheckBankAccount(new SimpleBankAccountImpl(ID_1, AMOUNT),
@@ -113,7 +110,7 @@ class BankTest {
     void payRentInexistentPlayer() {
         final IllegalArgumentException inexistentPropertyException = assertThrows(
             IllegalArgumentException.class,
-            () -> bank.payRent(TITLE_DEED_NAME1, -1, DICE)
+            () -> bank.payRent(TITLE_DEED_NAME1, -1, DICE_THROW)
         );
         testExceptionFormat(inexistentPropertyException);
     }
@@ -122,7 +119,7 @@ class BankTest {
     void payRentInexistentProperty() {
         final IllegalArgumentException inexistentPropertyException = assertThrows(
             IllegalArgumentException.class,
-            () -> bank.payRent("", ID_1, DICE)
+            () -> bank.payRent("", ID_1, DICE_THROW)
         );
         testExceptionFormat(inexistentPropertyException); 
     }
@@ -131,7 +128,7 @@ class BankTest {
     void payRentOfPropertyWithNoOwner() {
         final IllegalStateException propertyHasNoOwnerException = assertThrows(
             IllegalStateException.class,
-            () -> bank.payRent(TITLE_DEED_NAME1, ID_1, DICE)
+            () -> bank.payRent(TITLE_DEED_NAME1, ID_1, DICE_THROW)
         );
         testExceptionFormat(propertyHasNoOwnerException); 
     }
@@ -144,7 +141,7 @@ class BankTest {
         assertEquals(ID_1, bank.getTitleDeed(TITLE_DEED_NAME1).getOwnerId());
         final IllegalStateException propertyPossessedByPlayerException = assertThrows(
             IllegalStateException.class,
-            () -> bank.payRent(TITLE_DEED_NAME1, ID_1, DICE)
+            () -> bank.payRent(TITLE_DEED_NAME1, ID_1, DICE_THROW)
         );
         testExceptionFormat(propertyPossessedByPlayerException); 
     }
@@ -157,13 +154,13 @@ class BankTest {
         final int rent = bank.getTitleDeed(TITLE_DEED_NAME1)
                                                 .getRent(Sets.filter(Sets.newHashSet(deeds), 
                                                         d -> !TITLE_DEED_NAME1.equals(d.getName())),
-                                                DICE
+                                                DICE_THROW
                                                 );
         final int initialBalancePl1 = bank.getBankAccount(ID_1).getBalance();
         final int initialBalancePl2 = bank.getBankAccount(ID_2).getBalance();
         bank.getBankStateObject().resetTransactionData();
         bank.getApplicableActionsForTitleDeed(ID_1, TITLE_DEED_NAME1, DICE_THROW);
-        bank.payRent(TITLE_DEED_NAME1, ID_1, DICE);
+        bank.payRent(TITLE_DEED_NAME1, ID_1, DICE_THROW);
         assertEquals(initialBalancePl1 - rent, bank.getBankAccount(ID_1).getBalance());
         assertEquals(initialBalancePl2 + rent, bank.getBankAccount(ID_2).getBalance());
     }

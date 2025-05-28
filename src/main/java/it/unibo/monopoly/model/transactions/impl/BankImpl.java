@@ -141,7 +141,7 @@ public final class BankImpl implements Bank {
     }
 
     @Override
-    public void payRent(final String titleDeedName, final int playerId, final Collection<Integer> dices) {
+    public void payRent(final String titleDeedName, final int playerId, final int diceThrow) {
         Objects.requireNonNull(titleDeedName);
         Objects.requireNonNull(playerId);
         final TitleDeed deed = findTitleDeed(titleDeedName);
@@ -156,7 +156,7 @@ public final class BankImpl implements Bank {
 
 
         final int rentAmount = deed.getRent(
-            titleDeedsByGroup(deed.getGroup()), dices
+            titleDeedsByGroup(deed.getGroup()), diceThrow
         );
 
         transactionLedger.markExecution(PAY_TRANSACTION);

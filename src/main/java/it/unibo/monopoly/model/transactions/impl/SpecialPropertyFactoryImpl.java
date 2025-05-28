@@ -2,7 +2,6 @@ package it.unibo.monopoly.model.transactions.impl;
 
 import java.util.List;
 import java.util.Set;
-import java.util.Collection;
 
 import it.unibo.monopoly.model.gameboard.impl.Group;
 import it.unibo.monopoly.model.transactions.api.RentOption;
@@ -74,8 +73,8 @@ public final class SpecialPropertyFactoryImpl implements SpecialPropertyFactory 
             }
 
             @Override
-            public Integer getRent(final Set<TitleDeed> groupTitleDeeds, final Collection<Integer> dices) {
-                return titleDeed.getRent(groupTitleDeeds, dices) * dices.stream().mapToInt(Integer::intValue).sum();
+            public Integer getRent(final Set<TitleDeed> groupTitleDeeds, final int diceThrow) {
+                return titleDeed.getRent(groupTitleDeeds, diceThrow) * diceThrow;
             }
 
             @Override

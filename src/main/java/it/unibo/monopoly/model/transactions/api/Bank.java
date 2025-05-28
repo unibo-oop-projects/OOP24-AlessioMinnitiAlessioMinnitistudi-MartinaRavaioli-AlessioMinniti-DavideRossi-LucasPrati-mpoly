@@ -10,7 +10,7 @@ import it.unibo.monopoly.model.turnation.impl.PlayerImpl;
 /**
  * This object handles all payment operations that happen in the game.
  * It manages a {@link Collection} of {@link BankAccount} and of {@link TitleDeed}
- * and exposes methods to perform basic payment actions in the game ({@link #payRent(String, int, Collection)},
+ * and exposes methods to perform basic payment actions in the game ({@link #payRent(String, int, int)},
  * {@link #buyTitleDeed(String, int)}...)
  *
 */
@@ -56,9 +56,6 @@ public interface Bank {
      * @param titleDeedName the name of the {@link TitleDeed} to be purchased 
      * @param playerId the id associated with the player that will be the new owner of the property
      * The id is used to retrieve the account of the player and make the purchase
-     * @throws IllegalStateException if the object, and the content it manages, is in
-     * a state that does not allow the execution of this operation. These checks
-     * are specific of the underlying implementation
      */
     void buyTitleDeed(String titleDeedName, int playerId);
 
@@ -69,12 +66,9 @@ public interface Bank {
      * The rent will vary based on the {@link RentOption} chose by the system
      * @param playerId the id, returned by {@link it.unibo.monopoly.utils.Identifiable#getID()}, 
      * associated to the {@link BankAccount} of the player that has to pay the rent
-     * @param dices the value of the throw used to get some specific rent
-     * @throws IllegalStateException if the object, and the content it manages, is in
-     * a state that does not allow the execution of this operation. These checks
-     * are specific of the underlying implementation
+     * @param diceThrow the value of the throw used to get some specific rent
      */
-    void payRent(String titleDeedName, int playerId, Collection<Integer> dices);
+    void payRent(String titleDeedName, int playerId, int diceThrow);
 
 
     /**
