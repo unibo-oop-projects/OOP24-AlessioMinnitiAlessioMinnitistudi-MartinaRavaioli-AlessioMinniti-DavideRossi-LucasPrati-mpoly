@@ -1,14 +1,27 @@
 package it.unibo.monopoly.model.gameboard.impl.chance_comunity.impl;
 
+import java.util.List;
+
 import it.unibo.monopoly.model.gameboard.impl.chance_comunity.api.Command;
+import it.unibo.monopoly.model.turnation.api.Player;
 
-public abstract class BaseCommand implements Command {
+public interface BaseCommand extends Command {
+    
+    /**
+     * add the argumet for a command that requires an int.
+     * @param arg
+     */
+    void addIntArg(int arg);
 
-    private String keyword;
+    /**
+     * add the argumet for a command that requires a tile.
+     * @param tile
+     */
+    void addTileArg(String tile);
 
-    @Override
-    public String getKeyWord() {
-        return this.keyword;
-    }
-
+    /**
+     * add the argumet for a command that requires a list of players.
+     * @param players
+     */
+    void addPlayersArg(List<Player> players);
 }
