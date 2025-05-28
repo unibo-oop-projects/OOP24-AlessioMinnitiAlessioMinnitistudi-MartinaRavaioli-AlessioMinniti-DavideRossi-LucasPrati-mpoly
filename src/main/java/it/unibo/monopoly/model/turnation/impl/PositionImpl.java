@@ -39,10 +39,11 @@ public class PositionImpl implements Position, Comparable<Position>, Serializabl
     */
     @Override
     public void setPos(final int value) {
-        if (value <= MAX_POS) {
+        if (value < MAX_POS) {
             this.value = value;
         } else {
-            throw new IllegalArgumentException("out of bound");
+            int tempVal = value - MAX_POS;
+            this.value = tempVal;
         }
     }
 

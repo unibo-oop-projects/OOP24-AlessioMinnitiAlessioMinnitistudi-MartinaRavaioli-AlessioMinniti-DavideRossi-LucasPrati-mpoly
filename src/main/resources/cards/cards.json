@@ -1,5 +1,6 @@
 [
   {
+    "name": "GO",
     "position": 0,
     "type": "SPECIAL",
     "effect": "INCOME"
