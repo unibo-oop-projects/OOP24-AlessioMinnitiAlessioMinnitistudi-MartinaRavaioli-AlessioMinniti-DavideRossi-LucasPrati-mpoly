@@ -18,7 +18,6 @@ import it.unibo.monopoly.model.turnation.api.Player;
 import it.unibo.monopoly.utils.impl.GuiUtils;
 import it.unibo.monopoly.view.api.AccountPanel;
 import it.unibo.monopoly.view.api.ContractPanel;
-import it.unibo.monopoly.view.api.GameAction;
 import it.unibo.monopoly.view.api.GameActionsPanel;
 import it.unibo.monopoly.view.api.GamePanelsFactory;
 import it.unibo.monopoly.view.api.GameboardView;
@@ -133,8 +132,8 @@ public final class MainViewImpl implements MainGameView {
     }
 
     @Override
-    public void showPlayerActions(final Set<GameAction> actions) {
-        gameActionsPanel.buildActionButtons(actions);
+    public void showPlayerActions(final Set<String> actions) {
+        gameActionsPanel.buildActionButtons(actions, controller);
         mainGameFrame.repaint();
     }
 

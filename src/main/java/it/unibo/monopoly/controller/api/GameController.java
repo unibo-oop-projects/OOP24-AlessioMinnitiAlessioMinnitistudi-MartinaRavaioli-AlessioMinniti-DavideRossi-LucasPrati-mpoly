@@ -8,6 +8,7 @@ import it.unibo.monopoly.model.gameboard.api.Pawn;
 import it.unibo.monopoly.model.gameboard.api.Property;
 import it.unibo.monopoly.model.gameboard.api.Tile;
 import it.unibo.monopoly.model.transactions.api.BankAccount;
+import it.unibo.monopoly.model.transactions.api.BankAction;
 import it.unibo.monopoly.model.transactions.api.TitleDeed;
 import it.unibo.monopoly.model.turnation.api.Player;
 import it.unibo.monopoly.utils.impl.Configuration;
@@ -181,5 +182,12 @@ public interface GameController {
      * @return the string
      */
     String getRentString(TitleDeed selectedProperty, Set<TitleDeed> collect);
+
+    /**
+     * Retrieves a {@link BankAction} with the same name ({@link BankAction#getName()})
+     * as the one given as input and executes it (calling {@link BankAction#executeTransaction()}).  
+     * @param actionName the name of the {@link BankAction} to execute
+     */
+    void executeAction(String actionName);
 
 }

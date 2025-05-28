@@ -3,7 +3,9 @@ package it.unibo.monopoly.controller.impl;
 import java.awt.Color;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
@@ -25,6 +27,7 @@ import it.unibo.monopoly.utils.impl.Configuration;
 import it.unibo.monopoly.utils.impl.UseFileTxtImpl;
 import it.unibo.monopoly.view.api.GameboardView;
 import it.unibo.monopoly.view.api.MainGameView;
+import it.unibo.monopoly.model.transactions.api.BankAction;
 
 
 /**
@@ -38,6 +41,7 @@ public final class GameControllerImpl implements GameController {
     private final TurnationManager turnationManager;
     private final Board board;
     private final Configuration config;
+    private Map<String,BankAction> turnActions = new HashMap<>();
     private MainGameView gameView;
     private GameboardView gameboardView;
 
@@ -252,5 +256,23 @@ public final class GameControllerImpl implements GameController {
             return rent + " times dice result";
         }
         return Integer.toString(rent);
+    }
+
+    @Override
+    public void executeAction(final String actionName) {
+        try {
+            if (!turnActions.containsKey(actionName)) {
+                throw new IllegalArgumentException("No action with this name was registered");
+            }
+            turnActions.get(actionName).executeTransaction();
+            if (actionName == "buy") {
+                final Property currentProperty = (Property) this.board.getTileForPawn(
+                                                                        this.board.getPawn(
+                                                                            this.turnationManager.getIdCurrPlayer()));
+                gameboardView.buyProperty(currentProperty, this.turnationManager.getIdCurrPlayer());
+            }
+        } catch (final IllegalStateException | IllegalArgumentException e) {
+            gameView.displayError(e);
+        }
     }
 }

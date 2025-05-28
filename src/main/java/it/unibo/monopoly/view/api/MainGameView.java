@@ -43,11 +43,12 @@ public interface MainGameView {
 
     /**
      * Display interactable UI elements that show the possible actions for a player.
-     * @param actions the set of actions that the player can do. When a player selects an action
-     * this will be executed passing to the {@link GameAction} the {@link GameController} instance
-     * that was previously attached to this view.
+     * @param actions the names of the actions that the player can do. When a player selects an action
+     * this will be executed by asking the {@link GameController} instance
+     * that was previously attached to this view to execute the action.
+     * //TODO complete javadoc
      */
-    void showPlayerActions(Set<GameAction> actions);
+    void showPlayerActions(Set<String> actions);
 
     /**
      * Displays the game rules and general information
