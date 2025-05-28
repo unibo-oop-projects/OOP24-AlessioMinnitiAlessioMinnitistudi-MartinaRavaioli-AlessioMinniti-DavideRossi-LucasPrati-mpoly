@@ -32,9 +32,6 @@ public interface TitleDeed {
      * associated with the player that currently holds
      * ownership of this {@link TitleDeed}; or an empty optional 
      * if no player owns the property.
-     * @throws IllegalStateException if no player has ownership of this
-     * Title deed, meaning the title deed was never bought, never assigned
-     * to a player at the beginning of the game or it was sold back to the bank.
      */
     int getOwnerId();
 
@@ -43,7 +40,6 @@ public interface TitleDeed {
      * this {@link TitleDeed}, if no player already owns 
      * the {@link TitleDeed}.
      * @param ownerId The {@code name} associated with the new owner 
-     * @throws IllegalStateException if the title deed already has an owner
      */
     void setOwner(int ownerId);
 
@@ -53,7 +49,6 @@ public interface TitleDeed {
      * the {@link TitleDeed}. After that, the deed 
      * will have no owner and subsequent calls to 
      * {@link #getOwnerId()} will return an empty {@link Optional}
-     * @throws IllegalStateException if the title deed has no owner
      */
     void removeOwner();
 

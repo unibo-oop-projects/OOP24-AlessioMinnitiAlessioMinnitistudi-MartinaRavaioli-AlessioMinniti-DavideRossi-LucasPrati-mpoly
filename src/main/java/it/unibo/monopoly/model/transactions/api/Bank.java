@@ -37,9 +37,6 @@ public interface Bank {
      * The {@link TitleDeed} becomes available for purchase
      * and the previous owner is refunded
      * @param titleDeedName the name of the deed to sell
-     * @throws IllegalStateException if the object, and the content it manages, is in
-     * a state that does not allow the execution of this operation. These checks
-     * are specific of the underlying implementation
      */
     void sellTitleDeed(String titleDeedName);
 
