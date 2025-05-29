@@ -130,10 +130,6 @@ public interface GameController {
     */
     void gameOver();
     /**
-     * remove the player who lose.
-    */
-    void playerGameOver();
-    /**
      * change the pawns position.
     */
     void changePositions();

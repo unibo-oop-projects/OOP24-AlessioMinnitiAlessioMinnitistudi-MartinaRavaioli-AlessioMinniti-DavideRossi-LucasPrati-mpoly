@@ -207,11 +207,6 @@ public final class GameControllerImpl implements GameController {
     }
 
     @Override
-    public void playerGameOver() {
-
-    }
-
-    @Override
     public void changePositions() {
         final Collection<Integer> res = turnationManager.moveByDices();
         this.board.movePawn(this.board.getPawn(this.turnationManager.getIdCurrPlayer()), res);
