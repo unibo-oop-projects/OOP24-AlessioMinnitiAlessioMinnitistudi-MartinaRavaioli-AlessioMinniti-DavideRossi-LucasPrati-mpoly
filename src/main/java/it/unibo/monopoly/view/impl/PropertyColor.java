@@ -11,7 +11,7 @@ import javax.swing.JComponent;
  */
 public final class PropertyColor extends JComponent {
     private static final long serialVersionUID = -6218820567019985015L;
-    private Color color; 
+    private Color color;
 
     /**
      * the constructor sets the color that will be displayed.

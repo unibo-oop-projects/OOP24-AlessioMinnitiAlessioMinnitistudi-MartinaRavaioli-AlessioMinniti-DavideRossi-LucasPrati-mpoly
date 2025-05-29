@@ -9,7 +9,7 @@ public abstract class AbstractIdPlayerImpl implements Identifiable<Integer> {
     private final int id;
     /**
      * constructor.
-     * @param id
+     * @param id id
     */
     public AbstractIdPlayerImpl(final int id) {
         this.id = id;

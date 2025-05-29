@@ -16,9 +16,9 @@ public abstract class TileImpl implements Tile, Identifiable<String>, Comparable
 
     /**
     * constructor.
-    * @param name
-    * @param pos
-    * @param group
+    * @param name name
+    * @param pos position
+    * @param group group
     */
     protected TileImpl(final String name, final Position pos, final Group group) {
         this.name = name;
@@ -44,7 +44,7 @@ public abstract class TileImpl implements Tile, Identifiable<String>, Comparable
 
     /**
     * compare to.
-    * @param o
+    * @param o tile to compare
     * @return int
     */
     @Override

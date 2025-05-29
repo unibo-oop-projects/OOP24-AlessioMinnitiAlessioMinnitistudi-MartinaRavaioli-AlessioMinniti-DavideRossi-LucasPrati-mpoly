@@ -13,47 +13,47 @@ public interface Board {
     //call to return a tile
     /**
      * get the tile.
-     * @param pos
+     * @param pos position
      * @return return a tile
      */
     Tile getTile(Position pos);
 
     /**
      * get the tile of the pawn.
-     * @param p
+     * @param p pawn given
      * @return Tile
      */
     Tile getTileForPawn(Pawn p);
 
     /**
      * move the pawn.
-     * @param player
-     * @param value
+     * @param player pawn of the player who has to move 
+     * @param value value
     */
     void movePawn(Pawn player, Collection<Integer> value);
 
     /**
      * get the pawn with the given id.
-     * @param id
+     * @param id id
      * @return Pawn
     */
     Pawn getPawn(int id);
 
     /**
      * remove a pawn.
-     * @param p
+     * @param p pawn to remove
     */
     void removePawn(Pawn p);
 
     /**
      * add a pawn.
-     * @param p
+     * @param p pawn to add
     */
     void addPawn(Pawn p);
 
     /**
      * get all the pawns in a tile.
-     * @param tile
+     * @param tile tile given
      * @return List of Pawn
     */
     List<Pawn> getPawninTile(Tile tile);
@@ -77,21 +77,21 @@ public interface Board {
 
     /**
      * move a pawn in a selected tile.
-     * @param pawn
-     * @param name
+     * @param pawn pawn to move
+     * @param name name of the tile in which the pawn must move
     */
     void movePawnInTile(Pawn pawn, String name);
 
     /**
      * get a tile searched by the name given.
-     * @param name
+     * @param name name of the tile to find
      * @return Tile
     */
     Tile getTile(String name);
 
     /**
      * add a tile.
-     * @param tile
+     * @param tile tile to add
     */
     void addTile(Tile tile);
 

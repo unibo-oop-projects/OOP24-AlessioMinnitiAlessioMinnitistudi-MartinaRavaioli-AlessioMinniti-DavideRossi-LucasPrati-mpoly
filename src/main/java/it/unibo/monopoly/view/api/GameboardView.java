@@ -9,25 +9,25 @@ import it.unibo.monopoly.model.turnation.api.Position;
 public interface GameboardView extends GamePanel {
     /**
      * add players' houses.
-     * @param prop
-     * @param numHouses
+     * @param prop curr property
+     * @param numHouses property's num houses
     */
     void addHouse(Property prop, int numHouses);
     /**
      * add players' hotel.
-     * @param prop
+     * @param prop curr property
     */
     void addHotel(Property prop);
     /**
      * change the positions.
-     * @param currPlayer
-     * @param newPos
+     * @param currPlayer curr player
+     * @param newPos new position
     */
     void changePos(int currPlayer, Position newPos);
     /**
      * set new bought properties.
-     *  @param prop
-     *  @param currPlayer
+     *  @param prop property
+     *  @param currPlayer curr player
     */
     void buyProperty(Property prop, int currPlayer);
     /**

@@ -133,12 +133,12 @@ public interface GameController {
     void playerGameOver();
     /**
      * called if a player buy an house.
-     * @param prop
+     * @param prop curr property
     */
     void addHouse(Property prop);
     /**
      * called if a player buy an hotel.
-     * @param prop
+     * @param prop curr property
     */
     void addHotel(Property prop);
 
