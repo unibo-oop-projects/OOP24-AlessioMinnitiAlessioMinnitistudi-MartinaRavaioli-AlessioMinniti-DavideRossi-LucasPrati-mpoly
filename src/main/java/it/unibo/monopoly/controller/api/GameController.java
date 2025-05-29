@@ -146,12 +146,7 @@ public interface GameController {
      * @param prop
     */
     void addHotel(Property prop);
-    /**
-     * get the size of the board.
-     * @param numTiles
-     * @return int
-    */
-    int getSize(int numTiles);
+
     /**
      * get the tiles.
      * @return List Tile

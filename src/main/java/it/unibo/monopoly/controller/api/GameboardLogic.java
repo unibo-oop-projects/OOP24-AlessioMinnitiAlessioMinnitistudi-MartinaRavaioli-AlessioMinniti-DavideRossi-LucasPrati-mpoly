@@ -23,4 +23,10 @@ public interface GameboardLogic {
     */
     int tileCard(int i, int j, int size);
 
+    /**
+     * get the size of the board.
+     * @param numTiles
+     * @return int
+    */
+    int getSize(int numTiles);
 }

@@ -213,11 +213,6 @@ public final class GameControllerImpl implements GameController {
     }
 
     @Override
-    public int getSize(final int numTiles) {
-        return numTiles / 4 + 1;
-    }
-
-    @Override
     public void gameOver() {
         this.turnationManager.setOver();
     }

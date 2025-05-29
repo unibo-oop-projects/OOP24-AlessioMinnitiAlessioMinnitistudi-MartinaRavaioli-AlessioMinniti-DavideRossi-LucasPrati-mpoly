@@ -49,9 +49,8 @@ public final class GameboardViewImpl extends JPanel implements GameboardView {
                 justification = "must return reference to the object instead of a copy")
     public GameboardViewImpl(final GameController controller) {
         this.controller = controller;
-        this.size = controller.getSize(this.controller.getTiles().size());
         this.logic = new GameboardLogicImpl();
-
+        this.size = logic.getSize(this.controller.getTiles().size());
         renderDefaultUI();
     }
 
