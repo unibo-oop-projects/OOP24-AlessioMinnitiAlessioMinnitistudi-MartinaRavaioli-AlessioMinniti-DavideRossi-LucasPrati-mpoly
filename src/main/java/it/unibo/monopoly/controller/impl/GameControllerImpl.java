@@ -5,7 +5,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import com.google.common.collect.Maps;
 
@@ -14,9 +13,8 @@ import it.unibo.monopoly.controller.api.GameController;
 import it.unibo.monopoly.model.gameboard.api.Board;
 import it.unibo.monopoly.model.gameboard.api.Pawn;
 import it.unibo.monopoly.model.gameboard.api.Property;
+import it.unibo.monopoly.model.gameboard.api.Special;
 import it.unibo.monopoly.model.gameboard.api.Tile;
-import it.unibo.monopoly.model.gameboard.impl.Group;
-import it.unibo.monopoly.model.transactions.api.TitleDeed;
 import it.unibo.monopoly.model.turnation.api.Player;
 import it.unibo.monopoly.model.turnation.api.TurnationManager;
 import it.unibo.monopoly.utils.api.UseFileTxt;
@@ -66,6 +64,12 @@ public final class GameControllerImpl implements GameController {
     }
 
 
+    private void executeEffect() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'executeEffect'");
+    }
+
+
     @Override
     public void endTurn() {
         this.turnationManager.getNextPlayer();
@@ -88,32 +92,10 @@ public final class GameControllerImpl implements GameController {
                                     result.stream().mapToInt(d -> d).sum()),
                                     BankAction::getName);
             this.gameView.showPlayerActions(turnActions.keySet());
-        }
-    }
-
-    @Override
-    public void buyProperty() {
-        try {
-            //MISSING IDENTIFIER INTEGRATION WITH  BANK
-            //final Tile currentPlayerTile = board.getTileForPawn(board.getPawn(manager.getIdCurrPlayer()));
-            //bank.buyTitleDeed(currentPlayerTile.toString(), null);
-            gameView.displayMessage("Purchase of title deed successful");
-            throw new UnsupportedOperationException("Unimplemented method 'buyProperty'");
-        } catch (final IllegalStateException e) {
-            gameView.displayError(e);
-        }
-    }
-
-    @Override
-    public void payPropertyOwner() {
-        try {
-            //MISSING IDENTIFIER INTEGRATION WITH  BANK
-            //final Tile currentPlayerTile = board.getTileForPawn(board.getPawn(manager.getIdCurrPlayer()));
-            //bank.payRent(currentPlayerTile.toString(), null);
-            gameView.displayMessage("Rent payment successful");
-            throw new UnsupportedOperationException("Unimplemented method 'payPropertyOwner'");
-        } catch (final IllegalStateException e) {
-            gameView.displayError(e);
+        } else if (currentlySittingTile instanceof Special) {
+            final Special specialTile = (Special) currentlySittingTile;
+            this.gameView.displaySpecialInfo(specialTile);
+            executeEffect();
         }
     }
 
@@ -146,28 +128,6 @@ public final class GameControllerImpl implements GameController {
     }
 
     @Override
-    public void playerGameOver() {
-
-    }
-
-    @Override
-    public void addHouse(final Property prop) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'addHouse'");
-    }
-
-    @Override
-    public void addHotel(final Property prop) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'addHotel'");
-    }
-
-    @Override
-    public void gameOver() {
-        this.turnationManager.setOver();
-    }
-
-    @Override
     public List<Tile> getTiles() {
         return Collections.unmodifiableList(this.board.getTiles());
     }
@@ -182,14 +142,10 @@ public final class GameControllerImpl implements GameController {
         return this.turnationManager.getCurrPlayer();
     }
 
-    @Override
-    public String getRentString(final TitleDeed selectedProperty, final Set<TitleDeed> collect) {
-        final int rent = selectedProperty.getRent(collect, 1);
-        if (selectedProperty.getGroup().equals(Group.SOCIETY)) {
 
-            return rent + " times dice result";
-        }
-        return Integer.toString(rent);
+    @Override
+    public Pawn getCurrPawn() {
+        return this.board.getPawn(this.turnationManager.getIdCurrPlayer());
     }
 
     @Override
@@ -210,10 +166,4 @@ public final class GameControllerImpl implements GameController {
             gameView.displayError(e);
         }
     }
-
-    @Override
-    public Pawn getCurrPawn() {
-        return this.board.getPawn(this.turnationManager.getIdCurrPlayer());
-    }
-
 }
