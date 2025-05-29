@@ -57,7 +57,14 @@ public final class GameboardViewImpl extends JPanel implements GameboardView {
 
     @Override
     public void addHouse(Property prop, int numHouses) {
-
+        for (final Map.Entry<JPanel, Position> entry : this.tilePositions.entrySet()) {
+            if (entry.getValue().equals(prop.getPosition())) {
+                final JPanel panel = entry.getKey();
+                final JLabel label = new JLabel("HOUSES: "+numHouses);
+                label.setForeground(prop.getGroup().getColor());
+                panel.add(label);
+            }
+        }
     }
 
     @Override
@@ -93,7 +100,7 @@ public final class GameboardViewImpl extends JPanel implements GameboardView {
                 p.add(pawnGUI);
                 p.setLayout(new FlowLayout(FlowLayout.CENTER, PAWN_SIZE, PAWN_SIZE));
                 p.revalidate();
-                p.repaint(); 
+                p.repaint();
                 break;
             }
         }
@@ -102,12 +109,12 @@ public final class GameboardViewImpl extends JPanel implements GameboardView {
     @Override
     public void buyProperty(final Property prop, final int currPlayer) {
         for (final Map.Entry<JPanel, Position> entry : this.tilePositions.entrySet()) {
-            if (entry.getValue().equals(pawnPositions.get(currPlayer - 1))) { 
+            if (entry.getValue().equals(prop.getPosition())) {
                 final JPanel p = entry.getKey();
                 final PawnSquare propertyGUI = new PawnSquare(controller.getCurrPlayer().getColor());
                 p.add(propertyGUI);
                 p.revalidate();
-                p.repaint(); 
+                p.repaint();
                 break;
             }
         }
