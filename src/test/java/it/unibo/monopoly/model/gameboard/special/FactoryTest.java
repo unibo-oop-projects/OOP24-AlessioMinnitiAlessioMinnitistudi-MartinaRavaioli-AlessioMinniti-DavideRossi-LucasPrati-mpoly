@@ -124,11 +124,10 @@ class FactoryTest {
         s.activateEffect(p1);
         assertEquals(pos4.getPos(), board.getPawn(p1.getID()).getPosition().getPos());
         assertTrue(p1.isInPrison());
-        assertFalse(p1.canExitPrison(dice1, board));
+        assertFalse(p1.canExitPrison(dice1));
         assertTrue(p1.isInPrison());
-        assertTrue(p1.canExitPrison(dice2, board));
+        assertTrue(p1.canExitPrison(dice2));
         assertFalse(p1.isInPrison());
-        assertEquals(pos6.getPos(), board.getPawn(p1.getID()).getPosition().getPos());
     }
 
     @Test

@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.util.Collection;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-import it.unibo.monopoly.model.gameboard.api.Board;
 import it.unibo.monopoly.model.turnation.api.Parkable;
 import it.unibo.monopoly.model.turnation.api.Player;
 
@@ -72,7 +71,7 @@ public final class ParkablePlayer implements Parkable, Player {
     }
 
     @Override
-    public boolean canExitPrison(final Collection<Integer> dices, final Board board) {
-        return pl.canExitPrison(dices, board);
+    public boolean canExitPrison(final Collection<Integer> dices) {
+        return pl.canExitPrison(dices);
     }
 }
