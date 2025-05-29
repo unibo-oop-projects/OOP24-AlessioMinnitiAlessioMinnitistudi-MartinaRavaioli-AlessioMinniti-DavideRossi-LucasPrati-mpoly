@@ -1,5 +1,6 @@
 package it.unibo.monopoly.view.api;
 
+import java.util.List;
 import java.util.Set;
 
 import it.unibo.monopoly.controller.api.GameController;
@@ -51,6 +52,13 @@ public interface MainGameView {
      * This is done by calling the method {@link GameController#executeAction(String)}
      */
     void showPlayerActions(Set<String> actions);
+
+    /**
+     * Display the result of the call on {@link GameController#throwDices()}.
+     * @param results a {@link List} of {@code int} containing the results of each
+     * dice thrown
+     */
+    void displayDiceResult(List<Integer> results);
 
     /**
      * Displays the game rules and general information

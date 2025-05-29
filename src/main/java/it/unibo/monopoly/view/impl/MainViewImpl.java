@@ -2,6 +2,7 @@ package it.unibo.monopoly.view.impl;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.util.List;
 import java.util.Set;
 
 import javax.swing.JButton;
@@ -139,6 +140,12 @@ public final class MainViewImpl implements MainGameView {
         mainGameFrame.repaint();
     }
 
+
+    @Override
+    public void displayDiceResult(List<Integer> results) {
+        mainActionsPanel.displayDicesResults(results);
+    }
+
     @Override
     public void showRules(final String rules) {
         new RulesWindowView(this.mainGameFrame, controller.getConfiguration(), rules);
@@ -180,5 +187,4 @@ public final class MainViewImpl implements MainGameView {
     public void callBuyProperty(final Property prop) {
         this.gameBoardPanel.buyProperty(prop, this.controller.getCurrPlayer().getID());
     }
-
 }

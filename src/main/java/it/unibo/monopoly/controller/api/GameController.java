@@ -1,13 +1,10 @@
 package it.unibo.monopoly.controller.api;
 
 import java.util.List;
-import java.util.Set;
 
 import it.unibo.monopoly.model.gameboard.api.Pawn;
-import it.unibo.monopoly.model.gameboard.api.Property;
 import it.unibo.monopoly.model.gameboard.api.Tile;
 import it.unibo.monopoly.model.transactions.api.BankAction;
-import it.unibo.monopoly.model.transactions.api.TitleDeed;
 import it.unibo.monopoly.model.turnation.api.Player;
 import it.unibo.monopoly.utils.impl.Configuration;
 import it.unibo.monopoly.view.api.MainGameView;
@@ -71,7 +68,7 @@ public interface GameController {
      * @return Player
     */
     Player getCurrPlayer();
-    
+
     /**
      * get the pawn of the current player.
      * @return Pawn

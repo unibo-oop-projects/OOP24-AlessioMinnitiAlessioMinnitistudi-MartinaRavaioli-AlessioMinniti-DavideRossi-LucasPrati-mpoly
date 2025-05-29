@@ -68,6 +68,7 @@ public final class GameControllerImpl implements GameController {
     private void executeEffect(final Effect effect) {
         try {
             effect.activate(this.turnationManager.getCurrPlayer());
+            this.gameView.displayMessage("Eseguito effetto " + effect.getDescription());
         } catch (final Exception e) {
             this.gameView.displayError(e);
         }
@@ -85,6 +86,7 @@ public final class GameControllerImpl implements GameController {
         final int currentPlayerId = this.turnationManager.getIdCurrPlayer();
         this.board.movePawn(this.board.getPawn(this.turnationManager.getIdCurrPlayer()), result);
         this.gameView.callChangePositions();
+        this.gameView.displayDiceResult(result.stream().toList());
         final Tile currentlySittingTile = this.board.getTileForPawn(this.board.getPawn(currentPlayerId));
         if (currentlySittingTile instanceof Property) {
             final String propertyName = currentlySittingTile.getName();
