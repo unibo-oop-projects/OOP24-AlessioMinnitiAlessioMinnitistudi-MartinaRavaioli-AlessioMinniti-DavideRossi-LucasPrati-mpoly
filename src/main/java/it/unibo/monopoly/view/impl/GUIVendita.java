@@ -114,7 +114,7 @@ public final class GUIVendita extends JFrame {
             mortageValue.setText(Integer.toString(selectedProperty.getMortgagePrice()));
             String auxrent = String.valueOf(selectedProperty.getRent(logic.getProperties(player, bank)
                                                                         .stream()
-                                                                        .collect(Collectors.toSet()), List.of(1)));
+                                                                        .collect(Collectors.toSet()), 1));
             if (selectedProperty.getGroup().equals(Group.SOCIETY)) {
 
                 auxrent = auxrent + " times dice result";
