@@ -133,10 +133,6 @@ public interface GameController {
     */
     void playerGameOver();
     /**
-     * change the pawns position.
-    */
-    void changePositions();
-    /**
      * called if a player buy an house.
      * @param prop
     */

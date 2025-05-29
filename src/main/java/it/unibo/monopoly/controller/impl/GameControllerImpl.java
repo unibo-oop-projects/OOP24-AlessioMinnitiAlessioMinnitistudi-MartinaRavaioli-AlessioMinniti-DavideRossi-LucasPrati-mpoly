@@ -193,14 +193,6 @@ public final class GameControllerImpl implements GameController {
     }
 
     @Override
-    public void changePositions() {
-        final Collection<Integer> res = turnationManager.moveByDices();
-        this.board.movePawn(this.board.getPawn(this.turnationManager.getIdCurrPlayer()), res);
-        gameboardView.changePos(this.turnationManager.getIdCurrPlayer(),
-                                this.board.getPawn(this.turnationManager.getIdCurrPlayer()).getPosition());
-    }
-
-    @Override
     public void addHouse(final Property prop) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'addHouse'");
