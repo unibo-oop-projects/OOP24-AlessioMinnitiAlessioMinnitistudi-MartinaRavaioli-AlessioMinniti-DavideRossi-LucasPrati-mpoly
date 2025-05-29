@@ -11,6 +11,7 @@ import com.google.common.collect.Maps;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.monopoly.controller.api.GameController;
 import it.unibo.monopoly.model.gameboard.api.Board;
+import it.unibo.monopoly.model.gameboard.api.Effect;
 import it.unibo.monopoly.model.gameboard.api.Pawn;
 import it.unibo.monopoly.model.gameboard.api.Property;
 import it.unibo.monopoly.model.gameboard.api.Special;
@@ -64,9 +65,12 @@ public final class GameControllerImpl implements GameController {
     }
 
 
-    private void executeEffect() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'executeEffect'");
+    private void executeEffect(final Effect effect) {
+        try {
+            effect.activate(this.turnationManager.getCurrPlayer());
+        } catch (final Exception e) {
+            this.gameView.displayError(e);
+        }
     }
 
 
@@ -81,7 +85,6 @@ public final class GameControllerImpl implements GameController {
         final int currentPlayerId = this.turnationManager.getIdCurrPlayer();
         this.board.movePawn(this.board.getPawn(this.turnationManager.getIdCurrPlayer()), result);
         this.gameView.callChangePositions();
-        //TODO guardare se è una speciale e in quel caso attivare effetto
         final Tile currentlySittingTile = this.board.getTileForPawn(this.board.getPawn(currentPlayerId));
         if (currentlySittingTile instanceof Property) {
             final String propertyName = currentlySittingTile.getName();
@@ -95,7 +98,7 @@ public final class GameControllerImpl implements GameController {
         } else if (currentlySittingTile instanceof Special) {
             final Special specialTile = (Special) currentlySittingTile;
             this.gameView.displaySpecialInfo(specialTile);
-            executeEffect();
+            executeEffect(specialTile.getEffect());
         }
     }
 
