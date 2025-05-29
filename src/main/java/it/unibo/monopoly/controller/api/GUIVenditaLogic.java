@@ -10,23 +10,7 @@ import it.unibo.monopoly.model.turnation.api.Player;
 /**
  * this is the implementation of the logic behind the property manager GUI. 
  */
-public interface GUI_VenditaLogic {
-
-    /**
-     * this method returns wether there are houses on the property.
-     * @param prop the property you want to know if there are houses
-     * @return wether there are houses on the property
-     */
-    boolean areThereHouses(final TitleDeed prop);
-
-    /**
-     * this method removes a house fromm the property. 
-     * calls the bank method to deposit the ammount in the pleyers bank accouunt
-     * @param properties players properties
-     * @param selectedValue the property from wich the house will be removed
-     * @return wether the payment has been succesful
-     */
-    boolean sellHouse(final List<TitleDeed> properties, final Object selectedValue);
+public interface GUIVenditaLogic {
 
     /**
      * this method removes the property fromm the property list. 
@@ -35,7 +19,7 @@ public interface GUI_VenditaLogic {
      * @param selectedProperty the property you want to sell
      * @return wether the payment has been succesful
      */
-    boolean sellProperty(final List<TitleDeed> properties, final TitleDeed selectedProperty);
+    boolean sellProperty(List<TitleDeed> properties, TitleDeed selectedProperty);
 
     /**
      * 
@@ -43,18 +27,18 @@ public interface GUI_VenditaLogic {
      * @param selectedValue the property you want 
      * @return the property 
      */
-    TitleDeed getProperty(final List<TitleDeed> properties, final Object selectedValue);
+    TitleDeed getProperty(List<TitleDeed> properties, Object selectedValue);
 
-        /**
+    /**
      * gets the balance of the player account using the bank.
-     * @param player
+     * @param player of which we want the balance
      * @return its balance
      */
     BankAccount getPlayerBalance(Player player);
 
     /**
      * gets the list of property owned by the player using the bank.
-     * @param player
+     * @param player of which we want the properties
      * @return its property
      */
     List<TitleDeed> getProperties(Player player);
@@ -62,7 +46,7 @@ public interface GUI_VenditaLogic {
     /**
      * PLACEHOLDER 
      * there will be the method in Tile .
-     * @param selectedProperty
+     * @param selectedProperty  of which we want the color
      * @return an object of the class Color
      */
     Color getPropertyColor(TitleDeed selectedProperty);

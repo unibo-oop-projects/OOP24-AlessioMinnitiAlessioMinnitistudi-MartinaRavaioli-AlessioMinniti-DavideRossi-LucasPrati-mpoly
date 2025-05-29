@@ -19,7 +19,7 @@ import javax.swing.JScrollPane;
 import javax.swing.border.Border;
 import javax.swing.event.ListSelectionListener;
 
-import it.unibo.monopoly.controller.api.GUI_VenditaLogic;
+import it.unibo.monopoly.controller.api.GUIVenditaLogic;
 import it.unibo.monopoly.model.gameboard.impl.Group;
 import it.unibo.monopoly.model.transactions.api.TitleDeed;
 import it.unibo.monopoly.model.turnation.api.Player;
@@ -38,12 +38,12 @@ public final class GUIVendita extends JFrame {
       * @param player the player that wants to manage its properties
       * @param width of the frame
       * @param heigth of the frame
-      * @param gController for game
+      * @param log for game
       */
 
-    public GUIVendita(final Player player, final int width, final int heigth, final GUI_VenditaLogic log) {
+    public GUIVendita(final Player player, final int width, final int heigth, final  GUIVenditaLogic log) {
         final Border b = BorderFactory.createLineBorder(Color.black);
-        final GUI_VenditaLogic logic = log;
+        final  GUIVenditaLogic logic = log;
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setSize(width, heigth);
 

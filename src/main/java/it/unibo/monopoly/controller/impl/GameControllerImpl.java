@@ -10,7 +10,6 @@ import it.unibo.monopoly.model.gameboard.api.Board;
 import it.unibo.monopoly.model.gameboard.api.Pawn;
 import it.unibo.monopoly.model.gameboard.api.Property;
 import it.unibo.monopoly.model.gameboard.api.Tile;
-import it.unibo.monopoly.model.transactions.api.Bank;
 import it.unibo.monopoly.model.turnation.api.Player;
 import it.unibo.monopoly.model.turnation.api.TurnationManager;
 import it.unibo.monopoly.utils.api.UseFileTxt;
@@ -38,7 +37,6 @@ public final class GameControllerImpl implements GameController {
      * {@link Board} and {@link TurnationManager} are mutable and intentionally injected without defensive copies,
      * as they are expected to maintain consistent shared state across the application.
      * 
-     * @param bank the bank of the game
      * @param board the game board
      * @param turnationManager the entity for manage the turnation of the players
      * @param config a consistent configuration for settings
@@ -48,7 +46,6 @@ public final class GameControllerImpl implements GameController {
         justification = "Injection of shared mutable dependencies is intentional and controlled in this architecture."
     )
     public GameControllerImpl(
-            final Bank bank,
             final Board board,
             final TurnationManager turnationManager,
             final Configuration config
