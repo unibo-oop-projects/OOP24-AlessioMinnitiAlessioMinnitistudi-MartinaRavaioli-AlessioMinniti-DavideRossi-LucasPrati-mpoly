@@ -11,6 +11,7 @@ import javax.swing.JSplitPane;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.monopoly.controller.api.GameController;
+import it.unibo.monopoly.model.gameboard.api.Property;
 import it.unibo.monopoly.model.gameboard.api.Special;
 import it.unibo.monopoly.model.transactions.api.BankAccount;
 import it.unibo.monopoly.model.transactions.api.TitleDeed;
@@ -176,6 +177,11 @@ public final class MainViewImpl implements MainGameView {
     @Override
     public void callClearPanel() {
         this.gameBoardPanel.clearPanel();
+    }
+
+    @Override
+    public void callBuyProperty(Property prop) {
+        this.gameBoardPanel.buyProperty(prop, this.controller.getCurrPlayer().getID());
     }
 
 }

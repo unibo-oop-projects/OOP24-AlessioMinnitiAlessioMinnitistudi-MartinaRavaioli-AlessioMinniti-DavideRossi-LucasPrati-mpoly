@@ -3,6 +3,7 @@ package it.unibo.monopoly.view.api;
 import java.util.Set;
 
 import it.unibo.monopoly.controller.api.GameController;
+import it.unibo.monopoly.model.gameboard.api.Property;
 import it.unibo.monopoly.model.gameboard.api.Special;
 import it.unibo.monopoly.model.transactions.api.BankAccount;
 import it.unibo.monopoly.model.transactions.api.TitleDeed;
@@ -79,11 +80,16 @@ public interface MainGameView {
     void displayMessage(String message);
 
     /**
-     * call the change position in the gameboard view.
+     * call the change position method in the gameboard view.
      */
     void callChangePositions();
     /**
-     * call the clear panel in the gameboard view.
+     * call the clear panel method in the gameboard view.
      */
     void callClearPanel();
+    /**
+     * call the buy property method in the gameboard view.
+     * @param prop the property to buy
+     */
+    void callBuyProperty(Property prop);
 }
