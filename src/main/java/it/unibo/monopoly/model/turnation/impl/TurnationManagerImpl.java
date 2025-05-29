@@ -117,7 +117,7 @@ public class TurnationManagerImpl implements TurnationManager {
 
     @Override
     public final boolean canExitPrison(final Collection<Integer> value, final Board board) {
-        return this.currPlayer.canExitPrison(value, board);
+        return this.currPlayer.canExitPrison(value);
     }
 
     @Override

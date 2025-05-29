@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.util.Collection;
 import java.util.Objects;
 
-import it.unibo.monopoly.model.gameboard.api.Board;
 import it.unibo.monopoly.model.turnation.api.Player;
 import it.unibo.monopoly.utils.api.Identifiable;
 
@@ -144,7 +143,7 @@ public final class PlayerImpl implements Player {
     }
 
     @Override
-    public boolean canExitPrison(final Collection<Integer> dices, final Board board) {
+    public boolean canExitPrison(final Collection<Integer> dices) {
         return true;
     }
 }

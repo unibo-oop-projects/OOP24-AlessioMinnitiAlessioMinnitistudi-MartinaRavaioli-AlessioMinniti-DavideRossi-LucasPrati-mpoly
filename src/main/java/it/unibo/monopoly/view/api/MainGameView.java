@@ -5,6 +5,7 @@ import java.util.Set;
 import it.unibo.monopoly.controller.api.GameController;
 import it.unibo.monopoly.model.gameboard.api.Property;
 import it.unibo.monopoly.model.gameboard.api.Special;
+import it.unibo.monopoly.model.transactions.api.Bank;
 import it.unibo.monopoly.model.transactions.api.BankAccount;
 import it.unibo.monopoly.model.transactions.api.TitleDeed;
 import it.unibo.monopoly.model.turnation.api.Player;
@@ -64,8 +65,9 @@ public interface MainGameView {
      * @param player The player whose statistics have to be displayed
      * The view will then make subsequent calls to controller methods to retrieve
      * all information related to that player.
+     * @param bank
      */
-    void displayPlayerStats(Player player);
+    void displayPlayerStats(Player player, Bank bank);
 
     /**
      * Displays an error on the UI.

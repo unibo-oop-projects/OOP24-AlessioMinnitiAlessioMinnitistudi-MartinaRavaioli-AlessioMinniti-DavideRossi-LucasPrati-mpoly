@@ -1,10 +1,8 @@
 package it.unibo.monopoly.controller.impl;
 
-import java.awt.Color;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
@@ -14,10 +12,7 @@ import it.unibo.monopoly.model.gameboard.api.Pawn;
 import it.unibo.monopoly.model.gameboard.api.Property;
 import it.unibo.monopoly.model.gameboard.api.Tile;
 import it.unibo.monopoly.model.gameboard.impl.Group;
-import it.unibo.monopoly.model.transactions.api.Bank;
-import it.unibo.monopoly.model.transactions.api.BankAccount;
 import it.unibo.monopoly.model.transactions.api.TitleDeed;
-import it.unibo.monopoly.model.transactions.impl.BaseTitleDeed;
 import it.unibo.monopoly.model.turnation.api.Player;
 import it.unibo.monopoly.model.turnation.api.TurnationManager;
 import it.unibo.monopoly.utils.api.UseFileTxt;
@@ -31,9 +26,6 @@ import it.unibo.monopoly.view.api.MainGameView;
  */
 public final class GameControllerImpl implements GameController {
 
-    private static final int NUM = 0;
-
-    private final Bank bank;
     private final TurnationManager turnationManager;
     private final Board board;
     private final Configuration config;
@@ -46,7 +38,6 @@ public final class GameControllerImpl implements GameController {
      * {@link Board} and {@link TurnationManager} are mutable and intentionally injected without defensive copies,
      * as they are expected to maintain consistent shared state across the application.
      * 
-     * @param bank the bank of the game
      * @param board the game board
      * @param turnationManager the entity for manage the turnation of the players
      * @param config a consistent configuration for settings
@@ -56,65 +47,13 @@ public final class GameControllerImpl implements GameController {
         justification = "Injection of shared mutable dependencies is intentional and controlled in this architecture."
     )
     public GameControllerImpl(
-            final Bank bank,
             final Board board,
             final TurnationManager turnationManager,
             final Configuration config
         ) {
-        this.bank = bank;
         this.board = board;
         this.turnationManager = turnationManager;
         this.config = config;
-    }
-
-    @Override
-    public boolean areThereHouses(final TitleDeed prop) {
-        return prop.houseNum() > 0;
-    }
-
-    @Override
-    public boolean sellHouse(final List<TitleDeed> properties, final Object selectedValue) {
-        //manac metodo rossi per far arrivare i soldi al giocatore che vende
-        /*final int propInd = getPropertyIndex(properties, selectedValue);
-        final int houses = properties.get(propInd).houseNum();
-        properties.get(propInd).setHouseNum(houses - 1);*/
-        return true;
-    }
-
-    @Override
-    public boolean sellProperty(final TitleDeed selectedProperty) {
-        bank.sellTitleDeed(selectedProperty.getName());
-        return true;
-    }
-
-    @Override
-    public TitleDeed getProperty(final List<TitleDeed> properties, final Object selectedValue) {
-        final Optional<TitleDeed> selectedPropertyO = properties.stream()
-                                                                .filter(p -> p.getName().equals(selectedValue))
-                                                                .findAny();
-        TitleDeed selectedProperty = new BaseTitleDeed(null, "null", NUM, null, NUM); 
-        if (selectedPropertyO.isPresent()) {
-            selectedProperty = selectedPropertyO.get();
-        }
-        return selectedProperty;
-    }
-
-    @Override
-    public List<TitleDeed> getProperties(final Player player) {
-        if (bank.getTitleDeedsByOwner(player.getName()).isEmpty()) {
-            return List.of();
-        }
-        return bank.getTitleDeedsByOwner(player.getName()).stream().toList();
-    }
-
-    @Override
-    public BankAccount getPlayerBalance(final Player player) {
-        return bank.getBankAccount(player.getName());
-    }
-
-    @Override
-    public Color getPropertyColor(final TitleDeed selectedProperty) {
-        return selectedProperty.getGroup().getColor();
     }
 
 
@@ -236,4 +175,5 @@ public final class GameControllerImpl implements GameController {
     public Pawn getCurrPawn() {
         return this.board.getPawn(this.turnationManager.getIdCurrPlayer());
     }
+
 }

@@ -137,7 +137,7 @@ public final class MainMenuControllerImpl implements MainMenuController {
         titleDeeds.stream().forEach(bank::addTitleDeed);
 
         // start the game
-        final var controllerGameManager = new GameControllerImpl(bank, board, turnationManager, config);
+        final var controllerGameManager = new GameControllerImpl(board, turnationManager, config);
         final var mainView = new MainViewImpl(controllerGameManager);
         controllerGameManager.attachView(mainView);
         // mainView.start(); //TODO implementare il metodo e rimuovere il commento
