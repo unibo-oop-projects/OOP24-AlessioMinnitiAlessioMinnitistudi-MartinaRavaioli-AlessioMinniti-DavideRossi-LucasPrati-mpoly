@@ -14,9 +14,10 @@ public interface GameboardView extends GamePanel {
     */
     void addHouse(Property prop, int numHouses);
     /**
-     * add hotels' players.
+     * add players' hotel.
+     * @param prop
     */
-    void addHotel();
+    void addHotel(Property prop);
     /**
      * change the positions.
      * @param currPlayer

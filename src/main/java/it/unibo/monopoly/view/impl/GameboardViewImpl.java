@@ -68,8 +68,8 @@ public final class GameboardViewImpl extends JPanel implements GameboardView {
     }
 
     @Override
-    public void addHotel() {
-
+    public void addHotel(Property prop) {
+        
     }
 
     @Override
