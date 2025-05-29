@@ -56,11 +56,11 @@ public final class GameboardViewImpl extends JPanel implements GameboardView {
     }
 
     @Override
-    public void addHouse(Property prop, int numHouses) {
+    public void addHouse(final Property prop, final int numHouses) {
         for (final Map.Entry<JPanel, Position> entry : this.tilePositions.entrySet()) {
             if (entry.getValue().equals(prop.getPosition())) {
                 final JPanel panel = entry.getKey();
-                final JLabel label = new JLabel("HOUSES: "+numHouses);
+                final JLabel label = new JLabel("HOUSES: " + numHouses);
                 label.setForeground(prop.getGroup().getColor());
                 panel.add(label);
             }
@@ -68,7 +68,7 @@ public final class GameboardViewImpl extends JPanel implements GameboardView {
     }
 
     @Override
-    public void addHotel(Property prop) {
+    public void addHotel(final Property prop) {
         for (final Map.Entry<JPanel, Position> entry : this.tilePositions.entrySet()) {
             if (entry.getValue().equals(prop.getPosition())) {
                 final JPanel panel = entry.getKey();
@@ -191,35 +191,6 @@ public final class GameboardViewImpl extends JPanel implements GameboardView {
                 board.add(grid[i][j]);
             }
         }
-
-        /* 
-        for (int i = 0; i < this.size; i++) {
-            for (int j = 0; j < this.size; j++) {
-                final JPanel tile = new JPanel();
-
-                if (logic.isBoardTile(i, j, this.size)) {
-                    tile.setBorder(BorderFactory.createLineBorder(Color.black));
-                    tile.setBackground(Color.white);
-                    this.tilesView.add(tile);
-                } else if (logic.tileCard(i, j, this.size) > -1) {
-                    tile.setBorder(BorderFactory.createLineBorder(Color.black));
-
-                    if (logic.tileCard(i, j, this.size) == 0) {
-                        tile.setBackground(Color.RED);
-                        final JLabel label = new JLabel("IMPREVISTI");
-                        tile.add(label, BorderLayout.CENTER);
-                    } else {
-                        tile.setBackground(Color.YELLOW);
-                        final JLabel label = new JLabel("PROBABILITA'");
-                        tile.add(label, BorderLayout.CENTER);
-                    }
-                } else {
-                    tile.setBackground(Color.lightGray);
-                }
-                board.add(tile);
-
-            }
-        }*/
 
         for (int i = 0; i < controller.getTiles().size(); i++) {
             final JPanel panel = this.tilesView.get(i);
