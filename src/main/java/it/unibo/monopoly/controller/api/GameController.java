@@ -1,14 +1,10 @@
 package it.unibo.monopoly.controller.api;
 
-import java.awt.Color;
 import java.util.List;
-import java.util.Set;
 
 import it.unibo.monopoly.model.gameboard.api.Pawn;
 import it.unibo.monopoly.model.gameboard.api.Property;
 import it.unibo.monopoly.model.gameboard.api.Tile;
-import it.unibo.monopoly.model.transactions.api.BankAccount;
-import it.unibo.monopoly.model.transactions.api.TitleDeed;
 import it.unibo.monopoly.model.turnation.api.Player;
 import it.unibo.monopoly.utils.impl.Configuration;
 import it.unibo.monopoly.view.api.GameboardView;
@@ -43,60 +39,6 @@ public interface GameController {
      * occupied by the player's pawn whose turn it is.
      */
     void payPropertyOwner();
-
-    /**
-     * this method returns wether there are houses on the property.
-     * @param prop the property you want to know if there are houses
-     * @return wether there are houses on the property
-     */
-    boolean areThereHouses(TitleDeed prop);
-
-    /**
-     * this method removes a house fromm the property. 
-     * calls the bank method to deposit the ammount in the pleyers bank accouunt
-     * @param properties players properties
-     * @param selectedValue the property from wich the house will be removed
-     * @return wether the payment has been succesful
-     */
-    boolean sellHouse(List<TitleDeed> properties, Object selectedValue);
-
-    /**
-     * 
-     * @param properties the players property list
-     * @param selectedValue the property you want 
-     * @return the property 
-     */
-    TitleDeed getProperty(List<TitleDeed> properties, Object selectedValue);
-
-    /**
-     * Sell a {@link TitleDeed} back to the bank and refund the owner.
-     * @param selectedProperty the name of the {@link TitleDeed} to sell.
-     * @return whether the operation was successful or not
-     */
-    boolean sellProperty(TitleDeed selectedProperty);
-
-    /**
-     * gets the list of property owned by the player using the bank.
-     * @param player
-     * @return its property
-     */
-    List<TitleDeed> getProperties(Player player);
-
-    /**
-     * gets the balance of the player account using the bank.
-     * @param player
-     * @return its balance
-     */
-    BankAccount getPlayerBalance(Player player);
-
-
-    /**
-     * PLACEHOLDER 
-     * there will be the method in Tile .
-     * @param selectedProperty
-     * @return an object of the class Color
-     */
-    Color getPropertyColor(TitleDeed selectedProperty);
 
     /**
      * Loads the game rules from the file
@@ -174,12 +116,5 @@ public interface GameController {
      * @return Player
     */
     Player getCurrPlayer();
-    /**
-     * return the String version of the rent based on the type of property.
-     * @param selectedProperty of which you want to get the rent
-     * @param collect the property of the player that owns the selected property
-     * @return the string
-     */
-    String getRentString(TitleDeed selectedProperty, Set<TitleDeed> collect);
 
 }

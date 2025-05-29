@@ -6,6 +6,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
+import java.util.List;
 import java.util.stream.Collectors;
 
 import javax.swing.BorderFactory;
@@ -18,7 +19,8 @@ import javax.swing.JScrollPane;
 import javax.swing.border.Border;
 import javax.swing.event.ListSelectionListener;
 
-import it.unibo.monopoly.controller.api.GameController;
+import it.unibo.monopoly.controller.api.GUI_VenditaLogic;
+import it.unibo.monopoly.model.gameboard.impl.Group;
 import it.unibo.monopoly.model.transactions.api.TitleDeed;
 import it.unibo.monopoly.model.turnation.api.Player;
 /**
@@ -39,9 +41,9 @@ public final class GUIVendita extends JFrame {
       * @param gController for game
       */
 
-    public GUIVendita(final Player player, final int width, final int heigth, final GameController gController) {
+    public GUIVendita(final Player player, final int width, final int heigth, final GUI_VenditaLogic log) {
         final Border b = BorderFactory.createLineBorder(Color.black);
-        final GameController logic = gController;
+        final GUI_VenditaLogic logic = log;
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setSize(width, heigth);
 
@@ -108,11 +110,17 @@ public final class GUIVendita extends JFrame {
 
         //selection of property
         final ListSelectionListener propertySelectionListener = e -> {
-            final TitleDeed selectedProperty = logic.getProperty(logic.getProperties(player), propertiesList.getSelectedValue());
+            final TitleDeed selectedProperty = logic.getProperty(logic.getProperties(player), 
+                                                                propertiesList.getSelectedValue());
             housesCostValue.setText(Integer.toString(selectedProperty.housePrice()));
             mortageValue.setText(Integer.toString(selectedProperty.getMortgagePrice()));
-            rentValue.setText(logic.getRentString(selectedProperty, logic.getProperties(player)
-                                    .stream().collect(Collectors.toSet())));
+            String auxrent = String.valueOf(selectedProperty.getRent(logic.getProperties(player)
+                                    .stream().collect(Collectors.toSet()), List.of(1)));
+            if (selectedProperty.getGroup().equals(Group.SOCIETY)) {
+
+                auxrent = auxrent + " times dice result";
+            }
+            rentValue.setText(auxrent);
             housesNumValue.setText(Integer.toString(selectedProperty.houseNum()));
             colorValue.setColor(logic.getPropertyColor(selectedProperty));
 
@@ -150,7 +158,7 @@ public final class GUIVendita extends JFrame {
         //sell property
         final ActionListener sellPropertyListener = e -> {
             final TitleDeed selectedProperty = logic.getProperty(logic.getProperties(player), propertiesList.getSelectedValue());
-            if (logic.sellProperty(selectedProperty)) {
+            if (logic.sellProperty(logic.getProperties(player), selectedProperty)) {
                 final PaymentDialog paymentComplete = new PaymentDialog(selectedProperty.getMortgagePrice(), true);
                 sellProperty.setEnabled(false);
                 paymentComplete.setVisible(true);
