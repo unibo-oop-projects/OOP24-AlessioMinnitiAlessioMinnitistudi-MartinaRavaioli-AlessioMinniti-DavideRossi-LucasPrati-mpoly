@@ -23,7 +23,6 @@ import it.unibo.monopoly.model.turnation.api.TurnationManager;
 import it.unibo.monopoly.utils.api.UseFileTxt;
 import it.unibo.monopoly.utils.impl.Configuration;
 import it.unibo.monopoly.utils.impl.UseFileTxtImpl;
-import it.unibo.monopoly.view.api.GameboardView;
 import it.unibo.monopoly.view.api.MainGameView;
 
 
@@ -39,7 +38,6 @@ public final class GameControllerImpl implements GameController {
     private final Board board;
     private final Configuration config;
     private MainGameView gameView;
-    private GameboardView gameboardView;
 
     /**
      * Create a new {@link GameController} with the given parameters.
@@ -216,13 +214,6 @@ public final class GameControllerImpl implements GameController {
     @Override
     public List<Pawn> getPawns() {
         return Collections.unmodifiableList(this.board.getPawns());
-    }
-
-    @SuppressFBWarnings(value = "EI_EXPOSE_REP",
-                justification = "must return reference to the object instead of a copy")
-    @Override
-    public void setBoardView(final GameboardView view) {
-        this.gameboardView = view;
     }
 
     @Override

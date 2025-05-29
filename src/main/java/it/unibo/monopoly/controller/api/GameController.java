@@ -11,7 +11,6 @@ import it.unibo.monopoly.model.transactions.api.BankAccount;
 import it.unibo.monopoly.model.transactions.api.TitleDeed;
 import it.unibo.monopoly.model.turnation.api.Player;
 import it.unibo.monopoly.utils.impl.Configuration;
-import it.unibo.monopoly.view.api.GameboardView;
 import it.unibo.monopoly.view.api.MainGameView;
 
 /**
@@ -155,12 +154,6 @@ public interface GameController {
     List<Pawn> getPawns();
 
     /**
-     * set the gameboard view.
-     * @param view
-    */
-    void setBoardView(GameboardView view);
-
-    /**
      * get the current player.
      * @return Player
     */
@@ -174,6 +167,7 @@ public interface GameController {
     String getRentString(TitleDeed selectedProperty, Set<TitleDeed> collect);
     /**
      * get the pawn of the current player.
+     * @return Pawn
      */
     Pawn getCurrPawn();
 

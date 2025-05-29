@@ -60,7 +60,6 @@ public final class MainViewImpl implements MainGameView {
     public MainViewImpl(final GameController controller) {
         this.controller = controller;
         this.gameBoardPanel = new GameboardViewImpl(controller);
-        this.controller.setBoardView(this.gameBoardPanel);
         final GamePanelsFactory fact = new SwingPanelsFactory();
         contractPanel = fact.contractPanel();
         contractPanel.renderDefaultUI();
@@ -180,7 +179,7 @@ public final class MainViewImpl implements MainGameView {
     }
 
     @Override
-    public void callBuyProperty(Property prop) {
+    public void callBuyProperty(final Property prop) {
         this.gameBoardPanel.buyProperty(prop, this.controller.getCurrPlayer().getID());
     }
 
