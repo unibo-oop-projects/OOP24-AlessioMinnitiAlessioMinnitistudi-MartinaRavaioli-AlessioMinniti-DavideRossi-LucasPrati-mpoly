@@ -77,4 +77,9 @@ public interface MainGameView {
      * @param message The message to display
      */
     void displayMessage(String message);
+
+    /**
+     * call the change position in the gameboard view.
+     */
+    void callChangePositions();
 }

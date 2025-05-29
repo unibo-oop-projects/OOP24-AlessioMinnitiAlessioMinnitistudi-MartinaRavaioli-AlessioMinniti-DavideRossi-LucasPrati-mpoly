@@ -129,8 +129,7 @@ public final class GameControllerImpl implements GameController {
     public void throwDices() {
         final Collection<Integer> result = this.turnationManager.moveByDices();
         this.board.movePawn(this.board.getPawn(this.turnationManager.getIdCurrPlayer()), result);
-        this.gameboardView.changePos(this.turnationManager.getIdCurrPlayer(), 
-                                    this.board.getPawn(this.turnationManager.getIdCurrPlayer()).getPosition());
+        this.gameView.callChangePositions();
     }
 
     @Override
@@ -240,5 +239,10 @@ public final class GameControllerImpl implements GameController {
             return rent + " times dice result";
         }
         return Integer.toString(rent);
+    }
+
+    @Override
+    public Pawn getCurrPawn() {
+        return this.board.getPawn(this.turnationManager.getIdCurrPlayer());
     }
 }

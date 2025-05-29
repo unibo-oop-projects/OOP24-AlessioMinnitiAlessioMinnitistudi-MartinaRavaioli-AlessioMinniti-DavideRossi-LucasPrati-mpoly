@@ -168,4 +168,9 @@ public final class MainViewImpl implements MainGameView {
         throw new UnsupportedOperationException("Unimplemented method 'displayError'");
     }
 
+    @Override
+    public void callChangePositions() {
+        this.gameBoardPanel.changePos(this.controller.getCurrPlayer().getID(), this.controller.getCurrPawn().getPosition());
+    }
+
 }

@@ -172,5 +172,9 @@ public interface GameController {
      * @return the string
      */
     String getRentString(TitleDeed selectedProperty, Set<TitleDeed> collect);
+    /**
+     * get the pawn of the current player.
+     */
+    Pawn getCurrPawn();
 
 }
