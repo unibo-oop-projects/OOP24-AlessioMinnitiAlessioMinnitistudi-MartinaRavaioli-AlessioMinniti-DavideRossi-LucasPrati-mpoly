@@ -56,7 +56,7 @@ public final class GameboardViewImpl extends JPanel implements GameboardView {
     }
 
     @Override
-    public void addHouse() {
+    public void addHouse(Property prop, int numHouses) {
 
     }
 

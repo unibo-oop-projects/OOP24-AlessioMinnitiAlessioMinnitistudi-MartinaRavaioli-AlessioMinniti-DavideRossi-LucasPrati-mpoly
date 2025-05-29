@@ -8,9 +8,11 @@ import it.unibo.monopoly.model.turnation.api.Position;
 */
 public interface GameboardView extends GamePanel {
     /**
-     * add houses' players.
+     * add players' houses.
+     * @param prop
+     * @param numHouses
     */
-    void addHouse();
+    void addHouse(Property prop, int numHouses);
     /**
      * add hotels' players.
     */
