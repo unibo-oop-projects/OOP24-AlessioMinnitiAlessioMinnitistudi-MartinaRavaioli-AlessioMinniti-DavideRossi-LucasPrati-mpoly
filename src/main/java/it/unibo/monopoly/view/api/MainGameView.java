@@ -82,4 +82,8 @@ public interface MainGameView {
      * call the change position in the gameboard view.
      */
     void callChangePositions();
+    /**
+     * call the clear panel in the gameboard view.
+     */
+    void callClearPanel();
 }

@@ -173,4 +173,9 @@ public final class MainViewImpl implements MainGameView {
         this.gameBoardPanel.changePos(this.controller.getCurrPlayer().getID(), this.controller.getCurrPawn().getPosition());
     }
 
+    @Override
+    public void callClearPanel() {
+        this.gameBoardPanel.clearPanel();
+    }
+
 }
