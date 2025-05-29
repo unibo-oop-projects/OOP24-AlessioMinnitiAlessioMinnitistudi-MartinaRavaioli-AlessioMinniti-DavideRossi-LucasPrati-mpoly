@@ -8,8 +8,8 @@ import java.util.List;
  * @param <T> type of the list
 */
 public final class CircularLinkedList<T> {
-    private Node<T> head;
-    private Node<T> tail;
+    private Node<T> head; /**head. */
+    private Node<T> tail; /**tail. */
     /**
      * constructor.
     */

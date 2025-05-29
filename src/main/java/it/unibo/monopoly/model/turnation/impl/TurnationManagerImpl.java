@@ -17,11 +17,11 @@ import it.unibo.monopoly.utils.impl.CircularLinkedList;
  * turnation manager implementation.
 */
 public class TurnationManagerImpl implements TurnationManager {
-    private CircularLinkedList<Player> players;
-    private boolean isOver;
-    private Player currPlayer;
-    private Dice dice;
-    private BankState bankState;
+    private CircularLinkedList<Player> players; /**list of players. */
+    private boolean isOver; /**is Over bool. */
+    private Player currPlayer; /**current player. */
+    private Dice dice; /**dice. */
+    private BankState bankState; /**bankState to communicate with the bank. */
     /**
      * constructor.
      * @param plList list of players

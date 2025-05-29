@@ -11,9 +11,9 @@ import it.unibo.monopoly.model.turnation.impl.PositionImpl;
  * {@link Pawn} implementation.
 */
 public class PawnImpl extends AbstractIdPlayerImpl implements Pawn {
-    private Position pos;
-    private Color color;
-    private String shape;
+    private Position pos; /**position. */
+    private Color color; /**color. */
+    private String shape; /**shape. */
     /**
      * constructor.
      * @param id id

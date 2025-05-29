@@ -10,9 +10,9 @@ import it.unibo.monopoly.utils.api.Identifiable;
 * {@link Tile} implementation.
 */
 public abstract class TileImpl implements Tile, Identifiable<String>, Comparable<TileImpl> {
-    private final String name;
-    private final Position pos; 
-    private Group group;
+    private final String name; /**name. */
+    private final Position pos; /**position. */
+    private Group group; /**group. */
 
     /**
     * constructor.

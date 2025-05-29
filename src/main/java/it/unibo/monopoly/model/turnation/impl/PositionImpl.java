@@ -11,9 +11,9 @@ import it.unibo.monopoly.model.turnation.api.Position;
  * {@link Position}'s implementation.
 */
 public class PositionImpl implements Position, Comparable<Position>, Serializable {
-    private static final long serialVersionUID = 1L;
-    private static final Integer MAX_POS = 40;
-    private Integer value;
+    private static final long serialVersionUID = 1L; /**serial version. */
+    private static final Integer MAX_POS = 40; /**max pos reachable. */
+    private Integer value; /**value. */
 
     /**
      * constructor.

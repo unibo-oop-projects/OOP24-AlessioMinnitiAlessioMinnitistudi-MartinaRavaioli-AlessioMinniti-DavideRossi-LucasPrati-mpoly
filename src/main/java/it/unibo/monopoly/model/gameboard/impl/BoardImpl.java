@@ -19,9 +19,8 @@ import it.unibo.monopoly.model.turnation.impl.PositionImpl;
  * board implementation.
 */
 public class BoardImpl implements Board {
-
-    private final List<Tile> tiles;
-    private final List<Pawn> pawns;
+    private final List<Tile> tiles; /**list of tiles. */
+    private final List<Pawn> pawns; /**list of pawns. */
     /**
      * constructor.
     */

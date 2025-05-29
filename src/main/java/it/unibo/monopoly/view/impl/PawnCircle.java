@@ -9,9 +9,9 @@ import javax.swing.JPanel;
     * circle pawn shape.
 */
 public class PawnCircle extends JPanel {
-    private static final long serialVersionUID = 1L;
-    private static final int SIZE = 20; //size
-    private final Color color; //color
+    private static final long serialVersionUID = 1L; /**serial version. */
+    private static final int SIZE = 20; /**size. */
+    private final Color color; /**color. */
 
     /**
     * constructor.

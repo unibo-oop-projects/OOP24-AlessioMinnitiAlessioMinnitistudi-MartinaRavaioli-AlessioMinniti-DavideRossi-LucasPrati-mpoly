@@ -9,8 +9,8 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 @SuppressFBWarnings(value = "EI_EXPOSE_REP", justification = "Node is internal and safe to expose in this context")
 public class Node<T> {
 
-    private T value;
-    private Node<T> nextNode;
+    private T value; /**value. */
+    private Node<T> nextNode; /**next node. */
     /**
      * constructor.
      * @param value value of the node

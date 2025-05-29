@@ -7,10 +7,9 @@ import it.unibo.monopoly.model.turnation.api.Position;
  * {@link Property} implementation.
 */
 public class PropertyImpl extends TileImpl implements Property {
-
-    private static final int MAX_HOUSES = 4;
-    private int nHouses;
-    private boolean hotel;
+    private static final int MAX_HOUSES = 4; /**max number of houses. */
+    private int nHouses; /**number of hotel. */
+    private boolean hotel; /**tells if it has an hotel. */
 
     /**
      * constructor.

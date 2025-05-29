@@ -12,11 +12,11 @@ import it.unibo.monopoly.model.turnation.api.Dice;
  * dice implementation.
 */
 public class DiceImpl implements Dice {
-    private static final int DEFAULT_FACES = 5;
-    private final int faces;
-    private final Random rand = new Random();
-    private int nDices;
-    private final int[] dices;
+    private static final int DEFAULT_FACES = 5; /**default number of faces. */
+    private final int faces; /**number of faces. */
+    private final Random rand = new Random(); /**random. */
+    private int nDices; /**number of dices. */
+    private final int[] dices; /**dices. */
     /**
      * constructor.
      * @param n number of dices

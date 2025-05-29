@@ -25,11 +25,10 @@ import it.unibo.monopoly.view.api.MainGameView;
  * Implementation of {@link GameController}.
  */
 public final class GameControllerImpl implements GameController {
-
-    private final TurnationManager turnationManager;
-    private final Board board;
-    private final Configuration config;
-    private MainGameView gameView;
+    private final TurnationManager turnationManager; /**turnation manager. */
+    private final Board board; /**board. */
+    private final Configuration config; /**config. */
+    private MainGameView gameView; /**game view. */
 
     /**
      * Create a new {@link GameController} with the given parameters.

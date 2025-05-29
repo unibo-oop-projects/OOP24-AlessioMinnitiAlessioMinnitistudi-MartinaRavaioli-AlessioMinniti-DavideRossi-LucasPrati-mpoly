@@ -30,17 +30,18 @@ import it.unibo.monopoly.view.api.GameboardView;
     * board view implementation.
 */
 public final class GameboardViewImpl extends JPanel implements GameboardView {
-    private static final long serialVersionUID = 1L; //serial version UID
-    private static final int PAWN_SIZE = 5; //size of the pawns
-    private static final int STRIPE_WIDTH = 150; //width of the stripes of the tiles
-    private static final int STRIPE_HEIGHT = 10; //height of the stripes of the tiles
-    private final transient GameboardLogic logic; //controller only for this view
-    private final transient GameController controller; // main controller
-    private final List<JPanel> tilesView = new ArrayList<>(); //list with all the jpanels which represent the tiles
-    private final int size; //size of the board
-    private final Map<Integer, Position> pawnPositions = new HashMap<>(); //map with the number of the player and their positions
-    private final Map<JPanel, Position> tilePositions = new HashMap<>(); 
-    //map with the jpanels which represent the tiles and their positions
+    private static final long serialVersionUID = 1L; /**serial version UID.*/
+    private static final int PAWN_SIZE = 5; /**size of the pawns.*/
+    private static final int STRIPE_WIDTH = 150; /**width of the stripes of the tiles.*/
+    private static final int STRIPE_HEIGHT = 10; /**height of the stripes of the tiles.*/
+    private final transient GameboardLogic logic; /**controller only for this view.*/
+    private final transient GameController controller; /**main controller.*/
+    private final List<JPanel> tilesView = new ArrayList<>(); /**list with all the jpanels which represent the tiles.*/
+    private final int size; /**size of the board.*/
+    /**map with the number of the player and their positions.*/
+    private final Map<Integer, Position> pawnPositions = new HashMap<>();
+    /**map with the jpanels which represent the tiles and their positions.*/
+    private final Map<JPanel, Position> tilePositions = new HashMap<>();
 
     /**
     * start view.
