@@ -18,18 +18,16 @@ import it.unibo.monopoly.model.turnation.api.Player;
 public final class GUIVenditaLogicImpl implements  GUIVenditaLogic, Serializable {
     static final int NUM = 0;
     private static final long serialVersionUID = -6218820567019985015L;
-    private final Bank bank;
 
     /**
-     * constructor for this class.
-     * @param bank
+     * constructor.
      */
-    public GUIVenditaLogicImpl(final Bank bank) {
-        this.bank = bank;
+    public GUIVenditaLogicImpl() {
+
     }
 
     @Override
-    public List<TitleDeed> getProperties(final Player player) {
+    public List<TitleDeed> getProperties(final Player player, final Bank bank) {
         if (bank.getTitleDeedsByOwner(player.getName()).isEmpty()) {
             return List.of();
         }
@@ -37,7 +35,7 @@ public final class GUIVenditaLogicImpl implements  GUIVenditaLogic, Serializable
     }
 
     @Override
-    public BankAccount getPlayerBalance(final Player player) {
+    public BankAccount getPlayerBalance(final Player player, final Bank bank) {
         return bank.getBankAccount(player.getName());
     }
 
@@ -47,7 +45,7 @@ public final class GUIVenditaLogicImpl implements  GUIVenditaLogic, Serializable
     }
 
     @Override
-    public boolean sellProperty(final List<TitleDeed> properties, final TitleDeed selectedProperty) {
+    public boolean sellProperty(final List<TitleDeed> properties, final TitleDeed selectedProperty, final Bank bank) {
         bank.sellTitleDeed(selectedProperty.getName());
         return true;
     }

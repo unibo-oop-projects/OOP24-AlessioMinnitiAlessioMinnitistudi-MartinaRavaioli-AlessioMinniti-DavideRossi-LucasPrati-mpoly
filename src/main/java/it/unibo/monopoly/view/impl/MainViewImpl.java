@@ -152,7 +152,8 @@ public final class MainViewImpl implements MainGameView {
         new GUIVendita(player,
             (int) screenDimension.getWidth(), 
             (int) screenDimension.getHeight(), 
-            new GUIVenditaLogicImpl(bank)
+            new GUIVenditaLogicImpl(), 
+            bank
         );
     }
 

@@ -3,6 +3,7 @@ package it.unibo.monopoly.controller.api;
 import java.awt.Color;
 import java.util.List;
 
+import it.unibo.monopoly.model.transactions.api.Bank;
 import it.unibo.monopoly.model.transactions.api.BankAccount;
 import it.unibo.monopoly.model.transactions.api.TitleDeed;
 import it.unibo.monopoly.model.turnation.api.Player;
@@ -17,12 +18,13 @@ public interface GUIVenditaLogic {
      * calls the bank method to deposit the ammount in the pleyers bank accouunt
      * @param properties players properties
      * @param selectedProperty the property you want to sell
+     * @param bank to make the transaction
      * @return wether the payment has been succesful
      */
-    boolean sellProperty(List<TitleDeed> properties, TitleDeed selectedProperty);
+    boolean sellProperty(List<TitleDeed> properties, TitleDeed selectedProperty, Bank bank);
 
     /**
-     * 
+     * get the selected property as a titledeed.
      * @param properties the players property list
      * @param selectedValue the property you want 
      * @return the property 
@@ -32,16 +34,18 @@ public interface GUIVenditaLogic {
     /**
      * gets the balance of the player account using the bank.
      * @param player of which we want the balance
+     * @param bank to get the balance
      * @return its balance
      */
-    BankAccount getPlayerBalance(Player player);
+    BankAccount getPlayerBalance(Player player, Bank bank);
 
     /**
      * gets the list of property owned by the player using the bank.
      * @param player of which we want the properties
+     * @param bank to get the list
      * @return its property
      */
-    List<TitleDeed> getProperties(Player player);
+    List<TitleDeed> getProperties(Player player, Bank bank);
 
     /**
      * PLACEHOLDER 
