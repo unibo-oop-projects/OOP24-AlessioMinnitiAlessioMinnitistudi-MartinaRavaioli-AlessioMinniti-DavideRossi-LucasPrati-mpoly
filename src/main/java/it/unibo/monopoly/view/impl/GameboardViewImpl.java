@@ -69,7 +69,14 @@ public final class GameboardViewImpl extends JPanel implements GameboardView {
 
     @Override
     public void addHotel(Property prop) {
-        
+        for (final Map.Entry<JPanel, Position> entry : this.tilePositions.entrySet()) {
+            if (entry.getValue().equals(prop.getPosition())) {
+                final JPanel panel = entry.getKey();
+                final JLabel label = new JLabel("HOTEL: ✔");
+                label.setForeground(prop.getGroup().getColor());
+                panel.add(label);
+            }
+        }
     }
 
     @Override
