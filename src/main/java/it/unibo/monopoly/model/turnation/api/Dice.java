@@ -2,6 +2,8 @@ package it.unibo.monopoly.model.turnation.api;
 
 import java.util.Collection;
 
+import it.unibo.monopoly.model.turnation.impl.DiceImpl;
+
 /**
  * {@link DiceImpl} interface.
 */

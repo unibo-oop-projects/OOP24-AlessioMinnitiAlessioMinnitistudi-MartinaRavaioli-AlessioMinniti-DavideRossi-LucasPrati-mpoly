@@ -11,7 +11,10 @@ import javax.swing.JSplitPane;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.monopoly.controller.api.GameController;
+import it.unibo.monopoly.model.gameboard.api.Property;
+import it.unibo.monopoly.controller.impl.GUIVenditaLogicImpl;
 import it.unibo.monopoly.model.gameboard.api.Special;
+import it.unibo.monopoly.model.transactions.api.Bank;
 import it.unibo.monopoly.model.transactions.api.BankAccount;
 import it.unibo.monopoly.model.transactions.api.TitleDeed;
 import it.unibo.monopoly.model.turnation.api.Player;
@@ -58,7 +61,6 @@ public final class MainViewImpl implements MainGameView {
     public MainViewImpl(final GameController controller) {
         this.controller = controller;
         this.gameBoardPanel = new GameboardViewImpl(controller);
-        this.controller.setBoardView(this.gameBoardPanel);
         final GamePanelsFactory fact = new SwingPanelsFactory();
         contractPanel = fact.contractPanel();
         contractPanel.renderDefaultUI();
@@ -143,13 +145,14 @@ public final class MainViewImpl implements MainGameView {
     }
 
     @Override
-    public void displayPlayerStats(final Player player) {
+    public void displayPlayerStats(final Player player, final Bank bank) {
         // percentuale personalizzata dello schermo
         final Dimension screenDimension = GuiUtils.getDimensionWindow(PL_DATA_VIEW_PROPORTION, PL_DATA_VIEW_PROPORTION);
         new GUIVendita(player,
             (int) screenDimension.getWidth(), 
             (int) screenDimension.getHeight(), 
-            controller
+            new GUIVenditaLogicImpl(), 
+            bank
         );
     }
 
@@ -161,6 +164,21 @@ public final class MainViewImpl implements MainGameView {
     @Override
     public void displayError(final Exception e) {
         GuiUtils.showInfoMessage(mainGameFrame, "ERRORE", e.getMessage());
+    }
+
+    @Override
+    public void callChangePositions() {
+        this.gameBoardPanel.changePos(this.controller.getCurrPlayer().getID(), this.controller.getCurrPawn().getPosition());
+    }
+
+    @Override
+    public void callClearPanel() {
+        this.gameBoardPanel.clearPanel();
+    }
+
+    @Override
+    public void callBuyProperty(final Property prop) {
+        this.gameBoardPanel.buyProperty(prop, this.controller.getCurrPlayer().getID());
     }
 
 }

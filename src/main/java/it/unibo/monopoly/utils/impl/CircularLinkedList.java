@@ -5,11 +5,11 @@ import java.util.List;
 
 /**
  * circular linked list.
- * @param <T>
+ * @param <T> type of the list
 */
 public final class CircularLinkedList<T> {
-    private Node<T> head;
-    private Node<T> tail;
+    private Node<T> head; /**head. */
+    private Node<T> tail; /**tail. */
     /**
      * constructor.
     */
@@ -26,7 +26,7 @@ public final class CircularLinkedList<T> {
     }
     /**
      * add a node.
-     * @param value
+     * @param value value of the node
     */
     public void addNode(final T value) {
         final Node<T> newNode = new Node<>(value);
@@ -63,7 +63,7 @@ public final class CircularLinkedList<T> {
 
     /**
      * get the next node.
-     * @param value
+     * @param value value of the curr node
      * @return T
     */
     public T giveNextNode(final T value) {
@@ -80,7 +80,7 @@ public final class CircularLinkedList<T> {
     }
     /**
      * control if contains a node.
-     * @param searchValue
+     * @param searchValue value to search
      * @return boolean
     */
     public boolean containsNode(final T searchValue) {
@@ -99,7 +99,7 @@ public final class CircularLinkedList<T> {
     }
     /**
      * delete a node.
-     * @param valueToDelete
+     * @param valueToDelete value to delete
     */
     public void deleteNode(final T valueToDelete) {
         if (this.head == null) { // the list is empty

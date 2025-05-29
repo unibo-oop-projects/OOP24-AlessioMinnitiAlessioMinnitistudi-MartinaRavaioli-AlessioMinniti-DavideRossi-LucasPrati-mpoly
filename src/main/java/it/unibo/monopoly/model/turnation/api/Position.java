@@ -17,7 +17,7 @@ public interface Position {
 
     /**
      * set the position.
-     * @param value
+     * @param value value
     */
     void setPos(int value);
 }

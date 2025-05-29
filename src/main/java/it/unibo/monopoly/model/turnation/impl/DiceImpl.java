@@ -12,14 +12,14 @@ import it.unibo.monopoly.model.turnation.api.Dice;
  * dice implementation.
 */
 public class DiceImpl implements Dice {
-    private static final int DEFAULT_FACES = 5;
-    private final int faces;
-    private final Random rand = new Random();
-    private int nDices;
-    private final int[] dices;
+    private static final int DEFAULT_FACES = 5; /**default number of faces. */
+    private final int faces; /**number of faces. */
+    private final Random rand = new Random(); /**random. */
+    private int nDices; /**number of dices. */
+    private final int[] dices; /**dices. */
     /**
      * constructor.
-     * @param n
+     * @param n number of dices
     */
     public DiceImpl(final int n) {
         setNDices(n);
@@ -28,8 +28,8 @@ public class DiceImpl implements Dice {
     }
     /**
      * constructor.
-     * @param n
-     * @param faces
+     * @param n number of dices
+     * @param faces number of the dices' faces
     */
     public DiceImpl(final int n, final int faces) {
         setNDices(n);
@@ -45,10 +45,7 @@ public class DiceImpl implements Dice {
         this.dices = new int[this.nDices];
         this.faces = DEFAULT_FACES;
     }
-    /**
-     * throw the dices.
-     * @return a collection of integer
-    */
+
     @Override
     public final Collection<Integer> throwDices() {
         return IntStream.range(0, dices.length)
@@ -59,18 +56,14 @@ public class DiceImpl implements Dice {
 
     /**
      * set the number of dices.
-     * @param value
+     * @param value value
     */
     private void setNDices(final int value) {
         this.nDices = value;
     }
 
-    /**
-     * get the number of dices.
-     * @return int
-    */
     @Override
-    public int getNDices() {
+    public final int getNDices() {
         return this.nDices;
     }
 

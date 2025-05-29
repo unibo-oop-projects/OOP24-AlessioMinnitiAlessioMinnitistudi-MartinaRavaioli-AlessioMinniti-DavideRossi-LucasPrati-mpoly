@@ -10,7 +10,7 @@ import it.unibo.monopoly.model.turnation.api.Position;
 public interface Pawn {
     /**
      * move the pawn.
-     * @param steps
+     * @param steps number of steps to do
      */
     void move(int steps);
     /**
@@ -24,7 +24,7 @@ public interface Pawn {
 
     /**
      * set the position.
-     * @param pos
+     * @param pos position
     */
     void setPosition(Position pos);
     /**
@@ -34,12 +34,12 @@ public interface Pawn {
     String getShape();
     /**
      * set the shape.
-     * @param shape
+     * @param shape shape
     */
     void setShape(String shape);
     /**
      * set the color.
-     * @param color
+     * @param color color
     */
     void setColor(Color color);
 }

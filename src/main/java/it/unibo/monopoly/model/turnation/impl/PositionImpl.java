@@ -11,34 +11,26 @@ import it.unibo.monopoly.model.turnation.api.Position;
  * {@link Position}'s implementation.
 */
 public class PositionImpl implements Position, Comparable<Position>, Serializable {
-    private static final long serialVersionUID = 1L;
-    private static final Integer MAX_POS = 40;
-    private Integer value;
+    private static final long serialVersionUID = 1L; /**serial version. */
+    private static final Integer MAX_POS = 40; /**max pos reachable. */
+    private Integer value; /**value. */
 
     /**
      * constructor.
-     * @param value
+     * @param value value
     */
     @JsonCreator
     public PositionImpl(final Integer value) {
         this.value = value;
     }
 
-    /**
-     * get the position.
-     * @return int
-    */
     @Override
-    public int getPos() {
+    public final int getPos() {
         return this.value;
     }
 
-    /**
-     * set the position.
-     * @param value
-    */
     @Override
-    public void setPos(final int value) {
+    public final void setPos(final int value) {
         if (value < MAX_POS) {
             this.value = value;
         } else {
@@ -47,33 +39,21 @@ public class PositionImpl implements Position, Comparable<Position>, Serializabl
         }
     }
 
-    /**
-     * compare to.
-     * @param o
-     * @return int
-    */
     @Override
-    public int compareTo(final Position o) {
+    public final int compareTo(final Position o) {
         return this.value.compareTo(o.getPos());
     }
-    /**
-     * hashcode.
-     * @return int
-    */
+
     @Override
-    public int hashCode() {
+    public final int hashCode() {
         final int prime = 31;
         int result = 1;
         result = prime * result + ((value == null) ? 0 : value.hashCode());
         return result;
     }
-    /**
-     * equals.
-     * @param obj
-     * @return bool
-    */
+
     @Override
-    public boolean equals(final Object obj) {
+    public final boolean equals(final Object obj) {
         if (this == obj) {
             return true;
         }

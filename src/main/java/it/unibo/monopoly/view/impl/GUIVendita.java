@@ -6,6 +6,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
+import java.util.List;
 import java.util.stream.Collectors;
 
 import javax.swing.BorderFactory;
@@ -18,7 +19,9 @@ import javax.swing.JScrollPane;
 import javax.swing.border.Border;
 import javax.swing.event.ListSelectionListener;
 
-import it.unibo.monopoly.controller.api.GameController;
+import it.unibo.monopoly.controller.api.GUIVenditaLogic;
+import it.unibo.monopoly.model.gameboard.impl.Group;
+import it.unibo.monopoly.model.transactions.api.Bank;
 import it.unibo.monopoly.model.transactions.api.TitleDeed;
 import it.unibo.monopoly.model.turnation.api.Player;
 /**
@@ -36,12 +39,13 @@ public final class GUIVendita extends JFrame {
       * @param player the player that wants to manage its properties
       * @param width of the frame
       * @param heigth of the frame
-      * @param gController for game
+      * @param log for game
+      * @param bank for the stats
       */
 
-    public GUIVendita(final Player player, final int width, final int heigth, final GameController gController) {
+    public GUIVendita(final Player player, final int width, final int heigth, final  GUIVenditaLogic log, final Bank bank) {
         final Border b = BorderFactory.createLineBorder(Color.black);
-        final GameController logic = gController;
+        final  GUIVenditaLogic logic = log;
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setSize(width, heigth);
 
@@ -52,7 +56,7 @@ public final class GUIVendita extends JFrame {
         final JPanel rightPane = new JPanel(righLayout);
         final JPanel actionsPane = new JPanel(new GridLayout(2, 1));
         final JPanel infoPane = new JPanel(new GridLayout(1, 2));
-        final GridLayout infoLayout = new GridLayout(5, 1);
+        final GridLayout infoLayout = new GridLayout(3, 1);
         final JPanel fieldPane = new JPanel(infoLayout);
         final JPanel valuePane = new JPanel(infoLayout);
         final JPanel buttonPane = new JPanel();
@@ -70,31 +74,28 @@ public final class GUIVendita extends JFrame {
         balancePane.setBorder(b);
 
 // create all the info labels
-        final JLabel housesNum = new JLabel("nuber of Houses on the selected property:");
-        final JLabel housesNumValue = new JLabel("0");
         final JLabel rent = new JLabel("latest rent from the selected property:");
         final JLabel rentValue = new JLabel("0");
         final JLabel mortage = new JLabel("mortage lending value of the selected property:");
         final JLabel mortageValue = new JLabel("0");
-        final JLabel housesCost = new JLabel("value of each house upon selling it:");
-        final JLabel housesCostValue = new JLabel("0");
         final JLabel color = new JLabel("color");
         final PropertyColor colorValue = new PropertyColor(Color.BLACK);
 
 // create the sells buttons and user balance label
-        final JButton sellHouse = new JButton("sell House");
-        sellHouse.setEnabled(false);
         final JButton sellProperty = new JButton("sell Property");
         sellProperty.setEnabled(false);
         final JLabel balance = new JLabel("your balance is: ");
-        final JLabel balanceValue = new JLabel(String.valueOf(logic.getPlayerBalance(player).getBalance()));
+        final JLabel balanceValue = new JLabel(String.valueOf(logic.getPlayerBalance(player, bank).getBalance()));
 
 // create the Component for the listPane
         final JLabel selectProperty = new JLabel("select the property you want to manage");
         final int fontSize = 20;
         final Font f = new Font("gigi", Font.TYPE1_FONT, fontSize);
         selectProperty.setFont(f);
-        final JList<Object> propertiesList = new JList<>(logic.getProperties(player).stream().map(TitleDeed::getName).toArray());
+        final JList<Object> propertiesList = new JList<>(logic.getProperties(player, bank)
+                                                                        .stream()
+                                                                        .map(TitleDeed::getName)
+                                                                        .toArray());
         final JScrollPane propertiesScrollPane = new JScrollPane(propertiesList);
         final JButton exitButton = new JButton("done");
 
@@ -108,60 +109,33 @@ public final class GUIVendita extends JFrame {
 
         //selection of property
         final ListSelectionListener propertySelectionListener = e -> {
-            final TitleDeed selectedProperty = logic.getProperty(logic.getProperties(player), propertiesList.getSelectedValue());
-            housesCostValue.setText(Integer.toString(selectedProperty.housePrice()));
+            final TitleDeed selectedProperty = logic.getProperty(logic.getProperties(player, bank), 
+                                                                propertiesList.getSelectedValue());
             mortageValue.setText(Integer.toString(selectedProperty.getMortgagePrice()));
-            rentValue.setText(logic.getRentString(selectedProperty, logic.getProperties(player)
-                                    .stream().collect(Collectors.toSet())));
-            housesNumValue.setText(Integer.toString(selectedProperty.houseNum()));
+            String auxrent = String.valueOf(selectedProperty.getRent(logic.getProperties(player, bank)
+                                                                        .stream()
+                                                                        .collect(Collectors.toSet()), List.of(1)));
+            if (selectedProperty.getGroup().equals(Group.SOCIETY)) {
+
+                auxrent = auxrent + " times dice result";
+            }
+            rentValue.setText(auxrent);
             colorValue.setColor(logic.getPropertyColor(selectedProperty));
-
-            if (logic.areThereHouses(selectedProperty)) {
-                sellHouse.setEnabled(true);
-                sellProperty.setEnabled(false);
-            } else {
-                sellHouse.setEnabled(false);
-                sellProperty.setEnabled(true);
-            }
-
         };
-
-        // sell house
-        final ActionListener sellHouseListener = e -> {
-            final TitleDeed property = logic.getProperty(logic.getProperties(player), propertiesList.getSelectedValue());
-            if (logic.sellHouse(logic.getProperties(player), propertiesList.getSelectedValue())) {
-                final int houses = property.houseNum();
-                final PaymentDialog paymentComplete = new PaymentDialog(property.housePrice(), true);
-                paymentComplete.setVisible(true);
-                balanceValue.setText(String.valueOf(logic.getPlayerBalance(player).getBalance()));
-                if (houses == 0) {
-                    housesNumValue.setText(Integer.toString(houses));
-                    sellHouse.setEnabled(false);
-                    sellProperty.setEnabled(true);
-                } else {
-                    housesNumValue.setText(Integer.toString(houses));
-                }
-            } else {
-                final PaymentDialog paymentComplete = new PaymentDialog(property.housePrice(), false);
-                paymentComplete.setVisible(true);
-            }
-        };
-
-        //sell property
+    //sell property
         final ActionListener sellPropertyListener = e -> {
-            final TitleDeed selectedProperty = logic.getProperty(logic.getProperties(player), propertiesList.getSelectedValue());
-            if (logic.sellProperty(selectedProperty)) {
+            final TitleDeed selectedProperty = logic.getProperty(logic.getProperties(player, bank), 
+                                                                propertiesList.getSelectedValue());
+            if (logic.sellProperty(logic.getProperties(player, bank), selectedProperty, bank)) {
                 final PaymentDialog paymentComplete = new PaymentDialog(selectedProperty.getMortgagePrice(), true);
                 sellProperty.setEnabled(false);
                 paymentComplete.setVisible(true);
                 mortageValue.setText("0");
-                housesCostValue.setText("0");
                 rentValue.setText("0");
-                housesNumValue.setText("0");
                 colorValue.setColor(Color.BLACK);
-                balanceValue.setText(String.valueOf(logic.getPlayerBalance(player).getBalance()));
+                balanceValue.setText(String.valueOf(logic.getPlayerBalance(player, bank).getBalance()));
 
-                if (logic.getProperties(player).isEmpty()) {
+                if (logic.getProperties(player, bank).isEmpty()) {
                     selectProperty.setText("you have no properties to manage");
                     propertiesList.setVisible(false);
                     propertiesScrollPane.setVisible(false);
@@ -175,7 +149,6 @@ public final class GUIVendita extends JFrame {
 
 // add the listeners
         propertiesList.addListSelectionListener(propertySelectionListener);
-        sellHouse.addActionListener(sellHouseListener);
         sellProperty.addActionListener(sellPropertyListener);
         exitButton.addActionListener(exitListener);
 
@@ -185,22 +158,17 @@ public final class GUIVendita extends JFrame {
         rightPane.add(BorderLayout.CENTER, propertiesScrollPane);
         rightPane.add(BorderLayout.NORTH, selectProperty);
 
-        fieldPane.add(housesNum);
         fieldPane.add(rent);
         fieldPane.add(mortage);
-        fieldPane.add(housesCost);
         fieldPane.add(color);
 
-        valuePane.add(housesNumValue);
         valuePane.add(rentValue);
         valuePane.add(mortageValue);
-        valuePane.add(housesCostValue);
         valuePane.add(colorValue);
 
         infoPane.add(fieldPane);
         infoPane.add(valuePane);
 
-        buttonPane.add(sellHouse);
         buttonPane.add(sellProperty);
 
         balancePane.add(balance);

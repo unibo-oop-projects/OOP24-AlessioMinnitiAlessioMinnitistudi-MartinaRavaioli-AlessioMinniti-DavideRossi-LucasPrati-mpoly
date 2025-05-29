@@ -30,39 +30,54 @@ import it.unibo.monopoly.view.api.GameboardView;
     * board view implementation.
 */
 public final class GameboardViewImpl extends JPanel implements GameboardView {
-    private static final long serialVersionUID = 1L;
-    private static final int PAWN_SIZE = 5;
-    private static final int STRIPE_WIDTH = 150;
-    private static final int STRIPE_HEIGHT = 10;
-    private final transient GameboardLogic logic;
-    private final transient GameController controller;
-    private final List<JPanel> tilesView = new ArrayList<>();
-    private final int size;
+    private static final long serialVersionUID = 1L; /**serial version UID.*/
+    private static final int PAWN_SIZE = 5; /**size of the pawns.*/
+    private static final int STRIPE_WIDTH = 150; /**width of the stripes of the tiles.*/
+    private static final int STRIPE_HEIGHT = 10; /**height of the stripes of the tiles.*/
+    private final transient GameboardLogic logic; /**controller only for this view.*/
+    private final transient GameController controller; /**main controller.*/
+    private final List<JPanel> tilesView = new ArrayList<>(); /**list with all the jpanels which represent the tiles.*/
+    private final int size; /**size of the board.*/
+    /**map with the number of the player and their positions.*/
     private final Map<Integer, Position> pawnPositions = new HashMap<>();
+    /**map with the jpanels which represent the tiles and their positions.*/
     private final Map<JPanel, Position> tilePositions = new HashMap<>();
 
     /**
     * start view.
-    * @param controller
+    * @param controller controller
     */
     @SuppressFBWarnings(value = "EI_EXPOSE_REP",
                 justification = "must return reference to the object instead of a copy")
     public GameboardViewImpl(final GameController controller) {
         this.controller = controller;
-        this.size = controller.getSize(this.controller.getTiles().size());
         this.logic = new GameboardLogicImpl();
-
+        this.size = logic.getSize(this.controller.getTiles().size());
         renderDefaultUI();
     }
 
     @Override
-    public void addHouse() {
-
+    public void addHouse(final Property prop, final int numHouses) {
+        for (final Map.Entry<JPanel, Position> entry : this.tilePositions.entrySet()) {
+            if (entry.getValue().equals(prop.getPosition())) {
+                final JPanel panel = entry.getKey();
+                final JLabel label = new JLabel("HOUSES: " + numHouses);
+                label.setForeground(prop.getGroup().getColor());
+                panel.add(label);
+            }
+        }
     }
 
     @Override
-    public void addHotel() {
-
+    public void addHotel(final Property prop) {
+        for (final Map.Entry<JPanel, Position> entry : this.tilePositions.entrySet()) {
+            if (entry.getValue().equals(prop.getPosition())) {
+                final JPanel panel = entry.getKey();
+                final JLabel label = new JLabel("HOTEL: ✔");
+                label.setForeground(prop.getGroup().getColor());
+                panel.add(label);
+            }
+        }
     }
 
     @Override
@@ -93,7 +108,7 @@ public final class GameboardViewImpl extends JPanel implements GameboardView {
                 p.add(pawnGUI);
                 p.setLayout(new FlowLayout(FlowLayout.CENTER, PAWN_SIZE, PAWN_SIZE));
                 p.revalidate();
-                p.repaint(); 
+                p.repaint();
                 break;
             }
         }
@@ -102,12 +117,12 @@ public final class GameboardViewImpl extends JPanel implements GameboardView {
     @Override
     public void buyProperty(final Property prop, final int currPlayer) {
         for (final Map.Entry<JPanel, Position> entry : this.tilePositions.entrySet()) {
-            if (entry.getValue().equals(pawnPositions.get(currPlayer - 1))) { 
+            if (entry.getValue().equals(prop.getPosition())) {
                 final JPanel p = entry.getKey();
                 final PawnSquare propertyGUI = new PawnSquare(controller.getCurrPlayer().getColor());
                 p.add(propertyGUI);
                 p.revalidate();
-                p.repaint(); 
+                p.repaint();
                 break;
             }
         }
@@ -177,35 +192,6 @@ public final class GameboardViewImpl extends JPanel implements GameboardView {
                 board.add(grid[i][j]);
             }
         }
-
-        /* 
-        for (int i = 0; i < this.size; i++) {
-            for (int j = 0; j < this.size; j++) {
-                final JPanel tile = new JPanel();
-
-                if (logic.isBoardTile(i, j, this.size)) {
-                    tile.setBorder(BorderFactory.createLineBorder(Color.black));
-                    tile.setBackground(Color.white);
-                    this.tilesView.add(tile);
-                } else if (logic.tileCard(i, j, this.size) > -1) {
-                    tile.setBorder(BorderFactory.createLineBorder(Color.black));
-
-                    if (logic.tileCard(i, j, this.size) == 0) {
-                        tile.setBackground(Color.RED);
-                        final JLabel label = new JLabel("IMPREVISTI");
-                        tile.add(label, BorderLayout.CENTER);
-                    } else {
-                        tile.setBackground(Color.YELLOW);
-                        final JLabel label = new JLabel("PROBABILITA'");
-                        tile.add(label, BorderLayout.CENTER);
-                    }
-                } else {
-                    tile.setBackground(Color.lightGray);
-                }
-                board.add(tile);
-
-            }
-        }*/
 
         for (int i = 0; i < controller.getTiles().size(); i++) {
             final JPanel panel = this.tilesView.get(i);

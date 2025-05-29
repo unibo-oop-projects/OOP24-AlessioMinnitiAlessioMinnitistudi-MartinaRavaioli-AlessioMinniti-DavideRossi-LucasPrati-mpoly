@@ -11,15 +11,15 @@ import it.unibo.monopoly.model.turnation.impl.PositionImpl;
  * {@link Pawn} implementation.
 */
 public class PawnImpl extends AbstractIdPlayerImpl implements Pawn {
-    private Position pos;
-    private Color color;
-    private String shape;
+    private Position pos; /**position. */
+    private Color color; /**color. */
+    private String shape; /**shape. */
     /**
      * constructor.
-     * @param id
-     * @param pos
-     * @param color
-     * @param shape
+     * @param id id
+     * @param pos initial position
+     * @param color color
+     * @param shape shape
     */
     public PawnImpl(final int id, final Position pos, final Color color, final String shape) {
         super(id);
@@ -29,9 +29,9 @@ public class PawnImpl extends AbstractIdPlayerImpl implements Pawn {
     }
     /**
      * constructor.
-     * @param id
-     * @param pos
-     * @param color
+     * @param id id
+     * @param pos initial position
+     * @param color color
     */
     public PawnImpl(final int id, final Position pos, final Color color) {
         super(id);
@@ -39,19 +39,12 @@ public class PawnImpl extends AbstractIdPlayerImpl implements Pawn {
         setColor(color);
         setShape("square");
     }
-    /**
-     * set color.
-     * @param color
-    */
+
     @Override
     public final void setColor(final Color color) {
         this.color = color;
     }
 
-    /**
-     * set the shape.
-     * @param shape
-    */
     @Override
     public final void setShape(final String shape) {
         if (shape.isEmpty() || shape.isBlank()) {
@@ -60,48 +53,28 @@ public class PawnImpl extends AbstractIdPlayerImpl implements Pawn {
         this.shape = shape;
     }
 
-    /**
-     * get the color.
-     * @return Color
-    */
     @Override
-    public Color getColor() {
+    public final Color getColor() {
         return this.color;
     }
 
-    /**
-     * get the shape.
-     * @return String
-    */
     @Override
-    public String getShape() {
+    public final String getShape() {
         return this.shape;
     }
 
-    /**
-     * get the position.
-     * @return Position
-    */
     @Override
-    public Position getPosition() {
+    public final Position getPosition() {
         return new PositionImpl(this.pos.getPos());
     }
 
-    /**
-     * set the position.
-     * @param pos
-    */
     @Override
-    public void setPosition(final Position pos) {
+    public final void setPosition(final Position pos) {
         this.pos = new PositionImpl(pos.getPos());
     }
 
-    /**
-     * move a pawn.
-     * @param steps
-    */
     @Override
-    public void move(final int steps) {
+    public final void move(final int steps) {
         this.pos.setPos(this.pos.getPos() + steps);
     }
 }

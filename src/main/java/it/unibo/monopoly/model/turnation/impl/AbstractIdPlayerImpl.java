@@ -6,10 +6,10 @@ import it.unibo.monopoly.utils.api.Identifiable;
  * abstract player id implementation.
 */
 public abstract class AbstractIdPlayerImpl implements Identifiable<Integer> {
-    private final int id;
+    private final int id; /**id. */
     /**
      * constructor.
-     * @param id
+     * @param id id
     */
     public AbstractIdPlayerImpl(final int id) {
         this.id = id;

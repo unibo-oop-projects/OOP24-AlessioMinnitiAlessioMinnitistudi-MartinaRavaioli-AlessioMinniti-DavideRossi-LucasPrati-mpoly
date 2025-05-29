@@ -6,7 +6,6 @@ import java.util.Collection;
 import java.util.List;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-import it.unibo.monopoly.model.gameboard.api.Board;
 import it.unibo.monopoly.model.turnation.api.Player;
 import it.unibo.monopoly.model.turnation.api.Prisonable;
 /**
@@ -45,7 +44,7 @@ public final class PrisonablePlayer implements Prisonable, Player {
     }
 
     @Override
-    public boolean canExitPrison(final Collection<Integer> dices, final Board board) {
+    public boolean canExitPrison(final Collection<Integer> dices) {
         final List<Integer> l = List.copyOf(dices);
         for (int i = 0; i < l.size(); i++) {
             for (int j = 0; j < l.size(); j++) {
@@ -54,11 +53,8 @@ public final class PrisonablePlayer implements Prisonable, Player {
                 }
             }
         }
-
         if (validThrow) {
             this.turns = 0;
-            board.movePawn(board.getPawn(this.getID()), dices);
-            validThrow = false;
             return true;
         }
         return false;

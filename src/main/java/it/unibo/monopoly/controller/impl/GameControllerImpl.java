@@ -1,12 +1,10 @@
 package it.unibo.monopoly.controller.impl;
 
-import java.awt.Color;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.Set;
 
 import com.google.common.collect.Maps;
@@ -18,17 +16,14 @@ import it.unibo.monopoly.model.gameboard.api.Pawn;
 import it.unibo.monopoly.model.gameboard.api.Property;
 import it.unibo.monopoly.model.gameboard.api.Tile;
 import it.unibo.monopoly.model.gameboard.impl.Group;
-import it.unibo.monopoly.model.transactions.api.Bank;
-import it.unibo.monopoly.model.transactions.api.BankAccount;
 import it.unibo.monopoly.model.transactions.api.TitleDeed;
-import it.unibo.monopoly.model.transactions.impl.BaseTitleDeed;
 import it.unibo.monopoly.model.turnation.api.Player;
 import it.unibo.monopoly.model.turnation.api.TurnationManager;
 import it.unibo.monopoly.utils.api.UseFileTxt;
 import it.unibo.monopoly.utils.impl.Configuration;
 import it.unibo.monopoly.utils.impl.UseFileTxtImpl;
-import it.unibo.monopoly.view.api.GameboardView;
 import it.unibo.monopoly.view.api.MainGameView;
+import it.unibo.monopoly.model.transactions.api.Bank;
 import it.unibo.monopoly.model.transactions.api.BankAction;
 
 
@@ -36,16 +31,12 @@ import it.unibo.monopoly.model.transactions.api.BankAction;
  * Implementation of {@link GameController}.
  */
 public final class GameControllerImpl implements GameController {
-
-    private static final int NUM = 0;
-
+    private final TurnationManager turnationManager; /**turnation manager. */
+    private final Board board; /**board. */
+    private final Configuration config; /**config. */
     private final Bank bank;
-    private final TurnationManager turnationManager;
-    private final Board board;
-    private final Configuration config;
     private Map<String,BankAction> turnActions = new HashMap<>();
-    private MainGameView gameView;
-    private GameboardView gameboardView;
+    private MainGameView gameView; /**game view. */
 
     /**
      * Create a new {@link GameController} with the given parameters.
@@ -54,7 +45,6 @@ public final class GameControllerImpl implements GameController {
      * {@link Board} and {@link TurnationManager} are mutable and intentionally injected without defensive copies,
      * as they are expected to maintain consistent shared state across the application.
      * 
-     * @param bank the bank of the game
      * @param board the game board
      * @param turnationManager the entity for manage the turnation of the players
      * @param config a consistent configuration for settings
@@ -64,65 +54,15 @@ public final class GameControllerImpl implements GameController {
         justification = "Injection of shared mutable dependencies is intentional and controlled in this architecture."
     )
     public GameControllerImpl(
-            final Bank bank,
             final Board board,
             final TurnationManager turnationManager,
-            final Configuration config
+            final Configuration config,
+            final Bank bank
         ) {
-        this.bank = bank;
         this.board = board;
         this.turnationManager = turnationManager;
         this.config = config;
-    }
-
-    @Override
-    public boolean areThereHouses(final TitleDeed prop) {
-        return prop.houseNum() > 0;
-    }
-
-    @Override
-    public boolean sellHouse(final List<TitleDeed> properties, final Object selectedValue) {
-        //manac metodo rossi per far arrivare i soldi al giocatore che vende
-        /*final int propInd = getPropertyIndex(properties, selectedValue);
-        final int houses = properties.get(propInd).houseNum();
-        properties.get(propInd).setHouseNum(houses - 1);*/
-        return true;
-    }
-
-    @Override
-    public boolean sellProperty(final TitleDeed selectedProperty) {
-        bank.sellTitleDeed(selectedProperty.getName());
-        return true;
-    }
-
-    @Override
-    public TitleDeed getProperty(final List<TitleDeed> properties, final Object selectedValue) {
-        final Optional<TitleDeed> selectedPropertyO = properties.stream()
-                                                                .filter(p -> p.getName().equals(selectedValue))
-                                                                .findAny();
-        TitleDeed selectedProperty = new BaseTitleDeed(null, "null", NUM, null, NUM); 
-        if (selectedPropertyO.isPresent()) {
-            selectedProperty = selectedPropertyO.get();
-        }
-        return selectedProperty;
-    }
-
-    @Override
-    public List<TitleDeed> getProperties(final Player player) {
-        if (bank.getTitleDeedsByOwner(player.getID()).isEmpty()) {
-            return List.of();
-        }
-        return bank.getTitleDeedsByOwner(player.getID()).stream().toList();
-    }
-
-    @Override
-    public BankAccount getPlayerBalance(final Player player) {
-        return bank.getBankAccount(player.getID());
-    }
-
-    @Override
-    public Color getPropertyColor(final TitleDeed selectedProperty) {
-        return selectedProperty.getGroup().getColor();
+        this.bank = bank;
     }
 
 
@@ -135,9 +75,8 @@ public final class GameControllerImpl implements GameController {
     public void throwDices() {
         final Collection<Integer> result = this.turnationManager.moveByDices();
         final int currentPlayerId = this.turnationManager.getIdCurrPlayer();
-        this.board.movePawn(this.board.getPawn(currentPlayerId), result);
-        this.gameboardView.changePos(currentPlayerId, 
-                                    this.board.getPawn(currentPlayerId).getPosition());
+        this.board.movePawn(this.board.getPawn(this.turnationManager.getIdCurrPlayer()), result);
+        this.gameView.callChangePositions();
         //TODO guardare se è una speciale e in quel caso attivare effetto
         final Tile currentlySittingTile = this.board.getTileForPawn(this.board.getPawn(currentPlayerId));
         if (currentlySittingTile instanceof Property) {
@@ -207,11 +146,8 @@ public final class GameControllerImpl implements GameController {
     }
 
     @Override
-    public void changePositions() {
-        final Collection<Integer> res = turnationManager.moveByDices();
-        this.board.movePawn(this.board.getPawn(this.turnationManager.getIdCurrPlayer()), res);
-        gameboardView.changePos(this.turnationManager.getIdCurrPlayer(),
-                                this.board.getPawn(this.turnationManager.getIdCurrPlayer()).getPosition());
+    public void playerGameOver() {
+
     }
 
     @Override
@@ -227,11 +163,6 @@ public final class GameControllerImpl implements GameController {
     }
 
     @Override
-    public int getSize(final int numTiles) {
-        return numTiles / 4 + 1;
-    }
-
-    @Override
     public void gameOver() {
         this.turnationManager.setOver();
     }
@@ -244,13 +175,6 @@ public final class GameControllerImpl implements GameController {
     @Override
     public List<Pawn> getPawns() {
         return Collections.unmodifiableList(this.board.getPawns());
-    }
-
-    @SuppressFBWarnings(value = "EI_EXPOSE_REP",
-                justification = "must return reference to the object instead of a copy")
-    @Override
-    public void setBoardView(final GameboardView view) {
-        this.gameboardView = view;
     }
 
     @Override
@@ -280,10 +204,16 @@ public final class GameControllerImpl implements GameController {
                                                         this.board.getPawn(
                                                             this.turnationManager.getIdCurrPlayer()));
             if (actionName == "buy") {
-                gameboardView.buyProperty(currentlySittingProperty, this.turnationManager.getIdCurrPlayer());
+                gameView.callBuyProperty(currentlySittingProperty);
             }
         } catch (final IllegalStateException | IllegalArgumentException e) {
             gameView.displayError(e);
         }
     }
+
+    @Override
+    public Pawn getCurrPawn() {
+        return this.board.getPawn(this.turnationManager.getIdCurrPlayer());
+    }
+
 }

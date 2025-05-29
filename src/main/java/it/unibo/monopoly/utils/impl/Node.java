@@ -4,16 +4,16 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**
  * node for the linked lists.
- * @param <T>
+ * @param <T> type of the node
 */
 @SuppressFBWarnings(value = "EI_EXPOSE_REP", justification = "Node is internal and safe to expose in this context")
 public class Node<T> {
 
-    private T value;
-    private Node<T> nextNode;
+    private T value; /**value. */
+    private Node<T> nextNode; /**next node. */
     /**
      * constructor.
-     * @param value
+     * @param value value of the node
     */
     public Node(final T value) {
         this.value = value;
@@ -21,8 +21,8 @@ public class Node<T> {
     }
     /**
      * constructor.
-     * @param value
-     * @param nextNode
+     * @param value value of the node
+     * @param nextNode the next node linked to this one
     */
     public Node(final T value, final Node<T> nextNode) {
         this.value = value;
@@ -44,14 +44,14 @@ public class Node<T> {
     }
     /**
      * set the value.
-     * @param value
+     * @param value value of the node
     */
     public void setValue(final T value) {
         this.value = value;
     }
     /**
      * set the next node.
-     * @param node
+     * @param node node of the list
     */
     public void setNextNode(final Node<T> node) {
         this.nextNode = node;

@@ -11,15 +11,18 @@ import it.unibo.monopoly.model.gameboard.api.Board;
 */
 public interface TurnationManager {
     /**
-     * @return if is over
+     * tells if is over.
+     * @return bool
      */
     boolean isOver();
     /**
+     * get the next player.
      * @return the next player
      */
     Player getNextPlayer();
     /**
-     * @return the dices' result
+     * get the dices' result.
+     * @return multiple int
      */
     Collection<Integer> moveByDices();
     /**
@@ -39,7 +42,7 @@ public interface TurnationManager {
     List<Player> getPlayerList();
     /**
      * add a player.
-     * @param p
+     * @param p player to add
      */
     void addPlayer(Player p);
     /**
@@ -53,12 +56,12 @@ public interface TurnationManager {
     Dice getDice();
     /**
      * set the dice.
-     * @param dice
+     * @param dice dice
      */
     void setDice(Dice dice);
     /**
      * set all the players.
-     * @param plList
+     * @param plList list of the players
      */
     void setList(List<Player> plList);
     /**
@@ -69,8 +72,8 @@ public interface TurnationManager {
     /**
      * tells if the player can exit the prison.
      * @return bool
-     * @param value
-     * @param board
+     * @param value result of the dices
+     * @param board board
      */
     boolean canExitPrison(Collection<Integer> value, Board board);
     /**
@@ -100,7 +103,7 @@ public interface TurnationManager {
     List<Pair<String, Integer>> getRanking();
     /**
      * delete the player.
-     * @param player
+     * @param player player to delete
      */
     void deletePlayer(Player player);
 }

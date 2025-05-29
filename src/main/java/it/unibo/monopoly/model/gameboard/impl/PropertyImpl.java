@@ -7,16 +7,15 @@ import it.unibo.monopoly.model.turnation.api.Position;
  * {@link Property} implementation.
 */
 public class PropertyImpl extends TileImpl implements Property {
-
-    private static final int MAX_HOUSES = 4;
-    private int nHouses;
-    private boolean hotel;
+    private static final int MAX_HOUSES = 4; /**max number of houses. */
+    private int nHouses; /**number of hotel. */
+    private boolean hotel; /**tells if it has an hotel. */
 
     /**
      * constructor.
-     * @param name
-     * @param position
-     * @param group
+     * @param name name
+     * @param position position
+     * @param group group
     */
     public PropertyImpl(final String name, final Position position, final Group group) { 
         super(name, position, group);
@@ -24,43 +23,31 @@ public class PropertyImpl extends TileImpl implements Property {
         this.hotel = false;
     }
 
-    /**
-     * get the number of houses.
-     * @return int
-    */
     @Override
-    public int getNHouses() {
+    public final int getNHouses() {
         return this.nHouses;
     }
 
-    /**
-     * add house.
-    */
     @Override
-    public void buildHouse() {
+    public final void buildHouse() {
         if (this.getNHouses() < MAX_HOUSES) {
             this.nHouses++;
         } else {
             throw new IllegalArgumentException("max num houses reached");
         }
     }
-    /**
-     * add hotel.
-    */
+
     @Override
-    public void buildHotel() {
+    public final void buildHotel() {
         if (!this.hotel) {
             this.hotel = true;
         } else {
             throw new IllegalArgumentException("hotel already exists");
         }
     }
-    /**
-     * control if it has an hotel.
-     * @return bool
-    */
+
     @Override
-    public boolean hasHotel() {
+    public final boolean hasHotel() {
         return this.hotel;
     }
 }

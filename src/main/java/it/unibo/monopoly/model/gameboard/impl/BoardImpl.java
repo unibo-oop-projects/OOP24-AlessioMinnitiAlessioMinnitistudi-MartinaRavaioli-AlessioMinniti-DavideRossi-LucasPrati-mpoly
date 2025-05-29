@@ -19,9 +19,8 @@ import it.unibo.monopoly.model.turnation.impl.PositionImpl;
  * board implementation.
 */
 public class BoardImpl implements Board {
-
-    private final List<Tile> tiles;
-    private final List<Pawn> pawns;
+    private final List<Tile> tiles; /**list of tiles. */
+    private final List<Pawn> pawns; /**list of pawns. */
     /**
      * constructor.
     */
@@ -32,19 +31,16 @@ public class BoardImpl implements Board {
 
     /**
      * constructor.
-     * @param tiles
-     * @param pawns
+     * @param tiles list of tiles
+     * @param pawns list of pawns
     */
     public BoardImpl(final List<Tile> tiles, final List<Pawn> pawns) {
         this.tiles = new ArrayList<>(tiles);
         this.pawns = new ArrayList<>(pawns);
     }
 
-    /**
-     * sort the tiles.
-    */
     @Override
-    public void sortTiles() {
+    public final void sortTiles() {
         this.tiles.sort((a, b) -> ((TileImpl) a).compareTo((TileImpl) b));
     }
 
@@ -53,41 +49,23 @@ public class BoardImpl implements Board {
         return tiles.get(pos.getPos());
     }
 
-    /**
-     * remove a pawn.
-     * @param p
-    */
     @Override
-    public void removePawn(final Pawn p) {
+    public final void removePawn(final Pawn p) {
         this.pawns.remove(p);
     }
 
-    /**
-     * add a pawn.
-     * @param p
-    */
     @Override
-    public void addPawn(final Pawn p) {
+    public final void addPawn(final Pawn p) {
         this.pawns.add(p);
     }
 
-    /**
-     * get the tile of the pawn.
-     * @param p
-     * @return Tile
-    */
     @Override
     public final Tile getTileForPawn(final Pawn p) {
         return tiles.get(p.getPosition().getPos());
     }
 
-    /**
-     * get the pawn on a tile.
-     * @param tile
-     * @return List of Pawn
-    */
     @Override
-    public List<Pawn> getPawninTile(final Tile tile) {
+    public final List<Pawn> getPawninTile(final Tile tile) {
         final List<Pawn> pawnsInTile = new ArrayList<>();
 
         for (final Pawn p : this.pawns) {
@@ -99,26 +77,16 @@ public class BoardImpl implements Board {
         return pawnsInTile;
     }
 
-    /**
-     * move the pawn.
-     * @param player
-     * @param value
-    */
     @Override
     public final void movePawn(final Pawn player, final Collection<Integer> value) {
         final int steps = value.stream().mapToInt(Integer::intValue).sum();
         player.move(steps);
     }
 
-    /**
-     * get the pawn of the id given.
-     * @param id
-     * @return Pawn
-    */
     @SuppressFBWarnings(value = "EI_EXPOSE_REP",
                 justification = "must return reference to the object instead of a copy")
     @Override
-    public Pawn getPawn(final int id) {
+    public final Pawn getPawn(final int id) {
         for (final Pawn p : this.pawns) {
             if (((PawnImpl) p).getID() == id) {
                 return p;
@@ -128,10 +96,6 @@ public class BoardImpl implements Board {
         throw new IllegalArgumentException("id not present");
     }
 
-    /**
-     * get all the tiles.
-     * @return List of Tiles
-    */
     @Override
     public final List<Tile> getTiles() {
         return Collections.unmodifiableList(this.tiles);
