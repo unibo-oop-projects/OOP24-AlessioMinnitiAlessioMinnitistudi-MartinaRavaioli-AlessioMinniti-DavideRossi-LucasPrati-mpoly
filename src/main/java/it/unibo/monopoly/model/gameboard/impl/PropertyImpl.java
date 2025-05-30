@@ -30,6 +30,9 @@ public class PropertyImpl extends TileImpl implements Property {
 
     @Override
     public final void buildHouse() {
+        if (getGroup() == Group.SOCIETY || getGroup() == Group.STATION) {
+            throw new IllegalArgumentException("this type of property can't build an house");
+        }
         if (canBuildHouse()) {
             this.nHouses++;
         } else {
@@ -39,6 +42,9 @@ public class PropertyImpl extends TileImpl implements Property {
 
     @Override
     public final void buildHotel() {
+        if (getGroup() == Group.SOCIETY || getGroup() == Group.STATION) {
+            throw new IllegalArgumentException("this type of property can't build an hotel");
+        }
         if (canBuildHotel()) {
             this.hotel = true;
         } else {
