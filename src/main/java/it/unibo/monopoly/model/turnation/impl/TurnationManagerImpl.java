@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.apache.commons.lang3.tuple.Pair;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.monopoly.model.gameboard.api.Board;
 import it.unibo.monopoly.model.transactions.api.BankState;
 import it.unibo.monopoly.model.turnation.api.Dice;
@@ -42,6 +43,10 @@ public class TurnationManagerImpl implements TurnationManager {
      * @param dice dice
      * @param bankState bankState to communicate with the bank
     */
+    @SuppressFBWarnings(
+        value = "EI_EXPOSE_REP2",
+        justification = "Injection of shared mutable dependencies is intentional and controlled in this architecture."
+    )
     public TurnationManagerImpl(final List<Player> plList, final Dice dice, final BankState bankState) {
         this.bankState = bankState;
         this.players = new CircularLinkedList<>();

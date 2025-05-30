@@ -67,7 +67,7 @@ public final class GameControllerImpl implements GameController {
 
     private void refreshPlayerInfo() {
         final Player currentPlayer = turnationManager.getCurrPlayer();
-        gameView.refreshCurrentPlayerInfo(currentPlayer, bank.getBankAccount(currentPlayer.getID()));   
+        gameView.refreshCurrentPlayerInfo(currentPlayer, bank.getBankAccount(currentPlayer.getID()));
     }
 
 
