@@ -84,8 +84,10 @@ public final class GameControllerImpl implements GameController {
 
     @Override
     public void endTurn() {
-        this.turnationManager.getNextPlayer();
-        refreshPlayerInfo();
+        if (this.turnationManager.canPassTurn() && this.turnationManager.canPassTurn()) {
+            this.turnationManager.getNextPlayer();
+            refreshPlayerInfo();
+        }
     }
 
     @Override
