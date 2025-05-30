@@ -106,4 +106,16 @@ public interface Board {
      * @return bool
     */
     boolean canBuildHotelInProperty(Property prop);
+    /**
+     * build house in the property.
+     * @param prop property to change
+     * @return bool
+    */
+    void buildHouseInProperty(Property prop);
+    /**
+     * build hotel in the property.
+     * @param prop property to change
+     * @return bool
+    */
+    void buildHotelInProperty(Property prop);
 }
