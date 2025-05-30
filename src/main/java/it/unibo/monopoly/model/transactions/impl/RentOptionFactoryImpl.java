@@ -36,4 +36,9 @@ public final class RentOptionFactoryImpl implements RentOptionFactory {
                                             .count() >= p.getLeft()))
                     .collect(Collectors.toList());
     }
+
+    @Override
+    public RentOption baseRentOption(final int baseRent) {
+        return new RentOptionImpl("Affitto base", "", baseRent, (deeds, ownerId) -> true);
+    }
 }

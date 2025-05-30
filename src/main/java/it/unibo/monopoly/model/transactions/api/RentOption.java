@@ -2,8 +2,6 @@ package it.unibo.monopoly.model.transactions.api;
 
 import java.util.Set;
 
-import it.unibo.monopoly.model.transactions.impl.RentOptionImpl;
-
 /**
  * An object that encapsulates all information
  * related to one of the possible rent options that
@@ -18,11 +16,6 @@ import it.unibo.monopoly.model.transactions.impl.RentOptionImpl;
  * a price and its applicability conditions.
  */
 public interface RentOption {
-
-    /**
-     *Default Title for the default rent option.
-     */
-    String BASE_RENT_TITLE = "Affitto base";
 
     /**
      * @return the title of the {@link RentOption}.
@@ -55,14 +48,4 @@ public interface RentOption {
      * information.
      */
     boolean canBeApplied(Set<TitleDeed> groupDeeds, int ownerId);
-
-    /**
-     * Creates the standard rent option. The most basic rent 
-     * option, which is always applicable
-     * @param baseRent the rent of the option
-     * @return the created rent option
-     */
-    static RentOption baseRentOption(final int baseRent) {
-        return new RentOptionImpl(BASE_RENT_TITLE, "", baseRent, (deeds, ownerId) -> true);
-    }
 }

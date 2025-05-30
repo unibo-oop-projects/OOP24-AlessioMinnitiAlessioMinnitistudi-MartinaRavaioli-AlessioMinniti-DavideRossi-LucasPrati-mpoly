@@ -52,4 +52,11 @@ public interface RentOptionFactory {
      */
     List<RentOption> progressivelyIncreasingPrice(int startRent, int multiplyFactor, int nOptions);
 
+    /**
+     * Creates the standard rent option. The most basic rent 
+     * option, which is always applicable
+     * @param baseRent the rent of the option
+     * @return the created rent option
+     */
+    RentOption baseRentOption(final int baseRent);
 }
