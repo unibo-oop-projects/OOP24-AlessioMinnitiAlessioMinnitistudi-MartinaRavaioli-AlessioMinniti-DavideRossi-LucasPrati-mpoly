@@ -136,7 +136,12 @@ public final class MainMenuControllerImpl implements MainMenuController {
         titleDeeds.stream().forEach(bank::addTitleDeed);
 
         // start the game
-        final var controllerGameManager = new GameControllerImpl(board, turnationManager, config);
+        final var controllerGameManager = new GameControllerImpl(
+            board,
+            turnationManager,
+            config,
+            bank
+        );
         final var mainView = new MainViewImpl(controllerGameManager);
         controllerGameManager.attachView(mainView);
         // mainView.start(); //TODO implementare il metodo e rimuovere il commento
@@ -203,9 +208,9 @@ public final class MainMenuControllerImpl implements MainMenuController {
                                                 final String owner) {
         Objects.requireNonNull(owner);
         return switch (bankAccountType) {
-            case CLASSIC -> bankAccountFactory.createWithCheck(id,
-                                                               account -> account.getBalance() > 0);
-            case INFINITY  -> bankAccountFactory.createSimple(id);
+            case CLASSIC    -> bankAccountFactory.createWithCheck(id,
+                                                                  account -> account.getBalance() > 0);
+            case INFINITY   -> bankAccountFactory.createSimple(id);
         };
     }
 }
