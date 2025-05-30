@@ -3,8 +3,14 @@ package it.unibo.monopoly.model.gameboard.impl.chance_comunity.api;
 public interface Parser {
 
     /**
-     * 
-     * @return the next substring based on the type of parser.
+     * this method tells if the string has come to its end.
+     * @return wether or not it continues
+     */
+    boolean hasNesxt();
+    
+    /**
+     * this method get the next substring based on the type of parser.
+     * @return the string
      */
     String next();
 

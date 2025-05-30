@@ -10,13 +10,11 @@ import it.unibo.monopoly.model.turnation.api.TurnationManager;
 
 public  class ArgsInterpreterImpl implements ArgsInterpreter {
 
-    
     private  String interpretTileArg(String toInterpretString, Board board) {
         String t = null;
         t = board.getTiles().stream().filter(p -> p.getName().equals(toInterpretString)).map(p -> p.getName()).findAny().get();
         return t; 
     }
-
     
     private  Integer interpretIntArg(String toInterpretString) {
         boolean validInt = true; 
@@ -32,7 +30,6 @@ public  class ArgsInterpreterImpl implements ArgsInterpreter {
         return num; 
     }
 
-    
     private  List<Player> interpretPlayerArg(String toInterpretString, TurnationManager turnM) {
         
         List<Player> l = null;
@@ -43,12 +40,11 @@ public  class ArgsInterpreterImpl implements ArgsInterpreter {
 
     }
 
-
     @Override
-    public void interpret(String toInterpretString, BaseCommand command) {
+    public void interpret(String toInterpretString, BaseCommand command, Board board, TurnationManager turnM) {
         command.addIntArg(interpretIntArg(toInterpretString));
-        command.addPlayersArg(interpretPlayerArg(toInterpretString, null));
-        command.addTileArg(interpretTileArg(toInterpretString, null));
+        command.addPlayersArg(interpretPlayerArg(toInterpretString, turnM));
+        command.addTileArg(interpretTileArg(toInterpretString, board));
     }
 
 }

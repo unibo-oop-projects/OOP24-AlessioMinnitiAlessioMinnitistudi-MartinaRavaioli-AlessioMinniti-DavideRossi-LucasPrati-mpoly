@@ -26,5 +26,10 @@ public class ParserOnSpaces implements Parser{
         return ret;
 
     }
+    
+    @Override
+    public boolean hasNesxt() {
+        return index >= toParseString.length()-1;
+    }
 
 }
