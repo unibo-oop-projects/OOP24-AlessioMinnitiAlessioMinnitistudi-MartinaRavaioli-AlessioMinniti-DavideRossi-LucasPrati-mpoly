@@ -97,7 +97,7 @@ public final class GameControllerImpl implements GameController {
             if (this.turnationManager.isCurrentPlayerInPrison()) {
                 this.turnationManager.canExitPrison(result);
             }
-            
+
             final int currentPlayerId = this.turnationManager.getIdCurrPlayer();
             this.board.movePawn(this.board.getPawn(currentPlayerId), result);
             this.gameView.callChangePositions();
@@ -118,7 +118,7 @@ public final class GameControllerImpl implements GameController {
                 executeEffect(specialTile.getEffect());
             }
         }
-        
+
     }
 
     @Override

@@ -7,7 +7,6 @@ import java.util.List;
 import org.apache.commons.lang3.tuple.Pair;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-import it.unibo.monopoly.model.gameboard.api.Board;
 import it.unibo.monopoly.model.transactions.api.BankState;
 import it.unibo.monopoly.model.turnation.api.Dice;
 import it.unibo.monopoly.model.turnation.api.Player;
