@@ -58,20 +58,12 @@ public class PropertyImpl extends TileImpl implements Property {
     }
 
     @Override
-    public boolean canBuildHouse() {
-        if (getNHouses() <= MAX_HOUSES) {
-            return true;
-        } else {
-            return false;
-        }
+    public final boolean canBuildHouse() {
+        return getNHouses() <= MAX_HOUSES;
     }
 
     @Override
-    public boolean canBuildHotel() {
-        if (!hasHotel()) {
-            return true;
-        } else {
-            return false;
-        }
+    public final boolean canBuildHotel() {
+        return !hasHotel();
     }
 }

@@ -7,11 +7,12 @@ import it.unibo.monopoly.model.turnation.api.Position;
  * it contains a property object.
  * only the methods that give the houses and hotel info will be called, the others will throw exceptions.
 */
-public class ImmutableProperty implements Property{
+public final class ImmutableProperty implements Property {
     private final Property property;
     /**
     * constructor.
     * it has to take the reference of the property, not a copy
+    * @param prop property
     */
     public ImmutableProperty(final Property prop) {
         this.property = prop;
@@ -24,7 +25,7 @@ public class ImmutableProperty implements Property{
     }
 
     @Override
-    public void setGroup(Group group) {
+    public void setGroup(final Group group) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'setGroup'");
     }

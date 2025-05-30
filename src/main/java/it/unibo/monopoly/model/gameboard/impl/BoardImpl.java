@@ -134,22 +134,22 @@ public class BoardImpl implements Board {
     }
 
     @Override
-    public boolean canBuildHouseInProperty(Property prop) {
+    public final boolean canBuildHouseInProperty(final Property prop) {
         return prop.canBuildHouse();
     }
 
     @Override
-    public boolean canBuildHotelInProperty(Property prop) {
+    public final boolean canBuildHotelInProperty(final Property prop) {
         return prop.canBuildHotel();
     }
 
     @Override
-    public void buildHouseInProperty(Property prop) {
+    public final void buildHouseInProperty(final Property prop) {
         prop.buildHouse();
     }
 
     @Override
-    public void buildHotelInProperty(Property prop) {
+    public final void buildHotelInProperty(final Property prop) {
         prop.buildHotel();
     }
 
