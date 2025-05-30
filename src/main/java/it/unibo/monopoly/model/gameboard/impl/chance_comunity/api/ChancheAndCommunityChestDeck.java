@@ -6,4 +6,6 @@ public interface ChancheAndCommunityChestDeck {
 
     Chance_CommunityChestCard draw();
 
+    String getType();
+
 }

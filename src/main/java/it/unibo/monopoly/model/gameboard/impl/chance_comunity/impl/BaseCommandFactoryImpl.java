@@ -7,6 +7,7 @@ import it.unibo.monopoly.model.gameboard.api.Board;
 import it.unibo.monopoly.model.gameboard.impl.chance_comunity.api.BaseCommand;
 import it.unibo.monopoly.model.gameboard.impl.chance_comunity.api.BaseCommandFactory;
 import it.unibo.monopoly.model.transactions.api.Bank;
+import it.unibo.monopoly.model.transactions.api.TitleDeed;
 import it.unibo.monopoly.model.turnation.api.Player;
 
 public class BaseCommandFactoryImpl implements BaseCommandFactory {
@@ -174,6 +175,40 @@ public class BaseCommandFactoryImpl implements BaseCommandFactory {
         };
     }
     
+    private BaseCommand buyIfNotOwned(Bank bank, Board board){
+        return new BaseCommand() {
+            private String keyword;
+            private String tile;
+
+            @Override
+            public void execute(Player player) {
+                TitleDeed t = bank.getTitleDeed(tile);
+                if (!t.isOwned()) {
+                    bank.buyTitleDeed(tile, player.getName());
+                }                
+            }
+
+            @Override
+            public String getKeyWord() {
+                return this.keyword;
+            }
+
+            @Override
+            public void addIntArg(int arg) {
+            }
+
+            @Override
+            public void addTileArg(String tile) {
+                this.tile = tile;
+            }
+
+            @Override
+            public void addPlayersArg(List<Player> players) {
+            }
+            
+        };
+    }
+
     public BaseCommand still(){
         return new BaseCommand() {
 
@@ -207,7 +242,8 @@ public class BaseCommandFactoryImpl implements BaseCommandFactory {
             this.move(board),
             this.moveIn(board),
             this.withdraw(bank), 
-            depositFrom(bank)
+            this.depositFrom(bank),
+            this.buyIfNotOwned(bank, board)
         );
     }
 
