@@ -27,8 +27,14 @@ public interface Property extends Tile {
      * @return bool
     */
     boolean hasHotel();
-
+    /**
+     * tells if you can build an house.
+     * @return bool
+    */
     boolean canBuildHouse();
-
+    /**
+     * tells if you can build an hotel.
+     * @return bool
+    */
     boolean canBuildHotel();
 }

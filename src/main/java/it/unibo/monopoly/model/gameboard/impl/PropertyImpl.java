@@ -39,7 +39,7 @@ public class PropertyImpl extends TileImpl implements Property {
 
     @Override
     public final void buildHotel() {
-        if (!this.hotel) {
+        if (canBuildHotel()) {
             this.hotel = true;
         } else {
             throw new IllegalArgumentException("hotel already exists");
@@ -62,7 +62,10 @@ public class PropertyImpl extends TileImpl implements Property {
 
     @Override
     public boolean canBuildHotel() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'canBuildHotel'");
+        if (!hasHotel()) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }
