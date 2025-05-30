@@ -133,4 +133,14 @@ public class BoardImpl implements Board {
         this.tiles.add(tile);
     }
 
+    @Override
+    public boolean canBuildHouseInProperty(Property prop) {
+        return prop.canBuildHouse();
+    }
+
+    @Override
+    public boolean canBuildHotelInProperty(Property prop) {
+        return prop.canBuildHotel();
+    }
+
 }
