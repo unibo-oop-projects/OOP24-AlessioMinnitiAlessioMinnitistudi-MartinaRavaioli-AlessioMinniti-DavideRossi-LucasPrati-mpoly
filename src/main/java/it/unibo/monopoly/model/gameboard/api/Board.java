@@ -94,5 +94,16 @@ public interface Board {
      * @param tile tile to add
     */
     void addTile(Tile tile);
-
+    /**
+     * check if an house can be built in the property.
+     * @param prop house's property
+     * @return bool
+    */
+    boolean canBuildHouseInProperty(Property prop);
+    /**
+     * check if an hotel can be built in the property.
+     * @param prop hotel's property
+     * @return bool
+    */
+    boolean canBuildHotelInProperty(Property prop);
 }
