@@ -2,8 +2,11 @@ package it.unibo.monopoly.model.gameboard.impl.chance_comunity.impl;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
 
 import it.unibo.monopoly.model.gameboard.impl.chance_comunity.api.ArgsInterpreter;
+import it.unibo.monopoly.model.gameboard.impl.chance_comunity.api.BaseCommand;
+import it.unibo.monopoly.model.gameboard.impl.chance_comunity.api.BaseCommandFactory;
 import it.unibo.monopoly.model.gameboard.impl.chance_comunity.api.Command;
 import it.unibo.monopoly.model.gameboard.impl.chance_comunity.api.Interpreter;
 
@@ -11,6 +14,7 @@ public class BaseInterpreter implements Interpreter {
 
     private List<BaseCommand> baseCommands = new LinkedList<>();
     private ArgsInterpreter argsInterpreter = new ArgsInterpreterImpl(); 
+    private BaseCommandFactory factory = new BaseCommandFactoryImpl();
 
     public BaseInterpreter(final List<BaseCommand> baseCommands){
         this.baseCommands = baseCommands;
@@ -18,9 +22,15 @@ public class BaseInterpreter implements Interpreter {
 
     @Override
     public Command interpret(String toInterpretString) {
-        Command comm = null; 
-
-
+        Command comm = factory.still(); 
+        ParserOnColon pars = new ParserOnColon(toInterpretString);
+        String comString = pars.next();
+        Optional<BaseCommand> com = baseCommands.stream().filter(p -> p.getKeyWord().equals(comString)).findAny();
+        if (com.isPresent()) {
+            BaseCommand base = com.get(); 
+            argsInterpreter.interpret(toInterpretString, base);
+            comm = base;
+        }
         return comm;
     }
 

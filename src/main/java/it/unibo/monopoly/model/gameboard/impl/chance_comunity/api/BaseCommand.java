@@ -1,8 +1,7 @@
-package it.unibo.monopoly.model.gameboard.impl.chance_comunity.impl;
+package it.unibo.monopoly.model.gameboard.impl.chance_comunity.api;
 
 import java.util.List;
 
-import it.unibo.monopoly.model.gameboard.impl.chance_comunity.api.Command;
 import it.unibo.monopoly.model.turnation.api.Player;
 
 public interface BaseCommand extends Command {

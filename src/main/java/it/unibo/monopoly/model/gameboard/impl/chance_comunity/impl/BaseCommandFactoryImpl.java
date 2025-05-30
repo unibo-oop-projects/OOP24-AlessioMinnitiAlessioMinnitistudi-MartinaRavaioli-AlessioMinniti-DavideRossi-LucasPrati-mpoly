@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Set;
 
 import it.unibo.monopoly.model.gameboard.api.Board;
+import it.unibo.monopoly.model.gameboard.impl.chance_comunity.api.BaseCommand;
 import it.unibo.monopoly.model.gameboard.impl.chance_comunity.api.BaseCommandFactory;
 import it.unibo.monopoly.model.transactions.api.Bank;
 import it.unibo.monopoly.model.turnation.api.Player;
@@ -173,6 +174,33 @@ public class BaseCommandFactoryImpl implements BaseCommandFactory {
         };
     }
     
+    public BaseCommand still(){
+        return new BaseCommand() {
+
+            @Override
+            public void execute(Player player) {
+            }
+
+            @Override
+            public String getKeyWord() {
+                return "";
+            }
+
+            @Override
+            public void addIntArg(int arg) {
+            }
+
+            @Override
+            public void addTileArg(String tile) {
+            }
+
+            @Override
+            public void addPlayersArg(List<Player> players) {
+            }
+
+        };
+    }
+
     public List<BaseCommand> allCommand(Bank bank, Board board) {
         return List.of(
             this.deposit(bank),
