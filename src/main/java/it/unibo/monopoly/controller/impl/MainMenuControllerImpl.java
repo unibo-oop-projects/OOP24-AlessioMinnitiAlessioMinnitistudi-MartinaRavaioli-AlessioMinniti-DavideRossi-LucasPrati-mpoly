@@ -120,7 +120,8 @@ public final class MainMenuControllerImpl implements MainMenuController {
             new DiceImpl(
                 config.getNumDice(),
                 config.getSidesPerDie()
-            )
+            ),
+            bank.getBankStateObject()
         );
 
         // import from json
