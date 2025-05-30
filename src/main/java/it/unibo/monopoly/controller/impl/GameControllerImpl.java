@@ -23,7 +23,7 @@ import it.unibo.monopoly.utils.impl.Configuration;
 import it.unibo.monopoly.utils.impl.UseFileTxtImpl;
 import it.unibo.monopoly.view.api.MainGameView;
 import it.unibo.monopoly.model.transactions.api.Bank;
-import it.unibo.monopoly.model.transactions.api.BankAction;
+import it.unibo.monopoly.model.transactions.api.PropertyAction;
 
 
 /**
@@ -34,7 +34,7 @@ public final class GameControllerImpl implements GameController {
     private final Board board; /**board. */
     private final Configuration config; /**config. */
     private final Bank bank;
-    private Map<String,BankAction> turnActions = new HashMap<>();
+    private Map<String,PropertyAction> turnActions = new HashMap<>();
     private MainGameView gameView; /**game view. */
 
     /**
@@ -95,7 +95,7 @@ public final class GameControllerImpl implements GameController {
             this.turnActions = Maps.uniqueIndex(this.bank.getApplicableActionsForTitleDeed(currentPlayerId, 
                                     propertyName, 
                                     result.stream().mapToInt(d -> d).sum()),
-                                    BankAction::getName);
+                                    PropertyAction::getName);
             this.gameView.showPlayerActions(turnActions.keySet());
         } else if (currentlySittingTile instanceof Special) {
             final Special specialTile = (Special) currentlySittingTile;
@@ -160,13 +160,18 @@ public final class GameControllerImpl implements GameController {
                 throw new IllegalArgumentException("No action with this name was registered. It is possible that the current"
                 + "player has no permission to execute this action on the selected title deed");
             }
-            turnActions.get(actionName).executeTransaction();
+            final PropertyAction action = turnActions.get(actionName);
+            action.executePropertyAction(board,bank);
+            gameView.displayMessage(action.getDescription() + "eseguita con successo");
             final Property currentlySittingProperty = (Property) this.board.getTileForPawn(
                                                         this.board.getPawn(
                                                             this.turnationManager.getIdCurrPlayer()));
             if (actionName == "buy") {
                 gameView.callBuyProperty(currentlySittingProperty);
+            } else if (actionName == "sell") {
+                gameView.callClearPanel();
             }
+            gameView.refreshCurrentPlayerInfo(getCurrPlayer(), bank.getBankAccount(getCurrPlayer().getID()));
         } catch (final IllegalStateException | IllegalArgumentException e) {
             gameView.displayError(e);
         }

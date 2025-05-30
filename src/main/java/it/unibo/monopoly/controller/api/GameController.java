@@ -4,7 +4,7 @@ import java.util.List;
 
 import it.unibo.monopoly.model.gameboard.api.Pawn;
 import it.unibo.monopoly.model.gameboard.api.Tile;
-import it.unibo.monopoly.model.transactions.api.BankAction;
+import it.unibo.monopoly.model.transactions.api.PropertyAction;
 import it.unibo.monopoly.model.turnation.api.Player;
 import it.unibo.monopoly.utils.impl.Configuration;
 import it.unibo.monopoly.view.api.MainGameView;
@@ -76,9 +76,9 @@ public interface GameController {
     Pawn getCurrPawn();
 
     /**
-     * Retrieves a {@link BankAction} with the same name ({@link BankAction#getName()})
-     * as the one given as input and executes it (calling {@link BankAction#executeTransaction()}).  
-     * @param actionName the name of the {@link BankAction} to execute
+     * Retrieves a {@link PropertyAction} with the same name ({@link PropertyAction#getName()})
+     * as the one given as input and executes it (calling {@link PropertyAction#executePropertyAction()}).  
+     * @param actionName the name of the {@link PropertyAction} to execute
      */
     void executeAction(String actionName);
 
