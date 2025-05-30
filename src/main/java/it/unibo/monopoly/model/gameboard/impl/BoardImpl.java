@@ -143,4 +143,14 @@ public class BoardImpl implements Board {
         return prop.canBuildHotel();
     }
 
+    @Override
+    public void buildHouseInProperty(Property prop) {
+        prop.buildHouse();
+    }
+
+    @Override
+    public void buildHotelInProperty(Property prop) {
+        prop.buildHotel();
+    }
+
 }
