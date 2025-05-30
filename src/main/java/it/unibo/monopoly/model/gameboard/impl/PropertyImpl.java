@@ -30,7 +30,7 @@ public class PropertyImpl extends TileImpl implements Property {
 
     @Override
     public final void buildHouse() {
-        if (this.getNHouses() < MAX_HOUSES) {
+        if (canBuildHouse()) {
             this.nHouses++;
         } else {
             throw new IllegalArgumentException("max num houses reached");
@@ -49,5 +49,20 @@ public class PropertyImpl extends TileImpl implements Property {
     @Override
     public final boolean hasHotel() {
         return this.hotel;
+    }
+
+    @Override
+    public boolean canBuildHouse() {
+        if (getNHouses() <= MAX_HOUSES) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    @Override
+    public boolean canBuildHotel() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'canBuildHotel'");
     }
 }
