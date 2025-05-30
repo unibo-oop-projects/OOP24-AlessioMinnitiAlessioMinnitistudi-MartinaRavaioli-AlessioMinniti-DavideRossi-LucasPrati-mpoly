@@ -20,7 +20,6 @@ import it.unibo.monopoly.model.transactions.api.TitleDeed;
  */
 public class BaseTitleDeed implements TitleDeed {
 
-    private static final int HPRICE = 55;
     private final Group group;
     private final String name;
     private final int salePrice;
@@ -46,7 +45,7 @@ public class BaseTitleDeed implements TitleDeed {
         this.name = name;
         this.salePrice = salePrice;
         this.mortgageFunction = mortgageFunction;
-        this.rentOptions = new ArrayList<>(List.of(RentOption.baseRentOption(baseRent)));
+        this.rentOptions = new ArrayList<>(List.of(new RentOptionFactoryImpl().baseRentOption(baseRent)));
     }
 
     /**
@@ -98,6 +97,16 @@ public class BaseTitleDeed implements TitleDeed {
             throw new IllegalStateException("Cannot remove the owner because no owner is set");
         }
         owner = Optional.empty();
+    }
+
+    /**
+     * This is implementation checks whether there is a value in
+     * the {@link Optional} {@code owner} or if it is empty, and
+     * returns that as a boolean.
+     */
+    @Override
+    public boolean isOwned() {
+        return owner.isPresent();
     }
 
     @Override
@@ -161,6 +170,16 @@ public class BaseTitleDeed implements TitleDeed {
         return List.copyOf(this.rentOptions);
     }
 
+    @Override
+    public int getHousePrice() {
+        return 0;
+    }
+
+    @Override
+    public int getHotelPrice() {
+        return 0;
+    }
+
     /**
      * This implementation returns the {@code name} and {@code group} of
      * the {@link BaseTitleDeed}.
@@ -215,33 +234,4 @@ public class BaseTitleDeed implements TitleDeed {
         }
         return true;
     }
-    /* PLACE HOLDER FOR ATUAL METHOD */
-    /**
-     * place holder. 
-     * @return price of houses
-     */
-    @Override
-    public int housePrice() {
-        return HPRICE;
-    }
-    /* PLACE HOLDER FOR ATUAL METHOD */
-    /**
-     * place holder. 
-     * @return number of houses
-     */
-    @Override
-    public int houseNum() {
-        return 0;
-    }
-
-    /**
-     * This is implementation checks whether there is a value in
-     * the {@link Optional} {@code owner} or if it is empty, and
-     * returns that as a boolean.
-     */
-    @Override
-    public boolean isOwned() {
-        return owner.isPresent();
-    }
-
 }

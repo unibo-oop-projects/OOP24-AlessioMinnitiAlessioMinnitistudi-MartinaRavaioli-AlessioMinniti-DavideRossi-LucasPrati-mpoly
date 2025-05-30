@@ -81,6 +81,21 @@ public final class ImmutableTitleDeedCopy implements TitleDeed {
         return this.deed.getRentOptions();
     }
 
+        @Override
+    public boolean isOwned() {
+        return this.deed.isOwned();
+    }
+
+    @Override
+    public int getHousePrice() {
+        return this.deed.getHousePrice();
+    }
+
+    @Override
+    public int getHotelPrice() {
+        return this.deed.getHotelPrice();
+    }
+
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -110,22 +125,4 @@ public final class ImmutableTitleDeedCopy implements TitleDeed {
         }
         return true;
     }
-
-    @Override
-    public int housePrice() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'housePrice'");
-    }
-
-    @Override
-    public int houseNum() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'houseNum'");
-    }
-
-    @Override
-    public boolean isOwned() {
-        return this.deed.isOwned();
-    }
-
 }
