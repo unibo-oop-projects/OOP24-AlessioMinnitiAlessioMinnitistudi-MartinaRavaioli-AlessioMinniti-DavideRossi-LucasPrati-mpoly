@@ -70,7 +70,7 @@ public final class GameControllerImpl implements GameController {
         try {
             effect.activate(this.turnationManager.getCurrPlayer());
             this.gameView.displayMessage("Eseguito effetto " + effect.getDescription());
-        } catch (final Exception e) {
+        } catch (final IllegalStateException | IllegalArgumentException e) {
             this.gameView.displayError(e);
         }
     }
@@ -156,20 +156,24 @@ public final class GameControllerImpl implements GameController {
 
     @Override
     public void executeAction(final String actionName) {
+
+        if (!turnActions.containsKey(actionName)) {
+                gameView.displayError(new IllegalArgumentException("No action with this name was registered." 
+                + "It is possible that the current"
+                + "player has no permission to execute this action on the selected title deed"));
+                return;
+        }
+
         try {
-            if (!turnActions.containsKey(actionName)) {
-                throw new IllegalArgumentException("No action with this name was registered. It is possible that the current"
-                + "player has no permission to execute this action on the selected title deed");
-            }
             final PropertyAction action = turnActions.get(actionName);
             action.executePropertyAction(board, bank);
             gameView.displayMessage(action.getDescription() + "eseguita con successo");
             final Property currentlySittingProperty = (Property) this.board.getTileForPawn(
                                                         this.board.getPawn(
                                                         this.turnationManager.getIdCurrPlayer()));
-            if (actionName == "buy") {
+            if ("buy".equals(actionName)) {
                 gameView.callBuyProperty(currentlySittingProperty);
-            } else if (actionName == "sell") {
+            } else if ("sell".equals(actionName)) {
                 gameView.callClearPanel();
             }
             gameView.refreshCurrentPlayerInfo(getCurrPlayer(), bank.getBankAccount(getCurrPlayer().getID()));

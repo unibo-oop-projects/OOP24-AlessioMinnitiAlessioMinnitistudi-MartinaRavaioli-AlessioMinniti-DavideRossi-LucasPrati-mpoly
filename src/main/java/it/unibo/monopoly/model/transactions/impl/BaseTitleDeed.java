@@ -18,7 +18,7 @@ import it.unibo.monopoly.model.transactions.api.TitleDeed;
  * concept of player ownership and exposes a finite number 
  * of {@link RentOption} to choose the rent to pay.
  */
-public class BaseTitleDeed implements TitleDeed {
+public final class BaseTitleDeed implements TitleDeed {
 
     private final Group group;
     private final String name;
@@ -71,7 +71,7 @@ public class BaseTitleDeed implements TitleDeed {
     }
 
     @Override
-    public final int getOwnerId() {
+    public int getOwnerId() {
         if (owner.isEmpty()) {
             throw new IllegalStateException("This title deed has no owner");
         }
@@ -79,7 +79,7 @@ public class BaseTitleDeed implements TitleDeed {
     }
 
     @Override
-    public final void setOwner(final int ownerId) {
+    public void setOwner(final int ownerId) {
         Objects.requireNonNull(ownerId);
         if (owner.isPresent()) {
             throw new IllegalStateException("Cannot set a new owner for" 
@@ -92,7 +92,7 @@ public class BaseTitleDeed implements TitleDeed {
     }
 
     @Override
-    public final void removeOwner() {
+    public void removeOwner() {
         if (owner.isEmpty()) {
             throw new IllegalStateException("Cannot remove the owner because no owner is set");
         }
@@ -110,17 +110,17 @@ public class BaseTitleDeed implements TitleDeed {
     }
 
     @Override
-    public final Group getGroup() {
+    public Group getGroup() {
         return this.group;
     }
 
     @Override
-    public final String getName() {
+    public String getName() {
         return this.name;
     }
 
     @Override
-    public final Integer getSalePrice() {
+    public Integer getSalePrice() {
         return this.salePrice;
     }
 

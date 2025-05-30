@@ -58,5 +58,5 @@ public interface RentOptionFactory {
      * @param baseRent the rent of the option
      * @return the created rent option
      */
-    RentOption baseRentOption(final int baseRent);
+    RentOption baseRentOption(int baseRent);
 }

@@ -10,7 +10,7 @@ import it.unibo.monopoly.model.gameboard.impl.Group;
 import it.unibo.monopoly.model.transactions.api.RentOption;
 import it.unibo.monopoly.model.transactions.api.TitleDeed;
 
-public abstract class AbstractTitleDeed implements TitleDeed{
+abstract class AbstractTitleDeed implements TitleDeed {
     private final Group group;
     private final String name;
     private final int salePrice;
@@ -18,7 +18,15 @@ public abstract class AbstractTitleDeed implements TitleDeed{
     private final List<RentOption> rentOptions;
     private Optional<Integer> owner = Optional.empty();
 
-    public AbstractTitleDeed(final Group group, 
+    /**
+     * //TODO fill in.
+     * @param group
+     * @param name
+     * @param salePrice
+     * @param mortgageFunction
+     * @param baseRent
+     */
+    AbstractTitleDeed(final Group group, 
                         final String name, 
                         final int salePrice, 
                         final Function<Integer, Integer> mortgageFunction, 

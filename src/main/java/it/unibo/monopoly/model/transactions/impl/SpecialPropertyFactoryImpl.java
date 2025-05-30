@@ -89,12 +89,12 @@ public final class SpecialPropertyFactoryImpl implements SpecialPropertyFactory 
 
             @Override
             public int getHousePrice() {
-                return this.getHousePrice();
+                return titleDeed.getHousePrice();
             }
 
             @Override
             public int getHotelPrice() {
-                return this.getHotelPrice();
+                return titleDeed.getHotelPrice();
             }
 
         };
