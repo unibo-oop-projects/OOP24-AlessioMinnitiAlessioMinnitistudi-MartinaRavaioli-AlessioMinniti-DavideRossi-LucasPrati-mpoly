@@ -43,7 +43,7 @@ public final class SimpleBankAccountImpl implements BankAccount {
      * can still be used to play based on its state
      */
     public SimpleBankAccountImpl(final int id, final Predicate<BankAccount> canContinue) {
-        this(id, DEFAULT_BALANCE,canContinue);
+        this(id, DEFAULT_BALANCE, canContinue);
     }
 
     @Override

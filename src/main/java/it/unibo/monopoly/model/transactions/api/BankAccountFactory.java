@@ -11,7 +11,7 @@ import it.unibo.monopoly.utils.api.Identifiable;
 public interface BankAccountFactory {
 
     /**
-     * Creates a {@link BankAccount} with an {@code initialBalance}.
+     * Creates a {@link BankAccount} with an {@code initialBalance} and an {@code "always true"} check.
      * 
      * @param id the {@link Identifiable} representing the {@link Player} that owns the {@link BankAccount} 
      * @return a new {@link BankAccount} with an {@code initialBalance}

@@ -32,7 +32,9 @@ public final class BankAccountFactoryImpl implements BankAccountFactory {
      */
     @Override
     public BankAccount createSimple(final int id) {
-        return new SimpleBankAccountImpl(id, initialBalance);
+        return createWithCheck( id,
+                                e -> true
+        );
     }
 
     /**
@@ -41,7 +43,9 @@ public final class BankAccountFactoryImpl implements BankAccountFactory {
     @Override
     public BankAccount createWithCheck(final int id, final Predicate<BankAccount> check) {
         Objects.requireNonNull(check, "Check cannot be null");
-        return new CheckValidityBankAccount(createSimple(id), 
-                                            check);
+        return new SimpleBankAccountImpl(id,
+                                         initialBalance, 
+                                         check
+        );
     }
 }
