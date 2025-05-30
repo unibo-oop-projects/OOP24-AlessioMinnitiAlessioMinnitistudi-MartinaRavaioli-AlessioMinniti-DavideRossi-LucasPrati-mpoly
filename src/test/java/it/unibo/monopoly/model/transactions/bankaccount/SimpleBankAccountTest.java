@@ -23,14 +23,14 @@ class SimpleBankAccountTest {
 
     @BeforeEach
     void setUp() {
-        bankAccount = new SimpleBankAccountImpl(ID, INITIAL_BALANCE);
+        bankAccount = new SimpleBankAccountImpl(ID, INITIAL_BALANCE, e -> true);
     }
 
     @Test
     void createAccountWithNegativeBalance() {
         final IllegalArgumentException negativeAmountException = assertThrows(
             IllegalArgumentException.class,
-            () -> bankAccount = new SimpleBankAccountImpl(ID, -(INITIAL_BALANCE + 1)),
+            () -> bankAccount = new SimpleBankAccountImpl(ID, -(INITIAL_BALANCE + 1), e -> true),
             "Creating a bankAccount with a negative balance should have thrown an error");
         testExceptionFormat(negativeAmountException);
     }
