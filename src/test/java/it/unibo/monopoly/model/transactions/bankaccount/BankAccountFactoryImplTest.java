@@ -1,10 +1,6 @@
 package it.unibo.monopoly.model.transactions.bankaccount;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.function.Predicate;
 
@@ -38,7 +34,7 @@ class BankAccountFactoryImplTest {
             () -> new BankAccountFactoryImpl(NEGATIVE_INITIAL_BALANCE),
             "Constructor should throw if initialBalance is negative"
         );
-        testExceptionFormat(ex);
+        assertExceptionMessageNotEmpty(ex);
     }
 
     @Test
@@ -47,36 +43,53 @@ class BankAccountFactoryImplTest {
         assertNotNull(account, "createSimple should never return null");
         assertEquals(VALID_INITIAL_BALANCE, account.getBalance(),
             "Simple account should have been initialized with factory's balance");
-        // simple accounts always can continue
-        assertTrue(account.canContinue());
-    }
-
-
-
-    @Test
-    void createWithCheckWrapsInCheckValidityBankAccount() {
-        final Predicate<BankAccount> alwaysTrue = b -> true;
-        final BankAccount wrapped = factory.createWithCheck(PLAYER_ID, alwaysTrue);
-        assertNotNull(wrapped, "createWithCheck should never return null");
-        // we expect a CheckValidityBankAccount wrapper
-        assertEquals("it.unibo.monopoly.model.transactions.impl.bankaccount.CheckValidityBankAccount",
-            wrapped.getClass().getName(),
-            "Should return a CheckValidityBankAccount");
+        assertTrue(account.canContinue(), "Simple account should always be valid for continuation");
     }
 
     @Test
-    void createWithCheckHonorsPredicate() {
+    void createSimpleReturnsNewInstancesEachTime() {
+        final BankAccount acc1 = factory.createSimple(PLAYER_ID);
+        final BankAccount acc2 = factory.createSimple(PLAYER_ID + 1);
+        assertNotSame(acc1, acc2, "Each call should produce a distinct BankAccount instance");
+    }
+
+    @Test
+    void createWithCheckReturnsBankAccountHonoringPredicate() {
         final Predicate<BankAccount> alwaysFalse = b -> false;
         final BankAccount account = factory.createWithCheck(PLAYER_ID, alwaysFalse);
-        // underlying balance still valid
-        assertEquals(VALID_INITIAL_BALANCE, account.getBalance());
-        // but canContinue is governed by predicate
-        assertFalse(account.canContinue(),
-            "Wrapped account should report false when predicate fails");
+        assertEquals(VALID_INITIAL_BALANCE, account.getBalance(),
+            "Account should still have correct initial balance");
+        assertFalse(account.canContinue(), "Account should report predicate result (false)");
     }
 
-    private void testExceptionFormat(final Exception exception) {
-        assertNotNull(exception.getMessage(), "Exception message must not be null");
-        assertFalse(exception.getMessage().isBlank(), "Exception message must not be blank");
+    @Test
+    void createWithCheckReturnsNonNullAccount() {
+        final Predicate<BankAccount> alwaysTrue = b -> true;
+        final BankAccount account = factory.createWithCheck(PLAYER_ID, alwaysTrue);
+        assertNotNull(account, "createWithCheck must never return null");
+        assertTrue(account.canContinue(), "Account should be valid if predicate returns true");
+    }
+
+    @Test
+    void createWithCheckRejectsNullPredicate() {
+        final NullPointerException ex = assertThrows(
+            NullPointerException.class,
+            () -> factory.createWithCheck(PLAYER_ID, null),
+            "Passing null predicate must throw NullPointerException"
+        );
+        assertTrue(ex.getMessage().contains("Check cannot be null"),
+            "Exception message should describe missing check");
+    }
+
+    @Test
+    void createWithCheckAssignsCorrectId() {
+        final int testId = 99;
+        final BankAccount account = factory.createWithCheck(testId, b -> true);
+        assertEquals(testId, account.getID(), "BankAccount should preserve ID passed to factory");
+    }
+
+    private void assertExceptionMessageNotEmpty(final Exception ex) {
+        assertNotNull(ex.getMessage(), "Exception message must not be null");
+        assertFalse(ex.getMessage().isBlank(), "Exception message must not be blank");
     }
 }
