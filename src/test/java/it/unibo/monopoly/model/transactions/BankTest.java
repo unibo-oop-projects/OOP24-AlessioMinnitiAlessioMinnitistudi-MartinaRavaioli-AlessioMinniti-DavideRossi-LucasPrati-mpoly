@@ -36,8 +36,8 @@ class BankTest {
     private static final String TITLE_DEED_NAME2 = "Viale Monterosa";
 
     private final Set<BankAccount> accounts = Set.of(
-        new SimpleBankAccountImpl(ID_1, AMOUNT),
-        new SimpleBankAccountImpl(ID_2, AMOUNT)
+        new SimpleBankAccountImpl(ID_1, AMOUNT, e -> true),
+        new SimpleBankAccountImpl(ID_2, AMOUNT, e -> true)
     );
     private final Set<TitleDeed> deeds = Set.of(
         new BaseTitleDeed(Group.GREEN, TITLE_DEED_NAME1, 50, s -> s / 2, 10),

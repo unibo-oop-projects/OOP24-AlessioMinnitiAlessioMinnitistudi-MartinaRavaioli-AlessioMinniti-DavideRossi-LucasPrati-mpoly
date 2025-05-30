@@ -83,7 +83,7 @@ class FactoryTest {
     private final Player p1 = new PrisonablePlayer(p);
 
     private final Set<BankAccount> accounts = Set.of(
-        new SimpleBankAccountImpl(VALID_ID1)
+        new SimpleBankAccountImpl(VALID_ID1, e -> true)
     );
     private final Set<TitleDeed> deeds = Set.of(
         new BaseTitleDeed(Group.PURPLE, TITLE_DEED_NAME1, VALID_SALE_PRICE1, s -> s / 2, VALID_BASE_RENT),
