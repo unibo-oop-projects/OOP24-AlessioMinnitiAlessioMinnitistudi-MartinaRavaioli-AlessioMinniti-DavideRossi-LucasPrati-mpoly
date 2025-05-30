@@ -26,15 +26,15 @@ public final class GUIVenditaLogicImpl implements  GUIVenditaLogic, Serializable
 
     @Override
     public List<TitleDeed> getProperties(final Player player, final Bank bank) {
-        if (bank.getTitleDeedsByOwner(player.getName()).isEmpty()) {
+        if (bank.getTitleDeedsByOwner(player.getID()).isEmpty()) {
             return List.of();
         }
-        return bank.getTitleDeedsByOwner(player.getName()).stream().toList();
+        return bank.getTitleDeedsByOwner(player.getID()).stream().toList();
     }
 
     @Override
     public BankAccount getPlayerBalance(final Player player, final Bank bank) {
-        return bank.getBankAccount(player.getName());
+        return bank.getBankAccount(player.getID());
     }
 
     @Override
