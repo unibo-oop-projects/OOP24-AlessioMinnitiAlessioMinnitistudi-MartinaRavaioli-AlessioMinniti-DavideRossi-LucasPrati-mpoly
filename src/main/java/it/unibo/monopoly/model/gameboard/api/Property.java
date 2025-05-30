@@ -28,4 +28,7 @@ public interface Property extends Tile {
     */
     boolean hasHotel();
 
+    boolean canBuildHouse();
+
+    boolean canBuildHotel();
 }
