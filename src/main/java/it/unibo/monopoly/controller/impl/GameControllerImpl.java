@@ -65,11 +65,17 @@ public final class GameControllerImpl implements GameController {
         this.bank = bank;
     }
 
+    private void refreshPlayerInfo() {
+        final Player currentPlayer = turnationManager.getCurrPlayer();
+        gameView.refreshCurrentPlayerInfo(currentPlayer, bank.getBankAccount(currentPlayer.getID()));   
+    }
+
 
     private void executeEffect(final Effect effect) {
         try {
             effect.activate(this.turnationManager.getCurrPlayer());
             this.gameView.displayMessage("Eseguito effetto " + effect.getDescription());
+            refreshPlayerInfo();
         } catch (final IllegalStateException | IllegalArgumentException e) {
             this.gameView.displayError(e);
         }
@@ -79,6 +85,7 @@ public final class GameControllerImpl implements GameController {
     @Override
     public void endTurn() {
         this.turnationManager.getNextPlayer();
+        refreshPlayerInfo();
     }
 
     @Override
@@ -176,7 +183,7 @@ public final class GameControllerImpl implements GameController {
             } else if ("sell".equals(actionName)) {
                 gameView.callClearPanel();
             }
-            gameView.refreshCurrentPlayerInfo(getCurrPlayer(), bank.getBankAccount(getCurrPlayer().getID()));
+            refreshPlayerInfo();
         } catch (final IllegalStateException | IllegalArgumentException e) {
             gameView.displayError(e);
         }
