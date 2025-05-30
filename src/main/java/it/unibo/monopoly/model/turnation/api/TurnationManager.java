@@ -75,7 +75,7 @@ public interface TurnationManager {
      * @param value result of the dices
      * @param board board
      */
-    boolean canExitPrison(Collection<Integer> value, Board board);
+    boolean canExitPrison(Collection<Integer> value);
     /**
      * tells if the player can throw the dices.
      * @return bool

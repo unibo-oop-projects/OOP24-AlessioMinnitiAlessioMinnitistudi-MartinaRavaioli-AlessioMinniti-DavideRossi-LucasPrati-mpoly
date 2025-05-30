@@ -126,11 +126,6 @@ public final class GameboardViewImpl extends JPanel implements GameboardView {
                 break;
             }
         }
-        // for (final JPanel p : tilesView) {
-        //     if (p.getName().equals(prop.getName())) {
-        //         p.setBackground(currPlayer.getColor());
-        //     }
-        // }
     }
 
     @Override

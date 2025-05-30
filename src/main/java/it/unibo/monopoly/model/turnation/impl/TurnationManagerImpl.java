@@ -14,7 +14,6 @@ import it.unibo.monopoly.model.turnation.api.Player;
 import it.unibo.monopoly.model.turnation.api.TurnationManager;
 import it.unibo.monopoly.utils.impl.CircularLinkedList;
 
-
 /**
  * turnation manager implementation.
 */
@@ -122,7 +121,7 @@ public class TurnationManagerImpl implements TurnationManager {
     }
 
     @Override
-    public final boolean canExitPrison(final Collection<Integer> value, final Board board) {
+    public final boolean canExitPrison(final Collection<Integer> value) {
         return this.currPlayer.canExitPrison(value);
     }
 
