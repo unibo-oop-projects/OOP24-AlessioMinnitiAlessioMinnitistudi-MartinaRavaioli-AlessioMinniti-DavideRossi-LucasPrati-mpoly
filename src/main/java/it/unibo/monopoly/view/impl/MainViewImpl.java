@@ -142,7 +142,7 @@ public final class MainViewImpl implements MainGameView {
 
 
     @Override
-    public void displayDiceResult(List<Integer> results) {
+    public void displayDiceResult(final List<Integer> results) {
         mainActionsPanel.displayDicesResults(results);
     }
 

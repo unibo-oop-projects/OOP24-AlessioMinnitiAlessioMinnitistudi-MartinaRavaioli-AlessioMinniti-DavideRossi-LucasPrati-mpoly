@@ -32,8 +32,8 @@ public final class BankAccountFactoryImpl implements BankAccountFactory {
      */
     @Override
     public BankAccount createSimple(final int id) {
-        return createWithCheck( id,
-                                e -> true
+        return createWithCheck(id,
+                               e -> true
         );
     }
 

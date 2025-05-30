@@ -77,7 +77,7 @@ public interface GameController {
 
     /**
      * Retrieves a {@link PropertyAction} with the same name ({@link PropertyAction#getName()})
-     * as the one given as input and executes it (calling {@link PropertyAction#executePropertyAction()}).  
+     * as the one given as input and executes it (calling {@link PropertyAction#executePropertyAction()}).
      * @param actionName the name of the {@link PropertyAction} to execute
      */
     void executeAction(String actionName);

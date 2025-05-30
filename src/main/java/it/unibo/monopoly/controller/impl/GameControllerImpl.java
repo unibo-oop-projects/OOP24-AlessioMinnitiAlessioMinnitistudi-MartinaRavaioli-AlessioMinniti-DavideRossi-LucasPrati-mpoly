@@ -34,7 +34,7 @@ public final class GameControllerImpl implements GameController {
     private final Board board; /**board. */
     private final Configuration config; /**config. */
     private final Bank bank;
-    private Map<String,PropertyAction> turnActions = new HashMap<>();
+    private Map<String, PropertyAction> turnActions = new HashMap<>();
     private MainGameView gameView; /**game view. */
 
     /**
@@ -47,6 +47,7 @@ public final class GameControllerImpl implements GameController {
      * @param board the game board
      * @param turnationManager the entity for manage the turnation of the players
      * @param config a consistent configuration for settings
+     * @param bank the game's bank
      */
     @SuppressFBWarnings(
         value = "EI_EXPOSE_REP2",
@@ -161,11 +162,11 @@ public final class GameControllerImpl implements GameController {
                 + "player has no permission to execute this action on the selected title deed");
             }
             final PropertyAction action = turnActions.get(actionName);
-            action.executePropertyAction(board,bank);
+            action.executePropertyAction(board, bank);
             gameView.displayMessage(action.getDescription() + "eseguita con successo");
             final Property currentlySittingProperty = (Property) this.board.getTileForPawn(
                                                         this.board.getPawn(
-                                                            this.turnationManager.getIdCurrPlayer()));
+                                                        this.turnationManager.getIdCurrPlayer()));
             if (actionName == "buy") {
                 gameView.callBuyProperty(currentlySittingProperty);
             } else if (actionName == "sell") {
