@@ -4,29 +4,11 @@ package it.unibo.monopoly.model.gameboard.api;
 * property interface.
 */
 public interface Property extends Tile {
-
     /**
-     * add house.
-    */
-    void buildHouse();
-
-    /**
-     * add hotel.
-    */
-    void buildHotel();
-
-    /**
-
-     * get the number of houses.
-     * @return int
-    */
-    int getNHouses();
-
-    /**
-     * control if it has an hotel.
+     * tells if in this property you can build houses and hotel.
      * @return bool
     */
-    boolean hasHotel();
+    boolean isBuildable();
     /**
      * tells if you can build an house.
      * @return bool
