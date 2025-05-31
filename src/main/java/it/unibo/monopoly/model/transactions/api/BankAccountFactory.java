@@ -15,8 +15,6 @@ public interface BankAccountFactory {
      * 
      * @param id the {@link Identifiable} representing the {@link Player} that owns the {@link BankAccount} 
      * @return a new {@link BankAccount} with an {@code initialBalance}
-     * @throws IllegalArgumentException if {@code initialBalance} is negative
-     * @throws NullPointerException if {@code owner} is {@code null}
      */
     BankAccount createSimple(int id);
 
@@ -26,8 +24,6 @@ public interface BankAccountFactory {
      * @param id the {@link Identifiable} representing the {@link Player} that owns the {@link BankAccount}
      * @param check strategy to determine if the {@link BankAccount} can still be used to play based on its state
      * @return a new {@link BankAccount} with an {@code initialBalance} and a provided {@code check}
-     * @throws IllegalArgumentException if {@code initialBalance} is negative
-     * @throws NullPointerException if {@code owner} or {@code check} are {@code null}
      */
     BankAccount createWithCheck(int id, Predicate<BankAccount> check);
 
