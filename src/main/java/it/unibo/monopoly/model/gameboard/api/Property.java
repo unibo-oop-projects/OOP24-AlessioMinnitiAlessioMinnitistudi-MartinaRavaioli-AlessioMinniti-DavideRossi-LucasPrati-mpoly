@@ -9,14 +9,4 @@ public interface Property extends Tile {
      * @return bool
     */
     boolean isBuildable();
-    /**
-     * tells if you can build an house.
-     * @return bool
-    */
-    boolean canBuildHouse();
-    /**
-     * tells if you can build an hotel.
-     * @return bool
-    */
-    boolean canBuildHotel();
 }

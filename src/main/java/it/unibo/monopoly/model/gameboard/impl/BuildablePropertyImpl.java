@@ -1,11 +1,24 @@
 package it.unibo.monopoly.model.gameboard.impl;
 
 import it.unibo.monopoly.model.gameboard.api.BuildableProperty;
+import it.unibo.monopoly.model.turnation.api.Position;
 
 public class BuildablePropertyImpl extends TileImpl implements BuildableProperty{
     private static final int MAX_HOUSES = 4; /**max number of houses. */
     private int nHouses; /**number of hotel. */
     private boolean hotel; /**tells if it has an hotel. */
+
+    /**
+     * constructor.
+     * @param name property's name
+     * @param position position of the property
+     * @param group property group
+    */
+    public BuildablePropertyImpl(final String name, final Position position, final Group group) { 
+        super(name, position, group);
+        this.nHouses = 0;
+        this.hotel = false;
+    }
     
     @Override
     public final int getNHouses() {
@@ -43,19 +56,16 @@ public class BuildablePropertyImpl extends TileImpl implements BuildableProperty
 
     @Override
     public boolean isBuildable() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'isBuildable'");
+        return true;
     }
 
     @Override
     public boolean canBuildHouse() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'canBuildHouse'");
+        return getNHouses() <= MAX_HOUSES;
     }
 
     @Override
     public boolean canBuildHotel() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'canBuildHotel'");
+        return !hasHotel();
     }
 }
