@@ -221,6 +221,7 @@ public final class BankImpl implements Bank {
         }
 
         player.withdraw(td.getHousePrice());
+        //transactionLedger.markExecution("buy");
     }
 
     @Override
@@ -235,6 +236,7 @@ public final class BankImpl implements Bank {
         }
 
         player.withdraw(td.getHotelPrice());
+        //transactionLedger.markExecution("buy");
     }
 
     @Override
@@ -307,12 +309,6 @@ public final class BankImpl implements Bank {
             .forEach(TitleDeed::removeOwner);
             accounts.remove(pl.getID());
         }
-    }
-
-    @Override
-    public void withdrawFrom(String ownerName, int amount) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'withdrawFrom'");
     }
 
 }
