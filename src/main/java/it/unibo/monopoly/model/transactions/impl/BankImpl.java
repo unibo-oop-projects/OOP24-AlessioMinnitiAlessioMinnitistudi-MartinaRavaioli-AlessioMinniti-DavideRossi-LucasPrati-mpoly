@@ -159,4 +159,25 @@ public final class BankImpl implements Bank {
         final BankAccount account = findAccount(ownerName);
         account.withdraw(amount);
     }
+
+    @Override
+    public void buyHouse(final String titleDeedName, final int playerId) {
+        Objects.requireNonNull(titleDeedName);
+        Objects.requireNonNull(playerId);
+        final TitleDeed td = findTitleDeed(titleDeedName);
+        final BankAccount player = findAccount(playerId);
+
+        if (td.isOwned()) {
+            throw new IllegalStateException("Property is already owned by player" + td.getOwnerId());
+        }
+
+        player.withdraw(td.getHousePrice());
+
+    }
+
+    @Override
+    public void buyHotel(final String titleDeedName, final int playerId) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'buyHotel'");
+    }
 }
