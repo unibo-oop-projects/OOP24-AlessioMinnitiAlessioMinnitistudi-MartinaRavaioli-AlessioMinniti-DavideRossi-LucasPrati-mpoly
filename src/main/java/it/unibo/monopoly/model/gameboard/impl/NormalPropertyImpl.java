@@ -19,7 +19,7 @@ public class NormalPropertyImpl extends TileImpl implements Property {
     }
 
     @Override
-    public boolean isBuildable() {
+    public final boolean isBuildable() {
         return false;
     }
 }

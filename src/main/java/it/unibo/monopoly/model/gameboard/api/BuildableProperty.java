@@ -1,5 +1,7 @@
 package it.unibo.monopoly.model.gameboard.api;
-
+/**
+    * buildable property interface.
+*/
 public interface BuildableProperty extends Property {
     /**
      * add house.

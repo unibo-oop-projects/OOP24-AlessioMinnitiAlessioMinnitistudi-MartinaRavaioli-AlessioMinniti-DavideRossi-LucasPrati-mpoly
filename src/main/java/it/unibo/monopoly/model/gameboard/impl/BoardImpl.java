@@ -137,7 +137,7 @@ public class BoardImpl implements Board {
     @Override
     public final boolean canBuildHouseInProperty(final Property prop) {
         if (!(prop instanceof BuildableProperty)) {
-            throw new IllegalArgumentException("this property is not buildable");
+            throw new IllegalArgumentException("this property can't build houses");
         }
         return new BuildablePropertyDecorator((BuildableProperty) prop).canBuildHouse();
     }
@@ -145,7 +145,7 @@ public class BoardImpl implements Board {
     @Override
     public final boolean canBuildHotelInProperty(final Property prop) {
         if (!(prop instanceof BuildableProperty)) {
-            throw new IllegalArgumentException("this property is not buildable");
+            throw new IllegalArgumentException("this property can't build hotel");
         }
         return new BuildablePropertyDecorator((BuildableProperty) prop).canBuildHotel();
     }
@@ -161,7 +161,7 @@ public class BoardImpl implements Board {
     @Override
     public final void buildHotelInProperty(final Property prop) {
         if (!(prop instanceof BuildableProperty)) {
-            throw new IllegalArgumentException("this property is not buildable");
+            throw new IllegalArgumentException("this property isn't buildable");
         }
         new BuildablePropertyDecorator((BuildableProperty) prop).buildHotel();
     }

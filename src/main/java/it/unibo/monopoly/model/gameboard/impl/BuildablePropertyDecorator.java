@@ -1,41 +1,46 @@
 package it.unibo.monopoly.model.gameboard.impl;
 
 import it.unibo.monopoly.model.gameboard.api.BuildableProperty;
-
+/**
+    * buildable property decorator.
+*/
 public class BuildablePropertyDecorator extends NormalPropertyDecorator implements BuildableProperty {
-
-    public BuildablePropertyDecorator(BuildableProperty prop) {
+    /**
+     * constructor.
+     * @param prop
+    */
+    public BuildablePropertyDecorator(final BuildableProperty prop) {
         super(prop);
     }
 
     @Override
-    public void buildHouse() {
-        ((BuildableProperty)this.decorated).buildHouse();
+    public final void buildHouse() {
+        ((BuildableProperty) this.getProperty()).buildHouse();
     }
 
     @Override
-    public void buildHotel() {
-        ((BuildableProperty)this.decorated).buildHotel();
+    public final void buildHotel() {
+        ((BuildableProperty) this.getProperty()).buildHotel();
     }
 
     @Override
-    public int getNHouses() {
-        return ((BuildableProperty)this.decorated).getNHouses();
+    public final int getNHouses() {
+        return ((BuildableProperty) this.getProperty()).getNHouses();
     }
 
     @Override
-    public boolean hasHotel() {
-        return ((BuildableProperty)this.decorated).hasHotel();
+    public final boolean hasHotel() {
+        return ((BuildableProperty) this.getProperty()).hasHotel();
     }
 
     @Override
-    public boolean canBuildHouse() {
-        return ((BuildableProperty)this.decorated).canBuildHouse();
+    public final boolean canBuildHouse() {
+        return ((BuildableProperty) this.getProperty()).canBuildHouse();
     }
 
     @Override
-    public boolean canBuildHotel() {
-        return ((BuildableProperty)this.decorated).canBuildHotel();
+    public final boolean canBuildHotel() {
+        return ((BuildableProperty) this.getProperty()).canBuildHotel();
     }
 
 }
