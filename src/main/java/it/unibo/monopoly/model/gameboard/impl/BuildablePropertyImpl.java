@@ -3,7 +3,7 @@ package it.unibo.monopoly.model.gameboard.impl;
 import it.unibo.monopoly.model.gameboard.api.BuildableProperty;
 import it.unibo.monopoly.model.turnation.api.Position;
 
-public class BuildablePropertyImpl extends TileImpl implements BuildableProperty{
+public class BuildablePropertyImpl extends TileImpl implements BuildableProperty {
     private static final int MAX_HOUSES = 4; /**max number of houses. */
     private int nHouses; /**number of hotel. */
     private boolean hotel; /**tells if it has an hotel. */
