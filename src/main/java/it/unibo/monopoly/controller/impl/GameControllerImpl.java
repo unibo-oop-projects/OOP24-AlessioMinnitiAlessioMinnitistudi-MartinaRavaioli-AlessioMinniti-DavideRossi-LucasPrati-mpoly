@@ -94,36 +94,34 @@ public final class GameControllerImpl implements GameController {
         } else {
             this.gameView.displayMessage("the player will die if he passes the turn");
         }
-        
+
     }
 
     @Override
     public void throwDices() {
-        if (this.turnationManager.canThrowDices()) {
-            final Collection<Integer> result = this.turnationManager.moveByDices();
-            if (this.turnationManager.isCurrentPlayerInPrison()) {
-                this.turnationManager.canExitPrison(result);
-            }
+        final Collection<Integer> result = this.turnationManager.moveByDices();
+        if (this.turnationManager.isCurrentPlayerInPrison()) {
+            this.turnationManager.canExitPrison(result);
+        }
 
-            final int currentPlayerId = this.turnationManager.getIdCurrPlayer();
-            this.board.movePawn(this.board.getPawn(currentPlayerId), result);
-            this.gameView.callChangePositions();
-            this.gameView.displayDiceResult(result.stream().toList());
-            final Tile currentlySittingTile = this.board.getTileForPawn(this.board.getPawn(currentPlayerId));
-            if (currentlySittingTile instanceof Property) {
-                final String propertyName = currentlySittingTile.getName();
-                this.gameView.displayPropertyContract(this.bank.getTitleDeed(propertyName));
-                this.turnActions.clear();
-                this.turnActions = Maps.uniqueIndex(this.bank.getApplicableActionsForTitleDeed(currentPlayerId, 
-                                        propertyName, 
-                                        result.stream().mapToInt(d -> d).sum()),
-                                        PropertyAction::getName);
-                this.gameView.showPlayerActions(turnActions.keySet());
-            } else if (currentlySittingTile instanceof Special) {
-                final Special specialTile = (Special) currentlySittingTile;
-                this.gameView.displaySpecialInfo(specialTile);
-                executeEffect(specialTile.getEffect());
-            }
+        final int currentPlayerId = this.turnationManager.getIdCurrPlayer();
+        this.board.movePawn(this.board.getPawn(currentPlayerId), result);
+        this.gameView.callChangePositions();
+        this.gameView.displayDiceResult(result.stream().toList());
+        final Tile currentlySittingTile = this.board.getTileForPawn(this.board.getPawn(currentPlayerId));
+        if (currentlySittingTile instanceof Property) {
+            final String propertyName = currentlySittingTile.getName();
+            this.gameView.displayPropertyContract(this.bank.getTitleDeed(propertyName));
+            this.turnActions.clear();
+            this.turnActions = Maps.uniqueIndex(this.bank.getApplicableActionsForTitleDeed(currentPlayerId, 
+                                    propertyName, 
+                                    result.stream().mapToInt(d -> d).sum()),
+                                    PropertyAction::getName);
+            this.gameView.showPlayerActions(turnActions.keySet());
+        } else if (currentlySittingTile instanceof Special) {
+            final Special specialTile = (Special) currentlySittingTile;
+            this.gameView.displaySpecialInfo(specialTile);
+            executeEffect(specialTile.getEffect());
         }
 
     }
