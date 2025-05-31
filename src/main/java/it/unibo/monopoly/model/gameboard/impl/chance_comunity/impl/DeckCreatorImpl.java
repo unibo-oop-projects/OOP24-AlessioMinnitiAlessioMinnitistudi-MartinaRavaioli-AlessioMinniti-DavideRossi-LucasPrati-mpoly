@@ -21,7 +21,7 @@ public class DeckCreatorImpl implements DeckCreator {
     @Override
     public ChancheAndCommunityChestDeck createDeck(String type, Board board, Bank bank, TurnationManager turnM) {
         try {
-            FileReader file = new FileReader("command.json");
+            FileReader file = new FileReader("command.txt");
             ParserOnHyphen paars = new ParserOnHyphen(file);
             List<Chance_CommunityChestCard> cards = new LinkedList<>();
             while (paars.hasNesxt()) {
