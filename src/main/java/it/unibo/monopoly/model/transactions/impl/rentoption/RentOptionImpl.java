@@ -1,4 +1,4 @@
-package it.unibo.monopoly.model.transactions.impl;
+package it.unibo.monopoly.model.transactions.impl.rentoption;
 
 import java.util.Set;
 import java.util.function.BiPredicate;

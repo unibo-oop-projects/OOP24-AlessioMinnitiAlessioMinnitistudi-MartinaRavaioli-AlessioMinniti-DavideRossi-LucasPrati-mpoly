@@ -1,4 +1,4 @@
-package it.unibo.monopoly.model.transactions.impl;
+package it.unibo.monopoly.model.transactions.impl.rentoption;
 
 import java.util.List;
 import java.util.stream.Collectors;

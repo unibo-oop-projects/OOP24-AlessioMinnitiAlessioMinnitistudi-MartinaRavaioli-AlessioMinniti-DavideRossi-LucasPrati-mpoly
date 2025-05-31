@@ -9,7 +9,7 @@ import it.unibo.monopoly.controller.api.GUIVenditaLogic;
 import it.unibo.monopoly.model.transactions.api.Bank;
 import it.unibo.monopoly.model.transactions.api.BankAccount;
 import it.unibo.monopoly.model.transactions.api.TitleDeed;
-import it.unibo.monopoly.model.transactions.impl.BaseTitleDeed;
+import it.unibo.monopoly.model.transactions.impl.titledeed.BaseTitleDeed;
 import it.unibo.monopoly.model.turnation.api.Player;
 
 /**

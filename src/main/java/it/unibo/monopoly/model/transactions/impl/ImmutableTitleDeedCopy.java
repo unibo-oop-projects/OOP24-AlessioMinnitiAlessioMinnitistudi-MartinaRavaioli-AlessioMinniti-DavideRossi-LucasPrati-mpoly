@@ -7,6 +7,7 @@ import java.util.Set;
 import it.unibo.monopoly.model.gameboard.impl.Group;
 import it.unibo.monopoly.model.transactions.api.RentOption;
 import it.unibo.monopoly.model.transactions.api.TitleDeed;
+import it.unibo.monopoly.model.transactions.impl.titledeed.BaseTitleDeed;
 
 /**
  * Immutable view for a {@link TitleDeed} object.

@@ -15,8 +15,8 @@ import org.junit.jupiter.api.Test;
 import it.unibo.monopoly.model.gameboard.impl.Group;
 import it.unibo.monopoly.model.transactions.api.RentOption;
 import it.unibo.monopoly.model.transactions.api.TitleDeed;
-import it.unibo.monopoly.model.transactions.impl.BaseTitleDeed;
-import it.unibo.monopoly.model.transactions.impl.RentOptionImpl;
+import it.unibo.monopoly.model.transactions.impl.rentoption.RentOptionImpl;
+import it.unibo.monopoly.model.transactions.impl.titledeed.BaseTitleDeed;
 
 class BaseTitleDeedTest {
 

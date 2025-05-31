@@ -17,10 +17,10 @@ import it.unibo.monopoly.model.transactions.api.Bank;
 import it.unibo.monopoly.model.transactions.api.BankAccount;
 import it.unibo.monopoly.model.transactions.api.TitleDeed;
 import it.unibo.monopoly.model.transactions.impl.BankImpl;
-import it.unibo.monopoly.model.transactions.impl.BaseTitleDeed;
 import it.unibo.monopoly.model.transactions.impl.ImmutableTitleDeedCopy;
 import it.unibo.monopoly.model.transactions.impl.bankaccount.ImmutableBankAccountCopy;
 import it.unibo.monopoly.model.transactions.impl.bankaccount.SimpleBankAccountImpl;
+import it.unibo.monopoly.model.transactions.impl.titledeed.BaseTitleDeed;
 
 /*
  * Tests to verify correct functionality of

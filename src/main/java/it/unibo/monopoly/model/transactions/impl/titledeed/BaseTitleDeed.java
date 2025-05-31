@@ -1,4 +1,4 @@
-package it.unibo.monopoly.model.transactions.impl;
+package it.unibo.monopoly.model.transactions.impl.titledeed;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,6 +10,7 @@ import java.util.function.Function;
 import it.unibo.monopoly.model.gameboard.impl.Group;
 import it.unibo.monopoly.model.transactions.api.RentOption;
 import it.unibo.monopoly.model.transactions.api.TitleDeed;
+import it.unibo.monopoly.model.transactions.impl.rentoption.RentOptionFactoryImpl;
 
 
 /**

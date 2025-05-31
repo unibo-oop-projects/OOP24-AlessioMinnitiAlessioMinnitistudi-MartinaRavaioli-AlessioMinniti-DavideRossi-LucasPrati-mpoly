@@ -15,8 +15,8 @@ import it.unibo.monopoly.model.gameboard.impl.Group;
 import it.unibo.monopoly.model.transactions.api.RentOption;
 import it.unibo.monopoly.model.transactions.api.RentOptionFactory;
 import it.unibo.monopoly.model.transactions.api.TitleDeed;
-import it.unibo.monopoly.model.transactions.impl.BaseTitleDeed;
-import it.unibo.monopoly.model.transactions.impl.RentOptionFactoryImpl;
+import it.unibo.monopoly.model.transactions.impl.rentoption.RentOptionFactoryImpl;
+import it.unibo.monopoly.model.transactions.impl.titledeed.BaseTitleDeed;
 
 class RentOptionFactoryTest {
 

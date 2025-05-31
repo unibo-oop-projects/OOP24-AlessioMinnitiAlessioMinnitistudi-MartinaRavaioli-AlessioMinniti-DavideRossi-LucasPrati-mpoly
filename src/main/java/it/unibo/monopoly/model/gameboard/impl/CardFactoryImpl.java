@@ -17,9 +17,9 @@ import it.unibo.monopoly.model.transactions.api.Bank;
 import it.unibo.monopoly.model.transactions.api.RentOptionFactory;
 import it.unibo.monopoly.model.transactions.api.SpecialPropertyFactory;
 import it.unibo.monopoly.model.transactions.api.TitleDeed;
-import it.unibo.monopoly.model.transactions.impl.BaseTitleDeed;
-import it.unibo.monopoly.model.transactions.impl.RentOptionFactoryImpl;
-import it.unibo.monopoly.model.transactions.impl.SpecialPropertyFactoryImpl;
+import it.unibo.monopoly.model.transactions.impl.rentoption.RentOptionFactoryImpl;
+import it.unibo.monopoly.model.transactions.impl.titledeed.BaseTitleDeed;
+import it.unibo.monopoly.model.transactions.impl.titledeed.SpecialPropertyFactoryImpl;
 import it.unibo.monopoly.model.turnation.api.Position;
 
 /**
