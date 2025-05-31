@@ -88,4 +88,11 @@ public interface Bank {
      * @param amount the amount of money to withdraw
      */
     void withdrawFrom(String ownerName, int amount);
+    /**
+     * purchase an house to the given property,
+     * only if is owned by the player who has done the call
+     * @param titleDeedName name of the titleDeed of the house to buy
+     * @param playerId id of the player who has done the request
+     */
+    void buyHouse(String titleDeedName, int playerId);
 }
