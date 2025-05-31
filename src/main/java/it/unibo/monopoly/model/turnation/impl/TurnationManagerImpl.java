@@ -125,18 +125,13 @@ public class TurnationManagerImpl implements TurnationManager {
     }
 
     @Override
-    public final boolean canThrowDices() {
-        return true;
-    }
-
-    @Override
     public final boolean canPassTurn() {
         return this.bankState.allMandatoryTransactionsCompleted();
     }
 
     @Override
     public final boolean playerDiesIfTurnPassed() {
-        return this.bankState.canContinuePlay(this.currPlayer);
+        return !this.bankState.canContinuePlay(this.currPlayer);
     }
 
     @Override
