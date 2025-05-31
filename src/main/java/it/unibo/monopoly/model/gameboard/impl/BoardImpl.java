@@ -8,6 +8,7 @@ import java.util.List;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.monopoly.model.gameboard.api.Board;
+import it.unibo.monopoly.model.gameboard.api.BuildableProperty;
 import it.unibo.monopoly.model.gameboard.api.Pawn;
 import it.unibo.monopoly.model.gameboard.api.Property;
 import it.unibo.monopoly.model.gameboard.api.Special;
@@ -135,22 +136,34 @@ public class BoardImpl implements Board {
 
     @Override
     public final boolean canBuildHouseInProperty(final Property prop) {
-        return prop.canBuildHouse();
+        if (!(prop instanceof BuildableProperty)) {
+            throw new IllegalArgumentException("this property is not buildable");
+        }
+        return new BuildablePropertyDecorator((BuildableProperty) prop).canBuildHouse();
     }
 
     @Override
     public final boolean canBuildHotelInProperty(final Property prop) {
-        return prop.canBuildHotel();
+        if (!(prop instanceof BuildableProperty)) {
+            throw new IllegalArgumentException("this property is not buildable");
+        }
+        return new BuildablePropertyDecorator((BuildableProperty) prop).canBuildHotel();
     }
 
     @Override
     public final void buildHouseInProperty(final Property prop) {
-        prop.buildHouse();
+        if (!(prop instanceof BuildableProperty)) {
+            throw new IllegalArgumentException("this property is not buildable");
+        }
+        new BuildablePropertyDecorator((BuildableProperty) prop).buildHouse();
     }
 
     @Override
     public final void buildHotelInProperty(final Property prop) {
-        prop.buildHotel();
+        if (!(prop instanceof BuildableProperty)) {
+            throw new IllegalArgumentException("this property is not buildable");
+        }
+        new BuildablePropertyDecorator((BuildableProperty) prop).buildHotel();
     }
 
 }
