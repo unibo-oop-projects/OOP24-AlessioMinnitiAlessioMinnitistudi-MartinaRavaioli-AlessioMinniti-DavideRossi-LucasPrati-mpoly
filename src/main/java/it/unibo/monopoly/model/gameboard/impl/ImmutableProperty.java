@@ -1,20 +1,20 @@
 package it.unibo.monopoly.model.gameboard.impl;
 
-import it.unibo.monopoly.model.gameboard.api.Property;
+import it.unibo.monopoly.model.gameboard.api.BuildableProperty;
 import it.unibo.monopoly.model.turnation.api.Position;
 /**
  * immutable property used to give the info of the house and the hotel in the titledeed.
  * it contains a property object.
  * only the methods that give the houses and hotel info will be called, the others will throw exceptions.
 */
-public final class ImmutableProperty implements Property {
-    private final Property property;
+public final class ImmutableProperty implements BuildableProperty {
+    private final BuildableProperty property;
     /**
     * constructor.
     * it has to take the reference of the property, not a copy
     * @param prop property
     */
-    public ImmutableProperty(final Property prop) {
+    public ImmutableProperty(final BuildableProperty prop) {
         this.property = prop;
     }
 
@@ -74,6 +74,12 @@ public final class ImmutableProperty implements Property {
     public boolean canBuildHotel() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'canBuildHotel'");
+    }
+
+    @Override
+    public boolean isBuildable() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'isBuildable'");
     }
 
 }
