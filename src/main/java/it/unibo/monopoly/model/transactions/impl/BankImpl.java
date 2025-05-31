@@ -210,33 +210,29 @@ public final class BankImpl implements Bank {
     }
 
     @Override
-    public void buyHouse(final String titleDeedName, final int playerId) {
+    public void buyHouse(final String titleDeedName) {
         Objects.requireNonNull(titleDeedName);
-        Objects.requireNonNull(playerId);
         final TitleDeed td = findTitleDeed(titleDeedName);
+        if (!td.isOwned()) {
+            throw new IllegalStateException("Cannot place a house on a property with no owner");
+        } 
+        final int playerId = td.getOwnerId();
         final BankAccount player = findAccount(playerId);
-
-        if (td.getOwnerId() != playerId) {
-            throw new IllegalStateException("Property is owned by another player " + td.getOwnerId());
-        }
-
         player.withdraw(td.getHousePrice());
-        //transactionLedger.markExecution("buy");
+        transactionLedger.markExecution("buyHouse");
     }
 
     @Override
-    public void buyHotel(final String titleDeedName, final int playerId) {
+    public void buyHotel(final String titleDeedName) {
         Objects.requireNonNull(titleDeedName);
-        Objects.requireNonNull(playerId);
         final TitleDeed td = findTitleDeed(titleDeedName);
+        if (!td.isOwned()) {
+            throw new IllegalStateException("Cannot place a house on a property with no owner");
+        } 
+        final int playerId = td.getOwnerId();
         final BankAccount player = findAccount(playerId);
-
-        if (td.getOwnerId() != playerId) {
-            throw new IllegalStateException("Property is owned by another player " + td.getOwnerId());
-        }
-
         player.withdraw(td.getHotelPrice());
-        //transactionLedger.markExecution("buy");
+        transactionLedger.markExecution("buyHotel");
     }
 
     @Override
@@ -250,12 +246,18 @@ public final class BankImpl implements Bank {
         final Set<PropertyAction> returnSet = new HashSet<>();
         final TitleDeed selected = findTitleDeed(titleDeedName);
         transactionLedger.removeIfPresent(PAY_TRANSACTION);
+        transactionLedger.removeIfPresent("buy");
+        transactionLedger.removeIfPresent("buyHouse");
+        transactionLedger.removeIfPresent("buyHotel");
 
         if (!selected.isOwned()) {
             returnSet.add(bankActionFactory.createBuy(currentPlayerId, titleDeedName));
+            transactionLedger.registerTransaction("buy", 0, 1);
         } else if (selected.getOwnerId() == currentPlayerId) {
             returnSet.add(bankActionFactory.createSell(titleDeedName));
-            //TODO build houses
+            //TODO build houses action
+            transactionLedger.registerTransaction("buyHouse", 0);
+            transactionLedger.registerTransaction("buyHotel", 0);
         } else {
             returnSet.add(bankActionFactory.createPayRent(titleDeedName, currentPlayerId, diceThrow));
             transactionLedger.registerTransaction(PAY_TRANSACTION, 1, 1);
@@ -298,7 +300,9 @@ public final class BankImpl implements Bank {
         @Override
         public void resetTransactionData() {
             transactionLedger.reset();
-            transactionLedger.registerTransaction("buy", 0);
+            /*In this version of the game, the player always has permission
+            for sell operations, in any given moment of its turn
+            */
             transactionLedger.registerTransaction("sell", 0);
         }
 
