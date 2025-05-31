@@ -95,4 +95,11 @@ public interface Bank {
      * @param playerId id of the player who has done the request
      */
     void buyHouse(String titleDeedName, int playerId);
+    /**
+     * purchase the hotel to the given property,
+     * only if is owned by the player who has done the call
+     * @param titleDeedName name of the titleDeed of the house to buy
+     * @param playerId id of the player who has done the request
+     */
+    void buyHotel(String titleDeedName, int playerId);
 }
