@@ -113,7 +113,7 @@ public class CardFactoryImpl implements CardFactory {
             .orElseThrow(() -> new IllegalArgumentException(
                 "Missing 'group' for PROPERTY card at position: " + position.getPos()));
 
-        final PropertyImpl property = new PropertyImpl(name, position, group);
+        final NormalPropertyImpl property = new NormalPropertyImpl(name, position, group);
         final TitleDeed deed;
 
         if (isSpecialProperty(group)) {
