@@ -9,8 +9,8 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JTextArea;
 
+import it.unibo.monopoly.controller.api.GameController;
 import it.unibo.monopoly.view.api.GameActionsPanel;
-import it.unibo.monopoly.view.api.GameAction;
 
 final class SwingGameActionsPanel extends SwingAbstractJPanel implements GameActionsPanel {
 
@@ -40,12 +40,12 @@ final class SwingGameActionsPanel extends SwingAbstractJPanel implements GameAct
     }
 
     @Override
-    public void buildActionButtons(final Set<GameAction> actions) {
+    public void buildActionButtons(final Set<String> actionNames, final GameController controller) {
         this.removeAll();
-        this.setLayout(new GridLayout(actions.size(), 1));
-        actions.stream().forEach(action -> {
-            final JButton actionButton = new JButton(action.getName());
-            actionButton.addActionListener(l -> action.execute());
+        this.setLayout(new GridLayout(actionNames.size(), 1));
+        actionNames.stream().forEach(action -> {
+            final JButton actionButton = new JButton(action);
+            actionButton.addActionListener(l -> controller.executeAction(action));
             this.add(actionButton);
         });
     }

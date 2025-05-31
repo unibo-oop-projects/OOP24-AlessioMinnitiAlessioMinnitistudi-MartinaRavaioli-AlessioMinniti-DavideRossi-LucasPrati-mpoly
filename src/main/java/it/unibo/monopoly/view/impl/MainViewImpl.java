@@ -2,6 +2,7 @@ package it.unibo.monopoly.view.impl;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.util.List;
 import java.util.Set;
 
 import javax.swing.JButton;
@@ -21,7 +22,6 @@ import it.unibo.monopoly.model.turnation.api.Player;
 import it.unibo.monopoly.utils.impl.GuiUtils;
 import it.unibo.monopoly.view.api.AccountPanel;
 import it.unibo.monopoly.view.api.ContractPanel;
-import it.unibo.monopoly.view.api.GameAction;
 import it.unibo.monopoly.view.api.GameActionsPanel;
 import it.unibo.monopoly.view.api.GamePanelsFactory;
 import it.unibo.monopoly.view.api.GameboardView;
@@ -135,9 +135,15 @@ public final class MainViewImpl implements MainGameView {
     }
 
     @Override
-    public void showPlayerActions(final Set<GameAction> actions) {
-        gameActionsPanel.buildActionButtons(actions);
+    public void showPlayerActions(final Set<String> actions) {
+        gameActionsPanel.buildActionButtons(actions, controller);
         mainGameFrame.repaint();
+    }
+
+
+    @Override
+    public void displayDiceResult(final List<Integer> results) {
+        mainActionsPanel.displayDicesResults(results);
     }
 
     @Override
@@ -159,16 +165,12 @@ public final class MainViewImpl implements MainGameView {
 
     @Override
     public void displayMessage(final String message) {
-        GuiUtils.showInfoMessage(mainGameFrame, message, message);  // TODO può andare bene?
+        GuiUtils.showInfoMessage(mainGameFrame, message, message);
     }
 
     @Override
     public void displayError(final Exception e) {
-        // TODO se ti può andare bene questo termina anche l'applicazione, altrimenti fai con GuiUtils.showInfoMessage()
-        GuiUtils.showErrorAndExit(mainGameFrame, null, e.getMessage());
-
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'displayError'");
+        GuiUtils.showInfoMessage(mainGameFrame, "ERRORE", e.getMessage());
     }
 
     @Override
@@ -185,5 +187,4 @@ public final class MainViewImpl implements MainGameView {
     public void callBuyProperty(final Property prop) {
         this.gameBoardPanel.buyProperty(prop, this.controller.getCurrPlayer().getID());
     }
-
 }

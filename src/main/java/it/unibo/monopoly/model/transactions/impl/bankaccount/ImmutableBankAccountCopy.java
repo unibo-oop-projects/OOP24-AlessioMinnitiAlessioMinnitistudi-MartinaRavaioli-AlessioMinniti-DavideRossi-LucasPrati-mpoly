@@ -16,10 +16,9 @@ public final class ImmutableBankAccountCopy implements BankAccount {
      * @param account the account to wrap and to regulate access to
      */
     public ImmutableBankAccountCopy(final BankAccount account) {
-        this.account = new CheckValidityBankAccount(new SimpleBankAccountImpl(account.getID(),
-                                                                            account.getBalance(),
-                                                                            account.getPlayerName()),
-                                                    b -> account.canContinue());
+        this.account = new SimpleBankAccountImpl(account.getID(),
+                                                account.getBalance(),
+                                                b -> account.canContinue());
     }
 
     @Override
@@ -40,11 +39,6 @@ public final class ImmutableBankAccountCopy implements BankAccount {
     @Override
     public boolean canContinue() {
         return this.account.canContinue();
-    }
-
-    @Override
-    public String getPlayerName() {
-        return this.account.getPlayerName();
     }
 
     @Override

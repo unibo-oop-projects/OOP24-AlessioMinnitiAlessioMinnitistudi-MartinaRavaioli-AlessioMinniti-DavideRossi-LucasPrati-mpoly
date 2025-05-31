@@ -83,7 +83,7 @@ class FactoryTest {
     private final Player p1 = new PrisonablePlayer(p);
 
     private final Set<BankAccount> accounts = Set.of(
-        new SimpleBankAccountImpl(VALID_ID1, PLAYER1_NAME)
+        new SimpleBankAccountImpl(VALID_ID1, e -> true)
     );
     private final Set<TitleDeed> deeds = Set.of(
         new BaseTitleDeed(Group.PURPLE, TITLE_DEED_NAME1, VALID_SALE_PRICE1, s -> s / 2, VALID_BASE_RENT),
@@ -135,7 +135,7 @@ class FactoryTest {
         final Special s = factory.start(bank);
         final int expectedBalance = 1200;
         s.activateEffect(p1);
-        assertEquals(expectedBalance, bank.getBankAccount(p1.getName()).getBalance());
+        assertEquals(expectedBalance, bank.getBankAccount(p1.getID()).getBalance());
 
     }
 
@@ -144,7 +144,7 @@ class FactoryTest {
         final int expectedBalance = 900;
         final Special s = factory.taxes(pos1, bank);
         s.activateEffect(p1);
-        assertEquals(expectedBalance, bank.getBankAccount(p1.getName()).getBalance());
+        assertEquals(expectedBalance, bank.getBankAccount(p1.getID()).getBalance());
 
     }
 

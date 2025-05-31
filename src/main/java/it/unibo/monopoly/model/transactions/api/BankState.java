@@ -9,7 +9,7 @@ import it.unibo.monopoly.model.turnation.api.TurnationManager;
 
 /**
  * An object used by {@link TurnationManager} to check on the 
- * finantial situation of the players. {@link TurnationManager}, in order to arbitrate
+ * finantial situation of the players and manage the state of the {@link Bank}. {@link TurnationManager}, in order to arbitrate
  * the game, may have the necessity to retrieve information related to the finantial situation of a player
  * (ask if a player is bankrupt, rank the players based on their properties, ask if a player has executed
  * all mandatory payments...). Also, {@link TurnationManager} may need to be able to command specific operations
@@ -57,9 +57,40 @@ public interface BankState {
      * to a value more than another or may simply do different calculations,
      * resulting in a different ranking
      * @return a {@link List} of {@link Pair} where the first element is 
-     * the player's name and the second is its monetary value. 
+     * the player's id and the second is its monetary value. 
      * The values of the list are sorted in ascending order based on monetary
      * value.
      */
-    List<Pair<String, Integer>> rankPlayers();
+    List<Pair<Integer, Integer>> rankPlayers();
+
+    /**
+     * Wipes all internal data the {@link Bank} object has stored to track the execution
+     * of transaction requests. 
+     * When calling transactional methods {@link #payRent(String, int, int)},
+     * {@link #sellTitleDeed(String)},{@link #buyTitleDeed(String, int)} the {@link Bank} keeps 
+     * track of these method requests. This is done to keep track of the payments invoked by the
+     * player that is currently playing, which is necessary to implement logic regarding the player's turn.
+     * (for instance, you cannot end the turn unless you call payRent, you can only call sellTitleDeed once per turn...).
+     * Calling {@link #resetTransactionData()} should be done when the player ends its turn, signaling the {@link Bank}
+     * that the current player has ended its turn and that information related to method requests is no longer
+     * necessary. It prepares the {@link Bank} to be ready to keep track of the transaction requests of a new player.
+     */
+    void resetTransactionData();
+
+    /**
+     * Revoke ownership of all {@link TitleDeed} possessed
+     * by the given {@link Player} and delete its {@link BankAccount}.
+     * This action does something similar to {@link Bank#sellTitleDeed(String)}, meaning
+     * that {@link TitleDeed#removeOwner()} is called on all the {@code deeds} of the player, and they can
+     * be bought again. However no money is deposited to the player's {@link BankAccount}, so it's a force removal.
+     * Additionally, it removes the {@link BankAccount} with the same {@code id} as the one of the player
+     * (meaning it wipes its {@link BankAccount} from the system). The player will no longer be able to 
+     * call transaction methods after this.
+     * This is a dangerous method, and should only be called by {@link TurnationManager} when a player gets eliminated. 
+     * After the call the player will no longer be able to play the game in its full functionality, which may result in
+     * bugs if not invoked properly
+     * @param pl The player to eliminate, the {@code id} parameter {@link Player#getID()} will be retrieved and used
+     * to perform all cancellation operations.
+     */
+    void deletePlayer(Player pl);
 }

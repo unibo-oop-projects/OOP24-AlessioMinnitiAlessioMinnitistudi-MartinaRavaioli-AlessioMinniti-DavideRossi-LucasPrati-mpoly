@@ -1,17 +1,17 @@
 package it.unibo.monopoly.model.turnation.impl;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
 import org.apache.commons.lang3.tuple.Pair;
 
-import it.unibo.monopoly.model.gameboard.api.Board;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.monopoly.model.transactions.api.BankState;
 import it.unibo.monopoly.model.turnation.api.Dice;
 import it.unibo.monopoly.model.turnation.api.Player;
 import it.unibo.monopoly.model.turnation.api.TurnationManager;
 import it.unibo.monopoly.utils.impl.CircularLinkedList;
-
 
 /**
  * turnation manager implementation.
@@ -41,6 +41,10 @@ public class TurnationManagerImpl implements TurnationManager {
      * @param dice dice
      * @param bankState bankState to communicate with the bank
     */
+    @SuppressFBWarnings(
+        value = "EI_EXPOSE_REP2",
+        justification = "Injection of shared mutable dependencies is intentional and controlled in this architecture."
+    )
     public TurnationManagerImpl(final List<Player> plList, final Dice dice, final BankState bankState) {
         this.bankState = bankState;
         this.players = new CircularLinkedList<>();
@@ -116,7 +120,7 @@ public class TurnationManagerImpl implements TurnationManager {
     }
 
     @Override
-    public final boolean canExitPrison(final Collection<Integer> value, final Board board) {
+    public final boolean canExitPrison(final Collection<Integer> value) {
         return this.currPlayer.canExitPrison(value);
     }
 
@@ -137,20 +141,27 @@ public class TurnationManagerImpl implements TurnationManager {
 
     @Override
     public final Pair<String, Integer> getWinner() {
-        final Pair<String, Integer> winner = getRanking().get(0);
+        final Pair<Integer, Integer> winner = this.bankState.rankPlayers().get(0);
+        final Pair<String, Integer> winnerName;
 
-        for (final Pair<String, Integer> p : getRanking()) {
+        for (final Pair<Integer, Integer> p : this.bankState.rankPlayers()) {
             if (p.getRight() > winner.getRight()) {
                 winner.setValue(p.getRight());
             }
         }
 
-        return winner;
+        winnerName = Pair.of(this.players.toList().get(winner.getLeft()).getName(), winner.getRight());
+        return winnerName;
     }
 
     @Override
     public final List<Pair<String, Integer>> getRanking() {
-        return this.bankState.rankPlayers();
+        final List<Pair<String, Integer>> list = new ArrayList<>();
+        for (final Pair<Integer, Integer> p : this.bankState.rankPlayers()) {
+            list.add(Pair.of(this.players.toList().get(p.getLeft()).getName(), p.getRight()));
+        }
+
+        return list;
     }
 
     @Override

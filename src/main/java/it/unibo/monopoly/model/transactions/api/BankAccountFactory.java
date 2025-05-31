@@ -11,27 +11,25 @@ import it.unibo.monopoly.utils.api.Identifiable;
 public interface BankAccountFactory {
 
     /**
-     * Creates a {@link BankAccount} with an {@code initialBalance}.
+     * Creates a {@link BankAccount} with an {@code initialBalance} and an {@code "always true"} check.
      * 
-     * @param id the {@link Identifiable} representing the {@link BankAccount}
-     * @param owner the name of the {@link Player} that owns the {@link BankAccount} 
+     * @param id the {@link Identifiable} representing the {@link Player} that owns the {@link BankAccount} 
      * @return a new {@link BankAccount} with an {@code initialBalance}
      * @throws IllegalArgumentException if {@code initialBalance} is negative
      * @throws NullPointerException if {@code owner} is {@code null}
      */
-    BankAccount createSimple(int id, String owner);
+    BankAccount createSimple(int id);
 
     /**
      * Creates a {@link BankAccount} with a provided {@code initialBalance} and a provided {@code check}.
      * 
-     * @param id the {@link Identifiable} representing the {@link BankAccount}
-     * @param owner the name of the {@link Player} that owns the {@link BankAccount} 
+     * @param id the {@link Identifiable} representing the {@link Player} that owns the {@link BankAccount}
      * @param check strategy to determine if the {@link BankAccount} can still be used to play based on its state
      * @return a new {@link BankAccount} with an {@code initialBalance} and a provided {@code check}
      * @throws IllegalArgumentException if {@code initialBalance} is negative
      * @throws NullPointerException if {@code owner} or {@code check} are {@code null}
      */
-    BankAccount createWithCheck(int id, String owner, Predicate<BankAccount> check);
+    BankAccount createWithCheck(int id, Predicate<BankAccount> check);
 
 
 }

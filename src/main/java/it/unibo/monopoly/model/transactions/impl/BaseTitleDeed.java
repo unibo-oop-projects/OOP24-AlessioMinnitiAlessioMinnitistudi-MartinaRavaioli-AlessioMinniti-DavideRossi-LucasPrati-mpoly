@@ -1,7 +1,6 @@
 package it.unibo.monopoly.model.transactions.impl;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -19,15 +18,14 @@ import it.unibo.monopoly.model.transactions.api.TitleDeed;
  * concept of player ownership and exposes a finite number 
  * of {@link RentOption} to choose the rent to pay.
  */
-public class BaseTitleDeed implements TitleDeed {
+public final class BaseTitleDeed implements TitleDeed {
 
-    private static final int HPRICE = 55;
     private final Group group;
     private final String name;
     private final int salePrice;
     private final Function<Integer, Integer> mortgageFunction; 
     private final List<RentOption> rentOptions;
-    private Optional<String> owner = Optional.empty();
+    private Optional<Integer> owner = Optional.empty();
 
     /**
      * Creates a new {@link BaseTitleDeed} that 
@@ -47,7 +45,7 @@ public class BaseTitleDeed implements TitleDeed {
         this.name = name;
         this.salePrice = salePrice;
         this.mortgageFunction = mortgageFunction;
-        this.rentOptions = new ArrayList<>(List.of(RentOption.baseRentOption(baseRent)));
+        this.rentOptions = new ArrayList<>(List.of(new RentOptionFactoryImpl().baseRentOption(baseRent)));
     }
 
     /**
@@ -73,7 +71,7 @@ public class BaseTitleDeed implements TitleDeed {
     }
 
     @Override
-    public final String getOwner() {
+    public int getOwnerId() {
         if (owner.isEmpty()) {
             throw new IllegalStateException("This title deed has no owner");
         }
@@ -81,8 +79,8 @@ public class BaseTitleDeed implements TitleDeed {
     }
 
     @Override
-    public final void setOwner(final String ownerName) {
-        Objects.requireNonNull(ownerName);
+    public void setOwner(final int ownerId) {
+        Objects.requireNonNull(ownerId);
         if (owner.isPresent()) {
             throw new IllegalStateException("Cannot set a new owner for" 
                                             + "the title deed because the owner" 
@@ -90,29 +88,39 @@ public class BaseTitleDeed implements TitleDeed {
                                             + " already owns it"
                                             );
         }
-        owner = Optional.of(ownerName);
+        owner = Optional.of(ownerId);
     }
 
     @Override
-    public final void removeOwner() {
+    public void removeOwner() {
         if (owner.isEmpty()) {
             throw new IllegalStateException("Cannot remove the owner because no owner is set");
         }
         owner = Optional.empty();
     }
 
+    /**
+     * This is implementation checks whether there is a value in
+     * the {@link Optional} {@code owner} or if it is empty, and
+     * returns that as a boolean.
+     */
     @Override
-    public final Group getGroup() {
+    public boolean isOwned() {
+        return owner.isPresent();
+    }
+
+    @Override
+    public Group getGroup() {
         return this.group;
     }
 
     @Override
-    public final String getName() {
+    public String getName() {
         return this.name;
     }
 
     @Override
-    public final Integer getSalePrice() {
+    public Integer getSalePrice() {
         return this.salePrice;
     }
 
@@ -132,7 +140,7 @@ public class BaseTitleDeed implements TitleDeed {
      * selects the priciest and returns its value. 
      */
     @Override
-    public Integer getRent(final Set<TitleDeed> groupTitleDeeds, final Collection<Integer> dices) {
+    public Integer getRent(final Set<TitleDeed> groupTitleDeeds, final int diceThrow) {
         if (!groupTitleDeeds.stream().allMatch(d -> d.getGroup().equals(this.group))) {
             throw new IllegalArgumentException("The list of title deeds contains deeds"
                                                 + "that are not part of the group "
@@ -160,6 +168,16 @@ public class BaseTitleDeed implements TitleDeed {
     @Override
     public List<RentOption> getRentOptions() {
         return List.copyOf(this.rentOptions);
+    }
+
+    @Override
+    public int getHousePrice() {
+        return 0;
+    }
+
+    @Override
+    public int getHotelPrice() {
+        return 0;
     }
 
     /**
@@ -216,33 +234,4 @@ public class BaseTitleDeed implements TitleDeed {
         }
         return true;
     }
-    /* PLACE HOLDER FOR ATUAL METHOD */
-    /**
-     * place holder. 
-     * @return price of houses
-     */
-    @Override
-    public int housePrice() {
-        return HPRICE;
-    }
-    /* PLACE HOLDER FOR ATUAL METHOD */
-    /**
-     * place holder. 
-     * @return number of houses
-     */
-    @Override
-    public int houseNum() {
-        return 0;
-    }
-
-    /**
-     * This is implementation checks whether there is a value in
-     * the {@link Optional} {@code owner} or if it is empty, and
-     * returns that as a boolean.
-     */
-    @Override
-    public boolean isOwned() {
-        return owner.isPresent();
-    }
-
 }

@@ -2,23 +2,28 @@ package it.unibo.monopoly.controller.impl;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
-import java.util.Set;
+import java.util.Map;
+
+import com.google.common.collect.Maps;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.monopoly.controller.api.GameController;
 import it.unibo.monopoly.model.gameboard.api.Board;
+import it.unibo.monopoly.model.gameboard.api.Effect;
 import it.unibo.monopoly.model.gameboard.api.Pawn;
 import it.unibo.monopoly.model.gameboard.api.Property;
+import it.unibo.monopoly.model.gameboard.api.Special;
 import it.unibo.monopoly.model.gameboard.api.Tile;
-import it.unibo.monopoly.model.gameboard.impl.Group;
-import it.unibo.monopoly.model.transactions.api.TitleDeed;
 import it.unibo.monopoly.model.turnation.api.Player;
 import it.unibo.monopoly.model.turnation.api.TurnationManager;
 import it.unibo.monopoly.utils.api.UseFileTxt;
 import it.unibo.monopoly.utils.impl.Configuration;
 import it.unibo.monopoly.utils.impl.UseFileTxtImpl;
 import it.unibo.monopoly.view.api.MainGameView;
+import it.unibo.monopoly.model.transactions.api.Bank;
+import it.unibo.monopoly.model.transactions.api.PropertyAction;
 
 
 /**
@@ -28,6 +33,8 @@ public final class GameControllerImpl implements GameController {
     private final TurnationManager turnationManager; /**turnation manager. */
     private final Board board; /**board. */
     private final Configuration config; /**config. */
+    private final Bank bank;
+    private Map<String, PropertyAction> turnActions = new HashMap<>();
     private MainGameView gameView; /**game view. */
 
     /**
@@ -40,6 +47,7 @@ public final class GameControllerImpl implements GameController {
      * @param board the game board
      * @param turnationManager the entity for manage the turnation of the players
      * @param config a consistent configuration for settings
+     * @param bank the game's bank
      */
     @SuppressFBWarnings(
         value = "EI_EXPOSE_REP2",
@@ -48,50 +56,69 @@ public final class GameControllerImpl implements GameController {
     public GameControllerImpl(
             final Board board,
             final TurnationManager turnationManager,
-            final Configuration config
+            final Configuration config,
+            final Bank bank
         ) {
         this.board = board;
         this.turnationManager = turnationManager;
         this.config = config;
+        this.bank = bank;
+    }
+
+    private void refreshPlayerInfo() {
+        final Player currentPlayer = turnationManager.getCurrPlayer();
+        gameView.refreshCurrentPlayerInfo(currentPlayer, bank.getBankAccount(currentPlayer.getID()));
+    }
+
+
+    private void executeEffect(final Effect effect) {
+        try {
+            effect.activate(this.turnationManager.getCurrPlayer());
+            this.gameView.displayMessage("Eseguito effetto " + effect.getDescription());
+            refreshPlayerInfo();
+        } catch (final IllegalStateException | IllegalArgumentException e) {
+            this.gameView.displayError(e);
+        }
     }
 
 
     @Override
     public void endTurn() {
-        this.turnationManager.getNextPlayer();
+        if (this.turnationManager.canPassTurn() && this.turnationManager.canPassTurn()) {
+            this.turnationManager.getNextPlayer();
+            refreshPlayerInfo();
+        }
     }
 
     @Override
     public void throwDices() {
-        final Collection<Integer> result = this.turnationManager.moveByDices();
-        this.board.movePawn(this.board.getPawn(this.turnationManager.getIdCurrPlayer()), result);
-        this.gameView.callChangePositions();
-    }
+        if (this.turnationManager.canThrowDices()) {
+            final Collection<Integer> result = this.turnationManager.moveByDices();
+            if (this.turnationManager.isCurrentPlayerInPrison()) {
+                this.turnationManager.canExitPrison(result);
+            }
 
-    @Override
-    public void buyProperty() {
-        try {
-            //MISSING IDENTIFIER INTEGRATION WITH  BANK
-            //final Tile currentPlayerTile = board.getTileForPawn(board.getPawn(manager.getIdCurrPlayer()));
-            //bank.buyTitleDeed(currentPlayerTile.toString(), null);
-            gameView.displayMessage("Purchase of title deed successful");
-            throw new UnsupportedOperationException("Unimplemented method 'buyProperty'");
-        } catch (final IllegalStateException e) {
-            gameView.displayError(e);
+            final int currentPlayerId = this.turnationManager.getIdCurrPlayer();
+            this.board.movePawn(this.board.getPawn(currentPlayerId), result);
+            this.gameView.callChangePositions();
+            this.gameView.displayDiceResult(result.stream().toList());
+            final Tile currentlySittingTile = this.board.getTileForPawn(this.board.getPawn(currentPlayerId));
+            if (currentlySittingTile instanceof Property) {
+                final String propertyName = currentlySittingTile.getName();
+                this.gameView.displayPropertyContract(this.bank.getTitleDeed(propertyName));
+                this.turnActions.clear();
+                this.turnActions = Maps.uniqueIndex(this.bank.getApplicableActionsForTitleDeed(currentPlayerId, 
+                                        propertyName, 
+                                        result.stream().mapToInt(d -> d).sum()),
+                                        PropertyAction::getName);
+                this.gameView.showPlayerActions(turnActions.keySet());
+            } else if (currentlySittingTile instanceof Special) {
+                final Special specialTile = (Special) currentlySittingTile;
+                this.gameView.displaySpecialInfo(specialTile);
+                executeEffect(specialTile.getEffect());
+            }
         }
-    }
 
-    @Override
-    public void payPropertyOwner() {
-        try {
-            //MISSING IDENTIFIER INTEGRATION WITH  BANK
-            //final Tile currentPlayerTile = board.getTileForPawn(board.getPawn(manager.getIdCurrPlayer()));
-            //bank.payRent(currentPlayerTile.toString(), null);
-            gameView.displayMessage("Rent payment successful");
-            throw new UnsupportedOperationException("Unimplemented method 'payPropertyOwner'");
-        } catch (final IllegalStateException e) {
-            gameView.displayError(e);
-        }
     }
 
     @Override
@@ -123,28 +150,6 @@ public final class GameControllerImpl implements GameController {
     }
 
     @Override
-    public void playerGameOver() {
-
-    }
-
-    @Override
-    public void addHouse(final Property prop) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'addHouse'");
-    }
-
-    @Override
-    public void addHotel(final Property prop) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'addHotel'");
-    }
-
-    @Override
-    public void gameOver() {
-        this.turnationManager.setOver();
-    }
-
-    @Override
     public List<Tile> getTiles() {
         return Collections.unmodifiableList(this.board.getTiles());
     }
@@ -159,20 +164,37 @@ public final class GameControllerImpl implements GameController {
         return this.turnationManager.getCurrPlayer();
     }
 
-    @Override
-    public String getRentString(final TitleDeed selectedProperty, final Set<TitleDeed> collect) {
-        final List<Integer> l = List.of(1);
-        final int rent = selectedProperty.getRent(collect, l);
-        if (selectedProperty.getGroup().equals(Group.SOCIETY)) {
-
-            return rent + " times dice result";
-        }
-        return Integer.toString(rent);
-    }
 
     @Override
     public Pawn getCurrPawn() {
         return this.board.getPawn(this.turnationManager.getIdCurrPlayer());
     }
 
+    @Override
+    public void executeAction(final String actionName) {
+
+        if (!turnActions.containsKey(actionName)) {
+                gameView.displayError(new IllegalArgumentException("No action with this name was registered." 
+                + "It is possible that the current"
+                + "player has no permission to execute this action on the selected title deed"));
+                return;
+        }
+
+        try {
+            final PropertyAction action = turnActions.get(actionName);
+            action.executePropertyAction(board, bank);
+            gameView.displayMessage(action.getDescription() + "eseguita con successo");
+            final Property currentlySittingProperty = (Property) this.board.getTileForPawn(
+                                                        this.board.getPawn(
+                                                        this.turnationManager.getIdCurrPlayer()));
+            if ("buy".equals(actionName)) {
+                gameView.callBuyProperty(currentlySittingProperty);
+            } else if ("sell".equals(actionName)) {
+                gameView.callClearPanel();
+            }
+            refreshPlayerInfo();
+        } catch (final IllegalStateException | IllegalArgumentException e) {
+            gameView.displayError(e);
+        }
+    }
 }

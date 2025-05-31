@@ -6,7 +6,6 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
-import java.util.List;
 import java.util.stream.Collectors;
 
 import javax.swing.BorderFactory;
@@ -114,7 +113,7 @@ public final class GUIVendita extends JFrame {
             mortageValue.setText(Integer.toString(selectedProperty.getMortgagePrice()));
             String auxrent = String.valueOf(selectedProperty.getRent(logic.getProperties(player, bank)
                                                                         .stream()
-                                                                        .collect(Collectors.toSet()), List.of(1)));
+                                                                        .collect(Collectors.toSet()), 1));
             if (selectedProperty.getGroup().equals(Group.SOCIETY)) {
 
                 auxrent = auxrent + " times dice result";

@@ -4,8 +4,6 @@ import java.util.List;
 
 import org.apache.commons.lang3.tuple.Pair;
 
-import it.unibo.monopoly.model.gameboard.api.Board;
-
 /**
  * turnation manager interface.
 */
@@ -73,9 +71,8 @@ public interface TurnationManager {
      * tells if the player can exit the prison.
      * @return bool
      * @param value result of the dices
-     * @param board board
      */
-    boolean canExitPrison(Collection<Integer> value, Board board);
+    boolean canExitPrison(Collection<Integer> value);
     /**
      * tells if the player can throw the dices.
      * @return bool

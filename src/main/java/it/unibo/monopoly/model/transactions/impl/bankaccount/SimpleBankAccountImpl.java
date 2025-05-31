@@ -1,8 +1,6 @@
 package it.unibo.monopoly.model.transactions.impl.bankaccount;
 
-import java.util.Objects;
-
-import com.google.common.base.Strings;
+import java.util.function.Predicate;
 
 import it.unibo.monopoly.model.transactions.api.BankAccount;
 import it.unibo.monopoly.utils.api.Identifiable;
@@ -13,38 +11,39 @@ import it.unibo.monopoly.utils.api.Identifiable;
 public final class SimpleBankAccountImpl implements BankAccount {
 
     private static final int DEFAULT_BALANCE = 1000;
-    private int balance;
     private final int id;
-    private final String ownerName;
+    private final Predicate<BankAccount> canContinue;
+    private int balance;
 
     /**
      * Creates a new {@link BankAccount} with an initial amount of money.
      * 
-     * @param id the {@link Identifiable} representing the {@link BankAccount}
+     * @param id the {@code Integer} used as the {@link Identifiable} for the {@link BankAccount}
+     * Each {@link BankAccount} has an id that corresponds to a specific player.
      * @param initialBalance the initial amount of money
-     * @param owner the name of the player that owns the {@link BankAccount} 
-     * @throws IllegalArgumentException if the {@code initialBalance} is negative
-     * @throws NullPointerException if the {@code owner} is {@code null} or {@code empty}
+     * @param canContinue strategy to determine if the {@link BankAccount}
+     * can still be used to play based on its state
      */
-    public SimpleBankAccountImpl(final int id, final int initialBalance, final String owner) {
-        Objects.requireNonNull(Strings.emptyToNull(owner), "The name of the owner can not be null or empty");
+    public SimpleBankAccountImpl(final int id, final int initialBalance, final Predicate<BankAccount> canContinue) {
         if (initialBalance < 0) {
             throw new IllegalArgumentException("The initial balance of the account cannot be negative");
         }
 
         this.balance += initialBalance;
-        this.ownerName = owner;
         this.id = id;
+        this.canContinue = canContinue;
     }
 
     /**
      * Creates a new {@link BankAccount} with a default, positive and non-zero amount of money.
      * 
-     * @param id the {@link Identifiable} representing the {@link BankAccount}
-     * @param owner the name of the player that owns the {@link BankAccount}
+     * @param id the {@code Integer} used as the {@link Identifiable} for the {@link BankAccount}
+     * Each {@link BankAccount} has an id that corresponds to a specific player.
+     * @param canContinue strategy to determine if the {@link BankAccount}
+     * can still be used to play based on its state
      */
-    public SimpleBankAccountImpl(final int id, final String owner) {
-        this(id, DEFAULT_BALANCE, owner);
+    public SimpleBankAccountImpl(final int id, final Predicate<BankAccount> canContinue) {
+        this(id, DEFAULT_BALANCE, canContinue);
     }
 
     @Override
@@ -72,12 +71,7 @@ public final class SimpleBankAccountImpl implements BankAccount {
 
     @Override
     public boolean canContinue() {
-        return true;
-    }
-
-    @Override
-    public String getPlayerName() {
-        return this.ownerName;
+        return this.canContinue.test(this);
     }
 
     @Override
@@ -92,7 +86,6 @@ public final class SimpleBankAccountImpl implements BankAccount {
         final int prime = 31;
         int result = 1;
         result = prime * result + id;
-        result = prime * result + ((ownerName == null) ? 0 : ownerName.hashCode());
         result = prime * result + balance;
         return result;
     }
@@ -110,12 +103,11 @@ public final class SimpleBankAccountImpl implements BankAccount {
         }
         final SimpleBankAccountImpl other = (SimpleBankAccountImpl) obj;
         return id == other.id
-                && balance == other.balance
-                && ownerName.equals(other.ownerName);
+                && balance == other.balance;
     }
 
     @Override
     public String toString() {
-        return this.ownerName + ", balance: " + this.balance + ", id: " + this.id;
+        return "id: " + this.id + ", balance: " + this.balance;
     }
 }

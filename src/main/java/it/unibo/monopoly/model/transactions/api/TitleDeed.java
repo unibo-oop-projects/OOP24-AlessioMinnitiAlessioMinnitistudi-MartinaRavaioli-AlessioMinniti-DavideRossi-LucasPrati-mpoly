@@ -1,8 +1,6 @@
 package it.unibo.monopoly.model.transactions.api;
 
-import java.util.Collection;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 
 import it.unibo.monopoly.model.gameboard.impl.Group;
@@ -14,7 +12,11 @@ import it.unibo.monopoly.model.gameboard.impl.Group;
  * as well as encapsulating information about its 
  * ownership.
  * The title deed might be owned by a player or 
- * it might not have been bought yet
+ * it might not have been bought yet.
+ * Title deeds are managed by a {@link Bank}.
+ * For each {@link TitleDeed} there is a {@link Property},
+ * managed by the {@link Board} that shares the same {@code name}
+ * with this title deed ({@link TitleDeed#getName()})
  */
 public interface TitleDeed {
 
@@ -29,30 +31,25 @@ public interface TitleDeed {
     boolean isOwned();
 
     /**
-     * @return the name 
+     * @return the id 
      * associated with the player that currently holds
-     * ownership of this {@link TitleDeed}; or an empty optional 
-     * if no player owns the property.
-     * @throws IllegalStateException if no player has ownership of this
-     * Title deed, meaning the title deed was never bought, never assigned
-     * to a player at the beginning of the game or it was sold back to the bank.
+     * ownership of this {@link TitleDeed}.
      */
-    String getOwner();
+    int getOwnerId();
 
     /**
      * Sets the passed player as the owner of 
      * this {@link TitleDeed}, if no player already owns 
      * the {@link TitleDeed}.
-     * @param ownerName The {@code name} associated with the new owner 
+     * @param ownerId The {@code name} associated with the new owner 
      */
-    void setOwner(String ownerName);
+    void setOwner(int ownerId);
 
     /**
      * If the {@link TitleDeed} previously had
      * an owner, resets ownership information of 
      * the {@link TitleDeed}. After that, the deed 
-     * will have no owner and subsequent calls to 
-     * {@link #getOwner()} will return an empty {@link Optional}
+     * will have no owner.
      */
     void removeOwner();
 
@@ -80,7 +77,7 @@ public interface TitleDeed {
 
     /**
      * The rent price a player has to pay for stepping onto the 
-     * {@link Property} associated with this {@link TitleDeed}.
+     * {@link Property} corresponding to this {@link TitleDeed}.
      * The rent price might depend also on the state of the 
      * other title deeds that are part of the same group of 
      * this {@link TitleDeed}
@@ -88,12 +85,12 @@ public interface TitleDeed {
      * title deeds that will be checked to determine the final 
      * rent price. 
      * The tile deeds should be part of the same group,
-     * a call on {@link #getType()} should give the same {@code String}
+     * a call on {@link #getGroup()} should give the same {@link Group}
      * for each of the deeds that are part of this {@link Set}
-     * @param dices the value of the throw used to get some specific rent
+     * @param diceThrow the value of the throw used to get some specific rent
      * @return the final rent that should be paid as an {@code Integer}
      */
-    Integer getRent(Set<TitleDeed> groupTitleDeeds, Collection<Integer> dices);
+    Integer getRent(Set<TitleDeed> groupTitleDeeds, int diceThrow);
 
     /**
      * @return the {@link List} of {@link RentOption} 
@@ -102,16 +99,16 @@ public interface TitleDeed {
      */
     List<RentOption> getRentOptions();
 
-    /**
-     * place holder. 
-     * @return price of houses
-     */
-    int housePrice();
 
     /**
-     * place holder. 
-     * @return number of houses
+     * @return how much it would cost to build a house 
+     * on the {@link Property} associated with this {@link TitleDeed}.
      */
-    int houseNum();
+    int getHousePrice();
 
+    /**
+     * @return how much it would cost to build a hotel
+     * on the {@link Property} associated with this {@link TitleDeed}.
+     */
+    int getHotelPrice();
 }

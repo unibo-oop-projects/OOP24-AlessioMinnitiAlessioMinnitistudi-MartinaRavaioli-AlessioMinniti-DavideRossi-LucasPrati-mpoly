@@ -1,5 +1,6 @@
 package it.unibo.monopoly.view.api;
 
+import java.util.List;
 import java.util.Set;
 
 import it.unibo.monopoly.controller.api.GameController;
@@ -45,11 +46,19 @@ public interface MainGameView {
 
     /**
      * Display interactable UI elements that show the possible actions for a player.
-     * @param actions the set of actions that the player can do. When a player selects an action
-     * this will be executed passing to the {@link GameAction} the {@link GameController} instance
-     * that was previously attached to this view.
+     * @param actions the names of the actions that the player can do. When a player selects an action
+     * this will be executed by asking the {@link GameController} instance
+     * that was previously attached to this view to execute the action.
+     * This is done by calling the method {@link GameController#executeAction(String)}
      */
-    void showPlayerActions(Set<GameAction> actions);
+    void showPlayerActions(Set<String> actions);
+
+    /**
+     * Display the result of the call on {@link GameController#throwDices()}.
+     * @param results a {@link List} of {@code int} containing the results of each
+     * dice thrown
+     */
+    void displayDiceResult(List<Integer> results);
 
     /**
      * Displays the game rules and general information

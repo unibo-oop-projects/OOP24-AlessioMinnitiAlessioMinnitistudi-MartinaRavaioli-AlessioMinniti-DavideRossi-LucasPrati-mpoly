@@ -1,6 +1,5 @@
 package it.unibo.monopoly.model.transactions;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 import java.util.function.Function;
@@ -21,8 +20,8 @@ import it.unibo.monopoly.model.transactions.impl.RentOptionImpl;
 
 class BaseTitleDeedTest {
 
-    private static final String OWNER_NAME = "Bob";
-    private static final String SECOND_OWNER_NAME = "Alice";
+    private static final int OWNER_ID = 1;
+    private static final int SECOND_OWNER_ID = 2;
     private static final Group GROUP_NAME = Group.GREEN;
     private static final String TITLE_DEED_NAME = "vicolo corto";
     private static final int SALE_PRICE = 50;
@@ -30,7 +29,7 @@ class BaseTitleDeedTest {
         return salePrice / 10;
     };
     private static final int BASE_RENT_PRICE = 2;
-    private static final Collection<Integer> DICE = List.of(1);
+    private static final int DICE = 1;
     private TitleDeed deed;
 
 
@@ -50,24 +49,24 @@ class BaseTitleDeedTest {
     void testGetOwnerThrowsExceptionIfNoOwnerIsSet() {
         final IllegalStateException noOwnerException = assertThrows(
             IllegalStateException.class, 
-            deed::getOwner
+            deed::getOwnerId
         );
         testExceptionFormat(noOwnerException);
     }
 
     @Test
     void testSetOwnerSuccessful() {
-        deed.setOwner(OWNER_NAME);
+        deed.setOwner(OWNER_ID);
         assertTrue(deed.isOwned());
-        assertEquals(OWNER_NAME, deed.getOwner());
+        assertEquals(OWNER_ID, deed.getOwnerId());
     }
 
     @Test
     void setOwnerWhenOwnerAlreadySetThrowsException() {
-        deed.setOwner(OWNER_NAME);
+        deed.setOwner(OWNER_ID);
         final IllegalStateException ownerAlreadySetException = assertThrows(
             IllegalStateException.class, 
-            () -> deed.setOwner(SECOND_OWNER_NAME)
+            () -> deed.setOwner(SECOND_OWNER_ID)
         );
         testExceptionFormat(ownerAlreadySetException);
     }
@@ -83,9 +82,9 @@ class BaseTitleDeedTest {
 
     @Test
     void removeOwnerSuccessful() {
-        deed.setOwner(OWNER_NAME);
+        deed.setOwner(OWNER_ID);
         assertTrue(deed.isOwned());
-        assertEquals(OWNER_NAME, deed.getOwner());
+        assertEquals(OWNER_ID, deed.getOwnerId());
         deed.removeOwner();
         assertFalse(deed.isOwned());
     }
@@ -112,14 +111,14 @@ class BaseTitleDeedTest {
 
    @Test
    void testGetCorrectRentPrice() {
-        deed.setOwner(OWNER_NAME);
+        deed.setOwner(OWNER_ID);
         assertEquals(BASE_RENT_PRICE, deed.getRent(Set.of(), DICE));
         final RentOption allPropertiesOwned = new RentOptionImpl("Si possiede tutte le proprietà del gruppo", 
                                                                 "", 
                                                                 BASE_RENT_PRICE * 2, 
                                                                 (deeds, o) -> deeds.stream()
                                                                                 .allMatch(d -> d.isOwned() 
-                                                                                                && o.equals(d.getOwner())
+                                                                                                && o.equals(d.getOwnerId())
                                                                                                 )
                                                                 );
         final TitleDeed shortStreetDeed = new BaseTitleDeed(GROUP_NAME,
@@ -136,8 +135,8 @@ class BaseTitleDeedTest {
                                         BASE_RENT_PRICE, 
                                         List.of(allPropertiesOwned)
                                         );
-        shortStreetDeed.setOwner(OWNER_NAME);
-        longStreetDeed.setOwner(OWNER_NAME);
+        shortStreetDeed.setOwner(OWNER_ID);
+        longStreetDeed.setOwner(OWNER_ID);
         assertEquals(BASE_RENT_PRICE * 2, shortStreetDeed.getRent(Set.of(longStreetDeed), DICE));
     }
 
