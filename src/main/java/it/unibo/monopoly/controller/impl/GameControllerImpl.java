@@ -202,4 +202,9 @@ public final class GameControllerImpl implements GameController {
             gameView.displayError(e);
         }
     }
+
+    @Override
+    public void start() {
+        this.turnationManager
+    }
 }

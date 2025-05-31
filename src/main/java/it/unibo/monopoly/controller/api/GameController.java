@@ -81,5 +81,8 @@ public interface GameController {
      * @param actionName the name of the {@link PropertyAction} to execute
      */
     void executeAction(String actionName);
-
+    /**
+     * start the UI, initializing the game view and the bank state.
+     */
+    void start();
 }

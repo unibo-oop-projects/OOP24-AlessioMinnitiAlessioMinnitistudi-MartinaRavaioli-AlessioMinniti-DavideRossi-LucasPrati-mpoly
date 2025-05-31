@@ -99,4 +99,8 @@ public interface TurnationManager {
      * @param player player to delete
      */
     void deletePlayer(Player player);
+    /**
+     * reset the bank state transactions data.
+     */
+    void resetBankState();
 }
