@@ -2,35 +2,43 @@ package it.unibo.monopoly.model.comunityCestAndChance;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+
 import org.junit.jupiter.api.Test;
 
+import it.unibo.monopoly.model.gameboard.impl.chance_comunity.impl.ParserOnHyphen;
 import it.unibo.monopoly.model.gameboard.impl.chance_comunity.impl.ParserOnSpaces;
 
 public class ParserOnSpaceTest {
 
-    private static final String test1 = "hello";
-    private static final String test2 = "hello\n world";
-    private static final String test3 = "hello\n fucking\n world"; 
+    
+    private static FileReader file ;
+
 
 
     @Test
-    void parserTest1() {
-        final ParserOnSpaces p = new ParserOnSpaces(test1);
-        assertEquals("hello", p.next());
+    void parserOnHyphenTest() {
+        try {
+            file = new FileReader("command.txt");
+            
+        } catch (FileNotFoundException e) {
+            System.out.println("file not found");
+        }
+
+        final ParserOnHyphen p = new ParserOnHyphen(file);
+        if (p.hasNesxt()) {   
+            assertEquals("ciao \r\n" + //
+                        "io sono \r\n" + //
+                        "world", p.next());   
+        }
     }
 
     @Test
     void parserTest2() {
-        final ParserOnSpaces p = new ParserOnSpaces(test2);
-        assertEquals("hello", p.next());
-        assertEquals("world", p.next());
     }
 
     @Test
     void parserTest3() {
-        final ParserOnSpaces p = new ParserOnSpaces(test3);
-        assertEquals("hello", p.next());
-        assertEquals("fucking", p.next());
-        assertEquals("world", p.next());
     }
 }

@@ -17,11 +17,14 @@ public class ParserOnHyphen implements Parser {
     @Override
     public boolean hasNesxt() {
         try {
-
+            if (this.file ) {
+                // TODO how to check file is not null, loook up Buffered file reader as stated in professors slides
+            }
+            String rStr = "";
             int c = file.read();
             if (c != -1) {
                 while (c != 45 && c != -1) {
-                //TODO creazione stringa fra due - da ritornare
+                    rStr = rStr + c;
                 }
                 return true;
             }else{
