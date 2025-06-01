@@ -10,6 +10,10 @@ import it.unibo.monopoly.model.turnation.api.Position;
  * pawn factory implementation.
 */
 public final class PawnFactoryImpl implements PawnFactory {
+    /**
+     * constructor.
+    */
+    //public PawnFactoryImpl() { }
 
     @Override
     public Pawn createBasic(final int id, final Position pos, final Color color) {

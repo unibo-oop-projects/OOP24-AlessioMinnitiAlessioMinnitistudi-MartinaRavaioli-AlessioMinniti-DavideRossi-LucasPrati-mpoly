@@ -200,7 +200,7 @@ public final class MainViewImpl implements MainGameView {
 
     @Override
     public void displayOptionMessageEndTurn(final String message) {
-        final int result = JOptionPane.showConfirmDialog(null, message, "Continuare?",JOptionPane.YES_NO_OPTION);
+        final int result = JOptionPane.showConfirmDialog(null, message, "Continuare?", JOptionPane.YES_NO_OPTION);
 
         if (result == JOptionPane.YES_OPTION) {
             this.controller.endTurnPlayerDies();
