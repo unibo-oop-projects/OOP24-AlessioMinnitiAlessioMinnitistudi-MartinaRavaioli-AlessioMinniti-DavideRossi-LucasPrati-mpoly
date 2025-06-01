@@ -27,6 +27,7 @@ public final class LaunchApp {
         final Configuration config = Configuration.configureFromFile(CONFIG_FILE);
         SwingUtilities.invokeLater(() -> {
             new MainMenuView(config);
+            //new GUIRanking(null);
         });
     }
 }

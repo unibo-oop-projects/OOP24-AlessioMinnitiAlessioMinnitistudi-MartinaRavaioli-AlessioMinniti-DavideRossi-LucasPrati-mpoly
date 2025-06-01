@@ -26,6 +26,7 @@ import it.unibo.monopoly.utils.api.UseFileTxt;
 import it.unibo.monopoly.utils.impl.Configuration;
 import it.unibo.monopoly.utils.impl.UseFileTxtImpl;
 import it.unibo.monopoly.view.api.MainGameView;
+import it.unibo.monopoly.view.impl.GUIRanking;
 
 
 /**
@@ -148,7 +149,8 @@ public final class GameControllerImpl implements GameController {
         try {
             //Missing method to get current player
             //gameView.displayPlayerStats();
-            throw new UnsupportedOperationException("Unimplemented method 'loadCurrentPlayerInformation'");
+            //throw new UnsupportedOperationException("Unimplemented method 'loadCurrentPlayerInformation'");
+            new GUIRanking(getRanking());
         } catch (final IllegalStateException e) {
             gameView.displayError(e);
         }
