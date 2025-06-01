@@ -93,6 +93,9 @@ public final class GameControllerImpl implements GameController {
             }
         } else {
             this.gameView.displayMessage("the player will die if he passes the turn");
+            this.turnationManager.deletePlayer(this.turnationManager.getCurrPlayer());
+            this.turnationManager.getNextPlayer();
+            refreshPlayerInfo();
         }
 
     }
