@@ -21,7 +21,7 @@ public final class EffectFactoryImpl implements EffectFactory {
     public Effect depositMoney(final int amount, final Bank bank) {
         return new Effect() {
 
-            private final String desc = "deposits " + Integer.toString(amount) + "into your bankaccount";
+            private final String desc = "deposits " + Integer.toString(amount) + " into your bankaccount";
 
             @Override
             public void activate(final Player player) {
@@ -39,7 +39,7 @@ public final class EffectFactoryImpl implements EffectFactory {
     public Effect withdrawMoney(final int amount, final Bank bank) {
         return new Effect() {
 
-            private final String desc = "withdraw " + Integer.toString(amount) + "from your bankaccount";
+            private final String desc = "withdraw " + Integer.toString(amount) + " from your bankaccount";
 
             @Override
             public void activate(final Player player) {
