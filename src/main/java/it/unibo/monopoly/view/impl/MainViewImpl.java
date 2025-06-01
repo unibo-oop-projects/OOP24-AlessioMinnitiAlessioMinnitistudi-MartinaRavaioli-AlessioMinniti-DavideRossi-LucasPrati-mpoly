@@ -9,7 +9,6 @@ import java.util.Set;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 
@@ -87,15 +86,14 @@ public final class MainViewImpl implements MainGameView {
         mainGameFrame.add(splitPane);
         //mainGameFrame.pack();
         mainGameFrame.setVisible(true);
-        mainGameFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        mainGameFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         mainGameFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 
         mainGameFrame.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
-                JOptionPane.showMessageDialog(null, "Operazione completata con successo! ", 
-                                        "Info", JOptionPane.INFORMATION_MESSAGE);
-                // new GUIRanking(controller.getRanking());
+                new GUIRanking(controller.getRanking());
+                mainGameFrame.dispose();
             }
         });
     }
