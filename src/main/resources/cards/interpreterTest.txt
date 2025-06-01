@@ -1,0 +1,14 @@
+move of steps: 3
+-
+move in tile: Jail / Just Visiting
+-
+withdraw: 50
+-
+deposit: 50
+-
+deposit from: all, 50
+-
+buy if not owned: Bastoni Gran Sasso
+-
+buy if not owned: Bastoni Gran Sasso
+withdraw: 50

@@ -9,7 +9,7 @@ import it.unibo.monopoly.model.gameboard.impl.chance_comunity.api.Parser;
 import it.unibo.monopoly.model.gameboard.impl.chance_comunity.impl.ParserOnColon;
 import it.unibo.monopoly.model.gameboard.impl.chance_comunity.impl.ParserOnHyphen;
 import it.unibo.monopoly.model.gameboard.impl.chance_comunity.impl.ParserOnNewLine;
-import it.unibo.monopoly.model.gameboard.impl.chance_comunity.impl.ParserOnSpaces;
+import it.unibo.monopoly.model.gameboard.impl.chance_comunity.impl.ParserOnComma;
 import it.unibo.monopoly.utils.api.UseFileTxt;
 import it.unibo.monopoly.utils.impl.UseFileTxtImpl;
 
@@ -18,7 +18,7 @@ public class ParserOnSpaceTest {
         private final UseFileTxt f = new UseFileTxtImpl();
         private final String fi = f.loadTextResource("cards//commandTest.txt");
         private final static String COLON_TEST = "ciao: io sono: world: -: come stai";
-        private final static String SPACES_TEST = "ciao io sono world - come stai";
+        private final static String SPACES_TEST = "ciao, io, sono, world, -, come, stai";
 
     @Test
     void parserOnHyphenTest() {
@@ -62,8 +62,8 @@ public class ParserOnSpaceTest {
     }
 
     @Test
-    void parseOnSpacesTest(){
-        final Parser p = new ParserOnSpaces(SPACES_TEST);
+    void parseOnCommaTest(){
+        final Parser p = new ParserOnComma(SPACES_TEST);
         assertTrue(p.hasNesxt());
         assertEquals(p.next(), "ciao");
         assertTrue(p.hasNesxt());

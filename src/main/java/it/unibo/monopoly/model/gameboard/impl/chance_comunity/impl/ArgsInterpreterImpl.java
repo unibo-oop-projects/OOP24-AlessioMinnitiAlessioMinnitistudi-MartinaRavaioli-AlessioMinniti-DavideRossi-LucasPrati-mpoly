@@ -1,19 +1,26 @@
 package it.unibo.monopoly.model.gameboard.impl.chance_comunity.impl;
 
 import java.util.List;
+import java.util.Optional;
 
 import it.unibo.monopoly.model.gameboard.api.Board;
 import it.unibo.monopoly.model.gameboard.impl.chance_comunity.api.ArgsInterpreter;
 import it.unibo.monopoly.model.gameboard.impl.chance_comunity.api.BaseCommand;
+import it.unibo.monopoly.model.gameboard.impl.chance_comunity.api.Parser;
 import it.unibo.monopoly.model.turnation.api.Player;
 import it.unibo.monopoly.model.turnation.api.TurnationManager;
 
 public  class ArgsInterpreterImpl implements ArgsInterpreter {
 
     private  String interpretTileArg(String toInterpretString, Board board) {
-        String t = null;
-        t = board.getTiles().stream().filter(p -> p.getName().equals(toInterpretString)).map(p -> p.getName()).findAny().get();
-        return t; 
+        Optional<String> t = null;
+        t = board.getTiles().stream().filter(p -> p.getName().equals(toInterpretString)).map(p -> p.getName()).findAny();
+        
+        if (t.isPresent()) {
+            return t.get();
+        } else {
+            return null;
+        }
     }
     
     private  Integer interpretIntArg(String toInterpretString) {
@@ -23,11 +30,13 @@ public  class ArgsInterpreterImpl implements ArgsInterpreter {
                 validInt = false;
             }
         }
-        Integer num = null;
+
         if (validInt) {
-            num = Integer.valueOf(toInterpretString);
+            return Integer.valueOf(toInterpretString);
+        } else {
+            return -1;
         }
-        return num; 
+        
     }
 
     private  List<Player> interpretPlayerArg(String toInterpretString, TurnationManager turnM) {
@@ -42,9 +51,14 @@ public  class ArgsInterpreterImpl implements ArgsInterpreter {
 
     @Override
     public void interpret(String toInterpretString, BaseCommand command, Board board, TurnationManager turnM) {
-        command.addIntArg(interpretIntArg(toInterpretString));
-        command.addPlayersArg(interpretPlayerArg(toInterpretString, turnM));
-        command.addTileArg(interpretTileArg(toInterpretString, board));
+        final Parser p = new ParserOnComma(toInterpretString);
+        while (p.hasNesxt()) {
+            final String str = p.next();
+            command.addIntArg(interpretIntArg(str));
+            command.addPlayersArg(interpretPlayerArg(str, turnM));
+            command.addTileArg(interpretTileArg(str, board));
+        }
+        
     }
 
 }

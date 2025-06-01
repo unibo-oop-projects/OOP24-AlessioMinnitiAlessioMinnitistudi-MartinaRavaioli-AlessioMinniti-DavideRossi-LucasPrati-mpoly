@@ -23,6 +23,7 @@ import it.unibo.monopoly.model.gameboard.impl.chance_comunity.api.BaseCommand;
 import it.unibo.monopoly.model.gameboard.impl.chance_comunity.api.BaseCommandFactory;
 import it.unibo.monopoly.model.gameboard.impl.chance_comunity.api.Command;
 import it.unibo.monopoly.model.gameboard.impl.chance_comunity.impl.BaseCommandFactoryImpl;
+import it.unibo.monopoly.model.gameboard.impl.chance_comunity.impl.ComplexCommand;
 import it.unibo.monopoly.model.transactions.api.Bank;
 import it.unibo.monopoly.model.transactions.api.BankAccount;
 import it.unibo.monopoly.model.transactions.api.TitleDeed;
@@ -36,7 +37,7 @@ import it.unibo.monopoly.model.turnation.impl.PlayerImpl;
 import it.unibo.monopoly.model.turnation.impl.PositionImpl;
 import it.unibo.monopoly.model.turnation.impl.PrisonablePlayer;
 
-public class BaseCommandFactoryTest {
+public class BaseAndComplexCommandFactoryTest {
 
     
     private static final String PLAYER1_NAME = "Alice";
@@ -187,4 +188,23 @@ public class BaseCommandFactoryTest {
         c.execute(p1);
         assertEquals(p2.getName(), bank.getTitleDeed(s2).getOwner());
     }
+
+    @Test
+    void complex1(){
+        final String s1 = TITLE_DEED_NAME1;
+        final String s2 = TITLE_DEED_NAME2;
+        indice = 5;
+        BaseCommand c1 = commands.get(indice);
+        c1.addTileArg(s1);
+        indice = 2;
+        BaseCommand c2 = commands.get(indice);
+        c2.addTileArg(s2);
+        List<Command> li = List.of(c1, c2);
+        Command c = new ComplexCommand(li, s2);
+        c.execute(p1);
+        assertEquals(p1.getName(), bank.getTitleDeed(s1).getOwner());
+        assertEquals(pos1.getPos(), board.getPawn(p1.getID()).getPosition().getPos());
+        
+    }
+    
 }

@@ -15,7 +15,7 @@ public class BaseCommandFactoryImpl implements BaseCommandFactory {
     private BaseCommand move(Board board){
         return new BaseCommand() {
 
-            private String keyword;
+            private String keyword = "move of steps";
             private int num;
 
             @Override
@@ -25,7 +25,9 @@ public class BaseCommandFactoryImpl implements BaseCommandFactory {
 
             @Override
             public void addIntArg(int arg) {
-                this.num = arg;
+                if (arg != -1) {
+                    this.num = arg;
+                }
             }
 
             @Override
@@ -47,7 +49,7 @@ public class BaseCommandFactoryImpl implements BaseCommandFactory {
     private BaseCommand moveIn(Board board){
         return new BaseCommand() {
 
-            private String keyword;
+            private String keyword = "move in tile";
             private String tile;
 
             @Override
@@ -66,7 +68,9 @@ public class BaseCommandFactoryImpl implements BaseCommandFactory {
 
             @Override
             public void addTileArg(String tile) {
-                this.tile = tile;
+                if (tile != null) {
+                    this.tile = tile;
+                }
             }
 
             @Override
@@ -79,7 +83,7 @@ public class BaseCommandFactoryImpl implements BaseCommandFactory {
     private BaseCommand withdraw(Bank bank){
         return new BaseCommand() {
 
-            private String keyword;
+            private String keyword = "withdraw";
             private int num;
 
             @Override
@@ -94,7 +98,9 @@ public class BaseCommandFactoryImpl implements BaseCommandFactory {
 
             @Override
             public void addIntArg(int arg) {
-                this.num = arg;
+                if (arg != -1) {
+                    this.num = arg;
+                }
             }
 
             @Override
@@ -111,7 +117,7 @@ public class BaseCommandFactoryImpl implements BaseCommandFactory {
     private BaseCommand deposit(Bank bank){
         return new BaseCommand() {
 
-            private String keyword;
+            private String keyword = "deposit";
             private int num;
 
             @Override
@@ -126,7 +132,9 @@ public class BaseCommandFactoryImpl implements BaseCommandFactory {
 
             @Override
             public void addIntArg(int arg) {
-                this.num = arg;
+                if (arg != -1) {
+                    this.num = arg;
+                }
             }
 
             @Override
@@ -142,7 +150,7 @@ public class BaseCommandFactoryImpl implements BaseCommandFactory {
     private BaseCommand depositFrom(Bank bank){
         return new BaseCommand() {
 
-            private String keyword;
+            private String keyword = "deposit from";
             private int num;
             private List<Player> players;
 
@@ -161,7 +169,10 @@ public class BaseCommandFactoryImpl implements BaseCommandFactory {
 
             @Override
             public void addIntArg(int arg) {
-                this.num = arg;
+                if (arg != -1) {
+                    this.num = arg;
+                }
+                
             }
 
             @Override
@@ -170,14 +181,16 @@ public class BaseCommandFactoryImpl implements BaseCommandFactory {
             
             @Override
             public void addPlayersArg(List<Player> players) {
-                this.players = List.copyOf(players);
+                if (players != null) {
+                    this.players = List.copyOf(players);
+                }
             }
         };
     }
     
     private BaseCommand buyIfNotOwned(Bank bank, Board board){
         return new BaseCommand() {
-            private String keyword;
+            private String keyword = "buy if not owned";
             private String tile;
 
             @Override
@@ -199,7 +212,9 @@ public class BaseCommandFactoryImpl implements BaseCommandFactory {
 
             @Override
             public void addTileArg(String tile) {
-                this.tile = tile;
+                if (tile != null) {
+                    this.tile = tile;
+                }
             }
 
             @Override
