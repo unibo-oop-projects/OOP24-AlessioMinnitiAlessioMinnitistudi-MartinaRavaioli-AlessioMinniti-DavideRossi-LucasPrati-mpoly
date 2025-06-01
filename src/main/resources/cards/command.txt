@@ -1,5 +1,0 @@
-ciao
-io sono
-world
--
-come stai

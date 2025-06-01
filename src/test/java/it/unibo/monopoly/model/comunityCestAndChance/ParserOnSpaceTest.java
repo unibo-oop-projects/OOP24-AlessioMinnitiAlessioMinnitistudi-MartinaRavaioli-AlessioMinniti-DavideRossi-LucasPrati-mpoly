@@ -16,7 +16,7 @@ import it.unibo.monopoly.utils.impl.UseFileTxtImpl;
 public class ParserOnSpaceTest {
 
         private final UseFileTxt f = new UseFileTxtImpl();
-        private final String fi = f.loadTextResource("cards//command.txt");
+        private final String fi = f.loadTextResource("cards//commandTest.txt");
         private final static String COLON_TEST = "ciao: io sono: world: -: come stai";
         private final static String SPACES_TEST = "ciao io sono world - come stai";
 
