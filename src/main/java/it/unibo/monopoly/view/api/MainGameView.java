@@ -103,4 +103,11 @@ public interface MainGameView {
      * @param prop the property to buy
      */
     void callBuyProperty(Property prop);
+    /**
+     * Displays a generic yes/no option message sent to the user when he'll die if he passes the turn.
+     * if the player chooses 'yes' then the he'll pass the turn and die.
+     * if the player chooses 'no' then he won't pass the turn so he can sell something to not die. 
+     * @param message The message to display
+     */
+    void displayOptionMessageEndTurn(String message);
 }

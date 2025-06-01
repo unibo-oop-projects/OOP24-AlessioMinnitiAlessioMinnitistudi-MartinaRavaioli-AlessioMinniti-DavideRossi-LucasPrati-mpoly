@@ -9,6 +9,7 @@ import java.util.Set;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 
@@ -195,5 +196,14 @@ public final class MainViewImpl implements MainGameView {
     @Override
     public void callBuyProperty(final Property prop) {
         this.gameBoardPanel.buyProperty(prop, this.controller.getCurrPlayer().getID());
+    }
+
+    @Override
+    public void displayOptionMessageEndTurn(final String message) {
+        final int result = JOptionPane.showConfirmDialog(null, message, "Continuare?",JOptionPane.YES_NO_OPTION);
+
+        if (result == JOptionPane.YES_OPTION) {
+            this.controller.endTurnPlayerDies();
+        }
     }
 }
