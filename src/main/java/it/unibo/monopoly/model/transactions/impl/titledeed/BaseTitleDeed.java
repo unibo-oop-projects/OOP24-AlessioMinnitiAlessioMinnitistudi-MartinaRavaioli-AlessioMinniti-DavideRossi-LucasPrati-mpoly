@@ -155,7 +155,7 @@ public final class BaseTitleDeed implements TitleDeed {
         }
 
         return this.rentOptions.stream()
-                                .filter(op -> op.canBeApplied(groupTitleDeeds, this.owner.get()))
+                                .filter(op -> op.canBeApplied(groupTitleDeeds, this.owner.get(), null))
                                 .mapToInt(RentOption::getPrice)
                                 .max()
                                 .getAsInt();

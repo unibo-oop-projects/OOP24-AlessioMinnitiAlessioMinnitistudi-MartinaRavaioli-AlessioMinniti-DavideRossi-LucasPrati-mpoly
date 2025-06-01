@@ -59,4 +59,18 @@ public interface RentOptionFactory {
      * @return the created rent option
      */
     RentOption baseRentOption(int baseRent);
+
+    /**
+     * Generates a list consisting of {@code nHouses + nHotels} {@link RentOption}.
+     * Each one requires a progressively increasing number of houses on the property to be applied,
+     * same goes for hotels. 
+     * The {@link RentOption} that check for hotels come after the ones that check for houses and are
+     * pricier. The {@code rentAmount} is assigned using a tailored mathematical function. 
+     * @param baseRent the starting rent used for the calculation. It should correspond to the {@link #baseRentOption(int)}
+     * {@code baseRent}
+     * @param nHouses number of rent options checking for houses, with progressively increasing house number
+     * @param nHotels number of rent options checking for hotels, with progressively increasing hotel number
+     * @return
+     */
+    List<RentOption> housesAndHotelsOptions(int baseRent, int nHouses, int nHotels);
 }

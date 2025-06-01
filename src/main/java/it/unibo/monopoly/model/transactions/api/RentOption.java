@@ -2,6 +2,8 @@ package it.unibo.monopoly.model.transactions.api;
 
 import java.util.Set;
 
+import it.unibo.monopoly.model.gameboard.api.BuildableProperty;
+
 /**
  * An object that encapsulates all information
  * related to one of the possible rent options that
@@ -44,8 +46,10 @@ public interface RentOption {
      * should be all part of the same group, meaning that a call to {@code getGroup} on the title
      * deeds should return the same value.
      * @param ownerId the ownerid of the {@link TitleDeed} this {@code rent option} is associated to
+     * @param property some options may be applied based on the state of the {@link BuildableProperty}
+     * associated with the {@link TitleDeed}.
      * @return whether this rent option can be chosen based on the given 
      * information.
      */
-    boolean canBeApplied(Set<TitleDeed> groupDeeds, int ownerId);
+    boolean canBeApplied(Set<TitleDeed> groupDeeds, int ownerId, BuildableProperty property);
 }

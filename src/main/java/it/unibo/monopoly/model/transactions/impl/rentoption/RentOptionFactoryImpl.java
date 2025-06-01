@@ -41,4 +41,10 @@ public final class RentOptionFactoryImpl implements RentOptionFactory {
     public RentOption baseRentOption(final int baseRent) {
         return new RentOptionImpl("Affitto base", "", baseRent, (deeds, ownerId) -> true);
     }
+
+    @Override
+    public List<RentOption> housesAndHotelsOptions(int baseRent, int nHouses, int nHotels) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'housesAndHotelsOptions'");
+    }
 }
