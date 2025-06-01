@@ -69,8 +69,10 @@ public interface RentOptionFactory {
      * @param baseRent the starting rent used for the calculation. It should correspond to the {@link #baseRentOption(int)}
      * {@code baseRent}
      * @param nHouses number of rent options checking for houses, with progressively increasing house number
-     * @param nHotels number of rent options checking for hotels, with progressively increasing hotel number
-     * @return
+     * @param withHotel specifies whether to include in the list the hotel option or not
+     * @return a {@link List} of {@link RentOption} ordered based on number of houses on the {@link Property}
+     * required for application (and as a consequence by increasing price), with eventually the hotel option
+     * as the last one.
      */
-    List<RentOption> housesAndHotelsOptions(int baseRent, int nHouses, int nHotels);
+    List<RentOption> housesAndHotelsOptions(int baseRent, int nHouses, boolean withHotel);
 }

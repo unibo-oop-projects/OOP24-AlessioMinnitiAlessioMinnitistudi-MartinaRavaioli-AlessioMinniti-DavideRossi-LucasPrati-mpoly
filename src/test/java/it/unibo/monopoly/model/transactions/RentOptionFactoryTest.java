@@ -41,10 +41,10 @@ class RentOptionFactoryTest {
             new BaseTitleDeed(Group.GREEN, "vicolo stretto", START_RENT * 10, s -> s / 2, START_RENT, List.of(doubledPrice))
         );
         deeds.getFirst().setOwner(OWNER_ID);
-        assertFalse(doubledPrice.canBeApplied(Set.copyOf(deeds), OWNER_ID));
+        assertFalse(doubledPrice.canBeApplied(Set.copyOf(deeds), OWNER_ID, null));
         assertEquals(START_RENT, deeds.getFirst().getRent(Set.copyOf(deeds), DICE));
         deeds.getLast().setOwner(OWNER_ID);
-        assertTrue(doubledPrice.canBeApplied(Set.copyOf(deeds), OWNER_ID));
+        assertTrue(doubledPrice.canBeApplied(Set.copyOf(deeds), OWNER_ID, null));
         assertEquals(START_RENT * 2, deeds.getFirst().getRent(Set.copyOf(deeds), DICE));
     }
 
@@ -68,9 +68,9 @@ class RentOptionFactoryTest {
             deed.setOwner(OWNER_ID);
             for (int j = 0; j < options.size(); j++) {
                 if (j <= i) {
-                    assertTrue(options.get(j).canBeApplied(Set.copyOf(deeds), OWNER_ID));
+                    assertTrue(options.get(j).canBeApplied(Set.copyOf(deeds), OWNER_ID, null));
                 } else {
-                    assertFalse(options.get(j).canBeApplied(Set.copyOf(deeds), OWNER_ID));
+                    assertFalse(options.get(j).canBeApplied(Set.copyOf(deeds), OWNER_ID, null));
                 }
             }
         }

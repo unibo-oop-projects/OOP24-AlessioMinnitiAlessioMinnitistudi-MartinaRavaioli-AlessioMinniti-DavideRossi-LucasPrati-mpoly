@@ -3,7 +3,7 @@ package it.unibo.monopoly.model.transactions.impl.rentoption;
 import java.util.Set;
 import java.util.function.BiPredicate;
 
-import it.unibo.monopoly.model.gameboard.api.BuildableProperty;
+import it.unibo.monopoly.model.gameboard.api.Property;
 import it.unibo.monopoly.model.transactions.api.RentOption;
 import it.unibo.monopoly.model.transactions.api.TitleDeed;
 
@@ -37,7 +37,7 @@ public record RentOptionImpl(String title,
     }
 
     @Override
-    public boolean canBeApplied(final Set<TitleDeed> groupDeeds, final int ownerId, final BuildableProperty property) {
+    public boolean canBeApplied(final Set<TitleDeed> groupDeeds, final int ownerId, final Property property) {
         return applicabilityCondition.test(groupDeeds, ownerId);
     }
 }

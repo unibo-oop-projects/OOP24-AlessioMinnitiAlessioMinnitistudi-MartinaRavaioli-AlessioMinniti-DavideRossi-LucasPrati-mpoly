@@ -2,7 +2,7 @@ package it.unibo.monopoly.model.transactions.api;
 
 import java.util.Set;
 
-import it.unibo.monopoly.model.gameboard.api.BuildableProperty;
+import it.unibo.monopoly.model.gameboard.api.Property;
 
 /**
  * An object that encapsulates all information
@@ -51,5 +51,5 @@ public interface RentOption {
      * @return whether this rent option can be chosen based on the given 
      * information.
      */
-    boolean canBeApplied(Set<TitleDeed> groupDeeds, int ownerId, BuildableProperty property);
+    boolean canBeApplied(Set<TitleDeed> groupDeeds, int ownerId, Property property);
 }
