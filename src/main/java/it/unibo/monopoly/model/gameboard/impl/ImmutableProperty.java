@@ -1,20 +1,25 @@
 package it.unibo.monopoly.model.gameboard.impl;
 
-import it.unibo.monopoly.model.gameboard.api.BuildableProperty;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import it.unibo.monopoly.model.gameboard.api.Property;
 import it.unibo.monopoly.model.turnation.api.Position;
 /**
  * immutable property used to give the info of the house and the hotel in the titledeed.
  * it contains a property object.
  * only the methods that give the houses and hotel info will be called, the others will throw exceptions.
 */
-public final class ImmutableProperty implements BuildableProperty {
-    private final BuildableProperty property;
+public final class ImmutableProperty implements Property {
+    private final BuildablePropertyImpl property;
     /**
     * constructor.
     * it has to take the reference of the property, not a copy
     * @param prop property
     */
-    public ImmutableProperty(final BuildableProperty prop) {
+    @SuppressFBWarnings(
+        value = "EI_EXPOSE_REP2",
+        justification = "Injection of shared mutable dependencies is intentional and controlled in this architecture."
+    )
+    public ImmutableProperty(final BuildablePropertyImpl prop) {
         this.property = prop;
     }
 

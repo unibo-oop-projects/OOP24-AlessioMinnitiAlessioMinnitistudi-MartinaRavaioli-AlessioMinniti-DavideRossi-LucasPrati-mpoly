@@ -8,7 +8,6 @@ import java.util.List;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.monopoly.model.gameboard.api.Board;
-import it.unibo.monopoly.model.gameboard.api.BuildableProperty;
 import it.unibo.monopoly.model.gameboard.api.Pawn;
 import it.unibo.monopoly.model.gameboard.api.Property;
 import it.unibo.monopoly.model.gameboard.api.Special;
@@ -136,34 +135,34 @@ public class BoardImpl implements Board {
 
     @Override
     public final boolean canBuildHouseInProperty(final Property prop) {
-        if (!(prop instanceof BuildableProperty)) {
+        if (!prop.isBuildable()) {
             throw new IllegalArgumentException("this property can't build houses");
         }
-        return new BuildablePropertyDecorator((BuildableProperty) prop).canBuildHouse();
+        return new BuildablePropertyImpl(prop).canBuildHouse();
     }
 
     @Override
     public final boolean canBuildHotelInProperty(final Property prop) {
-        if (!(prop instanceof BuildableProperty)) {
+        if (!prop.isBuildable()) {
             throw new IllegalArgumentException("this property can't build hotel");
         }
-        return new BuildablePropertyDecorator((BuildableProperty) prop).canBuildHotel();
+        return new BuildablePropertyImpl(prop).canBuildHotel();
     }
 
     @Override
     public final void buildHouseInProperty(final Property prop) {
-        if (!(prop instanceof BuildableProperty)) {
+        if (!canBuildHouseInProperty(prop)) {
             throw new IllegalArgumentException("this property is not buildable");
         }
-        new BuildablePropertyDecorator((BuildableProperty) prop).buildHouse();
+        new BuildablePropertyImpl(prop).buildHouse();
     }
 
     @Override
     public final void buildHotelInProperty(final Property prop) {
-        if (!(prop instanceof BuildableProperty)) {
+        if (!canBuildHotelInProperty(prop)) {
             throw new IllegalArgumentException("this property isn't buildable");
         }
-        new BuildablePropertyDecorator((BuildableProperty) prop).buildHotel();
+        new BuildablePropertyImpl(prop).buildHotel();
     }
 
 }

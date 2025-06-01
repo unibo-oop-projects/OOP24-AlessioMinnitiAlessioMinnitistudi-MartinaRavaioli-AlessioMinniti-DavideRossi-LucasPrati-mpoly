@@ -22,4 +22,40 @@ public class NormalPropertyImpl extends TileImpl implements Property {
     public final boolean isBuildable() {
         return false;
     }
+
+    @Override
+    public final void buildHouse() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'buildHouse'");
+    }
+
+    @Override
+    public final void buildHotel() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'buildHotel'");
+    }
+
+    @Override
+    public final int getNHouses() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getNHouses'");
+    }
+
+    @Override
+    public final boolean hasHotel() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'hasHotel'");
+    }
+
+    @Override
+    public final boolean canBuildHouse() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'canBuildHouse'");
+    }
+
+    @Override
+    public final boolean canBuildHotel() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'canBuildHotel'");
+    }
 }
