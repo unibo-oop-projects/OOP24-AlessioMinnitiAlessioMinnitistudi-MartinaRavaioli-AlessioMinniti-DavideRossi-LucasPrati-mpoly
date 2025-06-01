@@ -13,7 +13,7 @@ public class ParserOnColon implements Parser{
 
     @Override
     public String next() {
-        String ret=null; 
+        String ret=""; 
         for (int i = index; i < toParseString.length(); i++) {
             index = i + 2;
             if (toParseString.charAt(i) == 58) {
@@ -29,7 +29,7 @@ public class ParserOnColon implements Parser{
 
     @Override
     public boolean hasNesxt() {
-        return index >= toParseString.length()-1;
+        return index < toParseString.length()-1;
     }
 
 }
