@@ -17,7 +17,6 @@ public class ParserOnColon implements Parser{
         for (int i = index; i < toParseString.length(); i++) {
             index = i + 2;
             if (toParseString.charAt(i) == 58) {
-                
                 return ret;
             }
             ret = ret + toParseString.charAt(i);

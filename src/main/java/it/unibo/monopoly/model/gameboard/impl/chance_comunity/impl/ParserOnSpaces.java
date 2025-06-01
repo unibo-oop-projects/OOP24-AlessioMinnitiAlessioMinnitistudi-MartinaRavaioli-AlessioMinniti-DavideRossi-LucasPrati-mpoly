@@ -13,9 +13,9 @@ public class ParserOnSpaces implements Parser{
 
     @Override
     public String next(){
-        String ret=null; 
+        String ret=""; 
         for (int i = index; i < toParseString.length(); i++) {
-            index = i + 2;
+            index = i + 1;
             if (toParseString.charAt(i) == 32) {
                 
                 return ret;

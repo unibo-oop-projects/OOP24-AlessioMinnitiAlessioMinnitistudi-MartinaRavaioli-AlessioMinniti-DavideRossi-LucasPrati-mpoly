@@ -12,11 +12,10 @@ public class ParserOnNewLine implements Parser{
 
     @Override
     public String next(){
-        String ret=null; 
+        String ret=""; 
         for (int i = index; i < toParseString.length(); i++) {
-            index = i + 2;
+            index = i + 1;
             if (toParseString.charAt(i) == 10) {
-                
                 return ret;
             }
             ret = ret + toParseString.charAt(i);
@@ -28,7 +27,7 @@ public class ParserOnNewLine implements Parser{
 
     @Override
     public boolean hasNesxt() {
-        return index >= toParseString.length()-1;
+        return index < toParseString.length()-1;
     }
 
 }
