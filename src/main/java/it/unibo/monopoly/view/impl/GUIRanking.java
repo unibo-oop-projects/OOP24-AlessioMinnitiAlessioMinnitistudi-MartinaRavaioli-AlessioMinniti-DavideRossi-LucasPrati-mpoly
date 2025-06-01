@@ -17,8 +17,8 @@ import org.apache.commons.lang3.tuple.Pair;
  */
 public class GUIRanking extends JFrame {
     private static final long serialVersionUID = 1L; /**serial version UID.*/
-    private static final int RANKING_SIZE = 400; /**frame size. */
-    private static final int LIST_SIZE = 300; /**list size. */
+    private static final int RANKING_SIZE = 300; /**frame size. */
+    private static final int LIST_SIZE = 200; /**list size. */
     private final JFrame frame = new JFrame();
 
 
@@ -33,7 +33,7 @@ public class GUIRanking extends JFrame {
 
     private void showGUI(final List<Pair<String, Integer>> ranks, final Pair<String, Integer> winner) {
         frame.setTitle("FINAL RANKING");
-        final JPanel panel = new JPanel();
+        final JPanel panel = new JPanel(new BorderLayout());
         //this.setSize(FRAME_SIZE, FRAME_SIZE);
         final DefaultListModel<Pair<String, Integer>> model = new DefaultListModel<>();
 
@@ -46,7 +46,7 @@ public class GUIRanking extends JFrame {
         scrollPane.setName("RANKING");
         scrollPane.setPreferredSize(new Dimension(LIST_SIZE, LIST_SIZE));
         panel.add(label, BorderLayout.NORTH);
-        panel.add(scrollPane, BorderLayout.SOUTH);
+        panel.add(scrollPane, BorderLayout.CENTER);
         frame.getContentPane().add(panel);
 
         //this.pack();
