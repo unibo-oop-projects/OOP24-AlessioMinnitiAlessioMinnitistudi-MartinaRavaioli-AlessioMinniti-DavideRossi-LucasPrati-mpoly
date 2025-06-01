@@ -20,14 +20,14 @@ public final class RentOptionFactoryImpl implements RentOptionFactory {
         return new PropertyRentOptionImpl(nHouse + " case",
         "Un giocatore possiede almeno " + nHouse + " case sul terreno",
         pricePerHouses(baseRent, nHouse),
-        property -> property.isBuildable() && property.getNHouses() >= nHouse);
+        property -> property != null && property.isBuildable() && property.getNHouses() >= nHouse);
     }
 
     private PropertyRentOptionImpl hotelOption(final int baseRent, final int maxNumberOfHouses) {
         return new PropertyRentOptionImpl("Hotel",
         "Un giocatore ha piazzato un hotel sul terreno",
         priceWithHotel(baseRent, maxNumberOfHouses),
-        property -> property.isBuildable() && property.hasHotel());
+        property -> property != null && property.isBuildable() && property.hasHotel());
     }
 
     private int pricePerHouses(final int baseRent, final int nHouse) {

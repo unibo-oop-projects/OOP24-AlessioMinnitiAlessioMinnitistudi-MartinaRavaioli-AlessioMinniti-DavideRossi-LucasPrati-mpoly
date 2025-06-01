@@ -218,6 +218,14 @@ public final class BankImpl implements Bank {
         } 
         final int playerId = td.getOwnerId();
         final BankAccount player = findAccount(playerId);
+        if (!titleDeedsByGroup(td.getGroup())
+                        .stream()
+                        .allMatch(d -> d.isOwned() && d.getOwnerId() == playerId)) {
+                            throw new IllegalStateException("You need to buy all title deeds of the group" 
+                            + td.getGroup() 
+                            + " before asking to buy houses for the title deed " 
+                            + titleDeedName);
+        }
         player.withdraw(td.getHousePrice());
         transactionLedger.markExecution("buyHouse");
     }
@@ -231,6 +239,14 @@ public final class BankImpl implements Bank {
         } 
         final int playerId = td.getOwnerId();
         final BankAccount player = findAccount(playerId);
+        if (!titleDeedsByGroup(td.getGroup())
+                .stream()
+                .allMatch(d -> d.isOwned() && d.getOwnerId() == playerId)) {
+                    throw new IllegalStateException("You need to buy all title deeds of the group" 
+                    + td.getGroup() 
+                    + " before asking to buy a hotel for the title deed " 
+                    + titleDeedName);
+        }
         player.withdraw(td.getHotelPrice());
         transactionLedger.markExecution("buyHotel");
     }
