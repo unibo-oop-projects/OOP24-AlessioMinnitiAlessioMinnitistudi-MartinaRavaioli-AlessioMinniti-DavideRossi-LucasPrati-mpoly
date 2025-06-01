@@ -97,4 +97,8 @@ public interface GameController {
      * @return winner data
     */
     Pair<String, Integer> getWinner();
+    /**
+     * end the turn even if the player dies.
+    */
+    void endTurnPlayerDies();
 }

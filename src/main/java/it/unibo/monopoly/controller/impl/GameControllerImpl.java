@@ -95,9 +95,9 @@ public final class GameControllerImpl implements GameController {
             }
         } else {
             this.gameView.displayMessage("the player will die if he passes the turn");
-            this.turnationManager.deletePlayer(this.turnationManager.getCurrPlayer());
-            this.turnationManager.getNextPlayer();
-            refreshPlayerInfo();
+            // this.turnationManager.deletePlayer(this.turnationManager.getCurrPlayer());
+            // this.turnationManager.getNextPlayer();
+            // refreshPlayerInfo();
         }
 
     }
@@ -222,5 +222,23 @@ public final class GameControllerImpl implements GameController {
     @Override
     public Pair<String, Integer> getWinner() {
         return this.turnationManager.getWinner();
+    }
+
+    @Override
+    public void endTurnPlayerDies() {
+        if (!this.turnationManager.playerDiesIfTurnPassed()) {
+            if (this.turnationManager.canPassTurn()) {
+                this.turnationManager.getNextPlayer();
+                refreshPlayerInfo();
+            } else {
+                this.gameView.displayMessage("the player has some actions to do before passing the turn");
+            }
+        } else {
+            final String deadPlayer = this.turnationManager.getCurrPlayer().getName();
+            this.turnationManager.deletePlayer(this.turnationManager.getCurrPlayer());
+            this.turnationManager.getNextPlayer();
+            refreshPlayerInfo();
+            this.gameView.displayMessage("player " + deadPlayer + " is dead");
+        }
     }
 }
