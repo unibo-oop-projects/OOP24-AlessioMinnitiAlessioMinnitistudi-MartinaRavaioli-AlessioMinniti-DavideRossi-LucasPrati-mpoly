@@ -35,7 +35,7 @@ public final class GameControllerImpl implements GameController {
     private final TurnationManager turnationManager; /**turnation manager. */
     private final Board board; /**board. */
     private final Configuration config; /**config. */
-    private final Bank bank;
+    private final Bank bank; /**bank. */
     private Map<String, PropertyAction> turnActions = new HashMap<>();
     private MainGameView gameView; /**game view. */
 
@@ -91,10 +91,10 @@ public final class GameControllerImpl implements GameController {
                 this.turnationManager.getNextPlayer();
                 refreshPlayerInfo();
             } else {
-                this.gameView.displayMessage("the player has some actions to do before passing the turn");
+                this.gameView.displayMessage("The player has some actions to do before passing the turn");
             }
         } else {
-            this.gameView.displayMessage("the player will die if he passes the turn");
+            this.gameView.displayMessage("The player will die if he passes the turn");
             // this.turnationManager.deletePlayer(this.turnationManager.getCurrPlayer());
             // this.turnationManager.getNextPlayer();
             // refreshPlayerInfo();
@@ -184,8 +184,8 @@ public final class GameControllerImpl implements GameController {
     public void executeAction(final String actionName) {
 
         if (!turnActions.containsKey(actionName)) {
-                gameView.displayError(new IllegalArgumentException("No action with this name was registered." 
-                + "It is possible that the current"
+                gameView.displayError(new IllegalArgumentException("No action with this name was registered. " 
+                + "It is possible that the current "
                 + "player has no permission to execute this action on the selected title deed"));
                 return;
         }
@@ -193,7 +193,7 @@ public final class GameControllerImpl implements GameController {
         try {
             final PropertyAction action = turnActions.get(actionName);
             action.executePropertyAction(board, bank);
-            gameView.displayMessage(action.getDescription() + "eseguita con successo");
+            gameView.displayMessage(action.getDescription() + " eseguita con successo");
             final Property currentlySittingProperty = (Property) this.board.getTileForPawn(
                                                         this.board.getPawn(
                                                         this.turnationManager.getIdCurrPlayer()));
@@ -231,14 +231,14 @@ public final class GameControllerImpl implements GameController {
                 this.turnationManager.getNextPlayer();
                 refreshPlayerInfo();
             } else {
-                this.gameView.displayMessage("the player has some actions to do before passing the turn");
+                this.gameView.displayMessage("The player has some actions to do before passing the turn");
             }
         } else {
             final String deadPlayer = this.turnationManager.getCurrPlayer().getName();
             this.turnationManager.deletePlayer(this.turnationManager.getCurrPlayer());
             this.turnationManager.getNextPlayer();
             refreshPlayerInfo();
-            this.gameView.displayMessage("player " + deadPlayer + " is dead");
+            this.gameView.displayMessage("Player " + deadPlayer + " is dead");
         }
     }
 }
