@@ -1,44 +1,46 @@
 package it.unibo.monopoly.model.comunityCestAndChance;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-
-import java.io.FileNotFoundException;
-import java.io.FileReader;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
+import it.unibo.monopoly.model.gameboard.impl.chance_comunity.api.Parser;
 import it.unibo.monopoly.model.gameboard.impl.chance_comunity.impl.ParserOnHyphen;
+import it.unibo.monopoly.model.gameboard.impl.chance_comunity.impl.ParserOnNewLine;
 import it.unibo.monopoly.model.gameboard.impl.chance_comunity.impl.ParserOnSpaces;
+import it.unibo.monopoly.utils.api.UseFileTxt;
+import it.unibo.monopoly.utils.impl.UseFileTxtImpl;
 
 public class ParserOnSpaceTest {
 
-    
-    private static FileReader file ;
-
-
+        private final UseFileTxt f = new UseFileTxtImpl();
+        private final String fi = f.loadTextResource("cards//command.txt");
 
     @Test
     void parserOnHyphenTest() {
-        try {
-            file = new FileReader("command.txt");
-            
-        } catch (FileNotFoundException e) {
-            System.out.println("file not found");
-        }
-
-        final ParserOnHyphen p = new ParserOnHyphen(file);
-        if (p.hasNesxt()) {   
-            assertEquals("ciao \r\n" + //
-                        "io sono \r\n" + //
-                        "world", p.next());   
-        }
+        final Parser p = new ParserOnHyphen(fi);
+        assertTrue(p.hasNesxt()); 
+        assertEquals("ciao\n" + //
+                    "io sono\n" + //
+                    "world\n", p.next());
+        assertTrue(p.hasNesxt());
+        assertEquals(p.next(), "come stai");
     }
 
-    @Test
-    void parserTest2() {
+    @Test 
+    void parserOnNewLineTest(){
+        final Parser p = new ParserOnNewLine(fi);
+        assertTrue(p.hasNesxt());
+        assertEquals(p.next(), "ciao");
+        assertTrue(p.hasNesxt());
+        assertEquals(p.next(), "io sono");
+        assertTrue(p.hasNesxt());
+        assertEquals(p.next(), "world");
+        assertTrue(p.hasNesxt());
+        assertEquals(p.next(), "-");
+        assertTrue(p.hasNesxt());
+        assertEquals(p.next(), "come stai");
     }
 
-    @Test
-    void parserTest3() {
-    }
 }

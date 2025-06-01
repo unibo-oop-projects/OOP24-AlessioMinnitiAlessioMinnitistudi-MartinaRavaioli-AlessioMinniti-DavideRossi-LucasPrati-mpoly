@@ -11,6 +11,9 @@ import it.unibo.monopoly.model.gameboard.impl.chance_comunity.api.Command;
 import it.unibo.monopoly.model.gameboard.impl.chance_comunity.api.DeckCreator;
 import it.unibo.monopoly.model.transactions.api.Bank;
 import it.unibo.monopoly.model.turnation.api.TurnationManager;
+import it.unibo.monopoly.utils.api.UseFile;
+import it.unibo.monopoly.utils.api.UseFileTxt;
+import it.unibo.monopoly.utils.impl.UseFileTxtImpl;
 
 public class DeckCreatorImpl implements DeckCreator {
 
@@ -20,21 +23,19 @@ public class DeckCreatorImpl implements DeckCreator {
 
     @Override
     public ChancheAndCommunityChestDeck createDeck(String type, Board board, Bank bank, TurnationManager turnM) {
-        try {
-            FileReader file = new FileReader("command.txt");
-            ParserOnHyphen paars = new ParserOnHyphen(file);
-            List<Chance_CommunityChestCard> cards = new LinkedList<>();
-            while (paars.hasNesxt()) {
-                String toInterpret = paars.next();
-                ComplexInterpreter compInt = new ComplexInterpreter(board, bank);
-                Command com = compInt.interpret(toInterpret, board, turnM);
-                cards.add(new Chance_CommunityChestCard(toInterpret, com));
-            } 
-            return new ChancheAndCommunityChestDeckImpl(cards, type);
-        } catch (FileNotFoundException e) {
-            System.out.println("not found");
-            return new ChancheAndCommunityChestDeckImpl(new LinkedList<>(), "null");
-        }
+
+        UseFileTxt fi = new UseFileTxtImpl();
+        String fileAsString = fi.loadTextResource("cards//command.txt");
+        ParserOnHyphen paars = new ParserOnHyphen(fileAsString);
+        List<Chance_CommunityChestCard> cards = new LinkedList<>();
+        while (paars.hasNesxt()) {
+            String toInterpret = paars.next();
+            ComplexInterpreter compInt = new ComplexInterpreter(board, bank);
+            Command com = compInt.interpret(toInterpret, board, turnM);
+            cards.add(new Chance_CommunityChestCard(toInterpret, com));
+        } 
+        return new ChancheAndCommunityChestDeckImpl(cards, type);
+
 
     }
 

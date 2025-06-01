@@ -1,39 +1,38 @@
 package it.unibo.monopoly.model.gameboard.impl.chance_comunity.impl;
 
-import java.io.FileReader;
-import java.io.IOException;
-
 import it.unibo.monopoly.model.gameboard.impl.chance_comunity.api.Parser;
 
 public class ParserOnHyphen implements Parser {
 
-    private final FileReader file;
+    private final String toParse;
     private String retString;
+    private int index;
 
-    public ParserOnHyphen(FileReader file){
-        this.file = file;
+    public ParserOnHyphen(String toParseString){
+        this.toParse = toParseString;
+        index = 0;
     } 
 
     @Override
     public boolean hasNesxt() {
-        try {
-            if (this.file ) {
-                // TODO how to check file is not null, loook up Buffered file reader as stated in professors slides
-            }
+ 
+        if (index >= toParse.length()) {
+            return false;         
+        } else {
             String rStr = "";
-            int c = file.read();
-            if (c != -1) {
-                while (c != 45 && c != -1) {
+
+            for (int i = index; i < toParse.length(); i++) {
+                char c = toParse.charAt(i);
+                index = i +2; 
+                if ( c == 45) {
+                    retString = rStr;
+                    return true;
+                } else {
                     rStr = rStr + c;
                 }
-                return true;
-            }else{
-                return false;
             }
-            
-        } catch (IOException e) {
-            System.out.println("not able to find the carachter");
-            return false;
+            retString = rStr; 
+            return true;
         }
         
     }
