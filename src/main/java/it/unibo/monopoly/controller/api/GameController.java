@@ -89,6 +89,12 @@ public interface GameController {
     void start();
     /**
      * get the final ranking of the players.
+     * @return List of all players with their ranking
     */
     List<Pair<String, Integer>> getRanking();
+    /**
+     * get the winner.
+     * @return winner data
+    */
+    Pair<String, Integer> getWinner();
 }

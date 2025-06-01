@@ -219,4 +219,9 @@ public final class GameControllerImpl implements GameController {
     public List<Pair<String, Integer>> getRanking() {
         return this.turnationManager.getRanking();
     }
+
+    @Override
+    public Pair<String, Integer> getWinner() {
+        return this.turnationManager.getWinner();
+    }
 }

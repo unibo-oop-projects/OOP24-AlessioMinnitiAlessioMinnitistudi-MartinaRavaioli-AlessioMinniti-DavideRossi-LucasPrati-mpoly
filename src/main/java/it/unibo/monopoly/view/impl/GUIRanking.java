@@ -15,7 +15,7 @@ public class GUIRanking extends JFrame {
     private static final int FRAME_SIZE = 500;
     private static final int LIST_SIZE = 300;
 
-    public GUIRanking(List<Pair<String, Integer>> ranks) {
+    public GUIRanking(List<Pair<String, Integer>> ranks, Pair<String, Integer> winner) {
         this.setTitle("FINAL RANKING");
         JPanel panel = new JPanel();
         this.setSize(FRAME_SIZE, FRAME_SIZE);
