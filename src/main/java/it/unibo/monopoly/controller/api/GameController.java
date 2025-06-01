@@ -2,6 +2,8 @@ package it.unibo.monopoly.controller.api;
 
 import java.util.List;
 
+import org.apache.commons.lang3.tuple.Pair;
+
 import it.unibo.monopoly.model.gameboard.api.Pawn;
 import it.unibo.monopoly.model.gameboard.api.Tile;
 import it.unibo.monopoly.model.transactions.api.PropertyAction;
@@ -85,4 +87,8 @@ public interface GameController {
      * start the UI, initializing the game view and the bank state.
      */
     void start();
+    /**
+     * get the final ranking of the players.
+    */
+    List<Pair<String, Integer>> getRanking();
 }

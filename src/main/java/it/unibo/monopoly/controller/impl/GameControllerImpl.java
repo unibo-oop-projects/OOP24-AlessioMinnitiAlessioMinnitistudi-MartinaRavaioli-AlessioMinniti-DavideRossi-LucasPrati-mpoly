@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.tuple.Pair;
+
 import com.google.common.collect.Maps;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
@@ -209,5 +211,10 @@ public final class GameControllerImpl implements GameController {
     @Override
     public void start() {
         this.turnationManager.resetBankState();
+    }
+
+    @Override
+    public List<Pair<String, Integer>> getRanking() {
+        return this.turnationManager.getRanking();
     }
 }
