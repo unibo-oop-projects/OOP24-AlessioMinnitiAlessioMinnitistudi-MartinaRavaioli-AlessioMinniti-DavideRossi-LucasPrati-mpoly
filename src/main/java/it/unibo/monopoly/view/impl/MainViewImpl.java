@@ -38,7 +38,6 @@ import it.unibo.monopoly.view.impl.gamepanels.SwingPanelsFactory;
  * its graphical UI by using a combination of {@link JFrame} {@code objects}.
  */
 public final class MainViewImpl implements MainGameView {
-
     private static final double PL_DATA_VIEW_PROPORTION = 0.5;
 
 
@@ -91,8 +90,8 @@ public final class MainViewImpl implements MainGameView {
 
         mainGameFrame.addWindowListener(new WindowAdapter() {
             @Override
-            public void windowClosing(WindowEvent e) {
-                new GUIRanking(controller.getRanking());
+            public void windowClosing(final WindowEvent e) {
+                new GUIRanking(controller.getRanking(), controller.getWinner());
                 mainGameFrame.dispose();
             }
         });

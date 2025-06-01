@@ -164,7 +164,7 @@ public class TurnationManagerImpl implements TurnationManager {
         this.players.deleteNode(player);
     }
     @Override
-    public void resetBankState() {
+    public final void resetBankState() {
         this.bankState.resetTransactionData();
     }
 
