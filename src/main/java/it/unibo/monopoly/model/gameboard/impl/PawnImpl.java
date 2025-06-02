@@ -12,6 +12,7 @@ import it.unibo.monopoly.model.turnation.impl.PositionImpl;
 */
 public class PawnImpl extends AbstractIdPlayerImpl implements Pawn {
     private Position pos; /**position. */
+    private Position prevPos; /**position. */
     private Color color; /**color. */
     private String shape; /**shape. */
     /**
@@ -69,12 +70,19 @@ public class PawnImpl extends AbstractIdPlayerImpl implements Pawn {
     }
 
     @Override
+    public final Position getPreviousPosition() {
+        return new PositionImpl(this.prevPos.getPos());
+    }
+
+    @Override
     public final void setPosition(final Position pos) {
+        this.prevPos = new PositionImpl(this.pos.getPos());
         this.pos = new PositionImpl(pos.getPos());
     }
 
     @Override
     public final void move(final int steps) {
+        this.prevPos = new PositionImpl(this.pos.getPos());
         this.pos.setPos(this.pos.getPos() + steps);
     }
 }

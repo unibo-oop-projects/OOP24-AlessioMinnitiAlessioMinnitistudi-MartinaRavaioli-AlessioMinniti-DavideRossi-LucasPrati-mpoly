@@ -19,6 +19,11 @@ public interface Pawn {
     */
     Position getPosition();
     /**
+     * get his previous position.
+     * @return the own previous position.
+    */
+    Position getPreviousPosition();
+    /**
      * get his color.
      * @return the own color.
     */
