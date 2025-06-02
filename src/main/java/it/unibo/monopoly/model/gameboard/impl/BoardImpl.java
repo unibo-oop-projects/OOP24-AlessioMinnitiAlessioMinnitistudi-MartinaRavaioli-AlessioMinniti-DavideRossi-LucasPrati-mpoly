@@ -166,15 +166,13 @@ public class BoardImpl implements Board {
     }
 
     @Override
-    public void deleteHouseInProperty(Property prop) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'deleteHouseInProperty'");
+    public void deleteHouseInProperty(Property prop) throws IllegalAccessException {
+        prop.deleteHouse();
     }
 
     @Override
-    public void deleteHotelInProperty(Property prop) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'deleteHotelInProperty'");
+    public void deleteHotelInProperty(Property prop) throws IllegalAccessException {
+        prop.deleteHotel();
     }
 
 }

@@ -120,10 +120,10 @@ public interface Board {
      * delete an house in the property.
      * @param prop
      */
-    void deleteHouseInProperty(Property prop);
+    void deleteHouseInProperty(Property prop) throws IllegalAccessException;
     /**
      * delete the hotel in the property.
      * @param prop
      */
-    void deleteHotelInProperty(Property prop);
+    void deleteHotelInProperty(Property prop) throws IllegalAccessException;
 }
