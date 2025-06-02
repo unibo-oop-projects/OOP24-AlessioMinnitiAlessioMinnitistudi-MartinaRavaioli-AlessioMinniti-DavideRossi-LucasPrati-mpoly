@@ -21,41 +21,21 @@ final class SwingMainCommandsPanel extends SwingAbstractJPanel implements Standa
 
     private final JLabel dicesResultsJLabel;
     private final JLabel dicesTotalJLabel;
+    private final JButton throwDicesButton;
 
     SwingMainCommandsPanel(final GameController controller) {
         this.setLayout(new GridLayout(2, 1));
-
-        //Turn panel UI
-        final JPanel turnJPanel = new JPanel();
-        final GridBagLayout turnPanelLayout = new GridBagLayout();
-        turnJPanel.setLayout(turnPanelLayout);
-
-        final JButton rulesButton = new JButton("?");
-        final JButton endTurnButton = new JButton("Termina turno");
-        endTurnButton.addActionListener(e -> controller.endTurn());
-        rulesButton.addActionListener(e -> controller.loadRules());
-
-        turnJPanel.add(endTurnButton);
-        turnJPanel.add(rulesButton);
-
-        final GridBagConstraints fixedButtonsConstraints = new GridBagConstraints();
-        fixedButtonsConstraints.fill = GridBagConstraints.BOTH;
-        fixedButtonsConstraints.weighty = 1.0;
-        turnPanelLayout.setConstraints(rulesButton, fixedButtonsConstraints);
-
-        final GridBagConstraints endTurnButtonConstraints = new GridBagConstraints();
-        endTurnButtonConstraints.weighty = 1.0;
-        endTurnButtonConstraints.weightx = 1.0;
-        endTurnButtonConstraints.fill = GridBagConstraints.BOTH;
-        turnPanelLayout.setConstraints(endTurnButton, endTurnButtonConstraints);
 
         //Dices panel UI
         final JPanel dicesJPanel = new JPanel();
         final GridBagLayout dicesPanelLayout = new GridBagLayout();
         dicesJPanel.setLayout(dicesPanelLayout);
 
-        final JButton throwDicesButton = new JButton("Lancia i dadi");
-        throwDicesButton.addActionListener(e -> controller.throwDices());
+        throwDicesButton = new JButton("Lancia i dadi");
+        throwDicesButton.addActionListener(e -> {
+            controller.throwDices();
+            throwDicesButton.setEnabled(false);
+        });
         dicesResultsJLabel = new JLabel("Risultato dadi:");
         dicesTotalJLabel = new JLabel("TOTALE:");
         dicesJPanel.add(throwDicesButton);
@@ -76,6 +56,33 @@ final class SwingMainCommandsPanel extends SwingAbstractJPanel implements Standa
         dicesResulConstraints.fill = GridBagConstraints.BOTH;
         dicesPanelLayout.setConstraints(dicesResultsJLabel, dicesResulConstraints);
         dicesPanelLayout.setConstraints(dicesTotalJLabel, dicesResulConstraints);
+
+                //Turn panel UI
+        final JPanel turnJPanel = new JPanel();
+        final GridBagLayout turnPanelLayout = new GridBagLayout();
+        turnJPanel.setLayout(turnPanelLayout);
+
+        final JButton rulesButton = new JButton("?");
+        final JButton endTurnButton = new JButton("Termina turno");
+        endTurnButton.addActionListener(e -> {
+            controller.endTurn();
+            throwDicesButton.setEnabled(true);
+        });
+        rulesButton.addActionListener(e -> controller.loadRules());
+
+        turnJPanel.add(endTurnButton);
+        turnJPanel.add(rulesButton);
+
+        final GridBagConstraints fixedButtonsConstraints = new GridBagConstraints();
+        fixedButtonsConstraints.fill = GridBagConstraints.BOTH;
+        fixedButtonsConstraints.weighty = 1.0;
+        turnPanelLayout.setConstraints(rulesButton, fixedButtonsConstraints);
+
+        final GridBagConstraints endTurnButtonConstraints = new GridBagConstraints();
+        endTurnButtonConstraints.weighty = 1.0;
+        endTurnButtonConstraints.weightx = 1.0;
+        endTurnButtonConstraints.fill = GridBagConstraints.BOTH;
+        turnPanelLayout.setConstraints(endTurnButton, endTurnButtonConstraints);
 
         this.add(dicesJPanel);
         this.add(turnJPanel);

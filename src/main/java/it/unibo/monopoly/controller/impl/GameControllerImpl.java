@@ -5,10 +5,9 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.tuple.Pair;
-
-import com.google.common.collect.Maps;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.monopoly.controller.api.GameController;
@@ -89,15 +88,13 @@ public final class GameControllerImpl implements GameController {
         if (!this.turnationManager.playerDiesIfTurnPassed()) {
             if (this.turnationManager.canPassTurn()) {
                 this.turnationManager.getNextPlayer();
+                gameView.clearControlsUI();
                 refreshPlayerInfo();
             } else {
                 this.gameView.displayMessage("The player has some actions to do before passing the turn");
             }
         } else {
             this.gameView.displayMessage("The player will die if he passes the turn");
-            // this.turnationManager.deletePlayer(this.turnationManager.getCurrPlayer());
-            // this.turnationManager.getNextPlayer();
-            // refreshPlayerInfo();
         }
 
     }
@@ -118,10 +115,11 @@ public final class GameControllerImpl implements GameController {
             final String propertyName = currentlySittingTile.getName();
             this.gameView.displayPropertyContract(this.bank.getTitleDeed(propertyName));
             this.turnActions.clear();
-            this.turnActions = Maps.uniqueIndex(this.bank.getApplicableActionsForTitleDeed(currentPlayerId, 
+            this.turnActions = this.bank.getApplicableActionsForTitleDeed(currentPlayerId, 
                                     propertyName, 
-                                    result.stream().mapToInt(d -> d).sum()),
-                                    PropertyAction::getName);
+                                    result.stream().mapToInt(d -> d).sum())
+                                    .stream()
+                                    .collect(Collectors.toMap(PropertyAction::getName, d -> d));
             this.gameView.showPlayerActions(turnActions.keySet());
         } else if (currentlySittingTile instanceof Special) {
             final Special specialTile = (Special) currentlySittingTile;
@@ -219,6 +217,7 @@ public final class GameControllerImpl implements GameController {
     @Override
     public void start() {
         this.turnationManager.resetBankState();
+        gameView.clearControlsUI();
         refreshPlayerInfo();
     }
 
@@ -237,7 +236,6 @@ public final class GameControllerImpl implements GameController {
         if (!this.turnationManager.playerDiesIfTurnPassed()) {
             if (this.turnationManager.canPassTurn()) {
                 this.turnationManager.getNextPlayer();
-                refreshPlayerInfo();
             } else {
                 this.gameView.displayMessage("The player has some actions to do before passing the turn");
             }
@@ -245,8 +243,9 @@ public final class GameControllerImpl implements GameController {
             final String deadPlayer = this.turnationManager.getCurrPlayer().getName();
             this.turnationManager.deletePlayer(this.turnationManager.getCurrPlayer());
             this.turnationManager.getNextPlayer();
-            refreshPlayerInfo();
             this.gameView.displayMessage("Player " + deadPlayer + " is dead");
         }
+        gameView.clearControlsUI();
+        refreshPlayerInfo();
     }
 }

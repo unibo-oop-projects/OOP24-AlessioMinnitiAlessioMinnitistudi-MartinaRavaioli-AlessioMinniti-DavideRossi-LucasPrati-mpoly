@@ -4,8 +4,10 @@ import java.util.List;
 import java.util.Set;
 
 import it.unibo.monopoly.controller.api.GameController;
+import it.unibo.monopoly.model.gameboard.api.Pawn;
 import it.unibo.monopoly.model.gameboard.api.Property;
 import it.unibo.monopoly.model.gameboard.api.Special;
+import it.unibo.monopoly.model.gameboard.api.Tile;
 import it.unibo.monopoly.model.transactions.api.Bank;
 import it.unibo.monopoly.model.transactions.api.BankAccount;
 import it.unibo.monopoly.model.transactions.api.TitleDeed;
@@ -17,6 +19,12 @@ import it.unibo.monopoly.model.turnation.api.Player;
  * allowing it to play and iteract with it.
  */
 public interface MainGameView {
+
+    /**
+     * Clears all panels displaying information about the 
+     * current player. Does not clear the ui of the {@link GamePanel}.
+     */
+    void clearControlsUI();
 
     /**
      * Ask the {@code view} to refresh the information related

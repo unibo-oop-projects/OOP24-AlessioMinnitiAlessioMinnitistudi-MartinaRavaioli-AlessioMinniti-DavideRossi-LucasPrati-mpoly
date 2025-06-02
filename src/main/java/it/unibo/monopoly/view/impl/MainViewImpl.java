@@ -126,6 +126,13 @@ public final class MainViewImpl implements MainGameView {
     public void refreshCurrentPlayerInfo(final Player player, final BankAccount account) {
         playerInfoPanel.displayPlayer(player);
         accountInfoPanel.displayBankAccount(account);
+        mainGameFrame.repaint();
+    }
+
+    @Override
+    public void clearControlsUI() {
+        playerInfoPanel.renderDefaultUI();
+        accountInfoPanel.renderDefaultUI();
         contractPanel.renderDefaultUI();
         gameActionsPanel.renderDefaultUI();
         mainActionsPanel.renderDefaultUI();
