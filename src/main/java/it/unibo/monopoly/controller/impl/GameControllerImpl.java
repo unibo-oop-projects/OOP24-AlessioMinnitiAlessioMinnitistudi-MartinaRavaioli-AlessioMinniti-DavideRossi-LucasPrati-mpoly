@@ -71,6 +71,13 @@ public final class GameControllerImpl implements GameController {
         gameView.refreshCurrentPlayerInfo(currentPlayer, bank.getBankAccount(currentPlayer.getID()));
     }
 
+    private void refreshCurrentTitleDeed() {
+        final int currentPlayerId = this.turnationManager.getIdCurrPlayer();
+        final Tile currentlySittingTile = this.board.getTileForPawn(this.board.getPawn(currentPlayerId));
+        final String propertyName = currentlySittingTile.getName();
+        this.gameView.displayPropertyContract(this.bank.getTitleDeed(propertyName));
+    }
+
 
     private void executeEffect(final Effect effect) {
         try {
@@ -112,11 +119,10 @@ public final class GameControllerImpl implements GameController {
         this.gameView.displayDiceResult(result.stream().toList());
         final Tile currentlySittingTile = this.board.getTileForPawn(this.board.getPawn(currentPlayerId));
         if (currentlySittingTile instanceof Property) {
-            final String propertyName = currentlySittingTile.getName();
-            this.gameView.displayPropertyContract(this.bank.getTitleDeed(propertyName));
+            refreshCurrentTitleDeed();
             this.turnActions.clear();
             this.turnActions = this.bank.getApplicableActionsForTitleDeed(currentPlayerId, 
-                                    propertyName, 
+                                    currentlySittingTile.getName(), 
                                     result.stream().mapToInt(d -> d).sum())
                                     .stream()
                                     .collect(Collectors.toMap(PropertyAction::getName, d -> d));
@@ -209,6 +215,7 @@ public final class GameControllerImpl implements GameController {
                 gameView.callClearPanel();
             }
             refreshPlayerInfo();
+            refreshCurrentTitleDeed();
         } catch (final IllegalStateException | IllegalArgumentException e) {
             gameView.displayError(e);
         }

@@ -136,7 +136,7 @@ final class SwingContractPanel extends SwingAbstractJPanel implements ContractPa
         //owner information
         final JPanel ownerPanel = new JPanel();
         ownerPanel.setLayout(new BorderLayout());
-        final JLabel ownerDesc = new JLabel("Proprietario: ");
+        final JLabel ownerDesc = new JLabel("ID Proprietario: ");
         final JLabel ownerInfo = new JLabel("this type of tile can't be owned");
         ownerPanel.add(ownerDesc, BorderLayout.WEST);
         ownerPanel.add(ownerInfo, BorderLayout.CENTER);
