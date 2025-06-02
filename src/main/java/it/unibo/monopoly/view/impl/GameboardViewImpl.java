@@ -31,6 +31,8 @@ import it.unibo.monopoly.view.api.GameboardView;
 */
 public final class GameboardViewImpl extends JPanel implements GameboardView {
     private static final long serialVersionUID = 1L; /**serial version UID.*/
+    private static final String HOUSE = "house";
+    private static final String HOTEL = "hotel";
     private static final int PAWN_SIZE = 5; /**size of the pawns.*/
     private static final int STRIPE_WIDTH = 150; /**width of the stripes of the tiles.*/
     private static final int STRIPE_HEIGHT = 10; /**height of the stripes of the tiles.*/
@@ -62,8 +64,12 @@ public final class GameboardViewImpl extends JPanel implements GameboardView {
             if (entry.getValue().equals(prop.getPosition())) {
                 final JPanel panel = entry.getKey();
                 final JLabel label = new JLabel("HOUSES: " + numHouses);
+                label.setName(HOUSE);
                 label.setForeground(prop.getGroup().getColor());
                 panel.add(label);
+                panel.revalidate();
+                panel.repaint();
+                break;
             }
         }
     }
@@ -74,8 +80,12 @@ public final class GameboardViewImpl extends JPanel implements GameboardView {
             if (entry.getValue().equals(prop.getPosition())) {
                 final JPanel panel = entry.getKey();
                 final JLabel label = new JLabel("HOTEL: ✔");
+                label.setName(HOTEL);
                 label.setForeground(prop.getGroup().getColor());
                 panel.add(label);
+                panel.revalidate();
+                panel.repaint();
+                break;
             }
         }
     }
@@ -241,7 +251,55 @@ public final class GameboardViewImpl extends JPanel implements GameboardView {
                         p.repaint();
                         break;
                     }
+                    if ((c.getName().equals(HOUSE) || c.getName().equals(HOTEL)) && c instanceof JLabel) {
+                        p.remove(c);
+                        p.revalidate();
+                        p.repaint();
+                        break;
+                    }
                 }
+            }
+        }
+    }
+
+    @Override
+    public void removeHouse(final Property prop, final int numHouses) {
+        for (final Map.Entry<JPanel, Position> entry : this.tilePositions.entrySet()) {
+            if (entry.getValue().equals(prop.getPosition())) {
+                final JPanel p = entry.getKey();
+                for (final Component c : p.getComponents()) {
+                    if (c.getName().equals(HOUSE) && c instanceof JLabel) {
+                        p.remove(c);
+                        if (numHouses > 0) {
+                            final JLabel label = new JLabel("HOUSES: " + numHouses);
+                            label.setName(HOUSE);
+                            label.setForeground(prop.getGroup().getColor());
+                            p.add(label);
+                        }
+                        p.revalidate();
+                        p.repaint();
+                        break;
+                    }
+                }
+
+            }
+        }
+    }
+
+    @Override
+    public void removeHotel(final Property prop) {
+        for (final Map.Entry<JPanel, Position> entry : this.tilePositions.entrySet()) {
+            if (entry.getValue().equals(prop.getPosition())) {
+                final JPanel p = entry.getKey();
+                for (final Component c : p.getComponents()) {
+                    if (c.getName().equals(HOTEL) && c instanceof JLabel) {
+                        p.remove(c);
+                        p.revalidate();
+                        p.repaint();
+                        break;
+                    }
+                }
+
             }
         }
     }

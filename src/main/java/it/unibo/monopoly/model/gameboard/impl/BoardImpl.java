@@ -166,12 +166,12 @@ public class BoardImpl implements Board {
     }
 
     @Override
-    public void deleteHouseInProperty(Property prop) throws IllegalAccessException {
+    public final void deleteHouseInProperty(final Property prop) throws IllegalAccessException {
         prop.deleteHouse();
     }
 
     @Override
-    public void deleteHotelInProperty(Property prop) throws IllegalAccessException {
+    public final void deleteHotelInProperty(final Property prop) throws IllegalAccessException {
         prop.deleteHotel();
     }
 
