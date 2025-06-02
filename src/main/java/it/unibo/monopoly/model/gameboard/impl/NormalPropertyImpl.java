@@ -58,4 +58,16 @@ public class NormalPropertyImpl extends TileImpl implements Property {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'canBuildHotel'");
     }
+
+    @Override
+    public void deleteHouse() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'deleteHouse'");
+    }
+
+    @Override
+    public void deleteHotel() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'deleteHotel'");
+    }
 }

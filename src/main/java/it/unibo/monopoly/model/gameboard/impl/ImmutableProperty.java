@@ -87,4 +87,16 @@ public final class ImmutableProperty implements Property {
         throw new UnsupportedOperationException("Unimplemented method 'isBuildable'");
     }
 
+    @Override
+    public void deleteHouse() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'deleteHouse'");
+    }
+
+    @Override
+    public void deleteHotel() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'deleteHotel'");
+    }
+
 }

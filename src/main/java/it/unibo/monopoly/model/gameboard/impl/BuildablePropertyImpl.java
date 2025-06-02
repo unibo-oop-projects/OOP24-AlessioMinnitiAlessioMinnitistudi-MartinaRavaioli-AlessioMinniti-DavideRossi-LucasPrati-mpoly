@@ -83,4 +83,22 @@ public class BuildablePropertyImpl implements Property {
     public final String getName() {
         return this.decorated.getName();
     }
+
+    @Override
+    public void deleteHouse() throws IllegalAccessException {
+        if (getNHouses() < 1) {
+            throw new IllegalAccessException("the property doesn't have any houses");
+        }
+
+        this.nHouses--;
+    }
+
+    @Override
+    public void deleteHotel() throws IllegalAccessException {
+        if (!hasHotel()) {
+            throw new IllegalAccessException("the property doesn't have hotel");
+        }
+
+        this.hotel = false;
+    }
 }

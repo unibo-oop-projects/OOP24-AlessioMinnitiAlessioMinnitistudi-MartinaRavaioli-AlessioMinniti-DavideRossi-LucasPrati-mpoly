@@ -43,4 +43,12 @@ public interface Property extends Tile {
      * @return bool
     */
     boolean canBuildHotel();
+    /**
+     * delete an house in the property.
+     */
+    void deleteHouse() throws IllegalAccessException;
+    /**
+     * delete the hotel in the property.
+     */
+    void deleteHotel() throws IllegalAccessException;
 }
