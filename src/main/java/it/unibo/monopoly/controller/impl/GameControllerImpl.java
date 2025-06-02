@@ -151,13 +151,7 @@ public final class GameControllerImpl implements GameController {
 
     @Override
     public void loadCurrentPlayerInformation() {
-        try {
-            //Missing method to get current player
-            //gameView.displayPlayerStats();
-            throw new UnsupportedOperationException("Unimplemented method 'loadCurrentPlayerInformation'");
-        } catch (final IllegalStateException e) {
-            gameView.displayError(e);
-        }
+        gameView.displayPlayerStats(this.turnationManager.getCurrPlayer(), this.bank);
     }
 
     @Override
