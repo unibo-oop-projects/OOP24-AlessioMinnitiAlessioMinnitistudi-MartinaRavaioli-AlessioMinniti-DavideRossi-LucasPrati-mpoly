@@ -78,4 +78,16 @@ final class PropertyActionFactoryImpl implements PropertyActionFactory {
         };
     }
 
+    @Override
+    public PropertyAction createBuyHouse(String titleDeedName, int currentPlayerId) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'createBuyHouse'");
+    }
+
+    @Override
+    public PropertyAction createBuyHotel(String titleDeedName, int currentPlayerId) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'createBuyHotel'");
+    }
+
 }
