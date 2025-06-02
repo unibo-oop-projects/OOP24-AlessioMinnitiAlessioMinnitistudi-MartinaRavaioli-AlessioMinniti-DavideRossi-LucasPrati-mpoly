@@ -120,4 +120,46 @@ final class PropertyActionFactoryImpl implements PropertyActionFactory {
         };
     }
 
+    @Override
+    public PropertyAction createSellHouse(String titleDeedName) {
+        return new PropertyAction() {
+
+            @Override
+            public String getName() {
+                return "sellHouse";
+            }
+
+            @Override
+            public String getDescription() {
+                return "sell house of " + titleDeedName;
+            }
+
+            @Override
+            public void executePropertyAction(Board board, Bank bank) {
+                bank.sellHouse(titleDeedName);
+            }
+        };
+    }
+
+    @Override
+    public PropertyAction createSellHotel(String titleDeedName) {
+        return new PropertyAction() {
+
+            @Override
+            public String getName() {
+                return "sellHotel";
+            }
+
+            @Override
+            public String getDescription() {
+                return "sell hotel of " + titleDeedName;
+            }
+
+            @Override
+            public void executePropertyAction(Board board, Bank bank) {
+                bank.sellHotel(titleDeedName);
+            }
+        };
+    }
+
 }
