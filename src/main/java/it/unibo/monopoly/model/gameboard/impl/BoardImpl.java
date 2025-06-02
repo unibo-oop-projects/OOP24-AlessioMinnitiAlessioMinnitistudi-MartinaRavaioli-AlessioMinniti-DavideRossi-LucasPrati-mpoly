@@ -165,4 +165,16 @@ public class BoardImpl implements Board {
         prop.buildHotel();
     }
 
+    @Override
+    public void deleteHouseInProperty(Property prop) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'deleteHouseInProperty'");
+    }
+
+    @Override
+    public void deleteHotelInProperty(Property prop) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'deleteHotelInProperty'");
+    }
+
 }

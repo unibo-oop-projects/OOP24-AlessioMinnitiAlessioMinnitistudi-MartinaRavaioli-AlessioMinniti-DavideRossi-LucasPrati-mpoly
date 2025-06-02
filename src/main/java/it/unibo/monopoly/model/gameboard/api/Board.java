@@ -116,4 +116,14 @@ public interface Board {
      * @param prop property to change
     */
     void buildHotelInProperty(Property prop);
+    /**
+     * delete an house in the property.
+     * @param prop
+     */
+    void deleteHouseInProperty(Property prop);
+    /**
+     * delete the hotel in the property.
+     * @param prop
+     */
+    void deleteHotelInProperty(Property prop);
 }
