@@ -34,7 +34,8 @@ public final class BaseTitleDeed implements TitleDeed {
      * @param group The Group of title deeds this deed is part of
      * @param name The name of the deed
      * @param salePrice The price to pay to buy the deed
-     * @param mortgageFunction The 
+     * @param mortgageFunction A function that calculates the {@link #getMortgagePrice()}
+     * based on the sale price
      * @param baseRent The standard rent fee
      */
     public BaseTitleDeed(final Group group, 
@@ -56,7 +57,8 @@ public final class BaseTitleDeed implements TitleDeed {
      * @param group The Group of title deeds this deed is part of
      * @param name The name of the deed
      * @param salePrice The price to pay to buy the deed
-     * @param mortgageFunction The 
+     * @param mortgageFunction A function that calculates the {@link #getMortgagePrice()}
+     * based on the sale price
      * @param baseRent The standard rent fee
      * @param additionalRentOptions The other rent options
      * that could be applied when having to pay the rent
