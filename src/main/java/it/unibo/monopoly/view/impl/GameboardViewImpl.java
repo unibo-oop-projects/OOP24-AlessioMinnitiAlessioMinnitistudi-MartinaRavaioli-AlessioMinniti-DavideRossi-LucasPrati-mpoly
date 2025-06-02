@@ -251,7 +251,7 @@ public final class GameboardViewImpl extends JPanel implements GameboardView {
                         p.repaint();
                         break;
                     }
-                    if ((c.getName().equals(HOUSE) || c.getName().equals(HOTEL)) && c instanceof JLabel) {
+                    if ((HOUSE.equals(c.getName()) || HOTEL.equals(c.getName())) && c instanceof JLabel) {
                         p.remove(c);
                         p.revalidate();
                         p.repaint();
@@ -268,7 +268,7 @@ public final class GameboardViewImpl extends JPanel implements GameboardView {
             if (entry.getValue().equals(prop.getPosition())) {
                 final JPanel p = entry.getKey();
                 for (final Component c : p.getComponents()) {
-                    if (c.getName().equals(HOUSE) && c instanceof JLabel) {
+                    if (HOUSE.equals(c.getName()) && c instanceof JLabel) {
                         p.remove(c);
                         if (numHouses > 0) {
                             final JLabel label = new JLabel("HOUSES: " + numHouses);
@@ -292,7 +292,7 @@ public final class GameboardViewImpl extends JPanel implements GameboardView {
             if (entry.getValue().equals(prop.getPosition())) {
                 final JPanel p = entry.getKey();
                 for (final Component c : p.getComponents()) {
-                    if (c.getName().equals(HOTEL) && c instanceof JLabel) {
+                    if (HOTEL.equals(c.getName()) && c instanceof JLabel) {
                         p.remove(c);
                         p.revalidate();
                         p.repaint();
