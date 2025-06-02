@@ -126,11 +126,12 @@ public final class GameControllerImpl implements GameController {
         } else if (currentlySittingTile instanceof Special) {
             final Special specialTile = (Special) currentlySittingTile;
             this.gameView.displaySpecialInfo(specialTile);
-            if (!currentlySittingTile.getName().equals("Go")) {
+            if (!"Go".equals(currentlySittingTile.getName())) {
                 executeEffect(specialTile.getEffect());
             }
         }
-        final int delta = board.getPawn(currentPlayerId).getPosition().getPos() - board.getPawn(currentPlayerId).getPreviousPosition().getPos();
+        final int delta = board.getPawn(currentPlayerId).getPosition().getPos() 
+                                    - board.getPawn(currentPlayerId).getPreviousPosition().getPos();
         if (delta < 0) {
             final Special tile = (Special) board.getTile("Go");
             executeEffect(tile.getEffect());
