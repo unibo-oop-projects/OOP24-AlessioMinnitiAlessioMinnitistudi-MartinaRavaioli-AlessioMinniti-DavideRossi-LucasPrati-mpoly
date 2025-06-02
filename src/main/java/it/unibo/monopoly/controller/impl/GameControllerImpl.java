@@ -145,10 +145,9 @@ public final class GameControllerImpl implements GameController {
                 final Special tile = (Special) board.getTile("Go");
                 executeEffect(tile.getEffect());
             }
-        } catch (IllegalAccessException e) {
+        } catch (final IllegalAccessException e) {
             gameView.displayError(e);
         }
-        
     }
 
     @Override
