@@ -137,22 +137,8 @@ public class BoardImpl implements Board {
     public final boolean canBuildHouseInProperty(final Property prop) {
         if (!prop.isBuildable()) {
             throw new IllegalArgumentException("this property can't build houses");
-        } //else {
-        //     List<Property> properties = new ArrayList<>();
-
-        //     for (Tile t : this.tiles) {
-        //         if (t.getGroup() == prop.getGroup()) {
-        //             properties.add((Property)t);
-        //         }
-        //     }
-
-        //     for (Property p : properties) {
-        //         if () {
-        //             throw new IllegalArgumentException("you must have all the properties of the same group before buying an house");
-        //         }
-        //     }
-        // }
-        return ((BuildablePropertyImpl) prop).canBuildHouse();
+        }
+        return prop.canBuildHouse();
     }
 
     @Override
@@ -160,7 +146,7 @@ public class BoardImpl implements Board {
         if (!prop.isBuildable()) {
             throw new IllegalArgumentException("this property can't build hotel");
         }
-        return ((BuildablePropertyImpl) prop).canBuildHotel();
+        return prop.canBuildHotel();
     }
 
     @Override
@@ -168,7 +154,7 @@ public class BoardImpl implements Board {
         if (!canBuildHouseInProperty(prop)) {
             throw new IllegalArgumentException("this property is not buildable");
         }
-        ((BuildablePropertyImpl) prop).buildHouse();
+        prop.buildHouse();
     }
 
     @Override
@@ -176,7 +162,7 @@ public class BoardImpl implements Board {
         if (!canBuildHotelInProperty(prop)) {
             throw new IllegalArgumentException("this property isn't buildable");
         }
-        ((BuildablePropertyImpl) prop).buildHotel();
+        prop.buildHotel();
     }
 
 }

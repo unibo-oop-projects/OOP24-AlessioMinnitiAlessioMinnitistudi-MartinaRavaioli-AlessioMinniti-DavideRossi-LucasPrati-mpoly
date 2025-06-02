@@ -79,7 +79,7 @@ final class PropertyActionFactoryImpl implements PropertyActionFactory {
     }
 
     @Override
-    public PropertyAction createBuyHouse(String titleDeedName, int currentPlayerId) {
+    public PropertyAction createBuyHouse(final String titleDeedName) {
         return new PropertyAction() {
 
             @Override
@@ -93,14 +93,14 @@ final class PropertyActionFactoryImpl implements PropertyActionFactory {
             }
 
             @Override
-            public void executePropertyAction(Board board, Bank bank) {
+            public void executePropertyAction(final Board board, final Bank bank) {
                 bank.buyHouse(titleDeedName);
             }
         };
     }
 
     @Override
-    public PropertyAction createBuyHotel(String titleDeedName, int currentPlayerId) {
+    public PropertyAction createBuyHotel(final String titleDeedName) {
         return new PropertyAction() {
 
             @Override
@@ -114,10 +114,9 @@ final class PropertyActionFactoryImpl implements PropertyActionFactory {
             }
 
             @Override
-            public void executePropertyAction(Board board, Bank bank) {
+            public void executePropertyAction(final Board board, final Bank bank) {
                 bank.buyHotel(titleDeedName);
             }
-            
         };
     }
 

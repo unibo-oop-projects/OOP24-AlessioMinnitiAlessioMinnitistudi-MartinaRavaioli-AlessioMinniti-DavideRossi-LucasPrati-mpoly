@@ -39,15 +39,13 @@ public interface PropertyActionFactory {
     /**
      * create an action that buys an house in the requested titleDeed for the requested player.
      * @param titleDeedName the name of the titleDeed to buy the house
-     * @param currentPlayerId the id associated with the player that buy the house
-     * @return
+     * @return the PropertyAction command that encapsulates the descripted action
      */
-    PropertyAction createBuyHouse(String titleDeedName, int currentPlayerId);
+    PropertyAction createBuyHouse(String titleDeedName);
     /**
      * create an action that buys the hotel in the requested titleDeed for the requested player.
-     * @param titleDeedName
-     * @param currentPlayerId
-     * @return
+     * @param titleDeedName the name of the titleDeed to buy the house
+     * @return the PropertyAction command that encapsulates the descripted action
      */
-    PropertyAction createBuyHotel(String titleDeedName, int currentPlayerId);
+    PropertyAction createBuyHotel(String titleDeedName);
 }

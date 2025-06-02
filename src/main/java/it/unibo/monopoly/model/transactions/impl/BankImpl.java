@@ -271,8 +271,9 @@ public final class BankImpl implements Bank {
             transactionLedger.registerTransaction("buy", 0, 1);
         } else if (selected.getOwnerId() == currentPlayerId) {
             returnSet.add(bankActionFactory.createSell(titleDeedName));
-            //TODO build houses action
+            returnSet.add(bankActionFactory.createBuyHouse(titleDeedName));
             transactionLedger.registerTransaction("buyHouse", 0);
+            returnSet.add(bankActionFactory.createBuyHotel(titleDeedName));
             transactionLedger.registerTransaction("buyHotel", 0);
         } else {
             returnSet.add(bankActionFactory.createPayRent(titleDeedName, currentPlayerId, diceThrow));
