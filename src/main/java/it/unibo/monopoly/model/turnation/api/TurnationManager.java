@@ -22,7 +22,7 @@ public interface TurnationManager {
      * get the dices' result.
      * @return multiple int
      */
-    Collection<Integer> moveByDices();
+    Collection<Integer> moveByDices() throws IllegalAccessException;
     /**
      * return the id of the current player.
      * @return int
@@ -103,4 +103,9 @@ public interface TurnationManager {
      * reset the bank state transactions data.
      */
     void resetBankState();
+    /**
+     * tells if the current player has already thrown the dices.
+     * @return bool
+     */
+    boolean hasCurrPlayerThrownDices();
 }

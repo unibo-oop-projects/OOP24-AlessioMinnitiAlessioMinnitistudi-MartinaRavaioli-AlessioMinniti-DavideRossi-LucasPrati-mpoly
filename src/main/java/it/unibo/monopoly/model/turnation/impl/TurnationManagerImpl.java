@@ -22,6 +22,7 @@ public class TurnationManagerImpl implements TurnationManager {
     private Player currPlayer; /**current player. */
     private Dice dice; /**dice. */
     private BankState bankState; /**bankState to communicate with the bank. */
+    private boolean diceThrown = false; /**tells if the current player has already thrown the dices. */
     /**
      * constructor.
      * @param plList list of players
@@ -96,12 +97,18 @@ public class TurnationManagerImpl implements TurnationManager {
     @Override
     public final Player getNextPlayer() { 
         this.currPlayer = players.giveNextNode(this.currPlayer);
+        this.diceThrown = false;
         return PlayerImpl.of(this.currPlayer.getID(), this.currPlayer.getName(), this.currPlayer.getColor());
     }
 
     @Override
-    public final Collection<Integer> moveByDices() { 
-        return this.dice.throwDices();
+    public final Collection<Integer> moveByDices() throws IllegalAccessException { 
+        if (this.diceThrown == false) {
+            this.diceThrown = true;
+            return this.dice.throwDices();
+        } else {
+            throw new IllegalAccessException("the current player has already thrown the dices");
+        }
     }
 
     @Override
@@ -166,6 +173,10 @@ public class TurnationManagerImpl implements TurnationManager {
     @Override
     public final void resetBankState() {
         this.bankState.resetTransactionData();
+    }
+    @Override
+    public boolean hasCurrPlayerThrownDices() {
+        return this.diceThrown;
     }
 
 }
