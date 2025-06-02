@@ -103,6 +103,18 @@ public interface Bank {
      * @param titleDeedName name of the titleDeed of the house to buy
      */
     void buyHotel(String titleDeedName);
+    /**
+     * sell an house of the given property.
+     * only if is owned by the player who has done the call
+     * @param titleDeedName name of the titleDeed of the house to buy
+     */
+    void sellHouse(String titleDeedName);
+    /**
+     * sell the hotel of the given property.
+     * only if is owned by the player who has done the call
+     * @param titleDeedName name of the titleDeed of the house to buy
+     */
+    void sellHotel(String titleDeedName);
 
     /**
      * make a withdraw from a player's {@link BankAccount}.

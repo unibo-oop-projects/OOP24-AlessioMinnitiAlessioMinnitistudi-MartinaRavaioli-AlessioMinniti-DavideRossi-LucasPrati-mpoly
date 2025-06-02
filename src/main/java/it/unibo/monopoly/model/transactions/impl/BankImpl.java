@@ -332,4 +332,29 @@ public final class BankImpl implements Bank {
         }
     }
 
+    @Override
+    public void sellHouse(final String titleDeedName) {
+        Objects.requireNonNull(titleDeedName);
+        final TitleDeed deed = findTitleDeed(titleDeedName);
+        if (!deed.isOwned()) {
+            throw new IllegalStateException("Cannot sell an house of a title deed with no owner");
+        }
+        final BankAccount seller = findAccount(deed.getOwnerId());
+        seller.deposit(deed.getHousePrice());
+        transactionLedger.markExecution("sellHouse");
+    }
+
+
+    @Override
+    public void sellHotel(final String titleDeedName) {
+        Objects.requireNonNull(titleDeedName);
+        final TitleDeed deed = findTitleDeed(titleDeedName);
+        if (!deed.isOwned()) {
+            throw new IllegalStateException("Cannot sell the hotel of a title deed with no owner");
+        }
+        final BankAccount seller = findAccount(deed.getOwnerId());
+        seller.deposit(deed.getHotelPrice());
+        transactionLedger.markExecution("sellHotel");
+    }
+
 }
