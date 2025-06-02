@@ -61,7 +61,7 @@ public class BuildablePropertyImpl implements Property {
 
     @Override
     public final boolean canBuildHotel() {
-        return !hasHotel();
+        return !hasHotel() && getNHouses() == MAX_HOUSES;
     }
 
     @Override
