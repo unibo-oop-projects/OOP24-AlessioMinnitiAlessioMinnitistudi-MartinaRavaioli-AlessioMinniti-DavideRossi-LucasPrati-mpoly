@@ -71,11 +71,16 @@ public final class GameControllerImpl implements GameController {
         gameView.refreshCurrentPlayerInfo(currentPlayer, bank.getBankAccount(currentPlayer.getID()));
     }
 
-    private void refreshCurrentTitleDeed() {
+    private void refreshCurrentTileInfo() {
         final int currentPlayerId = this.turnationManager.getIdCurrPlayer();
         final Tile currentlySittingTile = this.board.getTileForPawn(this.board.getPawn(currentPlayerId));
-        final String propertyName = currentlySittingTile.getName();
-        this.gameView.displayPropertyContract(this.bank.getTitleDeed(propertyName));
+        if (currentlySittingTile instanceof Property) {
+            final String propertyName = currentlySittingTile.getName();
+            this.gameView.displayPropertyContract(this.bank.getTitleDeed(propertyName));
+        } else {
+            final Special specialTile = (Special) currentlySittingTile;
+            this.gameView.displaySpecialInfo(specialTile);
+        }
     }
 
 
@@ -118,8 +123,8 @@ public final class GameControllerImpl implements GameController {
         this.gameView.callChangePositions();
         this.gameView.displayDiceResult(result.stream().toList());
         final Tile currentlySittingTile = this.board.getTileForPawn(this.board.getPawn(currentPlayerId));
+        refreshCurrentTileInfo();
         if (currentlySittingTile instanceof Property) {
-            refreshCurrentTitleDeed();
             this.turnActions.clear();
             this.turnActions = this.bank.getApplicableActionsForTitleDeed(currentPlayerId, 
                                     currentlySittingTile.getName(), 
@@ -129,7 +134,6 @@ public final class GameControllerImpl implements GameController {
             this.gameView.showPlayerActions(turnActions.keySet());
         } else if (currentlySittingTile instanceof Special) {
             final Special specialTile = (Special) currentlySittingTile;
-            this.gameView.displaySpecialInfo(specialTile);
             if (!"Go".equals(currentlySittingTile.getName())) {
                 executeEffect(specialTile.getEffect());
             }
@@ -140,7 +144,6 @@ public final class GameControllerImpl implements GameController {
             final Special tile = (Special) board.getTile("Go");
             executeEffect(tile.getEffect());
         }
-
     }
 
     @Override
@@ -215,7 +218,7 @@ public final class GameControllerImpl implements GameController {
                 gameView.callClearPanel();
             }
             refreshPlayerInfo();
-            refreshCurrentTitleDeed();
+            refreshCurrentTileInfo();
         } catch (final IllegalStateException | IllegalArgumentException e) {
             gameView.displayError(e);
         }
