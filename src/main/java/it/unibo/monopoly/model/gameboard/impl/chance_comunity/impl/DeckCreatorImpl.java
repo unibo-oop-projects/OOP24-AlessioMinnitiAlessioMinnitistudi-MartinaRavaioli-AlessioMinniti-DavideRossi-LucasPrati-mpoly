@@ -19,21 +19,19 @@ public class DeckCreatorImpl implements DeckCreator {
     }
 
     @Override
-    public ChancheAndCommunityChestDeck createDeck(String type, Board board, Bank bank, TurnationManager turnM) {
+    public ChancheAndCommunityChestDeck createDeck(String file, String type, Board board, Bank bank, TurnationManager turnM) {
 
         UseFileTxt fi = new UseFileTxtImpl();
-        String fileAsString = fi.loadTextResource("cards//command.txt");
+        String fileAsString = fi.loadTextResource(file);
         ParserOnHyphen paars = new ParserOnHyphen(fileAsString);
         List<Chance_CommunityChestCard> cards = new LinkedList<>();
+        ComplexInterpreter compInt = new ComplexInterpreter(board, bank);
         while (paars.hasNesxt()) {
             String toInterpret = paars.next();
-            ComplexInterpreter compInt = new ComplexInterpreter(board, bank);
             Command com = compInt.interpret(toInterpret, board, turnM);
-            cards.add(new Chance_CommunityChestCard(toInterpret, com));
+            cards.add(new Chance_CommunityChestCard(com));
         } 
         return new ChancheAndCommunityChestDeckImpl(cards, type);
-
-
     }
 
 }

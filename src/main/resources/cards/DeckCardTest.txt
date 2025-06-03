@@ -1,0 +1,6 @@
+deposit: 50
+-
+move in tile: Jail / Just Visiting
+buy if not owned: Jail / Just Visiting
+-
+withdraw: 50

@@ -7,7 +7,7 @@ import it.unibo.monopoly.model.gameboard.impl.chance_comunity.api.ChancheAndComm
 public class ChancheAndCommunityChestDeckImpl implements ChancheAndCommunityChestDeck{
 
     private String type;
-
+    private int ind;
     private final List<Chance_CommunityChestCard> cards; 
 
     public ChancheAndCommunityChestDeckImpl(List<Chance_CommunityChestCard> cards, String type){
@@ -24,6 +24,12 @@ public class ChancheAndCommunityChestDeckImpl implements ChancheAndCommunityChes
     @Override
     public String getType() {
         return this.type;
+    }
+
+    @Override
+    public Chance_CommunityChestCard drawInOrder() {
+        ind += 1;
+        return cards.get((ind -1)%cards.size());
     }
 
 }

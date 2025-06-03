@@ -5,7 +5,7 @@ import it.unibo.monopoly.model.gameboard.impl.chance_comunity.impl.Chance_Commun
 public interface ChancheAndCommunityChestDeck {
 
     /**
-     * draw a card from the deck.
+     * draw a radom card from the deck.
      * @return the card
      */
     Chance_CommunityChestCard draw();
@@ -15,4 +15,10 @@ public interface ChancheAndCommunityChestDeck {
      * @return the type
      */
     String getType();
+    
+    /**
+     * draw a card from the deck in order of creation.
+     * @return the card
+     */
+    Chance_CommunityChestCard drawInOrder();
 }

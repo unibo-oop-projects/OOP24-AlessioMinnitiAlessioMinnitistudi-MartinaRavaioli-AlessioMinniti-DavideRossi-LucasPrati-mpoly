@@ -6,11 +6,9 @@ import it.unibo.monopoly.model.turnation.api.Player;
 
 public class Chance_CommunityChestCard implements Chance_CommunityChest{
 
-    private String description;
     private Command command; 
 
-    public Chance_CommunityChestCard(String desc, Command comm) {
-        this.description = desc; 
+    public Chance_CommunityChestCard(Command comm) { 
         this.command = comm;
     } 
 
@@ -21,7 +19,7 @@ public class Chance_CommunityChestCard implements Chance_CommunityChest{
 
     @Override
     public String getDescription() {
-        return this.description;
+        return this.command.getDesc();
     }
 
 }

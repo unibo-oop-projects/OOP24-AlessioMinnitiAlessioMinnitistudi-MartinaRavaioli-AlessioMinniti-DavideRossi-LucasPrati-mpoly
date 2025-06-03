@@ -155,6 +155,7 @@ public class BaseCommandFactoryImpl implements BaseCommandFactory {
 
             @Override
             public String getDesc() {
+                desc = "deposit " + num;
                 return this.desc;
             }
 
@@ -162,7 +163,6 @@ public class BaseCommandFactoryImpl implements BaseCommandFactory {
             public void addIntArg(int arg) {
                 if (arg != -1) {
                     this.num = arg;
-                    desc = "deposit " + num;
                 }
             }
 

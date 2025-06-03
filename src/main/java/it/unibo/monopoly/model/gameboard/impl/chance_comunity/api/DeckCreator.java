@@ -8,6 +8,6 @@ import it.unibo.monopoly.model.turnation.api.TurnationManager;
 
 public interface DeckCreator {
 
-    ChancheAndCommunityChestDeck createDeck(String type, Board board, Bank bank, TurnationManager turnM) throws FileNotFoundException;
+    ChancheAndCommunityChestDeck createDeck(String file, String type, Board board, Bank bank, TurnationManager turnM) throws FileNotFoundException;
 
 }
