@@ -170,13 +170,13 @@ public final class MainViewImpl implements MainGameView {
 
     @Override
     public void displayPlayerStats(final Player player, final Bank bank) {
-        // percentuale personalizzata dello schermo
         final Dimension screenDimension = GuiUtils.getDimensionWindow(PL_DATA_VIEW_PROPORTION, PL_DATA_VIEW_PROPORTION);
         new GUIVendita(player,
             (int) screenDimension.getWidth(), 
             (int) screenDimension.getHeight(), 
             new GUIVenditaLogicImpl(), 
-            bank
+            bank,
+            this.mainGameFrame
         );
     }
 

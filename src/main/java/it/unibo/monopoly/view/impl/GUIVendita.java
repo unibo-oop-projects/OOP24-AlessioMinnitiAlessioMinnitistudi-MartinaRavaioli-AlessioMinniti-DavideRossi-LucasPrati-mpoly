@@ -4,13 +4,14 @@ package it.unibo.monopoly.view.impl;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Frame;
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
 import java.util.stream.Collectors;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
-import javax.swing.JFrame;
+import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
@@ -23,15 +24,17 @@ import it.unibo.monopoly.model.gameboard.impl.Group;
 import it.unibo.monopoly.model.transactions.api.Bank;
 import it.unibo.monopoly.model.transactions.api.TitleDeed;
 import it.unibo.monopoly.model.turnation.api.Player;
+import it.unibo.monopoly.utils.impl.GuiUtils;
 /**
  * the class presents the property manager frame of the game.
  * where you can look up the values of each of your property 
  * and then decide wether you wwant to sell it or not 
  */
 
-public final class GUIVendita extends JFrame {
+public final class GUIVendita extends JDialog {
     private static final long serialVersionUID = -6218820567019985015L;
     private static final int VGAP = 10;
+    private static String TITLE_WINDOW = "Property management";
 
      /**
       * in this constructor the whole GUI is built with all the action listener.
@@ -42,7 +45,13 @@ public final class GUIVendita extends JFrame {
       * @param bank for the stats
       */
 
-    public GUIVendita(final Player player, final int width, final int heigth, final  GUIVenditaLogic log, final Bank bank) {
+    public GUIVendita(final Player player, final int width, final int heigth, final  GUIVenditaLogic log, final Bank bank, final Frame parent) {
+        GuiUtils.configureWindow(this,
+                                 width,
+                                 heigth,
+                                 TITLE_WINDOW,
+                                 new BorderLayout(),
+                                 parent);
         final Border b = BorderFactory.createLineBorder(Color.black);
         final  GUIVenditaLogic logic = log;
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -111,12 +120,14 @@ public final class GUIVendita extends JFrame {
             final TitleDeed selectedProperty = logic.getProperty(logic.getProperties(player, bank), 
                                                                 propertiesList.getSelectedValue());
             mortageValue.setText(Integer.toString(selectedProperty.getMortgagePrice()));
-            String auxrent = String.valueOf(selectedProperty.getRent(logic.getProperties(player, bank)
+            int auxintrent = selectedProperty.getRent(logic.getProperties(player, bank)
                                                                         .stream()
-                                                                        .collect(Collectors.toSet()), 1));
+                                                                        .filter(p -> selectedProperty.getGroup().equals(p.getGroup()))
+                                                                        .collect(Collectors.toSet()), 1);
+            String auxrent=String.valueOf(auxintrent);
             if (selectedProperty.getGroup().equals(Group.SOCIETY)) {
 
-                auxrent = auxrent + " times dice result";
+                auxrent = auxintrent + " times dice result";
             }
             rentValue.setText(auxrent);
             colorValue.setColor(logic.getPropertyColor(selectedProperty));

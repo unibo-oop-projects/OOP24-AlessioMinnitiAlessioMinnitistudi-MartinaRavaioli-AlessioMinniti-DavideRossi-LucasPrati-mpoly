@@ -21,6 +21,7 @@ public final class PaymentDialog extends JDialog {
      * @param succesfull wether the payment has succeded or not
      */
     public PaymentDialog(final int paidImport, final boolean succesfull) {
+        // TODO fai in modo che disabiliti quella sotto come gui vendita
         final int width = 200; 
         final int heigth = 150;
         this.setSize(width, heigth);
