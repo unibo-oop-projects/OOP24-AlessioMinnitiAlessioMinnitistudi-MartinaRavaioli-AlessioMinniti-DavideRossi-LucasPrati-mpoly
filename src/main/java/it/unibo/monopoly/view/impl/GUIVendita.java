@@ -3,6 +3,7 @@ package it.unibo.monopoly.view.impl;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Frame;
 import java.awt.GridLayout;
@@ -34,28 +35,32 @@ import it.unibo.monopoly.utils.impl.GuiUtils;
 public final class GUIVendita extends JDialog {
     private static final long serialVersionUID = -6218820567019985015L;
     private static final int VGAP = 10;
-    private static String TITLE_WINDOW = "Property management";
+    private static final String TITLE_WINDOW = "Property management";
+    private static final double PROPORTION = 0.6;
+
 
      /**
       * in this constructor the whole GUI is built with all the action listener.
       * @param player the player that wants to manage its properties
-      * @param width of the frame
-      * @param heigth of the frame
       * @param log for game
       * @param bank for the stats
+      * @param parent the parent frame that owns this dialog and will be blocked while the dialog is visible
       */
-
-    public GUIVendita(final Player player, final int width, final int heigth, final  GUIVenditaLogic log, final Bank bank, final Frame parent) {
+    public GUIVendita(
+        final Player player,
+        final GUIVenditaLogic log,
+        final Bank bank,
+        final Frame parent
+    ) {
+        final Dimension screenDimension = GuiUtils.getDimensionWindow(PROPORTION, PROPORTION);
         GuiUtils.configureWindow(this,
-                                 width,
-                                 heigth,
+                                 (int) screenDimension.getWidth(),
+                                 (int) screenDimension.getHeight(),
                                  TITLE_WINDOW,
                                  new BorderLayout(),
                                  parent);
         final Border b = BorderFactory.createLineBorder(Color.black);
         final  GUIVenditaLogic logic = log;
-        this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        this.setSize(width, heigth);
 
 //  create all the panels
         final JPanel overallPane = new JPanel(new GridLayout(1, 2));
@@ -82,21 +87,21 @@ public final class GUIVendita extends JDialog {
         balancePane.setBorder(b);
 
 // create all the info labels
-        final JLabel rent = new JLabel("latest rent from the selected property:");
+        final JLabel rent = new JLabel("Latest rent from the selected property:");
         final JLabel rentValue = new JLabel("0");
-        final JLabel mortage = new JLabel("mortage lending value of the selected property:");
+        final JLabel mortage = new JLabel("Mortage lending value of the selected property:");
         final JLabel mortageValue = new JLabel("0");
-        final JLabel color = new JLabel("color");
+        final JLabel color = new JLabel("Color");
         final PropertyColor colorValue = new PropertyColor(Color.BLACK);
 
 // create the sells buttons and user balance label
-        final JButton sellProperty = new JButton("sell Property");
+        final JButton sellProperty = new JButton("Sell Property");
         sellProperty.setEnabled(false);
-        final JLabel balance = new JLabel("your balance is: ");
+        final JLabel balance = new JLabel("Your balance is: ");
         final JLabel balanceValue = new JLabel(String.valueOf(logic.getPlayerBalance(player, bank).getBalance()));
 
 // create the Component for the listPane
-        final JLabel selectProperty = new JLabel("select the property you want to manage");
+        final JLabel selectProperty = new JLabel("Select the property you want to manage");
         final int fontSize = 20;
         final Font f = new Font("gigi", Font.TYPE1_FONT, fontSize);
         selectProperty.setFont(f);
@@ -105,7 +110,7 @@ public final class GUIVendita extends JDialog {
                                                                         .map(TitleDeed::getName)
                                                                         .toArray());
         final JScrollPane propertiesScrollPane = new JScrollPane(propertiesList);
-        final JButton exitButton = new JButton("done");
+        final JButton exitButton = new JButton("Done");
 
 
 // the listeners for the buttons and the JList
@@ -120,11 +125,11 @@ public final class GUIVendita extends JDialog {
             final TitleDeed selectedProperty = logic.getProperty(logic.getProperties(player, bank), 
                                                                 propertiesList.getSelectedValue());
             mortageValue.setText(Integer.toString(selectedProperty.getMortgagePrice()));
-            int auxintrent = selectedProperty.getRent(logic.getProperties(player, bank)
+            final int auxintrent = selectedProperty.getRent(logic.getProperties(player, bank)
                                                                         .stream()
                                                                         .filter(p -> selectedProperty.getGroup().equals(p.getGroup()))
                                                                         .collect(Collectors.toSet()), 1);
-            String auxrent=String.valueOf(auxintrent);
+            String auxrent = String.valueOf(auxintrent);
             if (selectedProperty.getGroup().equals(Group.SOCIETY)) {
 
                 auxrent = auxintrent + " times dice result";
@@ -135,12 +140,12 @@ public final class GUIVendita extends JDialog {
         };
     //sell property
         final ActionListener sellPropertyListener = e -> {
+            final boolean statePayment;
             final TitleDeed selectedProperty = logic.getProperty(logic.getProperties(player, bank), 
                                                                 propertiesList.getSelectedValue());
             if (logic.sellProperty(logic.getProperties(player, bank), selectedProperty, bank)) {
-                final PaymentDialog paymentComplete = new PaymentDialog(selectedProperty.getMortgagePrice(), true);
+                statePayment = true;
                 sellProperty.setEnabled(false);
-                paymentComplete.setVisible(true);
                 mortageValue.setText("0");
                 rentValue.setText("0");
                 colorValue.setColor(Color.BLACK);
@@ -152,10 +157,20 @@ public final class GUIVendita extends JDialog {
                     propertiesScrollPane.setVisible(false);
                 }
             } else {
-                final PaymentDialog paymentComplete = new PaymentDialog(selectedProperty.getMortgagePrice(), false);
-                paymentComplete.setVisible(true);
+                statePayment = false;
             }
 
+            final String messageState;
+            if (statePayment) {
+                messageState = "succesfully";
+            } else {
+                messageState = "unsuccesfully";
+            }
+            GuiUtils.showInfoMessage(
+                this,
+                "Payment",
+                "The payment of " + selectedProperty.getMortgagePrice() + " has been " + messageState + " made"
+            );
         };
 
 // add the listeners

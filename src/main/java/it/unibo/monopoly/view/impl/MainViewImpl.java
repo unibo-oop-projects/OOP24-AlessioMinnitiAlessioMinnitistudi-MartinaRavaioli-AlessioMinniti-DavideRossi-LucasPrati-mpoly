@@ -1,7 +1,6 @@
 package it.unibo.monopoly.view.impl;
 
 import java.awt.BorderLayout;
-import java.awt.Dimension;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.List;
@@ -39,8 +38,6 @@ import it.unibo.monopoly.view.impl.gamepanels.SwingPanelsFactory;
  * its graphical UI by using a combination of {@link JFrame} {@code objects}.
  */
 public final class MainViewImpl implements MainGameView {
-    private static final double PL_DATA_VIEW_PROPORTION = 0.6;
-
 
     private final JFrame mainGameFrame = new JFrame();
 
@@ -170,10 +167,7 @@ public final class MainViewImpl implements MainGameView {
 
     @Override
     public void displayPlayerStats(final Player player, final Bank bank) {
-        final Dimension screenDimension = GuiUtils.getDimensionWindow(PL_DATA_VIEW_PROPORTION, PL_DATA_VIEW_PROPORTION);
         new GUIVendita(player,
-            (int) screenDimension.getWidth(), 
-            (int) screenDimension.getHeight(), 
             new GUIVenditaLogicImpl(), 
             bank,
             this.mainGameFrame
