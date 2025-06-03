@@ -1,7 +1,5 @@
 package it.unibo.monopoly.model.gameboard.impl.chance_comunity.impl;
 
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -11,7 +9,6 @@ import it.unibo.monopoly.model.gameboard.impl.chance_comunity.api.Command;
 import it.unibo.monopoly.model.gameboard.impl.chance_comunity.api.DeckCreator;
 import it.unibo.monopoly.model.transactions.api.Bank;
 import it.unibo.monopoly.model.turnation.api.TurnationManager;
-import it.unibo.monopoly.utils.api.UseFile;
 import it.unibo.monopoly.utils.api.UseFileTxt;
 import it.unibo.monopoly.utils.impl.UseFileTxtImpl;
 
