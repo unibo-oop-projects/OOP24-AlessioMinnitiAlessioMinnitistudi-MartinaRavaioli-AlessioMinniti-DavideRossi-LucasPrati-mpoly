@@ -45,7 +45,7 @@ public final class GUIVendita extends JFrame {
     public GUIVendita(final Player player, final int width, final int heigth, final  GUIVenditaLogic log, final Bank bank) {
         final Border b = BorderFactory.createLineBorder(Color.black);
         final  GUIVenditaLogic logic = log;
-        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         this.setSize(width, heigth);
 
 //  create all the panels
