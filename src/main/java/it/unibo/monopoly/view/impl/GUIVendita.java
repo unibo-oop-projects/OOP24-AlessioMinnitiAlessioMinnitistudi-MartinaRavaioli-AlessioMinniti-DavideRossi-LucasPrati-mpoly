@@ -120,6 +120,7 @@ public final class GUIVendita extends JFrame {
             }
             rentValue.setText(auxrent);
             colorValue.setColor(logic.getPropertyColor(selectedProperty));
+            sellProperty.setEnabled(true);
         };
     //sell property
         final ActionListener sellPropertyListener = e -> {
