@@ -5,11 +5,11 @@ import it.unibo.monopoly.model.gameboard.impl.chance_comunity.api.Parser;
 /**
  * implementation of a parser on comma, return the string before every comma.
  */
-public final class ParserOnComma implements Parser{
+public final class ParserOnComma implements Parser {
 
-    private final static int COMMA = 44;
+    private final int comma = 44;
     private final String toParseString;
-    private int index = 0;
+    private int index;
 
     /**
      * constructor.
@@ -24,7 +24,7 @@ public final class ParserOnComma implements Parser{
         String ret = ""; 
         for (int i = index; i < toParseString.length(); i++) {
             index = i + 2;
-            if (toParseString.charAt(i) == COMMA) {
+            if (toParseString.charAt(i) == comma) {
                 return ret;
             }
             ret = ret + toParseString.charAt(i);

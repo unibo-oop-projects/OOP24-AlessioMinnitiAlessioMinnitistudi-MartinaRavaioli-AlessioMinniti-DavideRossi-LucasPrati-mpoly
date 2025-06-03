@@ -13,7 +13,7 @@ public final class ChancheAndCommunityChestDeckImpl implements ChancheAndCommuni
     private String type;
     private int ind;
     private final List<ChanceAndCommunityChestCard> cards; 
-    private final static Random R = new Random();
+    private final Random R = new Random();
 
     /**
      * constructor.

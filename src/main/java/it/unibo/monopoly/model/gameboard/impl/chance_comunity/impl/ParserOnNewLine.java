@@ -5,9 +5,9 @@ import it.unibo.monopoly.model.gameboard.impl.chance_comunity.api.Parser;
 /**
  * implementation of a parser on new lilne, returns every new line.
  */
-public final class ParserOnNewLine implements Parser{
-    
-    private final static int NEWLINE = 10;
+public final class ParserOnNewLine implements Parser {
+
+    private final int newLine = 10;
     private final String toParseString;
     private int index;
 
@@ -20,11 +20,11 @@ public final class ParserOnNewLine implements Parser{
     }
 
     @Override
-    public String next(){
+    public String next() {
         String ret = ""; 
         for (int i = index; i < toParseString.length(); i++) {
             index = i + 1;
-            if (toParseString.charAt(i) == NEWLINE) {
+            if (toParseString.charAt(i) == newLine) {
                 return ret;
             }
             ret = ret + toParseString.charAt(i);

@@ -7,7 +7,7 @@ import it.unibo.monopoly.model.gameboard.impl.chance_comunity.api.Parser;
  */
 public final class ParserOnColon implements Parser {
 
-    private final static int COLON = 58;
+    private final int colon = 58;
     private final String toParseString;
     private int index;
 
@@ -24,7 +24,7 @@ public final class ParserOnColon implements Parser {
         String ret = ""; 
         for (int i = index; i < toParseString.length(); i++) {
             index = i + 2;
-            if (toParseString.charAt(i) == COLON) {
+            if (toParseString.charAt(i) == colon) {
                 return ret;
             }
             ret = ret + toParseString.charAt(i);
