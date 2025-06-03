@@ -121,7 +121,7 @@ public final class BankImpl implements Bank {
         final TitleDeed td = findTitleDeed(titleDeedName);
 
         if (td.isOwned()) {
-            throw new IllegalStateException("Property is already owned by player" + td.getOwnerId());
+            throw new IllegalStateException("Property is already owned by player " + td.getOwnerId());
         }
 
         buyer.withdraw(td.getSalePrice());

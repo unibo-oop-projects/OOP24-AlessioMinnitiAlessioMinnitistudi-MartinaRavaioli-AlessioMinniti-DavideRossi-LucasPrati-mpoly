@@ -152,7 +152,7 @@ public final class GuiUtils {
     public static void showInfoMessage(final Window parent,
                                          final String title,
                                          final String message) {
-        showMessageDialog(parent, message, title, JOptionPane.INFORMATION_MESSAGE);
+        showMessageDialog(parent, title, message, JOptionPane.INFORMATION_MESSAGE);
 
     }
 
