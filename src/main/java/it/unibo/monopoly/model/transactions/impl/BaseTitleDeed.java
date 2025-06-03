@@ -83,7 +83,7 @@ public final class BaseTitleDeed implements TitleDeed {
         Objects.requireNonNull(ownerId);
         if (owner.isPresent()) {
             throw new IllegalStateException("Cannot set a new owner for" 
-                                            + "the title deed because the owner" 
+                                            + "the title deed because the owner " 
                                             + owner.get() 
                                             + " already owns it"
                                             );
