@@ -27,6 +27,7 @@ public final class RulesWindowView extends JDialog {
     private static final String TITLE_WINDOW = "Monopoly - Rules";
     private static final String TITLE_TEXT = "Rules";
     private static final String EXIT_TEXT = "Exit";
+    private static final double PROPORTION = 0.5;
 
     private static final int TOP_BORDER = 10;
     private static final int BOTTOM_BORDER = 10;
@@ -44,9 +45,10 @@ public final class RulesWindowView extends JDialog {
      * @param rules a {@link String} with the rules of the game, to show
      */
     public RulesWindowView(final Frame parent, final Configuration config, final String rules) {
+        var size = GuiUtils.getDimensionWindow(PROPORTION, PROPORTION);
         GuiUtils.configureWindow(this,
-                                 parent.getWidth(),
-                                 parent.getHeight(),
+                                 (int) size.getWidth(),
+                                 (int) size.getHeight(),
                                  TITLE_WINDOW,
                                  new BorderLayout(),
                                  parent);
