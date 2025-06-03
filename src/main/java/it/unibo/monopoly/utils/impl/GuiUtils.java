@@ -15,10 +15,14 @@ import java.util.List;
 import java.util.Objects;
 
 import javax.swing.AbstractButton;
+import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.JTree;
 import javax.swing.WindowConstants;
 import javax.swing.text.JTextComponent;
 
@@ -55,7 +59,6 @@ public final class GuiUtils {
         colorBox.setPreferredSize(new Dimension(size, size));
         return colorBox;
     }
-
 
     /**
      * Configures a window with default layout and location, along with standard behaviors.
@@ -221,21 +224,31 @@ public final class GuiUtils {
             return;
         }
 
-        // Imposta il font su componenti con testo
-        if (comp instanceof final JLabel label) {
-            label.setFont(getSmallFontFromConfiguration(config));
-        } else if (comp instanceof final AbstractButton button) { // include JButton, JToggleButton, ecc.
-            button.setFont(getSmallFontFromConfiguration(config));
-        } else if (comp instanceof final JTextComponent textComp) { // include JTextField, JTextArea, ecc.
-            textComp.setFont(getSmallFontFromConfiguration(config));
+        if (isTextualComponent(comp)) {
+            comp.setFont(getSmallFontFromConfiguration(config));
         }
 
-        // Se è un contenitore, ricorri sui figli
+        // Se è un contenitore, ricorsione sui figli
         if (comp instanceof final Container container) {
             for (final Component child : container.getComponents()) {
                 setAllFonts(child, config, exclude);
             }
         }
+    }
+
+    /**
+     * Return if the parameter is a textual component or not.
+     * @param comp the {@link Component} that we want to check
+     * @return true if the {@link Component} is a textual component, false otherwise
+     */
+    private static boolean isTextualComponent(Component comp) {
+        return comp instanceof JLabel
+            || comp instanceof AbstractButton
+            || comp instanceof JTextComponent
+            || comp instanceof JComboBox<?>
+            || comp instanceof JList<?>
+            || comp instanceof JTable
+            || comp instanceof JTree;
     }
 
     /**
