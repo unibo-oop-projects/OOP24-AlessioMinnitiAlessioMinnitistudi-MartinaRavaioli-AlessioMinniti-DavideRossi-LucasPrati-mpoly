@@ -27,7 +27,7 @@ public class ParserOnNewLine implements Parser{
 
     @Override
     public boolean hasNesxt() {
-        return index < toParseString.length()-1;
+        return index < toParseString.length();
     }
 
 }

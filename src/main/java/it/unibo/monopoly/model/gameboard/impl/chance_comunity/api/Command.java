@@ -11,9 +11,15 @@ public interface Command {
     void execute(Player player);
 
     /**
-     * 
-     * @return the keword for the command.
+     * get the unic keyword of the command.
+     * @return the keword for the command
      */
     String getKeyWord();
+    
+    /**
+     * get a description in natural language of what the command does.
+     * @return the description
+     */
+    String getDesc();
 
 }

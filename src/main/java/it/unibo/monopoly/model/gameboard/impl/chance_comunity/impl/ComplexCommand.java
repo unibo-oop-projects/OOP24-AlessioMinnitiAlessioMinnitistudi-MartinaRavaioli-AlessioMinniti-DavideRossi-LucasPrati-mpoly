@@ -7,7 +7,7 @@ import it.unibo.monopoly.model.turnation.api.Player;
 
 public class ComplexCommand implements Command {
     private final List<Command> commands;
-    private final String desc;
+    private final String keyword;
 
     public ComplexCommand(List<Command> commands, String desc){
         this.commands = commands;
@@ -19,12 +19,13 @@ public class ComplexCommand implements Command {
                 str = str + command.getKeyWord() + " then\n";
             }
         }
-        this.desc = str;
+        this.keyword = str;
+        
     }
 
     @Override
     public String getKeyWord() {
-        return desc;
+        return keyword;
     }
 
     @Override
@@ -32,6 +33,19 @@ public class ComplexCommand implements Command {
         for (Command command : commands) {
             command.execute(player);
         }
+    }
+
+    @Override
+    public String getDesc() {
+        String str = "";
+        for (Command command : commands) {
+            if (commands.indexOf(command) == commands.size()-1) {
+                str = str + command.getDesc();
+            } else {
+                str = str + command.getDesc() + " then\n";
+            }
+        }
+        return str;
     }
 
 }

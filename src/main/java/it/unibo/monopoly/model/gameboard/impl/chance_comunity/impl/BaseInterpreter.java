@@ -26,7 +26,7 @@ public class BaseInterpreter implements BaseInterpreterInt {
         BaseCommand comm = factory.still(); 
         ParserOnColon pars = new ParserOnColon(toInterpretString);
         String comString = pars.next();
-        Optional<BaseCommand> com = baseCommands.stream().filter(p -> p.getKeyWord().equals(comString)).findAny();
+        Optional<BaseCommand> com = baseCommands.stream().filter(p -> p.getKeyWord().equals((String)comString)).findAny();
         if (com.isPresent()) {
             BaseCommand base = com.get(); 
             if (pars.hasNesxt()) {
