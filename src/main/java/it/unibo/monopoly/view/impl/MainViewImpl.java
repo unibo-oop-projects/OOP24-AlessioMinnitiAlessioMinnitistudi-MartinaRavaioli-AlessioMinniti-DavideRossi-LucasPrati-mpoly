@@ -39,7 +39,7 @@ import it.unibo.monopoly.view.impl.gamepanels.SwingPanelsFactory;
  * its graphical UI by using a combination of {@link JFrame} {@code objects}.
  */
 public final class MainViewImpl implements MainGameView {
-    private static final double PL_DATA_VIEW_PROPORTION = 0.5;
+    private static final double PL_DATA_VIEW_PROPORTION = 0.6;
 
 
     private final JFrame mainGameFrame = new JFrame();
