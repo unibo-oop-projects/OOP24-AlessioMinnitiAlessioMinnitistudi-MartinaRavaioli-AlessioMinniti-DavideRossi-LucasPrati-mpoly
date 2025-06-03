@@ -24,4 +24,10 @@ public class GameboardLogicImpl implements GameboardLogic {
         );
         return cards.getOrDefault(i + "," + j, -1);
     }
+
+    @Override
+    public final int getSize(final int numTiles) {
+        return numTiles / 4 + 1;
+    }
+
 }

@@ -10,15 +10,15 @@ import it.unibo.monopoly.utils.api.Identifiable;
 * {@link Tile} implementation.
 */
 public abstract class TileImpl implements Tile, Identifiable<String>, Comparable<TileImpl> {
-    private final String name;
-    private final Position pos; 
-    private Group group;
+    private final String name; /**name. */
+    private final Position pos; /**position. */
+    private Group group; /**group. */
 
     /**
     * constructor.
-    * @param name
-    * @param pos
-    * @param group
+    * @param name name
+    * @param pos position
+    * @param group group
     */
     protected TileImpl(final String name, final Position pos, final Group group) {
         this.name = name;
@@ -44,7 +44,7 @@ public abstract class TileImpl implements Tile, Identifiable<String>, Comparable
 
     /**
     * compare to.
-    * @param o
+    * @param o tile to compare
     * @return int
     */
     @Override

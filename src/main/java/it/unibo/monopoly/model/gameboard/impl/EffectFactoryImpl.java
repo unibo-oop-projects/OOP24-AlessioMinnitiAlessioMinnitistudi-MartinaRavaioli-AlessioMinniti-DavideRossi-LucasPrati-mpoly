@@ -12,15 +12,20 @@ import it.unibo.monopoly.model.turnation.api.Player;
  */
 public final class EffectFactoryImpl implements EffectFactory {
 
+    /**
+     * constructor.
+     */
+    // public EffectFactoryImpl() { }
+
     @Override
     public Effect depositMoney(final int amount, final Bank bank) {
         return new Effect() {
 
-            private final String desc = "deposits " + Integer.toString(amount) + "into your bankaccount";
+            private final String desc = "deposits " + Integer.toString(amount) + " into your bankaccount";
 
             @Override
             public void activate(final Player player) {
-                bank.depositTo(player.getName(), amount);
+                bank.depositTo(player.getID(), amount);
             }
 
             @Override
@@ -34,11 +39,11 @@ public final class EffectFactoryImpl implements EffectFactory {
     public Effect withdrawMoney(final int amount, final Bank bank) {
         return new Effect() {
 
-            private final String desc = "withdraw " + Integer.toString(amount) + "from your bankaccount";
+            private final String desc = "withdraw " + Integer.toString(amount) + " from your bankaccount";
 
             @Override
             public void activate(final Player player) {
-                bank.withdrawFrom(player.getName(), amount);
+                bank.withdrawFrom(player.getID(), amount);
             }
 
             @Override

@@ -25,7 +25,7 @@ class CardFactoryImplTest {
     private static final String CARDS_JSON = "debug/cards/debug_cards.json";
 
     // An empty-bank-account for bypass the constructor validation (it's unused during tests)
-    private final BankAccount emptyBankAccount = new SimpleBankAccountImpl(0, "jonny");
+    private final BankAccount emptyBankAccount = new SimpleBankAccountImpl(0, e -> true);
 
 
     @Test

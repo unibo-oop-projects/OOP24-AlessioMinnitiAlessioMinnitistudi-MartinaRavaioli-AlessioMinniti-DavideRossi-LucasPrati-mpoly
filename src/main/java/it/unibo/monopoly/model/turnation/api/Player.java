@@ -3,7 +3,6 @@ package it.unibo.monopoly.model.turnation.api;
 import java.awt.Color;
 import java.util.Collection;
 
-import it.unibo.monopoly.model.gameboard.api.Board;
 import it.unibo.monopoly.utils.api.Identifiable;
 
 /**
@@ -54,9 +53,8 @@ public interface Player extends Identifiable<Integer> {
      * tells if the player can exit 
      * the prison based on the dices result. 
      * If he can then it moves the players pawn
-     * @param dices to get the result
-     * @param board to move the pawn
+     * @param dice to get the result
      * @return whether he can
      */
-    boolean canExitPrison(Collection<Integer> dices, Board board);
+    boolean canExitPrison(Collection<Integer> dice);
 }

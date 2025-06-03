@@ -14,6 +14,13 @@ import it.unibo.monopoly.model.transactions.api.RentOptionFactory;
  */
 public final class RentOptionFactoryImpl implements RentOptionFactory {
 
+    /**
+     * Creates a new {@link RentOptionFactoryImpl}.
+     */
+    public RentOptionFactoryImpl() { 
+        //intentional empty constructor
+    }
+
     @Override
     public RentOption allDeedsOfGroupWithSameOwner(final int startRent) {
         return new RentOptionImpl("Tutti i terreni", 
@@ -21,19 +28,24 @@ public final class RentOptionFactoryImpl implements RentOptionFactory {
         startRent * 2,
         (deeds, o) -> deeds
                         .stream()
-                        .allMatch(d -> d.isOwned() && o.equals(d.getOwner())));
+                        .allMatch(d -> d.isOwned() && o.equals(d.getOwnerId())));
     }
 
     @Override
     public List<RentOption> progressivelyIncreasingPrice(final int startRent, final int multiplyFactor, final int nStations) {
         return Stream.iterate(Pair.of(1, startRent), r -> Pair.of(r.getLeft() + 1, r.getRight() * multiplyFactor))
                     .limit(nStations)
-                    .map(p -> new RentOptionImpl("Si possiede " + p.getLeft() + "proprietà dello stesso gruppo", 
+                    .map(p -> new RentOptionImpl("Si possiede " + p.getLeft() + " proprietà dello stesso gruppo", 
                     "",
                     p.getRight(),
                     (deeds, owner) -> deeds.stream()
-                                            .filter(d -> d.isOwned() && owner.equals(d.getOwner()))
+                                            .filter(d -> d.isOwned() && owner.equals(d.getOwnerId()))
                                             .count() >= p.getLeft()))
                     .collect(Collectors.toList());
+    }
+
+    @Override
+    public RentOption baseRentOption(final int baseRent) {
+        return new RentOptionImpl("Affitto base", "", baseRent, (deeds, ownerId) -> true);
     }
 }

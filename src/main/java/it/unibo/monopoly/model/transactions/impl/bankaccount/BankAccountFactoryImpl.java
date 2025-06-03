@@ -31,17 +31,21 @@ public final class BankAccountFactoryImpl implements BankAccountFactory {
      * {@inheritDoc}
      */
     @Override
-    public BankAccount createSimple(final int id, final String owner) {
-        return new SimpleBankAccountImpl(id, initialBalance, owner);
+    public BankAccount createSimple(final int id) {
+        return createWithCheck(id,
+                               e -> true
+        );
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public BankAccount createWithCheck(final int id, final String owner, final Predicate<BankAccount> check) {
+    public BankAccount createWithCheck(final int id, final Predicate<BankAccount> check) {
         Objects.requireNonNull(check, "Check cannot be null");
-        return new CheckValidityBankAccount(createSimple(id, owner), 
-                                            check);
+        return new SimpleBankAccountImpl(id,
+                                         initialBalance, 
+                                         check
+        );
     }
 }

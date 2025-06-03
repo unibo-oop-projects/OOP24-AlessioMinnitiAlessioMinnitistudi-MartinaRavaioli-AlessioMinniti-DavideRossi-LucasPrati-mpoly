@@ -9,12 +9,12 @@ import javax.swing.JPanel;
     * square pawn shape.
 */
 public class PawnSquare extends JPanel {
-    private static final long serialVersionUID = 1L;
-    private static final int SIZE = 20;
-    private final Color color;
+    private static final long serialVersionUID = 1L; /**serial version. */
+    private static final int SIZE = 20; /**size. */
+    private final Color color; /**color. */
     /**
     * constructor.
-    * @param color
+    * @param color color
     */
     public PawnSquare(final Color color) {
         this.color = color;

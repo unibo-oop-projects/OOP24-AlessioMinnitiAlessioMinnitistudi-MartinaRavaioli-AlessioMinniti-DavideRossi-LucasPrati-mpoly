@@ -2,7 +2,6 @@ package it.unibo.monopoly.model.transactions.impl;
 
 import java.util.List;
 import java.util.Set;
-import java.util.Collection;
 
 import it.unibo.monopoly.model.gameboard.impl.Group;
 import it.unibo.monopoly.model.transactions.api.RentOption;
@@ -39,13 +38,13 @@ public final class SpecialPropertyFactoryImpl implements SpecialPropertyFactory 
                                                              p -> p / 4 * 3, startFactor, rent);
 
             @Override
-            public String getOwner() {
-                return titleDeed.getOwner();
+            public int getOwnerId() {
+                return titleDeed.getOwnerId();
             }
 
             @Override
-            public void setOwner(final String ownerName) {
-                titleDeed.setOwner(ownerName);
+            public void setOwner(final int ownerId) {
+                titleDeed.setOwner(ownerId);
             }
 
             @Override
@@ -74,8 +73,8 @@ public final class SpecialPropertyFactoryImpl implements SpecialPropertyFactory 
             }
 
             @Override
-            public Integer getRent(final Set<TitleDeed> groupTitleDeeds, final Collection<Integer> dices) {
-                return titleDeed.getRent(groupTitleDeeds, dices) * dices.stream().mapToInt(Integer::intValue).sum();
+            public Integer getRent(final Set<TitleDeed> groupTitleDeeds, final int diceThrow) {
+                return titleDeed.getRent(groupTitleDeeds, diceThrow) * diceThrow;
             }
 
             @Override
@@ -89,16 +88,16 @@ public final class SpecialPropertyFactoryImpl implements SpecialPropertyFactory 
             }
 
             @Override
-            public int housePrice() {
-                return titleDeed.housePrice();
+            public int getHousePrice() {
+                return titleDeed.getHousePrice();
             }
 
             @Override
-            public int houseNum() {
-                return titleDeed.houseNum();
+            public int getHotelPrice() {
+                return titleDeed.getHotelPrice();
             }
 
-            };
+        };
     }
 
 }

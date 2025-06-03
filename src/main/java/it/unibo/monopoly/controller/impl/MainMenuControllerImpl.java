@@ -21,7 +21,6 @@ import it.unibo.monopoly.model.gameboard.impl.BoardImpl;
 import it.unibo.monopoly.model.gameboard.impl.CardDTO;
 import it.unibo.monopoly.model.gameboard.impl.CardFactoryImpl;
 import it.unibo.monopoly.model.gameboard.impl.PawnFactoryImpl;
-import it.unibo.monopoly.model.transactions.api.Bank;
 import it.unibo.monopoly.model.transactions.api.BankAccount;
 import it.unibo.monopoly.model.transactions.api.BankAccountFactory;
 import it.unibo.monopoly.model.transactions.api.BankAccountType;
@@ -115,13 +114,14 @@ public final class MainMenuControllerImpl implements MainMenuController {
 
         // creation of Bank, Board and TurnationManager
         final Board board = new BoardImpl(List.of(), pawns);
-        final Bank bank = new BankImpl(accounts, Set.of());
+        final BankImpl bank = new BankImpl(accounts, Set.of());
         final TurnationManager turnationManager = new TurnationManagerImpl(
             players,
             new DiceImpl(
                 config.getNumDice(),
                 config.getSidesPerDie()
-            )
+            ),
+            bank.getBankStateObject()
         );
 
         // import from json
@@ -137,10 +137,15 @@ public final class MainMenuControllerImpl implements MainMenuController {
         titleDeeds.stream().forEach(bank::addTitleDeed);
 
         // start the game
-        final var controllerGameManager = new GameControllerImpl(bank, board, turnationManager, config);
+        final var controllerGameManager = new GameControllerImpl(
+            board,
+            turnationManager,
+            config,
+            bank
+        );
         final var mainView = new MainViewImpl(controllerGameManager);
         controllerGameManager.attachView(mainView);
-        // mainView.start(); //TODO implementare il metodo e rimuovere il commento
+        controllerGameManager.start();
     }
 
     /**
@@ -204,9 +209,9 @@ public final class MainMenuControllerImpl implements MainMenuController {
                                                 final String owner) {
         Objects.requireNonNull(owner);
         return switch (bankAccountType) {
-            case CLASSIC    -> bankAccountFactory.createWithCheck(id, owner,
-                                                               account -> account.getBalance() > 0);
-            case INFINITY   -> bankAccountFactory.createSimple(id, owner);
+            case CLASSIC    -> bankAccountFactory.createWithCheck(id,
+                                                                  account -> account.getBalance() > 0);
+            case INFINITY   -> bankAccountFactory.createSimple(id);
         };
     }
 }

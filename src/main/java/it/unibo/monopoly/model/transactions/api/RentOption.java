@@ -2,8 +2,6 @@ package it.unibo.monopoly.model.transactions.api;
 
 import java.util.Set;
 
-import it.unibo.monopoly.model.transactions.impl.RentOptionImpl;
-
 /**
  * An object that encapsulates all information
  * related to one of the possible rent options that
@@ -20,22 +18,20 @@ import it.unibo.monopoly.model.transactions.impl.RentOptionImpl;
 public interface RentOption {
 
     /**
-     *Default Title for the default rent option.
-     */
-    String BASE_RENT_TITLE = "Affitto base";
-
-    /**
+     * Get the title of the rent option.
      * @return the title of the {@link RentOption}.
      */
     String getTitle();
 
     /**
+     * Get a brief description about the rent option.
      * @return the decription of the {@link RentOption}.
      * The description could be blank
      */
     String getDescription();
 
     /**
+     * Get the price of this rent option.
      * @return the price of the {@link RentOption}.
      * This is the price the player will have to pay
      * if this rent option is selected
@@ -50,19 +46,9 @@ public interface RentOption {
      * some check conditions might be applied. The title deeds of the Set 
      * should be all part of the same group, meaning that a call to {@code getGroup} on the title
      * deeds should return the same value.
-     * @param owner the owner of the {@link TitleDeed} this {@code rent option} is associated to
+     * @param ownerId the ownerid of the {@link TitleDeed} this {@code rent option} is associated to
      * @return whether this rent option can be chosen based on the given 
      * information.
      */
-    boolean canBeApplied(Set<TitleDeed> groupDeeds, String owner);
-
-    /**
-     * Creates the standard rent option. The most basic rent 
-     * option, which is always applicable
-     * @param baseRent the rent of the option
-     * @return the created rent option
-     */
-    static RentOption baseRentOption(final int baseRent) {
-        return new RentOptionImpl(BASE_RENT_TITLE, "", baseRent, (deeds, owner) -> true);
-    }
+    boolean canBeApplied(Set<TitleDeed> groupDeeds, int ownerId);
 }

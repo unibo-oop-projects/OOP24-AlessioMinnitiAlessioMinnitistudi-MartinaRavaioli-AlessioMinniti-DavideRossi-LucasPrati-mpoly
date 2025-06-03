@@ -1,6 +1,5 @@
 package it.unibo.monopoly.model.transactions;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Stream;
@@ -22,11 +21,11 @@ import it.unibo.monopoly.model.transactions.impl.RentOptionFactoryImpl;
 class RentOptionFactoryTest {
 
     private static final int START_RENT = 5;
-    private static final String OWNER_NAME = "Alice";
+    private static final int OWNER_ID = 1;
     private static final int MULTIPLY_FACTOR = 2;
     private static final int N_STATIONS = 4;
     private static final Group GROUP_TYPE = Group.STATION;
-    private static final Collection<Integer> DICE = List.of(1);
+    private static final int DICE = 1;
     private RentOptionFactory rentOptionFactory;
 
     @BeforeEach
@@ -41,11 +40,11 @@ class RentOptionFactoryTest {
             new BaseTitleDeed(Group.GREEN, "vicolo corto", START_RENT * 10, s -> s / 2, START_RENT, List.of(doubledPrice)),
             new BaseTitleDeed(Group.GREEN, "vicolo stretto", START_RENT * 10, s -> s / 2, START_RENT, List.of(doubledPrice))
         );
-        deeds.getFirst().setOwner(OWNER_NAME);
-        assertFalse(doubledPrice.canBeApplied(Set.copyOf(deeds), OWNER_NAME));
+        deeds.getFirst().setOwner(OWNER_ID);
+        assertFalse(doubledPrice.canBeApplied(Set.copyOf(deeds), OWNER_ID));
         assertEquals(START_RENT, deeds.getFirst().getRent(Set.copyOf(deeds), DICE));
-        deeds.getLast().setOwner(OWNER_NAME);
-        assertTrue(doubledPrice.canBeApplied(Set.copyOf(deeds), OWNER_NAME));
+        deeds.getLast().setOwner(OWNER_ID);
+        assertTrue(doubledPrice.canBeApplied(Set.copyOf(deeds), OWNER_ID));
         assertEquals(START_RENT * 2, deeds.getFirst().getRent(Set.copyOf(deeds), DICE));
     }
 
@@ -66,12 +65,12 @@ class RentOptionFactoryTest {
 
         for (int i = 0; i < deeds.size(); i++) {
             final TitleDeed deed = deeds.get(i);
-            deed.setOwner(OWNER_NAME);
+            deed.setOwner(OWNER_ID);
             for (int j = 0; j < options.size(); j++) {
                 if (j <= i) {
-                    assertTrue(options.get(j).canBeApplied(Set.copyOf(deeds), OWNER_NAME));
+                    assertTrue(options.get(j).canBeApplied(Set.copyOf(deeds), OWNER_ID));
                 } else {
-                    assertFalse(options.get(j).canBeApplied(Set.copyOf(deeds), OWNER_NAME));
+                    assertFalse(options.get(j).canBeApplied(Set.copyOf(deeds), OWNER_ID));
                 }
             }
         }

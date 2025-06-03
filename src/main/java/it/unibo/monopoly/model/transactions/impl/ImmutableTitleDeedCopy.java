@@ -1,7 +1,6 @@
 package it.unibo.monopoly.model.transactions.impl;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
@@ -33,17 +32,17 @@ public final class ImmutableTitleDeedCopy implements TitleDeed {
                                     deed.getRentOptions().getFirst().getPrice(),
                                     rentOptionCopy);
         if (deed.isOwned()) {
-            this.deed.setOwner(deed.getOwner());
+            this.deed.setOwner(deed.getOwnerId());
         }
     }
 
     @Override
-    public String getOwner() {
-        return this.deed.getOwner();
+    public int getOwnerId() {
+        return this.deed.getOwnerId();
     }
 
     @Override
-    public void setOwner(final String ownerName) {
+    public void setOwner(final int ownerId) {
         throw new UnsupportedOperationException("setOwner operation is not supported on an ImmutableTitleDeedView");
     }
 
@@ -73,13 +72,28 @@ public final class ImmutableTitleDeedCopy implements TitleDeed {
     }
 
     @Override
-    public Integer getRent(final Set<TitleDeed> groupTitleDeeds, final Collection<Integer> dices) {
-        return this.deed.getRent(groupTitleDeeds, dices);
+    public Integer getRent(final Set<TitleDeed> groupTitleDeeds, final int diceThrow) {
+        return this.deed.getRent(groupTitleDeeds, diceThrow);
     }
 
     @Override
     public List<RentOption> getRentOptions() {
         return this.deed.getRentOptions();
+    }
+
+        @Override
+    public boolean isOwned() {
+        return this.deed.isOwned();
+    }
+
+    @Override
+    public int getHousePrice() {
+        return this.deed.getHousePrice();
+    }
+
+    @Override
+    public int getHotelPrice() {
+        return this.deed.getHotelPrice();
     }
 
     @Override
@@ -111,22 +125,4 @@ public final class ImmutableTitleDeedCopy implements TitleDeed {
         }
         return true;
     }
-
-    @Override
-    public int housePrice() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'housePrice'");
-    }
-
-    @Override
-    public int houseNum() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'houseNum'");
-    }
-
-    @Override
-    public boolean isOwned() {
-        return this.deed.isOwned();
-    }
-
 }

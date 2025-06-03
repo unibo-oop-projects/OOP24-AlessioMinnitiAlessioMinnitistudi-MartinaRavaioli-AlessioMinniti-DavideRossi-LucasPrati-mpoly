@@ -1,29 +1,29 @@
 package it.unibo.monopoly.controller.impl;
 
-import java.awt.Color;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.Map;
+import java.util.stream.Collectors;
+
+import org.apache.commons.lang3.tuple.Pair;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.monopoly.controller.api.GameController;
 import it.unibo.monopoly.model.gameboard.api.Board;
+import it.unibo.monopoly.model.gameboard.api.Effect;
 import it.unibo.monopoly.model.gameboard.api.Pawn;
 import it.unibo.monopoly.model.gameboard.api.Property;
+import it.unibo.monopoly.model.gameboard.api.Special;
 import it.unibo.monopoly.model.gameboard.api.Tile;
-import it.unibo.monopoly.model.gameboard.impl.Group;
 import it.unibo.monopoly.model.transactions.api.Bank;
-import it.unibo.monopoly.model.transactions.api.BankAccount;
-import it.unibo.monopoly.model.transactions.api.TitleDeed;
-import it.unibo.monopoly.model.transactions.impl.BaseTitleDeed;
+import it.unibo.monopoly.model.transactions.api.PropertyAction;
 import it.unibo.monopoly.model.turnation.api.Player;
 import it.unibo.monopoly.model.turnation.api.TurnationManager;
 import it.unibo.monopoly.utils.api.UseFileTxt;
 import it.unibo.monopoly.utils.impl.Configuration;
 import it.unibo.monopoly.utils.impl.UseFileTxtImpl;
-import it.unibo.monopoly.view.api.GameboardView;
 import it.unibo.monopoly.view.api.MainGameView;
 
 
@@ -31,15 +31,12 @@ import it.unibo.monopoly.view.api.MainGameView;
  * Implementation of {@link GameController}.
  */
 public final class GameControllerImpl implements GameController {
-
-    private static final int NUM = 0;
-
-    private final Bank bank;
-    private final TurnationManager turnationManager;
-    private final Board board;
-    private final Configuration config;
-    private MainGameView gameView;
-    private GameboardView gameboardView;
+    private final TurnationManager turnationManager; /**turnation manager. */
+    private final Board board; /**board. */
+    private final Configuration config; /**config. */
+    private final Bank bank; /**bank. */
+    private Map<String, PropertyAction> turnActions = new HashMap<>();
+    private MainGameView gameView; /**game view. */
 
     /**
      * Create a new {@link GameController} with the given parameters.
@@ -48,113 +45,107 @@ public final class GameControllerImpl implements GameController {
      * {@link Board} and {@link TurnationManager} are mutable and intentionally injected without defensive copies,
      * as they are expected to maintain consistent shared state across the application.
      * 
-     * @param bank the bank of the game
      * @param board the game board
      * @param turnationManager the entity for manage the turnation of the players
      * @param config a consistent configuration for settings
+     * @param bank the game's bank
      */
     @SuppressFBWarnings(
         value = "EI_EXPOSE_REP2",
         justification = "Injection of shared mutable dependencies is intentional and controlled in this architecture."
     )
     public GameControllerImpl(
-            final Bank bank,
             final Board board,
             final TurnationManager turnationManager,
-            final Configuration config
+            final Configuration config,
+            final Bank bank
         ) {
-        this.bank = bank;
         this.board = board;
         this.turnationManager = turnationManager;
         this.config = config;
+        this.bank = bank;
     }
 
-    @Override
-    public boolean areThereHouses(final TitleDeed prop) {
-        return prop.houseNum() > 0;
+    private void refreshPlayerInfo() {
+        final Player currentPlayer = turnationManager.getCurrPlayer();
+        gameView.refreshCurrentPlayerInfo(currentPlayer, bank.getBankAccount(currentPlayer.getID()));
     }
 
-    @Override
-    public boolean sellHouse(final List<TitleDeed> properties, final Object selectedValue) {
-        //manac metodo rossi per far arrivare i soldi al giocatore che vende
-        /*final int propInd = getPropertyIndex(properties, selectedValue);
-        final int houses = properties.get(propInd).houseNum();
-        properties.get(propInd).setHouseNum(houses - 1);*/
-        return true;
-    }
-
-    @Override
-    public boolean sellProperty(final TitleDeed selectedProperty) {
-        bank.sellTitleDeed(selectedProperty.getName());
-        return true;
-    }
-
-    @Override
-    public TitleDeed getProperty(final List<TitleDeed> properties, final Object selectedValue) {
-        final Optional<TitleDeed> selectedPropertyO = properties.stream()
-                                                                .filter(p -> p.getName().equals(selectedValue))
-                                                                .findAny();
-        TitleDeed selectedProperty = new BaseTitleDeed(null, "null", NUM, null, NUM); 
-        if (selectedPropertyO.isPresent()) {
-            selectedProperty = selectedPropertyO.get();
+    private void refreshCurrentTileInfo() {
+        final int currentPlayerId = this.turnationManager.getIdCurrPlayer();
+        final Tile currentlySittingTile = this.board.getTileForPawn(this.board.getPawn(currentPlayerId));
+        if (currentlySittingTile instanceof Property) {
+            final String propertyName = currentlySittingTile.getName();
+            this.gameView.displayPropertyContract(this.bank.getTitleDeed(propertyName));
+        } else {
+            final Special specialTile = (Special) currentlySittingTile;
+            this.gameView.displaySpecialInfo(specialTile);
         }
-        return selectedProperty;
     }
 
-    @Override
-    public List<TitleDeed> getProperties(final Player player) {
-        if (bank.getTitleDeedsByOwner(player.getName()).isEmpty()) {
-            return List.of();
+
+    private void executeEffect(final Effect effect) {
+        try {
+            effect.activate(this.turnationManager.getCurrPlayer());
+            this.gameView.displayMessage("Eseguito effetto " + effect.getDescription());
+            refreshPlayerInfo();
+        } catch (final IllegalStateException | IllegalArgumentException e) {
+            this.gameView.displayError(e);
         }
-        return bank.getTitleDeedsByOwner(player.getName()).stream().toList();
-    }
-
-    @Override
-    public BankAccount getPlayerBalance(final Player player) {
-        return bank.getBankAccount(player.getName());
-    }
-
-    @Override
-    public Color getPropertyColor(final TitleDeed selectedProperty) {
-        return selectedProperty.getGroup().getColor();
     }
 
 
     @Override
     public void endTurn() {
-        this.turnationManager.getNextPlayer();
+        if (!this.turnationManager.playerDiesIfTurnPassed()) {
+            if (this.turnationManager.canPassTurn()) {
+                this.turnationManager.getNextPlayer();
+                gameView.clearControlsUI();
+                refreshPlayerInfo();
+            } else {
+                this.gameView.displayMessage("The player has some actions to do before passing the turn");
+            }
+        } else {
+            this.gameView.displayMessage("The player will die if he passes the turn");
+        }
+
     }
 
     @Override
     public void throwDices() {
-        final Collection<Integer> result = this.turnationManager.moveByDices();
-        this.board.movePawn(this.board.getPawn(this.turnationManager.getIdCurrPlayer()), result);
-        this.gameboardView.changePos(this.turnationManager.getIdCurrPlayer(), 
-                                    this.board.getPawn(this.turnationManager.getIdCurrPlayer()).getPosition());
-    }
-
-    @Override
-    public void buyProperty() {
         try {
-            //MISSING IDENTIFIER INTEGRATION WITH  BANK
-            //final Tile currentPlayerTile = board.getTileForPawn(board.getPawn(manager.getIdCurrPlayer()));
-            //bank.buyTitleDeed(currentPlayerTile.toString(), null);
-            gameView.displayMessage("Purchase of title deed successful");
-            throw new UnsupportedOperationException("Unimplemented method 'buyProperty'");
-        } catch (final IllegalStateException e) {
-            gameView.displayError(e);
-        }
-    }
+            final Collection<Integer> result = this.turnationManager.moveByDices();
+            if (this.turnationManager.isCurrentPlayerInPrison()) {
+                this.turnationManager.canExitPrison(result);
+            }
 
-    @Override
-    public void payPropertyOwner() {
-        try {
-            //MISSING IDENTIFIER INTEGRATION WITH  BANK
-            //final Tile currentPlayerTile = board.getTileForPawn(board.getPawn(manager.getIdCurrPlayer()));
-            //bank.payRent(currentPlayerTile.toString(), null);
-            gameView.displayMessage("Rent payment successful");
-            throw new UnsupportedOperationException("Unimplemented method 'payPropertyOwner'");
-        } catch (final IllegalStateException e) {
+            final int currentPlayerId = this.turnationManager.getIdCurrPlayer();
+            this.board.movePawn(this.board.getPawn(currentPlayerId), result);
+            this.gameView.callChangePositions();
+            this.gameView.displayDiceResult(result.stream().toList());
+            final Tile currentlySittingTile = this.board.getTileForPawn(this.board.getPawn(currentPlayerId));
+            refreshCurrentTileInfo();
+            if (currentlySittingTile instanceof Property) {
+                this.turnActions.clear();
+                this.turnActions = this.bank.getApplicableActionsForTitleDeed(currentPlayerId, 
+                                        currentlySittingTile.getName(), 
+                                        result.stream().mapToInt(d -> d).sum())
+                                        .stream()
+                                        .collect(Collectors.toMap(PropertyAction::getName, d -> d));
+                this.gameView.showPlayerActions(turnActions.keySet());
+            } else if (currentlySittingTile instanceof Special) {
+                final Special specialTile = (Special) currentlySittingTile;
+                if (!"Go".equals(currentlySittingTile.getName())) {
+                    executeEffect(specialTile.getEffect());
+                }
+            }
+            final int delta = board.getPawn(currentPlayerId).getPosition().getPos() 
+                                        - board.getPawn(currentPlayerId).getPreviousPosition().getPos();
+            if (delta < 0) {
+                final Special tile = (Special) board.getTile("Go");
+                executeEffect(tile.getEffect());
+            }
+        } catch (final IllegalAccessException e) {
             gameView.displayError(e);
         }
     }
@@ -173,53 +164,12 @@ public final class GameControllerImpl implements GameController {
 
     @Override
     public void loadCurrentPlayerInformation() {
-        try {
-            //Missing method to get current player
-            //gameView.displayPlayerStats();
-            throw new UnsupportedOperationException("Unimplemented method 'loadCurrentPlayerInformation'");
-        } catch (final IllegalStateException e) {
-            gameView.displayError(e);
-        }
+        gameView.displayPlayerStats(this.turnationManager.getCurrPlayer(), this.bank);
     }
 
     @Override
     public void attachView(final MainGameView view) {
         this.gameView = view;
-    }
-
-    @Override
-    public void playerGameOver() {
-
-    }
-
-    @Override
-    public void changePositions() {
-        final Collection<Integer> res = turnationManager.moveByDices();
-        this.board.movePawn(this.board.getPawn(this.turnationManager.getIdCurrPlayer()), res);
-        gameboardView.changePos(this.turnationManager.getIdCurrPlayer(),
-                                this.board.getPawn(this.turnationManager.getIdCurrPlayer()).getPosition());
-    }
-
-    @Override
-    public void addHouse(final Property prop) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'addHouse'");
-    }
-
-    @Override
-    public void addHotel(final Property prop) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'addHotel'");
-    }
-
-    @Override
-    public int getSize(final int numTiles) {
-        return numTiles / 4 + 1;
-    }
-
-    @Override
-    public void gameOver() {
-        this.turnationManager.setOver();
     }
 
     @Override
@@ -232,26 +182,78 @@ public final class GameControllerImpl implements GameController {
         return Collections.unmodifiableList(this.board.getPawns());
     }
 
-    @SuppressFBWarnings(value = "EI_EXPOSE_REP",
-                justification = "must return reference to the object instead of a copy")
-    @Override
-    public void setBoardView(final GameboardView view) {
-        this.gameboardView = view;
-    }
-
     @Override
     public Player getCurrPlayer() {
         return this.turnationManager.getCurrPlayer();
     }
 
-    @Override
-    public String getRentString(final TitleDeed selectedProperty, final Set<TitleDeed> collect) {
-        final List<Integer> l = List.of(1);
-        final int rent = selectedProperty.getRent(collect, l);
-        if (selectedProperty.getGroup().equals(Group.SOCIETY)) {
 
-            return rent + " times dice result";
+    @Override
+    public Pawn getCurrPawn() {
+        return this.board.getPawn(this.turnationManager.getIdCurrPlayer());
+    }
+
+    @Override
+    public void executeAction(final String actionName) {
+
+        if (!turnActions.containsKey(actionName)) {
+                gameView.displayError(new IllegalArgumentException("No action with this name was registered. " 
+                + "It is possible that the current "
+                + "player has no permission to execute this action on the selected title deed"));
+                return;
         }
-        return Integer.toString(rent);
+
+        try {
+            final PropertyAction action = turnActions.get(actionName);
+            action.executePropertyAction(board, bank);
+            gameView.displayMessage(action.getDescription() + " eseguita con successo");
+            final Property currentlySittingProperty = (Property) this.board.getTileForPawn(
+                                                        this.board.getPawn(
+                                                        this.turnationManager.getIdCurrPlayer()));
+            if ("buy".equals(actionName)) {
+                gameView.callBuyProperty(currentlySittingProperty);
+            } else if ("sell".equals(actionName)) {
+                gameView.callClearPanel();
+            }
+            refreshPlayerInfo();
+            refreshCurrentTileInfo();
+        } catch (final IllegalStateException | IllegalArgumentException e) {
+            gameView.displayError(e);
+        }
+    }
+
+    @Override
+    public void start() {
+        this.turnationManager.resetBankState();
+        gameView.clearControlsUI();
+        refreshPlayerInfo();
+    }
+
+    @Override
+    public List<Pair<String, Integer>> getRanking() {
+        return this.turnationManager.getRanking();
+    }
+
+    @Override
+    public Pair<String, Integer> getWinner() {
+        return this.turnationManager.getWinner();
+    }
+
+    @Override
+    public void endTurnPlayerDies() {
+        if (!this.turnationManager.playerDiesIfTurnPassed()) {
+            if (this.turnationManager.canPassTurn()) {
+                this.turnationManager.getNextPlayer();
+            } else {
+                this.gameView.displayMessage("The player has some actions to do before passing the turn");
+            }
+        } else {
+            final String deadPlayer = this.turnationManager.getCurrPlayer().getName();
+            this.turnationManager.deletePlayer(this.turnationManager.getCurrPlayer());
+            this.turnationManager.getNextPlayer();
+            this.gameView.displayMessage("Player " + deadPlayer + " is dead");
+        }
+        gameView.clearControlsUI();
+        refreshPlayerInfo();
     }
 }

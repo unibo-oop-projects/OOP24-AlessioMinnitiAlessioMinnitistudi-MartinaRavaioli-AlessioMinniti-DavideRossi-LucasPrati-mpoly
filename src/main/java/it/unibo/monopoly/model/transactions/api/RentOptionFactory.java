@@ -9,6 +9,9 @@ import java.util.List;
 public interface RentOptionFactory {
 
     /**
+     * Create a rent option whose price is double the price passed as input
+     * and that can be applied only if the owner owns all {@link TitleDeed}
+     * of the requested group.
      * @param startRent the standard rent fare. This implementation returns 
      * a rent option whose price is double the rent fare passed as input.
      * @return A {@link RentOption} that can be applied only when
@@ -19,6 +22,7 @@ public interface RentOptionFactory {
     RentOption allDeedsOfGroupWithSameOwner(int startRent);
 
     /**
+     * Build a list of rent options whose price increases progressively.
      * @param startRent the standard rent fare. The produced rent option
      * objects' price will be a result of a transformation function applied
      * to this {@code startRent}. The first {@link RentOption} of the {@link List}
@@ -29,22 +33,22 @@ public interface RentOptionFactory {
      * @param nOptions the number of options to generate in the {@link List}
      * @return A {@link List} of options whose price increases progressively following this formula:
      * {@code rentPrice = previousOptionInTheList.getPrice() * multiplyFactor}
-     * When calling {@link RentOption#canBeApplied(java.util.Set, String)} on one of these rent options it
+     * When calling {@link RentOption#canBeApplied(java.util.Set, int)} on one of these rent options it
      * will check how many {@code titledeeds} the {@code owner} passed as input possesses. If this number 
      * is greater than an arbitrary number required by the {@code rent option} than the method will return {@code true}.
      * The arbitrary number specified earlier progressively increases through the list. 
      * So for instance:
      * <ul>
      *      <li>
-     *          Calling {@link RentOption#canBeApplied(java.util.Set, String)} on the first {@link RentOption} of the list
+     *          Calling {@link RentOption#canBeApplied(java.util.Set, int)} on the first {@link RentOption} of the list
      *          will return {@code true} if the passed {@code owner} has ownership of at least one {@link TitleDeed}
      *      </li>
      *      <li>
-     *          Calling {@link RentOption#canBeApplied(java.util.Set, String)} on the second {@link RentOption} of the list
+     *          Calling {@link RentOption#canBeApplied(java.util.Set, int)} on the second {@link RentOption} of the list
      *          will return {@code true} if the passed {@code owner} has ownership of at least two {@link TitleDeed}
      *      </li>
      *      <li>
-     *          Calling {@link RentOption#canBeApplied(java.util.Set, String)} on the third {@link RentOption} of the list
+     *          Calling {@link RentOption#canBeApplied(java.util.Set, int)} on the third {@link RentOption} of the list
      *          will return {@code true} if the passed {@code owner} has ownership of at least three {@link TitleDeed}
      *      </li>
      * </ul> 
@@ -52,4 +56,11 @@ public interface RentOptionFactory {
      */
     List<RentOption> progressivelyIncreasingPrice(int startRent, int multiplyFactor, int nOptions);
 
+    /**
+     * Creates the standard rent option. The most basic rent 
+     * option, which is always applicable
+     * @param baseRent the rent of the option
+     * @return the created rent option
+     */
+    RentOption baseRentOption(int baseRent);
 }

@@ -9,24 +9,17 @@ public interface BankAccount extends Identifiable<Integer> {
     /**
      * Increases the current amount of money in the account.
      * @param amount the amount of money to add to the account
-     * @throws IllegalStateException if the underlying implementation
-     * does not allow to deposit the given {@code amount} of money. This 
-     * depends on the state of the {@link BankAccount} and the check
-     * conditions applied by the implementation
      */
     void deposit(int amount);
 
     /** 
      * Decreases the current amount of money in the account.
      * @param amount the amount of money to pull from the account
-     * @throws IllegalStateException if the underlying implementation
-     * does not allow to pull the given {@code amount} of money. This 
-     * depends on the state of the {@link BankAccount} and the check
-     * conditions applied by the implementation
      */
     void withdraw(int amount);
 
     /**
+     * Get the balance of the account.
      * @return the current balance of the account
      */
     int getBalance();
@@ -38,10 +31,4 @@ public interface BankAccount extends Identifiable<Integer> {
      * that doesn't allow the continuation of the game 
      */
     boolean canContinue(); 
-
-    /**
-     * Get the name of the player associated with the BankAccount.
-     * @return the name of the player
-     */
-    String getPlayerName();
 }
