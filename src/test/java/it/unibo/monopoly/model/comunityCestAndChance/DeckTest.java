@@ -24,7 +24,7 @@ import it.unibo.monopoly.model.gameboard.impl.PropertyImpl;
 import it.unibo.monopoly.model.gameboard.impl.SpecialFactoryImpl;
 import it.unibo.monopoly.model.gameboard.impl.chance_comunity.api.ChancheAndCommunityChestDeck;
 import it.unibo.monopoly.model.gameboard.impl.chance_comunity.api.DeckCreator;
-import it.unibo.monopoly.model.gameboard.impl.chance_comunity.impl.Chance_CommunityChestCard;
+import it.unibo.monopoly.model.gameboard.impl.chance_comunity.impl.ChanceAndCommunityChestCard;
 import it.unibo.monopoly.model.gameboard.impl.chance_comunity.impl.DeckCreatorImpl;
 import it.unibo.monopoly.model.transactions.api.Bank;
 import it.unibo.monopoly.model.transactions.api.BankAccount;
@@ -138,9 +138,9 @@ public class DeckTest {
             System.out.println("file not found");
         }
 
-        final Chance_CommunityChestCard c1 = deck.drawInOrder();
-        final Chance_CommunityChestCard c2 = deck.drawInOrder();
-        final Chance_CommunityChestCard c3 = deck.drawInOrder();
+        final ChanceAndCommunityChestCard c1 = deck.drawInOrder();
+        final ChanceAndCommunityChestCard c2 = deck.drawInOrder();
+        final ChanceAndCommunityChestCard c3 = deck.drawInOrder();
 
         assertEquals("deposit 50", c1.getDescription());
         assertEquals("move in Jail / Just Visiting" + " then\n" + "buy Jail / Just Visiting if not owned" , c2.getDescription());

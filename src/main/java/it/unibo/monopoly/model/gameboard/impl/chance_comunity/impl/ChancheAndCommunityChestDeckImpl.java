@@ -9,15 +9,15 @@ public class ChancheAndCommunityChestDeckImpl implements ChancheAndCommunityChes
 
     private String type;
     private int ind;
-    private final List<Chance_CommunityChestCard> cards; 
+    private final List<ChanceAndCommunityChestCard> cards; 
 
-    public ChancheAndCommunityChestDeckImpl(List<Chance_CommunityChestCard> cards, String type){
+    public ChancheAndCommunityChestDeckImpl(List<ChanceAndCommunityChestCard> cards, String type){
         this.cards = cards;
         this.type = type;
     }
 
     @Override
-    public Chance_CommunityChestCard draw() {
+    public ChanceAndCommunityChestCard draw() {
         Random r = new Random();
         int index = r.nextInt(cards.size()); 
         return cards.get(index);
@@ -29,7 +29,7 @@ public class ChancheAndCommunityChestDeckImpl implements ChancheAndCommunityChes
     }
 
     @Override
-    public Chance_CommunityChestCard drawInOrder() {
+    public ChanceAndCommunityChestCard drawInOrder() {
         ind += 1;
         return cards.get((ind -1)%cards.size());
     }

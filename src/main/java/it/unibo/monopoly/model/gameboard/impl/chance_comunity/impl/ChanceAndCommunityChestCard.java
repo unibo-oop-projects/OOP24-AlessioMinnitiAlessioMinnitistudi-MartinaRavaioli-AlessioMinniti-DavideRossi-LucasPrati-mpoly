@@ -1,14 +1,14 @@
 package it.unibo.monopoly.model.gameboard.impl.chance_comunity.impl;
 
-import it.unibo.monopoly.model.gameboard.impl.chance_comunity.api.Chance_CommunityChest;
+import it.unibo.monopoly.model.gameboard.impl.chance_comunity.api.ChanceAndCommunityChest;
 import it.unibo.monopoly.model.gameboard.impl.chance_comunity.api.Command;
 import it.unibo.monopoly.model.turnation.api.Player;
 
-public class Chance_CommunityChestCard implements Chance_CommunityChest{
+public class ChanceAndCommunityChestCard implements ChanceAndCommunityChest{
 
     private Command command; 
 
-    public Chance_CommunityChestCard(Command comm) { 
+    public ChanceAndCommunityChestCard(Command comm) { 
         this.command = comm;
     } 
 

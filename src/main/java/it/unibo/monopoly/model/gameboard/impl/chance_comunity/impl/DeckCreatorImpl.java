@@ -24,12 +24,12 @@ public class DeckCreatorImpl implements DeckCreator {
         UseFileTxt fi = new UseFileTxtImpl();
         String fileAsString = fi.loadTextResource(file);
         ParserOnHyphen paars = new ParserOnHyphen(fileAsString);
-        List<Chance_CommunityChestCard> cards = new LinkedList<>();
+        List<ChanceAndCommunityChestCard> cards = new LinkedList<>();
         ComplexInterpreter compInt = new ComplexInterpreter(board, bank);
         while (paars.hasNesxt()) {
             String toInterpret = paars.next();
             Command com = compInt.interpret(toInterpret, board, turnM);
-            cards.add(new Chance_CommunityChestCard(com));
+            cards.add(new ChanceAndCommunityChestCard(com));
         } 
         return new ChancheAndCommunityChestDeckImpl(cards, type);
     }
