@@ -241,7 +241,7 @@ public final class GuiUtils {
      * @param comp the {@link Component} that we want to check
      * @return true if the {@link Component} is a textual component, false otherwise
      */
-    private static boolean isTextualComponent(Component comp) {
+    private static boolean isTextualComponent(final Component comp) {
         return comp instanceof JLabel
             || comp instanceof AbstractButton
             || comp instanceof JTextComponent

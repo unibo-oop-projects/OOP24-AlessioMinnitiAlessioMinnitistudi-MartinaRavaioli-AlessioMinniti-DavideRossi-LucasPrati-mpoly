@@ -125,10 +125,12 @@ public final class GUIVendita extends JDialog {
             final TitleDeed selectedProperty = logic.getProperty(logic.getProperties(player, bank), 
                                                                 propertiesList.getSelectedValue());
             mortageValue.setText(Integer.toString(selectedProperty.getMortgagePrice()));
-            final int auxintrent = selectedProperty.getRent(logic.getProperties(player, bank)
-                                                                        .stream()
-                                                                        .filter(p -> selectedProperty.getGroup().equals(p.getGroup()))
-                                                                        .collect(Collectors.toSet()), 1);
+            final int auxintrent = selectedProperty.getRent(
+                logic.getProperties(player, bank)
+                    .stream()
+                    .filter(p -> selectedProperty.getGroup().equals(p.getGroup()))
+                    .collect(Collectors.toSet()), 1
+            );
             String auxrent = String.valueOf(auxintrent);
             if (selectedProperty.getGroup().equals(Group.SOCIETY)) {
 
