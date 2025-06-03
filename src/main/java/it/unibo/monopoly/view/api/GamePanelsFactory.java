@@ -1,7 +1,11 @@
 package it.unibo.monopoly.view.api;
 
 import java.awt.Component;
+
 import it.unibo.monopoly.controller.api.GameController;
+import it.unibo.monopoly.model.turnation.api.Player;
+import it.unibo.monopoly.model.transactions.api.TitleDeed;
+import it.unibo.monopoly.model.transactions.api.BankAccount;
 
 /**
  * Abstract factory to create UI components 

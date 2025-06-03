@@ -14,6 +14,13 @@ import it.unibo.monopoly.model.transactions.api.RentOptionFactory;
  */
 public final class RentOptionFactoryImpl implements RentOptionFactory {
 
+    /**
+     * Creates a new {@link RentOptionFactoryImpl}.
+     */
+    public RentOptionFactoryImpl() { 
+        //intentional empty constructor
+    }
+
     @Override
     public RentOption allDeedsOfGroupWithSameOwner(final int startRent) {
         return new RentOptionImpl("Tutti i terreni", 

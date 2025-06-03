@@ -2,6 +2,8 @@ package it.unibo.monopoly.view.api;
 
 import java.util.List;
 
+import it.unibo.monopoly.controller.api.GameController;
+
 /**
  * A panel that displays the main controls to 
  * conduct the game (such as end turn, throw dices...)

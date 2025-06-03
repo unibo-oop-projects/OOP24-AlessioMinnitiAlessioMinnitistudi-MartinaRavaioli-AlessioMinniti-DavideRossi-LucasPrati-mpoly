@@ -4,6 +4,9 @@ import java.util.List;
 import java.util.Set;
 
 import it.unibo.monopoly.model.gameboard.impl.Group;
+import it.unibo.monopoly.model.gameboard.api.Property;
+import it.unibo.monopoly.model.gameboard.api.Board;
+import it.unibo.monopoly.model.turnation.api.Player;
 
 /**
  * The title deed card of a specific {@link Property}.
@@ -31,6 +34,7 @@ public interface TitleDeed {
     boolean isOwned();
 
     /**
+     * Get the id of the {@link Player} that owns this deed.
      * @return the id 
      * associated with the player that currently holds
      * ownership of this {@link TitleDeed}.
@@ -54,22 +58,26 @@ public interface TitleDeed {
     void removeOwner();
 
     /**
+     * Returns the name of the group.
      * @return the name of the group this {@link TitleDeed} is part of.
      */
     Group getGroup();
 
     /**
+     * Get the name of the title deed.
      * @return the name of this {@link TitleDeed}
      */
     String getName();
 
     /**
+     * Get the sale price of this title deed.
      * @return the price that has to be paid to buy the {@link TitleDeed}
      * and acquire its ownership
      */
     Integer getSalePrice();
 
     /**
+     * Get the mortgage price.
      * @return the amount of money the user would gain back
      * from selling the {@link TitleDeed}
      */
@@ -93,6 +101,7 @@ public interface TitleDeed {
     Integer getRent(Set<TitleDeed> groupTitleDeeds, int diceThrow);
 
     /**
+     * Get all the options available to pay rent.
      * @return the {@link List} of {@link RentOption} 
      * that may be chosen when having to pay the rent of this 
      * {@link TitleDeed}.
@@ -101,12 +110,14 @@ public interface TitleDeed {
 
 
     /**
+     * Get the price to pay to buy a house.
      * @return how much it would cost to build a house 
      * on the {@link Property} associated with this {@link TitleDeed}.
      */
     int getHousePrice();
 
     /**
+     * Get the price to pay to buy a hotel.
      * @return how much it would cost to build a hotel
      * on the {@link Property} associated with this {@link TitleDeed}.
      */

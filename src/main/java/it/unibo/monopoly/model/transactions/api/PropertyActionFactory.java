@@ -1,5 +1,8 @@
 package it.unibo.monopoly.model.transactions.api;
 
+import it.unibo.monopoly.model.gameboard.api.Pawn;
+import it.unibo.monopoly.model.gameboard.api.Property;
+
 /**
  * An abstract factory of {@link PropertyAction}.
  */
@@ -27,7 +30,7 @@ public interface PropertyActionFactory {
      * Creates an action that pays the rent requested for the specified user, for stepping
      * onto the specified {@link TitleDeed}. The payment of the rent corresponds to a transfer of
      * money from the payer {@link BankAccount} to the {@link BankAccount} of the
-     * user who owns the {@link TitleDeed}. Calls {@link Bank#payRent(String, int)}.
+     * user who owns the {@link TitleDeed}. Calls {@link Bank#payRent(int, int, int)}.
      * @param titleDeedName the name of the {@link TitleDeed} to pay the rent for
      * @param currentPlayerId the id of the player who has to pay the rent
      * @param diceThrow the result of the dice throw that brought the player's {@link Pawn} on the

@@ -1,5 +1,7 @@
 package it.unibo.monopoly.view.impl.gamepanels;
 
+import javax.swing.JPanel;
+
 import it.unibo.monopoly.controller.api.GameController;
 import it.unibo.monopoly.view.api.GamePanelsFactory;
 import it.unibo.monopoly.view.api.PlayerPanel;
@@ -14,6 +16,12 @@ import it.unibo.monopoly.view.api.GameActionsPanel;
  */
 public final class SwingPanelsFactory implements GamePanelsFactory {
 
+    /**
+     * Creates a new {@link SwingPanelsFactory}.
+     */
+    public SwingPanelsFactory() {
+        //intentional empty constructor
+    }
     @Override
     public PlayerPanel userInfoPanel() {
         return new SwingPlayerPanel();

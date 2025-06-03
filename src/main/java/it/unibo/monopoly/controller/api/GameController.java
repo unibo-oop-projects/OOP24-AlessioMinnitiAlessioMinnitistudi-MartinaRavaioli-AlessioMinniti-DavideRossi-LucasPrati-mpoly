@@ -6,7 +6,9 @@ import org.apache.commons.lang3.tuple.Pair;
 
 import it.unibo.monopoly.model.gameboard.api.Pawn;
 import it.unibo.monopoly.model.gameboard.api.Tile;
+import it.unibo.monopoly.model.gameboard.api.Board;
 import it.unibo.monopoly.model.transactions.api.PropertyAction;
+import it.unibo.monopoly.model.transactions.api.Bank;
 import it.unibo.monopoly.model.turnation.api.Player;
 import it.unibo.monopoly.utils.impl.Configuration;
 import it.unibo.monopoly.view.api.MainGameView;
@@ -79,7 +81,7 @@ public interface GameController {
 
     /**
      * Retrieves a {@link PropertyAction} with the same name ({@link PropertyAction#getName()})
-     * as the one given as input and executes it (calling {@link PropertyAction#executePropertyAction()}).
+     * as the one given as input and executes it (calling {@link PropertyAction#executePropertyAction(Board, Bank)}).
      * @param actionName the name of the {@link PropertyAction} to execute
      */
     void executeAction(String actionName);

@@ -9,6 +9,9 @@ import java.util.List;
 public interface RentOptionFactory {
 
     /**
+     * Create a rent option whose price is double the price passed as input
+     * and that can be applied only if the owner owns all {@link TitleDeed}
+     * of the requested group.
      * @param startRent the standard rent fare. This implementation returns 
      * a rent option whose price is double the rent fare passed as input.
      * @return A {@link RentOption} that can be applied only when
@@ -19,6 +22,7 @@ public interface RentOptionFactory {
     RentOption allDeedsOfGroupWithSameOwner(int startRent);
 
     /**
+     * Build a list of rent options whose price increases progressively.
      * @param startRent the standard rent fare. The produced rent option
      * objects' price will be a result of a transformation function applied
      * to this {@code startRent}. The first {@link RentOption} of the {@link List}
