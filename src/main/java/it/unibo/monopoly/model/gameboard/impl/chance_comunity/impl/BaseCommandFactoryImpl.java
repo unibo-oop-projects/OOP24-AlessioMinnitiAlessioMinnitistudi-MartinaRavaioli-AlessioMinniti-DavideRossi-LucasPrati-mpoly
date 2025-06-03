@@ -56,7 +56,7 @@ public final class BaseCommandFactoryImpl implements BaseCommandFactory {
         };
     }
 
-    private BaseCommand moveIn(Board board) {
+    private BaseCommand moveIn(final Board board) {
         return new BaseCommand() {
 
             private String desc;
@@ -268,6 +268,7 @@ public final class BaseCommandFactoryImpl implements BaseCommandFactory {
         };
     }
 
+    @Override
     public BaseCommand still() {
         return new BaseCommand() {
             private final String keyword = "still";
@@ -300,6 +301,7 @@ public final class BaseCommandFactoryImpl implements BaseCommandFactory {
         };
     }
 
+    @Override
     public List<BaseCommand> allCommand(final Bank bank, final Board board) {
         return List.of(
             this.deposit(bank),

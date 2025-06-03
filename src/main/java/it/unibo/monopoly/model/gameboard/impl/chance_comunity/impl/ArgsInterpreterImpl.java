@@ -54,7 +54,8 @@ public final class ArgsInterpreterImpl implements ArgsInterpreter {
     }
 
     @Override
-    public void interpret(final String toInterpretString, final BaseCommand command, final Board board, final TurnationManager turnM) {
+    public void interpret(final String toInterpretString, final BaseCommand command, 
+                                        final Board board, final TurnationManager turnM) {
         final Parser p = new ParserOnComma(toInterpretString);
         while (p.hasNesxt()) {
             final String str = p.next();

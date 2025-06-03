@@ -7,7 +7,7 @@ import it.unibo.monopoly.model.turnation.api.Player;
 
 /**
  * implementation of complex command.
- * Commands that are composed by base commands and need to execute each of them
+ * xCommands that are composed by base commands and need to execute each of them
  */
 public final class ComplexCommand implements Command {
     private final List<Command> commands;

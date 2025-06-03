@@ -11,6 +11,9 @@ import it.unibo.monopoly.model.gameboard.impl.chance_comunity.api.BaseCommandFac
 import it.unibo.monopoly.model.gameboard.impl.chance_comunity.api.BaseInterpreterInt;
 import it.unibo.monopoly.model.turnation.api.TurnationManager;
 
+/**
+ * implementation of base interpreter.
+ */
 public final class BaseInterpreter implements BaseInterpreterInt {
 
     private List<BaseCommand> baseCommands = new LinkedList<>();

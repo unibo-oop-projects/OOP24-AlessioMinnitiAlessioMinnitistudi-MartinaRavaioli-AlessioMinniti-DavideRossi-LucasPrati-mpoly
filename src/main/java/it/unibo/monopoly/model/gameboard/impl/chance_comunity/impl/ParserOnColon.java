@@ -2,34 +2,39 @@ package it.unibo.monopoly.model.gameboard.impl.chance_comunity.impl;
 
 import it.unibo.monopoly.model.gameboard.impl.chance_comunity.api.Parser;
 
-public class ParserOnColon implements Parser{
+/**
+ * implementation of parser on colon, return the srting before every colon.
+ */
+public final class ParserOnColon implements Parser {
 
+    private final static int COLON = 58;
     private final String toParseString;
-    private int index = 0;
+    private int index;
 
-    public ParserOnColon(final String str){
+    /**
+     * constructor.
+     * @param str the string to parse on
+     */
+    public ParserOnColon(final String str) {
         this.toParseString = str; 
     }
 
     @Override
     public String next() {
-        String ret=""; 
+        String ret = ""; 
         for (int i = index; i < toParseString.length(); i++) {
             index = i + 2;
-            if (toParseString.charAt(i) == 58) {
+            if (toParseString.charAt(i) == COLON) {
                 return ret;
             }
             ret = ret + toParseString.charAt(i);
         }
-        
         return ret;
-        
-        
     }
 
     @Override
     public boolean hasNesxt() {
-        return index < toParseString.length()-1;
+        return index < toParseString.length() - 1;
     }
 
 }

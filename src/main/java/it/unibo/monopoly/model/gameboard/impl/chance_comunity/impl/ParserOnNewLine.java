@@ -2,25 +2,33 @@ package it.unibo.monopoly.model.gameboard.impl.chance_comunity.impl;
 
 import it.unibo.monopoly.model.gameboard.impl.chance_comunity.api.Parser;
 
-public class ParserOnNewLine implements Parser{
+/**
+ * implementation of a parser on new lilne, returns every new line.
+ */
+public final class ParserOnNewLine implements Parser{
+    
+    private final static int NEWLINE = 10;
     private final String toParseString;
-    private int index = 0;
+    private int index;
 
-    public ParserOnNewLine(final String str){
+    /**
+     * constructor.
+     * @param str the string to parse on
+     */
+    public ParserOnNewLine(final String str) {
         this.toParseString = str; 
     }
 
     @Override
     public String next(){
-        String ret=""; 
+        String ret = ""; 
         for (int i = index; i < toParseString.length(); i++) {
             index = i + 1;
-            if (toParseString.charAt(i) == 10) {
+            if (toParseString.charAt(i) == NEWLINE) {
                 return ret;
             }
             ret = ret + toParseString.charAt(i);
         }
-        
         return ret;
 
     }

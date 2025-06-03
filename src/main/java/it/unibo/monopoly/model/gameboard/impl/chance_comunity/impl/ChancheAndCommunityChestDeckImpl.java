@@ -5,12 +5,15 @@ import java.util.Random;
 
 import it.unibo.monopoly.model.gameboard.impl.chance_comunity.api.ChancheAndCommunityChestDeck;
 
-public final class ChancheAndCommunityChestDeckImpl implements ChancheAndCommunityChestDeck{
+/**
+ * implementation of ChancheAndCommunityChestDeck.
+ */
+public final class ChancheAndCommunityChestDeckImpl implements ChancheAndCommunityChestDeck {
 
     private String type;
     private int ind;
     private final List<ChanceAndCommunityChestCard> cards; 
-    private static final Random R = new Random();
+    private final static Random R = new Random();
 
     /**
      * constructor.

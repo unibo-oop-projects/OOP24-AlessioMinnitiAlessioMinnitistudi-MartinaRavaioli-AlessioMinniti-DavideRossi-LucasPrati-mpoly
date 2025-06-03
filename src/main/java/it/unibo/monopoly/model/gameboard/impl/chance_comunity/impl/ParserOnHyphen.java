@@ -2,13 +2,21 @@ package it.unibo.monopoly.model.gameboard.impl.chance_comunity.impl;
 
 import it.unibo.monopoly.model.gameboard.impl.chance_comunity.api.Parser;
 
-public class ParserOnHyphen implements Parser {
+/**
+ * implementation of a parser on hypen, returns the strings before every hypen.
+ */
+public final class ParserOnHyphen implements Parser {
 
+    private final static int HYPEN = 45;
     private final String toParse;
     private String retString;
     private int index;
 
-    public ParserOnHyphen(String toParseString){
+    /**
+     * constructor.
+     * @param toParseString the string to parse on
+     */
+    public ParserOnHyphen(final String toParseString) {
         this.toParse = toParseString;
         index = 0;
     } 
@@ -23,8 +31,8 @@ public class ParserOnHyphen implements Parser {
 
             for (int i = index; i < toParse.length(); i++) {
                 char c = toParse.charAt(i);
-                index = i +2; 
-                if ( c == 45) {
+                index = i + 2; 
+                if (c == HYPEN) {
                     retString = rStr;
                     return true;
                 } else {
@@ -34,7 +42,6 @@ public class ParserOnHyphen implements Parser {
             retString = rStr; 
             return true;
         }
-        
     }
 
     @Override

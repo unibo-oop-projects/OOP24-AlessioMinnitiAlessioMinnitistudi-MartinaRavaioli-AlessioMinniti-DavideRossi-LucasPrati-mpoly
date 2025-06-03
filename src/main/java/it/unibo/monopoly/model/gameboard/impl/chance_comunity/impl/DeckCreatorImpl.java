@@ -12,23 +12,22 @@ import it.unibo.monopoly.model.turnation.api.TurnationManager;
 import it.unibo.monopoly.utils.api.UseFileTxt;
 import it.unibo.monopoly.utils.impl.UseFileTxtImpl;
 
-public class DeckCreatorImpl implements DeckCreator {
-
-
-    public DeckCreatorImpl(){
-    }
+/**
+ * implementation of deck creator.
+ */
+public final class DeckCreatorImpl implements DeckCreator {
 
     @Override
-    public ChancheAndCommunityChestDeck createDeck(String file, String type, Board board, Bank bank, TurnationManager turnM) {
+    public ChancheAndCommunityChestDeck createDeck(final String file, final String type, final Board board, final Bank bank, final TurnationManager turnM) {
 
-        UseFileTxt fi = new UseFileTxtImpl();
-        String fileAsString = fi.loadTextResource(file);
-        ParserOnHyphen paars = new ParserOnHyphen(fileAsString);
-        List<ChanceAndCommunityChestCard> cards = new LinkedList<>();
-        ComplexInterpreter compInt = new ComplexInterpreter(board, bank);
+        final UseFileTxt fi = new UseFileTxtImpl();
+        final String fileAsString = fi.loadTextResource(file);
+        final ParserOnHyphen paars = new ParserOnHyphen(fileAsString);
+        final List<ChanceAndCommunityChestCard> cards = new LinkedList<>();
+        final ComplexInterpreter compInt = new ComplexInterpreter(board, bank);
         while (paars.hasNesxt()) {
-            String toInterpret = paars.next();
-            Command com = compInt.interpret(toInterpret, board, turnM);
+            final String toInterpret = paars.next();
+            final Command com = compInt.interpret(toInterpret, board, turnM);
             cards.add(new ChanceAndCommunityChestCard(com));
         } 
         return new ChancheAndCommunityChestDeckImpl(cards, type);

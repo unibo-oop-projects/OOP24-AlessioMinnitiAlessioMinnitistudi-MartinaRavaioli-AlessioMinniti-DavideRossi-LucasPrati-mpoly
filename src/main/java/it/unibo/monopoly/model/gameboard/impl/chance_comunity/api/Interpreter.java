@@ -11,7 +11,7 @@ public interface Interpreter {
     /**
      * this method interprets and transalte 
      * a String in a natural langage to a command object.
-     * @param toInterpretStriing the string that must be translated
+     * @param toInterpretString the string that must be translated
      * @param board to execute some of the commands
      * @param turnM to execute some of the commands
      * @return the command rapresented by that string
