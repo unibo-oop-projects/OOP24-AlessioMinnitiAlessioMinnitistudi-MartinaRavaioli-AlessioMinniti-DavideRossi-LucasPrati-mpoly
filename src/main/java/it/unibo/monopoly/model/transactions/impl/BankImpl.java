@@ -271,10 +271,15 @@ public final class BankImpl implements Bank {
             transactionLedger.registerTransaction("buy", 0, 1);
         } else if (selected.getOwnerId() == currentPlayerId) {
             returnSet.add(bankActionFactory.createSell(titleDeedName));
+            transactionLedger.registerTransaction("sell", 0);
             returnSet.add(bankActionFactory.createBuyHouse(titleDeedName));
             transactionLedger.registerTransaction("buyHouse", 0);
             returnSet.add(bankActionFactory.createBuyHotel(titleDeedName));
             transactionLedger.registerTransaction("buyHotel", 0);
+            returnSet.add(bankActionFactory.createSellHouse(titleDeedName));
+            transactionLedger.registerTransaction("sellHouse", 0);
+            returnSet.add(bankActionFactory.createSellHotel(titleDeedName));
+            transactionLedger.registerTransaction("sellHotel", 0);
         } else {
             returnSet.add(bankActionFactory.createPayRent(titleDeedName, currentPlayerId, diceThrow));
             transactionLedger.registerTransaction(PAY_TRANSACTION, 1, 1);
@@ -286,6 +291,30 @@ public final class BankImpl implements Bank {
     @Override
     public BankState getBankStateObject() {
         return this.new BankStateAdapter();
+    }
+
+    @Override
+    public void sellHouse(final String titleDeedName) {
+        Objects.requireNonNull(titleDeedName);
+        final TitleDeed deed = findTitleDeed(titleDeedName);
+        if (!deed.isOwned()) {
+            throw new IllegalStateException("Cannot sell an house of a title deed with no owner");
+        }
+        final BankAccount seller = findAccount(deed.getOwnerId());
+        seller.deposit(deed.getHousePrice());
+        transactionLedger.markExecution("sellHouse");
+    }
+
+    @Override
+    public void sellHotel(final String titleDeedName) {
+        Objects.requireNonNull(titleDeedName);
+        final TitleDeed deed = findTitleDeed(titleDeedName);
+        if (!deed.isOwned()) {
+            throw new IllegalStateException("Cannot sell the hotel of a title deed with no owner");
+        }
+        final BankAccount seller = findAccount(deed.getOwnerId());
+        seller.deposit(deed.getHotelPrice());
+        transactionLedger.markExecution("sellHotel");
     }
 
     private final class BankStateAdapter implements BankState {
@@ -330,31 +359,6 @@ public final class BankImpl implements Bank {
             .forEach(TitleDeed::removeOwner);
             accounts.remove(pl.getID());
         }
-    }
-
-    @Override
-    public void sellHouse(final String titleDeedName) {
-        Objects.requireNonNull(titleDeedName);
-        final TitleDeed deed = findTitleDeed(titleDeedName);
-        if (!deed.isOwned()) {
-            throw new IllegalStateException("Cannot sell an house of a title deed with no owner");
-        }
-        final BankAccount seller = findAccount(deed.getOwnerId());
-        seller.deposit(deed.getHousePrice());
-        transactionLedger.markExecution("sellHouse");
-    }
-
-
-    @Override
-    public void sellHotel(final String titleDeedName) {
-        Objects.requireNonNull(titleDeedName);
-        final TitleDeed deed = findTitleDeed(titleDeedName);
-        if (!deed.isOwned()) {
-            throw new IllegalStateException("Cannot sell the hotel of a title deed with no owner");
-        }
-        final BankAccount seller = findAccount(deed.getOwnerId());
-        seller.deposit(deed.getHotelPrice());
-        transactionLedger.markExecution("sellHotel");
     }
 
 }

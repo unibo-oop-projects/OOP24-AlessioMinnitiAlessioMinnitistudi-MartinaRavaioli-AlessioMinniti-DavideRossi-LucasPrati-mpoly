@@ -1,5 +1,6 @@
 package it.unibo.monopoly.model.gameboard.impl;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.monopoly.model.gameboard.api.Property;
 import it.unibo.monopoly.model.turnation.api.Position;
 /**
@@ -13,8 +14,12 @@ public class BuildablePropertyImpl implements Property {
 
     /**
      * constructor.
-     * @param prop
+     * @param prop property to decorate
     */
+    @SuppressFBWarnings(
+        value = "EI_EXPOSE_REP2",
+        justification = "Injection of shared mutable dependencies is intentional and controlled in this architecture."
+    )
     public BuildablePropertyImpl(final Property prop) {
         this.decorated = prop;
         this.nHouses = 0;
@@ -85,7 +90,7 @@ public class BuildablePropertyImpl implements Property {
     }
 
     @Override
-    public void deleteHouse() throws IllegalAccessException {
+    public final void deleteHouse() throws IllegalAccessException {
         if (getNHouses() < 1) {
             throw new IllegalAccessException("the property doesn't have any houses");
         }
@@ -94,7 +99,7 @@ public class BuildablePropertyImpl implements Property {
     }
 
     @Override
-    public void deleteHotel() throws IllegalAccessException {
+    public final void deleteHotel() throws IllegalAccessException {
         if (!hasHotel()) {
             throw new IllegalAccessException("the property doesn't have hotel");
         }

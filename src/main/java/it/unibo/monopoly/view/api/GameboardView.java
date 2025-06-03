@@ -34,4 +34,15 @@ public interface GameboardView extends GamePanel {
      * clear the panel.
     */
     void clearPanel();
+    /**
+     * remove house from the property.
+     * @param prop property
+     * @param numHouses new number of houses
+     */
+    void removeHouse(Property prop, int numHouses);
+    /**
+     * remove hotel from the property.
+     * @param prop property
+     */
+    void removeHotel(Property prop);
 }
