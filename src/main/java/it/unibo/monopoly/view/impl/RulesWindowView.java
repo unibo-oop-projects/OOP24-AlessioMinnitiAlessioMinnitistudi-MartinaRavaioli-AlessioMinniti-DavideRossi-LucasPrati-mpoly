@@ -45,7 +45,7 @@ public final class RulesWindowView extends JDialog {
      * @param rules a {@link String} with the rules of the game, to show
      */
     public RulesWindowView(final Frame parent, final Configuration config, final String rules) {
-        var size = GuiUtils.getDimensionWindow(PROPORTION, PROPORTION);
+        final var size = GuiUtils.getDimensionWindow(PROPORTION, PROPORTION);
         GuiUtils.configureWindow(this,
                                  (int) size.getWidth(),
                                  (int) size.getHeight(),
