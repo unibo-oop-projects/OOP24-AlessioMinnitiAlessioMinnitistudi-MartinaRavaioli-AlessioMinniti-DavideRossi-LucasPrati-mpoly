@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.awt.Color;
 import java.util.List;
 import java.util.Set;
+import java.util.function.Predicate;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -51,6 +52,7 @@ public class BaseAndComplexCommandFactoryTest {
     private static final Color VALID_COLOR1 = Color.GREEN;
     private static final Color VALID_COLOR2 = Color.PINK;
     private static final Color VALID_COLOR3 = Color.BLACK;
+    private static final Predicate<BankAccount> VALID_PREDICATE = e -> true;
 
     private static final int VALID_SALE_PRICE1 = 60;
     private static final int VALID_SALE_PRICE2 = 50;
@@ -86,9 +88,9 @@ public class BaseAndComplexCommandFactoryTest {
 
 
     private final Set<BankAccount> accounts = Set.of(
-        new SimpleBankAccountImpl(VALID_ID1, PLAYER1_NAME), 
-        new SimpleBankAccountImpl(VALID_ID2, PLAYER2_NAME), 
-        new SimpleBankAccountImpl(VALID_ID3, PLAYER3_NAME)
+        new SimpleBankAccountImpl(VALID_ID1, VALID_PREDICATE), 
+        new SimpleBankAccountImpl(VALID_ID2, VALID_PREDICATE), 
+        new SimpleBankAccountImpl(VALID_ID3, VALID_PREDICATE)
     );
     private final Set<TitleDeed> deeds = Set.of(
         new BaseTitleDeed(Group.PURPLE, TITLE_DEED_NAME1, VALID_SALE_PRICE1, s -> s / 2, VALID_BASE_RENT),
@@ -125,7 +127,8 @@ public class BaseAndComplexCommandFactoryTest {
         c.addIntArg(ammount);
         c.execute(p1);
         final int finalAmmount = 1050;
-        assertEquals(finalAmmount, bank.getBankAccount(p1.getName()).getBalance());
+        assertEquals("deposit " + ammount, c.getKeyWord());
+        assertEquals(finalAmmount, bank.getBankAccount(p1.getID()).getBalance());
     }
     @Test
     void Test1(){
@@ -135,6 +138,7 @@ public class BaseAndComplexCommandFactoryTest {
         
         c.addIntArg(ammount);
         c.execute(p1);
+        assertEquals("move of " + ammount + " steps", c.getKeyWord());
         assertEquals(pos2.getPos(), board.getPawn(p1.getID()).getPosition().getPos());
     }
     
@@ -145,6 +149,7 @@ public class BaseAndComplexCommandFactoryTest {
         BaseCommand c = commands.get(indice);
         c.addTileArg(s);
         c.execute(p1);
+        assertEquals("move in " + s, c.getKeyWord());
         assertEquals(pos4.getPos(), board.getPawn(p1.getID()).getPosition().getPos());
         
     }
@@ -156,7 +161,8 @@ public class BaseAndComplexCommandFactoryTest {
         c.addIntArg(ammount);
         c.execute(p1);
         final int finalAmmount = 950;
-        assertEquals(finalAmmount, bank.getBankAccount(p1.getName()).getBalance());
+        assertEquals("withdraw " + ammount, c.getKeyWord());
+        assertEquals(finalAmmount, bank.getBankAccount(p1.getID()).getBalance());
     }
 
     @Test
@@ -169,24 +175,27 @@ public class BaseAndComplexCommandFactoryTest {
         c.execute(p1);
         final int finalAmmount1 = 1100;
         final int finalAmmount2 = 950;
-        assertEquals(finalAmmount1, bank.getBankAccount(p1.getName()).getBalance());
-        assertEquals(finalAmmount2, bank.getBankAccount(p2.getName()).getBalance());
-        assertEquals(finalAmmount2, bank.getBankAccount(p3.getName()).getBalance());
+        assertEquals("deposit " + ammount + " from all players", c.getKeyWord());
+        assertEquals(finalAmmount1, bank.getBankAccount(p1.getID()).getBalance());
+        assertEquals(finalAmmount2, bank.getBankAccount(p2.getID()).getBalance());
+        assertEquals(finalAmmount2, bank.getBankAccount(p3.getID()).getBalance());
     }
     
     @Test
     void Test5(){
         final String s1 = TITLE_DEED_NAME1;
         final String s2 = TITLE_DEED_NAME2;
+        bank.getBankStateObject().resetTransactionData();
         indice = 5;
         BaseCommand c = commands.get(indice);
         c.addTileArg(s1);
         c.execute(p1);
-        assertEquals(p1.getName(), bank.getTitleDeed(s1).getOwner());
-        bank.buyTitleDeed(s2, p2.getName());
+        assertEquals("buy " + s1 + " if not owned", c.getKeyWord());
+        assertEquals(p1.getID(), bank.getTitleDeed(s1).getOwnerId());
+        bank.buyTitleDeed(s2, p2.getID());
         c.addTileArg(s2);
         c.execute(p1);
-        assertEquals(p2.getName(), bank.getTitleDeed(s2).getOwner());
+        assertEquals(p2.getID(), bank.getTitleDeed(s2).getOwnerId());
     }
 
     @Test
@@ -194,6 +203,7 @@ public class BaseAndComplexCommandFactoryTest {
         final String s1 = TITLE_DEED_NAME1;
         final String s2 = TITLE_DEED_NAME2;
         indice = 5;
+        bank.getBankStateObject().resetTransactionData();
         BaseCommand c1 = commands.get(indice);
         c1.addTileArg(s1);
         indice = 2;
@@ -202,7 +212,8 @@ public class BaseAndComplexCommandFactoryTest {
         List<Command> li = List.of(c1, c2);
         Command c = new ComplexCommand(li, s2);
         c.execute(p1);
-        assertEquals(p1.getName(), bank.getTitleDeed(s1).getOwner());
+        assertEquals("buy " + s1 + " if not owned" + " then\n" + "move in " + s2, c.getKeyWord());
+        assertEquals(p1.getID(), bank.getTitleDeed(s1).getOwnerId());
         assertEquals(pos1.getPos(), board.getPawn(p1.getID()).getPosition().getPos());
         
     }

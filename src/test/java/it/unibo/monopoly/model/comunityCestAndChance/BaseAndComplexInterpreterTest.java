@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.awt.Color;
 import java.util.List;
 import java.util.Set;
+import java.util.function.Predicate;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -65,6 +66,7 @@ public class BaseAndComplexInterpreterTest {
     private static final Color VALID_COLOR1 = Color.GREEN;
     private static final Color VALID_COLOR2 = Color.PINK;
     private static final Color VALID_COLOR3 = Color.BLACK;
+    private static final Predicate<BankAccount> VALID_PREDICATE = e -> true;
 
     private static final int VALID_SALE_PRICE1 = 60;
     private static final int VALID_SALE_PRICE2 = 50;
@@ -80,7 +82,7 @@ public class BaseAndComplexInterpreterTest {
 
     
     private final UseFileTxt f = new UseFileTxtImpl();
-    private final String fi = f.loadTextResource("cards//command.txt");
+    private final String fi = f.loadTextResource("cards//interpreterTest.txt");
     private Bank bank;
     private Board board;
     private TurnationManager turnM; 
@@ -109,9 +111,9 @@ public class BaseAndComplexInterpreterTest {
 
 
     private final Set<BankAccount> accounts = Set.of(
-        new SimpleBankAccountImpl(VALID_ID1, PLAYER1_NAME), 
-        new SimpleBankAccountImpl(VALID_ID2, PLAYER2_NAME), 
-        new SimpleBankAccountImpl(VALID_ID3, PLAYER3_NAME)
+        new SimpleBankAccountImpl(VALID_ID1, VALID_PREDICATE), 
+        new SimpleBankAccountImpl(VALID_ID2, VALID_PREDICATE), 
+        new SimpleBankAccountImpl(VALID_ID3, VALID_PREDICATE)
     );
     private final Set<TitleDeed> deeds = Set.of(
         new BaseTitleDeed(Group.PURPLE, TITLE_DEED_NAME1, VALID_SALE_PRICE1, s -> s / 2, VALID_BASE_RENT),
@@ -150,22 +152,16 @@ public class BaseAndComplexInterpreterTest {
         parOnHypen.hasNesxt();
         final Parser parOnColon = new ParserOnColon(parOnHypen.next());
         parOnColon.hasNesxt();
-        BaseCommand c = baseInt.interpret(parOnColon.next(), board, turnM);
-        parOnColon.hasNesxt();
-        argsInt.interpret(parOnColon.next(), c, board, turnM);
-        c.execute(p1);
-        final int finalAmmount = 1050;
-        assertEquals(finalAmmount, bank.getBankAccount(p1.getName()).getBalance());
+        BaseCommand c = baseInt.interpret("deposit", board, turnM);
+        assertEquals("deposit", c.getKeyWord());
     }
     @Test
     void Test1(){
-        final int ammount = 2;
-        indice = 1 ;
-        BaseCommand c = commands.get(indice);
-        
-        c.addIntArg(ammount);
-        c.execute(p1);
-        assertEquals(pos2.getPos(), board.getPawn(p1.getID()).getPosition().getPos());
+        parOnHypen.hasNesxt();
+        final Parser parOnColon = new ParserOnColon(parOnHypen.next());
+        parOnColon.hasNesxt();
+        BaseCommand c = baseInt.interpret(parOnColon.next(), board, turnM);
+        assertEquals("move of steps", c.getKeyWord());
     }
     
     @Test
@@ -186,7 +182,7 @@ public class BaseAndComplexInterpreterTest {
         c.addIntArg(ammount);
         c.execute(p1);
         final int finalAmmount = 950;
-        assertEquals(finalAmmount, bank.getBankAccount(p1.getName()).getBalance());
+        assertEquals(finalAmmount, bank.getBankAccount(p1.getID()).getBalance());
     }
 
     @Test
@@ -199,9 +195,9 @@ public class BaseAndComplexInterpreterTest {
         c.execute(p1);
         final int finalAmmount1 = 1100;
         final int finalAmmount2 = 950;
-        assertEquals(finalAmmount1, bank.getBankAccount(p1.getName()).getBalance());
-        assertEquals(finalAmmount2, bank.getBankAccount(p2.getName()).getBalance());
-        assertEquals(finalAmmount2, bank.getBankAccount(p3.getName()).getBalance());
+        assertEquals(finalAmmount1, bank.getBankAccount(p1.getID()).getBalance());
+        assertEquals(finalAmmount2, bank.getBankAccount(p2.getID()).getBalance());
+        assertEquals(finalAmmount2, bank.getBankAccount(p3.getID()).getBalance());
     }
     
     @Test
@@ -212,11 +208,11 @@ public class BaseAndComplexInterpreterTest {
         BaseCommand c = commands.get(indice);
         c.addTileArg(s1);
         c.execute(p1);
-        assertEquals(p1.getName(), bank.getTitleDeed(s1).getOwner());
-        bank.buyTitleDeed(s2, p2.getName());
+        assertEquals(p1.getID(), bank.getTitleDeed(s1).getOwnerId());
+        bank.buyTitleDeed(s2, p2.getID());
         c.addTileArg(s2);
         c.execute(p1);
-        assertEquals(p2.getName(), bank.getTitleDeed(s2).getOwner());
+        assertEquals(p2.getID(), bank.getTitleDeed(s2).getOwnerId());
     }
 
     @Test
@@ -232,7 +228,7 @@ public class BaseAndComplexInterpreterTest {
         c2.addTileArg(s2);
         Command c = complexInt.interpret(parOnHypen.next(), board, turnM);
         c.execute(p1);
-        assertEquals(p1.getName(), bank.getTitleDeed(s1).getOwner());
+        assertEquals(p1.getID(), bank.getTitleDeed(s1).getOwnerId());
         assertEquals(pos1.getPos(), board.getPawn(p1.getID()).getPosition().getPos());
         
     }
