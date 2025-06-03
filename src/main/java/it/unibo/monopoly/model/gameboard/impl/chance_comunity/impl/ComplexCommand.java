@@ -9,17 +9,9 @@ public class ComplexCommand implements Command {
     private final List<Command> commands;
     private final String keyword;
 
-    public ComplexCommand(List<Command> commands, String desc){
+    public ComplexCommand(final List<Command> commands, final String desc){
         this.commands = commands;
-        String str = "";
-        for (Command command : commands) {
-            if (commands.indexOf(command) == commands.size()-1) {
-                str = str + command.getKeyWord();
-            } else {
-                str = str + command.getKeyWord() + " then\n";
-            }
-        }
-        this.keyword = str;
+        this.keyword = desc;
         
     }
 

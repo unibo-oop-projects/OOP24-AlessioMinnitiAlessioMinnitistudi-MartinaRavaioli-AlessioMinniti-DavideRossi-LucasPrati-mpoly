@@ -141,7 +141,7 @@ public class BaseAndComplexInterpreterTest {
     }
 
     @Test
-    void Test0(){
+    void test0(){
         final Parser parOnColon = new ParserOnColon("deposit: 50");
         parOnColon.hasNesxt();
         BaseCommand c = baseInt.interpret(parOnColon.next(), board, turnM);
@@ -150,7 +150,7 @@ public class BaseAndComplexInterpreterTest {
         assertEquals("deposit " + 50, c.getDesc());
     }
     @Test
-    void Test1(){
+    void test1(){
         final int num = 3;
         final Parser parOnColon = new ParserOnColon("move of steps: " + num);
         parOnColon.hasNesxt();
@@ -161,7 +161,7 @@ public class BaseAndComplexInterpreterTest {
     }
     
     @Test
-    void Test2(){
+    void test2(){
         final String s = "Jail / Just Visiting";
         final Parser parOnColon = new ParserOnColon("move in tile: " + s);
         parOnColon.hasNesxt();
@@ -172,7 +172,7 @@ public class BaseAndComplexInterpreterTest {
 
     }
     @Test
-    void Test3(){
+    void test3(){
         final int ammount = 50;
         final Parser parOnColon = new ParserOnColon("withdraw: " + ammount);
         parOnColon.hasNesxt();
@@ -183,7 +183,7 @@ public class BaseAndComplexInterpreterTest {
     }
 
     @Test
-    void Test4(){
+    void test4(){
         final int ammount = 50;
         final Parser parOnColon = new ParserOnColon("deposit from: all, " + ammount);
         parOnColon.hasNesxt();
@@ -194,7 +194,7 @@ public class BaseAndComplexInterpreterTest {
     }
     
     @Test
-    void Test5(){
+    void test5(){
         final String s1 = TITLE_DEED_NAME1;
         final Parser parOnColon = new ParserOnColon("buy if not owned: " + s1);
         parOnColon.hasNesxt();

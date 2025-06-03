@@ -1,6 +1,7 @@
 package it.unibo.monopoly.model.gameboard.impl.chance_comunity.impl;
 
 import java.util.List;
+import java.util.Random;
 
 import it.unibo.monopoly.model.gameboard.impl.chance_comunity.api.ChancheAndCommunityChestDeck;
 
@@ -17,7 +18,8 @@ public class ChancheAndCommunityChestDeckImpl implements ChancheAndCommunityChes
 
     @Override
     public Chance_CommunityChestCard draw() {
-        int index = (int)Math.random()*100 % cards.size(); 
+        Random r = new Random();
+        int index = r.nextInt(cards.size()); 
         return cards.get(index);
     }
 

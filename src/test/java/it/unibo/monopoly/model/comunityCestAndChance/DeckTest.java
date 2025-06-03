@@ -131,7 +131,7 @@ public class DeckTest {
     }
 
     @Test
-    void TestDeck(){
+    void testDeck(){
         try {
             deck = creator.createDeck("cards//DeckCardTest.txt", VALID_TYPE, board, bank, turnM); 
         } catch (FileNotFoundException e) {

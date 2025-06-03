@@ -120,7 +120,7 @@ public class BaseAndComplexCommandFactoryTest {
     }
 
     @Test
-    void Test0(){
+    void test0(){
         final int ammount = 50;
         BaseCommand c = commands.get(indice);
         indice += 1;
@@ -131,7 +131,7 @@ public class BaseAndComplexCommandFactoryTest {
         assertEquals(finalAmmount, bank.getBankAccount(p1.getID()).getBalance());
     }
     @Test
-    void Test1(){
+    void test1(){
         final int ammount = 2;
         indice = 1 ;
         BaseCommand c = commands.get(indice);
@@ -143,7 +143,7 @@ public class BaseAndComplexCommandFactoryTest {
     }
     
     @Test
-    void Test2(){
+    void test2(){
         final String s = "Jail / Just Visiting";
         indice = 2;
         BaseCommand c = commands.get(indice);
@@ -154,7 +154,7 @@ public class BaseAndComplexCommandFactoryTest {
         
     }
     @Test
-    void Test3(){
+    void test3(){
         final int ammount = 50;
         indice = 3;
         BaseCommand c = commands.get(indice);
@@ -166,7 +166,7 @@ public class BaseAndComplexCommandFactoryTest {
     }
 
     @Test
-    void Test4(){
+    void test4(){
         final int ammount = 50;
         indice = 4;
         BaseCommand c = commands.get(indice);
@@ -182,7 +182,7 @@ public class BaseAndComplexCommandFactoryTest {
     }
     
     @Test
-    void Test5(){
+    void test5(){
         final String s1 = TITLE_DEED_NAME1;
         final String s2 = TITLE_DEED_NAME2;
         bank.getBankStateObject().resetTransactionData();
