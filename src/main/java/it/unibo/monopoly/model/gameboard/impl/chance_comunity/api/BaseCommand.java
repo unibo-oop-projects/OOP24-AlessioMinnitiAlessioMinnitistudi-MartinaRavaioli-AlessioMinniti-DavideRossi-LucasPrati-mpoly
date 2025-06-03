@@ -5,7 +5,7 @@ import java.util.List;
 import it.unibo.monopoly.model.turnation.api.Player;
 
 /**
- * interface for base command that need arguments to be added
+ * interface for base command that need arguments to be added.
  */
 public interface BaseCommand extends Command {
 

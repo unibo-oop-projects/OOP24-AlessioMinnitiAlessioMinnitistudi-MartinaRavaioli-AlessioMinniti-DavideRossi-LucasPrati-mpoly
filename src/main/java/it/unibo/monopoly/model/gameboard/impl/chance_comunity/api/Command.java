@@ -2,6 +2,9 @@ package it.unibo.monopoly.model.gameboard.impl.chance_comunity.api;
 
 import it.unibo.monopoly.model.turnation.api.Player;
 
+/**
+ * interface for generic command.
+ */
 public interface Command {
 
     /**
@@ -15,7 +18,7 @@ public interface Command {
      * @return the keword for the command
      */
     String getKeyWord();
-    
+
     /**
      * get a description in natural language of what the command does.
      * @return the description
