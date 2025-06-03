@@ -4,16 +4,24 @@ import it.unibo.monopoly.model.gameboard.impl.chance_comunity.api.ChanceAndCommu
 import it.unibo.monopoly.model.gameboard.impl.chance_comunity.api.Command;
 import it.unibo.monopoly.model.turnation.api.Player;
 
-public class ChanceAndCommunityChestCard implements ChanceAndCommunityChest{
+/**
+ * implementation of the chances and community chest card.
+ */
+public final class ChanceAndCommunityChestCard implements ChanceAndCommunityChest {
 
     private Command command; 
 
-    public ChanceAndCommunityChestCard(Command comm) { 
+    /**
+     * constructor.
+     * @param comm the command that will be executed 
+     * once this card has been drawn
+     */
+    public ChanceAndCommunityChestCard(final Command comm) { 
         this.command = comm;
     } 
 
     @Override
-    public void execute(Player player) {
+    public void execute(final Player player) {
         this.command.execute(player);
     }
 

@@ -10,14 +10,17 @@ import it.unibo.monopoly.model.transactions.api.Bank;
 import it.unibo.monopoly.model.transactions.api.TitleDeed;
 import it.unibo.monopoly.model.turnation.api.Player;
 
-public class BaseCommandFactoryImpl implements BaseCommandFactory {
+/**
+ * implementation of base command factory.
+ */
+public final class BaseCommandFactoryImpl implements BaseCommandFactory {
 
-    private BaseCommand move(Board board){
+    private BaseCommand move(final Board board) {
         return new BaseCommand() {
 
             private String desc;
             private int num;
-            private String keyword = "move of steps";
+            private final String keyword = "move of steps";
 
 
             @Override
@@ -32,34 +35,33 @@ public class BaseCommandFactoryImpl implements BaseCommandFactory {
             }
 
             @Override
-            public void addIntArg(int arg) {
+            public void addIntArg(final int arg) {
 
                     this.num = arg;
-                
             }
 
             @Override
-            public void addTileArg(String tile) {
+            public void addTileArg(final String tile) {
             }
 
             @Override
-            public void execute(Player player) {
+            public void execute(final Player player) {
                 board.movePawn(board.getPawn(player.getID()), Set.of(num));
             }
 
             @Override
-            public void addPlayersArg(List<Player> players) {
+            public void addPlayersArg(final List<Player> players) {
             }
 
         };
     }
 
-    private BaseCommand moveIn(Board board){
+    private BaseCommand moveIn(Board board) {
         return new BaseCommand() {
 
             private String desc;
             private String tile;
-            private String keyword = "move in tile";
+            private final String keyword = "move in tile";
 
             @Override
             public String getKeyWord() {
@@ -67,7 +69,7 @@ public class BaseCommandFactoryImpl implements BaseCommandFactory {
             }
 
             @Override
-            public void execute(Player player) {
+            public void execute(final Player player) {
                 board.movePawnInTile(board.getPawn(player.getID()), this.tile);
             }
 
@@ -77,11 +79,11 @@ public class BaseCommandFactoryImpl implements BaseCommandFactory {
             }
 
             @Override
-            public void addIntArg(int arg) {
+            public void addIntArg(final int arg) {
             }
 
             @Override
-            public void addTileArg(String tile) {
+            public void addTileArg(final String tile) {
                 if (tile != null) {
                     this.tile = tile;
                     desc = "move in " + tile;
@@ -89,18 +91,17 @@ public class BaseCommandFactoryImpl implements BaseCommandFactory {
             }
 
             @Override
-            public void addPlayersArg(List<Player> players) {
+            public void addPlayersArg(final List<Player> players) {
             }
-            
         };
     }
 
-    private BaseCommand withdraw(Bank bank){
+    private BaseCommand withdraw(final Bank bank) {
         return new BaseCommand() {
 
             private String desc;
             private int num;
-            private String keyword = "withdraw";
+            private final String keyword = "withdraw";
 
             @Override
             public String getKeyWord() {
@@ -108,7 +109,7 @@ public class BaseCommandFactoryImpl implements BaseCommandFactory {
             }
 
             @Override
-            public void execute(Player player) {
+            public void execute(final Player player) {
                 bank.withdrawFrom(player.getID(), num);
             }
 
@@ -118,7 +119,7 @@ public class BaseCommandFactoryImpl implements BaseCommandFactory {
             }
 
             @Override
-            public void addIntArg(int arg) {
+            public void addIntArg(final int arg) {
                 if (arg != -1) {
                     this.num = arg;
                     desc = "withdraw " + num;
@@ -126,22 +127,22 @@ public class BaseCommandFactoryImpl implements BaseCommandFactory {
             }
 
             @Override
-            public void addTileArg(String tile) {
+            public void addTileArg(final String tile) {
             }
 
             @Override
-            public void addPlayersArg(List<Player> players) {
+            public void addPlayersArg(final List<Player> players) {
             }
 
         };
     }
 
-    private BaseCommand deposit(Bank bank){
+    private BaseCommand deposit(final Bank bank) {
         return new BaseCommand() {
 
             private String desc;
             private int num;
-            private String keyword = "deposit";
+            private final String keyword = "deposit";
 
             @Override
             public String getKeyWord() {
@@ -149,7 +150,7 @@ public class BaseCommandFactoryImpl implements BaseCommandFactory {
             }
 
             @Override
-            public void execute(Player player) {
+            public void execute(final Player player) {
                 bank.depositTo(player.getID(), num);
             }
 
@@ -160,29 +161,29 @@ public class BaseCommandFactoryImpl implements BaseCommandFactory {
             }
 
             @Override
-            public void addIntArg(int arg) {
+            public void addIntArg(final int arg) {
                 if (arg != -1) {
                     this.num = arg;
                 }
             }
 
             @Override
-            public void addTileArg(String tile) {
+            public void addTileArg(final String tile) {
             }
-            
+
             @Override
-            public void addPlayersArg(List<Player> players) {
+            public void addPlayersArg(final List<Player> players) {
             }
         };
     }
 
-    private BaseCommand depositFrom(Bank bank){
+    private BaseCommand depositFrom(final Bank bank) {
         return new BaseCommand() {
 
             private String desc;
             private int num;
             private List<Player> players;
-            private String keyword = "deposit from";
+            private final String keyword = "deposit from";
 
             @Override
             public String getKeyWord() {
@@ -190,8 +191,8 @@ public class BaseCommandFactoryImpl implements BaseCommandFactory {
             }
 
             @Override
-            public void execute(Player player) {
-                for (Player player2 : players) {
+            public void execute(final Player player) {
+                for (final Player player2 : players) {
                     bank.withdrawFrom(player2.getID(), num);
                     bank.depositTo(player.getID(), num);
                 }
@@ -203,32 +204,32 @@ public class BaseCommandFactoryImpl implements BaseCommandFactory {
             }
 
             @Override
-            public void addIntArg(int arg) {
+            public void addIntArg(final int arg) {
                 if (arg != -1) {
                     this.num = arg;
                     desc = "deposit " + num + " from all players";
                 }
-                
+
             }
 
             @Override
-            public void addTileArg(String tile) {
-            }            
-            
+            public void addTileArg(final String tile) {
+            }
+
             @Override
-            public void addPlayersArg(List<Player> players) {
+            public void addPlayersArg(final List<Player> players) {
                 if (players != null) {
                     this.players = List.copyOf(players);
                 }
             }
         };
     }
-    
-    private BaseCommand buyIfNotOwned(Bank bank, Board board){
+
+    private BaseCommand buyIfNotOwned(final Bank bank, final Board board) {
         return new BaseCommand() {
             private String desc;
             private String tile;
-            private String keyword = "buy if not owned";
+            private final String keyword = "buy if not owned";
 
             @Override
             public String getKeyWord() {
@@ -236,11 +237,11 @@ public class BaseCommandFactoryImpl implements BaseCommandFactory {
             }
 
             @Override
-            public void execute(Player player) {
-                TitleDeed t = bank.getTitleDeed(tile);
+            public void execute(final Player player) {
+                final TitleDeed t = bank.getTitleDeed(tile);
                 if (!t.isOwned()) {
                     bank.buyTitleDeed(tile, player.getID());
-                }                
+                }
             }
 
             @Override
@@ -249,11 +250,11 @@ public class BaseCommandFactoryImpl implements BaseCommandFactory {
             }
 
             @Override
-            public void addIntArg(int arg) {
+            public void addIntArg(final int arg) {
             }
 
             @Override
-            public void addTileArg(String tile) {
+            public void addTileArg(final String tile) {
                 if (tile != null) {
                     this.tile = tile;
                     desc = "buy " + tile + " if not owned";
@@ -261,22 +262,22 @@ public class BaseCommandFactoryImpl implements BaseCommandFactory {
             }
 
             @Override
-            public void addPlayersArg(List<Player> players) {
+            public void addPlayersArg(final List<Player> players) {
             }
-            
+
         };
     }
 
-    public BaseCommand still(){
+    public BaseCommand still() {
         return new BaseCommand() {
-            private String keyword = "still";
+            private final String keyword = "still";
 
             @Override
             public String getKeyWord() {
                 return this.keyword;
             }
             @Override
-            public void execute(Player player) {
+            public void execute(final Player player) {
             }
 
             @Override
@@ -285,21 +286,21 @@ public class BaseCommandFactoryImpl implements BaseCommandFactory {
             }
 
             @Override
-            public void addIntArg(int arg) {
+            public void addIntArg(final int arg) {
             }
 
             @Override
-            public void addTileArg(String tile) {
+            public void addTileArg(final String tile) {
             }
 
             @Override
-            public void addPlayersArg(List<Player> players) {
+            public void addPlayersArg(final List<Player> players) {
             }
 
         };
     }
 
-    public List<BaseCommand> allCommand(Bank bank, Board board) {
+    public List<BaseCommand> allCommand(final Bank bank, final Board board) {
         return List.of(
             this.deposit(bank),
             this.move(board),

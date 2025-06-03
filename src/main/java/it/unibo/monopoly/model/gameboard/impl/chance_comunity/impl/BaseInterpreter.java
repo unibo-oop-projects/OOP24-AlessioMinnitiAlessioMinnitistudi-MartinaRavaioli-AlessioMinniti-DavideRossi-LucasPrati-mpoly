@@ -11,24 +11,28 @@ import it.unibo.monopoly.model.gameboard.impl.chance_comunity.api.BaseCommandFac
 import it.unibo.monopoly.model.gameboard.impl.chance_comunity.api.BaseInterpreterInt;
 import it.unibo.monopoly.model.turnation.api.TurnationManager;
 
-public class BaseInterpreter implements BaseInterpreterInt {
+public final class BaseInterpreter implements BaseInterpreterInt {
 
     private List<BaseCommand> baseCommands = new LinkedList<>();
     private ArgsInterpreter argsInterpreter = new ArgsInterpreterImpl(); 
     private BaseCommandFactory factory = new BaseCommandFactoryImpl();
 
-    public BaseInterpreter(final List<BaseCommand> baseCommands){
+    /**
+     * constructor.
+     * @param baseCommands the list o the base command supportetd by the game
+     */
+    public BaseInterpreter(final List<BaseCommand> baseCommands) {
         this.baseCommands = baseCommands;
     }
 
     @Override
-    public BaseCommand interpret(String toInterpretString, Board board, TurnationManager turnM) {
+    public BaseCommand interpret(final String toInterpretString, final Board board, final TurnationManager turnM) {
         BaseCommand comm = factory.still(); 
-        ParserOnColon pars = new ParserOnColon(toInterpretString);
-        String comString = pars.next();
-        Optional<BaseCommand> com = baseCommands.stream().filter(p -> p.getKeyWord().equals((String)comString)).findAny();
+        final ParserOnColon pars = new ParserOnColon(toInterpretString);
+        final String comString = pars.next();
+        final Optional<BaseCommand> com = baseCommands.stream().filter(p -> p.getKeyWord().equals((String) comString)).findAny();
         if (com.isPresent()) {
-            BaseCommand base = com.get(); 
+            final BaseCommand base = com.get(); 
             if (pars.hasNesxt()) {
                 argsInterpreter.interpret(pars.next(), base, board, turnM);
             }

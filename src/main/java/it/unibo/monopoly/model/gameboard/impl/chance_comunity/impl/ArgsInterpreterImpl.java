@@ -10,23 +10,28 @@ import it.unibo.monopoly.model.gameboard.impl.chance_comunity.api.Parser;
 import it.unibo.monopoly.model.turnation.api.Player;
 import it.unibo.monopoly.model.turnation.api.TurnationManager;
 
-public  class ArgsInterpreterImpl implements ArgsInterpreter {
+/**
+ * implementation of args interpreter.
+ */
+public final class ArgsInterpreterImpl implements ArgsInterpreter {
+    private static final int MIN_NUM = 48;
+    private static final int MAX_NUM = 57;
 
-    private String interpretTileArg(String toInterpretString, Board board) {
+    private String interpretTileArg(final String toInterpretString, final Board board) {
         Optional<String> t = null;
         t = board.getTiles().stream().filter(p -> p.getName().equals(toInterpretString)).map(p -> p.getName()).findAny();
-        
+
         if (t.isPresent()) {
             return t.get();
         } else {
             return null;
         }
     }
-    
-    public int interpretIntArg(String toInterpretString) {
+
+    private int interpretIntArg(final String toInterpretString) {
         boolean validInt = true; 
         for (int i = 0; i < toInterpretString.length(); i++) {
-            if (toInterpretString.charAt(i) < 48 || toInterpretString.charAt(i) > 57) {
+            if (toInterpretString.charAt(i) < MIN_NUM || toInterpretString.charAt(i) > MAX_NUM) {
                 validInt = false;
             }
         }
@@ -36,13 +41,12 @@ public  class ArgsInterpreterImpl implements ArgsInterpreter {
         } else {
             return -1;
         }
-        
     }
 
-    private List<Player> interpretPlayerArg(String toInterpretString, TurnationManager turnM) {
-        
+    private List<Player> interpretPlayerArg(final String toInterpretString, final TurnationManager turnM) {
+
         List<Player> l = null;
-        if (toInterpretString.equalsIgnoreCase("all")) {
+        if ("all".equalsIgnoreCase(toInterpretString)) {
             l = turnM.getPlayerList();
         }
         return l;
@@ -50,7 +54,7 @@ public  class ArgsInterpreterImpl implements ArgsInterpreter {
     }
 
     @Override
-    public void interpret(String toInterpretString, BaseCommand command, Board board, TurnationManager turnM) {
+    public void interpret(final String toInterpretString, final BaseCommand command, final Board board, final TurnationManager turnM) {
         final Parser p = new ParserOnComma(toInterpretString);
         while (p.hasNesxt()) {
             final String str = p.next();
@@ -58,7 +62,6 @@ public  class ArgsInterpreterImpl implements ArgsInterpreter {
             command.addPlayersArg(interpretPlayerArg(str, turnM));
             command.addTileArg(interpretTileArg(str, board));
         }
-        
     }
 
 }

@@ -5,21 +5,26 @@ import java.util.Random;
 
 import it.unibo.monopoly.model.gameboard.impl.chance_comunity.api.ChancheAndCommunityChestDeck;
 
-public class ChancheAndCommunityChestDeckImpl implements ChancheAndCommunityChestDeck{
+public final class ChancheAndCommunityChestDeckImpl implements ChancheAndCommunityChestDeck{
 
     private String type;
     private int ind;
     private final List<ChanceAndCommunityChestCard> cards; 
+    private static final Random R = new Random();
 
-    public ChancheAndCommunityChestDeckImpl(List<ChanceAndCommunityChestCard> cards, String type){
+    /**
+     * constructor.
+     * @param cards the list of cards for this deck
+     * @param type the type of the deck, chances or community chests
+     */
+    public ChancheAndCommunityChestDeckImpl(final List<ChanceAndCommunityChestCard> cards, final String type) {
         this.cards = cards;
         this.type = type;
     }
 
     @Override
     public ChanceAndCommunityChestCard draw() {
-        Random r = new Random();
-        int index = r.nextInt(cards.size()); 
+        final int index = R.nextInt(cards.size()); 
         return cards.get(index);
     }
 
@@ -31,7 +36,7 @@ public class ChancheAndCommunityChestDeckImpl implements ChancheAndCommunityChes
     @Override
     public ChanceAndCommunityChestCard drawInOrder() {
         ind += 1;
-        return cards.get((ind -1)%cards.size());
+        return cards.get((ind - 1) % cards.size());
     }
 
 }
