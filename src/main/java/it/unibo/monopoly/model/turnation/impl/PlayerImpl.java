@@ -126,7 +126,7 @@ public final class PlayerImpl implements Player {
 
     @Override
     public boolean isParked() {
-        return true;
+        return false;
     }
 
     @Override
@@ -135,7 +135,7 @@ public final class PlayerImpl implements Player {
 
     @Override
     public boolean isInPrison() {
-        return true;
+        return false;
     }
 
     @Override

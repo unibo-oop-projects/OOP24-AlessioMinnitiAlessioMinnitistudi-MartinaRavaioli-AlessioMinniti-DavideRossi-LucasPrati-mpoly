@@ -99,7 +99,8 @@ public class TurnationManagerImpl implements TurnationManager {
     public final Player getNextPlayer() { 
         this.currPlayer = players.giveNextNode(this.currPlayer);
         this.diceThrown = false;
-        return PlayerImpl.of(this.currPlayer.getID(), this.currPlayer.getName(), this.currPlayer.getColor());
+        return this.currPlayer;
+        //return PlayerImpl.of(this.currPlayer.getID(), this.currPlayer.getName(), this.currPlayer.getColor());
     }
 
     @Override
@@ -119,7 +120,8 @@ public class TurnationManagerImpl implements TurnationManager {
 
     @Override
     public final Player getCurrPlayer() {
-        return PlayerImpl.of(this.currPlayer.getID(), this.currPlayer.getName(), this.currPlayer.getColor());
+        return this.currPlayer;
+       // return PlayerImpl.of(this.currPlayer.getID(), this.currPlayer.getName(), this.currPlayer.getColor());
     }
 
     @Override
@@ -178,6 +180,10 @@ public class TurnationManagerImpl implements TurnationManager {
     @Override
     public final boolean hasCurrPlayerThrownDices() {
         return this.diceThrown;
+    }
+    @Override
+    public boolean isCurrentPlayerParked() {
+        return this.currPlayer.isParked();
     }
 
 }

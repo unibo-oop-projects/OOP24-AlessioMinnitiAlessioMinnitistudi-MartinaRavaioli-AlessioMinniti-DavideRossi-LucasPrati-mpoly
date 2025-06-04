@@ -74,7 +74,11 @@ public interface TurnationManager {
      * @param value result of the dices
      */
     boolean canExitPrison(Collection<Integer> value);
-
+    /**
+     * tells if the current player is parked.
+     * @return bool
+     */
+    boolean isCurrentPlayerParked();
     /**
      * tells if the player can pass the turn.
      * @return bool
