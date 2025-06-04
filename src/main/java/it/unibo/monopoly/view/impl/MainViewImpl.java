@@ -191,8 +191,8 @@ public final class MainViewImpl implements MainGameView {
     }
 
     @Override
-    public void callClearPanel(final Property prop) {
-        this.gameBoardPanel.clearPanel(prop);
+    public void callClearPanel(final String name) {
+        this.gameBoardPanel.clearPanel(name);
     }
 
     @Override
