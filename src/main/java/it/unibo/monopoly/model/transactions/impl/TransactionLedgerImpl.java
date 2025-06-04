@@ -1,16 +1,17 @@
 package it.unibo.monopoly.model.transactions.impl;
 
-import java.util.HashMap;
+import java.util.EnumMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import it.unibo.monopoly.model.transactions.api.PropertyActionsEnum;
 import it.unibo.monopoly.model.transactions.api.TransactionLedger;
 
 final class TransactionLedgerImpl implements TransactionLedger {
 
     private final Set<TransactionLedgerEntry> allowedTransactionTypes = new HashSet<>();
-    private final Map<String, Integer> executions = new HashMap<>();
+    private final Map<PropertyActionsEnum, Integer> executions = new EnumMap<>(PropertyActionsEnum.class);
 
     @Override
     public void reset() {
@@ -19,7 +20,7 @@ final class TransactionLedgerImpl implements TransactionLedger {
     }
 
     @Override
-    public void registerTransaction(final String name, final int minimumExecutions, final int maximumExecutions) {
+    public void registerTransaction(final PropertyActionsEnum name, final int minimumExecutions, final int maximumExecutions) {
         if (allowedTransactionTypes.stream().anyMatch(t -> name.equals(t.name()))) {
             throw new IllegalStateException("A transaction type with this name is already present in the ledger");
         }
@@ -28,7 +29,7 @@ final class TransactionLedgerImpl implements TransactionLedger {
     }
 
     @Override
-    public void registerTransaction(final String name, final int minimumExecutions) {
+    public void registerTransaction(final PropertyActionsEnum name, final int minimumExecutions) {
         if (allowedTransactionTypes.stream().anyMatch(t -> name.equals(t.name()))) {
             throw new IllegalStateException("A transaction type with this name is already present in the ledger");
         }
@@ -37,7 +38,7 @@ final class TransactionLedgerImpl implements TransactionLedger {
     }
 
     @Override
-    public void removeIfPresent(final String name) {
+    public void removeIfPresent(final PropertyActionsEnum name) {
         allowedTransactionTypes.removeIf(e -> name.equals(e.name()));
         if (executions.containsKey(name)) {
             executions.remove(name);
@@ -45,7 +46,7 @@ final class TransactionLedgerImpl implements TransactionLedger {
     }
 
     @Override
-    public void markExecution(final String name) {
+    public void markExecution(final PropertyActionsEnum name) {
         if (allowedTransactionTypes.stream().noneMatch(t -> name.equals(t.name()))) {
             throw new IllegalArgumentException("No transaction with this name exists in the ledger" 
             + "Register the transaction type by calling the method registerTransaction before asking to mark its execution");
@@ -63,7 +64,7 @@ final class TransactionLedgerImpl implements TransactionLedger {
     }
 
     @Override
-    public void unmarkExecution(final String name) {
+    public void unmarkExecution(final PropertyActionsEnum name) {
         if (allowedTransactionTypes.stream().noneMatch(t -> name.equals(t.name()))) {
             throw new IllegalArgumentException("No transaction with this name exists in the ledger." 
             + "Register the transaction type by calling the method registerTransaction before asking to mark its execution");
@@ -85,7 +86,7 @@ final class TransactionLedgerImpl implements TransactionLedger {
         });
     }
 
-    private record TransactionLedgerEntry(String name, int minimumExecutions, int maximumExecutions) {
+    private record TransactionLedgerEntry(PropertyActionsEnum name, int minimumExecutions, int maximumExecutions) {
 
     }
 }

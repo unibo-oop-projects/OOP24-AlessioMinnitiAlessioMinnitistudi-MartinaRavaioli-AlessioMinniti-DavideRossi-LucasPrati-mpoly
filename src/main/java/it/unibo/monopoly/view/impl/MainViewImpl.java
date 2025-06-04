@@ -17,6 +17,7 @@ import it.unibo.monopoly.controller.impl.GUIVenditaLogicImpl;
 import it.unibo.monopoly.model.gameboard.api.Special;
 import it.unibo.monopoly.model.transactions.api.Bank;
 import it.unibo.monopoly.model.transactions.api.BankAccount;
+import it.unibo.monopoly.model.transactions.api.PropertyActionsEnum;
 import it.unibo.monopoly.model.transactions.api.TitleDeed;
 import it.unibo.monopoly.model.turnation.api.Player;
 import it.unibo.monopoly.utils.impl.GuiUtils;
@@ -135,7 +136,7 @@ public final class MainViewImpl implements MainGameView {
     }
 
     @Override
-    public void showPlayerActions(final Set<String> actions) {
+    public void showPlayerActions(final Set<PropertyActionsEnum> actions) {
         gameActionsPanel.buildActionButtons(actions, controller);
         mainGameFrame.repaint();
     }

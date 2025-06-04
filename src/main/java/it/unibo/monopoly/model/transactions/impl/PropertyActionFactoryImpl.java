@@ -4,6 +4,7 @@ import it.unibo.monopoly.model.gameboard.api.Board;
 import it.unibo.monopoly.model.transactions.api.Bank;
 import it.unibo.monopoly.model.transactions.api.PropertyAction;
 import it.unibo.monopoly.model.transactions.api.PropertyActionFactory;
+import it.unibo.monopoly.model.transactions.api.PropertyActionsEnum;
 
 /**
  * Implementation of interface {@link PropertyActionFactory} that creates 
@@ -17,8 +18,8 @@ final class PropertyActionFactoryImpl implements PropertyActionFactory {
         return new PropertyAction() {
 
             @Override
-            public String getName() {
-                return "buy";
+            public PropertyActionsEnum getType() {
+                return PropertyActionsEnum.BUY;
             }
 
             @Override
@@ -38,8 +39,8 @@ final class PropertyActionFactoryImpl implements PropertyActionFactory {
         return new PropertyAction() {
 
             @Override
-            public String getName() {
-                return "sell";
+            public PropertyActionsEnum getType() {
+                return PropertyActionsEnum.SELL;
             }
 
             @Override
@@ -62,8 +63,8 @@ final class PropertyActionFactoryImpl implements PropertyActionFactory {
         return new PropertyAction() {
 
             @Override
-            public String getName() {
-                return "payRent";
+            public PropertyActionsEnum getType() {
+                return PropertyActionsEnum.PAYRENT;
             }
 
             @Override
@@ -83,8 +84,8 @@ final class PropertyActionFactoryImpl implements PropertyActionFactory {
         return new PropertyAction() {
 
             @Override
-            public String getName() {
-                return "buyHouse";
+            public PropertyActionsEnum getType() {
+                return PropertyActionsEnum.BUYHOUSE;
             }
 
             @Override
@@ -104,8 +105,8 @@ final class PropertyActionFactoryImpl implements PropertyActionFactory {
         return new PropertyAction() {
 
             @Override
-            public String getName() {
-                return "buyHotel";
+            public PropertyActionsEnum getType() {
+                return PropertyActionsEnum.BUYHOTEL;
             }
 
             @Override
@@ -125,8 +126,8 @@ final class PropertyActionFactoryImpl implements PropertyActionFactory {
         return new PropertyAction() {
 
             @Override
-            public String getName() {
-                return "sellHouse";
+            public PropertyActionsEnum getType() {
+                return PropertyActionsEnum.SELLHOUSE;
             }
 
             @Override
@@ -146,8 +147,8 @@ final class PropertyActionFactoryImpl implements PropertyActionFactory {
         return new PropertyAction() {
 
             @Override
-            public String getName() {
-                return "sellHotel";
+            public PropertyActionsEnum getType() {
+                return PropertyActionsEnum.SELLHOTEL;
             }
 
             @Override

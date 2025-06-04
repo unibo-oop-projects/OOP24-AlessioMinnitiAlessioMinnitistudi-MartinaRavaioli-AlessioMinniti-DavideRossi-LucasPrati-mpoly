@@ -2,7 +2,7 @@ package it.unibo.monopoly.controller.impl;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashMap;
+import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 
@@ -24,6 +24,7 @@ import it.unibo.monopoly.utils.impl.UseFileTxtImpl;
 import it.unibo.monopoly.view.api.MainGameView;
 import it.unibo.monopoly.model.transactions.api.Bank;
 import it.unibo.monopoly.model.transactions.api.PropertyAction;
+import it.unibo.monopoly.model.transactions.api.PropertyActionsEnum;
 
 
 /**
@@ -34,7 +35,7 @@ public final class GameControllerImpl implements GameController {
     private final Board board; /**board. */
     private final Configuration config; /**config. */
     private final Bank bank;
-    private Map<String, PropertyAction> turnActions = new HashMap<>();
+    private final Map<PropertyActionsEnum, PropertyAction> turnActions = new EnumMap<>(PropertyActionsEnum.class);
     private MainGameView gameView; /**game view. */
 
     /**
@@ -107,10 +108,10 @@ public final class GameControllerImpl implements GameController {
                 final String propertyName = currentlySittingTile.getName();
                 this.gameView.displayPropertyContract(this.bank.getTitleDeed(propertyName));
                 this.turnActions.clear();
-                this.turnActions = Maps.uniqueIndex(this.bank.getApplicableActionsForTitleDeed(currentPlayerId, 
+                this.turnActions.putAll(Maps.uniqueIndex(this.bank.getApplicableActionsForTitleDeed(currentPlayerId, 
                                         propertyName, 
                                         result.stream().mapToInt(d -> d).sum()),
-                                        PropertyAction::getName);
+                                        PropertyAction::getType));
                 this.gameView.showPlayerActions(turnActions.keySet());
             } else if (currentlySittingTile instanceof Special) {
                 final Special specialTile = (Special) currentlySittingTile;
@@ -171,7 +172,7 @@ public final class GameControllerImpl implements GameController {
     }
 
     @Override
-    public void executeAction(final String actionName) {
+    public void executeAction(final PropertyActionsEnum actionName) {
 
         if (!turnActions.containsKey(actionName)) {
                 gameView.displayError(new IllegalArgumentException("No action with this name was registered." 
@@ -187,9 +188,9 @@ public final class GameControllerImpl implements GameController {
             final Property currentlySittingProperty = (Property) this.board.getTileForPawn(
                                                         this.board.getPawn(
                                                         this.turnationManager.getIdCurrPlayer()));
-            if ("buy".equals(actionName)) {
+            if (actionName == PropertyActionsEnum.BUY) {
                 gameView.callBuyProperty(currentlySittingProperty);
-            } else if ("sell".equals(actionName)) {
+            } else if (actionName == PropertyActionsEnum.SELL) {
                 gameView.callClearPanel();
             }
             refreshPlayerInfo();

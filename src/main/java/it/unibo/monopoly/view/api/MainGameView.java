@@ -8,6 +8,7 @@ import it.unibo.monopoly.model.gameboard.api.Property;
 import it.unibo.monopoly.model.gameboard.api.Special;
 import it.unibo.monopoly.model.transactions.api.Bank;
 import it.unibo.monopoly.model.transactions.api.BankAccount;
+import it.unibo.monopoly.model.transactions.api.PropertyActionsEnum;
 import it.unibo.monopoly.model.transactions.api.TitleDeed;
 import it.unibo.monopoly.model.turnation.api.Player;
 
@@ -51,7 +52,7 @@ public interface MainGameView {
      * that was previously attached to this view to execute the action.
      * This is done by calling the method {@link GameController#executeAction(String)}
      */
-    void showPlayerActions(Set<String> actions);
+    void showPlayerActions(Set<PropertyActionsEnum> actions);
 
     /**
      * Display the result of the call on {@link GameController#throwDices()}.
