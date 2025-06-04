@@ -164,7 +164,7 @@ public final class GameControllerImpl implements GameController {
 
     @Override
     public void loadCurrentPlayerInformation() {
-        gameView.displayPlayerStats(this.turnationManager.getCurrPlayer(), this.bank);
+        gameView.displayPlayerStats(this.turnationManager.getCurrPlayer(), this.bank, this.board);
     }
 
     @Override

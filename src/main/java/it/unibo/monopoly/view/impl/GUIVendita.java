@@ -21,6 +21,7 @@ import javax.swing.border.Border;
 import javax.swing.event.ListSelectionListener;
 
 import it.unibo.monopoly.controller.api.GUIVenditaLogic;
+import it.unibo.monopoly.model.gameboard.api.Board;
 import it.unibo.monopoly.model.gameboard.impl.Group;
 import it.unibo.monopoly.model.transactions.api.Bank;
 import it.unibo.monopoly.model.transactions.api.TitleDeed;
@@ -50,6 +51,7 @@ public final class GUIVendita extends JDialog {
         final Player player,
         final GUIVenditaLogic log,
         final Bank bank,
+        final Board board,
         final Frame parent
     ) {
         final Dimension screenDimension = GuiUtils.getDimensionWindow(PROPORTION, PROPORTION);
@@ -145,7 +147,7 @@ public final class GUIVendita extends JDialog {
             final boolean statePayment;
             final TitleDeed selectedProperty = logic.getProperty(logic.getProperties(player, bank), 
                                                                 propertiesList.getSelectedValue());
-            if (logic.sellProperty(logic.getProperties(player, bank), selectedProperty, bank)) {
+            if (logic.sellProperty(selectedProperty, bank, board)) {
                 statePayment = true;
                 sellProperty.setEnabled(false);
                 mortageValue.setText("0");
@@ -157,6 +159,11 @@ public final class GUIVendita extends JDialog {
                     selectProperty.setText("you have no properties to manage");
                     propertiesList.setVisible(false);
                     propertiesScrollPane.setVisible(false);
+                } else {
+                    propertiesList.setListData(logic.getProperties(player, bank)
+                                                                        .stream()
+                                                                        .map(TitleDeed::getName)
+                                                                        .toArray());
                 }
             } else {
                 statePayment = false;

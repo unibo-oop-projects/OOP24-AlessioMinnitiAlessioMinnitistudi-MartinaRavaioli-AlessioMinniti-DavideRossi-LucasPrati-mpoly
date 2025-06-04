@@ -15,6 +15,7 @@ import javax.swing.JSplitPane;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.monopoly.controller.api.GameController;
 import it.unibo.monopoly.controller.impl.GUIVenditaLogicImpl;
+import it.unibo.monopoly.model.gameboard.api.Board;
 import it.unibo.monopoly.model.gameboard.api.Property;
 import it.unibo.monopoly.model.gameboard.api.Special;
 import it.unibo.monopoly.model.transactions.api.Bank;
@@ -166,10 +167,11 @@ public final class MainViewImpl implements MainGameView {
     }
 
     @Override
-    public void displayPlayerStats(final Player player, final Bank bank) {
+    public void displayPlayerStats(final Player player, final Bank bank, final Board board) {
         new GUIVendita(player,
             new GUIVenditaLogicImpl(), 
             bank,
+            board,
             this.mainGameFrame
         );
     }
