@@ -16,7 +16,6 @@ public interface GUIVenditaLogic {
     /**
      * this method removes the property fromm the property list. 
      * calls the bank method to deposit the ammount in the pleyers bank accouunt
-     * @param properties players properties
      * @param selectedProperty the property you want to sell
      * @param bank to make the transaction
      * @return wether the payment has been succesful

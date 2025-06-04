@@ -44,6 +44,7 @@ public final class GUIVendita extends JDialog {
       * @param player the player that wants to manage its properties
       * @param log for game
       * @param bank for the stats
+      * @param parentView the GUI parent, used to clear the game board once a property has been sold
       * @param parent the parent frame that owns this dialog and will be blocked while the dialog is visible
       */
     public GUIVendita(
@@ -153,7 +154,7 @@ public final class GUIVendita extends JDialog {
                 rentValue.setText("0");
                 colorValue.setColor(Color.BLACK);
                 balanceValue.setText(String.valueOf(logic.getPlayerBalance(player, bank).getBalance()));
-                parentView.callClearPanel(selectedProperty.getName());//TODO riguarda bene cosa fa 
+                parentView.callClearPanel(selectedProperty.getName());
 
                 if (logic.getProperties(player, bank).isEmpty()) {
                     selectProperty.setText("you have no properties to manage");
