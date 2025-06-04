@@ -137,6 +137,7 @@ public final class GameControllerImpl implements GameController {
                 final Special specialTile = (Special) currentlySittingTile;
                 if (!"Go".equals(currentlySittingTile.getName())) {
                     executeEffect(specialTile.getEffect());
+                    this.gameView.callChangePositions();
                 }
             }
             final int delta = board.getPawn(currentPlayerId).getPosition().getPos() 
