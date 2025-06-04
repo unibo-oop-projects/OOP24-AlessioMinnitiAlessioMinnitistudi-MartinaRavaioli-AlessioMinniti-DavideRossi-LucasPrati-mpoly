@@ -30,4 +30,9 @@ public interface Prisonable {
      */
     boolean canExitPrison(Collection<Integer> dices);
 
+    /**
+     * gets how many turns in prison the player has left.
+     * @return the number of turns
+     */
+    int turnLeftInPrison();
 }

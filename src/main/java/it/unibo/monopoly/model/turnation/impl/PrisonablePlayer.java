@@ -89,4 +89,9 @@ public final class PrisonablePlayer implements Prisonable, Player {
     public void park() {
         player.park();
     }
+
+    @Override
+    public int turnLeftInPrison() {
+        return this.turns;
+    }
 }

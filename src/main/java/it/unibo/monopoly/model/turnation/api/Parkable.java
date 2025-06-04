@@ -19,4 +19,9 @@ public interface Parkable {
      */
     void park();
 
+    /**
+     * gets how many turns in prison the player has left.
+     * @return the number of turns
+     */
+    int turnLeftInPrison();
 }
