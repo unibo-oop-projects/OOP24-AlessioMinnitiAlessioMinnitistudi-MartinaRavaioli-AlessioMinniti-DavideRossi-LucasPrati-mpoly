@@ -153,7 +153,7 @@ public final class GUIVendita extends JDialog {
                 rentValue.setText("0");
                 colorValue.setColor(Color.BLACK);
                 balanceValue.setText(String.valueOf(logic.getPlayerBalance(player, bank).getBalance()));
-                parentView.callClearPanel();//TODO riguarda bene cosa fa 
+                parentView.callClearPanel(selectedProperty);//TODO riguarda bene cosa fa 
 
                 if (logic.getProperties(player, bank).isEmpty()) {
                     selectProperty.setText("you have no properties to manage");
