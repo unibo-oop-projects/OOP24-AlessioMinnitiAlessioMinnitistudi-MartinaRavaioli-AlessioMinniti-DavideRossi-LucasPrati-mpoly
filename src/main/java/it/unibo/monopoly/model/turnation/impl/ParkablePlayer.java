@@ -74,4 +74,9 @@ public final class ParkablePlayer implements Parkable, Player {
     public boolean canExitPrison(final Collection<Integer> dices) {
         return pl.canExitPrison(dices);
     }
+
+    @Override
+    public int turnLeftInPrison() {
+        return pl.turnLeftInPrison();
+    }
 }

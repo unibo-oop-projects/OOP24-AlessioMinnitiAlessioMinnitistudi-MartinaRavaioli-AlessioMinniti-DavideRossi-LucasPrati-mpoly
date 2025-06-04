@@ -142,7 +142,7 @@ public final class GameControllerImpl implements GameController {
             final int delta = board.getPawn(currentPlayerId).getPosition().getPos() 
                                         - board.getPawn(currentPlayerId).getPreviousPosition().getPos();
             if (delta < 0) {
-                final Special tile = (Special) board.getTile("Go");
+                final Special tile = (Special) board.getTile("Start");
                 executeEffect(tile.getEffect());
             }
         } catch (final IllegalAccessException e) {

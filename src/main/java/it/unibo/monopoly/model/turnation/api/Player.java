@@ -57,4 +57,10 @@ public interface Player extends Identifiable<Integer> {
      * @return whether he can
      */
     boolean canExitPrison(Collection<Integer> dice);
+
+    /**
+     * gets how many turns in prison the player has left.
+     * @return the number of turns
+     */
+    int turnLeftInPrison();
 }
