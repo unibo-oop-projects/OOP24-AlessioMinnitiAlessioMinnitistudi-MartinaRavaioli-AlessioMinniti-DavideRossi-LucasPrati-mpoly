@@ -212,9 +212,9 @@ public final class GameControllerImpl implements GameController {
                                                         this.turnationManager.getIdCurrPlayer()));
             if ("buy".equals(actionName)) {
                 gameView.callBuyProperty(currentlySittingProperty);
-            } else if ("sell".equals(actionName)) {
-                gameView.callClearPanel();
-            }
+            } //else if ("sell".equals(actionName)) {
+            //     //gameView.callClearPanel();
+            // }
             refreshPlayerInfo();
             refreshCurrentTileInfo();
         } catch (final IllegalStateException | IllegalArgumentException e) {

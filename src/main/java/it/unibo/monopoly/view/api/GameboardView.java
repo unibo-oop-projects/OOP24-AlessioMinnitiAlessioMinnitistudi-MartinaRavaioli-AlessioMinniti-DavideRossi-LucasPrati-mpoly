@@ -32,6 +32,7 @@ public interface GameboardView extends GamePanel {
     void buyProperty(Property prop, int currPlayer);
     /**
      * clear the panel.
+     * @param prop property to clear
     */
-    void clearPanel();
+    void clearPanel(Property prop);
 }
