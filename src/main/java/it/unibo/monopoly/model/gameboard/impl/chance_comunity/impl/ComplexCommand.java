@@ -38,11 +38,13 @@ public final class ComplexCommand implements Command {
     @Override
     public String getDesc() {
         String str = "";
+        final StringBuilder s = new StringBuilder(str);
         for (final Command command : commands) {
             if (commands.indexOf(command) == commands.size() - 1) {
-                str = str + command.getDesc();
+                s.append(command.getDesc());
             } else {
-                str = str + command.getDesc() + " then\n";
+                s.append(command.getDesc());
+                s.append(" then\n");
             }
         }
         return str;

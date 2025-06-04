@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import it.unibo.monopoly.model.gameboard.api.Board;
+import it.unibo.monopoly.model.gameboard.api.Tile;
 import it.unibo.monopoly.model.gameboard.impl.chance_comunity.api.ArgsInterpreter;
 import it.unibo.monopoly.model.gameboard.impl.chance_comunity.api.BaseCommand;
 import it.unibo.monopoly.model.gameboard.impl.chance_comunity.api.Parser;
@@ -14,12 +15,9 @@ import it.unibo.monopoly.model.turnation.api.TurnationManager;
  * implementation of args interpreter.
  */
 public final class ArgsInterpreterImpl implements ArgsInterpreter {
-    private static final int MIN_NUM = 48;
-    private static final int MAX_NUM = 57;
 
     private String interpretTileArg(final String toInterpretString, final Board board) {
-        Optional<String> t = null;
-        t = board.getTiles().stream().filter(p -> p.getName().equals(toInterpretString)).map(p -> p.getName()).findAny();
+        Optional<String> t = board.getTiles().stream().filter(p -> p.getName().equals(toInterpretString)).map(Tile::getName).findAny();
 
         if (t.isPresent()) {
             return t.get();
@@ -29,16 +27,9 @@ public final class ArgsInterpreterImpl implements ArgsInterpreter {
     }
 
     private int interpretIntArg(final String toInterpretString) {
-        boolean validInt = true; 
-        for (int i = 0; i < toInterpretString.length(); i++) {
-            if (toInterpretString.charAt(i) < MIN_NUM || toInterpretString.charAt(i) > MAX_NUM) {
-                validInt = false;
-            }
-        }
-
-        if (validInt) {
-            return Integer.valueOf(toInterpretString);
-        } else {
+        try {
+            return Integer.parseInt(toInterpretString);
+        } catch (NumberFormatException e) {
             return -1;
         }
     }

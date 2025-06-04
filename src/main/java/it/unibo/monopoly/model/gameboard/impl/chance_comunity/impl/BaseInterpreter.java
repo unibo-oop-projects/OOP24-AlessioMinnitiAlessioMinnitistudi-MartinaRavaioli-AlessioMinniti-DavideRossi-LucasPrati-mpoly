@@ -1,6 +1,5 @@
 package it.unibo.monopoly.model.gameboard.impl.chance_comunity.impl;
 
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,9 +15,9 @@ import it.unibo.monopoly.model.turnation.api.TurnationManager;
  */
 public final class BaseInterpreter implements BaseInterpreterInt {
 
-    private List<BaseCommand> baseCommands = new LinkedList<>();
-    private ArgsInterpreter argsInterpreter = new ArgsInterpreterImpl(); 
-    private BaseCommandFactory factory = new BaseCommandFactoryImpl();
+    private final List<BaseCommand> baseCommands;
+    private final ArgsInterpreter argsInterpreter = new ArgsInterpreterImpl(); 
+    private final BaseCommandFactory factory = new BaseCommandFactoryImpl();
 
     /**
      * constructor.
@@ -33,7 +32,7 @@ public final class BaseInterpreter implements BaseInterpreterInt {
         BaseCommand comm = factory.still(); 
         final ParserOnColon pars = new ParserOnColon(toInterpretString);
         final String comString = pars.next();
-        final Optional<BaseCommand> com = baseCommands.stream().filter(p -> p.getKeyWord().equals((String) comString)).findAny();
+        final Optional<BaseCommand> com = baseCommands.stream().filter(p -> p.getKeyWord().equals(comString)).findAny();
         if (com.isPresent()) {
             final BaseCommand base = com.get(); 
             if (pars.hasNesxt()) {

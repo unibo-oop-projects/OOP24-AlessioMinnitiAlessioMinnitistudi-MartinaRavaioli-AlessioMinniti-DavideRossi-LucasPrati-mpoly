@@ -10,10 +10,10 @@ import it.unibo.monopoly.model.gameboard.impl.chance_comunity.api.ChancheAndComm
  */
 public final class ChancheAndCommunityChestDeckImpl implements ChancheAndCommunityChestDeck {
 
-    private String type;
+    private final String type;
     private int ind;
     private final List<ChanceAndCommunityChestCard> cards; 
-    private final Random R = new Random();
+    private final Random r = new Random();
 
     /**
      * constructor.
@@ -27,7 +27,7 @@ public final class ChancheAndCommunityChestDeckImpl implements ChancheAndCommuni
 
     @Override
     public ChanceAndCommunityChestCard draw() {
-        final int index = R.nextInt(cards.size()); 
+        final int index = r.nextInt(cards.size()); 
         return cards.get(index);
     }
 

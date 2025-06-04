@@ -9,7 +9,7 @@ import it.unibo.monopoly.model.turnation.api.Player;
  */
 public final class ChanceAndCommunityChestCard implements ChanceAndCommunityChest {
 
-    private Command command; 
+    private final Command command; 
 
     /**
      * constructor.

@@ -20,16 +20,21 @@ public final class ComplexInterpreter implements Interpreter {
     private final BaseInterpreter inter;
 
 
+    /**
+     * constructor.
+     * @param board to execute some commands
+     * @param bank to execute some commands
+     */
     public ComplexInterpreter(final Board board, final Bank bank) {
         inter = new BaseInterpreter(factory.allCommand(bank, board));
     }
 
     @Override
     public Command interpret(final String toInterpretString, final Board board, final TurnationManager turnM) {
-        List<Command> commands = new LinkedList<>(); 
+        final List<Command> commands = new LinkedList<>(); 
         final ParserOnNewLine pars = new ParserOnNewLine(toInterpretString);
         while (pars.hasNesxt()) {
-            commands.add(inter.interpret(pars.next(), board, turnM));            
+            commands.add(inter.interpret(pars.next(), board, turnM));
         }
         final Command comm = new ComplexCommand(commands, toInterpretString);
         return comm;

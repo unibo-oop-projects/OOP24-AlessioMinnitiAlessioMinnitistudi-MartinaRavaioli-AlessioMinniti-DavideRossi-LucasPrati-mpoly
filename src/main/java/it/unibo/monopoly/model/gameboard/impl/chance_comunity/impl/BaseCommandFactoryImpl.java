@@ -20,12 +20,12 @@ public final class BaseCommandFactoryImpl implements BaseCommandFactory {
 
             private String desc;
             private int num;
-            private final String keyword = "move of steps";
+            private final static String KEY = "move of steps";
 
 
             @Override
             public String getKeyWord() {
-                return this.keyword;
+                return KEY;
             }
 
             @Override
@@ -61,11 +61,11 @@ public final class BaseCommandFactoryImpl implements BaseCommandFactory {
 
             private String desc;
             private String tile;
-            private final String keyword = "move in tile";
+            private final static String KEY = "move in tile";
 
             @Override
             public String getKeyWord() {
-                return this.keyword;
+                return KEY;
             }
 
             @Override
@@ -101,11 +101,11 @@ public final class BaseCommandFactoryImpl implements BaseCommandFactory {
 
             private String desc;
             private int num;
-            private final String keyword = "withdraw";
+            private final static String KEY = "withdraw";
 
             @Override
             public String getKeyWord() {
-                return this.keyword;
+                return KEY;
             }
 
             @Override
@@ -142,11 +142,11 @@ public final class BaseCommandFactoryImpl implements BaseCommandFactory {
 
             private String desc;
             private int num;
-            private final String keyword = "deposit";
+            private final static String KEY = "deposit";
 
             @Override
             public String getKeyWord() {
-                return this.keyword;
+                return KEY;
             }
 
             @Override
@@ -183,11 +183,11 @@ public final class BaseCommandFactoryImpl implements BaseCommandFactory {
             private String desc;
             private int num;
             private List<Player> players;
-            private final String keyword = "deposit from";
+            private final static String KEY = "deposit from";
 
             @Override
             public String getKeyWord() {
-                return this.keyword;
+                return KEY;
             }
 
             @Override
@@ -229,11 +229,11 @@ public final class BaseCommandFactoryImpl implements BaseCommandFactory {
         return new BaseCommand() {
             private String desc;
             private String tile;
-            private final String keyword = "buy if not owned";
+            private final static String KEY = "buy if not owned";
 
             @Override
             public String getKeyWord() {
-                return this.keyword;
+                return KEY;
             }
 
             @Override
@@ -271,11 +271,11 @@ public final class BaseCommandFactoryImpl implements BaseCommandFactory {
     @Override
     public BaseCommand still() {
         return new BaseCommand() {
-            private final String keyword = "still";
+            private final static String KEY = "still";
 
             @Override
             public String getKeyWord() {
-                return this.keyword;
+                return KEY;
             }
             @Override
             public void execute(final Player player) {
