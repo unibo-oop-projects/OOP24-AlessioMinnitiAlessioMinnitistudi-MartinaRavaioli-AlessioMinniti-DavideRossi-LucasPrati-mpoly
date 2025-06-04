@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Optional;
 
 import it.unibo.monopoly.controller.api.GUIVenditaLogic;
-import it.unibo.monopoly.model.gameboard.api.Board;
 import it.unibo.monopoly.model.transactions.api.Bank;
 import it.unibo.monopoly.model.transactions.api.BankAccount;
 import it.unibo.monopoly.model.transactions.api.TitleDeed;
@@ -44,9 +43,8 @@ public final class GUIVenditaLogicImpl implements  GUIVenditaLogic, Serializable
     }
 
     @Override
-    public boolean sellProperty(final TitleDeed selectedProperty, final Bank bank, final Board board) {
+    public boolean sellProperty(final TitleDeed selectedProperty, final Bank bank) {
         bank.sellTitleDeed(selectedProperty.getName());
-        //board.getTile(selectedProperty.getName()). TODO
         return true;
     }
 

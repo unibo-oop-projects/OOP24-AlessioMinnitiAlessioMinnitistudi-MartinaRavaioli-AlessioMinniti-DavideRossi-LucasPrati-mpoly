@@ -3,7 +3,6 @@ package it.unibo.monopoly.controller.api;
 import java.awt.Color;
 import java.util.List;
 
-import it.unibo.monopoly.model.gameboard.api.Board;
 import it.unibo.monopoly.model.transactions.api.Bank;
 import it.unibo.monopoly.model.transactions.api.BankAccount;
 import it.unibo.monopoly.model.transactions.api.TitleDeed;
@@ -22,7 +21,7 @@ public interface GUIVenditaLogic {
      * @param bank to make the transaction
      * @return wether the payment has been succesful
      */
-    boolean sellProperty(TitleDeed selectedProperty, Bank bank, Board board);
+    boolean sellProperty(TitleDeed selectedProperty, Bank bank);
 
     /**
      * get the selected property as a titledeed.

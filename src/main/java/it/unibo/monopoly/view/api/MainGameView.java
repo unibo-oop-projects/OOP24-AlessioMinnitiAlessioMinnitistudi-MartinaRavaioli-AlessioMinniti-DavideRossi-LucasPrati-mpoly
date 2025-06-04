@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Set;
 
 import it.unibo.monopoly.controller.api.GameController;
-import it.unibo.monopoly.model.gameboard.api.Board;
 import it.unibo.monopoly.model.gameboard.api.Pawn;
 import it.unibo.monopoly.model.gameboard.api.Property;
 import it.unibo.monopoly.model.gameboard.api.Special;
@@ -85,7 +84,7 @@ public interface MainGameView {
      * all information related to that player.
      * @param bank
      */
-    void displayPlayerStats(Player player, Bank bank, Board board);
+    void displayPlayerStats(Player player, Bank bank);
 
     /**
      * Displays an error on the UI.
