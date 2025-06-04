@@ -33,5 +33,5 @@ public interface GameboardView extends GamePanel {
     /**
      * clear the panel.
     */
-    void clearPanel();
+    void clearPanel(Property prop);
 }

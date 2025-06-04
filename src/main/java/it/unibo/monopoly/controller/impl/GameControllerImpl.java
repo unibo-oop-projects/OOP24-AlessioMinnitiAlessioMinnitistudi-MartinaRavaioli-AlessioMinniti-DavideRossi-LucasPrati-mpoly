@@ -213,7 +213,7 @@ public final class GameControllerImpl implements GameController {
             if ("buy".equals(actionName)) {
                 gameView.callBuyProperty(currentlySittingProperty);
             } else if ("sell".equals(actionName)) {
-                gameView.callClearPanel();
+                //gameView.callClearPanel();
             }
             refreshPlayerInfo();
             refreshCurrentTileInfo();
