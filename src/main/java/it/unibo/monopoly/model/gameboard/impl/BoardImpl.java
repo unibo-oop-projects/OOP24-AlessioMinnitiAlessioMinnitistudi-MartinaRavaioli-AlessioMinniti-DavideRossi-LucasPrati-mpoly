@@ -59,8 +59,9 @@ public class BoardImpl implements Board {
     }
 
     @Override
-    public final Tile getTileForPawn(final Pawn p) {
-        return tiles.get(p.getPosition().getPos());
+    public final Tile getTileForPawn(final int id) {
+        final Pawn pawn = this.pawns.get(id - 1);
+        return tiles.get(pawn.getPosition().getPos());
     }
 
     @Override

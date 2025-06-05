@@ -20,10 +20,10 @@ public interface Board {
 
     /**
      * get the tile of the pawn.
-     * @param p pawn given
+     * @param id id of the pawn given
      * @return Tile
      */
-    Tile getTileForPawn(Pawn p);
+    Tile getTileForPawn(int id);
 
     /**
      * move the pawn.
