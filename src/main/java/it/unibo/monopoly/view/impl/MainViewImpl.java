@@ -182,6 +182,7 @@ public final class MainViewImpl implements MainGameView {
 
     @Override
     public void displayError(final Exception e) {
+        e.printStackTrace();
         GuiUtils.showInfoMessage(mainGameFrame, "ERRORE", e.getMessage());
     }
 

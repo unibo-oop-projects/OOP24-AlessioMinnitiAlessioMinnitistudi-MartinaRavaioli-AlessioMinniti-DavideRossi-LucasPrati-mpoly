@@ -16,9 +16,15 @@ public final class ImmutableBankAccountCopy implements BankAccount {
      * @param account the account to wrap and to regulate access to
      */
     public ImmutableBankAccountCopy(final BankAccount account) {
+        final int balance = account.getBalance();
         this.account = new SimpleBankAccountImpl(account.getID(),
-                                                account.getBalance(),
+                                                0,
                                                 b -> account.canContinue());
+        if (balance > 0) {
+            this.account.deposit(balance);
+        } else {
+            this.account.withdraw(-balance);
+        }
     }
 
     @Override

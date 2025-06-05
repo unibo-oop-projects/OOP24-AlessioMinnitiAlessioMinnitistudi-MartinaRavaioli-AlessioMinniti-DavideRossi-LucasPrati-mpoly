@@ -73,7 +73,7 @@ public final class GameControllerImpl implements GameController {
 
     private void refreshCurrentTileInfo() {
         final int currentPlayerId = this.turnationManager.getIdCurrPlayer();
-        final Tile currentlySittingTile = this.board.getTileForPawn(this.board.getPawn(currentPlayerId));
+        final Tile currentlySittingTile = this.board.getTileForPawn(currentPlayerId);
         if (currentlySittingTile instanceof Property) {
             final String propertyName = currentlySittingTile.getName();
             this.gameView.displayPropertyContract(this.bank.getTitleDeed(propertyName));
@@ -106,8 +106,8 @@ public final class GameControllerImpl implements GameController {
                 this.gameView.displayMessage("The player has some actions to do before passing the turn");
             }
         } else {
-            // this.gameView.displayOptionMessageEndTurn("The player will die if he passes the turn");
-            this.gameView.displayMessage("The player will die if he passes the turn");
+            this.gameView.displayOptionMessageEndTurn("The player will die if he passes the turn");
+            //this.gameView.displayMessage("The player will die if he passes the turn");
         }
 
     }
@@ -116,7 +116,7 @@ public final class GameControllerImpl implements GameController {
     public void throwDices() {
         try {
             final Collection<Integer> result = this.turnationManager.moveByDices();
-            
+
             if (!this.turnationManager.isCurrentPlayerParked()
                 && (!this.turnationManager.isCurrentPlayerInPrison() 
                 || this.turnationManager.canExitPrison(result))
@@ -125,10 +125,10 @@ public final class GameControllerImpl implements GameController {
             
 
                 final int currentPlayerId = this.turnationManager.getIdCurrPlayer();
-                this.board.movePawn(this.board.getPawn(currentPlayerId), result);
+                this.board.movePawn(currentPlayerId, result);
                 this.gameView.callChangePositions();
                 this.gameView.displayDiceResult(result.stream().toList());
-                final Tile currentlySittingTile = this.board.getTileForPawn(this.board.getPawn(currentPlayerId));
+                final Tile currentlySittingTile = this.board.getTileForPawn(currentPlayerId);
                 refreshCurrentTileInfo();
                 if (currentlySittingTile instanceof Property) {
                     this.turnActions.clear();
@@ -229,8 +229,7 @@ public final class GameControllerImpl implements GameController {
             action.executePropertyAction(board, bank);
             gameView.displayMessage(action.getDescription() + " eseguita con successo");
             final Property currentlySittingProperty = (Property) this.board.getTileForPawn(
-                                                        this.board.getPawn(
-                                                        this.turnationManager.getIdCurrPlayer()));
+                                                        this.turnationManager.getIdCurrPlayer());
             if ("buy".equals(actionName)) {
                 gameView.callBuyProperty(currentlySittingProperty);
             } //else if ("sell".equals(actionName)) {
