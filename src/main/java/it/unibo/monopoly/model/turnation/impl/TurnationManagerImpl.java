@@ -86,13 +86,8 @@ public class TurnationManagerImpl implements TurnationManager {
     }
 
     @Override
-    public final void setOver() {
-        this.isOver = true;
-    }
-
-    @Override
     public final boolean isOver() { 
-        return this.isOver;
+        return this.players.toList().size() < 2;
     }
 
     @Override
