@@ -119,10 +119,7 @@ public final class GameControllerImpl implements GameController {
 
             if (!this.turnationManager.isCurrentPlayerParked()
                 && (!this.turnationManager.isCurrentPlayerInPrison() 
-                || this.turnationManager.canExitPrison(result))
-                 ) {
-                System.out.println("out");
-            
+                || this.turnationManager.canExitPrison(result))) {
 
                 final int currentPlayerId = this.turnationManager.getIdCurrPlayer();
                 this.board.movePawn(currentPlayerId, result);
@@ -143,7 +140,6 @@ public final class GameControllerImpl implements GameController {
                     if (!"Start".equals(currentlySittingTile.getName())) {
                         executeEffect(specialTile.getEffect());
                         this.gameView.callChangePositions();
-                        System.err.println(turnationManager.currentPlayerTurnsLeftInPrison());
                     }
                 }
                 final int delta = board.getPawn(currentPlayerId).getPosition().getPos() 
@@ -157,13 +153,12 @@ public final class GameControllerImpl implements GameController {
                 if (this.turnationManager.isCurrentPlayerParked()) {
                     this.gameView.displayMessage("you can't move, you are parked,\nwait unil the next turn");
                     this.turnationManager.passedParkTurn();
-                }else{
+                } else {
                     this.gameView.displayMessage("you can't move, you have " 
                                     + turnationManager.currentPlayerTurnsLeftInPrison() 
                                     + " turns left in prison and the dices weren't kind with you.");
                     this.turnationManager.decreaseTurnsInPrison();
                 }
-                
 
             }
         } catch (final IllegalAccessException e) {

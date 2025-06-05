@@ -128,7 +128,7 @@ public final class MainMenuControllerImpl implements MainMenuController {
 
         // import from json
         final List<CardDTO> dtos = importFileJson.loadJsonList(config.getCardsPath(), CardDTO.class);
-        final CardFactory cardFactory = new CardFactoryImpl(board, bank); 
+        final CardFactory cardFactory = new CardFactoryImpl(board, bank, turnationManager); 
         cardFactory.parse(dtos);
         // populate elements
         titleDeeds.addAll(cardFactory.getDeeds());

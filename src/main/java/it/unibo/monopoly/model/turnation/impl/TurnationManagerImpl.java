@@ -99,8 +99,7 @@ public class TurnationManagerImpl implements TurnationManager {
     public final Player getNextPlayer() { 
         this.currPlayer = players.giveNextNode(this.currPlayer);
         this.diceThrown = false;
-        return this.currPlayer;
-        //return PlayerImpl.of(this.currPlayer.getID(), this.currPlayer.getName(), this.currPlayer.getColor());
+        return PlayerImpl.of(this.currPlayer.getID(), this.currPlayer.getName(), this.currPlayer.getColor());
     }
 
     @Override
@@ -120,8 +119,7 @@ public class TurnationManagerImpl implements TurnationManager {
 
     @Override
     public final Player getCurrPlayer() {
-        return this.currPlayer;
-       // return PlayerImpl.of(this.currPlayer.getID(), this.currPlayer.getName(), this.currPlayer.getColor());
+        return PlayerImpl.of(this.currPlayer.getID(), this.currPlayer.getName(), this.currPlayer.getColor());
     }
 
     @Override
@@ -182,20 +180,28 @@ public class TurnationManagerImpl implements TurnationManager {
         return this.diceThrown;
     }
     @Override
-    public boolean isCurrentPlayerParked() {
+    public final boolean isCurrentPlayerParked() {
         return this.currPlayer.isParked();
     }
     @Override
-    public int currentPlayerTurnsLeftInPrison() {
+    public final int currentPlayerTurnsLeftInPrison() {
         return this.currPlayer.turnLeftInPrison();
     }
     @Override
-    public void decreaseTurnsInPrison() {
+    public final void decreaseTurnsInPrison() {
         this.currPlayer.decreaseTurnsInPrison();
     }
     @Override
-    public void passedParkTurn() {
+    public final void passedParkTurn() {
         this.currPlayer.passTurn();
+    }
+    @Override
+    public final void putCurrentPlayerInPrison() {
+        this.currPlayer.putInPrison();
+    }
+    @Override
+    public final void parkCurrentPlayer() {
+        this.currPlayer.park();
     }
 
 }

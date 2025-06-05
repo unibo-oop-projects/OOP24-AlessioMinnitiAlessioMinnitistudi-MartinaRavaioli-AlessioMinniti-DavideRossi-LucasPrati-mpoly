@@ -64,7 +64,13 @@ public interface Player extends Identifiable<Integer> {
      */
     int turnLeftInPrison();
 
+    /**
+     * decreases the turns the player has left in prison.
+     */
     void decreaseTurnsInPrison();
 
+    /**
+     * sets the in variable as false so that the player can move in the next turn.
+     */
     void passTurn();
 }

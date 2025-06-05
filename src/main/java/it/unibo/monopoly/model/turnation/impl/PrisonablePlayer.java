@@ -51,7 +51,7 @@ public final class PrisonablePlayer implements Prisonable, Player {
             }
         }*/
 
-        if (l.size()!=l1.size()) {
+        if (l.size() != l1.size()) {
             this.turns = 0;
             return true;
         }

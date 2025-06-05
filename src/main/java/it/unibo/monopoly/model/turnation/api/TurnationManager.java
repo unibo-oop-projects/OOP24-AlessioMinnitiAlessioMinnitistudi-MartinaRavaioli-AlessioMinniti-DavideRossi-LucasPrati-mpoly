@@ -64,6 +64,10 @@ public interface TurnationManager {
      */
     void setList(List<Player> plList);
     /**
+     * puts the current player in prison.
+     */
+    void putCurrentPlayerInPrison();
+    /**
      * tells if the current player is in prison.
      * @return bool
      */
@@ -74,6 +78,10 @@ public interface TurnationManager {
      * @param value result of the dices
      */
     boolean canExitPrison(Collection<Integer> value);
+    /**
+     * parks the current player.
+     */
+    void parkCurrentPlayer();
     /**
      * tells if the current player is parked.
      * @return bool
