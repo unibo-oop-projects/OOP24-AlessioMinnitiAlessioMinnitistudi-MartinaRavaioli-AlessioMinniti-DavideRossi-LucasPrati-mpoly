@@ -27,12 +27,7 @@ public final class ParkablePlayer implements Parkable, Player {
 
     @Override
     public boolean isParked() {
-        if (in) {
-            in = false;
-            return true;
-        } else {
-            return false;
-        }
+        return in;
     }
 
     @Override
@@ -83,5 +78,10 @@ public final class ParkablePlayer implements Parkable, Player {
     @Override
     public void decreaseTurnsInPrison() {
         pl.decreaseTurnsInPrison();
+    }
+
+    @Override
+    public void passTurn() {
+        this.in = false;
     }
 }

@@ -125,12 +125,11 @@ class FactoryTest {
         assertEquals(pos4.getPos(), board.getPawn(p1.getID()).getPosition().getPos());
         assertEquals(3, p1.turnLeftInPrison());
         assertFalse(!p1.isInPrison()|| p1.canExitPrison(dice1));
+        p1.decreaseTurnsInPrison();
         assertEquals(2, p1.turnLeftInPrison());
         assertFalse(p1.canExitPrison(dice1));
-        assertFalse(!p1.isInPrison()|| p1.canExitPrison(dice1));
-        assertEquals(1, p1.turnLeftInPrison());
-        assertFalse(!p1.isInPrison()|| p1.canExitPrison(dice1));
-
+        p1.decreaseTurnsInPrison();
+        assertTrue(!p1.isInPrison()|| p1.canExitPrison(dice2));
         assertEquals(0, p1.turnLeftInPrison());
     }
 

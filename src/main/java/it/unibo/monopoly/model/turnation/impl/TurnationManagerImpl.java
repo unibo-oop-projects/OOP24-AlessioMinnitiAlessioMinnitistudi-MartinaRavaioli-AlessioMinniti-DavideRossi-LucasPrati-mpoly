@@ -193,5 +193,9 @@ public class TurnationManagerImpl implements TurnationManager {
     public void decreaseTurnsInPrison() {
         this.currPlayer.decreaseTurnsInPrison();
     }
+    @Override
+    public void passedParkTurn() {
+        this.currPlayer.passTurn();
+    }
 
 }

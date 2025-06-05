@@ -80,6 +80,11 @@ public interface TurnationManager {
      */
     boolean isCurrentPlayerParked();
     /**
+     * sets the variable in as false.
+     * It means the player can move when the next turn arrives
+     */
+    void passedParkTurn();
+    /**
      * it gets how many turn the player has left in prison.
      * @return the turns
      */

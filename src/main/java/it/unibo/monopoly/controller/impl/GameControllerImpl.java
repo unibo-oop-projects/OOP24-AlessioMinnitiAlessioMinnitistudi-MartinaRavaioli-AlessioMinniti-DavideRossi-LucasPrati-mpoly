@@ -117,8 +117,8 @@ public final class GameControllerImpl implements GameController {
         try {
             final Collection<Integer> result = this.turnationManager.moveByDices();
             
-            if (/*!this.turnationManager.isCurrentPlayerParked()
-                &&*/ (!this.turnationManager.isCurrentPlayerInPrison() 
+            if (!this.turnationManager.isCurrentPlayerParked()
+                && (!this.turnationManager.isCurrentPlayerInPrison() 
                 || this.turnationManager.canExitPrison(result))
                  ) {
                 System.out.println("out");
@@ -154,10 +154,16 @@ public final class GameControllerImpl implements GameController {
                 }
 
             } else {
-                this.gameView.displayMessage("you can't move, you have" 
+                if (this.turnationManager.isCurrentPlayerParked()) {
+                    this.gameView.displayMessage("you can't move, you are parked,\nwait unil the next turn");
+                    this.turnationManager.passedParkTurn();
+                }else{
+                    this.gameView.displayMessage("you can't move, you have " 
                                     + turnationManager.currentPlayerTurnsLeftInPrison() 
                                     + " turns left in prison and the dices weren't kind with you.");
-                this.turnationManager.decreaseTurnsInPrison();
+                    this.turnationManager.decreaseTurnsInPrison();
+                }
+                
 
             }
         } catch (final IllegalAccessException e) {

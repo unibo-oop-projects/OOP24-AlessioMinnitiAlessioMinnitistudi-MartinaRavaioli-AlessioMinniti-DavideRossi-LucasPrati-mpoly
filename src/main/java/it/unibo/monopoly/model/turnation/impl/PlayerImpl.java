@@ -155,4 +155,8 @@ public final class PlayerImpl implements Player {
     @Override
     public void decreaseTurnsInPrison() {
     }
+
+    @Override
+    public void passTurn() {
+    }
 }

@@ -97,4 +97,9 @@ public final class PrisonablePlayer implements Prisonable, Player {
     public void decreaseTurnsInPrison() {
         turns = turns - 1;
     }
+
+    @Override
+    public void passTurn() {
+        this.player.passTurn();
+    }
 }

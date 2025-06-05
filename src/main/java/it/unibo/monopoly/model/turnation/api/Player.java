@@ -65,4 +65,6 @@ public interface Player extends Identifiable<Integer> {
     int turnLeftInPrison();
 
     void decreaseTurnsInPrison();
+
+    void passTurn();
 }
