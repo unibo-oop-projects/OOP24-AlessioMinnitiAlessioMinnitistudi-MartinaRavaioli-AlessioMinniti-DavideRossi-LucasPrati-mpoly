@@ -250,6 +250,10 @@ public final class GameControllerImpl implements GameController {
             this.gameView.callDeletePlayer(this.turnationManager.getCurrPlayer().getColor());
             this.turnationManager.deletePlayer(this.turnationManager.getCurrPlayer());
             this.gameView.displayMessage("Player " + deadPlayer + " is dead");
+
+            if (this.turnationManager.isOver()) {
+                this.gameView.showRanking();
+            }
         }
         gameView.clearControlsUI();
         refreshPlayerInfo();

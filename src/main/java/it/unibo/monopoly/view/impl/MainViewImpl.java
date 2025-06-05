@@ -215,4 +215,9 @@ public final class MainViewImpl implements MainGameView {
     public void callDeletePlayer(Color color) {
         this.gameBoardPanel.deletePlayer(color);
     }
+
+    @Override
+    public void showRanking() {
+        new GUIRanking(controller.getRanking(), controller.getWinner());
+    }
 }

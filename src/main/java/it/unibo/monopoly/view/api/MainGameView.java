@@ -125,4 +125,8 @@ public interface MainGameView {
      * @param color color of the player
     */
     void callDeletePlayer(Color color);
+    /**
+     * call the frame that shows the final ranking.
+     */
+    void showRanking();
 }
