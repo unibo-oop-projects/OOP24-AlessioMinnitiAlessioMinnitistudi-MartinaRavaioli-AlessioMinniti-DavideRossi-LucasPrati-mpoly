@@ -32,13 +32,13 @@ Depending on where you land, you may:
     - Be sent to Jail
 
 
-"GO":
-Every time a player passes or lands on GO, they collect $200 from the Bank.
+"Start":
+Every time a player passes or lands on "Start", they collect $200 from the Bank.
 
 
 Buying Property:
 If you land on an unowned property, you may buy it from the Bank at its printed price.
-You will receive the corresponding Title Deed card as proof of ownership.
+As proof of ownership, the tile will'show a badge with the same token color of its owner.
 
 
 Paying Rent:
@@ -52,7 +52,7 @@ When you land on these spaces, draw a card from the corresponding deck and follo
 
 
 "INCOME TAX":
-If you land on the Income Tax space, you must pay $200 to the Bank.
+If you land on the Income Tax space, you must pay the relative amount to the Bank.
 
 
 "JAIL":
@@ -60,15 +60,14 @@ You go to Jail if:
     - You land on the “Go to Jail” space.
     - You draw a “Go to Jail” card.
 Rules while in Jail:
-    - Move your token directly to Jail—you do not collect $200 for passing GO.
+    - Move your token directly to Jail—you do not collect $200 for passing "Start".
     - Your turn ends immediately.
-    - Jail time lasts for 1 turn.
+    - Jail time lasts for 3 turn, unless you get at least 2 matching numbers at the dices.
     - You can still collect rent from other players.
 
 
 "FREE PARKING":
-Landing on Free Parking has no reward or penalty.
-It is simply a resting space.
+Landing on Free Parking puts you in stall for the next turn.
 
 
 Houses:

@@ -21,6 +21,7 @@ public interface TurnationManager {
     /**
      * get the dices' result.
      * @return multiple int
+     * @throws IllegalAccessException
      */
     Collection<Integer> moveByDices() throws IllegalAccessException;
     /**

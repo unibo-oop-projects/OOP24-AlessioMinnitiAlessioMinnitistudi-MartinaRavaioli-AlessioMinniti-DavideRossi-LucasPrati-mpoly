@@ -87,7 +87,7 @@ public final class GameControllerImpl implements GameController {
     private void executeEffect(final Effect effect) {
         try {
             effect.activate(this.turnationManager.getCurrPlayer());
-            this.gameView.displayMessage("Eseguito effetto " + effect.getDescription());
+            this.gameView.displayMessage("Eseguito effetto: " + effect.getDescription());
             refreshPlayerInfo();
         } catch (final IllegalStateException | IllegalArgumentException e) {
             this.gameView.displayError(e);
@@ -106,6 +106,7 @@ public final class GameControllerImpl implements GameController {
                 this.gameView.displayMessage("The player has some actions to do before passing the turn");
             }
         } else {
+            // this.gameView.displayOptionMessageEndTurn("The player will die if he passes the turn");
             this.gameView.displayMessage("The player will die if he passes the turn");
         }
 
@@ -115,9 +116,13 @@ public final class GameControllerImpl implements GameController {
     public void throwDices() {
         try {
             final Collection<Integer> result = this.turnationManager.moveByDices();
-            if (this.turnationManager.isCurrentPlayerInPrison()) {
-                this.turnationManager.canExitPrison(result);
-            }
+            
+            if (/*!this.turnationManager.isCurrentPlayerParked()
+                &&*/ (!this.turnationManager.isCurrentPlayerInPrison() 
+                || this.turnationManager.canExitPrison(result))
+                 ) {
+                System.out.println("can move");
+            
 
             final int currentPlayerId = this.turnationManager.getIdCurrPlayer();
             this.board.movePawn(this.board.getPawn(currentPlayerId), result);
@@ -137,14 +142,10 @@ public final class GameControllerImpl implements GameController {
                 final Special specialTile = (Special) currentlySittingTile;
                 if (!"Go".equals(currentlySittingTile.getName())) {
                     executeEffect(specialTile.getEffect());
+                    this.gameView.callChangePositions();
                 }
             }
-            final int delta = board.getPawn(currentPlayerId).getPosition().getPos() 
-                                        - board.getPawn(currentPlayerId).getPreviousPosition().getPos();
-            if (delta < 0) {
-                final Special tile = (Special) board.getTile("Go");
-                executeEffect(tile.getEffect());
-            }
+        }
         } catch (final IllegalAccessException e) {
             gameView.displayError(e);
         }
@@ -212,9 +213,9 @@ public final class GameControllerImpl implements GameController {
                                                         this.turnationManager.getIdCurrPlayer()));
             if ("buy".equals(actionName)) {
                 gameView.callBuyProperty(currentlySittingProperty);
-            } else if ("sell".equals(actionName)) {
-                gameView.callClearPanel();
-            }
+            } //else if ("sell".equals(actionName)) {
+            //     //gameView.callClearPanel();
+            // }
             refreshPlayerInfo();
             refreshCurrentTileInfo();
         } catch (final IllegalStateException | IllegalArgumentException e) {

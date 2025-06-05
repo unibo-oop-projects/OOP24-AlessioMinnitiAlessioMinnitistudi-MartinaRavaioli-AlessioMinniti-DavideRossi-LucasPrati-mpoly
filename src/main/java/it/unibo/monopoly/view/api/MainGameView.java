@@ -104,8 +104,9 @@ public interface MainGameView {
     void callChangePositions();
     /**
      * call the clear panel method in the gameboard view.
+     * @param name the property to clear
      */
-    void callClearPanel();
+    void callClearPanel(String name);
     /**
      * call the buy property method in the gameboard view.
      * @param prop the property to buy

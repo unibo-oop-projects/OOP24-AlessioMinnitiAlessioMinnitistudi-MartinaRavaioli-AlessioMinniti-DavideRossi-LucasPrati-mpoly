@@ -64,10 +64,7 @@ final class SwingMainCommandsPanel extends SwingAbstractJPanel implements Standa
 
         final JButton rulesButton = new JButton("?");
         final JButton endTurnButton = new JButton("Termina turno");
-        endTurnButton.addActionListener(e -> {
-            controller.endTurn();
-            throwDicesButton.setEnabled(true);
-        });
+        endTurnButton.addActionListener(e -> controller.endTurn());
         rulesButton.addActionListener(e -> controller.loadRules());
 
         turnJPanel.add(endTurnButton);
@@ -92,6 +89,7 @@ final class SwingMainCommandsPanel extends SwingAbstractJPanel implements Standa
     public void renderDefaultUI() {
         dicesResultsJLabel.setText(DICES_RESULTS_PH);
         dicesTotalJLabel.setText(DICES_TOTAL_PH);
+        throwDicesButton.setEnabled(true);
     }
 
     @Override

@@ -6,6 +6,7 @@ package it.unibo.monopoly.utils.api;
  */
 public interface Identifiable<E> {
     /**
+     * get the id.
      * @return the ID value
      */
     E getID();
