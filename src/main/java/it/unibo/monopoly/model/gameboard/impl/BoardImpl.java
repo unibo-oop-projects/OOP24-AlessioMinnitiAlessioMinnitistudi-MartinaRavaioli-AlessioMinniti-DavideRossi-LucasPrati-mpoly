@@ -49,8 +49,8 @@ public class BoardImpl implements Board {
     }
 
     @Override
-    public final void removePawn(final Pawn p) {
-        this.pawns.remove(p);
+    public final void removePawn(final int id) {
+        this.pawns.remove(id - 1);
     }
 
     @Override

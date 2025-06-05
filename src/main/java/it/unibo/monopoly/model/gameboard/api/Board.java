@@ -41,9 +41,9 @@ public interface Board {
 
     /**
      * remove a pawn.
-     * @param p pawn to remove
+     * @param id id of the pawn to remove
     */
-    void removePawn(Pawn p);
+    void removePawn(int id);
 
     /**
      * add a pawn.

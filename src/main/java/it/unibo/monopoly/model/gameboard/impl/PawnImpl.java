@@ -10,7 +10,7 @@ import it.unibo.monopoly.utils.api.Identifiable;
 /**
  * {@link Pawn} implementation.
 */
-public class PawnImpl implements Pawn, Identifiable<Integer>{
+public class PawnImpl implements Pawn, Identifiable<Integer> {
     private final int id; /**id. */
     private Position pos; /**position. */
     private Position prevPos; /**position. */
@@ -87,7 +87,7 @@ public class PawnImpl implements Pawn, Identifiable<Integer>{
         this.pos.setPos(this.pos.getPos() + steps);
     }
     @Override
-    public Integer getID() {
+    public final Integer getID() {
         return this.id;
     }
 }
