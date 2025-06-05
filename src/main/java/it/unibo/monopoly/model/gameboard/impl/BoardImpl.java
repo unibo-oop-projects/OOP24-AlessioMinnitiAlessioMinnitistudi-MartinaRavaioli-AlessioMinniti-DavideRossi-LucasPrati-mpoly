@@ -85,7 +85,7 @@ public class BoardImpl implements Board {
     }
 
     @Override
-    public final Pawn getPawn(final int id) {
+    public final Pawn getPawn(final int id) { //it's used to return the pawn outside of the board, it's because it returns a copy 
         for (final Pawn p : this.pawns) {
             if (((PawnImpl) p).getID() == id) {
                 return new PawnImpl(((PawnImpl) p).getID(), p.getPosition(), p.getColor());
@@ -106,14 +106,10 @@ public class BoardImpl implements Board {
     }
 
     @Override
-    public final void movePawnInTile(final Pawn pawn, final String name) {
+    public final void movePawnInTile(final int id, final String name) {
+        final Pawn pawn = this.pawns.get(id - 1);
         final Tile tile = getTile(name);
-
-        for (final Pawn p : this.pawns) {
-            if (((PawnImpl) p).getID().equals(((PawnImpl) pawn).getID())) {
-                p.setPosition(tile.getPosition());
-            }
-        }
+        pawn.setPosition(tile.getPosition());
     }
 
     @Override

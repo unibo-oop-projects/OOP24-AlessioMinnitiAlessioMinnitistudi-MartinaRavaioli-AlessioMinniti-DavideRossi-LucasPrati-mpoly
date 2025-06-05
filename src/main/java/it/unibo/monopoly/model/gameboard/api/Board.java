@@ -77,10 +77,10 @@ public interface Board {
 
     /**
      * move a pawn in a selected tile.
-     * @param pawn pawn to move
+     * @param id id of the pawn to move
      * @param name name of the tile in which the pawn must move
     */
-    void movePawnInTile(Pawn pawn, String name);
+    void movePawnInTile(int id, String name);
 
     /**
      * get a tile searched by the name given.
