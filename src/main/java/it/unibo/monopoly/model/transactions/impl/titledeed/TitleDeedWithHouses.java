@@ -13,7 +13,6 @@ import it.unibo.monopoly.model.gameboard.api.Property;
 import it.unibo.monopoly.model.gameboard.impl.ImmutableProperty;
 import it.unibo.monopoly.model.transactions.api.RentOption;
 import it.unibo.monopoly.model.transactions.api.TitleDeed;
-import it.unibo.monopoly.model.transactions.impl.rentoption.PropertyRentOptionImpl;
 
 /**
  * An implementation of {@link TitleDeed} that offers support also for the houses and 
@@ -47,7 +46,7 @@ public final class TitleDeedWithHouses extends TitleDeedDecorator {
     @SuppressFBWarnings(
         value = "EI_EXPOSE_REP2",
         justification = """
-                It was thought that storing a reference to the property was the better solution for this implementation.
+                It was thought that storing a reference to the property was a better solution for this implementation.
                 The title deed needs to know the current state of the property to execute the getRent function. Receiving 
                 this information as an input when the method is called could lead to potential errors if the data passed is
                 incorrect. Safety is ensured by asking upon construction for an ImmutableProperty: an implementation of Property
@@ -56,7 +55,7 @@ public final class TitleDeedWithHouses extends TitleDeedDecorator {
     )
     public TitleDeedWithHouses(
                         final TitleDeed decorated,
-                        final List<PropertyRentOptionImpl> propertyBasedRentOptions,
+                        final List<RentOption> propertyBasedRentOptions,
                         final ImmutableProperty attachedProperty,
                         final Function<Integer, Integer> houseFunction,
                         final Function<Integer, Integer> hotelFunction) {
