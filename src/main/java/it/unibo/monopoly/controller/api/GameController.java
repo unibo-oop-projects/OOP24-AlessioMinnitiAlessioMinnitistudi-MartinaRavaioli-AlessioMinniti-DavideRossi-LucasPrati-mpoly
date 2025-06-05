@@ -2,10 +2,14 @@ package it.unibo.monopoly.controller.api;
 
 import java.util.List;
 
+import org.apache.commons.lang3.tuple.Pair;
+
 import it.unibo.monopoly.model.gameboard.api.Pawn;
 import it.unibo.monopoly.model.gameboard.api.Tile;
+import it.unibo.monopoly.model.gameboard.api.Board;
 import it.unibo.monopoly.model.transactions.api.PropertyAction;
 import it.unibo.monopoly.model.transactions.api.PropertyActionsEnum;
+import it.unibo.monopoly.model.transactions.api.Bank;
 import it.unibo.monopoly.model.turnation.api.Player;
 import it.unibo.monopoly.utils.impl.Configuration;
 import it.unibo.monopoly.view.api.MainGameView;
@@ -78,9 +82,27 @@ public interface GameController {
 
     /**
      * Retrieves a {@link PropertyAction} with the same name ({@link PropertyAction#getName()})
-     * as the one given as input and executes it (calling {@link PropertyAction#executePropertyAction()}).
+     * as the one given as input and executes it (calling {@link PropertyAction#executePropertyAction(Board, Bank)}).
      * @param actionName the name of the {@link PropertyAction} to execute
      */
     void executeAction(PropertyActionsEnum actionName);
 
+    /**
+     * start the UI, initializing the game view and the bank state.
+     */
+    void start();
+    /**
+     * get the final ranking of the players.
+     * @return List of all players with their ranking
+    */
+    List<Pair<String, Integer>> getRanking();
+    /**
+     * get the winner.
+     * @return winner data
+    */
+    Pair<String, Integer> getWinner();
+    /**
+     * end the turn even if the player dies.
+    */
+    void endTurnPlayerDies();
 }

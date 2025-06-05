@@ -20,17 +20,20 @@ import it.unibo.monopoly.model.gameboard.api.Property;
 public interface RentOption {
 
     /**
+     * Get the title of the rent option.
      * @return the title of the {@link RentOption}.
      */
     String getTitle();
 
     /**
+     * Get a brief description about the rent option.
      * @return the decription of the {@link RentOption}.
      * The description could be blank
      */
     String getDescription();
 
     /**
+     * Get the price of this rent option.
      * @return the price of the {@link RentOption}.
      * This is the price the player will have to pay
      * if this rent option is selected

@@ -14,10 +14,17 @@ public interface Pawn {
      */
     void move(int steps);
     /**
+     * get his position.
      * @return the own position.
     */
     Position getPosition();
     /**
+     * get his previous position.
+     * @return the own previous position.
+    */
+    Position getPreviousPosition();
+    /**
+     * get his color.
      * @return the own color.
     */
     Color getColor();

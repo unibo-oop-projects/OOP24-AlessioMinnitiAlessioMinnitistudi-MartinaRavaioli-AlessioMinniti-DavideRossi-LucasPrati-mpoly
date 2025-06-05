@@ -2,6 +2,8 @@ package it.unibo.monopoly.view.api;
 
 import java.awt.Component;
 
+import javax.swing.JFrame;
+
 /**
  * A generic panel that displays some sort of information
  * and controls to play the game. 

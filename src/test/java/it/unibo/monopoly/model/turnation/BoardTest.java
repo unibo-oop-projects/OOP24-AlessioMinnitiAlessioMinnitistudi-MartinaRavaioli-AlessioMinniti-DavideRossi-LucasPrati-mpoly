@@ -47,7 +47,7 @@ class BoardTest {
         board.addPawn(newPawn);
         assertEquals(3, ((PawnImpl) board.getPawn(3)).getID());
 
-        board.removePawn(newPawn);
+        board.removePawn(((PawnImpl) newPawn).getID());
         assertThrows(IllegalArgumentException.class, () -> board.getPawn(3));
     }
 
@@ -59,13 +59,13 @@ class BoardTest {
 
     @Test
     void testGetTileForPawn() {
-        final Tile tile = board.getTileForPawn(pawn2);
+        final Tile tile = board.getTileForPawn(((PawnImpl) pawn2).getID());
         assertEquals(0, tile.getPosition().getPos());
     }
 
     @Test
     void testMovePawn() {
-        board.movePawn(pawn1, List.of(2, 3)); // Move 5 steps
+        board.movePawn(((PawnImpl) pawn1).getID(), List.of(2, 3)); // Move 5 steps
         assertEquals(STEPS, pawn1.getPosition().getPos());
     }
 

@@ -20,17 +20,17 @@ public interface Board {
 
     /**
      * get the tile of the pawn.
-     * @param p pawn given
+     * @param id id of the pawn given
      * @return Tile
      */
-    Tile getTileForPawn(Pawn p);
+    Tile getTileForPawn(int id);
 
     /**
      * move the pawn.
-     * @param player pawn of the player who has to move 
+     * @param id id of the pawn who has to move 
      * @param value value
     */
-    void movePawn(Pawn player, Collection<Integer> value);
+    void movePawn(int id, Collection<Integer> value);
 
     /**
      * get the pawn with the given id.
@@ -41,9 +41,9 @@ public interface Board {
 
     /**
      * remove a pawn.
-     * @param p pawn to remove
+     * @param id id of the pawn to remove
     */
-    void removePawn(Pawn p);
+    void removePawn(int id);
 
     /**
      * add a pawn.
@@ -77,10 +77,10 @@ public interface Board {
 
     /**
      * move a pawn in a selected tile.
-     * @param pawn pawn to move
+     * @param id id of the pawn to move
      * @param name name of the tile in which the pawn must move
     */
-    void movePawnInTile(Pawn pawn, String name);
+    void movePawnInTile(int id, String name);
 
     /**
      * get a tile searched by the name given.

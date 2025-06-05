@@ -43,7 +43,7 @@ public final class GUIVenditaLogicImpl implements  GUIVenditaLogic, Serializable
     }
 
     @Override
-    public boolean sellProperty(final List<TitleDeed> properties, final TitleDeed selectedProperty, final Bank bank) {
+    public boolean sellProperty(final TitleDeed selectedProperty, final Bank bank) {
         bank.sellTitleDeed(selectedProperty.getName());
         return true;
     }

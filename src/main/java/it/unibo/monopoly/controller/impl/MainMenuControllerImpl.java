@@ -145,7 +145,7 @@ public final class MainMenuControllerImpl implements MainMenuController {
         );
         final var mainView = new MainViewImpl(controllerGameManager);
         controllerGameManager.attachView(mainView);
-        // mainView.start(); //TODO implementare il metodo e rimuovere il commento
+        controllerGameManager.start();
     }
 
     /**

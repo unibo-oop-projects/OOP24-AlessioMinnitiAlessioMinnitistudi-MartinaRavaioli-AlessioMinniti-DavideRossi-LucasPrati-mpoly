@@ -4,14 +4,16 @@ import java.awt.Color;
 
 import it.unibo.monopoly.model.gameboard.api.Pawn;
 import it.unibo.monopoly.model.turnation.api.Position;
-import it.unibo.monopoly.model.turnation.impl.AbstractIdPlayerImpl;
 import it.unibo.monopoly.model.turnation.impl.PositionImpl;
+import it.unibo.monopoly.utils.api.Identifiable;
 
 /**
  * {@link Pawn} implementation.
 */
-public class PawnImpl extends AbstractIdPlayerImpl implements Pawn {
+public class PawnImpl implements Pawn, Identifiable<Integer> {
+    private final int id; /**id. */
     private Position pos; /**position. */
+    private Position prevPos; /**position. */
     private Color color; /**color. */
     private String shape; /**shape. */
     /**
@@ -22,7 +24,7 @@ public class PawnImpl extends AbstractIdPlayerImpl implements Pawn {
      * @param shape shape
     */
     public PawnImpl(final int id, final Position pos, final Color color, final String shape) {
-        super(id);
+        this.id = id;
         this.pos = new PositionImpl(pos.getPos());
         setColor(color);
         setShape(shape);
@@ -34,7 +36,7 @@ public class PawnImpl extends AbstractIdPlayerImpl implements Pawn {
      * @param color color
     */
     public PawnImpl(final int id, final Position pos, final Color color) {
-        super(id);
+        this.id = id;
         this.pos = new PositionImpl(pos.getPos());
         setColor(color);
         setShape("square");
@@ -69,12 +71,23 @@ public class PawnImpl extends AbstractIdPlayerImpl implements Pawn {
     }
 
     @Override
+    public final Position getPreviousPosition() {
+        return new PositionImpl(this.prevPos.getPos());
+    }
+
+    @Override
     public final void setPosition(final Position pos) {
+        this.prevPos = new PositionImpl(this.pos.getPos());
         this.pos = new PositionImpl(pos.getPos());
     }
 
     @Override
     public final void move(final int steps) {
+        this.prevPos = new PositionImpl(this.pos.getPos());
         this.pos.setPos(this.pos.getPos() + steps);
+    }
+    @Override
+    public final Integer getID() {
+        return this.id;
     }
 }

@@ -22,6 +22,7 @@ public class TurnationManagerImpl implements TurnationManager {
     private Player currPlayer; /**current player. */
     private Dice dice; /**dice. */
     private BankState bankState; /**bankState to communicate with the bank. */
+    private boolean diceThrown; /**tells if the current player has already thrown the dices. */
     /**
      * constructor.
      * @param plList list of players
@@ -34,6 +35,7 @@ public class TurnationManagerImpl implements TurnationManager {
         }
         this.dice = dice;
         this.currPlayer = plList.get(0);
+        this.diceThrown = false;
     }
     /**
      * constructor.
@@ -96,12 +98,18 @@ public class TurnationManagerImpl implements TurnationManager {
     @Override
     public final Player getNextPlayer() { 
         this.currPlayer = players.giveNextNode(this.currPlayer);
+        this.diceThrown = false;
         return PlayerImpl.of(this.currPlayer.getID(), this.currPlayer.getName(), this.currPlayer.getColor());
     }
 
     @Override
-    public final Collection<Integer> moveByDices() { 
-        return this.dice.throwDices();
+    public final Collection<Integer> moveByDices() throws IllegalAccessException { 
+        if (!hasCurrPlayerThrownDices()) {
+            this.diceThrown = true;
+            return this.dice.throwDices();
+        } else {
+            throw new IllegalAccessException("the current player has already thrown the dices");
+        }
     }
 
     @Override
@@ -125,18 +133,13 @@ public class TurnationManagerImpl implements TurnationManager {
     }
 
     @Override
-    public final boolean canThrowDices() {
-        return true;
-    }
-
-    @Override
     public final boolean canPassTurn() {
-        return this.bankState.allMandatoryTransactionsCompleted();
+        return this.bankState.allMandatoryTransactionsCompleted() && hasCurrPlayerThrownDices();
     }
 
     @Override
     public final boolean playerDiesIfTurnPassed() {
-        return this.bankState.canContinuePlay(this.currPlayer);
+        return !this.bankState.canContinuePlay(this.currPlayer);
     }
 
     @Override
@@ -150,7 +153,7 @@ public class TurnationManagerImpl implements TurnationManager {
             }
         }
 
-        winnerName = Pair.of(this.players.toList().get(winner.getLeft()).getName(), winner.getRight());
+        winnerName = Pair.of(this.players.toList().get(winner.getLeft() - 1).getName(), winner.getRight());
         return winnerName;
     }
 
@@ -158,7 +161,7 @@ public class TurnationManagerImpl implements TurnationManager {
     public final List<Pair<String, Integer>> getRanking() {
         final List<Pair<String, Integer>> list = new ArrayList<>();
         for (final Pair<Integer, Integer> p : this.bankState.rankPlayers()) {
-            list.add(Pair.of(this.players.toList().get(p.getLeft()).getName(), p.getRight()));
+            list.add(Pair.of(/*p.getLeft().toString()*/this.players.toList().get(p.getLeft() - 1).getName(), p.getRight()));
         }
 
         return list;
@@ -167,6 +170,14 @@ public class TurnationManagerImpl implements TurnationManager {
     @Override
     public final void deletePlayer(final Player player) {
         this.players.deleteNode(player);
+    }
+    @Override
+    public final void resetBankState() {
+        this.bankState.resetTransactionData();
+    }
+    @Override
+    public final boolean hasCurrPlayerThrownDices() {
+        return this.diceThrown;
     }
 
 }

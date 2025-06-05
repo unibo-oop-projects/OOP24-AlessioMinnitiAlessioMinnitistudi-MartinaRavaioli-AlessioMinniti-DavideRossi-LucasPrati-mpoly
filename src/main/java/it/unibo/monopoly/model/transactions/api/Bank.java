@@ -5,7 +5,9 @@ import java.util.Set;
 import java.util.function.BiFunction;
 
 import it.unibo.monopoly.model.gameboard.api.Pawn;
+import it.unibo.monopoly.model.gameboard.api.Property;
 import it.unibo.monopoly.model.turnation.impl.PlayerImpl;
+import it.unibo.monopoly.utils.api.Identifiable;
 
 /**
  * This object handles all payment operations that happen in the game.
@@ -53,7 +55,7 @@ public interface Bank {
      * by another player.
      * @param titleDeedName the {@link TitleDeed} whose rent has to be paid,
      * The rent will vary based on the {@link RentOption} chose by the system
-     * @param playerId the id, returned by {@link it.unibo.monopoly.utils.Identifiable#getID()}, 
+     * @param playerId the id, returned by {@link Identifiable#getID()}, 
      * associated to the {@link BankAccount} of the player that has to pay the rent
      * @param diceThrow the value of the throw used to get some specific rent
      */
@@ -62,7 +64,7 @@ public interface Bank {
 
     /**
      * Gets an immutable copy of a {@link BankAccount} of a specific player. 
-     * @param playerId The id, returned by {@link it.unibo.monopoly.utils.Identifiable#getID()},
+     * @param playerId The id, returned by {@link Identifiable#getID()},
      * of the owner of the account
      * @return {@link BankAccount} of the specified player
      */
@@ -78,7 +80,7 @@ public interface Bank {
     /**
      * Gets a {@link Set} containing the {@link TitleDeed} {@code deeds} owned 
      * by a specific player.
-     * @param ownerId The id,, returned by {@link it.unibo.monopoly.utils.Identifiable#getID()},
+     * @param ownerId The id,, returned by {@link Identifiable#getID()},
      * of the player whose properties have to be retrieved
      * @return a {@link Set} with copies of the original {@link TitleDeed} objects
      */
@@ -128,7 +130,7 @@ public interface Bank {
      * the specified player, can perform on the given {@link TitleDeed}. 
      * Additionally, it marks internally whether there are any actions that
      * are mandatory (meaning the player has to perform to be able to end its turn,
-     * such as {@link Bank#payRent(String, int)}).
+     * such as {@link #payRent(String, int, int)}).
      * @param currentPlayerId the id returned by {@link PlayerImpl#getID()}
      * of the player that is currently playing its turn
      * @param titleDeedName the name  of the {@link TitleDeed}
@@ -136,7 +138,7 @@ public interface Bank {
      * has currently stepped onto.
      * @param diceThrow the total result of the dices thrown by the user, summed together. 
      * Some {@link PropertyAction} might utilise it to function. For instance an action that calls 
-     * the method {@link Bank#payRent(String, int)}
+     * the method {@link #payRent(String, int, int)}
      * @return a {@link Set} of {@link PropertyAction} that can, or have to be performed 
      * by the player that is currently playing its turn. The {@code actions} wil be performed
      * on the requested {@link TitleDeed}, through the {@link BankAccount} of the player whose id

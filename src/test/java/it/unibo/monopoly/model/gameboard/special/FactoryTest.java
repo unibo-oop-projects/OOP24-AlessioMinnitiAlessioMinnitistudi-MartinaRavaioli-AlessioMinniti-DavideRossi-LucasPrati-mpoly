@@ -1,18 +1,16 @@
 package it.unibo.monopoly.model.gameboard.special;
 
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
-
 import java.awt.Color;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import it.unibo.monopoly.model.gameboard.api.Board;
 import it.unibo.monopoly.model.gameboard.api.Pawn;
@@ -118,16 +116,20 @@ class FactoryTest {
         final Collection<Integer> dice1 = List.of(1, 2);
         final Collection<Integer> dice2 = List.of(1, 1);
 
-        board.movePawn(board.getPawn(p1.getID()), dice1);
+        board.movePawn(p1.getID(), dice1);
         assertEquals(pos3.getPos(), board.getPawn(p1.getID()).getPosition().getPos());
 
         s.activateEffect(p1);
         assertEquals(pos4.getPos(), board.getPawn(p1.getID()).getPosition().getPos());
+        assertEquals(3, p1.turnLeftInPrison());
         assertTrue(p1.isInPrison());
+        assertEquals(2, p1.turnLeftInPrison());
         assertFalse(p1.canExitPrison(dice1));
         assertTrue(p1.isInPrison());
+        assertEquals(1, p1.turnLeftInPrison());
         assertTrue(p1.canExitPrison(dice2));
         assertFalse(p1.isInPrison());
+        assertEquals(0, p1.turnLeftInPrison());
     }
 
     @Test

@@ -19,6 +19,7 @@ final class SwingPlayerPanel extends SwingAbstractJPanel implements PlayerPanel 
     private static final String PRISON_PH = "È in prigione:";
     private static final String PRISON_TURNS_PH = "Turni rimasti da scontare:";
     private static final String PARKING_PH = "È nel parcheggio:";
+    private static final int N_ROWS = 5;
 
     private final JLabel userNameJLabel = new JLabel(NAME_PH);
     private final JLabel prisonStateJLabel = new JLabel(PRISON_PH);
@@ -46,12 +47,13 @@ final class SwingPlayerPanel extends SwingAbstractJPanel implements PlayerPanel 
 
     @Override
     public void displayPlayer(final Player pl) {
-        this.setLayout(new GridLayout(4, 1));
+        this.removeAll();
+        this.setLayout(new GridLayout(N_ROWS, 1));
         this.add(createRow(userNameJLabel, new JLabel(pl.getName())));
-        this.add(orderJLabel, new JLabel(Integer.toString(pl.getID())));
-        this.add(createRow(prisonStateJLabel, new JLabel("NO INFO")));
+        this.add(createRow(orderJLabel, new JLabel(Integer.toString(pl.getID()))));
+        this.add(createRow(prisonStateJLabel, new JLabel(pl.isInPrison() ? "Sì" : "No")));
         this.add(createRow(prisonTurnsJLabel, new JLabel("NO INFO")));
-        this.add(createRow(parkingStateJLabel, new JLabel("NO INFO")));
+        this.add(createRow(parkingStateJLabel, new JLabel(pl.isParked() ? "Sì" : "No")));
     }
 
 }

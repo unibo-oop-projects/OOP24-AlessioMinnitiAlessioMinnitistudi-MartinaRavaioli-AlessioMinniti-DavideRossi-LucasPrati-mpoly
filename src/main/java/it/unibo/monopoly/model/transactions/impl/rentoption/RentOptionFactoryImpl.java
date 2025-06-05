@@ -52,7 +52,7 @@ public final class RentOptionFactoryImpl implements RentOptionFactory {
     public List<RentOption> progressivelyIncreasingPrice(final int startRent, final int multiplyFactor, final int nStations) {
         return Stream.iterate(Pair.of(1, startRent), r -> Pair.of(r.getLeft() + 1, r.getRight() * multiplyFactor))
                     .limit(nStations)
-                    .map(p -> new RentOptionImpl("Si possiede " + p.getLeft() + "proprietà dello stesso gruppo", 
+                    .map(p -> new RentOptionImpl("Si possiede " + p.getLeft() + " proprietà dello stesso gruppo", 
                     "",
                     p.getRight(),
                     (deeds, owner) -> deeds.stream()

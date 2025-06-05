@@ -146,4 +146,9 @@ public final class PlayerImpl implements Player {
     public boolean canExitPrison(final Collection<Integer> dices) {
         return true;
     }
+
+    @Override
+    public int turnLeftInPrison() {
+        return 0;
+    }
 }

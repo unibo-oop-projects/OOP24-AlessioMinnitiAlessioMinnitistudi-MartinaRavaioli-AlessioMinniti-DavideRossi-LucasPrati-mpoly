@@ -21,8 +21,9 @@ public interface TurnationManager {
     /**
      * get the dices' result.
      * @return multiple int
+     * @throws IllegalAccessException
      */
-    Collection<Integer> moveByDices();
+    Collection<Integer> moveByDices() throws IllegalAccessException;
     /**
      * return the id of the current player.
      * @return int
@@ -73,11 +74,7 @@ public interface TurnationManager {
      * @param value result of the dices
      */
     boolean canExitPrison(Collection<Integer> value);
-    /**
-     * tells if the player can throw the dices.
-     * @return bool
-     */
-    boolean canThrowDices();
+
     /**
      * tells if the player can pass the turn.
      * @return bool
@@ -103,4 +100,13 @@ public interface TurnationManager {
      * @param player player to delete
      */
     void deletePlayer(Player player);
+    /**
+     * reset the bank state transactions data.
+     */
+    void resetBankState();
+    /**
+     * tells if the current player has already thrown the dices.
+     * @return bool
+     */
+    boolean hasCurrPlayerThrownDices();
 }

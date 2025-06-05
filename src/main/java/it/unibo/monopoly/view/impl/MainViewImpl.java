@@ -1,19 +1,21 @@
 package it.unibo.monopoly.view.impl;
 
 import java.awt.BorderLayout;
-import java.awt.Dimension;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.List;
 import java.util.Set;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.monopoly.controller.api.GameController;
-import it.unibo.monopoly.model.gameboard.api.Property;
 import it.unibo.monopoly.controller.impl.GUIVenditaLogicImpl;
+import it.unibo.monopoly.model.gameboard.api.Property;
 import it.unibo.monopoly.model.gameboard.api.Special;
 import it.unibo.monopoly.model.transactions.api.Bank;
 import it.unibo.monopoly.model.transactions.api.BankAccount;
@@ -37,9 +39,6 @@ import it.unibo.monopoly.view.impl.gamepanels.SwingPanelsFactory;
  * its graphical UI by using a combination of {@link JFrame} {@code objects}.
  */
 public final class MainViewImpl implements MainGameView {
-
-    private static final double PL_DATA_VIEW_PROPORTION = 0.5;
-
 
     private final JFrame mainGameFrame = new JFrame();
 
@@ -85,8 +84,16 @@ public final class MainViewImpl implements MainGameView {
         mainGameFrame.add(splitPane);
         //mainGameFrame.pack();
         mainGameFrame.setVisible(true);
-        mainGameFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        mainGameFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         mainGameFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+
+        mainGameFrame.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(final WindowEvent e) {
+                new GUIRanking(controller.getRanking(), controller.getWinner());
+                mainGameFrame.dispose();
+            }
+        });
     }
 
     private JPanel buildActionPanelUI(final GameController controller) {
@@ -117,6 +124,13 @@ public final class MainViewImpl implements MainGameView {
     public void refreshCurrentPlayerInfo(final Player player, final BankAccount account) {
         playerInfoPanel.displayPlayer(player);
         accountInfoPanel.displayBankAccount(account);
+        mainGameFrame.repaint();
+    }
+
+    @Override
+    public void clearControlsUI() {
+        playerInfoPanel.renderDefaultUI();
+        accountInfoPanel.renderDefaultUI();
         contractPanel.renderDefaultUI();
         gameActionsPanel.renderDefaultUI();
         mainActionsPanel.renderDefaultUI();
@@ -154,13 +168,11 @@ public final class MainViewImpl implements MainGameView {
 
     @Override
     public void displayPlayerStats(final Player player, final Bank bank) {
-        // percentuale personalizzata dello schermo
-        final Dimension screenDimension = GuiUtils.getDimensionWindow(PL_DATA_VIEW_PROPORTION, PL_DATA_VIEW_PROPORTION);
         new GUIVendita(player,
-            (int) screenDimension.getWidth(), 
-            (int) screenDimension.getHeight(), 
             new GUIVenditaLogicImpl(), 
-            bank
+            bank,
+            this,
+            this.mainGameFrame
         );
     }
 
@@ -171,6 +183,7 @@ public final class MainViewImpl implements MainGameView {
 
     @Override
     public void displayError(final Exception e) {
+        e.printStackTrace();
         GuiUtils.showInfoMessage(mainGameFrame, "ERRORE", e.getMessage());
     }
 
@@ -180,12 +193,21 @@ public final class MainViewImpl implements MainGameView {
     }
 
     @Override
-    public void callClearPanel() {
-        this.gameBoardPanel.clearPanel();
+    public void callClearPanel(final String name) {
+        this.gameBoardPanel.clearPanel(name);
     }
 
     @Override
     public void callBuyProperty(final Property prop) {
         this.gameBoardPanel.buyProperty(prop, this.controller.getCurrPlayer().getID());
+    }
+
+    @Override
+    public void displayOptionMessageEndTurn(final String message) {
+        final int result = JOptionPane.showConfirmDialog(null, message, "Continuare?", JOptionPane.YES_NO_OPTION);
+
+        if (result == JOptionPane.YES_OPTION) {
+            this.controller.endTurnPlayerDies();
+        }
     }
 }

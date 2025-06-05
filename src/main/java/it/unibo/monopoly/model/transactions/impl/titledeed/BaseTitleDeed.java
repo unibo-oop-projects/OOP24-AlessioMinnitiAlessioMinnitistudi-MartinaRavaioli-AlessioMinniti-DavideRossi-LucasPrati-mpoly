@@ -86,7 +86,7 @@ public final class BaseTitleDeed implements TitleDeed {
         Objects.requireNonNull(ownerId);
         if (owner.isPresent()) {
             throw new IllegalStateException("Cannot set a new owner for" 
-                                            + "the title deed because the owner" 
+                                            + "the title deed because the owner " 
                                             + owner.get() 
                                             + " already owns it"
                                             );
@@ -145,14 +145,14 @@ public final class BaseTitleDeed implements TitleDeed {
     @Override
     public Integer getRent(final Set<TitleDeed> groupTitleDeeds, final int diceThrow) {
         if (!groupTitleDeeds.stream().allMatch(d -> d.getGroup().equals(this.group))) {
-            throw new IllegalArgumentException("The list of title deeds contains deeds"
+            throw new IllegalArgumentException("The list of title deeds contains deeds "
                                                 + "that are not part of the group "
                                                 + this.group
                                                 + ", the group of this title deed");
         }
 
         if (this.owner.isEmpty()) {
-            throw new IllegalStateException("This title deed has not owner yet so it makes no sense to request the rent of it." 
+            throw new IllegalStateException("This title deed has not owner yet so it makes no sense to request the rent of it. " 
             + "Besides, some calculations to determine the final rent require the title deed to have a owner to work");
         }
 

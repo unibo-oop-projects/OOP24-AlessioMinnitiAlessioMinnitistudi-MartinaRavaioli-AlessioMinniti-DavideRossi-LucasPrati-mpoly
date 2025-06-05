@@ -21,11 +21,43 @@ final class SwingMainCommandsPanel extends SwingAbstractJPanel implements Standa
 
     private final JLabel dicesResultsJLabel;
     private final JLabel dicesTotalJLabel;
+    private final JButton throwDicesButton;
 
     SwingMainCommandsPanel(final GameController controller) {
         this.setLayout(new GridLayout(2, 1));
 
-        //Turn panel UI
+        //Dices panel UI
+        final JPanel dicesJPanel = new JPanel();
+        final GridBagLayout dicesPanelLayout = new GridBagLayout();
+        dicesJPanel.setLayout(dicesPanelLayout);
+
+        throwDicesButton = new JButton("Lancia i dadi");
+        throwDicesButton.addActionListener(e -> {
+            controller.throwDices();
+            throwDicesButton.setEnabled(false);
+        });
+        dicesResultsJLabel = new JLabel("Risultato dadi:");
+        dicesTotalJLabel = new JLabel("TOTALE:");
+        dicesJPanel.add(throwDicesButton);
+        dicesJPanel.add(dicesResultsJLabel);
+        dicesJPanel.add(dicesTotalJLabel);
+
+        final GridBagConstraints throwDicesButtonConstraints = new GridBagConstraints();
+        throwDicesButtonConstraints.weighty = 1.0;
+        throwDicesButtonConstraints.fill = GridBagConstraints.BOTH;
+        throwDicesButtonConstraints.gridheight = 2;
+        dicesPanelLayout.setConstraints(throwDicesButton, throwDicesButtonConstraints);
+
+        final GridBagConstraints dicesResulConstraints = new GridBagConstraints();
+        dicesResulConstraints.weightx = 1.0;
+        dicesResulConstraints.weighty = 1.0;
+        dicesResulConstraints.gridheight = 1;
+        dicesResulConstraints.gridwidth = GridBagConstraints.REMAINDER;
+        dicesResulConstraints.fill = GridBagConstraints.BOTH;
+        dicesPanelLayout.setConstraints(dicesResultsJLabel, dicesResulConstraints);
+        dicesPanelLayout.setConstraints(dicesTotalJLabel, dicesResulConstraints);
+
+                //Turn panel UI
         final JPanel turnJPanel = new JPanel();
         final GridBagLayout turnPanelLayout = new GridBagLayout();
         turnJPanel.setLayout(turnPanelLayout);
@@ -49,34 +81,6 @@ final class SwingMainCommandsPanel extends SwingAbstractJPanel implements Standa
         endTurnButtonConstraints.fill = GridBagConstraints.BOTH;
         turnPanelLayout.setConstraints(endTurnButton, endTurnButtonConstraints);
 
-        //Dices panel UI
-        final JPanel dicesJPanel = new JPanel();
-        final GridBagLayout dicesPanelLayout = new GridBagLayout();
-        dicesJPanel.setLayout(dicesPanelLayout);
-
-        final JButton throwDicesButton = new JButton("Lancia i dadi");
-        throwDicesButton.addActionListener(e -> controller.throwDices());
-        dicesResultsJLabel = new JLabel("Risultato dadi:");
-        dicesTotalJLabel = new JLabel("TOTALE:");
-        dicesJPanel.add(throwDicesButton);
-        dicesJPanel.add(dicesResultsJLabel);
-        dicesJPanel.add(dicesTotalJLabel);
-
-        final GridBagConstraints throwDicesButtonConstraints = new GridBagConstraints();
-        throwDicesButtonConstraints.weighty = 1.0;
-        throwDicesButtonConstraints.fill = GridBagConstraints.BOTH;
-        throwDicesButtonConstraints.gridheight = 2;
-        dicesPanelLayout.setConstraints(throwDicesButton, throwDicesButtonConstraints);
-
-        final GridBagConstraints dicesResulConstraints = new GridBagConstraints();
-        dicesResulConstraints.weightx = 1.0;
-        dicesResulConstraints.weighty = 1.0;
-        dicesResulConstraints.gridheight = 1;
-        dicesResulConstraints.gridwidth = GridBagConstraints.REMAINDER;
-        dicesResulConstraints.fill = GridBagConstraints.BOTH;
-        dicesPanelLayout.setConstraints(dicesResultsJLabel, dicesResulConstraints);
-        dicesPanelLayout.setConstraints(dicesTotalJLabel, dicesResulConstraints);
-
         this.add(dicesJPanel);
         this.add(turnJPanel);
     }
@@ -85,6 +89,7 @@ final class SwingMainCommandsPanel extends SwingAbstractJPanel implements Standa
     public void renderDefaultUI() {
         dicesResultsJLabel.setText(DICES_RESULTS_PH);
         dicesTotalJLabel.setText(DICES_TOTAL_PH);
+        throwDicesButton.setEnabled(true);
     }
 
     @Override

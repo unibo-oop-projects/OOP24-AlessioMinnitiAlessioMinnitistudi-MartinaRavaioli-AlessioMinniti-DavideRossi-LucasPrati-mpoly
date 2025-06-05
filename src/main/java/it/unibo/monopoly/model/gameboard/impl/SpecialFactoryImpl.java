@@ -20,7 +20,7 @@ public final class SpecialFactoryImpl implements SpecialFactory {
     public Special start(final Bank bank) {
             final int startAmount = 200;
 
-        return new SpecialImpl("Go", new PositionImpl(0), Group.SPECIAL, factory.depositMoney(startAmount, bank));
+        return new SpecialImpl("Start", new PositionImpl(0), Group.SPECIAL, factory.depositMoney(startAmount, bank));
     }
 
     @Override

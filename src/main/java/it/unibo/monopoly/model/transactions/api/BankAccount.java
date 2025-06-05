@@ -19,6 +19,7 @@ public interface BankAccount extends Identifiable<Integer> {
     void withdraw(int amount);
 
     /**
+     * Get the balance of the account.
      * @return the current balance of the account
      */
     int getBalance();
