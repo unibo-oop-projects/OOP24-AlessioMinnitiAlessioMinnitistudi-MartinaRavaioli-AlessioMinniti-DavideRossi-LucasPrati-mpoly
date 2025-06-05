@@ -1,5 +1,6 @@
 package it.unibo.monopoly.view.api;
 
+import java.awt.Color;
 import java.util.List;
 import java.util.Set;
 
@@ -119,4 +120,10 @@ public interface MainGameView {
      * @param message The message to display
      */
     void displayOptionMessageEndTurn(String message);
+    /**
+     * call the delete player method in gameboard view.
+     * @param id id of the player
+     * @param color color of the player
+    */
+    void callDeletePlayer(int id, Color color);
 }

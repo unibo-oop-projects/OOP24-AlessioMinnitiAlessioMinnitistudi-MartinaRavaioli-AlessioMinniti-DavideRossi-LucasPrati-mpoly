@@ -1,5 +1,7 @@
 package it.unibo.monopoly.view.api;
 
+import java.awt.Color;
+
 import it.unibo.monopoly.model.gameboard.api.Property;
 import it.unibo.monopoly.model.turnation.api.Position;
 
@@ -38,6 +40,7 @@ public interface GameboardView extends GamePanel {
     /**
      * delete the player.
      * @param currPlayer id of the player to delete
+     * @param color color of the player
      */
-    void deletePlayer(int currPlayer);
+    void deletePlayer(int currPlayer, Color color);
 }
