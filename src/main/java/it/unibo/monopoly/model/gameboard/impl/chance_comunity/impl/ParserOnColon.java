@@ -24,10 +24,11 @@ public final class ParserOnColon implements Parser {
         String ret = ""; 
         for (int i = index; i < toParseString.length(); i++) {
             index = i + 2;
-            if (toParseString.charAt(i) == colon) {
+            char c = toParseString.charAt(i);
+            if (c == colon) {
                 return ret;
             }
-            ret = ret + toParseString.charAt(i);
+            ret = ret.concat(String.valueOf(c));
         }
         return ret;
     }

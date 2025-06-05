@@ -36,7 +36,7 @@ public final class ParserOnHyphen implements Parser {
                     retString = rStr;
                     return true;
                 } else {
-                    rStr = rStr + c;
+                    rStr = rStr.concat(String.valueOf(c));
                 }
             }
             retString = rStr; 

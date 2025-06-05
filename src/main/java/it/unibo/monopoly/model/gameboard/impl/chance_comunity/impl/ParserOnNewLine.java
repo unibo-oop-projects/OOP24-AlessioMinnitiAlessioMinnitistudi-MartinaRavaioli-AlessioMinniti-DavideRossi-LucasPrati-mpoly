@@ -24,10 +24,11 @@ public final class ParserOnNewLine implements Parser {
         String ret = ""; 
         for (int i = index; i < toParseString.length(); i++) {
             index = i + 1;
-            if (toParseString.charAt(i) == newLine) {
+            char c = toParseString.charAt(i);
+            if ( c == newLine) {
                 return ret;
             }
-            ret = ret + toParseString.charAt(i);
+            ret = ret.concat(String.valueOf(c));
         }
         return ret;
 

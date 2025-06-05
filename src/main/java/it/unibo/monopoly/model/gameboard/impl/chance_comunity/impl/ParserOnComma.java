@@ -24,10 +24,11 @@ public final class ParserOnComma implements Parser {
         String ret = ""; 
         for (int i = index; i < toParseString.length(); i++) {
             index = i + 2;
-            if (toParseString.charAt(i) == comma) {
+            char c = toParseString.charAt(i);
+            if (c == comma) {
                 return ret;
             }
-            ret = ret + toParseString.charAt(i);
+            ret = ret.concat(String.valueOf(c));
         }
         return ret;
 

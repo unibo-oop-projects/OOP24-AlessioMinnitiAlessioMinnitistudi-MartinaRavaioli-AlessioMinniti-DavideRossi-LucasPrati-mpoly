@@ -47,7 +47,7 @@ public final class ComplexCommand implements Command {
                 s.append(" then\n");
             }
         }
-        return str;
+        return s.toString();
     }
 
 }
