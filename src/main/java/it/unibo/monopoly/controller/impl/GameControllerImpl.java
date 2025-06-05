@@ -247,6 +247,7 @@ public final class GameControllerImpl implements GameController {
             }
         } else {
             final String deadPlayer = this.turnationManager.getCurrPlayer().getName();
+            this.gameView.callDeletePlayer(this.turnationManager.getCurrPlayer().getColor());
             this.turnationManager.deletePlayer(this.turnationManager.getCurrPlayer());
             this.gameView.displayMessage("Player " + deadPlayer + " is dead");
         }

@@ -1,6 +1,7 @@
 package it.unibo.monopoly.view.impl;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.List;
@@ -208,5 +209,10 @@ public final class MainViewImpl implements MainGameView {
         if (result == JOptionPane.YES_OPTION) {
             this.controller.endTurnPlayerDies();
         }
+    }
+
+    @Override
+    public void callDeletePlayer(Color color) {
+        this.gameBoardPanel.deletePlayer(color);
     }
 }

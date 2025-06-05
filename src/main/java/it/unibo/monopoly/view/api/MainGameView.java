@@ -122,8 +122,7 @@ public interface MainGameView {
     void displayOptionMessageEndTurn(String message);
     /**
      * call the delete player method in gameboard view.
-     * @param id id of the player
      * @param color color of the player
     */
-    void callDeletePlayer(int id, Color color);
+    void callDeletePlayer(Color color);
 }

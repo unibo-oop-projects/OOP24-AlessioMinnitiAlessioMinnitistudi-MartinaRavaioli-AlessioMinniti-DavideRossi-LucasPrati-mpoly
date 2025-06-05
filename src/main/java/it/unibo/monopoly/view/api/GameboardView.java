@@ -39,8 +39,7 @@ public interface GameboardView extends GamePanel {
     void clearPanel(String name);
     /**
      * delete the player.
-     * @param currPlayer id of the player to delete
      * @param color color of the player
      */
-    void deletePlayer(int currPlayer, Color color);
+    void deletePlayer(Color color);
 }

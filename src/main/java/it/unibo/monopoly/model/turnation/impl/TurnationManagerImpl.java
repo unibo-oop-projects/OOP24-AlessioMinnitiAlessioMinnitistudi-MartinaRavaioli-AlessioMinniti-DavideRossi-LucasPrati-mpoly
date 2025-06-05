@@ -177,7 +177,6 @@ public class TurnationManagerImpl implements TurnationManager {
         for (final Player p : list) {
             this.players.addNode(p);
         }
-        getNextPlayer();
     }
     @Override
     public final void resetBankState() {
