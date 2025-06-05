@@ -245,4 +245,10 @@ public final class GameboardViewImpl extends JPanel implements GameboardView {
             }
         }
     }
+
+    @Override
+    public void deletePlayer(int currPlayer) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'deletePlayer'");
+    }
 }

@@ -102,29 +102,39 @@ public final class CircularLinkedList<T> {
      * @param valueToDelete value to delete
     */
     public void deleteNode(final T valueToDelete) {
-        if (this.head == null) { // the list is empty
-            return;
+        if (this.head == null) {
+            return; // lista vuota
         }
+
         Node<T> currentNode = this.head;
+        Node<T> prevNode = this.tail; // inizializziamo il precedente come tail per gestire anche il primo nodo
+
         do {
-            final Node<T> nextNode = currentNode.getNextNode();
-            if (nextNode.getValue().equals(valueToDelete)) {
-                if (this.tail.equals(this.head)) { // the list has only one single element
+            if (currentNode.getValue().equals(valueToDelete)) {
+                if (this.head == this.tail) {
+                    // Un solo nodo nella lista
                     this.head = null;
                     this.tail = null;
                 } else {
-                    currentNode.setNextNode(nextNode.getNextNode());
-                    if (this.head.equals(nextNode)) { //we're deleting the head
-                        this.head = this.head.getNextNode();
+                    prevNode.setNextNode(currentNode.getNextNode());
+
+                    if (currentNode == this.head) {
+                        this.head = currentNode.getNextNode();
                     }
-                    if (this.tail.equals(nextNode)) { //we're deleting the tail
-                        this.tail = currentNode;
+
+                    if (currentNode == this.tail) {
+                        this.tail = prevNode;
                     }
                 }
-                break;
+                return; // uscita dopo aver eliminato il nodo
             }
-            currentNode = nextNode;
-        } while (!currentNode.equals(this.head));
+            prevNode = currentNode;
+            currentNode = currentNode.getNextNode();
+        } while (currentNode != this.head);
     }
 
+    public void clear() {
+        this.head = null;
+        this.tail = null;
+    }
 }
