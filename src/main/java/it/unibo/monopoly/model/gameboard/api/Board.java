@@ -27,10 +27,10 @@ public interface Board {
 
     /**
      * move the pawn.
-     * @param player pawn of the player who has to move 
+     * @param id id of the pawn who has to move 
      * @param value value
     */
-    void movePawn(Pawn player, Collection<Integer> value);
+    void movePawn(int id, Collection<Integer> value);
 
     /**
      * get the pawn with the given id.
