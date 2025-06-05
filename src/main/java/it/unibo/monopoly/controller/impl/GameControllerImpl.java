@@ -87,7 +87,7 @@ public final class GameControllerImpl implements GameController {
     private void executeEffect(final Effect effect) {
         try {
             effect.activate(this.turnationManager.getCurrPlayer());
-            this.gameView.displayMessage("Eseguito effetto " + effect.getDescription());
+            this.gameView.displayMessage("Eseguito effetto: " + effect.getDescription());
             refreshPlayerInfo();
         } catch (final IllegalStateException | IllegalArgumentException e) {
             this.gameView.displayError(e);
@@ -116,9 +116,13 @@ public final class GameControllerImpl implements GameController {
     public void throwDices() {
         try {
             final Collection<Integer> result = this.turnationManager.moveByDices();
-            if (this.turnationManager.isCurrentPlayerInPrison()) {
-                this.turnationManager.canExitPrison(result);
-            }
+            
+            if (/*!this.turnationManager.isCurrentPlayerParked()
+                &&*/ (!this.turnationManager.isCurrentPlayerInPrison() 
+                || this.turnationManager.canExitPrison(result))
+                 ) {
+                System.out.println("can move");
+            
 
             final int currentPlayerId = this.turnationManager.getIdCurrPlayer();
             this.board.movePawn(this.board.getPawn(currentPlayerId), result);
@@ -141,12 +145,7 @@ public final class GameControllerImpl implements GameController {
                     this.gameView.callChangePositions();
                 }
             }
-            final int delta = board.getPawn(currentPlayerId).getPosition().getPos() 
-                                        - board.getPawn(currentPlayerId).getPreviousPosition().getPos();
-            if (delta < 0) {
-                final Special tile = (Special) board.getTile("Start");
-                executeEffect(tile.getEffect());
-            }
+        }
         } catch (final IllegalAccessException e) {
             gameView.displayError(e);
         }
