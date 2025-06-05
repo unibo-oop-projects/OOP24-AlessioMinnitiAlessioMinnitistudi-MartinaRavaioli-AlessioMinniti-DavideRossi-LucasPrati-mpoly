@@ -123,8 +123,9 @@ public interface MainGameView {
     /**
      * call the delete player method in gameboard view.
      * @param color color of the player
+     * @param id of the player
     */
-    void callDeletePlayer(Color color);
+    void callDeletePlayer(Color color, int id);
     /**
      * call the frame that shows the final ranking.
      */

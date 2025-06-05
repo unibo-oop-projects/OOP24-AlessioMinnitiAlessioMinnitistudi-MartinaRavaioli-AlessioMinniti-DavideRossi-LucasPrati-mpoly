@@ -212,8 +212,8 @@ public final class MainViewImpl implements MainGameView {
     }
 
     @Override
-    public void callDeletePlayer(Color color) {
-        this.gameBoardPanel.deletePlayer(color);
+    public void callDeletePlayer(Color color, int id) {
+        this.gameBoardPanel.deletePlayer(color, id);
     }
 
     @Override

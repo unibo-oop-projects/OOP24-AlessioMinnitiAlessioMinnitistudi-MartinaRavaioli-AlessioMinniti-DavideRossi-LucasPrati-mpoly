@@ -247,7 +247,7 @@ public final class GameboardViewImpl extends JPanel implements GameboardView {
     }
 
     @Override
-    public void deletePlayer(Color color) {
+    public void deletePlayer(Color color, int id) {
         for (final Map.Entry<JPanel, Position> entry : this.tilePositions.entrySet()) {
             final JPanel p = entry.getKey();
             for (final Component c : p.getComponents()) {
@@ -264,5 +264,6 @@ public final class GameboardViewImpl extends JPanel implements GameboardView {
                     }
                 }
         }
+        this.pawnPositions.remove(id - 1);
     }
 }
