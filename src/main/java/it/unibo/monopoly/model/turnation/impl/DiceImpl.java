@@ -49,7 +49,7 @@ public class DiceImpl implements Dice {
 
     @Override
     public final Collection<Integer> throwDices() {
-        return List.of(3,2);
+        return List.of(6,4);
         /*return IntStream.range(0, dices.length)
                 //.map(i -> 5)  TODO cancella il tiro prefatto 
                 .map(i -> rand.nextInt(this.faces) + 1)

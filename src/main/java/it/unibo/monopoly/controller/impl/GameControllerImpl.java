@@ -121,37 +121,45 @@ public final class GameControllerImpl implements GameController {
                 &&*/ (!this.turnationManager.isCurrentPlayerInPrison() 
                 || this.turnationManager.canExitPrison(result))
                  ) {
-                System.out.println("can move");
+                System.out.println("out");
             
 
-            final int currentPlayerId = this.turnationManager.getIdCurrPlayer();
-            this.board.movePawn(this.board.getPawn(currentPlayerId), result);
-            this.gameView.callChangePositions();
-            this.gameView.displayDiceResult(result.stream().toList());
-            final Tile currentlySittingTile = this.board.getTileForPawn(this.board.getPawn(currentPlayerId));
-            refreshCurrentTileInfo();
-            if (currentlySittingTile instanceof Property) {
-                this.turnActions.clear();
-                this.turnActions = this.bank.getApplicableActionsForTitleDeed(currentPlayerId, 
-                                        currentlySittingTile.getName(), 
-                                        result.stream().mapToInt(d -> d).sum())
-                                        .stream()
-                                        .collect(Collectors.toMap(PropertyAction::getName, d -> d));
-                this.gameView.showPlayerActions(turnActions.keySet());
-            } else if (currentlySittingTile instanceof Special) {
-                final Special specialTile = (Special) currentlySittingTile;
-                if (!"Go".equals(currentlySittingTile.getName())) {
-                    executeEffect(specialTile.getEffect());
-                    this.gameView.callChangePositions();
+                final int currentPlayerId = this.turnationManager.getIdCurrPlayer();
+                this.board.movePawn(this.board.getPawn(currentPlayerId), result);
+                this.gameView.callChangePositions();
+                this.gameView.displayDiceResult(result.stream().toList());
+                final Tile currentlySittingTile = this.board.getTileForPawn(this.board.getPawn(currentPlayerId));
+                refreshCurrentTileInfo();
+                if (currentlySittingTile instanceof Property) {
+                    this.turnActions.clear();
+                    this.turnActions = this.bank.getApplicableActionsForTitleDeed(currentPlayerId, 
+                                            currentlySittingTile.getName(), 
+                                            result.stream().mapToInt(d -> d).sum())
+                                            .stream()
+                                            .collect(Collectors.toMap(PropertyAction::getName, d -> d));
+                    this.gameView.showPlayerActions(turnActions.keySet());
+                } else if (currentlySittingTile instanceof Special) {
+                    final Special specialTile = (Special) currentlySittingTile;
+                    if (!"Start".equals(currentlySittingTile.getName())) {
+                        executeEffect(specialTile.getEffect());
+                        this.gameView.callChangePositions();
+                        System.err.println(turnationManager.currentPlayerTurnsLeftInPrison());
+                    }
                 }
+                final int delta = board.getPawn(currentPlayerId).getPosition().getPos() 
+                                            - board.getPawn(currentPlayerId).getPreviousPosition().getPos();
+                if (delta < 0 && !"GoToJail".equals(currentlySittingTile.getName())) {
+                    final Special tile = (Special) board.getTile("Start");
+                    executeEffect(tile.getEffect());
+                }
+
+            } else {
+                this.gameView.displayMessage("you can't move, you have" 
+                                    + turnationManager.currentPlayerTurnsLeftInPrison() 
+                                    + " turns left in prison and the dices weren't kind with you.");
+                this.turnationManager.decreaseTurnsInPrison();
+
             }
-            final int delta = board.getPawn(currentPlayerId).getPosition().getPos() 
-                                        - board.getPawn(currentPlayerId).getPreviousPosition().getPos();
-            if (delta < 0) {
-                final Special tile = (Special) board.getTile("Start");
-                executeEffect(tile.getEffect());
-            }
-        }
         } catch (final IllegalAccessException e) {
             gameView.displayError(e);
         }

@@ -151,4 +151,8 @@ public final class PlayerImpl implements Player {
     public int turnLeftInPrison() {
         return 0;
     }
+
+    @Override
+    public void decreaseTurnsInPrison() {
+    }
 }

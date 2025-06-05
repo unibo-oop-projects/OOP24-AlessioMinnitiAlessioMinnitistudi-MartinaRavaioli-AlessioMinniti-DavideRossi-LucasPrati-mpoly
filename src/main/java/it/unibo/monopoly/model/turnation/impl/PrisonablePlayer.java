@@ -24,19 +24,14 @@ public final class PrisonablePlayer implements Prisonable, Player {
      * @param player the base player.
      */
     @SuppressFBWarnings(value = "EI_EXPOSE_REP", 
-        justification = "must keep reference to the object, not a copy")
+        justification = "must keep reference to the object, not a copy in order to use decorator pattern")
     public PrisonablePlayer(final Player player) {
         this.player = player;
     }
 
     @Override
     public boolean isInPrison() {
-        if (turns > 0) {
-            turns -= 1;
-            return true;
-        } else {
-            return false;
-        }
+        return turns > 0;
     }
 
     @Override
@@ -96,5 +91,10 @@ public final class PrisonablePlayer implements Prisonable, Player {
     @Override
     public int turnLeftInPrison() {
         return this.turns;
+    }
+
+    @Override
+    public void decreaseTurnsInPrison() {
+        turns = turns - 1;
     }
 }

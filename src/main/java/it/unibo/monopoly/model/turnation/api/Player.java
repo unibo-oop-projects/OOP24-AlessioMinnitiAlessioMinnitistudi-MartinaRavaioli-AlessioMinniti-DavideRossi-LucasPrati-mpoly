@@ -63,4 +63,6 @@ public interface Player extends Identifiable<Integer> {
      * @return the number of turns
      */
     int turnLeftInPrison();
+
+    void decreaseTurnsInPrison();
 }

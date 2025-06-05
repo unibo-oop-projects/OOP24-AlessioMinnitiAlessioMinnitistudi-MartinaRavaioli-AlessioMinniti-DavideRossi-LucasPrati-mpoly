@@ -127,9 +127,9 @@ class FactoryTest {
         assertFalse(!p1.isInPrison()|| p1.canExitPrison(dice1));
         assertEquals(2, p1.turnLeftInPrison());
         assertFalse(p1.canExitPrison(dice1));
-        assertTrue(!p1.isInPrison()|| p1.canExitPrison(dice2));
-        /*assertEquals(1, p1.turnLeftInPrison());
-        assertFalse(!p1.isInPrison()|| p1.canExitPrison(dice1));*/
+        assertFalse(!p1.isInPrison()|| p1.canExitPrison(dice1));
+        assertEquals(1, p1.turnLeftInPrison());
+        assertFalse(!p1.isInPrison()|| p1.canExitPrison(dice1));
 
         assertEquals(0, p1.turnLeftInPrison());
     }

@@ -80,6 +80,15 @@ public interface TurnationManager {
      */
     boolean isCurrentPlayerParked();
     /**
+     * it gets how many turn the player has left in prison.
+     * @return the turns
+     */
+    int currentPlayerTurnsLeftInPrison();
+    /**
+     * decreases the turns the player has left in prison.
+     */
+    void decreaseTurnsInPrison();
+    /**
      * tells if the player can pass the turn.
      * @return bool
      */

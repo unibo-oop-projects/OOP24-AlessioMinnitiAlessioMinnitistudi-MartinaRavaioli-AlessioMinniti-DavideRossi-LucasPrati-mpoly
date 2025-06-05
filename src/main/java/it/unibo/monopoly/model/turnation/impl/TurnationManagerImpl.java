@@ -185,5 +185,13 @@ public class TurnationManagerImpl implements TurnationManager {
     public boolean isCurrentPlayerParked() {
         return this.currPlayer.isParked();
     }
+    @Override
+    public int currentPlayerTurnsLeftInPrison() {
+        return this.currPlayer.turnLeftInPrison();
+    }
+    @Override
+    public void decreaseTurnsInPrison() {
+        this.currPlayer.decreaseTurnsInPrison();
+    }
 
 }

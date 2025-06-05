@@ -79,4 +79,9 @@ public final class ParkablePlayer implements Parkable, Player {
     public int turnLeftInPrison() {
         return pl.turnLeftInPrison();
     }
+
+    @Override
+    public void decreaseTurnsInPrison() {
+        pl.decreaseTurnsInPrison();
+    }
 }
