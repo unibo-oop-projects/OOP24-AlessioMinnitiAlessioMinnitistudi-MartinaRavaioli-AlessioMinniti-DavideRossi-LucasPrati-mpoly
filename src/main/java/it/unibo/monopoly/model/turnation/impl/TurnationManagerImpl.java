@@ -150,12 +150,12 @@ public class TurnationManagerImpl implements TurnationManager {
             }
         }
 
-        for (Player pl : this.players.toList()) {
+        for (final Player pl : this.players.toList()) {
             if (pl.getID().equals(winner.getLeft())) {
                 player = pl;
             }
         }
-        winnerName = Pair.of(player.getName(), winner.getRight());   
+        winnerName = Pair.of(player.getName(), winner.getRight());
         return winnerName;
     }
 
@@ -164,7 +164,7 @@ public class TurnationManagerImpl implements TurnationManager {
         final List<Pair<String, Integer>> list = new ArrayList<>();
         for (final Pair<Integer, Integer> p : this.bankState.rankPlayers()) {
 
-            for (Player pl : this.players.toList()) {
+            for (final Player pl : this.players.toList()) {
                 if (pl.getID().equals(p.getLeft())) {
                     list.add(Pair.of(pl.getName(), p.getRight()));
                 }

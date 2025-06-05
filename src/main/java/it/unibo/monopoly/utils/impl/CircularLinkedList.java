@@ -132,7 +132,9 @@ public final class CircularLinkedList<T> {
             currentNode = currentNode.getNextNode();
         } while (currentNode != this.head);
     }
-
+    /**
+     * clear the list.
+     */
     public void clear() {
         this.head = null;
         this.tail = null;

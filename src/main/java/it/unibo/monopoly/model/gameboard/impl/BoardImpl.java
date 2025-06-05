@@ -51,7 +51,7 @@ public class BoardImpl implements Board {
 
     @Override
     public final void removePawn(final int id) {
-        for (Pawn p : this.pawns) {
+        for (final Pawn p : this.pawns) {
             if (((PawnImpl) p).getID().equals(id)) {
                 this.pawns.remove(p);
             }
@@ -65,7 +65,7 @@ public class BoardImpl implements Board {
 
     @Override
     public final Tile getTileForPawn(final int id) {
-        for (Pawn p : this.pawns) {
+        for (final Pawn p : this.pawns) {
             if (((PawnImpl) p).getID().equals(id)) {
                 return tiles.get(p.getPosition().getPos());
             }
@@ -90,7 +90,7 @@ public class BoardImpl implements Board {
     @Override
     public final void movePawn(final int id, final Collection<Integer> value) {
         Pawn pawn = null;
-        for (Pawn p : this.pawns) {
+        for (final Pawn p : this.pawns) {
             if (((PawnImpl) p).getID().equals(id)) {
                 pawn = p;
             }
