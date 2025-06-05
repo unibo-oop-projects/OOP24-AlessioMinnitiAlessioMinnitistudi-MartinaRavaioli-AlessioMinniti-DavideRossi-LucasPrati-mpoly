@@ -6,7 +6,6 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.monopoly.model.gameboard.api.Board;
 import it.unibo.monopoly.model.gameboard.api.Pawn;
 import it.unibo.monopoly.model.gameboard.api.Property;
@@ -83,13 +82,11 @@ public class BoardImpl implements Board {
         player.move(steps);
     }
 
-    @SuppressFBWarnings(value = "EI_EXPOSE_REP",
-                justification = "must return reference to the object instead of a copy")
     @Override
     public final Pawn getPawn(final int id) {
         for (final Pawn p : this.pawns) {
             if (((PawnImpl) p).getID() == id) {
-                return p;
+                return new PawnImpl(((PawnImpl) p).getID(), p.getPosition(), p.getColor());
             }
         }
 
@@ -109,7 +106,7 @@ public class BoardImpl implements Board {
     @Override
     public final void movePawnInTile(final Pawn pawn, final String name) {
         final Tile tile = getTile(name);
-        
+
         for (final Pawn p : this.pawns) {
             if (((PawnImpl) p).getID().equals(((PawnImpl) pawn).getID())) {
                 p.setPosition(tile.getPosition());
