@@ -109,7 +109,12 @@ public class BoardImpl implements Board {
     @Override
     public final void movePawnInTile(final Pawn pawn, final String name) {
         final Tile tile = getTile(name);
-        pawn.setPosition(tile.getPosition());
+        
+        for (final Pawn p : this.pawns) {
+            if (((PawnImpl) p).getID().equals(((PawnImpl) pawn).getID())) {
+                p.setPosition(tile.getPosition());
+            }
+        }
     }
 
     @Override
