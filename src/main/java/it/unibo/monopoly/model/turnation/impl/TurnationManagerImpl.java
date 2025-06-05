@@ -194,5 +194,29 @@ public class TurnationManagerImpl implements TurnationManager {
     public final boolean hasCurrPlayerThrownDices() {
         return this.diceThrown;
     }
+    @Override
+    public final boolean isCurrentPlayerParked() {
+        return this.currPlayer.isParked();
+    }
+    @Override
+    public final int currentPlayerTurnsLeftInPrison() {
+        return this.currPlayer.turnLeftInPrison();
+    }
+    @Override
+    public final void decreaseTurnsInPrison() {
+        this.currPlayer.decreaseTurnsInPrison();
+    }
+    @Override
+    public final void passedParkTurn() {
+        this.currPlayer.passTurn();
+    }
+    @Override
+    public final void putCurrentPlayerInPrison() {
+        this.currPlayer.putInPrison();
+    }
+    @Override
+    public final void parkCurrentPlayer() {
+        this.currPlayer.park();
+    }
 
 }

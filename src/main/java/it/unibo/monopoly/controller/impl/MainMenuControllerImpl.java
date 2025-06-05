@@ -31,8 +31,10 @@ import it.unibo.monopoly.model.transactions.impl.bankaccount.BankAccountFactoryI
 import it.unibo.monopoly.model.turnation.api.Player;
 import it.unibo.monopoly.model.turnation.api.TurnationManager;
 import it.unibo.monopoly.model.turnation.impl.DiceImpl;
+import it.unibo.monopoly.model.turnation.impl.ParkablePlayer;
 import it.unibo.monopoly.model.turnation.impl.PlayerImpl;
 import it.unibo.monopoly.model.turnation.impl.PositionImpl;
+import it.unibo.monopoly.model.turnation.impl.PrisonablePlayer;
 import it.unibo.monopoly.model.turnation.impl.TurnationManagerImpl;
 import it.unibo.monopoly.utils.api.UseFileJson;
 import it.unibo.monopoly.utils.api.UseFileTxt;
@@ -106,7 +108,7 @@ public final class MainMenuControllerImpl implements MainMenuController {
         for (final var p : playersSetup.entrySet()) {
             final String name = p.getValue();
             final Color color = p.getKey();
-            players.add(PlayerImpl.of(id, name, color));
+            players.add(new ParkablePlayer(new PrisonablePlayer(PlayerImpl.of(id, name, color))));
             accounts.add(createBankAccountByType(id, name));
             pawns.add(pawnFactory.createBasic(id, new PositionImpl(0), color));
             id++;
@@ -126,7 +128,7 @@ public final class MainMenuControllerImpl implements MainMenuController {
 
         // import from json
         final List<CardDTO> dtos = importFileJson.loadJsonList(config.getCardsPath(), CardDTO.class);
-        final CardFactory cardFactory = new CardFactoryImpl(board, bank); 
+        final CardFactory cardFactory = new CardFactoryImpl(board, bank, turnationManager); 
         cardFactory.parse(dtos);
         // populate elements
         titleDeeds.addAll(cardFactory.getDeeds());

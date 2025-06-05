@@ -1,6 +1,7 @@
 package it.unibo.monopoly.model.gameboard.api;
 
 import it.unibo.monopoly.model.transactions.api.Bank;
+import it.unibo.monopoly.model.turnation.api.TurnationManager;
 
 /**
  * a factory for effects that can be used.
@@ -29,15 +30,17 @@ public interface EffectFactory {
     /**
      * an effect that sends to prison the player.
      * @param board to tip the players pawn to the prison tile
+     * @param turnM used to put the player in prison
      * @return the effect
      */
-    Effect putInPrison(Board board);
+    Effect putInPrison(Board board, TurnationManager turnM);
 
     /**
      * an effect that park the player.
+     * @param turnM used to park the player
      * @return the effect
      */
-    Effect park();
+    Effect park(TurnationManager turnM);
 
     /**
      * an effect that does nothing.

@@ -126,7 +126,7 @@ public final class PlayerImpl implements Player {
 
     @Override
     public boolean isParked() {
-        return true;
+        return false;
     }
 
     @Override
@@ -135,7 +135,7 @@ public final class PlayerImpl implements Player {
 
     @Override
     public boolean isInPrison() {
-        return true;
+        return false;
     }
 
     @Override
@@ -150,5 +150,13 @@ public final class PlayerImpl implements Player {
     @Override
     public int turnLeftInPrison() {
         return 0;
+    }
+
+    @Override
+    public void decreaseTurnsInPrison() {
+    }
+
+    @Override
+    public void passTurn() {
     }
 }
