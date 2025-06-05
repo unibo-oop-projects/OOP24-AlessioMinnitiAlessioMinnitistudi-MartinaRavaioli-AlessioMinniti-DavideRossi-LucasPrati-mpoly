@@ -106,6 +106,7 @@ public final class GameControllerImpl implements GameController {
                 this.gameView.displayMessage("The player has some actions to do before passing the turn");
             }
         } else {
+            // this.gameView.displayOptionMessageEndTurn("The player will die if he passes the turn");
             this.gameView.displayMessage("The player will die if he passes the turn");
         }
 

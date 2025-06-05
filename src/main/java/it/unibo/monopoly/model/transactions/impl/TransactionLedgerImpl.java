@@ -47,7 +47,7 @@ final class TransactionLedgerImpl implements TransactionLedger {
     @Override
     public void markExecution(final String name) {
         if (allowedTransactionTypes.stream().noneMatch(t -> name.equals(t.name()))) {
-            throw new IllegalArgumentException("No transaction with this name exists in the ledger" 
+            throw new IllegalArgumentException("No transaction with this name exists in the ledger. " 
             + "Register the transaction type by calling the method registerTransaction before asking to mark its execution");
         }
         final TransactionLedgerEntry transaction = allowedTransactionTypes
@@ -56,8 +56,8 @@ final class TransactionLedgerImpl implements TransactionLedger {
         .findFirst()
         .get();
         if (transaction.maximumExecutions() > 0 && executions.get(name) >= transaction.maximumExecutions()) {
-            throw new IllegalStateException("The player has already executed the transaction" + name 
-            + "for the maximum number of times per turn");
+            throw new IllegalStateException("The player has already executed the transaction " + name 
+            + " for the maximum number of times per turn");
         }
         executions.put(name, executions.get(name) + 1);
     }
@@ -65,11 +65,11 @@ final class TransactionLedgerImpl implements TransactionLedger {
     @Override
     public void unmarkExecution(final String name) {
         if (allowedTransactionTypes.stream().noneMatch(t -> name.equals(t.name()))) {
-            throw new IllegalArgumentException("No transaction with this name exists in the ledger." 
+            throw new IllegalArgumentException("No transaction with this name exists in the ledger. " 
             + "Register the transaction type by calling the method registerTransaction before asking to mark its execution");
         }
         if (executions.get(name) <= 0) {
-            throw new IllegalStateException("The player has never asked to execute the transaction" + name 
+            throw new IllegalStateException("The player has never asked to execute the transaction " + name 
             + ". Therefore it is not possible to unmark it");
         }
         executions.put(name, executions.get(name) - 1);

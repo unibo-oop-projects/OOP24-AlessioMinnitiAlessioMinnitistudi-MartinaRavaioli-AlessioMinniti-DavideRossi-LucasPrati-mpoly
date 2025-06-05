@@ -136,7 +136,7 @@ public class TurnationManagerImpl implements TurnationManager {
 
     @Override
     public final boolean canPassTurn() {
-        return this.bankState.allMandatoryTransactionsCompleted();
+        return this.bankState.allMandatoryTransactionsCompleted() && hasCurrPlayerThrownDices();
     }
 
     @Override
