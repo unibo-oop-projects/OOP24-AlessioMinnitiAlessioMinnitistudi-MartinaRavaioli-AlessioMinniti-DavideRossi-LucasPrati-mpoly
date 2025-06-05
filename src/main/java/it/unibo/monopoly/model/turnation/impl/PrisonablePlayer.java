@@ -15,7 +15,8 @@ public final class PrisonablePlayer implements Prisonable, Player {
 
     private static final int PRISON_TURNS = 3;
     private int turns;
-    private boolean validThrow;
+    //TODO decidi se tenere il metodo con il for (io voto per il no poi vedi te me del futuro)
+    //private boolean validThrow;
     private final Player player;
 
     /**
@@ -46,14 +47,16 @@ public final class PrisonablePlayer implements Prisonable, Player {
     @Override
     public boolean canExitPrison(final Collection<Integer> dices) {
         final List<Integer> l = List.copyOf(dices);
-        for (int i = 0; i < l.size(); i++) {
+        final List<Integer> l1 = l.stream().distinct().toList();
+        /*for (int i = 0; i < l.size(); i++) {
             for (int j = 0; j < l.size(); j++) {
                 if (i != j && l.get(i).equals(l.get(j))) {
                     validThrow = true; 
                 }
             }
-        }
-        if (validThrow) {
+        }*/
+
+        if (l.size()!=l1.size()) {
             this.turns = 0;
             return true;
         }
