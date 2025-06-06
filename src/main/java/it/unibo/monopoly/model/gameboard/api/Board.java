@@ -95,4 +95,11 @@ public interface Board {
     */
     void addTile(Tile tile);
 
+    /**
+     * gets the previous position of the pawn associated with the id.
+     * @param id of the pawn
+     * @return the position 
+     */
+    Position getPrevPawPosition(int id);
+
 }

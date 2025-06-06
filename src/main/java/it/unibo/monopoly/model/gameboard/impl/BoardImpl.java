@@ -133,4 +133,15 @@ public class BoardImpl implements Board {
         this.tiles.add(tile);
     }
 
+    @Override
+    public Position getPrevPawPosition(int id) {
+        for (final Pawn p : this.pawns) {
+            if (((PawnImpl) p).getID() == id) {
+                return p.getPreviousPosition();
+            }
+        }
+        
+        throw new IllegalArgumentException("id not present");
+    }
+
 }

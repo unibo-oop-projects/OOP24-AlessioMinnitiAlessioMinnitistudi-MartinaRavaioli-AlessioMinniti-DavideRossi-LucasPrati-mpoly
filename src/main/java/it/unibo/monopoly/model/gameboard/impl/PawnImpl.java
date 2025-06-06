@@ -38,6 +38,7 @@ public class PawnImpl implements Pawn, Identifiable<Integer> {
     public PawnImpl(final int id, final Position pos, final Color color) {
         this.id = id;
         this.pos = new PositionImpl(pos.getPos());
+        this.prevPos = new PositionImpl(pos.getPos());
         setColor(color);
         setShape("square");
     }
@@ -76,14 +77,14 @@ public class PawnImpl implements Pawn, Identifiable<Integer> {
     }
 
     @Override
-    public final void setPosition(final Position pos) {
-        this.prevPos = new PositionImpl(this.pos.getPos());
-        this.pos = new PositionImpl(pos.getPos());
+    public final void setPosition(final Position npos) {
+        this.prevPos.setPos(this.pos.getPos());
+        this.pos = new PositionImpl(npos.getPos());
     }
 
     @Override
     public final void move(final int steps) {
-        this.prevPos = new PositionImpl(this.pos.getPos());
+        this.prevPos.setPos(this.pos.getPos());
         this.pos.setPos(this.pos.getPos() + steps);
     }
     @Override
