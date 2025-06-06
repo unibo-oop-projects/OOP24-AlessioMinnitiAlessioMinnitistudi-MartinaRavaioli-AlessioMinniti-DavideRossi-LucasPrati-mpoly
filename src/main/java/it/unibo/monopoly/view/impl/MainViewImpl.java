@@ -108,7 +108,7 @@ public final class MainViewImpl implements MainGameView {
         actionPanel.add(contractPanel.getPanel(), BorderLayout.CENTER);
         actionPanel.add(gameActionsPanel.getPanel(), BorderLayout.WEST);
 
-        final JButton handlePropertiesButton = new JButton("Gestione proprietà");
+        final JButton handlePropertiesButton = new JButton("Handle properties");
         handlePropertiesButton.addActionListener(e -> controller.loadCurrentPlayerInformation());
 
         final JPanel southPanel = new JPanel();
@@ -183,7 +183,7 @@ public final class MainViewImpl implements MainGameView {
 
     @Override
     public void displayError(final Exception e) {
-        GuiUtils.showInfoMessage(mainGameFrame, "ERRORE", e.getMessage());
+        GuiUtils.showInfoMessage(mainGameFrame, "ERROR", e.getMessage());
     }
 
     @Override
@@ -203,7 +203,7 @@ public final class MainViewImpl implements MainGameView {
 
     @Override
     public void displayOptionMessageEndTurn(final String message) {
-        final int result = JOptionPane.showConfirmDialog(null, message, "Continuare?", JOptionPane.YES_NO_OPTION);
+        final int result = JOptionPane.showConfirmDialog(null, message, "Continue?", JOptionPane.YES_NO_OPTION);
 
         if (result == JOptionPane.YES_OPTION) {
             this.controller.endTurnPlayerDies();
