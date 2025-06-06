@@ -84,7 +84,7 @@ final class SwingContractPanel extends SwingAbstractJPanel implements ContractPa
         //owner information
         final JPanel ownerPanel = new JPanel();
         ownerPanel.setLayout(new BorderLayout());
-        final JLabel ownerDesc = new JLabel("Proprietario: ");
+        final JLabel ownerDesc = new JLabel("Owner: ");
         final JLabel ownerInfo = new JLabel(deed.isOwned() ? Integer.toString(deed.getOwnerId()) : "NO OWNER", 
                                             SwingConstants.RIGHT);
         ownerPanel.add(ownerDesc, BorderLayout.WEST);
@@ -93,7 +93,7 @@ final class SwingContractPanel extends SwingAbstractJPanel implements ContractPa
         //sale information
         final JPanel salePanel = new JPanel();
         salePanel.setLayout(new BorderLayout());
-        final JLabel saleDesc = new JLabel("Prezzo d'acquisto: "); 
+        final JLabel saleDesc = new JLabel("Sale price: "); 
         final JLabel salePrice = new JLabel(Integer.toString(deed.getSalePrice()), SwingConstants.RIGHT);
         salePanel.add(saleDesc, BorderLayout.WEST);
         salePanel.add(salePrice, BorderLayout.CENTER);
@@ -101,7 +101,7 @@ final class SwingContractPanel extends SwingAbstractJPanel implements ContractPa
         //mortgage information
         final JPanel mortgagePanel = new JPanel();
         mortgagePanel.setLayout(new BorderLayout());
-        final JLabel mortgageDesc = new JLabel("Ipoteca: ");
+        final JLabel mortgageDesc = new JLabel("Mortgage price: ");
         final JLabel mortgagePrice = new JLabel(Integer.toString(deed.getMortgagePrice()), SwingConstants.RIGHT);
         mortgagePanel.add(mortgageDesc, BorderLayout.WEST);
         mortgagePanel.add(mortgagePrice, BorderLayout.CENTER);
@@ -136,7 +136,7 @@ final class SwingContractPanel extends SwingAbstractJPanel implements ContractPa
         //owner information
         final JPanel ownerPanel = new JPanel();
         ownerPanel.setLayout(new BorderLayout());
-        final JLabel ownerDesc = new JLabel("ID Proprietario: ");
+        final JLabel ownerDesc = new JLabel("ID owner: ");
         final JLabel ownerInfo = new JLabel("this type of tile can't be owned");
         ownerPanel.add(ownerDesc, BorderLayout.WEST);
         ownerPanel.add(ownerInfo, BorderLayout.CENTER);
@@ -144,7 +144,7 @@ final class SwingContractPanel extends SwingAbstractJPanel implements ContractPa
         //sale information
         final JPanel effectPanel = new JPanel();
         effectPanel.setLayout(new BorderLayout());
-        final JLabel saleDesc = new JLabel("effetto: "); 
+        final JLabel saleDesc = new JLabel("effect: "); 
         final JLabel salePrice = new JLabel(tile.getEffect().getDescription());
         effectPanel.add(saleDesc, BorderLayout.WEST);
         effectPanel.add(salePrice, BorderLayout.CENTER);
