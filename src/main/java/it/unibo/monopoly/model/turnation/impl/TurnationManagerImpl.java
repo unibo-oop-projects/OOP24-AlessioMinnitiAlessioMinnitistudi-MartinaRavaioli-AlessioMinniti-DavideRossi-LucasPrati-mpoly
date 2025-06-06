@@ -139,7 +139,8 @@ public class TurnationManagerImpl implements TurnationManager {
 
     @Override
     public final Pair<String, Integer> getWinner() {
-        Pair<Integer, Integer> winner = Pair.of(this.bankState.rankPlayers().get(0).getLeft(), this.bankState.rankPlayers().get(0).getRight());
+        Pair<Integer, Integer> winner = Pair.of(this.bankState.rankPlayers().get(0).getLeft(), 
+                                                this.bankState.rankPlayers().get(0).getRight());
         final Pair<String, Integer> winnerName;
         Player player = this.players.getHead();
 
@@ -175,7 +176,7 @@ public class TurnationManagerImpl implements TurnationManager {
 
     @Override
     public final void deletePlayer(final Player player) {
-        List<Player> list = this.players.toList();
+        final List<Player> list = this.players.toList();
 
         list.removeIf(p -> p.getID().equals(player.getID()));
         getNextPlayer();
