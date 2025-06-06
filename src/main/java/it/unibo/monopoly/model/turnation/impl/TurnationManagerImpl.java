@@ -139,13 +139,13 @@ public class TurnationManagerImpl implements TurnationManager {
 
     @Override
     public final Pair<String, Integer> getWinner() {
-        final Pair<Integer, Integer> winner = this.bankState.rankPlayers().get(0);
+        Pair<Integer, Integer> winner = Pair.of(this.bankState.rankPlayers().get(0).getLeft(), this.bankState.rankPlayers().get(0).getRight());
         final Pair<String, Integer> winnerName;
         Player player = this.players.getHead();
 
         for (final Pair<Integer, Integer> p : this.bankState.rankPlayers()) {
             if (p.getRight() > winner.getRight()) {
-                winner.setValue(p.getRight());
+                winner = Pair.of(p.getLeft(), p.getRight());
             }
         }
 
