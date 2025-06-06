@@ -52,7 +52,7 @@ public final class CircularLinkedList<T> {
             return list;
         }
 
-        if (this.head == this.tail) {
+        if (this.head.equals(this.tail)) {
             list.add(this.head.getValue());
             return list;
         }
@@ -117,18 +117,18 @@ public final class CircularLinkedList<T> {
 
         do {
             if (currentNode.getValue().equals(valueToDelete)) {
-                if (this.head == this.tail) {
+                if (this.head.equals(this.tail)) {
                     // Un solo nodo nella lista
                     this.head = null;
                     this.tail = null;
                 } else {
                     prevNode.setNextNode(currentNode.getNextNode());
 
-                    if (currentNode == this.head) {
+                    if (currentNode.equals(this.head)) {
                         this.head = currentNode.getNextNode();
                     }
 
-                    if (currentNode == this.tail) {
+                    if (currentNode.equals(this.tail)) {
                         this.tail = prevNode;
                     }
                 }
@@ -136,7 +136,7 @@ public final class CircularLinkedList<T> {
             }
             prevNode = currentNode;
             currentNode = currentNode.getNextNode();
-        } while (currentNode != this.head);
+        } while (!currentNode.equals(this.head));
     }
     /**
      * clear the list.

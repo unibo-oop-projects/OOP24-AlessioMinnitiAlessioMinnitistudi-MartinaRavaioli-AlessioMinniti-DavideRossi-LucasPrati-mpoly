@@ -177,7 +177,7 @@ public class TurnationManagerImpl implements TurnationManager {
     public final void deletePlayer(final Player player) {
         final List<Player> list = this.players.toList();
 
-        for (Player p : list) {
+        for (final Player p : list) {
             if (p.getID().equals(player.getID())) {
                 list.remove(p);
             }

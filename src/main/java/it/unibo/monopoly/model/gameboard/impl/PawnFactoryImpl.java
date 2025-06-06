@@ -13,7 +13,7 @@ public final class PawnFactoryImpl implements PawnFactory {
     /**
      * constructor.
     */
-    public PawnFactoryImpl() { }
+    //public PawnFactoryImpl() { }
 
     @Override
     public Pawn createBasic(final int id, final Position pos, final Color color) {

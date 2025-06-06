@@ -51,11 +51,7 @@ public class BoardImpl implements Board {
 
     @Override
     public final void removePawn(final int id) {
-        for (final Pawn p : this.pawns) {
-            if (((PawnImpl) p).getID().equals(id)) {
-                this.pawns.remove(p);
-            }
-        }
+        this.pawns.removeIf(p -> ((PawnImpl) p).getID().equals(id));
     }
 
     @Override
@@ -158,13 +154,12 @@ public class BoardImpl implements Board {
     }
 
     @Override
-    public Position getPrevPawPosition(int id) {
+    public final Position getPrevPawnPosition(final int id) {
         for (final Pawn p : this.pawns) {
-            if (((PawnImpl) p).getID() == id) {
+            if (((PawnImpl) p).getID().equals(id)) {
                 return p.getPreviousPosition();
             }
         }
-        
         throw new IllegalArgumentException("id not present");
     }
 
