@@ -45,10 +45,6 @@ public interface TurnationManager {
      */
     void addPlayer(Player p);
     /**
-     * set the game over.
-     */
-    void setOver();
-    /**
      * get dices' info.
      * @return Dice
      */
@@ -135,4 +131,5 @@ public interface TurnationManager {
      * @return bool
      */
     boolean hasCurrPlayerThrownDices();
+
 }

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 import it.unibo.monopoly.model.gameboard.api.Board;
 import it.unibo.monopoly.model.gameboard.api.Pawn;
@@ -50,7 +51,11 @@ public class BoardImpl implements Board {
 
     @Override
     public final void removePawn(final int id) {
-        this.pawns.remove(id - 1);
+        for (final Pawn p : this.pawns) {
+            if (((PawnImpl) p).getID().equals(id)) {
+                this.pawns.remove(p);
+            }
+        }
     }
 
     @Override
@@ -60,8 +65,13 @@ public class BoardImpl implements Board {
 
     @Override
     public final Tile getTileForPawn(final int id) {
-        final Pawn pawn = this.pawns.get(id - 1);
-        return tiles.get(pawn.getPosition().getPos());
+        for (final Pawn p : this.pawns) {
+            if (((PawnImpl) p).getID().equals(id)) {
+                return tiles.get(p.getPosition().getPos());
+            }
+        }
+
+        throw new IllegalArgumentException("id not present");
     }
 
     @Override
@@ -79,7 +89,15 @@ public class BoardImpl implements Board {
 
     @Override
     public final void movePawn(final int id, final Collection<Integer> value) {
-        final Pawn pawn = this.pawns.get(id - 1);
+        Pawn pawn = null;
+        for (final Pawn p : this.pawns) {
+            if (((PawnImpl) p).getID().equals(id)) {
+                pawn = p;
+            }
+        }
+
+        Objects.requireNonNull(pawn);
+
         final int steps = value.stream().mapToInt(Integer::intValue).sum();
         pawn.move(steps);
     }
@@ -107,7 +125,13 @@ public class BoardImpl implements Board {
 
     @Override
     public final void movePawnInTile(final int id, final String name) {
-        final Pawn pawn = this.pawns.get(id - 1);
+        Pawn pawn = null;
+        for (final Pawn p : this.pawns) {
+            if (((PawnImpl) p).getID() == id) {
+                pawn = p;
+            }
+        }
+        Objects.requireNonNull(pawn);
         final Tile tile = getTile(name);
         pawn.setPosition(tile.getPosition());
     }
