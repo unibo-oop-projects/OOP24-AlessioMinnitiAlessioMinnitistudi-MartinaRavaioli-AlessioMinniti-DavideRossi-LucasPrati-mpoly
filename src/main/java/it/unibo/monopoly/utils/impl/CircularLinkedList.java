@@ -34,7 +34,7 @@ public final class CircularLinkedList<T> {
         // Lista vuota: inizializza head e tail, e collega a sé stessa
         this.head = newNode;
         this.tail = newNode;
-        newNode.setNextNode(newNode);
+        // newNode.setNextNode(newNode);
         } else {
         // Aggiunta in coda
         this.tail.setNextNode(newNode);

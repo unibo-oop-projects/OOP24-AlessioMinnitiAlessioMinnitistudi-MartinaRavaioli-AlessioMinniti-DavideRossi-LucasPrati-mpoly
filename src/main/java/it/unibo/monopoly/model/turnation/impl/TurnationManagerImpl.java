@@ -175,14 +175,9 @@ public class TurnationManagerImpl implements TurnationManager {
 
     @Override
     public final void deletePlayer(final Player player) {
-        final List<Player> list = this.players.toList();
+        List<Player> list = this.players.toList();
 
-        for (final Player p : list) {
-            if (p.getID().equals(player.getID())) {
-                list.remove(p);
-            }
-        }
-
+        list.removeIf(p -> p.getID().equals(player.getID()));
         getNextPlayer();
         this.players.clear();
 
