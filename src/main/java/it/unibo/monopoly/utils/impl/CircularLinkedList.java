@@ -51,6 +51,12 @@ public final class CircularLinkedList<T> {
         if (this.head == null) {
             return list;
         }
+
+        if (this.head == this.tail) {
+            list.add(this.head.getValue());
+            return list;
+        }
+
         Node<T> current = this.head;
         do {
             if (!list.contains(current.getValue())) {

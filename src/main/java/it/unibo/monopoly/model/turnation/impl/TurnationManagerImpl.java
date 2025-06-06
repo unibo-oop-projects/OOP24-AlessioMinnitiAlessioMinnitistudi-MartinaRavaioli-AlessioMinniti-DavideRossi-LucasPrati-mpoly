@@ -18,7 +18,6 @@ import it.unibo.monopoly.utils.impl.CircularLinkedList;
 */
 public class TurnationManagerImpl implements TurnationManager {
     private CircularLinkedList<Player> players; /**list of players. */
-    private boolean isOver; /**is Over bool. */
     private Player currPlayer; /**current player. */
     private Dice dice; /**dice. */
     private BankState bankState; /**bankState to communicate with the bank. */
@@ -177,7 +176,13 @@ public class TurnationManagerImpl implements TurnationManager {
     @Override
     public final void deletePlayer(final Player player) {
         final List<Player> list = this.players.toList();
-        list.remove(player);
+
+        for (Player p : list) {
+            if (p.getID().equals(player.getID())) {
+                list.remove(p);
+            }
+        }
+
         getNextPlayer();
         this.players.clear();
 
