@@ -1,5 +1,6 @@
 package it.unibo.monopoly.model.gameboard.impl.chance_comunity.impl;
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
@@ -175,7 +176,7 @@ public final class BaseCommandFactoryImpl implements BaseCommandFactory {
 
             private static final String KEY = "deposit from";
             private int num;
-            private List<Player> players;
+            private List<Player> players = new LinkedList<>();
 
             @Override
             public String getKeyWord() {
