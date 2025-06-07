@@ -20,6 +20,7 @@ public interface BaseCommandFactory {
      * a method that create a list of all the command supported.
      * @return a list of all the possible base command
      * @param bank to execute some command
+     * @param view to show graphical reference of some commands 
      * @param board to execute some command
      */
     List<BaseCommand> allCommand(Bank bank, Board board, MainViewImpl view);

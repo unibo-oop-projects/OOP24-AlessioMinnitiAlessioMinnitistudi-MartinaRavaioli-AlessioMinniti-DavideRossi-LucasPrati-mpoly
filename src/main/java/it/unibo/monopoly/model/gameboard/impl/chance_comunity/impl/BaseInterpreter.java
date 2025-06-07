@@ -24,7 +24,7 @@ public final class BaseInterpreter implements BaseInterpreterInt {
      * @param baseCommands the list o the base command supportetd by the game
      */
     public BaseInterpreter(final List<BaseCommand> baseCommands) {
-        this.baseCommands = baseCommands;
+        this.baseCommands = List.copyOf(baseCommands);
     }
 
     @Override

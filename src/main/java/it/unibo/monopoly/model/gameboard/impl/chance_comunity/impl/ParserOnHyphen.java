@@ -38,10 +38,6 @@ public final class ParserOnHyphen implements Parser {
                 } else {
                     rStr = rStr.concat(String.valueOf(c));
                 }
-                    
-                if (i == toParse.length() -1) {
-                    index = i + 2;
-                }
             }
             index = toParse.length();
             retString = rStr; 

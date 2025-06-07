@@ -20,7 +20,8 @@ public final class DeckCreatorImpl implements DeckCreator {
 
     @Override
     public ChancheAndCommunityChestDeck createDeck(final String file, final String type, 
-                                        final Board board, final Bank bank, final TurnationManager turnM, final MainViewImpl view) {
+                                                    final Board board, final Bank bank, 
+                                                    final TurnationManager turnM, final MainViewImpl view) {
 
         final UseFileTxt fi = new UseFileTxtImpl();
         final String fileAsString = fi.loadTextResource(file);

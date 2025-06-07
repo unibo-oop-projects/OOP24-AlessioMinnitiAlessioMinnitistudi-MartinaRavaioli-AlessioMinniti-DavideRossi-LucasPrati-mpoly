@@ -21,13 +21,13 @@ public final class ChancheAndCommunityChestDeckImpl implements ChancheAndCommuni
      * @param type the type of the deck, chances or community chests
      */
     public ChancheAndCommunityChestDeckImpl(final List<ChanceAndCommunityChestCard> cards, final String type) {
-        this.cards = cards;
+        this.cards = List.copyOf(cards);
         this.type = type;
     }
 
     @Override
     public ChanceAndCommunityChestCard draw() {
-        if (cards.size() != 0 ) {
+        if (cards.isEmpty()) {
             final int index = r.nextInt(cards.size()); 
             return cards.get(index);
         } else {
