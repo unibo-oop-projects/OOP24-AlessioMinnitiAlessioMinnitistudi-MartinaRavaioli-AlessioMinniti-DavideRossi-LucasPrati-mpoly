@@ -18,7 +18,6 @@ import it.unibo.monopoly.utils.impl.CircularLinkedList;
 */
 public class TurnationManagerImpl implements TurnationManager {
     private CircularLinkedList<Player> players; /**list of players. */
-    private boolean isOver; /**is Over bool. */
     private Player currPlayer; /**current player. */
     private Dice dice; /**dice. */
     private BankState bankState; /**bankState to communicate with the bank. */
@@ -85,14 +84,10 @@ public class TurnationManagerImpl implements TurnationManager {
         this.players.addNode(p);
     }
 
-    @Override
-    public final void setOver() {
-        this.isOver = true;
-    }
 
     @Override
     public final boolean isOver() { 
-        return this.isOver;
+        return this.players.toList().size() < 2;
     }
 
     @Override
@@ -144,16 +139,23 @@ public class TurnationManagerImpl implements TurnationManager {
 
     @Override
     public final Pair<String, Integer> getWinner() {
-        final Pair<Integer, Integer> winner = this.bankState.rankPlayers().get(0);
+        Pair<Integer, Integer> winner = Pair.of(this.bankState.rankPlayers().get(0).getLeft(), 
+                                                this.bankState.rankPlayers().get(0).getRight());
         final Pair<String, Integer> winnerName;
+        Player player = this.players.getHead();
 
         for (final Pair<Integer, Integer> p : this.bankState.rankPlayers()) {
             if (p.getRight() > winner.getRight()) {
-                winner.setValue(p.getRight());
+                winner = Pair.of(p.getLeft(), p.getRight());
             }
         }
 
-        winnerName = Pair.of(this.players.toList().get(winner.getLeft() - 1).getName(), winner.getRight());
+        for (final Player pl : this.players.toList()) {
+            if (pl.getID().equals(winner.getLeft())) {
+                player = pl;
+            }
+        }
+        winnerName = Pair.of(player.getName(), winner.getRight());
         return winnerName;
     }
 
@@ -161,7 +163,12 @@ public class TurnationManagerImpl implements TurnationManager {
     public final List<Pair<String, Integer>> getRanking() {
         final List<Pair<String, Integer>> list = new ArrayList<>();
         for (final Pair<Integer, Integer> p : this.bankState.rankPlayers()) {
-            list.add(Pair.of(/*p.getLeft().toString()*/this.players.toList().get(p.getLeft() - 1).getName(), p.getRight()));
+
+            for (final Player pl : this.players.toList()) {
+                if (pl.getID().equals(p.getLeft())) {
+                    list.add(Pair.of(pl.getName(), p.getRight()));
+                }
+            }
         }
 
         return list;
@@ -169,7 +176,16 @@ public class TurnationManagerImpl implements TurnationManager {
 
     @Override
     public final void deletePlayer(final Player player) {
-        this.players.deleteNode(player);
+        final List<Player> list = this.players.toList();
+
+        list.removeIf(p -> p.getID().equals(player.getID()));
+        getNextPlayer();
+        this.players.clear();
+
+        for (final Player p : list) {
+            this.players.addNode(p);
+        }
+        this.bankState.deletePlayer(player);
     }
     @Override
     public final void resetBankState() {
@@ -178,6 +194,30 @@ public class TurnationManagerImpl implements TurnationManager {
     @Override
     public final boolean hasCurrPlayerThrownDices() {
         return this.diceThrown;
+    }
+    @Override
+    public final boolean isCurrentPlayerParked() {
+        return this.currPlayer.isParked();
+    }
+    @Override
+    public final int currentPlayerTurnsLeftInPrison() {
+        return this.currPlayer.turnLeftInPrison();
+    }
+    @Override
+    public final void decreaseTurnsInPrison() {
+        this.currPlayer.decreaseTurnsInPrison();
+    }
+    @Override
+    public final void passedParkTurn() {
+        this.currPlayer.passTurn();
+    }
+    @Override
+    public final void putCurrentPlayerInPrison() {
+        this.currPlayer.putInPrison();
+    }
+    @Override
+    public final void parkCurrentPlayer() {
+        this.currPlayer.park();
     }
 
 }

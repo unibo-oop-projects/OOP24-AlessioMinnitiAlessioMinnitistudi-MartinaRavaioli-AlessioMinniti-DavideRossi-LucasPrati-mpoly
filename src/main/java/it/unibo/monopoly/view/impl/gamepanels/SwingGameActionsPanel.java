@@ -19,8 +19,8 @@ final class SwingGameActionsPanel extends SwingAbstractJPanel implements GameAct
     private static final int BUTTONS_PH_HEIGHT = 100;
     private static final String PLACEHOLDER = 
     """
-    TIRA I DADI E MUOVI LA PEDINA
-    PER AGGIORNARE LE AZIONI DISPONIBILI
+    THROW THE DICES AND MOVE THE PAWN
+    ON A NEW TILE TO UPDATE AVAILABLE ACTIONS
     """;
 
     SwingGameActionsPanel() {

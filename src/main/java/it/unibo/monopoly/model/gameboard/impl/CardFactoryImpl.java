@@ -21,6 +21,7 @@ import it.unibo.monopoly.model.transactions.impl.BaseTitleDeed;
 import it.unibo.monopoly.model.transactions.impl.RentOptionFactoryImpl;
 import it.unibo.monopoly.model.transactions.impl.SpecialPropertyFactoryImpl;
 import it.unibo.monopoly.model.turnation.api.Position;
+import it.unibo.monopoly.model.turnation.api.TurnationManager;
 
 /**
  * A {@link CardFactory} implementation, for create entities after the deserialization from the file json.
@@ -32,6 +33,7 @@ public class CardFactoryImpl implements CardFactory {
     private final RentOptionFactory rentOptionFactory = new RentOptionFactoryImpl();
     private final Board board;
     private final Bank bank;
+    private final TurnationManager turnM;
 
     private final List<Tile> tiles = new ArrayList<>();
     private final Set<TitleDeed> deeds = new HashSet<>();
@@ -40,14 +42,16 @@ public class CardFactoryImpl implements CardFactory {
      * Create a new {@link CardFactoryImpl}.
      * @param board the {@link Board} of the game for handle specific effects
      * @param bank the {@link Bank} of the game for handle specific effects
+     * @param turnM the {@link TurnationManager} of the game for handle specific effects
      */
     @SuppressFBWarnings(
     value = "EI2",
     justification = "CardFactoryImpl intentionally holds references to mutable collaborators (Bank and Board) for initial setup."
     )
-    public CardFactoryImpl(final Board board, final Bank bank) {
+    public CardFactoryImpl(final Board board, final Bank bank, final TurnationManager turnM) {
         this.board = Objects.requireNonNull(board);
         this.bank = Objects.requireNonNull(bank);
+        this.turnM = Objects.requireNonNull(turnM);
     }
 
     /**
@@ -91,10 +95,10 @@ public class CardFactoryImpl implements CardFactory {
 
         switch (effect) {
             case "JAIL"         -> tile = specialFactory.prison(position);
-            case "GO_TO_JAIL"   -> tile = specialFactory.goToPrison(position, board);
+            case "GO_TO_JAIL"   -> tile = specialFactory.goToPrison(position, board, turnM);
             case "INCOME"       -> tile = specialFactory.start(bank);
             case "TAX"          -> tile = specialFactory.taxes(position, bank);
-            case "PARKING"      -> tile = specialFactory.parking(position);
+            case "PARKING"      -> tile = specialFactory.parking(position, turnM);
             // case "CHANCE"       -> tile = specialFactory.chance(); 
             // case "CHEST"        -> tile = specialFactory.chest();
             default -> throw new IllegalArgumentException("Unknown effect type: " + effect);

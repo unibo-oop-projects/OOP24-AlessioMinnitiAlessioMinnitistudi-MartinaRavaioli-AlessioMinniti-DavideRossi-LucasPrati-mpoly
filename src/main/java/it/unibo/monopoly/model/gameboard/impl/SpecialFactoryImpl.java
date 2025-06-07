@@ -7,6 +7,7 @@ import it.unibo.monopoly.model.gameboard.api.Special;
 import it.unibo.monopoly.model.gameboard.api.SpecialFactory;
 import it.unibo.monopoly.model.transactions.api.Bank;
 import it.unibo.monopoly.model.turnation.api.Position;
+import it.unibo.monopoly.model.turnation.api.TurnationManager;
 import it.unibo.monopoly.model.turnation.impl.PositionImpl;
 
 
@@ -24,8 +25,8 @@ public final class SpecialFactoryImpl implements SpecialFactory {
     }
 
     @Override
-    public Special goToPrison(final Position pos, final Board board) {
-        return new SpecialImpl("GoToJail", pos, Group.SPECIAL, factory.putInPrison(board));
+    public Special goToPrison(final Position pos, final Board board, final TurnationManager turnM) {
+        return new SpecialImpl("GoToJail", pos, Group.SPECIAL, factory.putInPrison(board, turnM));
     }
 
     @Override
@@ -34,8 +35,8 @@ public final class SpecialFactoryImpl implements SpecialFactory {
     }
 
     @Override
-    public Special parking(final Position pos) {
-        return new SpecialImpl("FreeParking", pos, Group.SPECIAL, factory.park());
+    public Special parking(final Position pos, final TurnationManager turnM) {
+        return new SpecialImpl("FreeParking", pos, Group.SPECIAL, factory.park(turnM));
     }
 
     @Override

@@ -1,18 +1,16 @@
 package it.unibo.monopoly.model.gameboard.special;
 
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
-
 import java.awt.Color;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import it.unibo.monopoly.model.gameboard.api.Board;
 import it.unibo.monopoly.model.gameboard.api.Pawn;
@@ -33,10 +31,13 @@ import it.unibo.monopoly.model.transactions.impl.BaseTitleDeed;
 import it.unibo.monopoly.model.transactions.impl.bankaccount.SimpleBankAccountImpl;
 import it.unibo.monopoly.model.turnation.api.Player;
 import it.unibo.monopoly.model.turnation.api.Position;
+import it.unibo.monopoly.model.turnation.api.TurnationManager;
+import it.unibo.monopoly.model.turnation.impl.DiceImpl;
 import it.unibo.monopoly.model.turnation.impl.ParkablePlayer;
 import it.unibo.monopoly.model.turnation.impl.PlayerImpl;
 import it.unibo.monopoly.model.turnation.impl.PositionImpl;
 import it.unibo.monopoly.model.turnation.impl.PrisonablePlayer;
+import it.unibo.monopoly.model.turnation.impl.TurnationManagerImpl;
 
 
 
@@ -69,6 +70,7 @@ class FactoryTest {
     private Bank bank;
     private Board board;
 
+
     private final SpecialFactory factory = new SpecialFactoryImpl();
     private final PawnFactory pF = new PawnFactoryImpl();
     private final Position pos0 = new PositionImpl(PO0);
@@ -97,18 +99,21 @@ class FactoryTest {
 
     @BeforeEach
     void setAll() {
+        final TurnationManager turnM;
+        final int dices = 2;
         bank = new BankImpl(accounts, deeds);
+        turnM = new TurnationManagerImpl(List.of(p1), new DiceImpl(dices));
         final List<Tile> tiles = List.of(
         new PropertyImpl("a", pos0, Group.RED),
         new PropertyImpl("b", pos1, Group.BLUE),
         new PropertyImpl("c", pos2, Group.YELLOW),
-        factory.parking(pos5),
+        factory.parking(pos5, turnM),
         factory.prison(pos4),
         factory.start(bank),
         factory.taxes(pos6, bank)
     );
         board = new BoardImpl(tiles, pawns);
-        board.addTile(factory.goToPrison(pos3, board));
+        board.addTile(factory.goToPrison(pos3, board, turnM));
 
     }
 
@@ -118,19 +123,19 @@ class FactoryTest {
         final Collection<Integer> dice1 = List.of(1, 2);
         final Collection<Integer> dice2 = List.of(1, 1);
 
-        board.movePawn(board.getPawn(p1.getID()), dice1);
+
+        board.movePawn(p1.getID(), dice1);
         assertEquals(pos3.getPos(), board.getPawn(p1.getID()).getPosition().getPos());
 
         s.activateEffect(p1);
         assertEquals(pos4.getPos(), board.getPawn(p1.getID()).getPosition().getPos());
         assertEquals(3, p1.turnLeftInPrison());
-        assertTrue(p1.isInPrison());
+        assertFalse(!p1.isInPrison() || p1.canExitPrison(dice1));
+        p1.decreaseTurnsInPrison();
         assertEquals(2, p1.turnLeftInPrison());
         assertFalse(p1.canExitPrison(dice1));
-        assertTrue(p1.isInPrison());
-        assertEquals(1, p1.turnLeftInPrison());
-        assertTrue(p1.canExitPrison(dice2));
-        assertFalse(p1.isInPrison());
+        p1.decreaseTurnsInPrison();
+        assertTrue(!p1.isInPrison() || p1.canExitPrison(dice2));
         assertEquals(0, p1.turnLeftInPrison());
     }
 
@@ -154,9 +159,10 @@ class FactoryTest {
 
     @Test
     void testPark() {
-        final Special s = factory.parking(pos2);
+        final Special s = (Special) board.getTile("FreeParking");
         s.activateEffect(p1);
         assertTrue(p1.isParked());
+        p1.passTurn();
         assertFalse(p1.isParked());
     }
 

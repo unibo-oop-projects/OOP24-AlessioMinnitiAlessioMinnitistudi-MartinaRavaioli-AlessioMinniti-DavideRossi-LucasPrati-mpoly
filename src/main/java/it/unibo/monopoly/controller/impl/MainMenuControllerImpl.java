@@ -10,8 +10,6 @@ import java.util.Objects;
 import java.util.Set;
 
 import it.unibo.monopoly.controller.api.MainMenuController;
-import it.unibo.monopoly.view.impl.MainViewImpl;
-
 import it.unibo.monopoly.model.gameboard.api.Board;
 import it.unibo.monopoly.model.gameboard.api.CardFactory;
 import it.unibo.monopoly.model.gameboard.api.Pawn;
@@ -27,19 +25,21 @@ import it.unibo.monopoly.model.transactions.api.BankAccountType;
 import it.unibo.monopoly.model.transactions.api.TitleDeed;
 import it.unibo.monopoly.model.transactions.impl.BankImpl;
 import it.unibo.monopoly.model.transactions.impl.bankaccount.BankAccountFactoryImpl;
-
 import it.unibo.monopoly.model.turnation.api.Player;
 import it.unibo.monopoly.model.turnation.api.TurnationManager;
 import it.unibo.monopoly.model.turnation.impl.DiceImpl;
+import it.unibo.monopoly.model.turnation.impl.ParkablePlayer;
 import it.unibo.monopoly.model.turnation.impl.PlayerImpl;
 import it.unibo.monopoly.model.turnation.impl.PositionImpl;
+import it.unibo.monopoly.model.turnation.impl.PrisonablePlayer;
 import it.unibo.monopoly.model.turnation.impl.TurnationManagerImpl;
+import it.unibo.monopoly.utils.api.Identifiable;
 import it.unibo.monopoly.utils.api.UseFileJson;
 import it.unibo.monopoly.utils.api.UseFileTxt;
-import it.unibo.monopoly.utils.api.Identifiable;
 import it.unibo.monopoly.utils.impl.Configuration;
 import it.unibo.monopoly.utils.impl.UseFileJsonImpl;
 import it.unibo.monopoly.utils.impl.UseFileTxtImpl;
+import it.unibo.monopoly.view.impl.MainViewImpl;
 
 
 /**
@@ -106,7 +106,7 @@ public final class MainMenuControllerImpl implements MainMenuController {
         for (final var p : playersSetup.entrySet()) {
             final String name = p.getValue();
             final Color color = p.getKey();
-            players.add(PlayerImpl.of(id, name, color));
+            players.add(new ParkablePlayer(new PrisonablePlayer(PlayerImpl.of(id, name, color))));
             accounts.add(createBankAccountByType(id, name));
             pawns.add(pawnFactory.createBasic(id, new PositionImpl(0), color));
             id++;
@@ -126,7 +126,7 @@ public final class MainMenuControllerImpl implements MainMenuController {
 
         // import from json
         final List<CardDTO> dtos = importFileJson.loadJsonList(config.getCardsPath(), CardDTO.class);
-        final CardFactory cardFactory = new CardFactoryImpl(board, bank); 
+        final CardFactory cardFactory = new CardFactoryImpl(board, bank, turnationManager); 
         cardFactory.parse(dtos);
         // populate elements
         titleDeeds.addAll(cardFactory.getDeeds());

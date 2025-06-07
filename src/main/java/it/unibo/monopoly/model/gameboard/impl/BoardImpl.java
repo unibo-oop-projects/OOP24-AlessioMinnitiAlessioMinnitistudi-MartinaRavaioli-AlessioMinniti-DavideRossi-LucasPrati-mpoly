@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.monopoly.model.gameboard.api.Board;
 import it.unibo.monopoly.model.gameboard.api.Pawn;
 import it.unibo.monopoly.model.gameboard.api.Property;
@@ -50,8 +50,8 @@ public class BoardImpl implements Board {
     }
 
     @Override
-    public final void removePawn(final Pawn p) {
-        this.pawns.remove(p);
+    public final void removePawn(final int id) {
+        this.pawns.removeIf(p -> ((PawnImpl) p).getID().equals(id));
     }
 
     @Override
@@ -60,8 +60,14 @@ public class BoardImpl implements Board {
     }
 
     @Override
-    public final Tile getTileForPawn(final Pawn p) {
-        return tiles.get(p.getPosition().getPos());
+    public final Tile getTileForPawn(final int id) {
+        for (final Pawn p : this.pawns) {
+            if (((PawnImpl) p).getID().equals(id)) {
+                return tiles.get(p.getPosition().getPos());
+            }
+        }
+
+        throw new IllegalArgumentException("id not present");
     }
 
     @Override
@@ -78,18 +84,25 @@ public class BoardImpl implements Board {
     }
 
     @Override
-    public final void movePawn(final Pawn player, final Collection<Integer> value) {
+    public final void movePawn(final int id, final Collection<Integer> value) {
+        Pawn pawn = null;
+        for (final Pawn p : this.pawns) {
+            if (((PawnImpl) p).getID().equals(id)) {
+                pawn = p;
+            }
+        }
+
+        Objects.requireNonNull(pawn);
+
         final int steps = value.stream().mapToInt(Integer::intValue).sum();
-        player.move(steps);
+        pawn.move(steps);
     }
 
-    @SuppressFBWarnings(value = "EI_EXPOSE_REP",
-                justification = "must return reference to the object instead of a copy")
     @Override
-    public final Pawn getPawn(final int id) {
+    public final Pawn getPawn(final int id) { //it's used to return the pawn outside of the board, it's because it returns a copy 
         for (final Pawn p : this.pawns) {
             if (((PawnImpl) p).getID() == id) {
-                return p;
+                return new PawnImpl(((PawnImpl) p).getID(), p.getPosition(), p.getColor());
             }
         }
 
@@ -107,7 +120,14 @@ public class BoardImpl implements Board {
     }
 
     @Override
-    public final void movePawnInTile(final Pawn pawn, final String name) {
+    public final void movePawnInTile(final int id, final String name) {
+        Pawn pawn = null;
+        for (final Pawn p : this.pawns) {
+            if (((PawnImpl) p).getID() == id) {
+                pawn = p;
+            }
+        }
+        Objects.requireNonNull(pawn);
         final Tile tile = getTile(name);
         pawn.setPosition(tile.getPosition());
     }
@@ -131,6 +151,16 @@ public class BoardImpl implements Board {
     @Override
     public final void addTile(final Tile tile) {
         this.tiles.add(tile);
+    }
+
+    @Override
+    public final Position getPrevPawnPosition(final int id) {
+        for (final Pawn p : this.pawns) {
+            if (((PawnImpl) p).getID().equals(id)) {
+                return p.getPreviousPosition();
+            }
+        }
+        throw new IllegalArgumentException("id not present");
     }
 
 }

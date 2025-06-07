@@ -11,7 +11,7 @@ import it.unibo.monopoly.view.api.AccountPanel;
 
 final class SwingAccountPanel extends SwingAbstractJPanel implements AccountPanel {
 
-    private static final String BALANCE = "Saldo:";
+    private static final String BALANCE = "Balance:";
     private static final String BL_PLACEHOLDER = "No balance";
     private static final long serialVersionUID = 1L;
 

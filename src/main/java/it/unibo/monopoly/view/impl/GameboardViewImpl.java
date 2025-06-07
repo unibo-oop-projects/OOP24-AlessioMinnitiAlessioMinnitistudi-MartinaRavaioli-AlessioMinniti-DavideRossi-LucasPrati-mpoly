@@ -245,4 +245,25 @@ public final class GameboardViewImpl extends JPanel implements GameboardView {
             }
         }
     }
+
+    @Override
+    public void deletePlayer(final Color color, final int id) {
+        for (final Map.Entry<JPanel, Position> entry : this.tilePositions.entrySet()) {
+            final JPanel p = entry.getKey();
+            for (final Component c : p.getComponents()) {
+                    if (c instanceof PawnCircle pawnCircle && pawnCircle.getColor().equals(color)) {
+                        p.remove(c);
+                        p.revalidate();
+                        p.repaint();
+                        break;
+                    } else if (c instanceof PawnSquare pawnSquare && pawnSquare.getColor().equals(color)) {
+                        p.remove(c);
+                        p.revalidate();
+                        p.repaint();
+                        break;
+                    }
+                }
+        }
+        this.pawnPositions.remove(id - 1);
+    }
 }

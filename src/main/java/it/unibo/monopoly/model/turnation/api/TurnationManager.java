@@ -21,7 +21,7 @@ public interface TurnationManager {
     /**
      * get the dices' result.
      * @return multiple int
-     * @throws IllegalAccessException
+     * @throws IllegalAccessException throws exception if the player has already thrown the dices
      */
     Collection<Integer> moveByDices() throws IllegalAccessException;
     /**
@@ -45,10 +45,6 @@ public interface TurnationManager {
      */
     void addPlayer(Player p);
     /**
-     * set the game over.
-     */
-    void setOver();
-    /**
      * get dices' info.
      * @return Dice
      */
@@ -64,6 +60,10 @@ public interface TurnationManager {
      */
     void setList(List<Player> plList);
     /**
+     * puts the current player in prison.
+     */
+    void putCurrentPlayerInPrison();
+    /**
      * tells if the current player is in prison.
      * @return bool
      */
@@ -74,7 +74,29 @@ public interface TurnationManager {
      * @param value result of the dices
      */
     boolean canExitPrison(Collection<Integer> value);
-
+    /**
+     * parks the current player.
+     */
+    void parkCurrentPlayer();
+    /**
+     * tells if the current player is parked.
+     * @return bool
+     */
+    boolean isCurrentPlayerParked();
+    /**
+     * sets the variable in as false.
+     * It means the player can move when the next turn arrives
+     */
+    void passedParkTurn();
+    /**
+     * it gets how many turn the player has left in prison.
+     * @return the turns
+     */
+    int currentPlayerTurnsLeftInPrison();
+    /**
+     * decreases the turns the player has left in prison.
+     */
+    void decreaseTurnsInPrison();
     /**
      * tells if the player can pass the turn.
      * @return bool
@@ -109,4 +131,5 @@ public interface TurnationManager {
      * @return bool
      */
     boolean hasCurrPlayerThrownDices();
+
 }
