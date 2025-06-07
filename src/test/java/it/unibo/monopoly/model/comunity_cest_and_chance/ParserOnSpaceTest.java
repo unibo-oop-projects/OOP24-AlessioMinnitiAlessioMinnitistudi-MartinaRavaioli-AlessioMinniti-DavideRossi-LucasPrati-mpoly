@@ -83,7 +83,7 @@ class ParserOnSpaceTest {
         assertTrue(p.hasNesxt());
         assertEquals(p.next(), "stai");
         final String commas2 = "50";
-        final ParserOnComma pars = new ParserOnComma(commas2);   
+        final ParserOnComma pars = new ParserOnComma(commas2);
         assertTrue(pars.hasNesxt());
         assertEquals(pars.next(), "50");
         assertFalse(pars.hasNesxt());

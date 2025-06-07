@@ -9,6 +9,7 @@ import it.unibo.monopoly.model.gameboard.impl.chance_comunity.api.Command;
 import it.unibo.monopoly.model.gameboard.impl.chance_comunity.api.Interpreter;
 import it.unibo.monopoly.model.transactions.api.Bank;
 import it.unibo.monopoly.model.turnation.api.TurnationManager;
+import it.unibo.monopoly.view.impl.MainViewImpl;
 
 /**
  * implementation of interpreter for complex command that are composed of multiple base commands.
@@ -25,8 +26,8 @@ public final class ComplexInterpreter implements Interpreter {
      * @param board to execute some commands
      * @param bank to execute some commands
      */
-    public ComplexInterpreter(final Board board, final Bank bank) {
-        inter = new BaseInterpreter(factory.allCommand(bank, board));
+    public ComplexInterpreter(final Board board, final Bank bank, final MainViewImpl view) {
+        inter = new BaseInterpreter(factory.allCommand(bank, board, view));
     }
 
     @Override

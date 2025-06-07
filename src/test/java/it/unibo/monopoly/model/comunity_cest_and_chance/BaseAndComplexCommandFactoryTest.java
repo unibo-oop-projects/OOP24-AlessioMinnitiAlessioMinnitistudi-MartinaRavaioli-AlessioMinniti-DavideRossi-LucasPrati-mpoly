@@ -3,36 +3,36 @@ package it.unibo.monopoly.model.comunity_cest_and_chance;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.awt.Color;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
-import java.util.function.Predicate;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import it.unibo.monopoly.controller.impl.GameControllerImpl;
 import it.unibo.monopoly.model.gameboard.api.Board;
+import it.unibo.monopoly.model.gameboard.api.CardFactory;
 import it.unibo.monopoly.model.gameboard.api.Pawn;
 import it.unibo.monopoly.model.gameboard.api.PawnFactory;
-import it.unibo.monopoly.model.gameboard.api.SpecialFactory;
 import it.unibo.monopoly.model.gameboard.api.Tile;
 import it.unibo.monopoly.model.gameboard.impl.BoardImpl;
-import it.unibo.monopoly.model.gameboard.impl.Group;
+import it.unibo.monopoly.model.gameboard.impl.CardDTO;
+import it.unibo.monopoly.model.gameboard.impl.CardFactoryImpl;
 import it.unibo.monopoly.model.gameboard.impl.PawnFactoryImpl;
-import it.unibo.monopoly.model.gameboard.impl.PropertyImpl;
-import it.unibo.monopoly.model.gameboard.impl.SpecialFactoryImpl;
 import it.unibo.monopoly.model.gameboard.impl.chance_comunity.api.BaseCommand;
 import it.unibo.monopoly.model.gameboard.impl.chance_comunity.api.BaseCommandFactory;
 import it.unibo.monopoly.model.gameboard.impl.chance_comunity.api.Command;
 import it.unibo.monopoly.model.gameboard.impl.chance_comunity.impl.BaseCommandFactoryImpl;
 import it.unibo.monopoly.model.gameboard.impl.chance_comunity.impl.ComplexCommand;
-import it.unibo.monopoly.model.transactions.api.Bank;
 import it.unibo.monopoly.model.transactions.api.BankAccount;
+import it.unibo.monopoly.model.transactions.api.BankAccountFactory;
 import it.unibo.monopoly.model.transactions.api.TitleDeed;
 import it.unibo.monopoly.model.transactions.impl.BankImpl;
-import it.unibo.monopoly.model.transactions.impl.BaseTitleDeed;
-import it.unibo.monopoly.model.transactions.impl.bankaccount.SimpleBankAccountImpl;
+import it.unibo.monopoly.model.transactions.impl.bankaccount.BankAccountFactoryImpl;
 import it.unibo.monopoly.model.turnation.api.Player;
-import it.unibo.monopoly.model.turnation.api.Position;
 import it.unibo.monopoly.model.turnation.api.TurnationManager;
 import it.unibo.monopoly.model.turnation.impl.DiceImpl;
 import it.unibo.monopoly.model.turnation.impl.ParkablePlayer;
@@ -40,6 +40,10 @@ import it.unibo.monopoly.model.turnation.impl.PlayerImpl;
 import it.unibo.monopoly.model.turnation.impl.PositionImpl;
 import it.unibo.monopoly.model.turnation.impl.PrisonablePlayer;
 import it.unibo.monopoly.model.turnation.impl.TurnationManagerImpl;
+import it.unibo.monopoly.utils.api.UseFileJson;
+import it.unibo.monopoly.utils.impl.Configuration;
+import it.unibo.monopoly.utils.impl.UseFileJsonImpl;
+import it.unibo.monopoly.view.impl.MainViewImpl;
 
 /**
  * test for classes complex command and base command factory.
@@ -49,78 +53,92 @@ class BaseAndComplexCommandFactoryTest {
     private static final String PLAYER1_NAME = "Alice";
     private static final String PLAYER2_NAME = "Marta";
     private static final String PLAYER3_NAME = "Roberto";
-    private static final String TITLE_DEED_NAME1 = "Bastoni Gran Sasso";
-    private static final String TITLE_DEED_NAME2 = "Viale Monterosa";
     private static final int VALID_ID1 = 1;
     private static final int VALID_ID2 = 2;
     private static final int VALID_ID3 = 3;
     private static final Color VALID_COLOR1 = Color.GREEN;
     private static final Color VALID_COLOR2 = Color.PINK;
     private static final Color VALID_COLOR3 = Color.BLACK;
-    private static final Predicate<BankAccount> VALID_PREDICATE = e -> true;
 
-    private static final int VALID_SALE_PRICE1 = 60;
-    private static final int VALID_SALE_PRICE2 = 50;
-    private static final int VALID_BASE_RENT = 10;
-
-    private static final int PO0 = 0;
-    private static final int PO1 = 1;
-    private static final int PO2 = 2;
-    private static final int PO3 = 3;
-    private static final int PO4 = 4;
-    private static final int PO5 = 5;
-    private static final int PO6 = 6;
-
-    private Bank bank;
-    private Board board;
     private final BaseCommandFactory bcf = new BaseCommandFactoryImpl();
     private List<BaseCommand> commands;
 
-    private final SpecialFactory factory = new SpecialFactoryImpl();
-    private final PawnFactory pF = new PawnFactoryImpl();
-    private final Position pos0 = new PositionImpl(PO0);
-    private final Position pos1 = new PositionImpl(PO1);
-    private final Position pos2 = new PositionImpl(PO2);
-    private final Position pos3 = new PositionImpl(PO3);
-    private final Position pos4 = new PositionImpl(PO4);
-    private final Position pos5 = new PositionImpl(PO5);
-    private final Position pos6 = new PositionImpl(PO6);
+    private BankImpl bank;
+    private Board board;
+
 
     private final Player p = new ParkablePlayer(PlayerImpl.of(VALID_ID1, PLAYER1_NAME, VALID_COLOR1));
     private final Player p1 = new PrisonablePlayer(p);
     private final Player p2 = PlayerImpl.of(VALID_ID2, PLAYER2_NAME, VALID_COLOR2);
     private final Player p3 = PlayerImpl.of(VALID_ID3, PLAYER3_NAME, VALID_COLOR3);
 
-
-    private final Set<BankAccount> accounts = Set.of(
-        new SimpleBankAccountImpl(VALID_ID1, VALID_PREDICATE), 
-        new SimpleBankAccountImpl(VALID_ID2, VALID_PREDICATE), 
-        new SimpleBankAccountImpl(VALID_ID3, VALID_PREDICATE)
-    );
-    private final Set<TitleDeed> deeds = Set.of(
-        new BaseTitleDeed(Group.PURPLE, TITLE_DEED_NAME1, VALID_SALE_PRICE1, s -> s / 2, VALID_BASE_RENT),
-        new BaseTitleDeed(Group.PURPLE, TITLE_DEED_NAME2, VALID_SALE_PRICE2, s -> s / 2, VALID_BASE_RENT)
-
-    );
-    private final List<Pawn> pawns = List.of(
-        pF.createBasic(VALID_ID1, pos0, VALID_COLOR1)
-    );
-
     @BeforeEach
     void setAll() {
-        bank = new BankImpl(accounts, deeds);
-        final TurnationManager turnM = new TurnationManagerImpl(List.of(p1, p2, p3), new DiceImpl(2));
-        final List<Tile> tiles = List.of(
-        new PropertyImpl(TITLE_DEED_NAME1, pos0, Group.RED),
-        new PropertyImpl(TITLE_DEED_NAME2, pos1, Group.BLUE),
-        new PropertyImpl("c", pos2, Group.YELLOW),
-        factory.parking(pos5, turnM),
-        factory.prison(pos4),
-        factory.taxes(pos6, bank)
-    );
-        board = new BoardImpl(tiles, pawns);
-        board.addTile(factory.goToPrison(pos3, board, turnM));
-        commands = bcf.allCommand(bank, board);
+        final String confFil = "configuration/config.yml";
+        final Configuration config = Configuration.configureFromFile(confFil);
+        final List<Player> players = new ArrayList<>();
+        final List<Pawn> pawns = new ArrayList<>();
+        final List<Tile> tiles = new ArrayList<>();
+        final Set<TitleDeed> titleDeeds = new HashSet<>();
+        final Set<BankAccount> accounts = new HashSet<>();
+
+        final PawnFactory pawnFactory = new PawnFactoryImpl();
+        final UseFileJson importFileJson = new UseFileJsonImpl();
+
+        final TurnationManager turnM;
+        final MainViewImpl mainView;
+        // create a id for each Player (his Pawn and BankAccount must have the same id)
+        int id = 1;
+        // create a Player, his Pawn and his BankAccount according to the type chosen
+        final int inBal = 1000;
+        final BankAccountFactory bankAccountFactory = new BankAccountFactoryImpl(inBal);
+        final Map<Color, String> playersSetup = Map.of(Color.BLUE, p1.getName(), 
+                                                        Color.RED, p2.getName(), 
+                                                        Color.GREEN, p3.getName());
+        for (final var p : playersSetup.entrySet()) {
+            final String name = p.getValue();
+            final Color color = p.getKey();
+            players.add(new ParkablePlayer(new PrisonablePlayer(PlayerImpl.of(id, name, color))));
+            accounts.add(bankAccountFactory.createWithCheck(id,
+                                                                  account -> account.getBalance() > 0));
+            pawns.add(pawnFactory.createBasic(id, new PositionImpl(0), color));
+            id++;
+        }
+
+        // creation of Bank, Board and TurnationManager
+        board = new BoardImpl(List.of(), pawns);
+        bank = new BankImpl(accounts, Set.of());
+        turnM = new TurnationManagerImpl(
+            players,
+            new DiceImpl(
+                config.getNumDice(),
+                config.getSidesPerDie()
+            ),
+            bank.getBankStateObject()
+        );
+
+        // import from json
+        final List<CardDTO> dtos = importFileJson.loadJsonList(config.getCardsPath(), CardDTO.class);
+        final CardFactory cardFactory = new CardFactoryImpl(board, bank, turnM); 
+        cardFactory.parse(dtos);
+        // populate elements
+        titleDeeds.addAll(cardFactory.getDeeds());
+        tiles.addAll(cardFactory.getTiles());
+
+        // Add tiles to the board and titleDeeds to the Bank
+        tiles.stream().forEach(board::addTile);
+        titleDeeds.stream().forEach(bank::addTitleDeed);
+
+        // start the game
+        final var controllerGameManager = new GameControllerImpl(
+            board,
+            turnM,
+            config,
+            bank
+        );
+        mainView = new MainViewImpl(controllerGameManager);
+
+        commands = bcf.allCommand(bank, board, mainView);
     }
 
     @Test
@@ -139,11 +157,11 @@ class BaseAndComplexCommandFactoryTest {
         final int ammount = 2;
         final int indice = 1;
         final BaseCommand c = commands.get(indice);
-
+        final int prevPos = board.getPawn(p1.getID()).getPosition().getPos();
         c.addIntArg(ammount);
         c.execute(p1);
         assertEquals("move of " + ammount + " steps", c.getDesc());
-        assertEquals(pos2.getPos(), board.getPawn(p1.getID()).getPosition().getPos());
+        assertEquals(ammount, board.getPawn(p1.getID()).getPosition().getPos() - prevPos);
     }
 
     @Test
@@ -154,7 +172,8 @@ class BaseAndComplexCommandFactoryTest {
         c.addTileArg(s);
         c.execute(p1);
         assertEquals("move in " + s, c.getDesc());
-        assertEquals(pos4.getPos(), board.getPawn(p1.getID()).getPosition().getPos());
+        assertEquals(board.getTile(s).getPosition().getPos(), 
+                        board.getPawn(p1.getID()).getPosition().getPos());
 
     }
     @Test
@@ -187,8 +206,8 @@ class BaseAndComplexCommandFactoryTest {
 
     @Test
     void test5() {
-        final String s1 = TITLE_DEED_NAME1;
-        final String s2 = TITLE_DEED_NAME2;
+        final String s1 = "Baltic Avenue";
+        final String s2 = "Mediterranean Avenue";
         bank.getBankStateObject().resetTransactionData();
         final int indice = 5;
         final BaseCommand c = commands.get(indice);
@@ -204,8 +223,8 @@ class BaseAndComplexCommandFactoryTest {
 
     @Test
     void complex1() {
-        final String s1 = TITLE_DEED_NAME1;
-        final String s2 = TITLE_DEED_NAME2;
+        final String s1 = "Baltic Avenue";
+        final String s2 = "Mediterranean Avenue";
         final int indice1 = 5;
         bank.getBankStateObject().resetTransactionData();
         final BaseCommand c1 = commands.get(indice1);
@@ -218,7 +237,7 @@ class BaseAndComplexCommandFactoryTest {
         c.execute(p1);
         assertEquals("buy " + s1 + " if not owned" + " then\n" + "move in " + s2, c.getDesc());
         assertEquals(p1.getID(), bank.getTitleDeed(s1).getOwnerId());
-        assertEquals(pos1.getPos(), board.getPawn(p1.getID()).getPosition().getPos());
+        assertEquals(board.getTile(s2).getPosition().getPos(), board.getPawn(p1.getID()).getPosition().getPos());
     }
 
 }

@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import it.unibo.monopoly.model.gameboard.api.Board;
 import it.unibo.monopoly.model.transactions.api.Bank;
 import it.unibo.monopoly.model.turnation.api.TurnationManager;
+import it.unibo.monopoly.view.impl.MainViewImpl;
 
 /**
  * interface for a creator of chence and community chests deck.
@@ -22,6 +23,6 @@ public interface DeckCreator {
      * @throws FileNotFoundException if the file in the arguments is not valid
      */
     ChancheAndCommunityChestDeck createDeck(String file, String type, 
-                                Board board, Bank bank, TurnationManager turnM) throws FileNotFoundException;
+                                Board board, Bank bank, TurnationManager turnM, MainViewImpl view) throws FileNotFoundException;
 
 }
