@@ -228,7 +228,7 @@ public final class GameControllerImpl implements GameController {
             final Property currentlySittingProperty = (Property) this.board.getTileForPawn(
                                                         this.turnationManager.getIdCurrPlayer());
             if ("buy".equals(actionName)) {
-                gameView.callBuyProperty(currentlySittingProperty.getName());
+                gameView.callBuyProperty(currentlySittingProperty.getName(), this.turnationManager.getCurrPlayer().getColor());
             } //else if ("sell".equals(actionName)) {
             //     //gameView.callClearPanel();
             // }
@@ -280,10 +280,11 @@ public final class GameControllerImpl implements GameController {
         gameView.clearControlsUI();
         refreshPlayerInfo();
     }
-
+    @Override
     public void refreshBankPlayerInfo() {
-        for (Player p : this.turnationManager.getPlayerList()) {
-            for (TitleDeed t : this.bank.getTitleDeedsByOwner(p.getID())) {
+        this.gameView.callClearAll();
+        for (final Player p : this.turnationManager.getPlayerList()) {
+            for (final TitleDeed t : this.bank.getTitleDeedsByOwner(p.getID())) {
                 this.gameView.callBuyProperty(t.getName(), p.getColor());
             }
         }

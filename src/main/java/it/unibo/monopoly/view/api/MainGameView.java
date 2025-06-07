@@ -131,4 +131,8 @@ public interface MainGameView {
      * call the frame that shows the final ranking.
      */
     void showRanking();
+    /**
+     * calls the clear all method in the gameboard view.
+     */
+    void callClearAll();
 }

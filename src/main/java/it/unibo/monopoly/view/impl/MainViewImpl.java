@@ -218,4 +218,9 @@ public final class MainViewImpl implements MainGameView {
     public void showRanking() {
         new GUIRanking(controller.getRanking(), controller.getWinner());
     }
+
+    @Override
+    public void callClearAll() {
+        this.gameBoardPanel.clearAll();
+    }
 }

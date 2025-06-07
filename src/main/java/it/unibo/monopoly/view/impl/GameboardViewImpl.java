@@ -221,7 +221,7 @@ public final class GameboardViewImpl extends JPanel implements GameboardView {
     }
     /**
      * create the view for the tile of the board.
-     * @return
+     * @return JPanel
      */
     private JPanel createTile() {
         final JPanel tile = new JPanel(new BorderLayout());
