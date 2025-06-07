@@ -26,6 +26,9 @@ public class BoardImpl implements Board {
     private final ChancheAndCommunityChestDeck deck;
     /**
      * constructor.
+     * @param tiles list of tiles
+     * @param pawns list of pawns
+     * @param deck deck with chance and community cards
     */
     public BoardImpl(final List<Tile> tiles, final List<Pawn> pawns, final ChancheAndCommunityChestDeck deck) {
         this.tiles = new ArrayList<>(tiles);
@@ -41,7 +44,15 @@ public class BoardImpl implements Board {
     public BoardImpl(final List<Tile> tiles, final List<Pawn> pawns) {
         this.tiles = new ArrayList<>(tiles);
         this.pawns = new ArrayList<>(pawns);
-        deck = null;
+        this.deck = null;
+    }
+    /**
+     * constructor.
+     */
+    public BoardImpl() {
+        this.tiles = new ArrayList<>();
+        this.pawns = new ArrayList<>();
+        this.deck = null;
     }
 
     @Override
@@ -169,7 +180,7 @@ public class BoardImpl implements Board {
     }
 
     @Override
-    public ChanceAndCommunityChestCard draw() {
+    public final ChanceAndCommunityChestCard draw() {
         return this.deck.draw();
     }
 
