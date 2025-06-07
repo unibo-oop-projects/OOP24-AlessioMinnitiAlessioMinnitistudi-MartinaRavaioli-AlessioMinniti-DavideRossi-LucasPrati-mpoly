@@ -44,4 +44,8 @@ public interface GameboardView extends GamePanel {
      * @param id of the player
      */
     void deletePlayer(Color color, int id);
+    /**
+     * clear all the panels.
+     */
+    void clearAll();
 }

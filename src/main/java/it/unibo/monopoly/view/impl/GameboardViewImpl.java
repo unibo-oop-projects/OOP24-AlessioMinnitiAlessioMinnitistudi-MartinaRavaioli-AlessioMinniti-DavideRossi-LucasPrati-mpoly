@@ -219,7 +219,10 @@ public final class GameboardViewImpl extends JPanel implements GameboardView {
     public Component getPanel() {
         return this;
     }
-
+    /**
+     * create the view for the tile of the board.
+     * @return
+     */
     private JPanel createTile() {
         final JPanel tile = new JPanel(new BorderLayout());
         tile.setBorder(BorderFactory.createLineBorder(Color.BLACK));
@@ -262,5 +265,20 @@ public final class GameboardViewImpl extends JPanel implements GameboardView {
                 }
         }
         this.pawnPositions.remove(id - 1);
+    }
+
+    @Override
+    public void clearAll() {
+        for (final Map.Entry<JPanel, Position> entry : this.tilePositions.entrySet()) {
+            final JPanel p = entry.getKey();
+            for (final Component c : p.getComponents()) {
+                if (c instanceof PawnSquare) {
+                    p.remove(c);
+                    p.revalidate();
+                    p.repaint();
+                    break;
+                }
+            }
+        }
     }
 }
