@@ -1,4 +1,4 @@
-package it.unibo.monopoly.model.comunityCestAndChance;
+package it.unibo.monopoly.model.comunity_cest_and_chance;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -16,7 +16,7 @@ import it.unibo.monopoly.utils.impl.UseFileTxtImpl;
 /**
  * test for parsers.
  */
-public class ParserOnSpaceTest {
+class ParserOnSpaceTest {
 
         private final UseFileTxt f = new UseFileTxtImpl();
         private final String fi = f.loadTextResource("cards//commandTest.txt");

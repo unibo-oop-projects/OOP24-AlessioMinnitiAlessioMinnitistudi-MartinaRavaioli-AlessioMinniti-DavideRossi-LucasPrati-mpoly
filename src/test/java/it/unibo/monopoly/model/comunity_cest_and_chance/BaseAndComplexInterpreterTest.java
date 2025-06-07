@@ -1,10 +1,8 @@
-package it.unibo.monopoly.model.comunityCestAndChance;
-
+package it.unibo.monopoly.model.comunity_cest_and_chance;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.awt.Color;
-import java.io.FileNotFoundException;
 import java.util.List;
 import java.util.Set;
 import java.util.function.Predicate;
@@ -22,10 +20,18 @@ import it.unibo.monopoly.model.gameboard.impl.Group;
 import it.unibo.monopoly.model.gameboard.impl.PawnFactoryImpl;
 import it.unibo.monopoly.model.gameboard.impl.PropertyImpl;
 import it.unibo.monopoly.model.gameboard.impl.SpecialFactoryImpl;
-import it.unibo.monopoly.model.gameboard.impl.chance_comunity.api.ChancheAndCommunityChestDeck;
-import it.unibo.monopoly.model.gameboard.impl.chance_comunity.api.DeckCreator;
-import it.unibo.monopoly.model.gameboard.impl.chance_comunity.impl.ChanceAndCommunityChestCard;
-import it.unibo.monopoly.model.gameboard.impl.chance_comunity.impl.DeckCreatorImpl;
+import it.unibo.monopoly.model.gameboard.impl.chance_comunity.api.ArgsInterpreter;
+import it.unibo.monopoly.model.gameboard.impl.chance_comunity.api.BaseCommand;
+import it.unibo.monopoly.model.gameboard.impl.chance_comunity.api.BaseCommandFactory;
+import it.unibo.monopoly.model.gameboard.impl.chance_comunity.api.BaseInterpreterInt;
+import it.unibo.monopoly.model.gameboard.impl.chance_comunity.api.Command;
+import it.unibo.monopoly.model.gameboard.impl.chance_comunity.api.Interpreter;
+import it.unibo.monopoly.model.gameboard.impl.chance_comunity.api.Parser;
+import it.unibo.monopoly.model.gameboard.impl.chance_comunity.impl.ArgsInterpreterImpl;
+import it.unibo.monopoly.model.gameboard.impl.chance_comunity.impl.BaseCommandFactoryImpl;
+import it.unibo.monopoly.model.gameboard.impl.chance_comunity.impl.BaseInterpreter;
+import it.unibo.monopoly.model.gameboard.impl.chance_comunity.impl.ComplexInterpreter;
+import it.unibo.monopoly.model.gameboard.impl.chance_comunity.impl.ParserOnColon;
 import it.unibo.monopoly.model.transactions.api.Bank;
 import it.unibo.monopoly.model.transactions.api.BankAccount;
 import it.unibo.monopoly.model.transactions.api.TitleDeed;
@@ -44,10 +50,9 @@ import it.unibo.monopoly.model.turnation.impl.PrisonablePlayer;
 import it.unibo.monopoly.model.turnation.impl.TurnationManagerImpl;
 
 /**
- * test for class Deck.
+ * test for classes Base interpreter and complex interpreter.
  */
-public final class DeckTest {
-
+class BaseAndComplexInterpreterTest {
 
     private static final String PLAYER1_NAME = "Alice";
     private static final String PLAYER2_NAME = "Marta";
@@ -66,8 +71,6 @@ public final class DeckTest {
     private static final int VALID_SALE_PRICE2 = 50;
     private static final int VALID_BASE_RENT = 10;
 
-    private static final String VALID_TYPE = "chances";
-
     private static final int PO0 = 0;
     private static final int PO1 = 1;
     private static final int PO2 = 2;
@@ -76,11 +79,12 @@ public final class DeckTest {
     private static final int PO5 = 5;
     private static final int PO6 = 6;
 
-    private Bank bank;
     private Board board;
-    private TurnationManager turnM;
-    private DeckCreator creator = new DeckCreatorImpl();
-    private ChancheAndCommunityChestDeck deck;
+    private TurnationManager turnM; 
+    private final BaseCommandFactory bcf = new BaseCommandFactoryImpl();
+    private BaseInterpreterInt baseInt;
+    private Interpreter complexInt;
+    private ArgsInterpreter argsInt;
 
     private final SpecialFactory factory = new SpecialFactoryImpl();
     private final PawnFactory pF = new PawnFactoryImpl();
@@ -114,7 +118,7 @@ public final class DeckTest {
 
     @BeforeEach
     void setAll() {
-        bank = new BankImpl(accounts, deeds);
+        final Bank bank = new BankImpl(accounts, deeds);
         final Dice d = new DiceImpl(1);
         turnM = new TurnationManagerImpl(List.of(p1, p2, p3), d);
         final List<Tile> tiles = List.of(
@@ -127,24 +131,85 @@ public final class DeckTest {
     );
         board = new BoardImpl(tiles, pawns);
         board.addTile(factory.goToPrison(pos3, board, turnM));
-        creator = new DeckCreatorImpl();
+        final List<BaseCommand> commands = bcf.allCommand(bank, board);
+        complexInt = new ComplexInterpreter(board, bank);
+        baseInt = new BaseInterpreter(commands);
+        argsInt = new ArgsInterpreterImpl();
     }
 
     @Test
-    void testDeck() {
-        try {
-            deck = creator.createDeck("cards//DeckCardTest.txt", VALID_TYPE, board, bank, turnM); 
-        } catch (final FileNotFoundException e) {
-            System.out.println("file not found");
-        }
-
-        final ChanceAndCommunityChestCard c1 = deck.drawInOrder();
-        final ChanceAndCommunityChestCard c2 = deck.drawInOrder();
-        final ChanceAndCommunityChestCard c3 = deck.drawInOrder();
-
-        assertEquals("deposit 50", c1.getDescription());
-        assertEquals("move in Jail / Just Visiting" + " then\n" + "buy Jail / Just Visiting if not owned", c2.getDescription());
-        assertEquals("withdraw 50", c3.getDescription());
+    void test0() {
+        final Parser parOnColon = new ParserOnColon("deposit: 50");
+        final int ammount = 50;
+        parOnColon.hasNesxt();
+        final BaseCommand c = baseInt.interpret(parOnColon.next(), board, turnM);
+        parOnColon.hasNesxt();
+        argsInt.interpret(parOnColon.next(), c, board, turnM);
+        assertEquals("deposit " + ammount, c.getDesc());
     }
 
+    @Test
+    void test1() {
+        final int num = 3;
+        final Parser parOnColon = new ParserOnColon("move of steps: " + num);
+        parOnColon.hasNesxt();
+        final BaseCommand c = baseInt.interpret(parOnColon.next(), board, turnM);
+        parOnColon.hasNesxt();
+        argsInt.interpret(parOnColon.next(), c, board, turnM);
+        assertEquals("move of " + num + " steps", c.getDesc());
+    }
+
+    @Test
+    void test2() {
+        final String s = "Jail / Just Visiting";
+        final Parser parOnColon = new ParserOnColon("move in tile: " + s);
+        parOnColon.hasNesxt();
+        final BaseCommand c = baseInt.interpret(parOnColon.next(), board, turnM);
+        parOnColon.hasNesxt();
+        argsInt.interpret(parOnColon.next(), c, board, turnM);
+        assertEquals("move in " + s, c.getDesc());
+
+    }
+
+    @Test
+    void test3() {
+        final int ammount = 50;
+        final Parser parOnColon = new ParserOnColon("withdraw: " + ammount);
+        parOnColon.hasNesxt();
+        final BaseCommand c = baseInt.interpret(parOnColon.next(), board, turnM);
+        parOnColon.hasNesxt();
+        argsInt.interpret(parOnColon.next(), c, board, turnM);
+        assertEquals("withdraw " + ammount, c.getDesc());
+    }
+
+    @Test
+    void test4() {
+        final int ammount = 50;
+        final Parser parOnColon = new ParserOnColon("deposit from: all, " + ammount);
+        parOnColon.hasNesxt();
+        final BaseCommand c = baseInt.interpret(parOnColon.next(), board, turnM);
+        parOnColon.hasNesxt();
+        argsInt.interpret(parOnColon.next(), c, board, turnM);
+        assertEquals("deposit " + ammount + " from all players", c.getDesc());
+    }
+
+    @Test
+    void test5() {
+        final String s1 = TITLE_DEED_NAME1;
+        final Parser parOnColon = new ParserOnColon("buy if not owned: " + s1);
+        parOnColon.hasNesxt();
+        final BaseCommand c = baseInt.interpret(parOnColon.next(), board, turnM);
+        parOnColon.hasNesxt();
+        argsInt.interpret(parOnColon.next(), c, board, turnM);
+        assertEquals("buy " + s1 + " if not owned", c.getDesc());
+    }
+
+    @Test
+    void complex1() {
+        final String s1 = TITLE_DEED_NAME1;
+        final String s2 = TITLE_DEED_NAME2;
+        final String s = "buy if not owned: " + s1 + "\n" + "move in tile: " + s2;
+        final Command c = complexInt.interpret(s, board, turnM);
+        assertEquals("buy " + s1 + " if not owned" + " then\n" + "move in " + s2, c.getDesc());
+    }
 }

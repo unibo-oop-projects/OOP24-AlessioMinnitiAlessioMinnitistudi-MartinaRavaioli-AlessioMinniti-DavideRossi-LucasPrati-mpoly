@@ -1,4 +1,4 @@
-package it.unibo.monopoly.model.comunityCestAndChance;
+package it.unibo.monopoly.model.comunity_cest_and_chance;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -20,25 +20,17 @@ import it.unibo.monopoly.model.gameboard.impl.Group;
 import it.unibo.monopoly.model.gameboard.impl.PawnFactoryImpl;
 import it.unibo.monopoly.model.gameboard.impl.PropertyImpl;
 import it.unibo.monopoly.model.gameboard.impl.SpecialFactoryImpl;
-import it.unibo.monopoly.model.gameboard.impl.chance_comunity.api.ArgsInterpreter;
 import it.unibo.monopoly.model.gameboard.impl.chance_comunity.api.BaseCommand;
 import it.unibo.monopoly.model.gameboard.impl.chance_comunity.api.BaseCommandFactory;
-import it.unibo.monopoly.model.gameboard.impl.chance_comunity.api.BaseInterpreterInt;
 import it.unibo.monopoly.model.gameboard.impl.chance_comunity.api.Command;
-import it.unibo.monopoly.model.gameboard.impl.chance_comunity.api.Interpreter;
-import it.unibo.monopoly.model.gameboard.impl.chance_comunity.api.Parser;
-import it.unibo.monopoly.model.gameboard.impl.chance_comunity.impl.ArgsInterpreterImpl;
 import it.unibo.monopoly.model.gameboard.impl.chance_comunity.impl.BaseCommandFactoryImpl;
-import it.unibo.monopoly.model.gameboard.impl.chance_comunity.impl.BaseInterpreter;
-import it.unibo.monopoly.model.gameboard.impl.chance_comunity.impl.ComplexInterpreter;
-import it.unibo.monopoly.model.gameboard.impl.chance_comunity.impl.ParserOnColon;
+import it.unibo.monopoly.model.gameboard.impl.chance_comunity.impl.ComplexCommand;
 import it.unibo.monopoly.model.transactions.api.Bank;
 import it.unibo.monopoly.model.transactions.api.BankAccount;
 import it.unibo.monopoly.model.transactions.api.TitleDeed;
 import it.unibo.monopoly.model.transactions.impl.BankImpl;
 import it.unibo.monopoly.model.transactions.impl.BaseTitleDeed;
 import it.unibo.monopoly.model.transactions.impl.bankaccount.SimpleBankAccountImpl;
-import it.unibo.monopoly.model.turnation.api.Dice;
 import it.unibo.monopoly.model.turnation.api.Player;
 import it.unibo.monopoly.model.turnation.api.Position;
 import it.unibo.monopoly.model.turnation.api.TurnationManager;
@@ -50,9 +42,9 @@ import it.unibo.monopoly.model.turnation.impl.PrisonablePlayer;
 import it.unibo.monopoly.model.turnation.impl.TurnationManagerImpl;
 
 /**
- * test for classes Base interpreter and complex interpreter.
+ * test for classes complex command and base command factory.
  */
-public final class BaseAndComplexInterpreterTest {
+class BaseAndComplexCommandFactoryTest {
 
     private static final String PLAYER1_NAME = "Alice";
     private static final String PLAYER2_NAME = "Marta";
@@ -81,12 +73,8 @@ public final class BaseAndComplexInterpreterTest {
 
     private Bank bank;
     private Board board;
-    private TurnationManager turnM; 
     private final BaseCommandFactory bcf = new BaseCommandFactoryImpl();
     private List<BaseCommand> commands;
-    private BaseInterpreterInt baseInt;
-    private Interpreter complexInt;
-    private ArgsInterpreter argsInt;
 
     private final SpecialFactory factory = new SpecialFactoryImpl();
     private final PawnFactory pF = new PawnFactoryImpl();
@@ -121,8 +109,7 @@ public final class BaseAndComplexInterpreterTest {
     @BeforeEach
     void setAll() {
         bank = new BankImpl(accounts, deeds);
-        final Dice d = new DiceImpl(1);
-        turnM = new TurnationManagerImpl(List.of(p1, p2, p3), d);
+        final TurnationManager turnM = new TurnationManagerImpl(List.of(p1, p2, p3), new DiceImpl(2));
         final List<Tile> tiles = List.of(
         new PropertyImpl(TITLE_DEED_NAME1, pos0, Group.RED),
         new PropertyImpl(TITLE_DEED_NAME2, pos1, Group.BLUE),
@@ -134,84 +121,104 @@ public final class BaseAndComplexInterpreterTest {
         board = new BoardImpl(tiles, pawns);
         board.addTile(factory.goToPrison(pos3, board, turnM));
         commands = bcf.allCommand(bank, board);
-        complexInt = new ComplexInterpreter(board, bank);
-        baseInt = new BaseInterpreter(commands);
-        argsInt = new ArgsInterpreterImpl();
     }
 
     @Test
     void test0() {
-        final Parser parOnColon = new ParserOnColon("deposit: 50");
         final int ammount = 50;
-        parOnColon.hasNesxt();
-        final BaseCommand c = baseInt.interpret(parOnColon.next(), board, turnM);
-        parOnColon.hasNesxt();
-        argsInt.interpret(parOnColon.next(), c, board, turnM);
+        final int indice = 0;
+        final BaseCommand c = commands.get(indice);
+        c.addIntArg(ammount);
+        c.execute(p1);
+        final int finalAmmount = 1050;
         assertEquals("deposit " + ammount, c.getDesc());
+        assertEquals(finalAmmount, bank.getBankAccount(p1.getID()).getBalance());
     }
-
     @Test
     void test1() {
-        final int num = 3;
-        final Parser parOnColon = new ParserOnColon("move of steps: " + num);
-        parOnColon.hasNesxt();
-        final BaseCommand c = baseInt.interpret(parOnColon.next(), board, turnM);
-        parOnColon.hasNesxt();
-        argsInt.interpret(parOnColon.next(), c, board, turnM);
-        assertEquals("move of " + num + " steps", c.getDesc());
+        final int ammount = 2;
+        final int indice = 1;
+        final BaseCommand c = commands.get(indice);
+
+        c.addIntArg(ammount);
+        c.execute(p1);
+        assertEquals("move of " + ammount + " steps", c.getDesc());
+        assertEquals(pos2.getPos(), board.getPawn(p1.getID()).getPosition().getPos());
     }
 
     @Test
     void test2() {
         final String s = "Jail / Just Visiting";
-        final Parser parOnColon = new ParserOnColon("move in tile: " + s);
-        parOnColon.hasNesxt();
-        final BaseCommand c = baseInt.interpret(parOnColon.next(), board, turnM);
-        parOnColon.hasNesxt();
-        argsInt.interpret(parOnColon.next(), c, board, turnM);
+        final int indice = 2;
+        final BaseCommand c = commands.get(indice);
+        c.addTileArg(s);
+        c.execute(p1);
         assertEquals("move in " + s, c.getDesc());
+        assertEquals(pos4.getPos(), board.getPawn(p1.getID()).getPosition().getPos());
 
     }
-
     @Test
     void test3() {
         final int ammount = 50;
-        final Parser parOnColon = new ParserOnColon("withdraw: " + ammount);
-        parOnColon.hasNesxt();
-        final BaseCommand c = baseInt.interpret(parOnColon.next(), board, turnM);
-        parOnColon.hasNesxt();
-        argsInt.interpret(parOnColon.next(), c, board, turnM);
+        final int indice = 3;
+        final BaseCommand c = commands.get(indice);
+        c.addIntArg(ammount);
+        c.execute(p1);
+        final int finalAmmount = 950;
         assertEquals("withdraw " + ammount, c.getDesc());
+        assertEquals(finalAmmount, bank.getBankAccount(p1.getID()).getBalance());
     }
 
     @Test
     void test4() {
         final int ammount = 50;
-        final Parser parOnColon = new ParserOnColon("deposit from: all, " + ammount);
-        parOnColon.hasNesxt();
-        final BaseCommand c = baseInt.interpret(parOnColon.next(), board, turnM);
-        parOnColon.hasNesxt();
-        argsInt.interpret(parOnColon.next(), c, board, turnM);
+        final int indice = 4;
+        final BaseCommand c = commands.get(indice);
+        c.addPlayersArg(List.of(p2, p3));
+        c.addIntArg(ammount);
+        c.execute(p1);
+        final int finalAmmount1 = 1100;
+        final int finalAmmount2 = 950;
         assertEquals("deposit " + ammount + " from all players", c.getDesc());
+        assertEquals(finalAmmount1, bank.getBankAccount(p1.getID()).getBalance());
+        assertEquals(finalAmmount2, bank.getBankAccount(p2.getID()).getBalance());
+        assertEquals(finalAmmount2, bank.getBankAccount(p3.getID()).getBalance());
     }
 
     @Test
     void test5() {
         final String s1 = TITLE_DEED_NAME1;
-        final Parser parOnColon = new ParserOnColon("buy if not owned: " + s1);
-        parOnColon.hasNesxt();
-        final BaseCommand c = baseInt.interpret(parOnColon.next(), board, turnM);
-        parOnColon.hasNesxt();
-        argsInt.interpret(parOnColon.next(), c, board, turnM);
+        final String s2 = TITLE_DEED_NAME2;
+        bank.getBankStateObject().resetTransactionData();
+        final int indice = 5;
+        final BaseCommand c = commands.get(indice);
+        c.addTileArg(s1);
+        c.execute(p1);
         assertEquals("buy " + s1 + " if not owned", c.getDesc());
+        assertEquals(p1.getID(), bank.getTitleDeed(s1).getOwnerId());
+        bank.buyTitleDeed(s2, p2.getID());
+        c.addTileArg(s2);
+        c.execute(p1);
+        assertEquals(p2.getID(), bank.getTitleDeed(s2).getOwnerId());
     }
 
     @Test
     void complex1() {
         final String s1 = TITLE_DEED_NAME1;
         final String s2 = TITLE_DEED_NAME2;
-        final String s = "buy if not owned: " + s1 + "\n" + "move in tile: " + s2;
-        final Command c = complexInt.interpret(s, board, turnM);
+        final int indice1 = 5;
+        bank.getBankStateObject().resetTransactionData();
+        final BaseCommand c1 = commands.get(indice1);
+        c1.addTileArg(s1);
+        final int indice2 = 2;
+        final BaseCommand c2 = commands.get(indice2);
+        c2.addTileArg(s2);
+        final List<Command> li = List.of(c1, c2);
+        final Command c = new ComplexCommand(li, s2);
+        c.execute(p1);
         assertEquals("buy " + s1 + " if not owned" + " then\n" + "move in " + s2, c.getDesc());
+        assertEquals(p1.getID(), bank.getTitleDeed(s1).getOwnerId());
+        assertEquals(pos1.getPos(), board.getPawn(p1.getID()).getPosition().getPos());
     }
+
 }

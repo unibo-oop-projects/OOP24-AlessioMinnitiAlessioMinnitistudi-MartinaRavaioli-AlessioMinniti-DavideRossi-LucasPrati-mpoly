@@ -1,8 +1,10 @@
-package it.unibo.monopoly.model.comunityCestAndChance;
+package it.unibo.monopoly.model.comunity_cest_and_chance;
+
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.awt.Color;
+import java.io.FileNotFoundException;
 import java.util.List;
 import java.util.Set;
 import java.util.function.Predicate;
@@ -20,17 +22,17 @@ import it.unibo.monopoly.model.gameboard.impl.Group;
 import it.unibo.monopoly.model.gameboard.impl.PawnFactoryImpl;
 import it.unibo.monopoly.model.gameboard.impl.PropertyImpl;
 import it.unibo.monopoly.model.gameboard.impl.SpecialFactoryImpl;
-import it.unibo.monopoly.model.gameboard.impl.chance_comunity.api.BaseCommand;
-import it.unibo.monopoly.model.gameboard.impl.chance_comunity.api.BaseCommandFactory;
-import it.unibo.monopoly.model.gameboard.impl.chance_comunity.api.Command;
-import it.unibo.monopoly.model.gameboard.impl.chance_comunity.impl.BaseCommandFactoryImpl;
-import it.unibo.monopoly.model.gameboard.impl.chance_comunity.impl.ComplexCommand;
+import it.unibo.monopoly.model.gameboard.impl.chance_comunity.api.ChancheAndCommunityChestDeck;
+import it.unibo.monopoly.model.gameboard.impl.chance_comunity.api.DeckCreator;
+import it.unibo.monopoly.model.gameboard.impl.chance_comunity.impl.ChanceAndCommunityChestCard;
+import it.unibo.monopoly.model.gameboard.impl.chance_comunity.impl.DeckCreatorImpl;
 import it.unibo.monopoly.model.transactions.api.Bank;
 import it.unibo.monopoly.model.transactions.api.BankAccount;
 import it.unibo.monopoly.model.transactions.api.TitleDeed;
 import it.unibo.monopoly.model.transactions.impl.BankImpl;
 import it.unibo.monopoly.model.transactions.impl.BaseTitleDeed;
 import it.unibo.monopoly.model.transactions.impl.bankaccount.SimpleBankAccountImpl;
+import it.unibo.monopoly.model.turnation.api.Dice;
 import it.unibo.monopoly.model.turnation.api.Player;
 import it.unibo.monopoly.model.turnation.api.Position;
 import it.unibo.monopoly.model.turnation.api.TurnationManager;
@@ -42,9 +44,10 @@ import it.unibo.monopoly.model.turnation.impl.PrisonablePlayer;
 import it.unibo.monopoly.model.turnation.impl.TurnationManagerImpl;
 
 /**
- * test for classes complex command and base command factory.
+ * test for class Deck.
  */
-public final class BaseAndComplexCommandFactoryTest {
+class DeckTest {
+
 
     private static final String PLAYER1_NAME = "Alice";
     private static final String PLAYER2_NAME = "Marta";
@@ -63,6 +66,8 @@ public final class BaseAndComplexCommandFactoryTest {
     private static final int VALID_SALE_PRICE2 = 50;
     private static final int VALID_BASE_RENT = 10;
 
+    private static final String VALID_TYPE = "chances";
+
     private static final int PO0 = 0;
     private static final int PO1 = 1;
     private static final int PO2 = 2;
@@ -73,8 +78,9 @@ public final class BaseAndComplexCommandFactoryTest {
 
     private Bank bank;
     private Board board;
-    private final BaseCommandFactory bcf = new BaseCommandFactoryImpl();
-    private List<BaseCommand> commands;
+    private TurnationManager turnM;
+    private DeckCreator creator = new DeckCreatorImpl();
+    private ChancheAndCommunityChestDeck deck;
 
     private final SpecialFactory factory = new SpecialFactoryImpl();
     private final PawnFactory pF = new PawnFactoryImpl();
@@ -109,7 +115,8 @@ public final class BaseAndComplexCommandFactoryTest {
     @BeforeEach
     void setAll() {
         bank = new BankImpl(accounts, deeds);
-        final TurnationManager turnM = new TurnationManagerImpl(List.of(p1, p2, p3), new DiceImpl(2));
+        final Dice d = new DiceImpl(1);
+        turnM = new TurnationManagerImpl(List.of(p1, p2, p3), d);
         final List<Tile> tiles = List.of(
         new PropertyImpl(TITLE_DEED_NAME1, pos0, Group.RED),
         new PropertyImpl(TITLE_DEED_NAME2, pos1, Group.BLUE),
@@ -120,105 +127,24 @@ public final class BaseAndComplexCommandFactoryTest {
     );
         board = new BoardImpl(tiles, pawns);
         board.addTile(factory.goToPrison(pos3, board, turnM));
-        commands = bcf.allCommand(bank, board);
+        creator = new DeckCreatorImpl();
     }
 
     @Test
-    void test0() {
-        final int ammount = 50;
-        final int indice = 0;
-        final BaseCommand c = commands.get(indice);
-        c.addIntArg(ammount);
-        c.execute(p1);
-        final int finalAmmount = 1050;
-        assertEquals("deposit " + ammount, c.getDesc());
-        assertEquals(finalAmmount, bank.getBankAccount(p1.getID()).getBalance());
-    }
-    @Test
-    void test1() {
-        final int ammount = 2;
-        final int indice = 1;
-        final BaseCommand c = commands.get(indice);
+    void testDeck() {
+        try {
+            deck = creator.createDeck("cards//DeckCardTest.txt", VALID_TYPE, board, bank, turnM); 
+        } catch (final FileNotFoundException e) {
+            deck = null;
+        }
 
-        c.addIntArg(ammount);
-        c.execute(p1);
-        assertEquals("move of " + ammount + " steps", c.getDesc());
-        assertEquals(pos2.getPos(), board.getPawn(p1.getID()).getPosition().getPos());
-    }
+        final ChanceAndCommunityChestCard c1 = deck.drawInOrder();
+        final ChanceAndCommunityChestCard c2 = deck.drawInOrder();
+        final ChanceAndCommunityChestCard c3 = deck.drawInOrder();
 
-    @Test
-    void test2() {
-        final String s = "Jail / Just Visiting";
-        final int indice = 2;
-        final BaseCommand c = commands.get(indice);
-        c.addTileArg(s);
-        c.execute(p1);
-        assertEquals("move in " + s, c.getDesc());
-        assertEquals(pos4.getPos(), board.getPawn(p1.getID()).getPosition().getPos());
-
-    }
-    @Test
-    void test3() {
-        final int ammount = 50;
-        final int indice = 3;
-        final BaseCommand c = commands.get(indice);
-        c.addIntArg(ammount);
-        c.execute(p1);
-        final int finalAmmount = 950;
-        assertEquals("withdraw " + ammount, c.getDesc());
-        assertEquals(finalAmmount, bank.getBankAccount(p1.getID()).getBalance());
-    }
-
-    @Test
-    void test4() {
-        final int ammount = 50;
-        final int indice = 4;
-        final BaseCommand c = commands.get(indice);
-        c.addPlayersArg(List.of(p2, p3));
-        c.addIntArg(ammount);
-        c.execute(p1);
-        final int finalAmmount1 = 1100;
-        final int finalAmmount2 = 950;
-        assertEquals("deposit " + ammount + " from all players", c.getDesc());
-        assertEquals(finalAmmount1, bank.getBankAccount(p1.getID()).getBalance());
-        assertEquals(finalAmmount2, bank.getBankAccount(p2.getID()).getBalance());
-        assertEquals(finalAmmount2, bank.getBankAccount(p3.getID()).getBalance());
-    }
-
-    @Test
-    void test5() {
-        final String s1 = TITLE_DEED_NAME1;
-        final String s2 = TITLE_DEED_NAME2;
-        bank.getBankStateObject().resetTransactionData();
-        final int indice = 5;
-        final BaseCommand c = commands.get(indice);
-        c.addTileArg(s1);
-        c.execute(p1);
-        assertEquals("buy " + s1 + " if not owned", c.getDesc());
-        assertEquals(p1.getID(), bank.getTitleDeed(s1).getOwnerId());
-        bank.buyTitleDeed(s2, p2.getID());
-        c.addTileArg(s2);
-        c.execute(p1);
-        assertEquals(p2.getID(), bank.getTitleDeed(s2).getOwnerId());
-    }
-
-    @Test
-    void complex1() {
-        final String s1 = TITLE_DEED_NAME1;
-        final String s2 = TITLE_DEED_NAME2;
-        final int indice1 = 5;
-        bank.getBankStateObject().resetTransactionData();
-        final BaseCommand c1 = commands.get(indice1);
-        c1.addTileArg(s1);
-        final int indice2 = 2;
-        final BaseCommand c2 = commands.get(indice2);
-        c2.addTileArg(s2);
-        final List<Command> li = List.of(c1, c2);
-        final Command c = new ComplexCommand(li, s2);
-        c.execute(p1);
-        assertEquals("buy " + s1 + " if not owned" + " then\n" + "move in " + s2, c.getDesc());
-        assertEquals(p1.getID(), bank.getTitleDeed(s1).getOwnerId());
-        assertEquals(pos1.getPos(), board.getPawn(p1.getID()).getPosition().getPos());
+        assertEquals("deposit 50", c1.getDescription());
+        assertEquals("move in Jail / Just Visiting" + " then\n" + "buy Jail / Just Visiting if not owned", c2.getDescription());
+        assertEquals("withdraw 50", c3.getDescription());
     }
 
 }
