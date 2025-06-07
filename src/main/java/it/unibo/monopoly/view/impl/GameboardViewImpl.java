@@ -276,7 +276,6 @@ public final class GameboardViewImpl extends JPanel implements GameboardView {
                     p.remove(c);
                     p.revalidate();
                     p.repaint();
-                    break;
                 }
             }
         }
