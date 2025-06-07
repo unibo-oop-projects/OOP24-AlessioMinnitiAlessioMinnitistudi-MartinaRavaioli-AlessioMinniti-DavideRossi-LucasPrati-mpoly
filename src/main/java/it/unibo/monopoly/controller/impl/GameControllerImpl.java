@@ -284,7 +284,7 @@ public final class GameControllerImpl implements GameController {
     public void refreshBankPlayerInfo() {
         for (Player p : this.turnationManager.getPlayerList()) {
             for (TitleDeed t : this.bank.getTitleDeedsByOwner(p.getID())) {
-                this.gameView.callBuyProperty(t.getName());
+                this.gameView.callBuyProperty(t.getName(), p.getColor());
             }
         }
     }

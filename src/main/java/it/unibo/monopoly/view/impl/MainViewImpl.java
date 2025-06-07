@@ -196,8 +196,8 @@ public final class MainViewImpl implements MainGameView {
     }
 
     @Override
-    public void callBuyProperty(final String name) {
-        this.gameBoardPanel.buyProperty(name, this.controller.getCurrPlayer().getColor());
+    public void callBuyProperty(final String name, final Color color) {
+        this.gameBoardPanel.buyProperty(name, color);
     }
 
     @Override

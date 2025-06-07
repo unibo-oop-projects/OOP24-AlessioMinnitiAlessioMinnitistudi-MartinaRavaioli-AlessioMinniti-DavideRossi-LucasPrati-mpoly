@@ -111,8 +111,9 @@ public interface MainGameView {
     /**
      * call the buy property method in the gameboard view.
      * @param name name of the property to buy
+     * @param color color of the player who buy the property
      */
-    void callBuyProperty(String name);
+    void callBuyProperty(String name, Color color);
     /**
      * Displays a generic yes/no option message sent to the user when he'll die if he passes the turn.
      * if the player chooses 'yes' then the he'll pass the turn and die.
