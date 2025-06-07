@@ -161,6 +161,7 @@ public final class GameControllerImpl implements GameController {
                 }
 
             }
+
         } catch (final IllegalAccessException e) {
             gameView.displayError(e);
         }
@@ -266,8 +267,9 @@ public final class GameControllerImpl implements GameController {
             final String deadPlayer = this.turnationManager.getCurrPlayer().getName();
             this.gameView.callDeletePlayer(this.turnationManager.getCurrPlayer().getColor(), 
                                             this.turnationManager.getIdCurrPlayer());
-            this.turnationManager.deletePlayer(this.turnationManager.getCurrPlayer());
+
             this.board.removePawn(this.turnationManager.getIdCurrPlayer());
+            this.turnationManager.deletePlayer(this.turnationManager.getCurrPlayer());
             this.gameView.displayMessage("Player " + deadPlayer + " is dead");
 
             if (this.turnationManager.isOver()) {
