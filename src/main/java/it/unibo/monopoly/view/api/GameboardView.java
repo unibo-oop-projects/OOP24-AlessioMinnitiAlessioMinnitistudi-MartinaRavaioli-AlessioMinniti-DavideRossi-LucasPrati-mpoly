@@ -28,10 +28,10 @@ public interface GameboardView extends GamePanel {
     void changePos(int currPlayer, Position newPos);
     /**
      * set new bought properties.
-     *  @param prop property
+     *  @param propName property name
      *  @param currPlayer curr player
     */
-    void buyProperty(Property prop, int currPlayer);
+    void buyProperty(String propName, int currPlayer);
     /**
      * clear the panel.
      * @param name property to clear

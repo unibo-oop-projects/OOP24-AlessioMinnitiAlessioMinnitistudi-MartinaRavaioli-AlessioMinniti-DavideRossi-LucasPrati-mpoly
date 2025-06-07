@@ -115,9 +115,9 @@ public final class GameboardViewImpl extends JPanel implements GameboardView {
     }
 
     @Override
-    public void buyProperty(final Property prop, final int currPlayer) {
+    public void buyProperty(final String propName, final int currPlayer) {
         for (final Map.Entry<JPanel, Position> entry : this.tilePositions.entrySet()) {
-            if (entry.getValue().equals(prop.getPosition())) {
+            if (entry.getKey().getName().equals(propName)) {
                 final JPanel p = entry.getKey();
                 final PawnSquare propertyGUI = new PawnSquare(controller.getCurrPlayer().getColor());
                 p.add(propertyGUI);
