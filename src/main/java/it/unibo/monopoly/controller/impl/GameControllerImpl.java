@@ -115,6 +115,7 @@ public final class GameControllerImpl implements GameController {
     @Override
     public void throwDices() {
         try {
+            gameView.displayMessage("id " + this.turnationManager.getIdCurrPlayer());
             final Collection<Integer> result = this.turnationManager.moveByDices();
 
             if (!this.turnationManager.isCurrentPlayerParked()
@@ -161,7 +162,11 @@ public final class GameControllerImpl implements GameController {
                 }
 
             }
+            
+            //gameView.displayMessage("pos " + this.board.getPawn(this.turnationManager.getIdCurrPlayer()).getPosition().getPos());
         } catch (final IllegalAccessException e) {
+            gameView.displayError(e);
+        } catch (final NullPointerException e) {
             gameView.displayError(e);
         }
     }
@@ -266,8 +271,9 @@ public final class GameControllerImpl implements GameController {
             final String deadPlayer = this.turnationManager.getCurrPlayer().getName();
             this.gameView.callDeletePlayer(this.turnationManager.getCurrPlayer().getColor(), 
                                             this.turnationManager.getIdCurrPlayer());
-            this.turnationManager.deletePlayer(this.turnationManager.getCurrPlayer());
+
             this.board.removePawn(this.turnationManager.getIdCurrPlayer());
+            this.turnationManager.deletePlayer(this.turnationManager.getCurrPlayer());
             this.gameView.displayMessage("Player " + deadPlayer + " is dead");
 
             if (this.turnationManager.isOver()) {
