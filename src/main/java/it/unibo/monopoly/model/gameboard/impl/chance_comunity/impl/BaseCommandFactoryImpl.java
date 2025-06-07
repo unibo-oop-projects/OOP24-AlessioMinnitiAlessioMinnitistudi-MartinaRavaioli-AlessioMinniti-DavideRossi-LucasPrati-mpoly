@@ -225,7 +225,7 @@ public final class BaseCommandFactoryImpl implements BaseCommandFactory {
         };
     }
 
-    private BaseCommand buyIfNotOwned(final Bank bank, final Board board) {
+    private BaseCommand buyIfNotOwned(final Bank bank /*, final MainViewImpl view*/) {
         return new BaseCommand() {
             private String desc;
             private String tile;
@@ -241,6 +241,7 @@ public final class BaseCommandFactoryImpl implements BaseCommandFactory {
                 final TitleDeed t = bank.getTitleDeed(tile);
                 if (!t.isOwned()) {
                     bank.buyTitleDeed(tile, player.getID());
+                    // TODO view.callButProperty(tile);
                 }
             }
 
@@ -309,7 +310,7 @@ public final class BaseCommandFactoryImpl implements BaseCommandFactory {
             this.moveIn(board),
             this.withdraw(bank), 
             this.depositFrom(bank),
-            this.buyIfNotOwned(bank, board)
+            this.buyIfNotOwned(bank)
         );
     }
 
