@@ -13,26 +13,27 @@ import it.unibo.monopoly.model.gameboard.impl.chance_comunity.impl.ParserOnComma
 import it.unibo.monopoly.utils.api.UseFileTxt;
 import it.unibo.monopoly.utils.impl.UseFileTxtImpl;
 
+/**
+ * test for parsers.
+ */
 public class ParserOnSpaceTest {
 
         private final UseFileTxt f = new UseFileTxtImpl();
         private final String fi = f.loadTextResource("cards//commandTest.txt");
-        private final static String COLON_TEST = "ciao: io sono: world: -: come stai";
-        private final static String SPACES_TEST = "ciao, io, sono, world, -, come, stai";
 
     @Test
     void parserOnHyphenTest() {
         final Parser p = new ParserOnHyphen(fi);
         assertTrue(p.hasNesxt()); 
-        assertEquals("ciao\n" + //
-                    "io sono\n" + //
-                    "world\n", p.next());
+        assertEquals("ciao\n"
+                    + "io sono\n"
+                    + "world\n", p.next());
         assertTrue(p.hasNesxt());
         assertEquals(p.next(), "come stai");
     }
 
     @Test 
-    void parserOnNewLineTest(){
+    void parserOnNewLineTest() {
         final Parser p = new ParserOnNewLine(fi);
         assertTrue(p.hasNesxt());
         assertEquals(p.next(), "ciao");
@@ -47,8 +48,9 @@ public class ParserOnSpaceTest {
     }
 
     @Test
-    void parseOnColonTest(){
-        final Parser p = new ParserOnColon(COLON_TEST);
+    void parseOnColonTest() {
+        final String colon = "ciao: io sono: world: -: come stai";
+        final Parser p = new ParserOnColon(colon);
         assertTrue(p.hasNesxt());
         assertEquals(p.next(), "ciao");
         assertTrue(p.hasNesxt());
@@ -62,8 +64,9 @@ public class ParserOnSpaceTest {
     }
 
     @Test
-    void parseOnCommaTest(){
-        final Parser p = new ParserOnComma(SPACES_TEST);
+    void parseOnCommaTest() {
+        final String commas = "ciao, io, sono, world, -, come, stai";
+        final Parser p = new ParserOnComma(commas);
         assertTrue(p.hasNesxt());
         assertEquals(p.next(), "ciao");
         assertTrue(p.hasNesxt());

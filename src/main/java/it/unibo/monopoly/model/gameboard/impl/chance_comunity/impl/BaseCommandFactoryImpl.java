@@ -46,7 +46,7 @@ public final class BaseCommandFactoryImpl implements BaseCommandFactory {
 
             @Override
             public void execute(final Player player) {
-                board.movePawn(board.getPawn(player.getID()), Set.of(num));
+                board.movePawn(player.getID(), Set.of(num));
             }
 
             @Override
@@ -70,7 +70,7 @@ public final class BaseCommandFactoryImpl implements BaseCommandFactory {
 
             @Override
             public void execute(final Player player) {
-                board.movePawnInTile(board.getPawn(player.getID()), this.tile);
+                board.movePawnInTile(player.getID(), this.tile);
             }
 
             @Override

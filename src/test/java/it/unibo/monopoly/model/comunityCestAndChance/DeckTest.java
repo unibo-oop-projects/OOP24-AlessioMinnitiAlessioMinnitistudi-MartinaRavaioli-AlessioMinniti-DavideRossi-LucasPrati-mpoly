@@ -43,9 +43,12 @@ import it.unibo.monopoly.model.turnation.impl.PositionImpl;
 import it.unibo.monopoly.model.turnation.impl.PrisonablePlayer;
 import it.unibo.monopoly.model.turnation.impl.TurnationManagerImpl;
 
-public class DeckTest {
+/**
+ * test for class Deck.
+ */
+public final class DeckTest {
 
-    
+
     private static final String PLAYER1_NAME = "Alice";
     private static final String PLAYER2_NAME = "Marta";
     private static final String PLAYER3_NAME = "Roberto";
@@ -62,7 +65,7 @@ public class DeckTest {
     private static final int VALID_SALE_PRICE1 = 60;
     private static final int VALID_SALE_PRICE2 = 50;
     private static final int VALID_BASE_RENT = 10;
-    
+
     private static final String VALID_TYPE = "chances";
 
     private static final int PO0 = 0;
@@ -73,7 +76,6 @@ public class DeckTest {
     private static final int PO5 = 5;
     private static final int PO6 = 6;
 
-    
     private Bank bank;
     private Board board;
     private TurnationManager turnM;
@@ -110,31 +112,29 @@ public class DeckTest {
         pF.createBasic(VALID_ID1, pos0, VALID_COLOR1)
     );
 
-    
     @BeforeEach
     void setAll() {
         bank = new BankImpl(accounts, deeds);
-        Dice d = new DiceImpl(1);
+        final Dice d = new DiceImpl(1);
         turnM = new TurnationManagerImpl(List.of(p1, p2, p3), d);
         final List<Tile> tiles = List.of(
         new PropertyImpl(TITLE_DEED_NAME1, pos0, Group.RED),
         new PropertyImpl(TITLE_DEED_NAME2, pos1, Group.BLUE),
         new PropertyImpl("c", pos2, Group.YELLOW),
-        factory.parking(pos5),
+        factory.parking(pos5, turnM),
         factory.prison(pos4),
         factory.taxes(pos6, bank)
     );
         board = new BoardImpl(tiles, pawns);
-        board.addTile(factory.goToPrison(pos3, board));
+        board.addTile(factory.goToPrison(pos3, board, turnM));
         creator = new DeckCreatorImpl();
-        
     }
 
     @Test
-    void testDeck(){
+    void testDeck() {
         try {
             deck = creator.createDeck("cards//DeckCardTest.txt", VALID_TYPE, board, bank, turnM); 
-        } catch (FileNotFoundException e) {
+        } catch (final FileNotFoundException e) {
             System.out.println("file not found");
         }
 
@@ -143,7 +143,7 @@ public class DeckTest {
         final ChanceAndCommunityChestCard c3 = deck.drawInOrder();
 
         assertEquals("deposit 50", c1.getDescription());
-        assertEquals("move in Jail / Just Visiting" + " then\n" + "buy Jail / Just Visiting if not owned" , c2.getDescription());
+        assertEquals("move in Jail / Just Visiting" + " then\n" + "buy Jail / Just Visiting if not owned", c2.getDescription());
         assertEquals("withdraw 50", c3.getDescription());
     }
 

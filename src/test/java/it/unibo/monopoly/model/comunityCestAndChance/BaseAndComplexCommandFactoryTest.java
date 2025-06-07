@@ -33,14 +33,19 @@ import it.unibo.monopoly.model.transactions.impl.BaseTitleDeed;
 import it.unibo.monopoly.model.transactions.impl.bankaccount.SimpleBankAccountImpl;
 import it.unibo.monopoly.model.turnation.api.Player;
 import it.unibo.monopoly.model.turnation.api.Position;
+import it.unibo.monopoly.model.turnation.api.TurnationManager;
+import it.unibo.monopoly.model.turnation.impl.DiceImpl;
 import it.unibo.monopoly.model.turnation.impl.ParkablePlayer;
 import it.unibo.monopoly.model.turnation.impl.PlayerImpl;
 import it.unibo.monopoly.model.turnation.impl.PositionImpl;
 import it.unibo.monopoly.model.turnation.impl.PrisonablePlayer;
+import it.unibo.monopoly.model.turnation.impl.TurnationManagerImpl;
 
-public class BaseAndComplexCommandFactoryTest {
+/**
+ * test for classes complex command and base command factory.
+ */
+public final class BaseAndComplexCommandFactoryTest {
 
-    
     private static final String PLAYER1_NAME = "Alice";
     private static final String PLAYER2_NAME = "Marta";
     private static final String PLAYER3_NAME = "Roberto";
@@ -57,7 +62,7 @@ public class BaseAndComplexCommandFactoryTest {
     private static final int VALID_SALE_PRICE1 = 60;
     private static final int VALID_SALE_PRICE2 = 50;
     private static final int VALID_BASE_RENT = 10;
-    
+
     private static final int PO0 = 0;
     private static final int PO1 = 1;
     private static final int PO2 = 2;
@@ -100,30 +105,29 @@ public class BaseAndComplexCommandFactoryTest {
     private final List<Pawn> pawns = List.of(
         pF.createBasic(VALID_ID1, pos0, VALID_COLOR1)
     );
-    private int indice = 0;
 
-    
     @BeforeEach
     void setAll() {
         bank = new BankImpl(accounts, deeds);
+        final TurnationManager turnM = new TurnationManagerImpl(List.of(p1, p2, p3), new DiceImpl(2));
         final List<Tile> tiles = List.of(
         new PropertyImpl(TITLE_DEED_NAME1, pos0, Group.RED),
         new PropertyImpl(TITLE_DEED_NAME2, pos1, Group.BLUE),
         new PropertyImpl("c", pos2, Group.YELLOW),
-        factory.parking(pos5),
+        factory.parking(pos5, turnM),
         factory.prison(pos4),
         factory.taxes(pos6, bank)
     );
         board = new BoardImpl(tiles, pawns);
-        board.addTile(factory.goToPrison(pos3, board));
+        board.addTile(factory.goToPrison(pos3, board, turnM));
         commands = bcf.allCommand(bank, board);
     }
 
     @Test
-    void test0(){
+    void test0() {
         final int ammount = 50;
-        BaseCommand c = commands.get(indice);
-        indice += 1;
+        final int indice = 0;
+        final BaseCommand c = commands.get(indice);
         c.addIntArg(ammount);
         c.execute(p1);
         final int finalAmmount = 1050;
@@ -131,33 +135,33 @@ public class BaseAndComplexCommandFactoryTest {
         assertEquals(finalAmmount, bank.getBankAccount(p1.getID()).getBalance());
     }
     @Test
-    void test1(){
+    void test1() {
         final int ammount = 2;
-        indice = 1 ;
-        BaseCommand c = commands.get(indice);
-        
+        final int indice = 1;
+        final BaseCommand c = commands.get(indice);
+
         c.addIntArg(ammount);
         c.execute(p1);
         assertEquals("move of " + ammount + " steps", c.getDesc());
         assertEquals(pos2.getPos(), board.getPawn(p1.getID()).getPosition().getPos());
     }
-    
+
     @Test
-    void test2(){
+    void test2() {
         final String s = "Jail / Just Visiting";
-        indice = 2;
-        BaseCommand c = commands.get(indice);
+        final int indice = 2;
+        final BaseCommand c = commands.get(indice);
         c.addTileArg(s);
         c.execute(p1);
         assertEquals("move in " + s, c.getDesc());
         assertEquals(pos4.getPos(), board.getPawn(p1.getID()).getPosition().getPos());
-        
+
     }
     @Test
-    void test3(){
+    void test3() {
         final int ammount = 50;
-        indice = 3;
-        BaseCommand c = commands.get(indice);
+        final int indice = 3;
+        final BaseCommand c = commands.get(indice);
         c.addIntArg(ammount);
         c.execute(p1);
         final int finalAmmount = 950;
@@ -166,11 +170,11 @@ public class BaseAndComplexCommandFactoryTest {
     }
 
     @Test
-    void test4(){
+    void test4() {
         final int ammount = 50;
-        indice = 4;
-        BaseCommand c = commands.get(indice);
-        c.addPlayersArg(List.of(p2,p3));
+        final int indice = 4;
+        final BaseCommand c = commands.get(indice);
+        c.addPlayersArg(List.of(p2, p3));
         c.addIntArg(ammount);
         c.execute(p1);
         final int finalAmmount1 = 1100;
@@ -180,14 +184,14 @@ public class BaseAndComplexCommandFactoryTest {
         assertEquals(finalAmmount2, bank.getBankAccount(p2.getID()).getBalance());
         assertEquals(finalAmmount2, bank.getBankAccount(p3.getID()).getBalance());
     }
-    
+
     @Test
-    void test5(){
+    void test5() {
         final String s1 = TITLE_DEED_NAME1;
         final String s2 = TITLE_DEED_NAME2;
         bank.getBankStateObject().resetTransactionData();
-        indice = 5;
-        BaseCommand c = commands.get(indice);
+        final int indice = 5;
+        final BaseCommand c = commands.get(indice);
         c.addTileArg(s1);
         c.execute(p1);
         assertEquals("buy " + s1 + " if not owned", c.getDesc());
@@ -199,23 +203,22 @@ public class BaseAndComplexCommandFactoryTest {
     }
 
     @Test
-    void complex1(){
+    void complex1() {
         final String s1 = TITLE_DEED_NAME1;
         final String s2 = TITLE_DEED_NAME2;
-        indice = 5;
+        final int indice1 = 5;
         bank.getBankStateObject().resetTransactionData();
-        BaseCommand c1 = commands.get(indice);
+        final BaseCommand c1 = commands.get(indice1);
         c1.addTileArg(s1);
-        indice = 2;
-        BaseCommand c2 = commands.get(indice);
+        final int indice2 = 2;
+        final BaseCommand c2 = commands.get(indice2);
         c2.addTileArg(s2);
-        List<Command> li = List.of(c1, c2);
-        Command c = new ComplexCommand(li, s2);
+        final List<Command> li = List.of(c1, c2);
+        final Command c = new ComplexCommand(li, s2);
         c.execute(p1);
         assertEquals("buy " + s1 + " if not owned" + " then\n" + "move in " + s2, c.getDesc());
         assertEquals(p1.getID(), bank.getTitleDeed(s1).getOwnerId());
         assertEquals(pos1.getPos(), board.getPawn(p1.getID()).getPosition().getPos());
-        
     }
-    
+
 }
