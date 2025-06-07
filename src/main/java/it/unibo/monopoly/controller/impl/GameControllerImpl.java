@@ -115,7 +115,6 @@ public final class GameControllerImpl implements GameController {
     @Override
     public void throwDices() {
         try {
-            gameView.displayMessage("id " + this.turnationManager.getIdCurrPlayer());
             final Collection<Integer> result = this.turnationManager.moveByDices();
 
             if (!this.turnationManager.isCurrentPlayerParked()
@@ -162,11 +161,8 @@ public final class GameControllerImpl implements GameController {
                 }
 
             }
-            
-            //gameView.displayMessage("pos " + this.board.getPawn(this.turnationManager.getIdCurrPlayer()).getPosition().getPos());
+
         } catch (final IllegalAccessException e) {
-            gameView.displayError(e);
-        } catch (final NullPointerException e) {
             gameView.displayError(e);
         }
     }
