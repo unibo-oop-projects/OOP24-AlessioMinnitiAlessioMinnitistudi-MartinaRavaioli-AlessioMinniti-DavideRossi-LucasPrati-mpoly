@@ -28,11 +28,9 @@ public final class ParserOnComma implements Parser {
                 index = i + 2;
                 return ret;
             }
-            if (i == toParseString.length() -1) {
-                index = i + 2;
-            }
             ret = ret.concat(String.valueOf(c));
         }
+        index = toParseString.length();
         return ret;
 
     }

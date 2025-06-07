@@ -43,6 +43,7 @@ public final class ParserOnHyphen implements Parser {
                     index = i + 2;
                 }
             }
+            index = toParse.length();
             retString = rStr; 
             return true;
         }

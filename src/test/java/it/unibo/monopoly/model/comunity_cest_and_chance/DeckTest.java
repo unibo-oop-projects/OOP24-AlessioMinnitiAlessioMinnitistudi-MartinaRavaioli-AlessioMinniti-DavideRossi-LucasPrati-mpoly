@@ -133,13 +133,16 @@ class DeckTest {
     @Test
     void testDeck() {
         try {
-            final ChancheAndCommunityChestDeck deck = creator.createDeck("cards//DeckCardTest.txt", VALID_TYPE, board, bank, turnM);
+            final ChancheAndCommunityChestDeck deck = creator
+                                .createDeck("cards//DeckCardTest.txt", VALID_TYPE, board, bank, turnM);
             final ChanceAndCommunityChestCard c1 = deck.drawInOrder();
             final ChanceAndCommunityChestCard c2 = deck.drawInOrder();
             final ChanceAndCommunityChestCard c3 = deck.drawInOrder();
 
             assertEquals("deposit 50", c1.getDescription());
-            assertEquals("move in Jail / Just Visiting" + " then\n" + "buy Jail / Just Visiting if not owned", c2.getDescription());
+            assertEquals("move in Jail / Just Visiting" 
+                            + " then\n" 
+                            + "buy Jail / Just Visiting if not owned", c2.getDescription());
             assertEquals("withdraw 50", c3.getDescription());
         } catch (final FileNotFoundException e) { 
             final ChancheAndCommunityChestDeck deck = new ChancheAndCommunityChestDeckImpl(List.of(), VALID_TYPE);
