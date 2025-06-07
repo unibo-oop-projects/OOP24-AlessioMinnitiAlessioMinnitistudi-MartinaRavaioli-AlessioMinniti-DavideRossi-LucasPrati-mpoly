@@ -12,6 +12,8 @@ import it.unibo.monopoly.model.gameboard.api.Pawn;
 import it.unibo.monopoly.model.gameboard.api.Property;
 import it.unibo.monopoly.model.gameboard.api.Special;
 import it.unibo.monopoly.model.gameboard.api.Tile;
+import it.unibo.monopoly.model.gameboard.impl.chance_comunity.impl.ChanceAndCommunityChestCard;
+import it.unibo.monopoly.model.gameboard.impl.chance_comunity.impl.ChancheAndCommunityChestDeckImpl;
 import it.unibo.monopoly.model.turnation.api.Position;
 import it.unibo.monopoly.model.turnation.impl.PositionImpl;
 
@@ -21,12 +23,14 @@ import it.unibo.monopoly.model.turnation.impl.PositionImpl;
 public class BoardImpl implements Board {
     private final List<Tile> tiles; /**list of tiles. */
     private final List<Pawn> pawns; /**list of pawns. */
+    private final ChancheAndCommunityChestDeckImpl chanceAndCommunityChest;
     /**
      * constructor.
     */
     public BoardImpl() {
         this.tiles = new ArrayList<>();
         this.pawns = new ArrayList<>();
+        this.chanceAndCommunityChest = new ChancheAndCommunityChestDeckImpl(null, null);
     }
 
     /**
@@ -34,9 +38,10 @@ public class BoardImpl implements Board {
      * @param tiles list of tiles
      * @param pawns list of pawns
     */
-    public BoardImpl(final List<Tile> tiles, final List<Pawn> pawns) {
+    public BoardImpl(final List<Tile> tiles, final List<Pawn> pawns, final ChancheAndCommunityChestDeckImpl chanceAndCommunityChest) {
         this.tiles = new ArrayList<>(tiles);
         this.pawns = new ArrayList<>(pawns);
+        this.chanceAndCommunityChest = chanceAndCommunityChest;
     }
 
     @Override
@@ -161,6 +166,11 @@ public class BoardImpl implements Board {
             }
         }
         throw new IllegalArgumentException("id not present");
+    }
+
+    @Override
+    public ChanceAndCommunityChestCard drawCard() {
+        return this.chanceAndCommunityChest.draw();
     }
 
 }
