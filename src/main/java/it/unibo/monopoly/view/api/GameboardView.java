@@ -2,7 +2,6 @@ package it.unibo.monopoly.view.api;
 
 import java.awt.Color;
 
-import it.unibo.monopoly.model.gameboard.api.Property;
 import it.unibo.monopoly.model.turnation.api.Position;
 
 /**
@@ -11,15 +10,17 @@ import it.unibo.monopoly.model.turnation.api.Position;
 public interface GameboardView extends GamePanel {
     /**
      * add players' houses.
-     * @param prop curr property
+     * @param propName name of the property
+     * @param color property's color
      * @param numHouses property's num houses
     */
-    void addHouse(Property prop, int numHouses);
+    void addHouse(String propName, Color color, int numHouses);
     /**
      * add players' hotel.
-     * @param prop curr property
+     * @param propName property's name
+     * @param color property's color
     */
-    void addHotel(Property prop);
+    void addHotel(String propName, Color color);
     /**
      * change the positions.
      * @param currPlayer curr player
@@ -28,10 +29,10 @@ public interface GameboardView extends GamePanel {
     void changePos(int currPlayer, Position newPos);
     /**
      * set new bought properties.
-     *  @param prop property
+     *  @param propName property name
      *  @param currPlayer curr player
     */
-    void buyProperty(Property prop, int currPlayer);
+    void buyProperty(String propName, int currPlayer);
     /**
      * clear the panel.
      * @param name property to clear

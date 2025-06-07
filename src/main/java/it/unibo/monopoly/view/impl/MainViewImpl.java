@@ -198,7 +198,7 @@ public final class MainViewImpl implements MainGameView {
 
     @Override
     public void callBuyProperty(final Property prop) {
-        this.gameBoardPanel.buyProperty(prop, this.controller.getCurrPlayer().getID());
+        this.gameBoardPanel.buyProperty(prop.getName(), this.controller.getCurrPlayer().getID());
     }
 
     @Override

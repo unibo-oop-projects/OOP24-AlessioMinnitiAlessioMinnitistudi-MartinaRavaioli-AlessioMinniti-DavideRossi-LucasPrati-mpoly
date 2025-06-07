@@ -21,7 +21,6 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.monopoly.controller.api.GameController;
 import it.unibo.monopoly.controller.api.GameboardLogic;
 import it.unibo.monopoly.controller.impl.GameboardLogicImpl;
-import it.unibo.monopoly.model.gameboard.api.Property;
 import it.unibo.monopoly.model.turnation.api.Position;
 import it.unibo.monopoly.model.turnation.impl.PositionImpl;
 import it.unibo.monopoly.view.api.GameboardView;
@@ -57,24 +56,24 @@ public final class GameboardViewImpl extends JPanel implements GameboardView {
     }
 
     @Override
-    public void addHouse(final Property prop, final int numHouses) {
+    public void addHouse(final String propName, final Color color, final int numHouses) {
         for (final Map.Entry<JPanel, Position> entry : this.tilePositions.entrySet()) {
-            if (entry.getValue().equals(prop.getPosition())) {
+            if (entry.getKey().getName().equals(propName)) {
                 final JPanel panel = entry.getKey();
                 final JLabel label = new JLabel("HOUSES: " + numHouses);
-                label.setForeground(prop.getGroup().getColor());
+                label.setForeground(color);
                 panel.add(label);
             }
         }
     }
 
     @Override
-    public void addHotel(final Property prop) {
+    public void addHotel(final String propName, final Color color) {
         for (final Map.Entry<JPanel, Position> entry : this.tilePositions.entrySet()) {
-            if (entry.getValue().equals(prop.getPosition())) {
+            if (entry.getKey().getName().equals(propName)) {
                 final JPanel panel = entry.getKey();
                 final JLabel label = new JLabel("HOTEL: ✔");
-                label.setForeground(prop.getGroup().getColor());
+                label.setForeground(color);
                 panel.add(label);
             }
         }
@@ -115,9 +114,9 @@ public final class GameboardViewImpl extends JPanel implements GameboardView {
     }
 
     @Override
-    public void buyProperty(final Property prop, final int currPlayer) {
+    public void buyProperty(final String propName, final int currPlayer) {
         for (final Map.Entry<JPanel, Position> entry : this.tilePositions.entrySet()) {
-            if (entry.getValue().equals(prop.getPosition())) {
+            if (entry.getKey().getName().equals(propName)) {
                 final JPanel p = entry.getKey();
                 final PawnSquare propertyGUI = new PawnSquare(controller.getCurrPlayer().getColor());
                 p.add(propertyGUI);
@@ -255,12 +254,10 @@ public final class GameboardViewImpl extends JPanel implements GameboardView {
                         p.remove(c);
                         p.revalidate();
                         p.repaint();
-                        break;
                     } else if (c instanceof PawnSquare pawnSquare && pawnSquare.getColor().equals(color)) {
                         p.remove(c);
                         p.revalidate();
                         p.repaint();
-                        break;
                     }
                 }
         }
