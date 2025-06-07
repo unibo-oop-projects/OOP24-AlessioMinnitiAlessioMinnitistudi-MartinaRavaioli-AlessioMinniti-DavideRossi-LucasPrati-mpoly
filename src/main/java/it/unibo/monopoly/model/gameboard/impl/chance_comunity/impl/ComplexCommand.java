@@ -19,7 +19,7 @@ public final class ComplexCommand implements Command {
      * @param desc
      */
     public ComplexCommand(final List<Command> commands, final String desc) {
-        this.commands = commands;
+        this.commands = List.copyOf(commands);
         this.keyword = desc;
     }
 
@@ -37,14 +37,13 @@ public final class ComplexCommand implements Command {
 
     @Override
     public String getDesc() {
-        String str = "";
+        final String str = "";
         final StringBuilder s = new StringBuilder(str);
         for (final Command command : commands) {
             if (commands.indexOf(command) == commands.size() - 1) {
                 s.append(command.getDesc());
             } else {
-                s.append(command.getDesc());
-                s.append(" then\n");
+                s.append(command.getDesc()).append(" then\n");
             }
         }
         return s.toString();

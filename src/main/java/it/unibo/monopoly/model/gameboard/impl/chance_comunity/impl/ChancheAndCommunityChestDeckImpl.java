@@ -27,6 +27,13 @@ public final class ChancheAndCommunityChestDeckImpl implements ChancheAndCommuni
 
     @Override
     public ChanceAndCommunityChestCard draw() {
+        /*if (cards.size() != 0 ) {
+            final int index = r.nextInt(cards.size()); 
+            return cards.get(index);
+        } else {
+            final BaseCommandFactoryImpl fact = new BaseCommandFactoryImpl();
+            return new ChanceAndCommunityChestCard(new ComplexCommand(List.of(fact.still()), type));
+        } */
         final int index = r.nextInt(cards.size()); 
         return cards.get(index);
     }

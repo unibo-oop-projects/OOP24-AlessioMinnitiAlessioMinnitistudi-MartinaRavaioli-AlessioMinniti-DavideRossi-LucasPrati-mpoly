@@ -7,7 +7,6 @@ import it.unibo.monopoly.model.gameboard.impl.chance_comunity.api.Parser;
  */
 public final class ParserOnNewLine implements Parser {
 
-    private final int newLine = 10;
     private final String toParseString;
     private int index;
 
@@ -22,11 +21,15 @@ public final class ParserOnNewLine implements Parser {
     @Override
     public String next() {
         String ret = ""; 
+        final int newLine = 10;
         for (int i = index; i < toParseString.length(); i++) {
-            index = i + 1;
-            char c = toParseString.charAt(i);
-            if ( c == newLine) {
+            final char c = toParseString.charAt(i);
+            if (c == newLine) {
+                index = i + 1;
                 return ret;
+            }
+            if (i == toParseString.length() -1) {
+                index = i + 2;
             }
             ret = ret.concat(String.valueOf(c));
         }

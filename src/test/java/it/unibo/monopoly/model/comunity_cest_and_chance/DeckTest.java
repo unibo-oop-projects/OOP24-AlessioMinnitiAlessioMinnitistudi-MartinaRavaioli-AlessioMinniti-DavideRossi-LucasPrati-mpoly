@@ -25,6 +25,7 @@ import it.unibo.monopoly.model.gameboard.impl.SpecialFactoryImpl;
 import it.unibo.monopoly.model.gameboard.impl.chance_comunity.api.ChancheAndCommunityChestDeck;
 import it.unibo.monopoly.model.gameboard.impl.chance_comunity.api.DeckCreator;
 import it.unibo.monopoly.model.gameboard.impl.chance_comunity.impl.ChanceAndCommunityChestCard;
+import it.unibo.monopoly.model.gameboard.impl.chance_comunity.impl.ChancheAndCommunityChestDeckImpl;
 import it.unibo.monopoly.model.gameboard.impl.chance_comunity.impl.DeckCreatorImpl;
 import it.unibo.monopoly.model.transactions.api.Bank;
 import it.unibo.monopoly.model.transactions.api.BankAccount;
@@ -80,7 +81,6 @@ class DeckTest {
     private Board board;
     private TurnationManager turnM;
     private DeckCreator creator = new DeckCreatorImpl();
-    private ChancheAndCommunityChestDeck deck;
 
     private final SpecialFactory factory = new SpecialFactoryImpl();
     private final PawnFactory pF = new PawnFactoryImpl();
@@ -133,18 +133,19 @@ class DeckTest {
     @Test
     void testDeck() {
         try {
-            deck = creator.createDeck("cards//DeckCardTest.txt", VALID_TYPE, board, bank, turnM); 
-        } catch (final FileNotFoundException e) {
-            deck = null;
+            final ChancheAndCommunityChestDeck deck = creator.createDeck("cards//DeckCardTest.txt", VALID_TYPE, board, bank, turnM);
+            final ChanceAndCommunityChestCard c1 = deck.drawInOrder();
+            final ChanceAndCommunityChestCard c2 = deck.drawInOrder();
+            final ChanceAndCommunityChestCard c3 = deck.drawInOrder();
+
+            assertEquals("deposit 50", c1.getDescription());
+            assertEquals("move in Jail / Just Visiting" + " then\n" + "buy Jail / Just Visiting if not owned", c2.getDescription());
+            assertEquals("withdraw 50", c3.getDescription());
+        } catch (final FileNotFoundException e) { 
+            final ChancheAndCommunityChestDeck deck = new ChancheAndCommunityChestDeckImpl(List.of(), VALID_TYPE);
+            assertEquals("", deck.draw().getDescription());
         }
 
-        final ChanceAndCommunityChestCard c1 = deck.drawInOrder();
-        final ChanceAndCommunityChestCard c2 = deck.drawInOrder();
-        final ChanceAndCommunityChestCard c3 = deck.drawInOrder();
-
-        assertEquals("deposit 50", c1.getDescription());
-        assertEquals("move in Jail / Just Visiting" + " then\n" + "buy Jail / Just Visiting if not owned", c2.getDescription());
-        assertEquals("withdraw 50", c3.getDescription());
     }
 
 }

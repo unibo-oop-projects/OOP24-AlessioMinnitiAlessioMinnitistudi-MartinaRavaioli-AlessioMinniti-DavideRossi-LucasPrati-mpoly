@@ -20,7 +20,7 @@ public final class BaseCommandFactoryImpl implements BaseCommandFactory {
 
             private String desc;
             private int num;
-            private final static String KEY = "move of steps";
+            private static final String KEY = "move of steps";
 
 
             @Override
@@ -61,7 +61,7 @@ public final class BaseCommandFactoryImpl implements BaseCommandFactory {
 
             private String desc;
             private String tile;
-            private final static String KEY = "move in tile";
+            private static final String KEY = "move in tile";
 
             @Override
             public String getKeyWord() {
@@ -101,7 +101,7 @@ public final class BaseCommandFactoryImpl implements BaseCommandFactory {
 
             private String desc;
             private int num;
-            private final static String KEY = "withdraw";
+            private static final String KEY = "withdraw";
 
             @Override
             public String getKeyWord() {
@@ -142,7 +142,7 @@ public final class BaseCommandFactoryImpl implements BaseCommandFactory {
 
             private String desc;
             private int num;
-            private final static String KEY = "deposit";
+            private static final String KEY = "deposit";
 
             @Override
             public String getKeyWord() {
@@ -183,7 +183,7 @@ public final class BaseCommandFactoryImpl implements BaseCommandFactory {
             private String desc;
             private int num;
             private List<Player> players;
-            private final static String KEY = "deposit from";
+            private static final String KEY = "deposit from";
 
             @Override
             public String getKeyWord() {
@@ -229,7 +229,7 @@ public final class BaseCommandFactoryImpl implements BaseCommandFactory {
         return new BaseCommand() {
             private String desc;
             private String tile;
-            private final static String KEY = "buy if not owned";
+            private static final String KEY = "buy if not owned";
 
             @Override
             public String getKeyWord() {
@@ -271,7 +271,7 @@ public final class BaseCommandFactoryImpl implements BaseCommandFactory {
     @Override
     public BaseCommand still() {
         return new BaseCommand() {
-            private final static String KEY = "still";
+            private static final String KEY = "still";
 
             @Override
             public String getKeyWord() {

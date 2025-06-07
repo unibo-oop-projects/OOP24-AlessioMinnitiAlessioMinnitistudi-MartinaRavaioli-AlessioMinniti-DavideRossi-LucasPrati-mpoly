@@ -36,8 +36,7 @@ public final class ComplexInterpreter implements Interpreter {
         while (pars.hasNesxt()) {
             commands.add(inter.interpret(pars.next(), board, turnM));
         }
-        final Command comm = new ComplexCommand(commands, toInterpretString);
-        return comm;
+        return new ComplexCommand(commands, toInterpretString);
     }
 
 }

@@ -1,6 +1,7 @@
 package it.unibo.monopoly.model.comunity_cest_and_chance;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
@@ -81,5 +82,10 @@ class ParserOnSpaceTest {
         assertEquals(p.next(), "come");
         assertTrue(p.hasNesxt());
         assertEquals(p.next(), "stai");
+        final String commas2 = "50";
+        final ParserOnComma pars = new ParserOnComma(commas2);   
+        assertTrue(pars.hasNesxt());
+        assertEquals(pars.next(), "50");
+        assertFalse(pars.hasNesxt());
     }
 }

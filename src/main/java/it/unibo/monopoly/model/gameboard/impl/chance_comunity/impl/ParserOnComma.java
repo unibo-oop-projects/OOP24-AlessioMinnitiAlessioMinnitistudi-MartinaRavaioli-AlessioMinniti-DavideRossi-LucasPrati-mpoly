@@ -7,7 +7,6 @@ import it.unibo.monopoly.model.gameboard.impl.chance_comunity.api.Parser;
  */
 public final class ParserOnComma implements Parser {
 
-    private final int comma = 44;
     private final String toParseString;
     private int index;
 
@@ -21,12 +20,16 @@ public final class ParserOnComma implements Parser {
 
     @Override
     public String next() {
+        final int comma = 44;
         String ret = ""; 
         for (int i = index; i < toParseString.length(); i++) {
-            index = i + 2;
-            char c = toParseString.charAt(i);
+            final char c = toParseString.charAt(i);
             if (c == comma) {
+                index = i + 2;
                 return ret;
+            }
+            if (i == toParseString.length() -1) {
+                index = i + 2;
             }
             ret = ret.concat(String.valueOf(c));
         }

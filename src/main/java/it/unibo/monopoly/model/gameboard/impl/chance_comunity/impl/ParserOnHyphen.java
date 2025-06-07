@@ -7,7 +7,6 @@ import it.unibo.monopoly.model.gameboard.impl.chance_comunity.api.Parser;
  */
 public final class ParserOnHyphen implements Parser {
 
-    private final int hypen = 45;
     private final String toParse;
     private String retString;
     private int index;
@@ -28,15 +27,20 @@ public final class ParserOnHyphen implements Parser {
             return false;
         } else {
             String rStr = "";
+            final int hypen = 45;
 
             for (int i = index; i < toParse.length(); i++) {
                 final char c = toParse.charAt(i);
-                index = i + 2; 
                 if (c == hypen) {
+                    index = i + 2;
                     retString = rStr;
                     return true;
                 } else {
                     rStr = rStr.concat(String.valueOf(c));
+                }
+                    
+                if (i == toParse.length() -1) {
+                    index = i + 2;
                 }
             }
             retString = rStr; 

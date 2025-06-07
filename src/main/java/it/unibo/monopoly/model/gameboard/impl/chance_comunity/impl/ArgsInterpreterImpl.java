@@ -17,7 +17,11 @@ import it.unibo.monopoly.model.turnation.api.TurnationManager;
 public final class ArgsInterpreterImpl implements ArgsInterpreter {
 
     private String interpretTileArg(final String toInterpretString, final Board board) {
-        Optional<String> t = board.getTiles().stream().filter(p -> p.getName().equals(toInterpretString)).map(Tile::getName).findAny();
+        final Optional<String> t = board.getTiles()
+                                        .stream()
+                                        .filter(p -> p.getName().equals(toInterpretString))
+                                        .map(Tile::getName)
+                                        .findAny();
 
         if (t.isPresent()) {
             return t.get();
@@ -29,7 +33,7 @@ public final class ArgsInterpreterImpl implements ArgsInterpreter {
     private int interpretIntArg(final String toInterpretString) {
         try {
             return Integer.parseInt(toInterpretString);
-        } catch (NumberFormatException e) {
+        } catch (final NumberFormatException e) {
             return -1;
         }
     }
