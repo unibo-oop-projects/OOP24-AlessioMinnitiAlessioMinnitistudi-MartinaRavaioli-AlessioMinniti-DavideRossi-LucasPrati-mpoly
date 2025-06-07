@@ -43,6 +43,13 @@ public interface EffectFactory {
     Effect park(TurnationManager turnM);
 
     /**
+     * draws a chanche and community chest card and then acivate its effect.
+     * @param board to draw the card
+     * @return the effect
+     */
+    Effect drawChancesAndCommunity(Board board);
+
+    /**
      * an effect that does nothing.
      * @return the effect
      */

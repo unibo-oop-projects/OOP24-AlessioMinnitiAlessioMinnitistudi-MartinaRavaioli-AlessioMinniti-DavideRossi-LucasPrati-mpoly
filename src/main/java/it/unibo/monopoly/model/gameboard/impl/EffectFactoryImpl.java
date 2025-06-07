@@ -94,6 +94,13 @@ public final class EffectFactoryImpl implements EffectFactory {
             }
         };
     }
+    
+    @Override
+    public Effect drawChancesAndCommunity(Board board) {
+        
+        return null;
+        
+    }
 
     @Override
     public Effect still() {

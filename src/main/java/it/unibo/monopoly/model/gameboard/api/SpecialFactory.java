@@ -48,5 +48,14 @@ public interface SpecialFactory {
      */
     Special taxes(Position pos, Bank bank);
 
+    /**
+     * creates the tile chances and community chest that 
+     * makes the player draw a chances and community chest card 
+     * and then activates its effect.
+     * @param pos
+     * @return
+     */
+    Special chancheAndCommunityChest(Position pos);
+
 
 }
