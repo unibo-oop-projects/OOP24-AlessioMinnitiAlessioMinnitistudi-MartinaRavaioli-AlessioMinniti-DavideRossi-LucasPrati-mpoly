@@ -61,9 +61,8 @@ You go to Jail if:
     - You draw a “Go to Jail” card.
 Rules while in Jail:
     - Your token will move directly to Jail without collect the $200 for passing "Start".
-    - Your turn ends immediately.
     - Jail time lasts for 3 turn, unless you get at least 2 matching numbers at the dices.
-    - You can still collect rent from other players.
+    - You can still collect rent from other players and manage your properties during your turn.
 
 
 "FREE PARKING":

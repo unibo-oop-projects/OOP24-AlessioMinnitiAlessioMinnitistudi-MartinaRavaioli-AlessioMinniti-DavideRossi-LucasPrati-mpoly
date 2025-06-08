@@ -104,8 +104,8 @@ Vendite:
 6. PRIGIONE, TASSE, SOCIETA' ED EVENTI SPECIALI
 Prigione:
 - Inviato se: si finisce sulla casella "Go to Jail" o si pesca la relativa carta imprevisti/probabilità.
-- Turno terminato subito, si rimane max 3 turni.
-- Si esce con numero doppio ai dadi o dopo 3 turni.
+- Si rimane max 3 turni, si può uscire prime se si ottiene un numero doppio ai dadi durnate il proprio turno.
+- Durante il proprio turno rimane possibile la gestione delle proprie proprietà tramite l'apposito menù.
 
 Tasse:
 - Tax e carte evento possono richiedere pagamenti alla banca.
