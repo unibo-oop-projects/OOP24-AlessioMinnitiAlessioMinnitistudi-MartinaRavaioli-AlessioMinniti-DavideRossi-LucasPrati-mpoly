@@ -54,7 +54,7 @@ public final class CardDTO {
 
     /**
      * Get the name of the card.
-     * @return the an {@link Optional}<{@link String}> with represents the name of the card
+     * @return the an {@link Optional} <{@link String}> with represents the name of the card
      */
     public Optional<String> getName() {
         return name;
@@ -78,7 +78,7 @@ public final class CardDTO {
 
     /**
      * Get a {@link String} that represents the card's effect.
-     * @return an {@link Optional}<{@link String}> with the card's effect
+     * @return an {@link Optional} <{@link String}> with the card's effect
      */
     public Optional<String> getEffect() {
         return effect;
@@ -94,7 +94,7 @@ public final class CardDTO {
 
     /**
      * Get the price of the card.
-     * @return an {@link Optional}<{@link Integer}> with represents the card's price
+     * @return an {@link Optional} <{@link Integer}> with represents the card's price
      */
     public Optional<Integer> getCost() {
         return cost;
@@ -102,7 +102,7 @@ public final class CardDTO {
 
     /**
      * Get the initial amount of the card's rent.
-     * @return an {@link Optional}<{@link Integer}> which represents the card's initial amount of rent
+     * @return an {@link Optional} <{@link Integer}> which represents the card's initial amount of rent
      */
     public Optional<Integer> getBaseRent() {
         return baseRent;
