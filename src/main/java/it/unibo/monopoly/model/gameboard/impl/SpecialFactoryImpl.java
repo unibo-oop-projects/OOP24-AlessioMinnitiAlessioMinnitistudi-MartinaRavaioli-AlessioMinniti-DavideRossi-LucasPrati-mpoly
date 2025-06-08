@@ -45,4 +45,9 @@ public final class SpecialFactoryImpl implements SpecialFactory {
         return new SpecialImpl("Tax", pos, Group.SPECIAL, factory.withdrawMoney(taxesAmount, bank));
     }
 
+    @Override
+    public Special chancesAndCommunityChest(Position pos, Board board) {
+        return new SpecialImpl("Chances and Community Chest", pos, Group.SPECIAL, factory.drawChanceAndCommunityChest(board));
+    }
+
 }

@@ -48,5 +48,13 @@ public interface SpecialFactory {
      */
     Special taxes(Position pos, Bank bank);
 
+    /**
+     * creates a special tile that makes you draw a card then activates its effect.
+     * @param pos of the tile
+     * @param board to draw the card
+     * @return the special tile
+     */
+    Special chancesAndCommunityChest(Position pos, Board board);
+
 
 }

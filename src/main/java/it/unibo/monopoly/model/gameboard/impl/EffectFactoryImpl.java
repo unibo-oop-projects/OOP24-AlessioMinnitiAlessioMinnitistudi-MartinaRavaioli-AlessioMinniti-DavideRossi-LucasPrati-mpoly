@@ -4,6 +4,7 @@ package it.unibo.monopoly.model.gameboard.impl;
 import it.unibo.monopoly.model.gameboard.api.Board;
 import it.unibo.monopoly.model.gameboard.api.Effect;
 import it.unibo.monopoly.model.gameboard.api.EffectFactory;
+import it.unibo.monopoly.model.gameboard.impl.chance_comunity.impl.ChanceAndCommunityChestCard;
 import it.unibo.monopoly.model.transactions.api.Bank;
 import it.unibo.monopoly.model.turnation.api.Player;
 import it.unibo.monopoly.model.turnation.api.TurnationManager;
@@ -94,6 +95,29 @@ public final class EffectFactoryImpl implements EffectFactory {
             }
         };
     }
+
+
+    @Override
+    public Effect drawChanceAndCommunityChest(Board board) {
+        return new Effect() {
+
+            private static final String DESC = "draw a card from chances and community chest deck then activate its effect :";
+            ChanceAndCommunityChestCard c;
+
+            @Override
+            public void activate(Player player) {
+                c = board.draw();
+                c.execute(player);
+            }
+
+            @Override
+            public String getDescription() {
+                return DESC + "\n" + c.getDescription();
+            }
+            
+        };
+    }
+
 
     @Override
     public Effect still() {
