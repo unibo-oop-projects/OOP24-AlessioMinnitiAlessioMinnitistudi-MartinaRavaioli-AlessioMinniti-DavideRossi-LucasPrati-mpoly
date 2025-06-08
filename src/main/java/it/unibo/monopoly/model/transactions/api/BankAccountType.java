@@ -6,6 +6,6 @@ package it.unibo.monopoly.model.transactions.api;
 public enum BankAccountType {
     /** Standard account. */
     CLASSIC,
-    /** “Infinity” account. */
+    /** Infinity account. */
     INFINITY
 }
