@@ -47,8 +47,8 @@ If a player owns all properties in a color group, they may charge double rent fo
 Rent increases significantly when houses are built.
 
 
-"CHANCE" and "COMMUNITY CHEST":
-When you land on these spaces, draw a card from the corresponding deck and follow its instructions immediately.
+"CHANCE / CHEST":
+When you land on these spaces, draw a card from the deck and follow its instructions immediately.
 
 
 "INCOME TAX":

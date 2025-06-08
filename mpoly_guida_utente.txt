@@ -111,15 +111,15 @@ Tasse:
 - Tax e carte evento possono richiedere pagamenti alla banca.
 
 Imprevisti/Probabilità:
-- 20 carte per tipo (Chance / Community Chest), effetti variabili (bonus e malus).
-- Vengono rimesse in fondo al mazzo.
+- 20 carte con effetti variabili (bonus e malus).
+- Vengono estratte random e reinserite nel mazzo.
 
 Free Parking:
 - Nessun effetto economico.
 - Si salta il turno successivo.
 
 SOCIETA':
-- hanno un costo di affitto pari al valore dei dadi moltiplicato per !!TODO!!
+- hanno un costo di affitto pari al valore dei dadi moltiplicato per l'affitto base
 
 
 7. FINE DEL GIOCO E CONDIZIONI DI VITTORIA

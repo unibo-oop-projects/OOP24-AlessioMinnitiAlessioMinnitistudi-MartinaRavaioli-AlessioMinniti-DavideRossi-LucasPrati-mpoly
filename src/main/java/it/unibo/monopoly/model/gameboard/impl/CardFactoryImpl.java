@@ -94,13 +94,12 @@ public class CardFactoryImpl implements CardFactory {
             .orElseThrow(() -> new IllegalArgumentException("Missing 'effect' for SPECIAL card: " + dto.getName()));
 
         switch (effect) {
-            case "JAIL"         -> tile = specialFactory.prison(position);
-            case "GO_TO_JAIL"   -> tile = specialFactory.goToPrison(position, board, turnM);
-            case "INCOME"       -> tile = specialFactory.start(bank);
-            case "TAX"          -> tile = specialFactory.taxes(position, bank);
-            case "PARKING"      -> tile = specialFactory.parking(position, turnM);
-            // case "CHANCE"       -> tile = specialFactory.chance(); 
-            // case "CHEST"        -> tile = specialFactory.chest();
+            case "JAIL"             -> tile = specialFactory.prison(position);
+            case "GO_TO_JAIL"       -> tile = specialFactory.goToPrison(position, board, turnM);
+            case "INCOME"           -> tile = specialFactory.start(bank);
+            case "TAX"              -> tile = specialFactory.taxes(position, bank);
+            case "PARKING"          -> tile = specialFactory.parking(position, turnM);
+            case "CHANCE / CHEST"   -> tile = specialFactory.chancesAndCommunityChest(position, board); 
             default -> throw new IllegalArgumentException("Unknown effect type: " + effect);
         }
         tiles.add(tile);
