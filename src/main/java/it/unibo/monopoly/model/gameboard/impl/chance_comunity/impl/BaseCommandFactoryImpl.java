@@ -4,6 +4,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
+import it.unibo.monopoly.controller.api.GameController;
 import it.unibo.monopoly.model.gameboard.api.Board;
 import it.unibo.monopoly.model.gameboard.api.Property;
 import it.unibo.monopoly.model.gameboard.api.Tile;
@@ -11,7 +12,6 @@ import it.unibo.monopoly.model.gameboard.impl.chance_comunity.api.BaseCommand;
 import it.unibo.monopoly.model.gameboard.impl.chance_comunity.api.BaseCommandFactory;
 import it.unibo.monopoly.model.transactions.api.Bank;
 import it.unibo.monopoly.model.turnation.api.Player;
-import it.unibo.monopoly.view.impl.MainViewImpl;
 
 /**
  * implementation of base command factory.
@@ -217,7 +217,7 @@ public final class BaseCommandFactoryImpl implements BaseCommandFactory {
         };
     }
 
-    private BaseCommand buyIfNotOwned(final Bank bank, final Board board, final MainViewImpl view) {
+    private BaseCommand buyIfNotOwned(final Bank bank, final Board board, final GameController viewcontroller) {
         return new BaseCommand() {
 
             private static final String KEY = "buy if not owned";
@@ -233,7 +233,7 @@ public final class BaseCommandFactoryImpl implements BaseCommandFactory {
                 final Tile t = board.getTile(tile);
                 if (t instanceof Property && !bank.getTitleDeed(tile).isOwned()) {
                     bank.buyTitleDeed(tile, player.getID());
-                    view.callBuyProperty(t.getName(), null);
+                    viewcontroller.refreshBankPlayerInfo();
                 }
             }
 
@@ -294,14 +294,14 @@ public final class BaseCommandFactoryImpl implements BaseCommandFactory {
     }
 
     @Override
-    public List<BaseCommand> allCommand(final Bank bank, final Board board, final MainViewImpl view) {
+    public List<BaseCommand> allCommand(final Bank bank, final Board board, final GameController viewcontroller) {
         return List.of(
             this.deposit(bank),
             this.move(board),
             this.moveIn(board),
             this.withdraw(bank), 
             this.depositFrom(bank),
-            this.buyIfNotOwned(bank, board, view)
+            this.buyIfNotOwned(bank, board, viewcontroller)
         );
     }
 

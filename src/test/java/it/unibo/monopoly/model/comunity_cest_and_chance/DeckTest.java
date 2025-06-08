@@ -14,6 +14,7 @@ import java.util.Set;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import it.unibo.monopoly.controller.api.GameController;
 import it.unibo.monopoly.controller.impl.GameControllerImpl;
 import it.unibo.monopoly.model.gameboard.api.Board;
 import it.unibo.monopoly.model.gameboard.api.CardFactory;
@@ -45,7 +46,6 @@ import it.unibo.monopoly.model.turnation.impl.TurnationManagerImpl;
 import it.unibo.monopoly.utils.api.UseFileJson;
 import it.unibo.monopoly.utils.impl.Configuration;
 import it.unibo.monopoly.utils.impl.UseFileJsonImpl;
-import it.unibo.monopoly.view.impl.MainViewImpl;
 
 /**
  * test for class Deck.
@@ -69,7 +69,7 @@ class DeckTest {
     private Board board;
     private TurnationManager turnM;
     private final DeckCreator creator = new DeckCreatorImpl();
-    private MainViewImpl mainView;
+    private GameController controllerGameManager;
 
     private final Player p = new ParkablePlayer(PlayerImpl.of(VALID_ID1, PLAYER1_NAME, VALID_COLOR1));
     private final Player p1 = new PrisonablePlayer(p);
@@ -132,20 +132,19 @@ class DeckTest {
         titleDeeds.stream().forEach(bank::addTitleDeed);
 
         // start the game
-        final var controllerGameManager = new GameControllerImpl(
+        controllerGameManager = new GameControllerImpl(
             board,
             turnM,
             config,
             bank
         );
-        mainView = new MainViewImpl(controllerGameManager);
     }
 
     @Test
     void testDeck() {
         try {
             final ChancheAndCommunityChestDeck deck = creator
-                                .createDeck("cards//DeckCardTest.txt", VALID_TYPE, board, bank, turnM, mainView);
+                                .createDeck("cards//DeckCardTest.txt", VALID_TYPE, board, bank, turnM, controllerGameManager);
             final ChanceAndCommunityChestCard c1 = deck.drawInOrder();
             final ChanceAndCommunityChestCard c2 = deck.drawInOrder();
             final ChanceAndCommunityChestCard c3 = deck.drawInOrder();

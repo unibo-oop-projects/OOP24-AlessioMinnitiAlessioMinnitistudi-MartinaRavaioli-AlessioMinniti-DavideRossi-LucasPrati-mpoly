@@ -3,13 +3,13 @@ package it.unibo.monopoly.model.gameboard.impl.chance_comunity.impl;
 import java.util.LinkedList;
 import java.util.List;
 
+import it.unibo.monopoly.controller.api.GameController;
 import it.unibo.monopoly.model.gameboard.api.Board;
 import it.unibo.monopoly.model.gameboard.impl.chance_comunity.api.BaseCommandFactory;
 import it.unibo.monopoly.model.gameboard.impl.chance_comunity.api.Command;
 import it.unibo.monopoly.model.gameboard.impl.chance_comunity.api.Interpreter;
 import it.unibo.monopoly.model.transactions.api.Bank;
 import it.unibo.monopoly.model.turnation.api.TurnationManager;
-import it.unibo.monopoly.view.impl.MainViewImpl;
 
 /**
  * implementation of interpreter for complex command that are composed of multiple base commands.
@@ -27,8 +27,8 @@ public final class ComplexInterpreter implements Interpreter {
      * @param bank to execute some commands
      * @param view to show graphical reference of some commands 
      */
-    public ComplexInterpreter(final Board board, final Bank bank, final MainViewImpl view) {
-        inter = new BaseInterpreter(factory.allCommand(bank, board, view));
+    public ComplexInterpreter(final Board board, final Bank bank, final GameController viewcontroller) {
+        inter = new BaseInterpreter(factory.allCommand(bank, board, viewcontroller));
     }
 
     @Override

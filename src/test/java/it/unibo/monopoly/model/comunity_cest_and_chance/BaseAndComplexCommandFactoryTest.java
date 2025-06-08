@@ -43,7 +43,6 @@ import it.unibo.monopoly.model.turnation.impl.TurnationManagerImpl;
 import it.unibo.monopoly.utils.api.UseFileJson;
 import it.unibo.monopoly.utils.impl.Configuration;
 import it.unibo.monopoly.utils.impl.UseFileJsonImpl;
-import it.unibo.monopoly.view.impl.MainViewImpl;
 
 /**
  * test for classes complex command and base command factory.
@@ -86,7 +85,6 @@ class BaseAndComplexCommandFactoryTest {
         final UseFileJson importFileJson = new UseFileJsonImpl();
 
         final TurnationManager turnM;
-        final MainViewImpl mainView;
         // create a id for each Player (his Pawn and BankAccount must have the same id)
         int id = 1;
         // create a Player, his Pawn and his BankAccount according to the type chosen
@@ -136,9 +134,8 @@ class BaseAndComplexCommandFactoryTest {
             config,
             bank
         );
-        mainView = new MainViewImpl(controllerGameManager);
 
-        commands = bcf.allCommand(bank, board, mainView);
+        commands = bcf.allCommand(bank, board, controllerGameManager);
     }
 
     @Test

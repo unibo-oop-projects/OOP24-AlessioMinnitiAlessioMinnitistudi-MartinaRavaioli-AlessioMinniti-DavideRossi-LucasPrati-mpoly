@@ -50,7 +50,6 @@ import it.unibo.monopoly.model.turnation.impl.TurnationManagerImpl;
 import it.unibo.monopoly.utils.api.UseFileJson;
 import it.unibo.monopoly.utils.impl.Configuration;
 import it.unibo.monopoly.utils.impl.UseFileJsonImpl;
-import it.unibo.monopoly.view.impl.MainViewImpl;
 
 /**
  * test for classes Base interpreter and complex interpreter.
@@ -95,7 +94,6 @@ class BaseAndComplexInterpreterTest {
         final UseFileJson importFileJson = new UseFileJsonImpl();
 
         final BankImpl bank;
-        final MainViewImpl mainView;
         // create a id for each Player (his Pawn and BankAccount must have the same id)
         int id = 1;
         // create a Player, his Pawn and his BankAccount according to the type chosen
@@ -145,10 +143,9 @@ class BaseAndComplexInterpreterTest {
             config,
             bank
         );
-        mainView = new MainViewImpl(controllerGameManager);
 
-        complexInt = new ComplexInterpreter(board, bank, mainView);
-        baseInt = new BaseInterpreter(bcf.allCommand(bank, board, mainView));
+        complexInt = new ComplexInterpreter(board, bank, controllerGameManager);
+        baseInt = new BaseInterpreter(bcf.allCommand(bank, board, controllerGameManager));
         argsInt = new ArgsInterpreterImpl();
     }
 

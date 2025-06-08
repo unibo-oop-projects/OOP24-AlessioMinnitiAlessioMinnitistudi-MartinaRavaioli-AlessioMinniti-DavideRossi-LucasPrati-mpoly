@@ -54,7 +54,6 @@ public interface SpecialFactory {
      * @param board to draw the card
      * @return the special tile
      */
-    Special chancesAndCommunityChest(Position pos, Board board);
-
+    Special chancesCommunityChest(Position pos, Board board);
 
 }
