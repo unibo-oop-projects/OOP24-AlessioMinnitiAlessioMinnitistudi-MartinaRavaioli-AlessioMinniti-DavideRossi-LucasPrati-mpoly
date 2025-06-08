@@ -19,11 +19,12 @@ public interface DeckCreator {
      * @param board to execute some commands 
      * @param bank to execute some commands 
      * @param turnM to execute some commands 
-     * @param view to show graphical reference of some commands 
+     * @param viewcontroller to show graphical reference of some commands 
      * @return the deck
      * @throws FileNotFoundException if the file in the arguments is not valid
      */
     ChancheAndCommunityChestDeck createDeck(String file, String type, 
-                                Board board, Bank bank, TurnationManager turnM, GameController viewcontroller) throws FileNotFoundException;
+                                Board board, Bank bank, TurnationManager turnM, 
+                                GameController viewcontroller) throws FileNotFoundException;
 
 }

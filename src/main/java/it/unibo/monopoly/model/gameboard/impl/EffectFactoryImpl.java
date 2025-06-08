@@ -98,14 +98,14 @@ public final class EffectFactoryImpl implements EffectFactory {
 
 
     @Override
-    public Effect drawChanceAndCommunityChest(Board board) {
+    public Effect drawChanceAndCommunityChest(final Board board) {
         return new Effect() {
 
             private static final String DESC = "draw a card from chances and community chest deck then activate its effect :";
-            ChanceAndCommunityChestCard c;
+            private ChanceAndCommunityChestCard c;
 
             @Override
-            public void activate(Player player) {
+            public void activate(final Player player) {
                 c = board.draw();
                 c.execute(player);
             }
@@ -114,7 +114,6 @@ public final class EffectFactoryImpl implements EffectFactory {
             public String getDescription() {
                 return DESC + "\n" + c.getDescription();
             }
-            
         };
     }
 

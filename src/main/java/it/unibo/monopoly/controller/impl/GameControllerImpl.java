@@ -282,8 +282,8 @@ public final class GameControllerImpl implements GameController {
     }
     @Override
     public void refreshBankPlayerInfo() {
-        if (!(null == this.gameView)) {
-            this.gameView.callClearAll();        
+        if (null != this.gameView) {
+            this.gameView.callClearAll();
 
             for (final Player p : this.turnationManager.getPlayerList()) {
                 for (final TitleDeed t : this.bank.getTitleDeedsByOwner(p.getID())) {

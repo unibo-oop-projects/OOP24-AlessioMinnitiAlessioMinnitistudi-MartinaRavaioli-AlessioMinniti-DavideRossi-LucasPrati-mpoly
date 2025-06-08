@@ -46,7 +46,7 @@ public final class SpecialFactoryImpl implements SpecialFactory {
     }
 
     @Override
-    public Special chancesAndCommunityChest(Position pos, Board board) {
+    public Special chancesAndCommunityChest(final Position pos, final Board board) {
         return new SpecialImpl("Chances and Community chest", pos, Group.SPECIAL, factory.drawChanceAndCommunityChest(board));
     }
 

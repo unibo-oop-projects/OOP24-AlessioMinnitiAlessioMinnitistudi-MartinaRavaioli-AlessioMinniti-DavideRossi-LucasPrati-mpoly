@@ -25,7 +25,7 @@ public final class ComplexInterpreter implements Interpreter {
      * constructor.
      * @param board to execute some commands
      * @param bank to execute some commands
-     * @param view to show graphical reference of some commands 
+     * @param viewcontroller to show graphical reference of some commands 
      */
     public ComplexInterpreter(final Board board, final Bank bank, final GameController viewcontroller) {
         inter = new BaseInterpreter(factory.allCommand(bank, board, viewcontroller));
