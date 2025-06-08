@@ -6,10 +6,12 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Function;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.monopoly.model.gameboard.api.Board;
 import it.unibo.monopoly.model.gameboard.api.CardFactory;
+import it.unibo.monopoly.model.gameboard.api.Property;
 import it.unibo.monopoly.model.gameboard.api.Special;
 import it.unibo.monopoly.model.gameboard.api.SpecialFactory;
 import it.unibo.monopoly.model.gameboard.api.Tile;
@@ -20,6 +22,7 @@ import it.unibo.monopoly.model.transactions.api.TitleDeed;
 import it.unibo.monopoly.model.transactions.impl.rentoption.RentOptionFactoryImpl;
 import it.unibo.monopoly.model.transactions.impl.titledeed.BaseTitleDeed;
 import it.unibo.monopoly.model.transactions.impl.titledeed.SpecialPropertyFactoryImpl;
+import it.unibo.monopoly.model.transactions.impl.titledeed.TitleDeedWithHouses;
 import it.unibo.monopoly.model.turnation.api.Position;
 
 /**
@@ -32,6 +35,14 @@ public class CardFactoryImpl implements CardFactory {
     private final RentOptionFactory rentOptionFactory = new RentOptionFactoryImpl();
     private final Board board;
     private final Bank bank;
+
+    private final Function<Integer, Integer> houseCost = propertyPrice -> {
+        final int min = 50;
+        final int max = 300;
+        int cost = propertyPrice / 3;
+        return Math.max(min, Math.min(max, cost));
+    };
+    private final Function<Integer, Integer> hotelCost = propertyPrice -> (int) (houseCost.apply(propertyPrice) * 1.5);
 
     private final List<Tile> tiles = new ArrayList<>();
     private final Set<TitleDeed> deeds = new HashSet<>();
@@ -113,11 +124,12 @@ public class CardFactoryImpl implements CardFactory {
             .orElseThrow(() -> new IllegalArgumentException(
                 "Missing 'group' for PROPERTY card at position: " + position.getPos()));
 
-        final NormalPropertyImpl property = new NormalPropertyImpl(name, position, group);
+        final Property property = new NormalPropertyImpl(name, position, group);
         final TitleDeed deed;
 
         if (isSpecialProperty(group)) {
             deed = handleSpecialPropertyTitleDeed(name, group);
+            deeds.add(deed);
 
         } else {
             final int cost = dto.getCost()
@@ -135,9 +147,18 @@ public class CardFactoryImpl implements CardFactory {
                 baseRent,
                 List.of(rentOptionFactory.allDeedsOfGroupWithSameOwner(baseRent))
             );
+            
+            final var buildableProperty = new BuildablePropertyImpl(property);
+            final TitleDeed deedWithHouses = new TitleDeedWithHouses(
+                deed,
+                List.of(),
+                new ImmutableProperty(buildableProperty),
+                houseCost,
+                hotelCost
+            );
+            deeds.add(deedWithHouses);
         }
         tiles.add(property);
-        deeds.add(deed);
     }
 
 
