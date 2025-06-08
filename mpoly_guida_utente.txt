@@ -1,0 +1,151 @@
+
+MONOPOLY - GUIDA UTENTE
+
+1. INTRODUZIONE E OBIETTIVO DEL GIOCO
+Benvenuto nel tuo Monopoly!
+L’obiettivo è semplice: diventare il giocatore più ricco accumulando proprietà, incassando affitti e gestendo con attenzione il proprio patrimonio.
+Per farlo, i giocatori si alternano in turni scanditi dal lancio dei dadi, muovendosi sul tabellone, acquistando terreni, costruendo case e interagendo con eventi casuali.
+
+La partita può essere affrontata in due modalità:
+- Classic Mode: attenta gestione finanziaria, rischio bancarotta.
+- Infinity Mode: gioco libero, senza eliminazioni per bancarotta.
+
+Il gioco supporta più giocatori, ognuno dei quali sceglie un nome e seleziona un colore tra quelli disponibili.
+
+Il regolamento completo è sempre consultabile tramite l’apposito pulsante "?", disponibile sia nel menu iniziale che durante la partita.
+
+
+2. AVVIO DEL GIOCO
+All’avvio, il gioco presenta un menu iniziale da cui è possibile:
+- Avviare una nuova partita
+- Consultare le regole
+- Modificare il numero di giocatori
+- Accedere alle impostazioni (Settings) per selezionare la modalità di gioco
+
+Scelta dei giocatori:
+Ogni partecipante inserisce il proprio nome in corrispondenza di uno dei colori disponibili. Ogni colore rappresenta un token unico sul tabellone e identifica visivamente le proprietà acquistate.
+
+File di configurazione (config.yml):
+Il gioco carica all’avvio il file config.yml, che definisce alcuni parametri fondamentali per la partita. Se il file non viene trovato o contiene errori di formattazione, viene caricata automaticamente una configurazione standard valida.
+
+Esempio di contenuto:
+MIN_PLAYERS: 2
+MAX_PLAYERS: 6
+NUM_DICE: 2
+SIDES_PER_DIE: 6
+FONT_NAME: ARIAL
+BIG_FONT: 32
+SMALL_FONT: 20
+INIT_BALANCE: 2000
+RULES_FILE: rules/rules.txt
+CARDS_FILE: cards/cards.json
+COLORS: RED, BLUE, ORANGE, GREEN, MAGENTA, CYAN, YELLOW, BLACK, LIGHT_GRAY, PINK, DARK_GRAY, GRAY
+
+Modalità di gioco:
+- Classic Mode: il giocatore viene eliminato se al termine del turno ha saldo negativo.
+- Infinity Mode: non esistono eliminazioni; anche con saldo negativo il gioco prosegue.
+
+
+3. INTERFACCIA GRAFICA E SCHERMATE PRINCIPALI
+L’interfaccia grafica è suddivisa in aree funzionali:
+
+Tabellone:
+- Visualizza tutte le caselle, token, proprietà e miglioramenti.
+- Proprietà acquistate mostrate con badge colorato del proprietario.
+- Case e alberghi visibili direttamente sulle caselle.
+
+Pannello giocatore:
+- Mostra nome, identificativo numerico e saldo attuale del giocatore attivo.
+
+Pannelli centrali:
+1. Azioni contestuali: mostra i pulsanti per eseguire azioni (compra proprietà, compra casa, compra hotel, paga affitto, vendi).
+2. Dettaglio carta: visualizza la carta ingrandita della casella con info su affitti, proprietario, valore.
+
+Comandi principali:
+- Tira dadi: tira i dadi e avvia il movimento
+- Gestione Proprietà: consente la gestione e vendita dei beni posseduti
+- Termina turno: termina il turno se tutte le azioni obbligatorie sono concluse (pagamento affitti, tiro dei dadi, eventuali effetti speciali)
+- "?": visualizza il regolamento
+
+
+4. SVOLGIMENTO DEL TURNO
+Ogni turno si compone di:
+
+1. Fase pre-tiro (facoltativa): vendita di beni tramite "Gestione Proprietà".
+2. Tiro dei dadi: clic su "Tira dadi", movimento sul tabellone.
+3. Interazione con la casella: acquisto, pagamento affitto, carte evento, tasse, acquisti di case/hotel se applicabili.
+4. Consultazione dettagli: tramite pannello carta ingrandita.
+5. Fine turno: clic su "Termina turno"; in Classic Mode è obbligatorio avere saldo positivo per non perdere.
+
+
+5. PROPRIETÀ E MIGLIORAMENTI
+Acquisto:
+- Si possono comprare proprietà libere, se si ha saldo sufficiente.
+
+Affitti:
+- Si pagano  tramite la banca.
+- Raddoppiati se il proprietario ha l’intero gruppo colore.
+- Aumentano con case e alberghi.
+
+Miglioramenti con case e hotel:
+- Per poter costruire, è necessario possedere tutte le proprietà dello stesso gruppo colore.
+- Quando acquisti case (o hotel), devi piazzarne esattamente una per ciascuna proprietà del gruppo, nello stesso turno.
+- Non è consentito aggiungere case in modo disomogeneo: se il gruppo è composto da tre terreni, comprerai contemporaneamente una casa su ciascuno dei tre.
+- Per costruire l’hotel, devi prima avere 4 case su ciascuna proprietà del gruppo; quindi vendi 4 case a testa e acquisti 1 hotel per ciascuna proprietà, in un unico blocco.
+
+Vendite:
+- Case e Hotel: restituiscono il 50% del valore di acquisto.
+- Analogamente all'acquisto, se decidi di vendere case (o hotel), devi rimuoverne una per ciascuna proprietà del gruppo, sempre tutte insieme.
+- Per demolire un hotel, vendi simultaneamente 1 hotel su ciascuna proprietà del gruppo e, se desideri, puoi ricomprare fino a 4 case per proprietà (sempre in blocco).
+- Proprietà: singolarmente, solo se prive di case/hotel. Restituiscono il 50% del valore di acquisto.
+- Stazioni: vendibili singolarmente, restituiscono il 75% del valore di acquisto.
+
+
+6. PRIGIONE, TASSE, SOCIETA' ED EVENTI SPECIALI
+Prigione:
+- Inviato se: si finisce sulla casella "Go to Jail" o si pesca la relativa carta imprevisti/probabilità.
+- Turno terminato subito, si rimane max 3 turni.
+- Si esce con numero doppio ai dadi o dopo 3 turni.
+
+Tasse:
+- Tax e carte evento possono richiedere pagamenti alla banca.
+
+Imprevisti/Probabilità:
+- 20 carte per tipo (Chance / Community Chest), effetti variabili (bonus e malus).
+- Vengono rimesse in fondo al mazzo.
+
+Free Parking:
+- Nessun effetto economico.
+- Si salta il turno successivo.
+
+SOCIETA':
+- hanno un costo di affitto pari al valore dei dadi moltiplicato per !!TODO!!
+
+
+7. FINE DEL GIOCO E CONDIZIONI DI VITTORIA
+Classic Mode:
+- Eliminazione se saldo negativo a fine turno.
+- Vince l’ultimo giocatore rimasto.
+
+Infinity Mode:
+- Nessuna eliminazione, anche con saldo negativo.
+
+I giocatori possono sempre terminare la partita utilizzando la "X" della finestra di gioco, in quel caso vince il giocatore con il saldo più alto.
+
+
+8. RIEPILOGO COMANDI E STRUTTURA TECNICA
+Pulsanti principali:
+- Tira dadi: tira i dadi
+- Gestione Proprietà: gestisci beni posseduti
+- Termina turno: termina turno
+- "?": visualizza regolamento
+
+Azioni contestuali (casella attuale):
+- Buy Property, Buy House, Buy Hotel, Pay Rent, Sell
+
+Regolamento:
+- Sempre accessibile tramite "?" in qualsiasi momento.
+- Caricato dal percorso indicato nel campo RULES_FILE.
+
+File config.yml:
+- Parametri personalizzabili: numero giocatori, dadi, saldo iniziale, font, percorsi ai file, colori dei token dei giocatori
