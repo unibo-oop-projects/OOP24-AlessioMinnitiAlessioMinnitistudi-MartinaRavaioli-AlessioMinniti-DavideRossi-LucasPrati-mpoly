@@ -24,7 +24,7 @@ class ConfigurationTest {
     private static final int VALID_MAX = 6;
     private static final int VALID_NUM_DICE = 2;
     private static final int VALID_SIDES_PER_DIE = 6;
-    private static final String VALID_FONT = "ARIAL";
+    private static final String VALID_FONT = "SansSerif";
     private static final int VALID_BIG_FONT = 30;
     private static final int VALID_SMALL_FONT = 18;
     private static final int VALID_STARTER_BALANCE = 1500;

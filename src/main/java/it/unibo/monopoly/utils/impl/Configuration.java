@@ -170,7 +170,7 @@ public final class Configuration {
         private static final int MAX_PLAYER = 4; 
         private static final int NUM_DICE = 2;
         private static final int SIDES_PER_DIE = 6;
-        private static final String FONT_NAME = "ARIAL";
+        private static final String FONT_NAME = "SansSerif";
         private static final int BIG_FONT = 24;
         private static final int SMALL_FONT = 16;
         private static final int INIT_BALANCE = 2000;
