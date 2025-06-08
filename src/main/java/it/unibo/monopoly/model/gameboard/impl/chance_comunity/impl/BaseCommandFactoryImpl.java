@@ -233,7 +233,7 @@ public final class BaseCommandFactoryImpl implements BaseCommandFactory {
                 final Tile t = board.getTile(tile);
                 if (t instanceof Property && !bank.getTitleDeed(tile).isOwned()) {
                     bank.buyTitleDeed(tile, player.getID());
-                    view.callBuyProperty((Property) t);
+                    view.callBuyProperty(t.getName(), null);
                 }
             }
 

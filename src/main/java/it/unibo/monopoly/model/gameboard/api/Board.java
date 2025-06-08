@@ -3,6 +3,7 @@ package it.unibo.monopoly.model.gameboard.api;
 import java.util.Collection;
 import java.util.List;
 
+import it.unibo.monopoly.model.gameboard.impl.chance_comunity.impl.ChanceAndCommunityChestCard;
 import it.unibo.monopoly.model.turnation.api.Position;
 
 /**
@@ -101,5 +102,9 @@ public interface Board {
      * @return Position
      */
     Position getPrevPawnPosition(int id);
-
+    /**
+     * draw a card by calling the method of the deck.
+     * @return Chance or Community card
+     */
+    ChanceAndCommunityChestCard draw();
 }

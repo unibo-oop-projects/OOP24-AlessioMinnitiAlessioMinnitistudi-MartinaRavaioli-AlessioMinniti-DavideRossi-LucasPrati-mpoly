@@ -139,6 +139,15 @@ public class CardFactoryImpl implements CardFactory {
                 baseRent,
                 List.of(rentOptionFactory.allDeedsOfGroupWithSameOwner(baseRent))
             );
+            // deed = new TitleDeedWithHouses(
+            //     group,
+            //     name,
+            //     cost,
+            //     p -> p / 2,
+            //     baseRent,
+
+            //     property
+            // );
         }
         tiles.add(property);
         deeds.add(deed);

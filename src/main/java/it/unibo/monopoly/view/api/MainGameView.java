@@ -110,9 +110,10 @@ public interface MainGameView {
     void callClearPanel(String name);
     /**
      * call the buy property method in the gameboard view.
-     * @param prop the property to buy
+     * @param name name of the property to buy
+     * @param color color of the player who buy the property
      */
-    void callBuyProperty(Property prop);
+    void callBuyProperty(String name, Color color);
     /**
      * Displays a generic yes/no option message sent to the user when he'll die if he passes the turn.
      * if the player chooses 'yes' then the he'll pass the turn and die.
@@ -130,4 +131,8 @@ public interface MainGameView {
      * call the frame that shows the final ranking.
      */
     void showRanking();
+    /**
+     * calls the clear all method in the gameboard view.
+     */
+    void callClearAll();
 }

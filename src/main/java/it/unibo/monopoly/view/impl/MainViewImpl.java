@@ -16,7 +16,6 @@ import javax.swing.JSplitPane;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.monopoly.controller.api.GameController;
 import it.unibo.monopoly.controller.impl.GUIVenditaLogicImpl;
-import it.unibo.monopoly.model.gameboard.api.Property;
 import it.unibo.monopoly.model.gameboard.api.Special;
 import it.unibo.monopoly.model.transactions.api.Bank;
 import it.unibo.monopoly.model.transactions.api.BankAccount;
@@ -197,8 +196,8 @@ public final class MainViewImpl implements MainGameView {
     }
 
     @Override
-    public void callBuyProperty(final Property prop) {
-        this.gameBoardPanel.buyProperty(prop.getName(), this.controller.getCurrPlayer().getID());
+    public void callBuyProperty(final String name, final Color color) {
+        this.gameBoardPanel.buyProperty(name, color);
     }
 
     @Override
@@ -218,5 +217,10 @@ public final class MainViewImpl implements MainGameView {
     @Override
     public void showRanking() {
         new GUIRanking(controller.getRanking(), controller.getWinner());
+    }
+
+    @Override
+    public void callClearAll() {
+        this.gameBoardPanel.clearAll();
     }
 }

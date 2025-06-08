@@ -19,6 +19,7 @@ import it.unibo.monopoly.model.gameboard.api.Special;
 import it.unibo.monopoly.model.gameboard.api.Tile;
 import it.unibo.monopoly.model.transactions.api.Bank;
 import it.unibo.monopoly.model.transactions.api.PropertyAction;
+import it.unibo.monopoly.model.transactions.api.TitleDeed;
 import it.unibo.monopoly.model.turnation.api.Player;
 import it.unibo.monopoly.model.turnation.api.TurnationManager;
 import it.unibo.monopoly.utils.api.UseFileTxt;
@@ -227,7 +228,7 @@ public final class GameControllerImpl implements GameController {
             final Property currentlySittingProperty = (Property) this.board.getTileForPawn(
                                                         this.turnationManager.getIdCurrPlayer());
             if ("buy".equals(actionName)) {
-                gameView.callBuyProperty(currentlySittingProperty);
+                gameView.callBuyProperty(currentlySittingProperty.getName(), this.turnationManager.getCurrPlayer().getColor());
             } //else if ("sell".equals(actionName)) {
             //     //gameView.callClearPanel();
             // }
@@ -278,5 +279,14 @@ public final class GameControllerImpl implements GameController {
         }
         gameView.clearControlsUI();
         refreshPlayerInfo();
+    }
+    @Override
+    public void refreshBankPlayerInfo() {
+        this.gameView.callClearAll();
+        for (final Player p : this.turnationManager.getPlayerList()) {
+            for (final TitleDeed t : this.bank.getTitleDeedsByOwner(p.getID())) {
+                this.gameView.callBuyProperty(t.getName(), p.getColor());
+            }
+        }
     }
 }
