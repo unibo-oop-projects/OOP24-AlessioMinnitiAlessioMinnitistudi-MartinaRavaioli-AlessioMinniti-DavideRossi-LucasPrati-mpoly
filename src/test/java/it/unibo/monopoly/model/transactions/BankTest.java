@@ -292,4 +292,12 @@ class BankTest {
 
         assertEquals(AMOUNT - PROPERTY_SALE_PRICE2 - HOTEL_PRICE.apply(ID_1), bank.getBankAccount(ID_1).getBalance());
     }
+
+    @Test
+    void testBuyHouseWithoutOwnership() {
+        IllegalStateException e = assertThrows(IllegalStateException.class, () -> 
+            bank.buyHouse(TITLE_DEED_NAME3)
+        );
+        assertTrue(e.getMessage().contains("Cannot place a house on a property with no owner"));
+    }
 } 
