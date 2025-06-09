@@ -23,7 +23,7 @@ import it.unibo.monopoly.model.turnation.impl.PositionImpl;
 public class BoardImpl implements Board {
     private final List<Tile> tiles; /**list of tiles. */
     private final List<Pawn> pawns; /**list of pawns. */
-    private final ChancheAndCommunityChestDeck deck;
+    private ChancheAndCommunityChestDeck deck;
     /**
      * constructor.
      * @param tiles list of tiles
@@ -182,6 +182,11 @@ public class BoardImpl implements Board {
     @Override
     public final ChanceAndCommunityChestCard draw() {
         return this.deck.draw();
+    }
+
+    @Override
+    public void addDeck(ChancheAndCommunityChestDeck deck) {
+        this.deck = deck;
     }
 
 }
