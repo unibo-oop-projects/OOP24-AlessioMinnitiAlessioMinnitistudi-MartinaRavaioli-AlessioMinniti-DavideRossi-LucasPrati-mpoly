@@ -300,4 +300,12 @@ class BankTest {
         );
         assertTrue(e.getMessage().contains("Cannot place a house on a property with no owner"));
     }
+
+    @Test
+    void testBuyHotelWithoutOwnership() {
+        IllegalStateException e = assertThrows(IllegalStateException.class, () -> 
+            bank.buyHotel(TITLE_DEED_NAME3)
+        );
+        assertTrue(e.getMessage().contains("Cannot place a house on a property with no owner"));
+    }
 } 
