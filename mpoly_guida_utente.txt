@@ -38,7 +38,7 @@ BIG_FONT: 32
 SMALL_FONT: 20
 INIT_BALANCE: 2000
 RULES_FILE: rules/rules.txt
-CARDS_FILE: cards/cards.json
+CARDS_FILE: cards/final_cards.json
 COLORS: RED, BLUE, ORANGE, GREEN, MAGENTA, CYAN, YELLOW, BLACK, LIGHT_GRAY, PINK, DARK_GRAY, GRAY
 
 Modalità di gioco:
@@ -80,10 +80,10 @@ Ogni turno si compone di:
 
 5. PROPRIETÀ E MIGLIORAMENTI
 Acquisto:
-- Si possono comprare proprietà libere, se si ha saldo sufficiente.
+- Si possono comprare proprietà libere.
 
 Affitti:
-- Si pagano  tramite la banca.
+- Si pagano tramite la banca.
 - Raddoppiati se il proprietario ha l’intero gruppo colore.
 - Aumentano con case e alberghi.
 
@@ -119,7 +119,7 @@ Free Parking:
 - Si salta il turno successivo.
 
 SOCIETA':
-- hanno un costo di affitto pari al valore dei dadi moltiplicato per l'affitto base
+- Hanno un costo di affitto pari al valore dei dadi moltiplicato per l'affitto base
 
 
 7. FINE DEL GIOCO E CONDIZIONI DI VITTORIA
