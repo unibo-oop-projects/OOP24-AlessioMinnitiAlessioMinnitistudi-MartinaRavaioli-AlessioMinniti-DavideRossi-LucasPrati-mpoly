@@ -119,24 +119,25 @@ public final class MainViewImpl implements MainGameView {
     }
 
     @Override
-    public void refreshCurrentPlayerInfo(final Player player, final BankAccount account) {
+    public void displayPlayerInfo(final Player player, final BankAccount account) {
         playerInfoPanel.displayPlayer(player);
         accountInfoPanel.displayBankAccount(account);
         mainGameFrame.repaint();
     }
 
     @Override
-    public void clearControlsUI() {
+    public void refreshUIForNewTurn(final Player pl) {
         playerInfoPanel.renderDefaultUI();
         accountInfoPanel.renderDefaultUI();
         contractPanel.renderDefaultUI();
         gameActionsPanel.renderDefaultUI();
         mainActionsPanel.renderDefaultUI();
+        mainActionsPanel.setDiceButtonEnabled(pl.isParked());
         mainGameFrame.repaint();
     }
 
     @Override
-    public void displayPropertyContract(final TitleDeed propertyContract) {
+    public void displayPropertyContractInfo(final TitleDeed propertyContract) {
         contractPanel.displayPropertyContract(propertyContract);
         mainGameFrame.repaint();
     }
@@ -148,7 +149,7 @@ public final class MainViewImpl implements MainGameView {
     }
 
     @Override
-    public void showPlayerActions(final Set<String> actions) {
+    public void displayPlayerActions(final Set<String> actions) {
         gameActionsPanel.buildActionButtons(actions, controller);
         mainGameFrame.repaint();
     }
@@ -160,7 +161,7 @@ public final class MainViewImpl implements MainGameView {
     }
 
     @Override
-    public void showRules(final String rules) {
+    public void displayRules(final String rules) {
         new RulesWindowView(this.mainGameFrame, controller.getConfiguration(), rules);
     }
 
@@ -172,7 +173,7 @@ public final class MainViewImpl implements MainGameView {
             this,
             this.mainGameFrame
         );
-        this.refreshCurrentPlayerInfo(player, bank.getBankAccount(player.getID()));
+        this.displayPlayerInfo(player, bank.getBankAccount(player.getID()));
     }
 
     @Override

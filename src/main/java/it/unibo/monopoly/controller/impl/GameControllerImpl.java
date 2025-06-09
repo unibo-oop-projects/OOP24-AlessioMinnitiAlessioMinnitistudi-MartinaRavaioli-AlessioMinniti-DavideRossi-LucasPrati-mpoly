@@ -69,7 +69,7 @@ public final class GameControllerImpl implements GameController {
 
     private void refreshPlayerInfo() {
         final Player currentPlayer = turnationManager.getCurrPlayer();
-        gameView.refreshCurrentPlayerInfo(currentPlayer, bank.getBankAccount(currentPlayer.getID()));
+        gameView.displayPlayerInfo(currentPlayer, bank.getBankAccount(currentPlayer.getID()));
     }
 
     private void refreshCurrentTileInfo() {
@@ -77,7 +77,7 @@ public final class GameControllerImpl implements GameController {
         final Tile currentlySittingTile = this.board.getTileForPawn(currentPlayerId);
         if (currentlySittingTile instanceof Property) {
             final String propertyName = currentlySittingTile.getName();
-            this.gameView.displayPropertyContract(this.bank.getTitleDeed(propertyName));
+            this.gameView.displayPropertyContractInfo(this.bank.getTitleDeed(propertyName));
         } else {
             final Special specialTile = (Special) currentlySittingTile;
             this.gameView.displaySpecialInfo(specialTile);
@@ -101,8 +101,7 @@ public final class GameControllerImpl implements GameController {
         if (!this.turnationManager.playerDiesIfTurnPassed()) {
             if (this.turnationManager.canPassTurn()) {
                 this.turnationManager.getNextPlayer();
-                gameView.clearControlsUI();
-                refreshPlayerInfo();
+                gameView.refreshUIForNewTurn(turnationManager.getCurrPlayer());
             } else {
                 this.gameView.displayMessage("The player has some actions to do before passing the turn");
             }
@@ -133,7 +132,7 @@ public final class GameControllerImpl implements GameController {
                                             result.stream().mapToInt(d -> d).sum())
                                             .stream()
                                             .collect(Collectors.toMap(PropertyAction::getName, d -> d));
-                    this.gameView.showPlayerActions(turnActions.keySet());
+                    this.gameView.displayPlayerActions(turnActions.keySet());
                 } else if (currentlySittingTile instanceof Special) {
                     final Special specialTile = (Special) currentlySittingTile;
                     if (!"Start".equals(currentlySittingTile.getName())) {
@@ -170,7 +169,7 @@ public final class GameControllerImpl implements GameController {
     public void loadRules() {
         final UseFileTxt importRules = new UseFileTxtImpl();
         final String rules = importRules.loadTextResource(config.getRulesPath());
-        gameView.showRules(rules);
+        gameView.displayRules(rules);
     }
 
     @Override
@@ -240,7 +239,7 @@ public final class GameControllerImpl implements GameController {
     @Override
     public void start() {
         this.turnationManager.resetBankState();
-        gameView.clearControlsUI();
+        gameView.refreshUIForNewTurn(turnationManager.getCurrPlayer());
         refreshPlayerInfo();
     }
 
@@ -275,7 +274,7 @@ public final class GameControllerImpl implements GameController {
                 this.gameView.showRanking();
             }
         }
-        gameView.clearControlsUI();
+        gameView.refreshUIForNewTurn(turnationManager.getCurrPlayer());
         refreshPlayerInfo();
     }
     @Override

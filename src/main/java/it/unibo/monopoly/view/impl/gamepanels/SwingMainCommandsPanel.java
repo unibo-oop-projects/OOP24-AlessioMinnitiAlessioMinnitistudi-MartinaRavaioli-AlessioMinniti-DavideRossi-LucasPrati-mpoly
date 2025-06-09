@@ -102,4 +102,9 @@ final class SwingMainCommandsPanel extends SwingAbstractJPanel implements Standa
         dicesResultsJLabel.setText(DICES_RESULTS_PH + stringBuilder.toString());
         dicesTotalJLabel.setText(DICES_TOTAL_PH + Integer.toString(results.stream().mapToInt(i -> i).sum()));
     }
+
+    @Override
+    public void setDiceButtonEnabled(final boolean isEnabled) {
+        throwDicesButton.setEnabled(isEnabled);
+    }
 }
