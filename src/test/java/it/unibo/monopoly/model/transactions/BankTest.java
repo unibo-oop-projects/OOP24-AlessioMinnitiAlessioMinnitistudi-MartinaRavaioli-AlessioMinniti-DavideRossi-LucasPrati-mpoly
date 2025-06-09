@@ -1,6 +1,8 @@
 package it.unibo.monopoly.model.transactions;
 
+import java.util.List;
 import java.util.Set;
+import java.util.function.Function;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -12,15 +14,22 @@ import org.junit.jupiter.api.Test;
 
 import com.google.common.collect.Sets;
 
+import it.unibo.monopoly.model.gameboard.impl.BuildablePropertyImpl;
 import it.unibo.monopoly.model.gameboard.impl.Group;
+import it.unibo.monopoly.model.gameboard.impl.ImmutableProperty;
+import it.unibo.monopoly.model.gameboard.impl.NormalPropertyImpl;
 import it.unibo.monopoly.model.transactions.api.Bank;
 import it.unibo.monopoly.model.transactions.api.BankAccount;
+import it.unibo.monopoly.model.transactions.api.RentOption;
 import it.unibo.monopoly.model.transactions.api.TitleDeed;
 import it.unibo.monopoly.model.transactions.impl.BankImpl;
 import it.unibo.monopoly.model.transactions.impl.ImmutableTitleDeedCopy;
 import it.unibo.monopoly.model.transactions.impl.bankaccount.ImmutableBankAccountCopy;
 import it.unibo.monopoly.model.transactions.impl.bankaccount.SimpleBankAccountImpl;
+import it.unibo.monopoly.model.transactions.impl.rentoption.RentOptionFactoryImpl;
 import it.unibo.monopoly.model.transactions.impl.titledeed.BaseTitleDeed;
+import it.unibo.monopoly.model.transactions.impl.titledeed.TitleDeedWithHouses;
+import it.unibo.monopoly.model.turnation.impl.PositionImpl;
 
 /*
  * Tests to verify correct functionality of
@@ -37,8 +46,15 @@ class BankTest {
     private static final String TITLE_DEED_NAME3 = "CITTA3";
     private static final int PROPERTY_SALE_PRICE1 = 50;
     private static final int PROPERTY_SALE_PRICE2 = 60;
-    private static final int HOUSE_PRICE = 20;
-    private static final int HOTEL_PRICE = 30;
+    private static final Function<Integer,Integer> HOUSE_PRICE = d -> 20;
+    private static final Function<Integer,Integer> HOTEL_PRICE = d -> 30;
+    private static final int BASE_RENT_PRICE = 2;
+    private BuildablePropertyImpl referencedProperty = new BuildablePropertyImpl(
+        new NormalPropertyImpl(TITLE_DEED_NAME3, new PositionImpl(4), Group.RED));
+    private ImmutableProperty property = new ImmutableProperty(referencedProperty);
+    private TitleDeed decorated = new BaseTitleDeed(Group.RED, TITLE_DEED_NAME3, PROPERTY_SALE_PRICE2, s -> s / 2, 10);
+    private List<RentOption> housesOptions = new RentOptionFactoryImpl().housesAndHotelsOptions(BASE_RENT_PRICE, 4, true);
+
 
     private final Set<BankAccount> accounts = Set.of(
         new SimpleBankAccountImpl(ID_1, AMOUNT, e -> true),
@@ -47,7 +63,8 @@ class BankTest {
     private final Set<TitleDeed> deeds = Set.of(
         new BaseTitleDeed(Group.GREEN, TITLE_DEED_NAME1, PROPERTY_SALE_PRICE1, s -> s / 2, 10),
         new BaseTitleDeed(Group.GREEN, TITLE_DEED_NAME2, PROPERTY_SALE_PRICE2, s -> s / 2, 10),
-        new BaseTitleDeed(Group.RED, TITLE_DEED_NAME3, PROPERTY_SALE_PRICE2, s -> s / 2, 10)
+        
+        new TitleDeedWithHouses(decorated, housesOptions, property, HOUSE_PRICE, HOTEL_PRICE)
     );
     private Bank bank;
 
@@ -259,10 +276,10 @@ class BankTest {
     void testBuyHouse() {
         bank.getApplicableActionsForTitleDeed(ID_1, TITLE_DEED_NAME3, DICE_THROW);
         bank.buyTitleDeed(TITLE_DEED_NAME3, ID_1);
-
+        bank.getApplicableActionsForTitleDeed(ID_1, TITLE_DEED_NAME3, DICE_THROW);
         // Proprietà unica del gruppo -> considerata sufficiente per costruire
         bank.buyHouse(TITLE_DEED_NAME3);
 
-        assertEquals(AMOUNT - PROPERTY_SALE_PRICE2 - HOUSE_PRICE, bank.getBankAccount(ID_1).getBalance());
+        assertEquals(AMOUNT - PROPERTY_SALE_PRICE2 - HOUSE_PRICE.apply(ID_1), bank.getBankAccount(ID_1).getBalance());
     }
 } 
