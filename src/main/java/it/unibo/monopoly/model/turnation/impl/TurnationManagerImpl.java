@@ -105,7 +105,8 @@ public class TurnationManagerImpl implements TurnationManager {
                 Collection<Integer> result = this.dice.throwDices();
                 return result;
             } else {
-                throw new IllegalAccessException("the player can't throw dices");
+                passedParkTurn();
+                throw new IllegalAccessException("the player can't throw dices because is parked");
             }
             
         } else {
