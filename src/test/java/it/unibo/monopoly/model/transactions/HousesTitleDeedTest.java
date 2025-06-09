@@ -19,7 +19,9 @@ import it.unibo.monopoly.model.transactions.impl.rentoption.RentOptionFactoryImp
 import it.unibo.monopoly.model.transactions.impl.titledeed.BaseTitleDeed;
 import it.unibo.monopoly.model.transactions.impl.titledeed.TitleDeedWithHouses;
 import it.unibo.monopoly.model.turnation.impl.PositionImpl;
-
+/**
+ * test house title deeds
+ */
 public class HousesTitleDeedTest {
         private static final Group GROUP_NAME = Group.GREEN;
     private static final String TITLE_DEED_NAME = "vicolo corto";
@@ -31,8 +33,8 @@ public class HousesTitleDeedTest {
     private static final String FOUR_HOUSES_OPTION = "4 case";
     private static final String THREE_HOUSES_OPTION = "3 case";
     private static final int BASE_RENT_PRICE = 2;
-    private static final Function<Integer,Integer> HOUSE_PRICE = d -> 50;
-    private static final Function<Integer,Integer> HOTEL_PRICE = d -> 100;
+    private static final Function<Integer, Integer> HOUSE_PRICE = d -> 50;
+    private static final Function<Integer, Integer> HOTEL_PRICE = d -> 100;
     private BuildablePropertyImpl referencedProperty;
     private ImmutableProperty property;
     private TitleDeed deed;
@@ -61,7 +63,7 @@ public class HousesTitleDeedTest {
 
     @Test
     void applyHotelCostFunction() {
-        final int hotelCost = deed.getHousePrice();
+        final int hotelCost = deed.getHotelPrice();
         assertEquals(HOTEL_PRICE.apply(SALE_PRICE), hotelCost);
     }
 
@@ -76,6 +78,7 @@ public class HousesTitleDeedTest {
 
     @Test
     void rentAfterPlacingHouse() {
+        deed.setOwner(1);
         referencedProperty.buildHouse();
         final int rent = deed.getRent(Set.of(), DICE_THROW);
         assertEquals(housesOptions.getFirst().getPrice(), rent);
@@ -83,6 +86,7 @@ public class HousesTitleDeedTest {
 
     @Test 
     void rentAfterPlacingHotel() {
+        deed.setOwner(1);
         referencedProperty.buildHouse();
         referencedProperty.buildHouse();
         referencedProperty.buildHouse();
@@ -94,12 +98,14 @@ public class HousesTitleDeedTest {
 
     @Test 
     void rentWithNoHouses() {
+        deed.setOwner(1);
         final int rent = deed.getRent(Set.of(), DICE_THROW);
         assertEquals(decorated.getRent(Set.of(), DICE_THROW), rent);
     }
 
     @Test
     void rentAfterRemovingHotel() throws IllegalAccessException {
+        deed.setOwner(1);
         referencedProperty.buildHouse();
         referencedProperty.buildHouse();
         referencedProperty.buildHouse();
@@ -113,6 +119,7 @@ public class HousesTitleDeedTest {
 
     @Test
     void rentAfterRemovingHouse() throws IllegalAccessException {
+        deed.setOwner(1);
         referencedProperty.buildHouse();
         referencedProperty.buildHouse();
         referencedProperty.buildHouse();

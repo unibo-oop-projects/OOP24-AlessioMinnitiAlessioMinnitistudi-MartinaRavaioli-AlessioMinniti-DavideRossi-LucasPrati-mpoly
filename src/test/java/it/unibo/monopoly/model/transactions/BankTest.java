@@ -46,8 +46,8 @@ class BankTest {
     private static final String TITLE_DEED_NAME3 = "CITTA3";
     private static final int PROPERTY_SALE_PRICE1 = 50;
     private static final int PROPERTY_SALE_PRICE2 = 60;
-    private static final Function<Integer,Integer> HOUSE_PRICE = d -> 20;
-    private static final Function<Integer,Integer> HOTEL_PRICE = d -> 30;
+    private static final Function<Integer, Integer> HOUSE_PRICE = d -> 20;
+    private static final Function<Integer, Integer> HOTEL_PRICE = d -> 30;
     private static final int BASE_RENT_PRICE = 2;
     private BuildablePropertyImpl referencedProperty = new BuildablePropertyImpl(
         new NormalPropertyImpl(TITLE_DEED_NAME3, new PositionImpl(4), Group.RED));
@@ -63,7 +63,7 @@ class BankTest {
     private final Set<TitleDeed> deeds = Set.of(
         new BaseTitleDeed(Group.GREEN, TITLE_DEED_NAME1, PROPERTY_SALE_PRICE1, s -> s / 2, 10),
         new BaseTitleDeed(Group.GREEN, TITLE_DEED_NAME2, PROPERTY_SALE_PRICE2, s -> s / 2, 10),
-        
+
         new TitleDeedWithHouses(decorated, housesOptions, property, HOUSE_PRICE, HOTEL_PRICE)
     );
     private Bank bank;
@@ -295,7 +295,7 @@ class BankTest {
 
     @Test
     void testBuyHouseWithoutOwnership() {
-        IllegalStateException e = assertThrows(IllegalStateException.class, () -> 
+        final IllegalStateException e = assertThrows(IllegalStateException.class, () -> 
             bank.buyHouse(TITLE_DEED_NAME3)
         );
         assertTrue(e.getMessage().contains("Cannot place a house on a property with no owner"));
@@ -303,9 +303,10 @@ class BankTest {
 
     @Test
     void testBuyHotelWithoutOwnership() {
-        IllegalStateException e = assertThrows(IllegalStateException.class, () -> 
+        final IllegalStateException e = assertThrows(IllegalStateException.class, () -> 
             bank.buyHotel(TITLE_DEED_NAME3)
         );
         assertTrue(e.getMessage().contains("Cannot place a house on a property with no owner"));
     }
+
 } 

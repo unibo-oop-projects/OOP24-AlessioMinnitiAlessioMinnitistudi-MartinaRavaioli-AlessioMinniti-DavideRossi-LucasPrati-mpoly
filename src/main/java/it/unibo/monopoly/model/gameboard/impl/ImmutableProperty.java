@@ -82,8 +82,7 @@ public final class ImmutableProperty implements Property {
 
     @Override
     public boolean isBuildable() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'isBuildable'");
+        return this.property.isBuildable();
     }
 
     @Override
