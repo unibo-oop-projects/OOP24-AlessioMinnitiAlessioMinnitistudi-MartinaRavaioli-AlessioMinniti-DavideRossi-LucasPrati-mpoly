@@ -17,7 +17,6 @@ public final class ChancheAndCommunityChestDeckImpl implements ChancheAndCommuni
     /**
      * constructor.
      * @param cards the list of cards for this deck
-     * @param type the type of the deck, chances or community chests
      */
     public ChancheAndCommunityChestDeckImpl(final List<ChanceAndCommunityChestCard> cards) {
         this.cards = List.copyOf(cards);

@@ -15,7 +15,6 @@ public interface DeckCreator {
     /**
      * a method that create a deck of cards based on a file.
      * @param file the file from which the cards effect will be taken
-     * @param type of the deck, chances or community chests
      * @param board to execute some commands 
      * @param bank to execute some commands 
      * @param turnM to execute some commands 
@@ -23,8 +22,7 @@ public interface DeckCreator {
      * @return the deck
      * @throws FileNotFoundException if the file in the arguments is not valid
      */
-    void createDeck(String file, 
-                                Board board, Bank bank, TurnationManager turnM, 
+    void createDeck(String file, Board board, Bank bank, TurnationManager turnM, 
                                 GameController viewcontroller) throws FileNotFoundException;
 
 }

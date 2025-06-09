@@ -185,7 +185,7 @@ public class BoardImpl implements Board {
     }
 
     @Override
-    public void addDeck(ChancheAndCommunityChestDeck deck) {
+    public final void addDeck(final ChancheAndCommunityChestDeck deck) {
         this.deck = deck;
     }
 
