@@ -4,6 +4,7 @@ package it.unibo.monopoly.utils.impl;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Dialog;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.LayoutManager;
@@ -62,7 +63,7 @@ public final class GuiUtils {
      * Other properties are enforced and not configurable:
      * <ul>
      *   <li>{@code setResizable(true)} is always applied</li>
-     *   <li>{@code setModal(true)} is applied if the window is a {@link JDialog}</li>
+     *   <li>{@code setModalityType(Dialog.DEFAULT_MODALITY_TYPE)} is enforced for {@link JDialog}</li>
      *   <li>{@code setDefaultCloseOperation} is set to:
      *     <ul>
      *       <li>{@code EXIT_ON_CLOSE} for {@link JFrame}</li>
@@ -86,7 +87,7 @@ public final class GuiUtils {
      * @implNote Some properties are automatically enforced and cannot be customized through parameters:
      *   <ul>
      *    <li>{@code setResizable(true)} is always applied</li>
-     *    <li>{@code setModal(true)} is enforced for {@link JDialog}</li>
+     *    <li>{@code setModalityType(Dialog.DEFAULT_MODALITY_TYPE)} is enforced for {@link JDialog}</li>
      *    <li>{@code setDefaultCloseOperation} is set to:
      *      <ul>
      *        <li>{@code EXIT_ON_CLOSE} for {@link JFrame}</li>
@@ -117,7 +118,7 @@ public final class GuiUtils {
                 dialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
                 dialog.setTitle(title);
                 dialog.setResizable(true);
-                dialog.setModal(true);
+                dialog.setModalityType(Dialog.DEFAULT_MODALITY_TYPE);
             }
         }
     }
@@ -201,7 +202,6 @@ public final class GuiUtils {
     /**
      * Setup a new global font to use, provided by the configuration.
      * @param config a consistent {@link Configuration} for the font settings
-     * @throws IllegalArgumentException if the font is not available
      */
     public static void applyGlobalFont(final Configuration config) {
         final Font font = getSmallFontFromConfiguration(config);

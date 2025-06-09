@@ -89,7 +89,7 @@ public final class MainViewImpl implements MainGameView {
         mainGameFrame.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(final WindowEvent e) {
-                new GUIRanking(controller.getRanking(), controller.getWinner());
+                new GUIRanking(mainGameFrame, controller.getRanking(), controller.getWinner());
                 mainGameFrame.dispose();
             }
         });
@@ -217,7 +217,8 @@ public final class MainViewImpl implements MainGameView {
 
     @Override
     public void showRanking() {
-        new GUIRanking(controller.getRanking(), controller.getWinner());
+        new GUIRanking(mainGameFrame, controller.getRanking(), controller.getWinner());
+        mainGameFrame.dispose();
     }
 
     @Override
