@@ -117,7 +117,7 @@ public final class GameControllerImpl implements GameController {
             final Collection<Integer> result = this.turnationManager.moveByDices();
 
             final int currentPlayerId = this.turnationManager.getIdCurrPlayer();
-            if (!this.turnationManager.isCurrentPlayerInPrison() || (this.turnationManager.canExitPrison(result))) {
+            if (!this.turnationManager.isCurrentPlayerInPrison() || this.turnationManager.tryExitPrison(result)) {
                 this.board.movePawn(currentPlayerId, result);
             } else {
                 this.gameView.displayMessage("you can't move, you have " 
