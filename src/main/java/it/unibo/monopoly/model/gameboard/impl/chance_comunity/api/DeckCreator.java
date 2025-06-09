@@ -23,7 +23,7 @@ public interface DeckCreator {
      * @return the deck
      * @throws FileNotFoundException if the file in the arguments is not valid
      */
-    ChancheAndCommunityChestDeck createDeck(String file, String type, 
+    void createDeck(String file, 
                                 Board board, Bank bank, TurnationManager turnM, 
                                 GameController viewcontroller) throws FileNotFoundException;
 

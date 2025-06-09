@@ -20,7 +20,7 @@ import it.unibo.monopoly.utils.impl.UseFileTxtImpl;
 class ParserOnSpaceTest {
 
         private final UseFileTxt f = new UseFileTxtImpl();
-        private final String fi = f.loadTextResource("cards//commandTest.txt");
+        private final String fi = f.loadTextResource("debug//cards//commandTest.txt");
 
     @Test
     void parserOnHyphenTest() {

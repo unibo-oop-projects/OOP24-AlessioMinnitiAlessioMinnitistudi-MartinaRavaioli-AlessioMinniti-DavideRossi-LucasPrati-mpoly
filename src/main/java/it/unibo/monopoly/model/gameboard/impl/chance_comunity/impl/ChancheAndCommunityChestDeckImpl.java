@@ -10,7 +10,6 @@ import it.unibo.monopoly.model.gameboard.impl.chance_comunity.api.ChancheAndComm
  */
 public final class ChancheAndCommunityChestDeckImpl implements ChancheAndCommunityChestDeck {
 
-    private final String type;
     private int ind;
     private final List<ChanceAndCommunityChestCard> cards; 
     private final Random r = new Random();
@@ -20,25 +19,19 @@ public final class ChancheAndCommunityChestDeckImpl implements ChancheAndCommuni
      * @param cards the list of cards for this deck
      * @param type the type of the deck, chances or community chests
      */
-    public ChancheAndCommunityChestDeckImpl(final List<ChanceAndCommunityChestCard> cards, final String type) {
+    public ChancheAndCommunityChestDeckImpl(final List<ChanceAndCommunityChestCard> cards) {
         this.cards = List.copyOf(cards);
-        this.type = type;
     }
 
     @Override
     public ChanceAndCommunityChestCard draw() {
-        if (cards.isEmpty()) {
+        if (!cards.isEmpty()) {
             final int index = r.nextInt(cards.size()); 
             return cards.get(index);
         } else {
             final BaseCommandFactoryImpl fact = new BaseCommandFactoryImpl();
-            return new ChanceAndCommunityChestCard(new ComplexCommand(List.of(fact.still()), type));
+            return new ChanceAndCommunityChestCard(new ComplexCommand(List.of(fact.still()), ""));
         }
-    }
-
-    @Override
-    public String getType() {
-        return this.type;
     }
 
     @Override

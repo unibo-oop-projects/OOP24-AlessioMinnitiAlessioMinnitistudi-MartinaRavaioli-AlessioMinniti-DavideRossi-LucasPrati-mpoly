@@ -2,6 +2,7 @@ package it.unibo.monopoly.model.comunity_cest_and_chance;
 
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.awt.Color;
 import java.io.FileNotFoundException;
@@ -62,8 +63,6 @@ class DeckTest {
     private static final Color VALID_COLOR1 = Color.GREEN;
     private static final Color VALID_COLOR2 = Color.PINK;
     private static final Color VALID_COLOR3 = Color.BLACK;
-
-    private static final String VALID_TYPE = "chances";
 
     private BankImpl bank;
     private Board board;
@@ -140,22 +139,32 @@ class DeckTest {
         );
     }
 
+    boolean isThere(String desc, List<String> descs){
+        boolean isthere = false;
+        for (String string : descs) {
+            if (desc.equals(string)) {
+                isthere=true;
+            }
+        }
+        return isthere;
+    }
     @Test
     void testDeck() {
         try {
-            final ChancheAndCommunityChestDeck deck = creator
-                                .createDeck("cards//DeckCardTest.txt", VALID_TYPE, board, bank, turnM, controllerGameManager);
-            final ChanceAndCommunityChestCard c1 = deck.drawInOrder();
-            final ChanceAndCommunityChestCard c2 = deck.drawInOrder();
-            final ChanceAndCommunityChestCard c3 = deck.drawInOrder();
-
-            assertEquals("deposit 50", c1.getDescription());
-            assertEquals("move in Jail / Just Visiting" 
-                            + " then\n" 
-                            + "buy Jail / Just Visiting if not owned", c2.getDescription());
-            assertEquals("withdraw 50", c3.getDescription());
+            creator.createDeck("debug//cards//DeckCardTest.txt", board, bank, turnM, controllerGameManager);
+            final ChanceAndCommunityChestCard c1 = board.draw();
+            final ChanceAndCommunityChestCard c2 = board.draw();
+            final ChanceAndCommunityChestCard c3 = board.draw();
+            final List<String> descs = List.of("deposit 50", 
+                                                    "move in Jail / Just Visiting" 
+                                                    + " then\n" 
+                                                    + "buy Jail / Just Visiting if not owned",
+                                                    "withdraw 50");
+            assertTrue(isThere(c1.getDescription(), descs));
+            assertTrue(descs.contains(c2.getDescription()));
+            assertTrue(descs.contains(c3.getDescription()));
         } catch (final FileNotFoundException e) { 
-            final ChancheAndCommunityChestDeck deck = new ChancheAndCommunityChestDeckImpl(List.of(), VALID_TYPE);
+            final ChancheAndCommunityChestDeck deck = new ChancheAndCommunityChestDeckImpl(List.of());
             assertEquals("", deck.draw().getDescription());
         }
 

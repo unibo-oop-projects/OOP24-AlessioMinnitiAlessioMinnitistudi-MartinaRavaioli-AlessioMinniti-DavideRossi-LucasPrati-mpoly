@@ -5,7 +5,6 @@ import java.util.List;
 
 import it.unibo.monopoly.controller.api.GameController;
 import it.unibo.monopoly.model.gameboard.api.Board;
-import it.unibo.monopoly.model.gameboard.impl.chance_comunity.api.ChancheAndCommunityChestDeck;
 import it.unibo.monopoly.model.gameboard.impl.chance_comunity.api.Command;
 import it.unibo.monopoly.model.gameboard.impl.chance_comunity.api.DeckCreator;
 import it.unibo.monopoly.model.transactions.api.Bank;
@@ -19,10 +18,10 @@ import it.unibo.monopoly.utils.impl.UseFileTxtImpl;
 public final class DeckCreatorImpl implements DeckCreator {
 
     @Override
-    public ChancheAndCommunityChestDeck createDeck(final String file, final String type, 
-                                                    final Board board, final Bank bank, 
-                                                    final TurnationManager turnM, 
-                                                    final GameController viewcontroller) {
+    public void createDeck(final String file, 
+                            final Board board, final Bank bank, 
+                            final TurnationManager turnM, 
+                            final GameController viewcontroller) {
 
         final UseFileTxt fi = new UseFileTxtImpl();
         final String fileAsString = fi.loadTextResource(file);
@@ -34,7 +33,7 @@ public final class DeckCreatorImpl implements DeckCreator {
             final Command com = compInt.interpret(toInterpret, board, turnM);
             cards.add(new ChanceAndCommunityChestCard(com));
         } 
-        return new ChancheAndCommunityChestDeckImpl(cards, type);
+        board.addDeck(new ChancheAndCommunityChestDeckImpl(cards));
     }
 
 }

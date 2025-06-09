@@ -14,12 +14,6 @@ public interface ChancheAndCommunityChestDeck {
     ChanceAndCommunityChestCard draw();
 
     /**
-     * gets the type of deck, chances or community chest.
-     * @return the type
-     */
-    String getType();
-
-    /**
      * draw a card from the deck in order of creation.
      * @return the card
      */
