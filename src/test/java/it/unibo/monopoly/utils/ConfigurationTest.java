@@ -30,6 +30,7 @@ class ConfigurationTest {
     private static final int VALID_STARTER_BALANCE = 1500;
     private static final String VALID_RULES_PATH = "debug/rules/debug_rules.txt";
     private static final String VALID_CARDS_PATH = "debug/cards/debug_cards.json";
+    private static final String VALID_DECK_PATH = "debug/cards/DeckCardTest.txt";
     private static final List<Color> VALID_COLORS = List.of(
         Color.RED,
         Color.BLUE,
@@ -62,6 +63,7 @@ class ConfigurationTest {
                 .withInitBalance(VALID_STARTER_BALANCE)
                 .withRulesPath(VALID_RULES_PATH)
                 .withCardsPath(VALID_CARDS_PATH)
+                .withDeckPath(VALID_DECK_PATH)
                 .withColors(VALID_COLORS);
     }
 
@@ -80,6 +82,7 @@ class ConfigurationTest {
         assertEquals(VALID_STARTER_BALANCE, config.getInitBalance());
         assertEquals(VALID_RULES_PATH, config.getRulesPath());
         assertEquals(VALID_CARDS_PATH, config.getCardsPath());
+        assertEquals(VALID_DECK_PATH, config.getDeckPath());
         assertEquals(VALID_COLORS.size(), config.getPlayerColors().size());
     }
 
@@ -159,10 +162,17 @@ class ConfigurationTest {
     }
 
     @Test
-    void configurationInconsistentIfTitleDeedsFileIsNull() {
+    void configurationInconsistentIfTCardsFileIsNull() {
         final Configuration config = builder.withCardsPath(null).build();
         assertFalse(config.isConsistent(),
                     MESSAGE_INVALID_CONFIG + "cardsPath cannot be null");
+    }
+
+    @Test
+    void configurationInconsistentIfDeckFileIsNull() {
+        final Configuration config = builder.withDeckPath(null).build();
+        assertFalse(config.isConsistent(),
+                    MESSAGE_INVALID_CONFIG + "deckPath cannot be null");
     }
 
     @Test

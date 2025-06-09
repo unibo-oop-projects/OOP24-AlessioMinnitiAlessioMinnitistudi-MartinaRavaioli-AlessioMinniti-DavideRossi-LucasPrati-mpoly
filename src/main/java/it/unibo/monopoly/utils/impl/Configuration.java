@@ -21,24 +21,26 @@ public final class Configuration {
     private final int initBalance;
     private final String rulesPath;
     private final String cardsPath;
+    private final String deckPath;
     private final List<Color> playerColors;
 
 
 
     private Configuration(final int minPlayer, final int maxPlayer, final int numDice, final int sidesPerDie,
                             final String fontName, final int bigFont, final int smallFont, final int initBalance,
-                            final String rulesPath, final String cardsPath,
+                            final String rulesPath, final String cardsPath, final String deckPath,
                             final List<Color> playerColors) {
-        this.minPlayer = minPlayer;
-        this.maxPlayer = maxPlayer;
-        this.numDice = numDice;
-        this.sidesPerDie = sidesPerDie;
-        this.fontName = fontName;
-        this.bigFont = bigFont;
-        this.smallFont = smallFont;
-        this.initBalance = initBalance;
-        this.rulesPath = rulesPath;
-        this.cardsPath = cardsPath;
+        this.minPlayer    = minPlayer;
+        this.maxPlayer    = maxPlayer;
+        this.numDice      = numDice;
+        this.sidesPerDie  = sidesPerDie;
+        this.fontName     = fontName;
+        this.bigFont      = bigFont;
+        this.smallFont    = smallFont;
+        this.initBalance  = initBalance;
+        this.rulesPath    = rulesPath;
+        this.cardsPath    = cardsPath;
+        this.deckPath     = deckPath;
         this.playerColors = playerColors;
     }
 
@@ -115,6 +117,13 @@ public final class Configuration {
     }
 
     /**
+     * @return the path of the file which contains all the cards of the deck
+     */
+    public String getDeckPath() {
+        return deckPath;
+    }
+
+    /**
      * @return the list of colors assigned to players
      */
     public List<Color> getPlayerColors() {
@@ -134,7 +143,8 @@ public final class Configuration {
                 && smallFont < bigFont
                 && initBalance >= 0
                 && FileChecker.checkPath(rulesPath)
-                && FileChecker.checkPath(cardsPath);
+                && FileChecker.checkPath(cardsPath)
+                && FileChecker.checkPath(deckPath);
     }
 
 
@@ -176,6 +186,7 @@ public final class Configuration {
         private static final int INIT_BALANCE = 2000;
         private static final String RULES_PATH = "rules/rules.txt";
         private static final String CARDS_PATH = "cards/cards.json";
+        private static final String DECK_PATH = "cards/DeckCard.txt";
         private static final List<Color> PLAYER_COLORS = List.of(
             Color.RED,
             Color.BLUE,
@@ -202,7 +213,8 @@ public final class Configuration {
         private int smallFont = SMALL_FONT;
         private int initBalance = INIT_BALANCE;
         private String rulesPath = RULES_PATH;
-        private String cardspath = CARDS_PATH;
+        private String cardsPath = CARDS_PATH;
+        private String deckPath = DECK_PATH;
         private List<Color> playerColors = List.copyOf(PLAYER_COLORS);
         private boolean consumed;
 
@@ -289,11 +301,20 @@ public final class Configuration {
         }
 
         /**
-         * @param cardspath the path of the file which contains all the cards of the game
+         * @param cardsPath the path of the file which contains all the cards of the game
          * @return this builder, for method chaining
          */
-        public Builder withCardsPath(final String cardspath) {
-            this.cardspath = cardspath;
+        public Builder withCardsPath(final String cardsPath) {
+            this.cardsPath = cardsPath;
+            return this;
+        }
+
+        /**
+         * @param deckPath the path of the file which contains all the cards of deck
+         * @return this builder, for method chaining
+         */
+        public Builder withDeckPath(final String deckPath) {
+            this.deckPath = deckPath;
             return this;
         }
 
@@ -327,7 +348,7 @@ public final class Configuration {
             consumed = true;
             return new Configuration(minPlayer, maxPlayer, numDice, sidesPerDie,
                                     fontName, bigFont, smallFont, initBalance,
-                                    rulesPath, cardspath, playerColors);
+                                    rulesPath, cardsPath, deckPath, playerColors);
         }
 
         /**
@@ -348,6 +369,7 @@ public final class Configuration {
                 && INIT_BALANCE  ==  config.getInitBalance()
                 && RULES_PATH.equals(config.getRulesPath())
                 && CARDS_PATH.equals(config.getCardsPath())
+                && DECK_PATH.equals(config.getDeckPath())
                 && PLAYER_COLORS.containsAll(config.getPlayerColors());
         }
     }
