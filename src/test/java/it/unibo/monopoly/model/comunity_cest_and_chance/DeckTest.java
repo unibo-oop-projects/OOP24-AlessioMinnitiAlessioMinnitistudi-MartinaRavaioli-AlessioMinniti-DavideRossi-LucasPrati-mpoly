@@ -139,11 +139,11 @@ class DeckTest {
         );
     }
 
-    boolean isThere(String desc, List<String> descs){
+    boolean isThere(final String desc, final List<String> descs) {
         boolean isthere = false;
-        for (String string : descs) {
+        for (final String string : descs) {
             if (desc.equals(string)) {
-                isthere=true;
+                isthere = true;
             }
         }
         return isthere;

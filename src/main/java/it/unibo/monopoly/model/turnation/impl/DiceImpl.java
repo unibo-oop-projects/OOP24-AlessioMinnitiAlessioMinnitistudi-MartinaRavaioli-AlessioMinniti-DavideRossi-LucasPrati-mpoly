@@ -49,7 +49,7 @@ public class DiceImpl implements Dice {
 
     @Override
     public final Collection<Integer> throwDices() {
-        return Set.of(3,4);
+        return Set.of(3, 4);
         /*return IntStream.range(0, dices.length)
                 .map(i -> rand.nextInt(this.faces) + 1)
                 .boxed()

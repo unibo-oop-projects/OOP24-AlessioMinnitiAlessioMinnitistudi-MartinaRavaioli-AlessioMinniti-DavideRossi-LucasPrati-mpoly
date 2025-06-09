@@ -108,18 +108,12 @@ public final class EffectFactoryImpl implements EffectFactory {
             @Override
             public void activate(final Player player) {
                 c = board.draw();
-                commDesc=c.getDescription();
-                if (c == null) {
-                    System.out.println("noooo");
-                }
+                commDesc = c.getDescription();
                 c.execute(player);
             }
 
             @Override
             public String getDescription() {
-                if (c == null) {
-                    System.out.println("noooo");
-                }
                 return DESC + "\n" + this.commDesc;
             }
         };

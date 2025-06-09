@@ -279,7 +279,7 @@ public final class GameControllerImpl implements GameController {
         gameView.clearControlsUI();
         refreshPlayerInfo();
     }
-   
+
     @Override
     public void refreshBankPlayerInfo() {
         if (null != this.gameView) {
