@@ -43,8 +43,7 @@ public final class ImmutableProperty implements Property {
 
     @Override
     public String getName() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getName'");
+        return this.property.getName();
     }
 
     @Override
@@ -88,15 +87,15 @@ public final class ImmutableProperty implements Property {
     }
 
     @Override
-    public void deleteHouse() {
+    public void deleteHouse() throws IllegalAccessException {
         // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'deleteHouse'");
+        throw new IllegalAccessException("operation not permitted");
     }
 
     @Override
-    public void deleteHotel() {
+    public void deleteHotel() throws IllegalAccessException {
         // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'deleteHotel'");
+        throw new IllegalAccessException("operation not permitted");
     }
 
 }

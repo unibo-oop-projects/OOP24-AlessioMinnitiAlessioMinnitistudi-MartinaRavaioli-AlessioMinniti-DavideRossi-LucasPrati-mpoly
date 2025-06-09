@@ -34,14 +34,20 @@ class BankTest {
     private static final int DICE_THROW = 12;
     private static final String TITLE_DEED_NAME1 = "Bastoni Gran Sasso";
     private static final String TITLE_DEED_NAME2 = "Viale Monterosa";
+    private static final String TITLE_DEED_NAME3 = "CITTA3";
+    private static final int PROPERTY_SALE_PRICE1 = 50;
+    private static final int PROPERTY_SALE_PRICE2 = 60;
+    private static final int HOUSE_PRICE = 20;
+    private static final int HOTEL_PRICE = 30;
 
     private final Set<BankAccount> accounts = Set.of(
         new SimpleBankAccountImpl(ID_1, AMOUNT, e -> true),
         new SimpleBankAccountImpl(ID_2, AMOUNT, e -> true)
     );
     private final Set<TitleDeed> deeds = Set.of(
-        new BaseTitleDeed(Group.GREEN, TITLE_DEED_NAME1, 50, s -> s / 2, 10),
-        new BaseTitleDeed(Group.GREEN, TITLE_DEED_NAME2, 60, s -> s / 2, 10)
+        new BaseTitleDeed(Group.GREEN, TITLE_DEED_NAME1, PROPERTY_SALE_PRICE1, s -> s / 2, 10),
+        new BaseTitleDeed(Group.GREEN, TITLE_DEED_NAME2, PROPERTY_SALE_PRICE2, s -> s / 2, 10),
+        new BaseTitleDeed(Group.RED, TITLE_DEED_NAME3, PROPERTY_SALE_PRICE2, s -> s / 2, 10)
     );
     private Bank bank;
 
@@ -247,5 +253,16 @@ class BankTest {
     private void testExceptionFormat(final Exception exception) {
         assertNotNull(exception.getMessage());
         assertFalse(exception.getMessage().isBlank());
+    }
+
+    @Test
+    void testBuyHouse() {
+        bank.getApplicableActionsForTitleDeed(ID_1, TITLE_DEED_NAME3, DICE_THROW);
+        bank.buyTitleDeed(TITLE_DEED_NAME3, ID_1);
+
+        // Proprietà unica del gruppo -> considerata sufficiente per costruire
+        bank.buyHouse(TITLE_DEED_NAME3);
+
+        assertEquals(AMOUNT - PROPERTY_SALE_PRICE2 - HOUSE_PRICE, bank.getBankAccount(ID_1).getBalance());
     }
 } 

@@ -1,12 +1,11 @@
 package it.unibo.monopoly.model.transactions;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.function.Function;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -100,7 +99,7 @@ public class HousesTitleDeedTest {
     }
 
     @Test
-    void rentAfterRemovingHotel() {
+    void rentAfterRemovingHotel() throws IllegalAccessException {
         referencedProperty.buildHouse();
         referencedProperty.buildHouse();
         referencedProperty.buildHouse();
@@ -113,7 +112,7 @@ public class HousesTitleDeedTest {
     }
 
     @Test
-    void rentAfterRemovingHouse() {
+    void rentAfterRemovingHouse() throws IllegalAccessException {
         referencedProperty.buildHouse();
         referencedProperty.buildHouse();
         referencedProperty.buildHouse();
