@@ -100,8 +100,14 @@ public class TurnationManagerImpl implements TurnationManager {
     @Override
     public final Collection<Integer> moveByDices() throws IllegalAccessException { 
         if (!hasCurrPlayerThrownDices()) {
-            this.diceThrown = true;
-            return this.dice.throwDices();
+            if (canThrowDices()) {
+                this.diceThrown = true;
+                Collection<Integer> result = this.dice.throwDices();
+                return result;
+            } else {
+                throw new IllegalAccessException("the player can't throw dices");
+            }
+            
         } else {
             throw new IllegalAccessException("the current player has already thrown the dices");
         }
@@ -223,6 +229,15 @@ public class TurnationManagerImpl implements TurnationManager {
     @Override
     public boolean canThrowDices() {
         return !this.currPlayer.isParked();
+    }
+    @Override
+    public boolean tryExitPrison(Collection<Integer> result) {
+        if (this.currPlayer.canExitPrison(result)) {
+            return true;
+        } else {
+            this.currPlayer.decreaseTurnsInPrison();
+            return false;
+        }
     }
 
 }

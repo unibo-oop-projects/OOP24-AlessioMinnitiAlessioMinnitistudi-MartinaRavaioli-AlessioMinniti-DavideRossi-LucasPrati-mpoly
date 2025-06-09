@@ -136,4 +136,10 @@ public interface TurnationManager {
      * @return bool
      */
     boolean canThrowDices();
+    /**
+     * if the player throw the same number of dices can escape the prison otherwise the number of turns to wait will decrease.
+     * @param result result of the dices
+     * @return bool
+     */
+    boolean tryExitPrison(Collection<Integer> result);
 }
