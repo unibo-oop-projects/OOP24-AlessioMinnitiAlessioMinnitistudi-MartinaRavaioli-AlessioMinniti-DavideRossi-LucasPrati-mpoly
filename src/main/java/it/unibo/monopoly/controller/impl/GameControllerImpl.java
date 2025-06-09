@@ -108,9 +108,7 @@ public final class GameControllerImpl implements GameController {
             }
         } else {
             this.gameView.displayOptionMessageEndTurn("The player will die if he passes the turn");
-            //this.gameView.displayMessage("The player will die if he passes the turn");
         }
-
     }
 
     @Override

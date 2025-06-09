@@ -81,7 +81,6 @@ public final class MainViewImpl implements MainGameView {
         splitPane.setEnabled(false);    // Rendi il divisore fisso, se vuoi
 
         mainGameFrame.add(splitPane);
-        //mainGameFrame.pack();
         mainGameFrame.setVisible(true);
         mainGameFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         mainGameFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
