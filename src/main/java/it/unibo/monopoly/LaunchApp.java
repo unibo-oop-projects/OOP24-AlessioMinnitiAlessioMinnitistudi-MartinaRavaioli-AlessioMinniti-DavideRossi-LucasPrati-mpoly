@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import javax.swing.SwingUtilities;
 
 import it.unibo.monopoly.utils.impl.Configuration;
+import it.unibo.monopoly.utils.impl.GuiUtils;
 import it.unibo.monopoly.view.impl.MainMenuView;
 
 /**
@@ -25,6 +26,8 @@ public final class LaunchApp {
     public static void main(final String[] args) throws FileNotFoundException {
 
         final Configuration config = Configuration.configureFromFile(CONFIG_FILE);
+        GuiUtils.applyGlobalFont(config);
+        
         SwingUtilities.invokeLater(() -> {
             new MainMenuView(config);
         });

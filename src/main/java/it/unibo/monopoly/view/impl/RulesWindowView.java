@@ -65,7 +65,6 @@ public final class RulesWindowView extends JDialog {
         rulesTextArea.setEditable(false);
         rulesTextArea.setLineWrap(true);
         rulesTextArea.setWrapStyleWord(true);
-        rulesTextArea.setFont(GuiUtils.getSmallFontFromConfiguration(config));
         rulesTextArea.setText(rules);
         rulesTextArea.setCaretPosition(0);
 
@@ -75,7 +74,6 @@ public final class RulesWindowView extends JDialog {
 
         // Create an exit button for the window
         final JButton exitButton = new JButton(EXIT_TEXT);
-        exitButton.setFont(GuiUtils.getSmallFontFromConfiguration(config));
         exitButton.addActionListener(e -> dispose());
 
         mainPanel.add(titleLabel, BorderLayout.NORTH);

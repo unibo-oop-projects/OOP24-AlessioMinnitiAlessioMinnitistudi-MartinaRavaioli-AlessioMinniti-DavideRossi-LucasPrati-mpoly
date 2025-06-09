@@ -4,27 +4,18 @@ package it.unibo.monopoly.utils.impl;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.LayoutManager;
 import java.awt.Toolkit;
 import java.awt.Window;
-
-import java.util.List;
 import java.util.Objects;
 
-import javax.swing.AbstractButton;
-import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JList;
 import javax.swing.JOptionPane;
-import javax.swing.JTable;
-import javax.swing.JTree;
 import javax.swing.WindowConstants;
-import javax.swing.text.JTextComponent;
 
 
 /**
@@ -134,7 +125,6 @@ public final class GuiUtils {
     /**
      * Refreshes the specified window by revalidating and repainting its content,
      * and making sure it is visible.
-     *
      * @param window the window to refresh; must not be {@code null}
     */
     public static void refresh(final Window window) {
@@ -172,8 +162,7 @@ public final class GuiUtils {
     }
 
     /**
-     * Get a default percentage {@link Dimension} of the screen size.
-     * 
+     * Get a default 50% {@link Dimension} of the screen size.
      * @return a {@link Dimension} based the screen size with default percentage
      */
     public static Dimension getDimensionWindow() {
@@ -182,7 +171,6 @@ public final class GuiUtils {
 
     /**
      * Get a custom percentage {@link Dimension} of the screen size.
-     * 
      * @param widthPerc the percentage of the full screen's width
      * @param heightPerc the percentage of the full screen's height
      * @return a {@link Dimension} based the screen size and the provided percentage
@@ -194,7 +182,6 @@ public final class GuiUtils {
 
     /**
      * Get a new {@link Font} with a small size, according to the {@link Configuration}.
-     * 
      * @param config a consistent {@link Configuration} for upload {@code size} and {@code name} parameters
      * @return a new {@link Font} according to the {@link Configuration} parameters
      */
@@ -204,7 +191,6 @@ public final class GuiUtils {
 
     /**
      * Get a new {@link Font} with a big size, according to the {@link Configuration}.
-     * 
      * @param config a consistent {@link Configuration} for upload {@code size} and {@code name} parameters
      * @return a new {@link Font} according to the {@link Configuration} parameters
      */
@@ -213,47 +199,18 @@ public final class GuiUtils {
     }
 
     /**
-     * TODO funzione ricorsiva  per impostare tutti i font di elementi testuali come desiderato.
-     * @param comp the {@link Component} where we want to set the font
-     * @param config a consistent {@link Configuration} for get the font dimension
-     * @param exclude a {@link List} of {@link Component}s to exclude from the font set
+     * Setup a new global font to use, provided by the configuration.
+     * @param config a consistent {@link Configuration} for the font settings
+     * @throws IllegalArgumentException if the font is not available
      */
-    public static void setAllFonts(final Component comp, final Configuration config, final List<Component> exclude) {
-        // controlla se è da escludere
-        if (exclude.contains(comp)) {
-            return;
-        }
-
-        if (isTextualComponent(comp)) {
-            comp.setFont(getSmallFontFromConfiguration(config));
-        }
-
-        // Se è un contenitore, ricorsione sui figli
-        if (comp instanceof final Container container) {
-            for (final Component child : container.getComponents()) {
-                setAllFonts(child, config, exclude);
-            }
-        }
+    public static void applyGlobalFont(final Configuration config) {
+        final Font font = getSmallFontFromConfiguration(config);
+        FontUtils.configure(font);
     }
 
-    /**
-     * Return if the parameter is a textual component or not.
-     * @param comp the {@link Component} that we want to check
-     * @return true if the {@link Component} is a textual component, false otherwise
-     */
-    private static boolean isTextualComponent(final Component comp) {
-        return comp instanceof JLabel
-            || comp instanceof AbstractButton
-            || comp instanceof JTextComponent
-            || comp instanceof JComboBox<?>
-            || comp instanceof JList<?>
-            || comp instanceof JTable
-            || comp instanceof JTree;
-    }
 
     /**
      * Checks whether the provided parameters represent a valid and consistent configuration for a Swing window setup.
-     * 
      * @param window the window to configure (must be a {@link JFrame} or {@link JDialog})
      * @param width the width in pixels
      * @param height the height in pixels
