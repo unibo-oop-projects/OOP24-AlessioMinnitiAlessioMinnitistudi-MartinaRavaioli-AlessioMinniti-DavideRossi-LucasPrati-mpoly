@@ -220,5 +220,9 @@ public class TurnationManagerImpl implements TurnationManager {
     public final void parkCurrentPlayer() {
         this.currPlayer.park();
     }
+    @Override
+    public boolean canThrowDices() {
+        return !this.currPlayer.isParked();
+    }
 
 }

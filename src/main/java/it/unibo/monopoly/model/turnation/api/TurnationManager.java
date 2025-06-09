@@ -131,5 +131,9 @@ public interface TurnationManager {
      * @return bool
      */
     boolean hasCurrPlayerThrownDices();
-
+    /**
+     * tells if the player can throw the dices.
+     * @return bool
+     */
+    boolean canThrowDices();
 }
