@@ -277,9 +277,19 @@ class BankTest {
         bank.getApplicableActionsForTitleDeed(ID_1, TITLE_DEED_NAME3, DICE_THROW);
         bank.buyTitleDeed(TITLE_DEED_NAME3, ID_1);
         bank.getApplicableActionsForTitleDeed(ID_1, TITLE_DEED_NAME3, DICE_THROW);
-        // Proprietà unica del gruppo -> considerata sufficiente per costruire
+
         bank.buyHouse(TITLE_DEED_NAME3);
 
         assertEquals(AMOUNT - PROPERTY_SALE_PRICE2 - HOUSE_PRICE.apply(ID_1), bank.getBankAccount(ID_1).getBalance());
+    }
+
+    @Test
+    void testBuyHotel() {
+        bank.getApplicableActionsForTitleDeed(ID_1, TITLE_DEED_NAME3, DICE_THROW);
+        bank.buyTitleDeed(TITLE_DEED_NAME3, ID_1);
+        bank.getApplicableActionsForTitleDeed(ID_1, TITLE_DEED_NAME3, DICE_THROW);
+        bank.buyHotel(TITLE_DEED_NAME3);
+
+        assertEquals(AMOUNT - PROPERTY_SALE_PRICE2 - HOTEL_PRICE.apply(ID_1), bank.getBankAccount(ID_1).getBalance());
     }
 } 
