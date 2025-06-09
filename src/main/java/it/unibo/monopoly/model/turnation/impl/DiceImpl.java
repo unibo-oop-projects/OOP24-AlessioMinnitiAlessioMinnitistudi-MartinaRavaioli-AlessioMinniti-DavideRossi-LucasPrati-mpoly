@@ -2,6 +2,7 @@ package it.unibo.monopoly.model.turnation.impl;
 
 import java.util.Collection;
 import java.util.Random;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -48,10 +49,11 @@ public class DiceImpl implements Dice {
 
     @Override
     public final Collection<Integer> throwDices() {
-        return IntStream.range(0, dices.length)
+        return Set.of(3,4);
+        /*return IntStream.range(0, dices.length)
                 .map(i -> rand.nextInt(this.faces) + 1)
                 .boxed()
-                .collect(Collectors.toList());
+                .collect(Collectors.toList());*/
     }
 
     /**

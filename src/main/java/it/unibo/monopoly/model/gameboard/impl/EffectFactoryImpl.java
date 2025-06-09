@@ -103,16 +103,24 @@ public final class EffectFactoryImpl implements EffectFactory {
 
             private static final String DESC = "draw a card from chances and community chest deck then activate its effect :";
             private ChanceAndCommunityChestCard c;
+            private String commDesc;
 
             @Override
             public void activate(final Player player) {
                 c = board.draw();
+                commDesc=c.getDescription();
+                if (c == null) {
+                    System.out.println("noooo");
+                }
                 c.execute(player);
             }
 
             @Override
             public String getDescription() {
-                return DESC + "\n" + c.getDescription();
+                if (c == null) {
+                    System.out.println("noooo");
+                }
+                return DESC + "\n" + this.commDesc;
             }
         };
     }

@@ -205,7 +205,6 @@ public final class GameControllerImpl implements GameController {
         return this.turnationManager.getCurrPlayer();
     }
 
-
     @Override
     public Pawn getCurrPawn() {
         return this.board.getPawn(this.turnationManager.getIdCurrPlayer());
@@ -280,6 +279,7 @@ public final class GameControllerImpl implements GameController {
         gameView.clearControlsUI();
         refreshPlayerInfo();
     }
+   
     @Override
     public void refreshBankPlayerInfo() {
         if (null != this.gameView) {
