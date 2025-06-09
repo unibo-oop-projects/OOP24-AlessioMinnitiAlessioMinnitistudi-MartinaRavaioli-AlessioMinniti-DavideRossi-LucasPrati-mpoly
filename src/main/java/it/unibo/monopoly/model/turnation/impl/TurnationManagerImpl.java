@@ -94,7 +94,8 @@ public class TurnationManagerImpl implements TurnationManager {
     public final Player getNextPlayer() { 
         this.currPlayer = players.giveNextNode(this.currPlayer);
         this.diceThrown = false;
-        return new ParkablePlayer(new PrisonablePlayer(PlayerImpl.of(this.currPlayer.getID(), this.currPlayer.getName(), this.currPlayer.getColor())));
+        return new ParkablePlayer(new PrisonablePlayer(
+            PlayerImpl.of(this.currPlayer.getID(), this.currPlayer.getName(), this.currPlayer.getColor())));
     }
 
     @Override
@@ -102,13 +103,12 @@ public class TurnationManagerImpl implements TurnationManager {
         if (!hasCurrPlayerThrownDices()) {
             if (canThrowDices()) {
                 this.diceThrown = true;
-                Collection<Integer> result = this.dice.throwDices();
-                return result;
+                return this.dice.throwDices();
             } else {
                 passedParkTurn();
                 throw new IllegalAccessException("the player can't throw dices because is parked");
             }
-            
+
         } else {
             throw new IllegalAccessException("the current player has already thrown the dices");
         }
@@ -121,7 +121,8 @@ public class TurnationManagerImpl implements TurnationManager {
 
     @Override
     public final Player getCurrPlayer() {
-        return new ParkablePlayer(new PrisonablePlayer(PlayerImpl.of(this.currPlayer.getID(), this.currPlayer.getName(), this.currPlayer.getColor())));
+        return new ParkablePlayer(new PrisonablePlayer(
+            PlayerImpl.of(this.currPlayer.getID(), this.currPlayer.getName(), this.currPlayer.getColor())));
     }
 
     @Override
@@ -235,11 +236,11 @@ public class TurnationManagerImpl implements TurnationManager {
         this.currPlayer.park();
     }
     @Override
-    public boolean canThrowDices() {
+    public final boolean canThrowDices() {
         return !this.currPlayer.isParked();
     }
     @Override
-    public boolean tryExitPrison(Collection<Integer> result) {
+    public final boolean tryExitPrison(final Collection<Integer> result) {
         if (this.currPlayer.canExitPrison(result)) {
             return true;
         } else {
