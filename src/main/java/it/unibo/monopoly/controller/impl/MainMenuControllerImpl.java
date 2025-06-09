@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
+import it.unibo.monopoly.controller.api.GameController;
 import it.unibo.monopoly.controller.api.MainMenuController;
 import it.unibo.monopoly.model.gameboard.api.Board;
 import it.unibo.monopoly.model.gameboard.api.CardFactory;
@@ -19,6 +20,8 @@ import it.unibo.monopoly.model.gameboard.impl.BoardImpl;
 import it.unibo.monopoly.model.gameboard.impl.CardDTO;
 import it.unibo.monopoly.model.gameboard.impl.CardFactoryImpl;
 import it.unibo.monopoly.model.gameboard.impl.PawnFactoryImpl;
+import it.unibo.monopoly.model.gameboard.impl.chance_comunity.api.DeckCreator;
+import it.unibo.monopoly.model.gameboard.impl.chance_comunity.impl.DeckCreatorImpl;
 import it.unibo.monopoly.model.transactions.api.BankAccount;
 import it.unibo.monopoly.model.transactions.api.BankAccountFactory;
 import it.unibo.monopoly.model.transactions.api.BankAccountType;
@@ -39,6 +42,7 @@ import it.unibo.monopoly.utils.api.UseFileTxt;
 import it.unibo.monopoly.utils.impl.Configuration;
 import it.unibo.monopoly.utils.impl.UseFileJsonImpl;
 import it.unibo.monopoly.utils.impl.UseFileTxtImpl;
+import it.unibo.monopoly.view.api.MainGameView;
 import it.unibo.monopoly.view.impl.MainViewImpl;
 
 
@@ -137,13 +141,24 @@ public final class MainMenuControllerImpl implements MainMenuController {
         titleDeeds.stream().forEach(bank::addTitleDeed);
 
         // start the game
-        final var controllerGameManager = new GameControllerImpl(
+        final GameController controllerGameManager = new GameControllerImpl(
             board,
             turnationManager,
             config,
             bank
         );
-        final var mainView = new MainViewImpl(controllerGameManager);
+        
+        // create the deck for "chance and community chest"
+        final DeckCreator deckCreator = new DeckCreatorImpl();
+        deckCreator.createDeck(
+            config.getDeckPath(),
+            board,
+            bank,
+            turnationManager,
+            controllerGameManager
+        );
+
+        final MainGameView mainView = new MainViewImpl(controllerGameManager);
         controllerGameManager.attachView(mainView);
         controllerGameManager.start();
     }
