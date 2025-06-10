@@ -162,7 +162,7 @@ public final class MainViewImpl implements MainGameView {
 
     @Override
     public void displayRules(final String rules) {
-        new RulesWindowView(this.mainGameFrame, controller.getConfiguration(), rules);
+        new RulesWindowView(this.mainGameFrame, rules);
     }
 
     @Override
