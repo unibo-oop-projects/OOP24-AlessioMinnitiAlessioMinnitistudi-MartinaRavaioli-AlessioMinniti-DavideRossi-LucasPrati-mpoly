@@ -31,6 +31,7 @@ import it.unibo.monopoly.model.gameboard.impl.chance_comunity.api.Parser;
 import it.unibo.monopoly.model.gameboard.impl.chance_comunity.impl.ArgsInterpreterImpl;
 import it.unibo.monopoly.model.gameboard.impl.chance_comunity.impl.BaseCommandFactoryImpl;
 import it.unibo.monopoly.model.gameboard.impl.chance_comunity.impl.BaseInterpreter;
+import it.unibo.monopoly.model.gameboard.impl.chance_comunity.impl.ComplexInterpreter;
 import it.unibo.monopoly.model.gameboard.impl.chance_comunity.impl.ParserOnColon;
 import it.unibo.monopoly.model.transactions.api.BankAccount;
 import it.unibo.monopoly.model.transactions.api.BankAccountFactory;
@@ -134,16 +135,8 @@ class BaseAndComplexInterpreterTest {
         tiles.stream().forEach(board::addTile);
         titleDeeds.stream().forEach(bank::addTitleDeed);
 
-        // start the game
-        final var controllerGameManager = new GameControllerImpl(
-            board,
-            turnM,
-            config,
-            bank
-        );
-
-        complexInt = new ComplexInterpreter(board, bank, controllerGameManager);
-        baseInt = new BaseInterpreter(bcf.allCommand(bank, board, controllerGameManager));
+        complexInt = new ComplexInterpreter(board, bank);
+        baseInt = new BaseInterpreter(bcf.allCommand(bank, board));
         argsInt = new ArgsInterpreterImpl();
     }
 
