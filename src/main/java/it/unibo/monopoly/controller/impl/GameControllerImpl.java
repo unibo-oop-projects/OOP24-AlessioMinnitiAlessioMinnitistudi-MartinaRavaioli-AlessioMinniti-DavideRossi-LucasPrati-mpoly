@@ -102,6 +102,7 @@ public final class GameControllerImpl implements GameController {
             if (this.turnationManager.canPassTurn()) {
                 this.turnationManager.getNextPlayer();
                 gameView.refreshUIForNewTurn(turnationManager.canThrowDices());
+                refreshPlayerInfo();
             } else {
                 this.gameView.displayMessage("The player has some actions to do before passing the turn");
             }
