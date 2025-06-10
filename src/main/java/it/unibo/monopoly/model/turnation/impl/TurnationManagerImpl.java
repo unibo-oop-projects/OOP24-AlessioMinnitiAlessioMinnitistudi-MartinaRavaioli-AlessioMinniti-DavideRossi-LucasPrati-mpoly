@@ -101,8 +101,8 @@ public class TurnationManagerImpl implements TurnationManager {
         return createCurrPlayerCopy();
     }
     /**
-     * method that create a copy of the current player
-     * @return
+     * method that create a copy of the current player.
+     * @return Player
      */
     private Player createCurrPlayerCopy() {
         return new Player() {
@@ -148,7 +148,7 @@ public class TurnationManagerImpl implements TurnationManager {
             }
 
             @Override
-            public boolean canExitPrison(Collection<Integer> dice) {
+            public boolean canExitPrison(final Collection<Integer> dice) {
                return currPlayer.canExitPrison(dice);
             }
 
@@ -166,7 +166,7 @@ public class TurnationManagerImpl implements TurnationManager {
             public void passTurn() {
                 currPlayer.passTurn();
             }
-            
+
         };
     }
 

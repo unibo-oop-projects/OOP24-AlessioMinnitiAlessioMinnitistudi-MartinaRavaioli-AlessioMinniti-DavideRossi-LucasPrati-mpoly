@@ -147,7 +147,8 @@ public final class GameControllerImpl implements GameController {
             }
             final int delta = board.getPawn(currentPlayerId).getPosition().getPos() 
                                         - board.getPrevPawnPosition(currentPlayerId).getPos();
-            if (delta < 0 && !"GoToJail".equals(currentlySittingTile.getName()) && !"Jail / Just Visiting".equals(currentlySittingTile.getName())) {
+            if (delta < 0 && !"GoToJail".equals(currentlySittingTile.getName()) 
+                && !"Jail / Just Visiting".equals(currentlySittingTile.getName())) {
                 final Special tile = (Special) board.getTile("Start");
                 executeEffect(tile.getEffect());
             }
