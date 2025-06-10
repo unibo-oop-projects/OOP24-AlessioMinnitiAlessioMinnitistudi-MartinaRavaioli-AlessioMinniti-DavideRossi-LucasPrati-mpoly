@@ -39,7 +39,6 @@ import it.unibo.monopoly.utils.api.UseFileTxt;
 import it.unibo.monopoly.utils.impl.Configuration;
 import it.unibo.monopoly.utils.impl.UseFileJsonImpl;
 import it.unibo.monopoly.utils.impl.UseFileTxtImpl;
-import it.unibo.monopoly.view.impl.MainViewImpl;
 
 
 /**
@@ -143,8 +142,6 @@ public final class MainMenuControllerImpl implements MainMenuController {
             config,
             bank
         );
-        final var mainView = new MainViewImpl(controllerGameManager);
-        controllerGameManager.attachView(mainView);
         controllerGameManager.start();
     }
 

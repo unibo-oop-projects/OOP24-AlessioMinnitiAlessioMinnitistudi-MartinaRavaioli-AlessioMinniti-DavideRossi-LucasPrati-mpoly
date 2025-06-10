@@ -26,6 +26,7 @@ import it.unibo.monopoly.utils.api.UseFileTxt;
 import it.unibo.monopoly.utils.impl.Configuration;
 import it.unibo.monopoly.utils.impl.UseFileTxtImpl;
 import it.unibo.monopoly.view.api.MainGameView;
+import it.unibo.monopoly.view.impl.MainViewImpl;
 
 
 /**
@@ -228,6 +229,7 @@ public final class GameControllerImpl implements GameController {
 
     @Override
     public void start() {
+        attachView(new MainViewImpl(this));
         this.turnationManager.resetBankState();
         gameView.refreshUIForNewTurn(turnationManager.canThrowDices());
         refreshPlayerInfo();
