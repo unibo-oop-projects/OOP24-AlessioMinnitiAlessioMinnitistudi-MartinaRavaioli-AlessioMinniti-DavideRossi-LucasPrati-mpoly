@@ -126,13 +126,13 @@ public final class MainViewImpl implements MainGameView {
     }
 
     @Override
-    public void refreshUIForNewTurn(final Player pl) {
+    public void refreshUIForNewTurn(final boolean canThrowDices) {
         playerInfoPanel.renderDefaultUI();
         accountInfoPanel.renderDefaultUI();
         contractPanel.renderDefaultUI();
         gameActionsPanel.renderDefaultUI();
         mainActionsPanel.renderDefaultUI();
-        mainActionsPanel.setDiceButtonEnabled(!pl.isParked());
+        mainActionsPanel.setDiceButtonEnabled(canThrowDices);
         mainGameFrame.repaint();
     }
 

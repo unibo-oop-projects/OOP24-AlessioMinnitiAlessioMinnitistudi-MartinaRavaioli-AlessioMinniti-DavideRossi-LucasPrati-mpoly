@@ -24,9 +24,9 @@ public interface MainGameView {
     /**
      * Clears all panels displaying information about the 
      * current player and resets them, to be ready for the turn of a new player to begin.
-     * @param pl the {@link Player} who's about to play its turn
+     * @param canThrowDices tells whether to enable or not the button to throw the dices
      */
-    void refreshUIForNewTurn(Player pl);
+    void refreshUIForNewTurn(boolean canThrowDices);
 
     /**
      * Ask the {@code view} to refresh the information related

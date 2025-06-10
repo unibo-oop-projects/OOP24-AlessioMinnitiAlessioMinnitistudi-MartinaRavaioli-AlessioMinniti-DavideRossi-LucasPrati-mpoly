@@ -101,7 +101,7 @@ public final class GameControllerImpl implements GameController {
         if (!this.turnationManager.playerDiesIfTurnPassed()) {
             if (this.turnationManager.canPassTurn()) {
                 this.turnationManager.getNextPlayer();
-                gameView.refreshUIForNewTurn(turnationManager.getCurrPlayer());
+                gameView.refreshUIForNewTurn(turnationManager.canThrowDices());
             } else {
                 this.gameView.displayMessage("The player has some actions to do before passing the turn");
             }
@@ -228,7 +228,7 @@ public final class GameControllerImpl implements GameController {
     @Override
     public void start() {
         this.turnationManager.resetBankState();
-        gameView.refreshUIForNewTurn(turnationManager.getCurrPlayer());
+        gameView.refreshUIForNewTurn(turnationManager.canThrowDices());
         refreshPlayerInfo();
     }
 
@@ -263,7 +263,7 @@ public final class GameControllerImpl implements GameController {
                 this.gameView.showRanking();
             }
         }
-        gameView.refreshUIForNewTurn(turnationManager.getCurrPlayer());
+        gameView.refreshUIForNewTurn(turnationManager.canThrowDices());
         refreshPlayerInfo();
     }
     @Override
