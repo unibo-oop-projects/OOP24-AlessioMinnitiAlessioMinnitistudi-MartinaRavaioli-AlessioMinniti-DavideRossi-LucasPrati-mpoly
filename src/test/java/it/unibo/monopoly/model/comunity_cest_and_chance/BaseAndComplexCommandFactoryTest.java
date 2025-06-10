@@ -12,7 +12,6 @@ import java.util.Set;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import it.unibo.monopoly.controller.impl.GameControllerImpl;
 import it.unibo.monopoly.model.gameboard.api.Board;
 import it.unibo.monopoly.model.gameboard.api.CardFactory;
 import it.unibo.monopoly.model.gameboard.api.Pawn;
@@ -127,15 +126,7 @@ class BaseAndComplexCommandFactoryTest {
         tiles.stream().forEach(board::addTile);
         titleDeeds.stream().forEach(bank::addTitleDeed);
 
-        // start the game
-        final var controllerGameManager = new GameControllerImpl(
-            board,
-            turnM,
-            config,
-            bank
-        );
-
-        commands = bcf.allCommand(bank, board, controllerGameManager);
+        commands = bcf.allCommand(bank, board);
     }
 
     @Test

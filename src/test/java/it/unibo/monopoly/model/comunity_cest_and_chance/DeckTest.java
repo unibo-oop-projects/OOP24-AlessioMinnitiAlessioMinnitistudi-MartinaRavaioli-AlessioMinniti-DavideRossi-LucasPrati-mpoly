@@ -15,8 +15,6 @@ import java.util.Set;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import it.unibo.monopoly.controller.api.GameController;
-import it.unibo.monopoly.controller.impl.GameControllerImpl;
 import it.unibo.monopoly.model.gameboard.api.Board;
 import it.unibo.monopoly.model.gameboard.api.CardFactory;
 import it.unibo.monopoly.model.gameboard.api.Pawn;
@@ -68,7 +66,6 @@ class DeckTest {
     private Board board;
     private TurnationManager turnM;
     private final DeckCreator creator = new DeckCreatorImpl();
-    private GameController controllerGameManager;
 
     private final Player p = new ParkablePlayer(PlayerImpl.of(VALID_ID1, PLAYER1_NAME, VALID_COLOR1));
     private final Player p1 = new PrisonablePlayer(p);
@@ -129,14 +126,6 @@ class DeckTest {
         // Add tiles to the board and titleDeeds to the Bank
         tiles.stream().forEach(board::addTile);
         titleDeeds.stream().forEach(bank::addTitleDeed);
-
-        // start the game
-        controllerGameManager = new GameControllerImpl(
-            board,
-            turnM,
-            config,
-            bank
-        );
     }
 
     boolean isThere(final String desc, final List<String> descs) {
@@ -151,7 +140,7 @@ class DeckTest {
     @Test
     void testDeck() {
         try {
-            creator.createDeck("debug//cards//DeckCardTest.txt", board, bank, turnM, controllerGameManager);
+            creator.createDeck("debug//cards//DeckCardTest.txt", board, bank, turnM);
             final ChanceAndCommunityChestCard c1 = board.draw();
             final ChanceAndCommunityChestCard c2 = board.draw();
             final ChanceAndCommunityChestCard c3 = board.draw();

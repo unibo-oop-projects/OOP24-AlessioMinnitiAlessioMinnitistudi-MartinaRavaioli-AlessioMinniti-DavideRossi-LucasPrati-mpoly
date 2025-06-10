@@ -12,7 +12,6 @@ import java.util.Set;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import it.unibo.monopoly.controller.impl.GameControllerImpl;
 import it.unibo.monopoly.model.gameboard.api.Board;
 import it.unibo.monopoly.model.gameboard.api.CardFactory;
 import it.unibo.monopoly.model.gameboard.api.Pawn;
@@ -32,7 +31,6 @@ import it.unibo.monopoly.model.gameboard.impl.chance_comunity.api.Parser;
 import it.unibo.monopoly.model.gameboard.impl.chance_comunity.impl.ArgsInterpreterImpl;
 import it.unibo.monopoly.model.gameboard.impl.chance_comunity.impl.BaseCommandFactoryImpl;
 import it.unibo.monopoly.model.gameboard.impl.chance_comunity.impl.BaseInterpreter;
-import it.unibo.monopoly.model.gameboard.impl.chance_comunity.impl.ComplexInterpreter;
 import it.unibo.monopoly.model.gameboard.impl.chance_comunity.impl.ParserOnColon;
 import it.unibo.monopoly.model.transactions.api.BankAccount;
 import it.unibo.monopoly.model.transactions.api.BankAccountFactory;
