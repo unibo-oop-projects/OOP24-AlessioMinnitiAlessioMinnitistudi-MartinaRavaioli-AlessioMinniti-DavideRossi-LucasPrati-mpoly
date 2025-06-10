@@ -22,7 +22,10 @@ import javax.swing.SwingConstants;
 import it.unibo.monopoly.controller.api.MainMenuController;
 import it.unibo.monopoly.model.transactions.api.BankAccountType;
 import it.unibo.monopoly.utils.impl.GuiUtils;
+import it.unibo.monopoly.view.api.GamePanelsFactory;
+import it.unibo.monopoly.view.api.MainMenuPanelsFactory;
 import it.unibo.monopoly.view.api.MainMenuView;
+import it.unibo.monopoly.view.impl.gamepanels.SwingPanelsFactory;
 
 public final class MainMenuViewImpl implements MainMenuView{
     
@@ -68,12 +71,13 @@ public final class MainMenuViewImpl implements MainMenuView{
     // Container
     private final JFrame mainFrame = new JFrame();
     private final JPanel mainPanel = new JPanel(new BorderLayout());
-    private final JPanel menuPanel;
-    private final JPanel settingsPanel;
-    private final JPanel setupPanel;
+    private final MenuPanel menuPanel;
+    private final SettingsPanel settingsPanel;
+    private SetupPanel setupPanel;
 
     private final MainMenuController controller;
     private final Map<Color, JTextField> playersInfo = new LinkedHashMap<>();
+    final MainMenuPanelsFactory fact = new SwingPanelsFactory();
 
 
     /**
@@ -92,9 +96,8 @@ public final class MainMenuViewImpl implements MainMenuView{
                                  (int) GuiUtils.getDimensionWindow().getHeight(),
                                  TITLE_WINDOW
         );
-        menuPanel = createMainMenuPanel();
-        settingsPanel = createSettingsPanel();
-        setupPanel = createSetupPanel();
+        menuPanel = fact.menuPanel(controller);
+        settingsPanel = fact.settingsPanel(controller);
 
         mainPanel.setBorder(BorderFactory.createEmptyBorder(TOP_BORDER, SIDE_BORDER, BOTTOM_BORDER, SIDE_BORDER));
         mainFrame.add(mainPanel);
@@ -119,6 +122,7 @@ public final class MainMenuViewImpl implements MainMenuView{
     @Override
     public void displaySetupMenu() {
         mainPanel.removeAll();
+        setupPanel = fact.setupPanel(controller);
         mainPanel.add(setupPanel);
         GuiUtils.refresh(mainFrame);
     }
@@ -219,7 +223,7 @@ public final class MainMenuViewImpl implements MainMenuView{
 
             row.add(colorBox, BorderLayout.WEST);
             row.add(textField, BorderLayout.CENTER);
-            playersInfo.put(colorBox.getBackground(), textField);
+            playersInfo.put(colorBox.getColor(), textField);
 
             playersPanel.add(row);
             playersPanel.add(Box.createVerticalStrut(GAP));
