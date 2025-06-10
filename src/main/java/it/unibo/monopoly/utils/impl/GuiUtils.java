@@ -2,7 +2,6 @@ package it.unibo.monopoly.utils.impl;
 
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dialog;
 import java.awt.Dimension;
@@ -14,7 +13,6 @@ import java.util.Objects;
 
 import javax.swing.JDialog;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.WindowConstants;
 
@@ -24,33 +22,12 @@ import javax.swing.WindowConstants;
  */
 public final class GuiUtils {
 
+    private static final double MAX_PERC = 1.0;
+    private static final double MIN_PERC = 0.0;
     private static final double WIDTH_PERC = 0.5;
     private static final double HEIGHT_PERC = 0.5;
 
     private GuiUtils() { /* Prevent instantiation */ }
-
-    /**
-     * Create a fixed-size square colored label.
-     * If the {@code size} is invalid (zero or negative), returns a placeholder label
-     * with an error message instead of throwing an exception.
-     * <p>
-     * This behavior is intentional to allow graceful failure in GUI contexts where
-     * exception handling would be excessive or intrusive.
-     *
-     * @param color the background color
-     * @param size the width and height in pixels
-     * @return a square JLabel or an error label if size is invalid
-     */
-    public static JLabel colorBoxFactory(final Color color, final int size) {
-        if (size < 0) {
-            return new JLabel("Error size box");
-        }
-        final JLabel colorBox = new JLabel();
-        colorBox.setOpaque(true);
-        colorBox.setBackground(color);
-        colorBox.setPreferredSize(new Dimension(size, size));
-        return colorBox;
-    }
 
     /**
      * Configures a window with default layout and location, along with standard behaviors.
@@ -175,8 +152,16 @@ public final class GuiUtils {
      * @param widthPerc the percentage of the full screen's width
      * @param heightPerc the percentage of the full screen's height
      * @return a {@link Dimension} based the screen size and the provided percentage
+     * @throws IllegalArgumentException if the provided percentage is not between 0.0 and 1.0
      */
     public static Dimension getDimensionWindow(final double widthPerc, final double heightPerc) {
+        if (!isPercentageCorrect(widthPerc, heightPerc)) {
+            throw new IllegalArgumentException(
+                "The percentage selected ("
+                + widthPerc + ", " + heightPerc
+                + ") does not follow this rule: 0% < val <= 100%"
+            );
+        }
         final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         return new Dimension((int) (screenSize.getWidth() * widthPerc), (int) (screenSize.getHeight() * heightPerc));
     }
@@ -185,8 +170,10 @@ public final class GuiUtils {
      * Get a new {@link Font} with a small size, according to the {@link Configuration}.
      * @param config a consistent {@link Configuration} for upload {@code size} and {@code name} parameters
      * @return a new {@link Font} according to the {@link Configuration} parameters
+     * @throws NullPointerException if the {@link Configuration} is {@code null}
      */
     public static Font getSmallFontFromConfiguration(final Configuration config) {
+        Objects.requireNonNull(config, "The configuration must not be null");
         return FontUtils.createFont(config.getFontName(), config.getSmallFont());
     }
 
@@ -194,8 +181,10 @@ public final class GuiUtils {
      * Get a new {@link Font} with a big size, according to the {@link Configuration}.
      * @param config a consistent {@link Configuration} for upload {@code size} and {@code name} parameters
      * @return a new {@link Font} according to the {@link Configuration} parameters
+     * @throws NullPointerException if the {@link Configuration} is {@code null}
      */
     public static Font getBigFontFromConfiguration(final Configuration config) {
+        Objects.requireNonNull(config, "The configuration must not be null");
         return FontUtils.createFont(config.getFontName(), config.getBigFont());
     }
 
@@ -204,6 +193,7 @@ public final class GuiUtils {
      * @param config a consistent {@link Configuration} for the font settings
      */
     public static void applyGlobalFont(final Configuration config) {
+        Objects.requireNonNull(config, "The configuration must not be null");
         final Font font = getSmallFontFromConfiguration(config);
         FontUtils.configure(font);
     }
@@ -216,7 +206,7 @@ public final class GuiUtils {
      * @param height the height in pixels
      * @param title the window title
      * @param layout the layout manager to apply
-     * @return true if the provided parameters form a consistent configuration
+     * @return true if the provided parameters form a consistent configuration, false otherwise
      */
     private static boolean isConsistent(final Window window, final int width, final int height, 
                                         final String title, final LayoutManager layout) {
@@ -231,7 +221,20 @@ public final class GuiUtils {
     private static void showMessageDialog(final Window parent,
                                           final String title,
                                           final String message,
-                                          final int type) {
+                                          final int type) {        
         JOptionPane.showMessageDialog(parent, message, title, type);
+    }
+
+    /**
+     * Checks whether the provided percentage represent a valid ones.
+     * @param widthPerc the width to check
+     * @param heightPerc the height to check
+     * @return true if the provided percentage are valid, false otherwise
+     */
+    private static boolean isPercentageCorrect(final double widthPerc, final double heightPerc) {
+        return widthPerc > MIN_PERC
+            && widthPerc <= MAX_PERC
+            && heightPerc > MIN_PERC
+            && heightPerc <= MAX_PERC;
     }
 }
