@@ -26,8 +26,8 @@ import javax.swing.SwingConstants;
 import it.unibo.monopoly.model.gameboard.api.Special;
 import it.unibo.monopoly.model.transactions.api.RentOption;
 import it.unibo.monopoly.model.transactions.api.TitleDeed;
-import it.unibo.monopoly.utils.impl.GuiUtils;
 import it.unibo.monopoly.view.api.ContractPanel;
+import it.unibo.monopoly.view.impl.PawnSquare;
 
 /**
  * A panel to visualise all information related to a {@link TitleDeed}.
@@ -77,7 +77,7 @@ final class SwingContractPanel extends SwingAbstractJPanel implements ContractPa
         groupPanel.setLayout(new BorderLayout());
         final JLabel group = new JLabel(deed.getGroup().toString(), SwingConstants.RIGHT);
 
-        final JLabel colorBox = GuiUtils.colorBoxFactory(deed.getGroup().getColor(), 30);
+        final var colorBox = new PawnSquare(deed.getGroup().getColor(), 30);
         groupPanel.add(colorBox, BorderLayout.WEST);
         groupPanel.add(group, BorderLayout.CENTER);
 
@@ -129,7 +129,7 @@ final class SwingContractPanel extends SwingAbstractJPanel implements ContractPa
         groupPanel.setLayout(new BorderLayout());
         final JLabel group = new JLabel(tile.getGroup().toString(), SwingConstants.RIGHT);
 
-        final JLabel colorBox = GuiUtils.colorBoxFactory(tile.getGroup().getColor(), 30);
+        final var colorBox = new PawnSquare(tile.getGroup().getColor(), 30);
         groupPanel.add(colorBox, BorderLayout.WEST);
         groupPanel.add(group, BorderLayout.CENTER);
 
