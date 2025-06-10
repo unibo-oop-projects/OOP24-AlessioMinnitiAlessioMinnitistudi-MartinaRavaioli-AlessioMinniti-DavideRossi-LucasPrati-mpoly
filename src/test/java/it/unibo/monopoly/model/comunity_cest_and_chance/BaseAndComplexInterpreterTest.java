@@ -136,16 +136,8 @@ class BaseAndComplexInterpreterTest {
         tiles.stream().forEach(board::addTile);
         titleDeeds.stream().forEach(bank::addTitleDeed);
 
-        // start the game
-        final var controllerGameManager = new GameControllerImpl(
-            board,
-            turnM,
-            config,
-            bank
-        );
 
-        complexInt = new ComplexInterpreter(board, bank, controllerGameManager);
-        baseInt = new BaseInterpreter(bcf.allCommand(bank, board, controllerGameManager));
+        baseInt = new BaseInterpreter(bcf.allCommand(bank, board));
         argsInt = new ArgsInterpreterImpl();
     }
 
