@@ -27,7 +27,7 @@ public final class LaunchApp {
 
         final Configuration config = Configuration.configureFromFile(CONFIG_FILE);
         GuiUtils.applyGlobalFont(config);
-        
+
         SwingUtilities.invokeLater(() -> {
             new MainMenuView(config);
         });

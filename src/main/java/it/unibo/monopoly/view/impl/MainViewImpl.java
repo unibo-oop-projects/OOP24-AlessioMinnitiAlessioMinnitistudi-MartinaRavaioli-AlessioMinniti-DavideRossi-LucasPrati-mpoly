@@ -132,7 +132,7 @@ public final class MainViewImpl implements MainGameView {
         contractPanel.renderDefaultUI();
         gameActionsPanel.renderDefaultUI();
         mainActionsPanel.renderDefaultUI();
-        mainActionsPanel.setDiceButtonEnabled(pl.isParked());
+        mainActionsPanel.setDiceButtonEnabled(!pl.isParked());
         mainGameFrame.repaint();
     }
 

@@ -94,14 +94,21 @@ public class TurnationManagerImpl implements TurnationManager {
     public final Player getNextPlayer() { 
         this.currPlayer = players.giveNextNode(this.currPlayer);
         this.diceThrown = false;
-        return PlayerImpl.of(this.currPlayer.getID(), this.currPlayer.getName(), this.currPlayer.getColor());
+        return new ParkablePlayer(new PrisonablePlayer(
+            PlayerImpl.of(this.currPlayer.getID(), this.currPlayer.getName(), this.currPlayer.getColor())));
     }
 
     @Override
     public final Collection<Integer> moveByDices() throws IllegalAccessException { 
         if (!hasCurrPlayerThrownDices()) {
-            this.diceThrown = true;
-            return this.dice.throwDices();
+            if (canThrowDices()) {
+                this.diceThrown = true;
+                return this.dice.throwDices();
+            } else {
+                passedParkTurn();
+                throw new IllegalAccessException("the player can't throw dices because is parked");
+            }
+
         } else {
             throw new IllegalAccessException("the current player has already thrown the dices");
         }
@@ -114,7 +121,8 @@ public class TurnationManagerImpl implements TurnationManager {
 
     @Override
     public final Player getCurrPlayer() {
-        return PlayerImpl.of(this.currPlayer.getID(), this.currPlayer.getName(), this.currPlayer.getColor());
+        return new ParkablePlayer(new PrisonablePlayer(
+            PlayerImpl.of(this.currPlayer.getID(), this.currPlayer.getName(), this.currPlayer.getColor())));
     }
 
     @Override
@@ -129,7 +137,14 @@ public class TurnationManagerImpl implements TurnationManager {
 
     @Override
     public final boolean canPassTurn() {
-        return this.bankState.allMandatoryTransactionsCompleted() && hasCurrPlayerThrownDices();
+        if (this.bankState.allMandatoryTransactionsCompleted()) {
+            if (hasCurrPlayerThrownDices()) {
+                return true;
+            } else if (this.currPlayer.isParked()) {
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override
@@ -187,6 +202,7 @@ public class TurnationManagerImpl implements TurnationManager {
         }
         this.bankState.deletePlayer(player);
     }
+
     @Override
     public final void resetBankState() {
         this.bankState.resetTransactionData();
@@ -218,6 +234,19 @@ public class TurnationManagerImpl implements TurnationManager {
     @Override
     public final void parkCurrentPlayer() {
         this.currPlayer.park();
+    }
+    @Override
+    public final boolean canThrowDices() {
+        return !this.currPlayer.isParked();
+    }
+    @Override
+    public final boolean tryExitPrison(final Collection<Integer> result) {
+        if (this.currPlayer.canExitPrison(result)) {
+            return true;
+        } else {
+            this.currPlayer.decreaseTurnsInPrison();
+            return false;
+        }
     }
 
 }
