@@ -2,6 +2,7 @@ package it.unibo.monopoly.controller.impl;
 
 import java.awt.Color;
 import java.io.IOException;
+import java.io.UncheckedIOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -39,6 +40,8 @@ import it.unibo.monopoly.utils.api.UseFileTxt;
 import it.unibo.monopoly.utils.impl.Configuration;
 import it.unibo.monopoly.utils.impl.UseFileJsonImpl;
 import it.unibo.monopoly.utils.impl.UseFileTxtImpl;
+import it.unibo.monopoly.view.api.MainMenuView;
+import it.unibo.monopoly.view.impl.MainMenuViewImpl;
 
 
 /**
@@ -48,10 +51,11 @@ public final class MainMenuControllerImpl implements MainMenuController {
 
     private final Configuration config;
     private final BankAccountFactory bankAccountFactory;
-    private BankAccountType bankAccountType = BankAccountType.CLASSIC;
-    private int numPlayers;
     private final int minPlayers;
     private final int maxPlayers;
+    private int numPlayers;
+    private BankAccountType bankAccountType = BankAccountType.CLASSIC;
+    private MainMenuView view;
 
     /**
      * Creates a new {@link MainMenuController}. Based on the given {@link Configuration}
@@ -69,27 +73,26 @@ public final class MainMenuControllerImpl implements MainMenuController {
      * {@inheritDoc}
      */
     @Override
-    public void decreaseNumPlayer() {
-        if (numPlayers > minPlayers) {
-            numPlayers--;
+    public void onClickStart(final Map<Color, String> playersSetup) {
+        try {
+            initGame(playersSetup);
+
+        } catch (final IOException e) {
+            view.displayErrorAndExit(
+                e.getMessage(),
+                "Error loading Json"
+            );
+
+        } catch (final UncheckedIOException e) {
+            view.displayErrorAndExit(
+                e.getMessage(),
+                "Error parsing Json"
+            );
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void increaseNumPlayer() {
-        if (numPlayers < maxPlayers) {
-            numPlayers++;
-        }
-    }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void onClickStart(final Map<Color, String> playersSetup) throws IOException {
+    private void initGame(final Map<Color, String> playersSetup) throws IOException {
         final List<Player> players = new ArrayList<>();
         final List<Pawn> pawns = new ArrayList<>();
         final List<Tile> tiles = new ArrayList<>();
@@ -189,7 +192,113 @@ public final class MainMenuControllerImpl implements MainMenuController {
      * {@inheritDoc}
      */
     @Override
-    public String getRules() {
+    public void onClickIncrease() {
+        increaseNumPlayer();
+        view.refreshNumPlayers();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void onClickDecrease() {
+        decreaseNumPlayer();
+        view.refreshNumPlayers();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void onClickRules() {
+        view.displayRules(getRules());
+    }
+
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void onClickSettings() {
+        view.displaySettingsMenu();
+    }
+
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void onClickContinue() {
+        view.displaySetupMenu();
+    }
+
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void onClickClassicMode() {
+        setBankAccountType(BankAccountType.CLASSIC);
+        view.refreshSettingsData();
+    }
+
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void onClickInfinityMode() {
+        setBankAccountType(BankAccountType.INFINITY);
+        view.refreshSettingsData();
+    }
+
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void onClickDone() {
+        view.displayMainMenu();
+    }
+
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Configuration getConfiguration() {
+        return config;
+    }
+
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void start() {
+        this.view = new MainMenuViewImpl(this);
+    }
+
+
+    private void decreaseNumPlayer() {
+        if (numPlayers > minPlayers) {
+            numPlayers--;
+        }
+    }
+
+
+    private void increaseNumPlayer() {
+        if (numPlayers < maxPlayers) {
+            numPlayers++;
+        }
+    }
+
+
+    /**
+     * Use a {@link UseFileTxt} for getting a {@link String} with all the rules of the game.
+     * @return a {@link String} with all the rules of the game
+     */
+    private String getRules() {
         final UseFileTxt importRules = new UseFileTxtImpl();
         return importRules.loadTextResource(config.getRulesPath());
     }

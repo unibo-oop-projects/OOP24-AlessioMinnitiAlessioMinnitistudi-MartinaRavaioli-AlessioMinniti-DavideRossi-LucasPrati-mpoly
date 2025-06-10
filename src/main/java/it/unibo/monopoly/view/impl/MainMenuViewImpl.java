@@ -3,10 +3,7 @@ package it.unibo.monopoly.view.impl;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.GridLayout;
-import java.io.IOException;
-import java.io.UncheckedIOException;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -22,20 +19,13 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
-import it.unibo.monopoly.controller.api.GameController;
 import it.unibo.monopoly.controller.api.MainMenuController;
-import it.unibo.monopoly.controller.impl.MainMenuControllerImpl;
 import it.unibo.monopoly.model.transactions.api.BankAccountType;
-import it.unibo.monopoly.model.turnation.impl.PlayerImpl;
-import it.unibo.monopoly.utils.impl.Configuration;
 import it.unibo.monopoly.utils.impl.GuiUtils;
 import it.unibo.monopoly.view.api.MainMenuView;
 
-/**
- * MainMenuGUI view.
- */
-public final class MainMenuViewImpl implements MainMenuView {
-
+public final class MainMenuViewImpl implements MainMenuView{
+    
     // Grid layout
     private static final int ZERO = 0;
     private static final int SINGLE = 1;
@@ -58,6 +48,9 @@ public final class MainMenuViewImpl implements MainMenuView {
     private static final String PLUS_TEXT = "+";
     private static final String RULES_TEXT = "?";
     private static final String SETTINGS_TEXT = "settings";
+    private JButton decreaseButton;
+    private JButton increaseButton;
+    private final JLabel numPlayersLabel = new JLabel();
 
     // Player Setup Screen
     private static final String TITLE_TEXT_PLAYER_SETUP = "Set players nicknames";
@@ -66,51 +59,103 @@ public final class MainMenuViewImpl implements MainMenuView {
 
     // Settings Menu
     private static final String TITLE_TEXT_SETTINGS = "Select game mode";
-    private static final String EXIT_TEXT = "Exit";
+    private static final String DONE_TEXT = "Done";
     private static final String INFINITY_TEXT = "Infinity Mode";
     private static final String CLASSIC_TEXT = "Classic Mode";
+    private JButton classicModeButton;
+    private JButton infinityModeButton;
 
-    private final JFrame mainGameFrame = new JFrame();
+    // Container
+    private final JFrame mainFrame = new JFrame();
+    private final JPanel mainPanel = new JPanel(new BorderLayout());
+    private final JPanel menuPanel;
+    private final JPanel settingsPanel;
+    private final JPanel setupPanel;
+
     private final MainMenuController controller;
     private final Map<Color, JTextField> playersInfo = new LinkedHashMap<>();
 
-    private JButton decreaseButton;
-    private JButton increaseButton;
-    private final JLabel numPlayersLabel = new JLabel();
-    private JButton classicModeButton;
-    private JButton infinityModeButton;
-    private final JPanel mainPanel = new JPanel(new BorderLayout());
-
 
     /**
-     * Creates a new MainMenuView with his controller.
-     * @param controller the {@link GameController} that captures the events 
-     * happening on this view, implementing the observer pattern. User events
-     * will be captured and handled by the {@code controller} provided to this constructor. 
+     * Assembles the UI of the menu interface and adds all components to {@code mainFrame} object.
+     * The {@code mainFrame} is a {@link JFrame}. 
+     * @param controller the {@link MainMenuController} that captures the events 
+     * happening on this view, implementing the observer pattern. 
+     * User events will be captured and handled by the {@code controller} provided to this constructor.
      */
+    // @SuppressFBWarnings(value = "EI_EXPOSE_REP",
+    //             justification = "Must return reference to the object instead of a copy")
     public MainMenuViewImpl(final MainMenuController controller) {
         this.controller = controller;
-        GuiUtils.configureWindow(mainGameFrame,
+        GuiUtils.configureWindow(mainFrame,
                                  (int) GuiUtils.getDimensionWindow().getWidth(),
                                  (int) GuiUtils.getDimensionWindow().getHeight(),
-                                 TITLE_WINDOW);
-        mainGameFrame.add(mainPanel);
-        showMainMenu();
-        mainGameFrame.setVisible(true);
+                                 TITLE_WINDOW
+        );
+        menuPanel = createMainMenuPanel();
+        settingsPanel = createSettingsPanel();
+        setupPanel = createSetupPanel();
+
+        mainPanel.setBorder(BorderFactory.createEmptyBorder(TOP_BORDER, SIDE_BORDER, BOTTOM_BORDER, SIDE_BORDER));
+        mainFrame.add(mainPanel);
+        mainFrame.setVisible(true);
+        displayMainMenu();
+    }
+
+    @Override
+    public void displayMainMenu() {
+        mainPanel.removeAll();
+        mainPanel.add(menuPanel);
+        GuiUtils.refresh(mainFrame);
+    }
+
+    @Override
+    public void displaySettingsMenu() {
+        mainPanel.removeAll();
+        mainPanel.add(settingsPanel);
+        GuiUtils.refresh(mainFrame);
+    }
+
+    @Override
+    public void displaySetupMenu() {
+        mainPanel.removeAll();
+        mainPanel.add(setupPanel);
+        GuiUtils.refresh(mainFrame);
+    }
+
+    @Override
+    public void displayRules(String rules) {
+        new RulesWindowView(this.mainFrame, rules);
+    }
+
+    @Override
+    public void displayErrorAndExit(final String title, final String message) {
+        GuiUtils.showErrorAndExit(mainFrame, title, message);
+        mainFrame.dispose();
+    }
+
+    @Override
+    public void refreshSettingsData() {
+        classicModeButton.setEnabled(!controller.getBankAccountType().equals(BankAccountType.CLASSIC));
+        infinityModeButton.setEnabled(!controller.getBankAccountType().equals(BankAccountType.INFINITY));
+    }
+
+    @Override
+    public void refreshNumPlayers() {
+        numPlayersLabel.setText(String.valueOf(controller.getNumPlayers()));
+        decreaseButton.setEnabled(!controller.alreadyMinPlayers());
+        increaseButton.setEnabled(!controller.alreadyMaxPlayers());
     }
 
 
-    private void showMainMenu() {
-        mainPanel.removeAll();
-        mainPanel.setBorder(BorderFactory.createEmptyBorder(TOP_BORDER, SIDE_BORDER, BOTTOM_BORDER, SIDE_BORDER));
 
-        numPlayersLabel.setHorizontalAlignment(SwingConstants.CENTER);
+    private JPanel createMainMenuPanel() {
+        final var panel = new JPanel(new BorderLayout());
 
         final JLabel title = new JLabel(TITLE_TEXT_MAIN, SwingConstants.CENTER);
-        title.setFont(getBigFont());
-        title.setForeground(Color.RED);
-
+        title.setForeground(Color.RED); 
         final JLabel playersLabel = new JLabel(PLAYERS_TEXT, SwingConstants.CENTER);
+        numPlayersLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
         // Create buttons and their actionListener
         decreaseButton = new JButton(MINUS_TEXT);
@@ -128,34 +173,35 @@ public final class MainMenuViewImpl implements MainMenuView {
         final JButton continueButton = new JButton(CONTINUE_TEXT);
         continueButton.addActionListener(e -> controller.onClickContinue());
 
-        // Create panel for display players and use buttons
-        final JPanel menuPanel = new JPanel(new GridLayout(ROWS, COLS, GAP, GAP));
-        menuPanel.add(playersLabel);
-        menuPanel.add(numPlayersLabel);
-        menuPanel.add(decreaseButton);
-        menuPanel.add(increaseButton);
-        menuPanel.add(settingsButton);
-        menuPanel.add(rulesButton);
+        // Create panel for display labels and use buttons
+        final JPanel midPanel = new JPanel(new GridLayout(ROWS, COLS, GAP, GAP));
+        midPanel.add(playersLabel);
+        midPanel.add(numPlayersLabel);
+        midPanel.add(decreaseButton);
+        midPanel.add(increaseButton);
+        midPanel.add(settingsButton);
+        midPanel.add(rulesButton);
 
         // Create panel for use the button for skip to setup all the players
         final JPanel continuePanel = new JPanel(new GridLayout(SINGLE, SINGLE));
         continuePanel.setBorder(BorderFactory.createEmptyBorder(TOP_BORDER, ZERO, ZERO, ZERO));
         continuePanel.add(continueButton);
 
-        mainPanel.add(title, BorderLayout.NORTH);
-        mainPanel.add(menuPanel, BorderLayout.CENTER);
-        mainPanel.add(continuePanel, BorderLayout.SOUTH);
-        updateNumPlayers();
-        GuiUtils.refresh(mainGameFrame);
+        panel.add(title, BorderLayout.NORTH);
+        panel.add(midPanel, BorderLayout.CENTER);
+        panel.add(continuePanel, BorderLayout.SOUTH);
+        refreshNumPlayers();
+        return panel;
     }
 
 
-    private void showPlayerSetupScreen() {
-        mainPanel.removeAll();
+
+    private JPanel createSetupPanel() {
+        final var panel = new JPanel(new BorderLayout());
+
         playersInfo.clear();
 
         final JLabel title = new JLabel(TITLE_TEXT_PLAYER_SETUP, SwingConstants.CENTER);
-        title.setFont(getBigFont());
 
         // Create panel for display the players info for edit
         final JPanel playersPanel = new JPanel();
@@ -165,8 +211,10 @@ public final class MainMenuViewImpl implements MainMenuView {
         for (int i = 0; i < controller.getNumPlayers(); i++) {
             final JPanel row = new JPanel(new BorderLayout(GAP, GAP));
             row.setMaximumSize(new Dimension(Integer.MAX_VALUE, COLOR_BOX_SIZE));
-            // final var esempio = PawnSquare(config.getPlayerColors().get(i), COLOR_BOX_SIZE); // TODO
-            final JLabel colorBox = GuiUtils.colorBoxFactory(config.getPlayerColors().get(i), COLOR_BOX_SIZE);
+            final var colorBox = new PawnSquare(
+                controller.getConfiguration().getPlayerColors().get(i),
+                COLOR_BOX_SIZE
+            );
             final JTextField textField = new JTextField(DEFAULT_PLAYER_TEXT + (i + 1));
 
             row.add(colorBox, BorderLayout.WEST);
@@ -182,7 +230,18 @@ public final class MainMenuViewImpl implements MainMenuView {
         scrollPane.setBorder(BorderFactory.createEmptyBorder(TOP_BORDER, ZERO, BOTTOM_BORDER, ZERO));
 
         final JButton startGameButton = new JButton(START_TEXT);
-        startGameButton.addActionListener(e -> initializePlayers());
+        startGameButton.addActionListener(e -> {
+            controller.onClickStart(
+                playersInfo.entrySet().stream()
+                    .collect(Collectors.toMap(
+                        Map.Entry::getKey,                      // chiave: Color
+                        k -> k.getValue().getText().trim(),     // valore: testo dal JTextField pulito da spazi extra
+                        (a, b) -> b,                            // risolve eventuali duplicati Colore mantenendo l'ultimo valore
+                        LinkedHashMap::new                      // preservo l'ordine di inserimento
+                ))
+            );
+            mainFrame.dispose();
+        });
 
         // Create a panel for the start button
         final JPanel startPanel = new JPanel();
@@ -190,33 +249,28 @@ public final class MainMenuViewImpl implements MainMenuView {
         startPanel.add(Box.createHorizontalGlue());
         startPanel.add(startGameButton);
 
-        mainPanel.add(title, BorderLayout.NORTH);
-        mainPanel.add(scrollPane, BorderLayout.CENTER);
-        mainPanel.add(startPanel, BorderLayout.SOUTH);
-        GuiUtils.refresh(mainGameFrame);
+        panel.add(title, BorderLayout.NORTH);
+        panel.add(scrollPane, BorderLayout.CENTER);
+        panel.add(startPanel, BorderLayout.SOUTH);
+        return panel;
     }
 
-    private void showSettingsMenu() {
-        mainPanel.removeAll();
+
+
+    private JPanel createSettingsPanel() {
+        final var panel = new JPanel(new BorderLayout());
+
         final JLabel title = new JLabel(TITLE_TEXT_SETTINGS, SwingConstants.CENTER);
-        title.setFont(getBigFont());
         title.setForeground(Color.RED);
 
-        // Create buttons for settings the game mode and an exit button
+        // Create buttons for settings the game mode and an exit button, with action listeners
         classicModeButton = new JButton(CLASSIC_TEXT);
         infinityModeButton = new JButton(INFINITY_TEXT);
-        final JButton exitButton = new JButton(EXIT_TEXT);
+        final JButton doneButton = new JButton(DONE_TEXT);
 
-        // Adding action listener
-        classicModeButton.addActionListener(e -> {
-            controller.setBankAccountType(BankAccountType.CLASSIC);
-            updateSettingsButton();
-        });
-        infinityModeButton.addActionListener(e -> {
-            controller.setBankAccountType(BankAccountType.INFINITY);
-            updateSettingsButton();
-        });
-        exitButton.addActionListener(e -> showMainMenu());
+        classicModeButton.addActionListener(e -> controller.onClickClassicMode());
+        infinityModeButton.addActionListener(e -> controller.onClickInfinityMode());
+        doneButton.addActionListener(e -> controller.onClickDone());
 
         // Create a panel for display all game mode and choose which one use
         final JPanel modePanel = new JPanel(new GridLayout(SINGLE, COLS, GAP, GAP));
@@ -230,61 +284,11 @@ public final class MainMenuViewImpl implements MainMenuView {
         centerWrapper.add(modePanel);
         centerWrapper.add(Box.createVerticalGlue());
 
-        mainPanel.add(title, BorderLayout.NORTH);
-        mainPanel.add(centerWrapper, BorderLayout.CENTER);
-        mainPanel.add(exitButton, BorderLayout.SOUTH);
-        updateSettingsButton();
-        GuiUtils.refresh(mainGameFrame);
-    }
+        panel.add(title, BorderLayout.NORTH);
+        panel.add(centerWrapper, BorderLayout.CENTER);
+        panel.add(doneButton, BorderLayout.SOUTH);
+        refreshSettingsData();
+        return panel;
 
-
-    /**
-     * Initializes the players according to the preferences entered by the users.
-     * 
-     * It collects the text from each {@link JTextField} in the {@code playersInfo} map,
-     * trims the inputs, and creates a new map of {@link Color} to {@link String}.
-     * This map is then passed to the controller, which creates the {@link PlayerImpl} instances.
-     */
-    private void initializePlayers() {
-        final Map<Color, String> playersSetup = playersInfo.entrySet().stream()
-            .collect(Collectors.toMap(
-                Map.Entry::getKey,                      // chiave: Color
-                e -> e.getValue().getText().trim(),     // valore: testo dal JTextField pulito da spazi extra
-                (a, b) -> b,                            // risolve eventuali duplicati Colore mantenendo l'ultimo valore
-                LinkedHashMap::new                      // preservo l'ordine di inserimento
-            ));
-
-        try {
-            controller.onClickStart(playersSetup);
-
-        } catch (final IOException e) {
-            GuiUtils.showErrorAndExit(
-                mainGameFrame,
-                e.getMessage(),
-                "Error loading Json");
-
-        } catch (final UncheckedIOException e) {
-            GuiUtils.showErrorAndExit(
-                mainGameFrame,
-                e.getMessage(),
-                "Error parsing Json");
-
-        }
-        mainGameFrame.dispose();
-    }
-
-    private void updateSettingsButton() {
-        classicModeButton.setEnabled(!controller.getBankAccountType().equals(BankAccountType.CLASSIC));
-        infinityModeButton.setEnabled(!controller.getBankAccountType().equals(BankAccountType.INFINITY));
-    }
-
-    private void updateNumPlayers() {
-        numPlayersLabel.setText(String.valueOf(controller.getNumPlayers()));
-        decreaseButton.setEnabled(!controller.alreadyMinPlayers());
-        increaseButton.setEnabled(!controller.alreadyMaxPlayers());
-    }
-
-    private Font getBigFont() {
-        return GuiUtils.getBigFontFromConfiguration(config);
     }
 }
