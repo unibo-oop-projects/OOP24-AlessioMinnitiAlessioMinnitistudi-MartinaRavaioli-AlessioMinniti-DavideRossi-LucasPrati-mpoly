@@ -22,19 +22,19 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
+import it.unibo.monopoly.controller.api.GameController;
 import it.unibo.monopoly.controller.api.MainMenuController;
 import it.unibo.monopoly.controller.impl.MainMenuControllerImpl;
 import it.unibo.monopoly.model.transactions.api.BankAccountType;
 import it.unibo.monopoly.model.turnation.impl.PlayerImpl;
 import it.unibo.monopoly.utils.impl.Configuration;
 import it.unibo.monopoly.utils.impl.GuiUtils;
+import it.unibo.monopoly.view.api.MainMenuView;
 
 /**
  * MainMenuGUI view.
  */
-public final class MainMenuView extends JFrame {
-
-    private static final long serialVersionUID = 1L;
+public final class MainMenuViewImpl implements MainMenuView {
 
     // Grid layout
     private static final int ZERO = 0;
@@ -70,8 +70,8 @@ public final class MainMenuView extends JFrame {
     private static final String INFINITY_TEXT = "Infinity Mode";
     private static final String CLASSIC_TEXT = "Classic Mode";
 
-    private final transient Configuration config;
-    private final transient MainMenuController controller;
+    private final JFrame mainGameFrame = new JFrame();
+    private final MainMenuController controller;
     private final Map<Color, JTextField> playersInfo = new LinkedHashMap<>();
 
     private JButton decreaseButton;
@@ -83,19 +83,20 @@ public final class MainMenuView extends JFrame {
 
 
     /**
-     * Creates a new MainMenuView with his controller. Based on the given {@link Configuration}
-     * @param config a consistent configuration for settings
+     * Creates a new MainMenuView with his controller.
+     * @param controller the {@link GameController} that captures the events 
+     * happening on this view, implementing the observer pattern. User events
+     * will be captured and handled by the {@code controller} provided to this constructor. 
      */
-    public MainMenuView(final Configuration config) {
-        this.config = config;
-        this.controller = new MainMenuControllerImpl(config);
-        GuiUtils.configureWindow(this,
+    public MainMenuViewImpl(final MainMenuController controller) {
+        this.controller = controller;
+        GuiUtils.configureWindow(mainGameFrame,
                                  (int) GuiUtils.getDimensionWindow().getWidth(),
                                  (int) GuiUtils.getDimensionWindow().getHeight(),
                                  TITLE_WINDOW);
-        add(mainPanel);
+        mainGameFrame.add(mainPanel);
         showMainMenu();
-        setVisible(true);
+        mainGameFrame.setVisible(true);
     }
 
 
@@ -113,25 +114,19 @@ public final class MainMenuView extends JFrame {
 
         // Create buttons and their actionListener
         decreaseButton = new JButton(MINUS_TEXT);
-        decreaseButton.addActionListener(e -> {
-            controller.decreaseNumPlayer();
-            updateNumPlayers();
-        });
+        decreaseButton.addActionListener(e -> controller.onClickDecrease());
 
         increaseButton = new JButton(PLUS_TEXT); 
-        increaseButton.addActionListener(e -> {
-            controller.increaseNumPlayer();
-            updateNumPlayers();
-        });
+        increaseButton.addActionListener(e -> controller.onClickIncrease());
 
         final JButton rulesButton = new JButton(RULES_TEXT);
-        rulesButton.addActionListener(e -> new RulesWindowView(this, config, controller.getRules()));
+        rulesButton.addActionListener(e -> controller.onClickRules());
 
         final JButton settingsButton = new JButton(SETTINGS_TEXT);
-        settingsButton.addActionListener(e -> showSettingsMenu());
+        settingsButton.addActionListener(e -> controller.onClickSettings());
 
         final JButton continueButton = new JButton(CONTINUE_TEXT);
-        continueButton.addActionListener(e -> showPlayerSetupScreen());
+        continueButton.addActionListener(e -> controller.onClickContinue());
 
         // Create panel for display players and use buttons
         final JPanel menuPanel = new JPanel(new GridLayout(ROWS, COLS, GAP, GAP));
@@ -151,7 +146,7 @@ public final class MainMenuView extends JFrame {
         mainPanel.add(menuPanel, BorderLayout.CENTER);
         mainPanel.add(continuePanel, BorderLayout.SOUTH);
         updateNumPlayers();
-        GuiUtils.refresh(this);
+        GuiUtils.refresh(mainGameFrame);
     }
 
 
@@ -170,6 +165,7 @@ public final class MainMenuView extends JFrame {
         for (int i = 0; i < controller.getNumPlayers(); i++) {
             final JPanel row = new JPanel(new BorderLayout(GAP, GAP));
             row.setMaximumSize(new Dimension(Integer.MAX_VALUE, COLOR_BOX_SIZE));
+            // final var esempio = PawnSquare(config.getPlayerColors().get(i), COLOR_BOX_SIZE); // TODO
             final JLabel colorBox = GuiUtils.colorBoxFactory(config.getPlayerColors().get(i), COLOR_BOX_SIZE);
             final JTextField textField = new JTextField(DEFAULT_PLAYER_TEXT + (i + 1));
 
@@ -197,7 +193,7 @@ public final class MainMenuView extends JFrame {
         mainPanel.add(title, BorderLayout.NORTH);
         mainPanel.add(scrollPane, BorderLayout.CENTER);
         mainPanel.add(startPanel, BorderLayout.SOUTH);
-        GuiUtils.refresh(this);
+        GuiUtils.refresh(mainGameFrame);
     }
 
     private void showSettingsMenu() {
@@ -238,7 +234,7 @@ public final class MainMenuView extends JFrame {
         mainPanel.add(centerWrapper, BorderLayout.CENTER);
         mainPanel.add(exitButton, BorderLayout.SOUTH);
         updateSettingsButton();
-        GuiUtils.refresh(this);
+        GuiUtils.refresh(mainGameFrame);
     }
 
 
@@ -263,18 +259,18 @@ public final class MainMenuView extends JFrame {
 
         } catch (final IOException e) {
             GuiUtils.showErrorAndExit(
-                this,
+                mainGameFrame,
                 e.getMessage(),
                 "Error loading Json");
 
         } catch (final UncheckedIOException e) {
             GuiUtils.showErrorAndExit(
-                this,
+                mainGameFrame,
                 e.getMessage(),
                 "Error parsing Json");
 
         }
-        this.dispose();
+        mainGameFrame.dispose();
     }
 
     private void updateSettingsButton() {
