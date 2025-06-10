@@ -2,7 +2,6 @@ package it.unibo.monopoly.model.gameboard.impl.chance_comunity.api;
 
 import java.util.List;
 
-import it.unibo.monopoly.controller.api.GameController;
 import it.unibo.monopoly.model.gameboard.api.Board;
 import it.unibo.monopoly.model.transactions.api.Bank;
 
@@ -23,6 +22,6 @@ public interface BaseCommandFactory {
      * @param viewcontroller to show graphical reference of some commands 
      * @param board to execute some command
      */
-    List<BaseCommand> allCommand(Bank bank, Board board, GameController viewcontroller);
+    List<BaseCommand> allCommand(Bank bank, Board board);
 
 }

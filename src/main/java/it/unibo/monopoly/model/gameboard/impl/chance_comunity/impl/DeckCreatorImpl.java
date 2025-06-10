@@ -3,7 +3,6 @@ package it.unibo.monopoly.model.gameboard.impl.chance_comunity.impl;
 import java.util.LinkedList;
 import java.util.List;
 
-import it.unibo.monopoly.controller.api.GameController;
 import it.unibo.monopoly.model.gameboard.api.Board;
 import it.unibo.monopoly.model.gameboard.impl.chance_comunity.api.Command;
 import it.unibo.monopoly.model.gameboard.impl.chance_comunity.api.DeckCreator;
@@ -20,14 +19,13 @@ public final class DeckCreatorImpl implements DeckCreator {
     @Override
     public void createDeck(final String file, 
                             final Board board, final Bank bank, 
-                            final TurnationManager turnM, 
-                            final GameController viewcontroller) {
+                            final TurnationManager turnM) {
 
         final UseFileTxt fi = new UseFileTxtImpl();
         final String fileAsString = fi.loadTextResource(file);
         final ParserOnHyphen paars = new ParserOnHyphen(fileAsString);
         final List<ChanceAndCommunityChestCard> cards = new LinkedList<>();
-        final ComplexInterpreter compInt = new ComplexInterpreter(board, bank, viewcontroller);
+        final ComplexInterpreter compInt = new ComplexInterpreter(board, bank);
         while (paars.hasNesxt()) {
             final String toInterpret = paars.next();
             final Command com = compInt.interpret(toInterpret, board, turnM);

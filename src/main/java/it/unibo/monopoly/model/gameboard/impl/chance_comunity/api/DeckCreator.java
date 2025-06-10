@@ -2,7 +2,6 @@ package it.unibo.monopoly.model.gameboard.impl.chance_comunity.api;
 
 import java.io.FileNotFoundException;
 
-import it.unibo.monopoly.controller.api.GameController;
 import it.unibo.monopoly.model.gameboard.api.Board;
 import it.unibo.monopoly.model.transactions.api.Bank;
 import it.unibo.monopoly.model.turnation.api.TurnationManager;
@@ -22,7 +21,6 @@ public interface DeckCreator {
      * @return the deck
      * @throws FileNotFoundException if the file in the arguments is not valid
      */
-    void createDeck(String file, Board board, Bank bank, TurnationManager turnM, 
-                                GameController viewcontroller) throws FileNotFoundException;
+    void createDeck(String file, Board board, Bank bank, TurnationManager turnM) throws FileNotFoundException;
 
 }

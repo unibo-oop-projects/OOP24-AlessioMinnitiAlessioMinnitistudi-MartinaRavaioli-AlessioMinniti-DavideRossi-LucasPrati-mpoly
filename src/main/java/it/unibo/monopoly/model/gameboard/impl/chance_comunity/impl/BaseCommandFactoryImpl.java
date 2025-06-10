@@ -4,7 +4,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
-import it.unibo.monopoly.controller.api.GameController;
 import it.unibo.monopoly.model.gameboard.api.Board;
 import it.unibo.monopoly.model.gameboard.api.Property;
 import it.unibo.monopoly.model.gameboard.api.Tile;
@@ -217,7 +216,7 @@ public final class BaseCommandFactoryImpl implements BaseCommandFactory {
         };
     }
 
-    private BaseCommand buyIfNotOwned(final Bank bank, final Board board, final GameController viewcontroller) {
+    private BaseCommand buyIfNotOwned(final Bank bank, final Board board) {
         return new BaseCommand() {
 
             private static final String KEY = "buy if not owned";
@@ -233,7 +232,6 @@ public final class BaseCommandFactoryImpl implements BaseCommandFactory {
                 final Tile t = board.getTile(tile);
                 if (t instanceof Property && !bank.getTitleDeed(tile).isOwned()) {
                     bank.buyTitleDeed(tile, player.getID());
-                    viewcontroller.refreshBankPlayerInfo();
                 } else if (t instanceof Property && bank.getTitleDeed(tile).isOwned()) {
                     bank.payRent(t.getName(), player.getID(), 10);
                 }
@@ -296,14 +294,14 @@ public final class BaseCommandFactoryImpl implements BaseCommandFactory {
     }
 
     @Override
-    public List<BaseCommand> allCommand(final Bank bank, final Board board, final GameController viewcontroller) {
+    public List<BaseCommand> allCommand(final Bank bank, final Board board) {
         return List.of(
             this.deposit(bank),
             this.move(board),
             this.moveIn(board),
             this.withdraw(bank), 
             this.depositFrom(bank),
-            this.buyIfNotOwned(bank, board, viewcontroller)
+            this.buyIfNotOwned(bank, board)
         );
     }
 
