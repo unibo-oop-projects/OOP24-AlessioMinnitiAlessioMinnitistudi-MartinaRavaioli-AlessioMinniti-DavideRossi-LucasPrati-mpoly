@@ -6,7 +6,6 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
-import java.awt.Toolkit;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -130,7 +129,7 @@ public final class GameboardViewImpl extends JPanel implements GameboardView {
     @Override
     public void renderDefaultUI() {
         this.setLayout(new BorderLayout());
-        this.setSize(Toolkit.getDefaultToolkit().getScreenSize());
+        //this.setSize(Toolkit.getDefaultToolkit().getScreenSize());
         final JPanel board = new JPanel(new GridLayout(this.size, this.size));
         this.add(board);
         final JPanel[][] grid = new JPanel[this.size][this.size];
