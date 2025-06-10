@@ -210,7 +210,7 @@ public final class MainMenuControllerImpl implements MainMenuController {
         Objects.requireNonNull(owner);
         return switch (bankAccountType) {
             case CLASSIC    -> bankAccountFactory.createWithCheck(id,
-                                                                  account -> account.getBalance() > 0);
+                                                                  account -> account.getBalance() >= 0);
             case INFINITY   -> bankAccountFactory.createSimple(id);
         };
     }
