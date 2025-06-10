@@ -25,7 +25,7 @@ public final class RulesWindowView extends JDialog {
 
     private static final String TITLE_WINDOW = "Monopoly - Rules";
     private static final String TITLE_TEXT = "Rules";
-    private static final String EXIT_TEXT = "Exit";
+    private static final String DONE_TEXT = "Done";
 
     private static final int TOP_BORDER = 10;
     private static final int BOTTOM_BORDER = 10;
@@ -65,12 +65,12 @@ public final class RulesWindowView extends JDialog {
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 
         // Create an exit button for the window
-        final JButton exitButton = new JButton(EXIT_TEXT);
-        exitButton.addActionListener(e -> dispose());
+        final JButton doneButton = new JButton(DONE_TEXT);
+        doneButton.addActionListener(e -> dispose());
 
         mainPanel.add(titleLabel, BorderLayout.NORTH);
         mainPanel.add(scrollPane, BorderLayout.CENTER);
-        mainPanel.add(exitButton, BorderLayout.SOUTH);
+        mainPanel.add(doneButton, BorderLayout.SOUTH);
 
         GuiUtils.refresh(this);
     }
