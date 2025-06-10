@@ -37,7 +37,7 @@ import it.unibo.monopoly.model.turnation.impl.PositionImpl;
  */
 class BankTest {
 
-    private static final int AMOUNT = 100;
+    private static final int AMOUNT = 1000;
     private static final int ID_1 = 21;
     private static final int ID_2 = 42;
     private static final int DICE_THROW = 12;
@@ -50,9 +50,9 @@ class BankTest {
     private static final Function<Integer, Integer> HOTEL_PRICE = d -> 30;
     private static final int BASE_RENT_PRICE = 2;
     private BuildablePropertyImpl referencedProperty = new BuildablePropertyImpl(
-        new NormalPropertyImpl(TITLE_DEED_NAME3, new PositionImpl(4), Group.RED));
+        new NormalPropertyImpl(TITLE_DEED_NAME3, new PositionImpl(4), Group.GREEN));
     private ImmutableProperty property = new ImmutableProperty(referencedProperty);
-    private TitleDeed decorated = new BaseTitleDeed(Group.RED, TITLE_DEED_NAME3, PROPERTY_SALE_PRICE2, s -> s / 2, 10);
+    private TitleDeed decorated = new BaseTitleDeed(Group.GREEN, TITLE_DEED_NAME3, PROPERTY_SALE_PRICE2, s -> s / 2, 10);
     private List<RentOption> housesOptions = new RentOptionFactoryImpl().housesAndHotelsOptions(BASE_RENT_PRICE, 4, true);
 
 
@@ -274,23 +274,34 @@ class BankTest {
 
     @Test
     void testBuyHouse() {
+        bank.getApplicableActionsForTitleDeed(ID_1, TITLE_DEED_NAME2, DICE_THROW);
+        bank.buyTitleDeed(TITLE_DEED_NAME2, ID_1);
+        bank.getApplicableActionsForTitleDeed(ID_1, TITLE_DEED_NAME1, DICE_THROW);
+        bank.buyTitleDeed(TITLE_DEED_NAME1, ID_1);
+
+        final int amount = bank.getBankAccount(ID_1).getBalance();
         bank.getApplicableActionsForTitleDeed(ID_1, TITLE_DEED_NAME3, DICE_THROW);
         bank.buyTitleDeed(TITLE_DEED_NAME3, ID_1);
         bank.getApplicableActionsForTitleDeed(ID_1, TITLE_DEED_NAME3, DICE_THROW);
-
         bank.buyHouse(TITLE_DEED_NAME3);
 
-        assertEquals(AMOUNT - PROPERTY_SALE_PRICE2 - HOUSE_PRICE.apply(ID_1), bank.getBankAccount(ID_1).getBalance());
+        assertEquals(amount - PROPERTY_SALE_PRICE2 - HOUSE_PRICE.apply(ID_1), bank.getBankAccount(ID_1).getBalance());
     }
 
     @Test
     void testBuyHotel() {
+        bank.getApplicableActionsForTitleDeed(ID_1, TITLE_DEED_NAME2, DICE_THROW);
+        bank.buyTitleDeed(TITLE_DEED_NAME2, ID_1);
+        bank.getApplicableActionsForTitleDeed(ID_1, TITLE_DEED_NAME1, DICE_THROW);
+        bank.buyTitleDeed(TITLE_DEED_NAME1, ID_1);
+
+        final int amount = bank.getBankAccount(ID_1).getBalance();
         bank.getApplicableActionsForTitleDeed(ID_1, TITLE_DEED_NAME3, DICE_THROW);
         bank.buyTitleDeed(TITLE_DEED_NAME3, ID_1);
         bank.getApplicableActionsForTitleDeed(ID_1, TITLE_DEED_NAME3, DICE_THROW);
         bank.buyHotel(TITLE_DEED_NAME3);
 
-        assertEquals(AMOUNT - PROPERTY_SALE_PRICE2 - HOTEL_PRICE.apply(ID_1), bank.getBankAccount(ID_1).getBalance());
+        assertEquals(amount - PROPERTY_SALE_PRICE2 - HOTEL_PRICE.apply(ID_1), bank.getBankAccount(ID_1).getBalance());
     }
 
     @Test
