@@ -23,9 +23,10 @@ public interface MainGameView {
 
     /**
      * Clears all panels displaying information about the 
-     * current player. Does not clear the ui of the {@link GamePanel}.
+     * current player and resets them, to be ready for the turn of a new player to begin.
+     * @param canThrowDices tells whether to enable or not the button to throw the dices
      */
-    void clearControlsUI();
+    void refreshUIForNewTurn(boolean canThrowDices);
 
     /**
      * Ask the {@code view} to refresh the information related
@@ -35,7 +36,7 @@ public interface MainGameView {
      * @param player an object containing generic information of a player
      * @param account an object containing all information related to the {@code balance} of a specific player
      */
-    void refreshCurrentPlayerInfo(Player player, BankAccount account);
+    void displayPlayerInfo(Player player, BankAccount account);
 
     /**
      * Display information of the {@link TitleDeed}
@@ -43,7 +44,7 @@ public interface MainGameView {
      * is currently on.
      * @param propertyContract the title deed to display
      */
-    void displayPropertyContract(TitleDeed propertyContract);
+    void displayPropertyContractInfo(TitleDeed propertyContract);
 
     /**
      * Display information of the {@link Special}
@@ -60,7 +61,7 @@ public interface MainGameView {
      * that was previously attached to this view to execute the action.
      * This is done by calling the method {@link GameController#executeAction(String)}
      */
-    void showPlayerActions(Set<String> actions);
+    void displayPlayerActions(Set<String> actions);
 
     /**
      * Display the result of the call on {@link GameController#throwDices()}.
@@ -74,7 +75,7 @@ public interface MainGameView {
      * to play the game.
      * @param rules the text of the game rules
      */
-    void showRules(String rules);
+    void displayRules(String rules);
 
 
     /**

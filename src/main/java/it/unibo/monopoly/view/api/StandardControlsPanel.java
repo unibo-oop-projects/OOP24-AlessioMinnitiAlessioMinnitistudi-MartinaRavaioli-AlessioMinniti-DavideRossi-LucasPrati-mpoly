@@ -18,4 +18,10 @@ public interface StandardControlsPanel extends GamePanel {
      * the numeric results of the dices.
      */
     void displayDicesResults(List<Integer> results);
+
+    /**
+     * Sets the button to throw the dices enabled or disabled.
+     * @param isEnabled whether the button should be enabled or not.
+     */
+    void setDiceButtonEnabled(boolean isEnabled);
 }

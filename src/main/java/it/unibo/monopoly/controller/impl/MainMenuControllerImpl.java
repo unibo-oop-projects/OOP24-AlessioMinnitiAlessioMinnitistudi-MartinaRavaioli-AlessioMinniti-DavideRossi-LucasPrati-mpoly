@@ -42,8 +42,11 @@ import it.unibo.monopoly.utils.api.UseFileTxt;
 import it.unibo.monopoly.utils.impl.Configuration;
 import it.unibo.monopoly.utils.impl.UseFileJsonImpl;
 import it.unibo.monopoly.utils.impl.UseFileTxtImpl;
+<<<<<<< HEAD
 import it.unibo.monopoly.view.api.MainGameView;
 import it.unibo.monopoly.view.impl.MainViewImpl;
+=======
+>>>>>>> development
 
 
 /**
@@ -147,6 +150,7 @@ public final class MainMenuControllerImpl implements MainMenuController {
             config,
             bank
         );
+<<<<<<< HEAD
         
         // create the deck for "chance and community chest"
         final DeckCreator deckCreator = new DeckCreatorImpl();
@@ -160,6 +164,8 @@ public final class MainMenuControllerImpl implements MainMenuController {
 
         final MainGameView mainView = new MainViewImpl(controllerGameManager);
         controllerGameManager.attachView(mainView);
+=======
+>>>>>>> development
         controllerGameManager.start();
     }
 
@@ -225,7 +231,7 @@ public final class MainMenuControllerImpl implements MainMenuController {
         Objects.requireNonNull(owner);
         return switch (bankAccountType) {
             case CLASSIC    -> bankAccountFactory.createWithCheck(id,
-                                                                  account -> account.getBalance() > 0);
+                                                                  account -> account.getBalance() >= 0);
             case INFINITY   -> bankAccountFactory.createSimple(id);
         };
     }

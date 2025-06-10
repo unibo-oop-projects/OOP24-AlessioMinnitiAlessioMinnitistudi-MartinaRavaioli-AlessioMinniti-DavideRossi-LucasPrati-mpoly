@@ -26,6 +26,7 @@ import it.unibo.monopoly.utils.api.UseFileTxt;
 import it.unibo.monopoly.utils.impl.Configuration;
 import it.unibo.monopoly.utils.impl.UseFileTxtImpl;
 import it.unibo.monopoly.view.api.MainGameView;
+import it.unibo.monopoly.view.impl.MainViewImpl;
 
 
 /**
@@ -69,7 +70,7 @@ public final class GameControllerImpl implements GameController {
 
     private void refreshPlayerInfo() {
         final Player currentPlayer = turnationManager.getCurrPlayer();
-        gameView.refreshCurrentPlayerInfo(currentPlayer, bank.getBankAccount(currentPlayer.getID()));
+        gameView.displayPlayerInfo(currentPlayer, bank.getBankAccount(currentPlayer.getID()));
     }
 
     private void refreshCurrentTileInfo() {
@@ -77,7 +78,7 @@ public final class GameControllerImpl implements GameController {
         final Tile currentlySittingTile = this.board.getTileForPawn(currentPlayerId);
         if (currentlySittingTile instanceof Property) {
             final String propertyName = currentlySittingTile.getName();
-            this.gameView.displayPropertyContract(this.bank.getTitleDeed(propertyName));
+            this.gameView.displayPropertyContractInfo(this.bank.getTitleDeed(propertyName));
         } else {
             final Special specialTile = (Special) currentlySittingTile;
             this.gameView.displaySpecialInfo(specialTile);
@@ -101,16 +102,14 @@ public final class GameControllerImpl implements GameController {
         if (!this.turnationManager.playerDiesIfTurnPassed()) {
             if (this.turnationManager.canPassTurn()) {
                 this.turnationManager.getNextPlayer();
-                gameView.clearControlsUI();
+                gameView.refreshUIForNewTurn(turnationManager.canThrowDices());
                 refreshPlayerInfo();
             } else {
                 this.gameView.displayMessage("The player has some actions to do before passing the turn");
             }
         } else {
             this.gameView.displayOptionMessageEndTurn("The player will die if he passes the turn");
-            //this.gameView.displayMessage("The player will die if he passes the turn");
         }
-
     }
 
     @Override
@@ -118,52 +117,40 @@ public final class GameControllerImpl implements GameController {
         try {
             final Collection<Integer> result = this.turnationManager.moveByDices();
 
-            if (!this.turnationManager.isCurrentPlayerParked()
-                && (!this.turnationManager.isCurrentPlayerInPrison() 
-                || this.turnationManager.canExitPrison(result))) {
-
-                final int currentPlayerId = this.turnationManager.getIdCurrPlayer();
+            final int currentPlayerId = this.turnationManager.getIdCurrPlayer();
+            if (!this.turnationManager.isCurrentPlayerInPrison() || this.turnationManager.tryExitPrison(result)) {
                 this.board.movePawn(currentPlayerId, result);
-                this.gameView.callChangePositions();
-                this.gameView.displayDiceResult(result.stream().toList());
-                final Tile currentlySittingTile = this.board.getTileForPawn(currentPlayerId);
-                refreshCurrentTileInfo();
-                final int delta = board.getPawn(currentPlayerId).getPosition().getPos() 
-                                            - board.getPrevPawnPosition(currentPlayerId).getPos();
-                if (delta < 0 && !"GoToJail".equals(currentlySittingTile.getName())) {
-                    final Special tile = (Special) board.getTile("Start");
-                    executeEffect(tile.getEffect());
-                }
-                if (currentlySittingTile instanceof Property) {
-                    this.turnActions.clear();
-                    this.turnActions = this.bank.getApplicableActionsForTitleDeed(currentPlayerId, 
-                                            currentlySittingTile.getName(), 
-                                            result.stream().mapToInt(d -> d).sum())
-                                            .stream()
-                                            .collect(Collectors.toMap(PropertyAction::getName, d -> d));
-                    this.gameView.showPlayerActions(turnActions.keySet());
-                } else if (currentlySittingTile instanceof Special) {
-                    final Special specialTile = (Special) currentlySittingTile;
-                    if (!"Start".equals(currentlySittingTile.getName())) {
-                        executeEffect(specialTile.getEffect());
-                        this.gameView.callChangePositions();
-                    }
-                }
-                
-
             } else {
-                if (this.turnationManager.isCurrentPlayerParked()) {
-                    this.gameView.displayMessage("you can't move, you are parked,\nwait unil the next turn");
-                    this.turnationManager.passedParkTurn();
-                } else {
-                    this.gameView.displayMessage("you can't move, you have " 
-                                    + turnationManager.currentPlayerTurnsLeftInPrison() 
-                                    + " turns left in prison and the dices weren't kind with you.");
-                    this.turnationManager.decreaseTurnsInPrison();
-                }
-
+                this.gameView.displayMessage("you can't move, you have " 
+                                + turnationManager.currentPlayerTurnsLeftInPrison() 
+                                + " turns left in prison and the dices weren't kind with you.");
             }
 
+            this.gameView.callChangePositions();
+            this.gameView.displayDiceResult(result.stream().toList());
+            final Tile currentlySittingTile = this.board.getTileForPawn(currentPlayerId);
+            refreshCurrentTileInfo();
+            if (currentlySittingTile instanceof Property) {
+                this.turnActions.clear();
+                this.turnActions = this.bank.getApplicableActionsForTitleDeed(currentPlayerId, 
+                                        currentlySittingTile.getName(), 
+                                        result.stream().mapToInt(d -> d).sum())
+                                        .stream()
+                                        .collect(Collectors.toMap(PropertyAction::getName, d -> d));
+                this.gameView.displayPlayerActions(turnActions.keySet());
+            } else if (currentlySittingTile instanceof Special) {
+                final Special specialTile = (Special) currentlySittingTile;
+                if (!"Start".equals(currentlySittingTile.getName())) {
+                    executeEffect(specialTile.getEffect());
+                    this.gameView.callChangePositions();
+                }
+            }
+            final int delta = board.getPawn(currentPlayerId).getPosition().getPos() 
+                                        - board.getPrevPawnPosition(currentPlayerId).getPos();
+            if (delta < 0 && !"GoToJail".equals(currentlySittingTile.getName())) {
+                final Special tile = (Special) board.getTile("Start");
+                executeEffect(tile.getEffect());
+            }
         } catch (final IllegalAccessException e) {
             gameView.displayError(e);
         }
@@ -173,7 +160,7 @@ public final class GameControllerImpl implements GameController {
     public void loadRules() {
         final UseFileTxt importRules = new UseFileTxtImpl();
         final String rules = importRules.loadTextResource(config.getRulesPath());
-        gameView.showRules(rules);
+        gameView.displayRules(rules);
     }
 
     @Override
@@ -241,8 +228,9 @@ public final class GameControllerImpl implements GameController {
 
     @Override
     public void start() {
+        attachView(new MainViewImpl(this));
         this.turnationManager.resetBankState();
-        gameView.clearControlsUI();
+        gameView.refreshUIForNewTurn(turnationManager.canThrowDices());
         refreshPlayerInfo();
     }
 
@@ -277,7 +265,7 @@ public final class GameControllerImpl implements GameController {
                 this.gameView.showRanking();
             }
         }
-        gameView.clearControlsUI();
+        gameView.refreshUIForNewTurn(turnationManager.canThrowDices());
         refreshPlayerInfo();
     }
 

@@ -81,7 +81,6 @@ public final class MainViewImpl implements MainGameView {
         splitPane.setEnabled(false);    // Rendi il divisore fisso, se vuoi
 
         mainGameFrame.add(splitPane);
-        //mainGameFrame.pack();
         mainGameFrame.setVisible(true);
         mainGameFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         mainGameFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -89,7 +88,7 @@ public final class MainViewImpl implements MainGameView {
         mainGameFrame.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(final WindowEvent e) {
-                new GUIRanking(controller.getRanking(), controller.getWinner());
+                new GUIRanking(mainGameFrame, controller.getRanking(), controller.getWinner());
                 mainGameFrame.dispose();
             }
         });
@@ -120,24 +119,25 @@ public final class MainViewImpl implements MainGameView {
     }
 
     @Override
-    public void refreshCurrentPlayerInfo(final Player player, final BankAccount account) {
+    public void displayPlayerInfo(final Player player, final BankAccount account) {
         playerInfoPanel.displayPlayer(player);
         accountInfoPanel.displayBankAccount(account);
         mainGameFrame.repaint();
     }
 
     @Override
-    public void clearControlsUI() {
+    public void refreshUIForNewTurn(final boolean canThrowDices) {
         playerInfoPanel.renderDefaultUI();
         accountInfoPanel.renderDefaultUI();
         contractPanel.renderDefaultUI();
         gameActionsPanel.renderDefaultUI();
         mainActionsPanel.renderDefaultUI();
+        mainActionsPanel.setDiceButtonEnabled(canThrowDices);
         mainGameFrame.repaint();
     }
 
     @Override
-    public void displayPropertyContract(final TitleDeed propertyContract) {
+    public void displayPropertyContractInfo(final TitleDeed propertyContract) {
         contractPanel.displayPropertyContract(propertyContract);
         mainGameFrame.repaint();
     }
@@ -149,7 +149,7 @@ public final class MainViewImpl implements MainGameView {
     }
 
     @Override
-    public void showPlayerActions(final Set<String> actions) {
+    public void displayPlayerActions(final Set<String> actions) {
         gameActionsPanel.buildActionButtons(actions, controller);
         mainGameFrame.repaint();
     }
@@ -161,7 +161,7 @@ public final class MainViewImpl implements MainGameView {
     }
 
     @Override
-    public void showRules(final String rules) {
+    public void displayRules(final String rules) {
         new RulesWindowView(this.mainGameFrame, controller.getConfiguration(), rules);
     }
 
@@ -173,7 +173,7 @@ public final class MainViewImpl implements MainGameView {
             this,
             this.mainGameFrame
         );
-        this.refreshCurrentPlayerInfo(player, bank.getBankAccount(player.getID()));
+        this.displayPlayerInfo(player, bank.getBankAccount(player.getID()));
     }
 
     @Override
@@ -217,7 +217,8 @@ public final class MainViewImpl implements MainGameView {
 
     @Override
     public void showRanking() {
-        new GUIRanking(controller.getRanking(), controller.getWinner());
+        new GUIRanking(mainGameFrame, controller.getRanking(), controller.getWinner());
+        mainGameFrame.dispose();
     }
 
     @Override
