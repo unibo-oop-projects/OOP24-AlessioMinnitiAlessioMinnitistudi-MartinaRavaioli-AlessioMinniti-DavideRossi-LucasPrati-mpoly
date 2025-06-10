@@ -1,4 +1,5 @@
 package it.unibo.monopoly.model.turnation.impl;
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -97,8 +98,76 @@ public class TurnationManagerImpl implements TurnationManager {
         if (isCurrentPlayerParked()) {
             passedParkTurn();
         }
-        return new ParkablePlayer(new PrisonablePlayer(
-            PlayerImpl.of(this.currPlayer.getID(), this.currPlayer.getName(), this.currPlayer.getColor())));
+        return createCurrPlayerCopy();
+    }
+    /**
+     * method that create a copy of the current player
+     * @return
+     */
+    private Player createCurrPlayerCopy() {
+        return new Player() {
+
+            @Override
+            public Integer getID() {
+               return currPlayer.getID();
+            }
+
+            @Override
+            public String getName() {
+                return currPlayer.getName();
+            }
+
+            @Override
+            public Color getColor() {
+                return currPlayer.getColor();
+            }
+
+            @Override
+            public boolean isAlive() {
+                return currPlayer.isAlive();
+            }
+
+            @Override
+            public boolean isParked() {
+                return currPlayer.isParked();
+            }
+
+            @Override
+            public void park() {
+                currPlayer.park();
+            }
+
+            @Override
+            public boolean isInPrison() {
+                return currPlayer.isInPrison();
+            }
+
+            @Override
+            public void putInPrison() {
+                currPlayer.putInPrison();
+            }
+
+            @Override
+            public boolean canExitPrison(Collection<Integer> dice) {
+               return currPlayer.canExitPrison(dice);
+            }
+
+            @Override
+            public int turnLeftInPrison() {
+                return currPlayer.turnLeftInPrison();
+            }
+
+            @Override
+            public void decreaseTurnsInPrison() {
+                currPlayer.decreaseTurnsInPrison();
+            }
+
+            @Override
+            public void passTurn() {
+                currPlayer.passTurn();
+            }
+            
+        };
     }
 
     @Override
@@ -123,8 +192,7 @@ public class TurnationManagerImpl implements TurnationManager {
 
     @Override
     public final Player getCurrPlayer() {
-        return new ParkablePlayer(new PrisonablePlayer(
-            PlayerImpl.of(this.currPlayer.getID(), this.currPlayer.getName(), this.currPlayer.getColor())));
+        return createCurrPlayerCopy();
     }
 
     @Override
