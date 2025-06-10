@@ -104,9 +104,6 @@ public final class GUIVendita extends JDialog {
 
 // create the Component for the listPane
         final JLabel selectProperty = new JLabel("Select the property you want to manage");
-        final int fontSize = 20;
-        final Font f = new Font("gigi", Font.TYPE1_FONT, fontSize);
-        selectProperty.setFont(f);
         final JList<Object> propertiesList = new JList<>(logic.getProperties(player, bank)
                                                                         .stream()
                                                                         .map(TitleDeed::getName)
