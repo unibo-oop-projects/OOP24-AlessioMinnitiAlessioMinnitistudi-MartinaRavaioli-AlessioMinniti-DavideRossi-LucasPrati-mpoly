@@ -128,6 +128,12 @@ public final class GameControllerImpl implements GameController {
                 this.gameView.displayDiceResult(result.stream().toList());
                 final Tile currentlySittingTile = this.board.getTileForPawn(currentPlayerId);
                 refreshCurrentTileInfo();
+                final int delta = board.getPawn(currentPlayerId).getPosition().getPos() 
+                                            - board.getPrevPawnPosition(currentPlayerId).getPos();
+                if (delta < 0 && !"GoToJail".equals(currentlySittingTile.getName())) {
+                    final Special tile = (Special) board.getTile("Start");
+                    executeEffect(tile.getEffect());
+                }
                 if (currentlySittingTile instanceof Property) {
                     this.turnActions.clear();
                     this.turnActions = this.bank.getApplicableActionsForTitleDeed(currentPlayerId, 
@@ -143,12 +149,7 @@ public final class GameControllerImpl implements GameController {
                         this.gameView.callChangePositions();
                     }
                 }
-                final int delta = board.getPawn(currentPlayerId).getPosition().getPos() 
-                                            - board.getPrevPawnPosition(currentPlayerId).getPos();
-                if (delta < 0 && !"GoToJail".equals(currentlySittingTile.getName())) {
-                    final Special tile = (Special) board.getTile("Start");
-                    executeEffect(tile.getEffect());
-                }
+                
 
             } else {
                 if (this.turnationManager.isCurrentPlayerParked()) {

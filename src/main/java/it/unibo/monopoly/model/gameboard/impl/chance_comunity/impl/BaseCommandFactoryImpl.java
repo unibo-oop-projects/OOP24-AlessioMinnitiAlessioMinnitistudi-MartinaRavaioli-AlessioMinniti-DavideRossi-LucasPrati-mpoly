@@ -234,12 +234,14 @@ public final class BaseCommandFactoryImpl implements BaseCommandFactory {
                 if (t instanceof Property && !bank.getTitleDeed(tile).isOwned()) {
                     bank.buyTitleDeed(tile, player.getID());
                     viewcontroller.refreshBankPlayerInfo();
+                } else if (t instanceof Property && bank.getTitleDeed(tile).isOwned()) {
+                    bank.payRent(t.getName(), player.getID(), 10);
                 }
             }
 
             @Override
             public String getDesc() {
-                return "buy " + tile + " if not owned";
+                return "buy " + tile + " if not owned otherwise pay it's rent";
             }
 
             @Override

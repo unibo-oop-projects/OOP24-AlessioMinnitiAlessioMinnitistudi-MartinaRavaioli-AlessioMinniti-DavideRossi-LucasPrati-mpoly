@@ -210,12 +210,13 @@ class BaseAndComplexCommandFactoryTest {
         final BaseCommand c = commands.get(indice);
         c.addTileArg(s1);
         c.execute(p1);
-        assertEquals("buy " + s1 + " if not owned", c.getDesc());
+        assertEquals("buy " + s1 + " if not owned otherwise pay it's rent", c.getDesc());
         assertEquals(p1.getID(), bank.getTitleDeed(s1).getOwnerId());
-        bank.buyTitleDeed(s2, p2.getID());
+        bank.getBankStateObject().resetTransactionData();
+        bank.buyTitleDeed(s2, p1.getID());
         c.addTileArg(s2);
-        c.execute(p1);
-        assertEquals(p2.getID(), bank.getTitleDeed(s2).getOwnerId());
+        c.execute(p2);
+        assertEquals(p1.getID(), bank.getTitleDeed(s2).getOwnerId());
     }
 
     @Test

@@ -26,6 +26,7 @@ public final class ChancheAndCommunityChestDeckImpl implements ChancheAndCommuni
     public ChanceAndCommunityChestCard draw() {
         if (!cards.isEmpty()) {
             final int index = r.nextInt(cards.size()); 
+            System.out.println(index);
             return cards.get(index);
         } else {
             final BaseCommandFactoryImpl fact = new BaseCommandFactoryImpl();
