@@ -12,7 +12,7 @@ import javax.swing.UIManager;
 /**
  * Utility class for common operation with {@link Font}.
  */
-final class FontUtils {
+abstract class FontUtils {
 
     private static final int FONT_STYLE = Font.BOLD;
     private static final String[] keys = {
@@ -22,10 +22,6 @@ final class FontUtils {
             "TitledBorder.font", "Menu.font", "MenuItem.font", "CheckBoxMenuItem.font",
             "RadioButtonMenuItem.font", "ToolTip.font", "Tree.font", "TabbedPane.font", "Spinner.font"
     };
-
-
-    private FontUtils() { /* Prevent instantiation */ }
-
 
     /**
      * Create a new {@link Font} according to the provided data.
@@ -43,12 +39,15 @@ final class FontUtils {
 
 
     /**
-     * Use {@link UIManager} for setup the font of every new textual element
+     * Use {@link UIManager} for setup the font of every new textual element.
+     * Note: only if the font is available on the system.
      * @param font the font to apply to all the new text
      */
-    public static void configure(Font font) {
-        for (String key : keys) {
-            UIManager.put(key, font);
+    public static void applyGlobalFont(final Font font) {
+        if(isValidFontName(font.getName())){
+            for (String key : keys) {
+                UIManager.put(key, font);
+            }
         }
     }
 
@@ -61,7 +60,7 @@ final class FontUtils {
      */
     public static boolean isValidFontName(final String fontName) {
         return  fontName != null
-        && Arrays.stream(GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames())
-        .anyMatch(name -> name.equalsIgnoreCase(fontName));
+            && Arrays.stream(GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames())
+            .anyMatch(name -> name.equalsIgnoreCase(fontName));
     }
 }

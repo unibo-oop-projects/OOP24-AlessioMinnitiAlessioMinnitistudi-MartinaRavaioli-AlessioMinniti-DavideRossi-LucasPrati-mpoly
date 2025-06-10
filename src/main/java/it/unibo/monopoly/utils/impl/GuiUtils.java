@@ -20,7 +20,7 @@ import javax.swing.WindowConstants;
 /**
  * Utility class for common GUI operations.
  */
-public final class GuiUtils {
+public final class GuiUtils extends FontUtils {
 
     private static final double MAX_PERC = 1.0;
     private static final double MIN_PERC = 0.0;
@@ -186,16 +186,6 @@ public final class GuiUtils {
     public static Font getBigFontFromConfiguration(final Configuration config) {
         Objects.requireNonNull(config, "The configuration must not be null");
         return FontUtils.createFont(config.getFontName(), config.getBigFont());
-    }
-
-    /**
-     * Setup a new global font to use, provided by the configuration.
-     * @param config a consistent {@link Configuration} for the font settings
-     */
-    public static void applyGlobalFont(final Configuration config) {
-        Objects.requireNonNull(config, "The configuration must not be null");
-        final Font font = getSmallFontFromConfiguration(config);
-        FontUtils.configure(font);
     }
 
 
