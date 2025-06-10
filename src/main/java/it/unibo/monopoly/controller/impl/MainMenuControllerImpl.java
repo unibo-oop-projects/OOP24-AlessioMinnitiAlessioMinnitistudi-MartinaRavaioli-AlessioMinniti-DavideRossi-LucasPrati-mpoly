@@ -153,8 +153,7 @@ public final class MainMenuControllerImpl implements MainMenuController {
             config.getDeckPath(),
             board,
             bank,
-            turnationManager,
-            controllerGameManager
+            turnationManager
         );
 
         final MainGameView mainView = new MainViewImpl(controllerGameManager);
