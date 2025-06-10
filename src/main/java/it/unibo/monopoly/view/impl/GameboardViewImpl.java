@@ -6,7 +6,6 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
-import java.awt.Toolkit;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -23,6 +22,7 @@ import it.unibo.monopoly.controller.api.GameboardLogic;
 import it.unibo.monopoly.controller.impl.GameboardLogicImpl;
 import it.unibo.monopoly.model.turnation.api.Position;
 import it.unibo.monopoly.model.turnation.impl.PositionImpl;
+import it.unibo.monopoly.utils.impl.GuiUtils;
 import it.unibo.monopoly.view.api.GameboardView;
 
 /**
@@ -129,8 +129,9 @@ public final class GameboardViewImpl extends JPanel implements GameboardView {
 
     @Override
     public void renderDefaultUI() {
+        GuiUtils.applyGlobalFont(GuiUtils.createFont("Dialog", 12));
         this.setLayout(new BorderLayout());
-        this.setSize(Toolkit.getDefaultToolkit().getScreenSize());
+        this.setSize(GuiUtils.getDimensionWindow(0.8, 1.0));
         final JPanel board = new JPanel(new GridLayout(this.size, this.size));
         this.add(board);
         final JPanel[][] grid = new JPanel[this.size][this.size];
@@ -213,6 +214,7 @@ public final class GameboardViewImpl extends JPanel implements GameboardView {
         }
 
         this.setVisible(true);
+        GuiUtils.applyGlobalFont(GuiUtils.getSmallFontFromConfiguration(controller.getConfiguration()));
     }
 
     @Override
