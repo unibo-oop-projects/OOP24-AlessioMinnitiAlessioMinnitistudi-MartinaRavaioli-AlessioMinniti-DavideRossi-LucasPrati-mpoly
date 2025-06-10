@@ -94,6 +94,9 @@ public class TurnationManagerImpl implements TurnationManager {
     public final Player getNextPlayer() { 
         this.currPlayer = players.giveNextNode(this.currPlayer);
         this.diceThrown = false;
+        if (isCurrentPlayerParked()) {
+            passedParkTurn();
+        }
         return new ParkablePlayer(new PrisonablePlayer(
             PlayerImpl.of(this.currPlayer.getID(), this.currPlayer.getName(), this.currPlayer.getColor())));
     }
@@ -105,7 +108,6 @@ public class TurnationManagerImpl implements TurnationManager {
                 this.diceThrown = true;
                 return this.dice.throwDices();
             } else {
-                passedParkTurn();
                 throw new IllegalAccessException("the player can't throw dices because is parked");
             }
 
