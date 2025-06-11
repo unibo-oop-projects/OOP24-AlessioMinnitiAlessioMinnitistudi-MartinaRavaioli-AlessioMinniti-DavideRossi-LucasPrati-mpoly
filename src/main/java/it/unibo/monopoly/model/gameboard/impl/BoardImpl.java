@@ -45,7 +45,7 @@ public class BoardImpl implements Board {
     public BoardImpl(final List<Tile> tiles, final List<Pawn> pawns) {
         this.tiles = new ArrayList<>(tiles);
         this.pawns = new ArrayList<>(pawns);
-        this.deck = new ChancheAndCommunityChestDeckImpl(List.of());;
+        this.deck = new ChancheAndCommunityChestDeckImpl(List.of());
     }
     /**
      * constructor.

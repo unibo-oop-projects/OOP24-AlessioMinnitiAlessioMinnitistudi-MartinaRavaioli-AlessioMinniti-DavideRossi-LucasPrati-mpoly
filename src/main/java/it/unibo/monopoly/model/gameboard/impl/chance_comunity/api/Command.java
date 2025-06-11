@@ -10,6 +10,7 @@ public interface Command {
     /**
      * execute the action expressed in the command.
      * @param player on wich the command is executed
+     * @param args used to execute the command
      */
     void execute(Player player, String args);
 

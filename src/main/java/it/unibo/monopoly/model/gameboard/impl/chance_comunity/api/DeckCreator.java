@@ -17,8 +17,6 @@ public interface DeckCreator {
      * @param board to execute some commands 
      * @param bank to execute some commands 
      * @param turnM to execute some commands 
-     * @param viewcontroller to show graphical reference of some commands 
-     * @return the deck
      * @throws FileNotFoundException if the file in the arguments is not valid
      */
     void createDeck(String file, Board board, Bank bank, TurnationManager turnM) throws FileNotFoundException;

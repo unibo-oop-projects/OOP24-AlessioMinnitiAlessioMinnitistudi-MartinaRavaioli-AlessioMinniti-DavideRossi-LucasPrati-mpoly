@@ -26,5 +26,5 @@ public interface BaseCommand extends Command {
      * @param players
      */
     void addPlayersArg(List<Player> players);
-    
+
 }

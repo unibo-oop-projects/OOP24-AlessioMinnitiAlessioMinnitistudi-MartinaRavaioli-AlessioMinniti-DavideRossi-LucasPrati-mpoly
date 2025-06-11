@@ -152,7 +152,7 @@ class DeckTest {
             c2.execute(p);
             final ChanceAndCommunityChestCard c3 = board.draw();
             c3.execute(p);
-            
+
             assertTrue(isThere(c1.getDescription(), descs));
             assertTrue(descs.contains(c2.getDescription()));
             assertTrue(descs.contains(c3.getDescription()));

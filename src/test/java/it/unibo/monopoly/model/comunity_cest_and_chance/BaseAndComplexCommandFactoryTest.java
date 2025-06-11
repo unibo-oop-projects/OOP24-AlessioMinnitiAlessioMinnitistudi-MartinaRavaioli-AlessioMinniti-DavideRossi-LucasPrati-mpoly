@@ -215,7 +215,7 @@ class BaseAndComplexCommandFactoryTest {
         final int indice2 = 2;
         final BaseCommand c2 = commands.get(indice2);
         c2.addTileArg(s2);
-        final List<Pair<BaseCommand,String>> li = List.of(new Pair<>(c1, s1), new Pair<>(c2, s2));
+        final List<Pair<BaseCommand, String>> li = List.of(new Pair<>(c1, s1), new Pair<>(c2, s2));
         final Command c = new ComplexCommand(li, s2);
         c.execute(p1, c.getKeyWord());
         assertEquals("buy " + s1 + " if not owned otherwise pay it's rent" + " then\n" + "move in " + s2, c.getDesc());

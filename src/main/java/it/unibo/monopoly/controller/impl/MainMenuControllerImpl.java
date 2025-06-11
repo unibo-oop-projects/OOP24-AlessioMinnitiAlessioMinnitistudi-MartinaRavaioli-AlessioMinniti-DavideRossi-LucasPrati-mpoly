@@ -137,9 +137,9 @@ public final class MainMenuControllerImpl implements MainMenuController {
         tiles.stream().forEach(board::addTile);
         titleDeeds.stream().forEach(bank::addTitleDeed);
 
-        DeckCreator creator = new DeckCreatorImpl();
+        final DeckCreator creator = new DeckCreatorImpl();
         creator.createDeck(config.getDeckPath(), board, bank, turnationManager);
-        
+
         // start the game
         final var controllerGameManager = new GameControllerImpl(
             board,

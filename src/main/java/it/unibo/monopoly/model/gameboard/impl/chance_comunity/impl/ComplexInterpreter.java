@@ -25,7 +25,7 @@ public final class ComplexInterpreter implements Interpreter {
      * constructor.
      * @param board to execute some commands
      * @param bank to execute some commands
-     * @param viewcontroller to show graphical reference of some commands 
+     * @param turnM to execute some commands 
      */
     public ComplexInterpreter(final Board board, final Bank bank, final TurnationManager turnM) {
         inter = new BaseInterpreter(factory.allCommand(bank, board, turnM));
@@ -37,12 +37,12 @@ public final class ComplexInterpreter implements Interpreter {
         final ParserOnNewLine pars = new ParserOnNewLine(toInterpretString);
         while (pars.hasNesxt()) {
             final ParserOnColon parOnColon = new ParserOnColon(pars.next());
-            BaseCommand co = inter.interpret(parOnColon.next(), board, turnM);
+            final BaseCommand co = inter.interpret(parOnColon.next(), board, turnM);
             StringBuilder b = new StringBuilder("");
             while (parOnColon.hasNesxt()) {
                 b = b.append(parOnColon.next());
             }
-            Pair<BaseCommand, String> com = new Pair<>(co, b.toString());
+            final Pair<BaseCommand, String> com = new Pair<>(co, b.toString());
             commands.add(com);
         }
         return new ComplexCommand(commands, toInterpretString);

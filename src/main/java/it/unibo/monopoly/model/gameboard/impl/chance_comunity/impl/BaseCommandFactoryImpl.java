@@ -107,7 +107,7 @@ public final class BaseCommandFactoryImpl implements BaseCommandFactory {
         };
     }
 
-    private BaseCommand withdraw(final Bank bank,final Board board, final TurnationManager turnM) {
+    private BaseCommand withdraw(final Bank bank, final Board board, final TurnationManager turnM) {
         return new BaseCommand() {
 
             private static final String KEY = "withdraw";
@@ -150,7 +150,7 @@ public final class BaseCommandFactoryImpl implements BaseCommandFactory {
         };
     }
 
-    private BaseCommand deposit(final Bank bank, final Board board,final TurnationManager turnM) {
+    private BaseCommand deposit(final Bank bank, final Board board, final TurnationManager turnM) {
         return new BaseCommand() {
 
             private static final String KEY = "deposit";
@@ -192,7 +192,7 @@ public final class BaseCommandFactoryImpl implements BaseCommandFactory {
         };
     }
 
-    private BaseCommand depositFrom(final Bank bank, final Board board,final TurnationManager turnM) {
+    private BaseCommand depositFrom(final Bank bank, final Board board, final TurnationManager turnM) {
         return new BaseCommand() {
 
             private static final String KEY = "deposit from";
@@ -260,12 +260,12 @@ public final class BaseCommandFactoryImpl implements BaseCommandFactory {
                     argsInt.interpret(pc.next(), this, board, turnM);
                 }
                 final Tile t = board.getTile(tile);
-                
+
                 if (t instanceof Property) {
                     bank.getBankStateObject().resetTransactionData();
-                    Set<PropertyAction> actions = bank.getApplicableActionsForTitleDeed(player.getID(), tile, 10);
-                    Optional<PropertyAction> buy = actions.stream().filter(p ->"buy".equals(p.getName())).findAny();
-                    Optional<PropertyAction> pay = actions.stream().filter(p ->"payRent".equals(p.getName())).findAny();
+                    final Set<PropertyAction> actions = bank.getApplicableActionsForTitleDeed(player.getID(), tile, 10);
+                    final Optional<PropertyAction> buy = actions.stream().filter(p -> "buy".equals(p.getName())).findAny();
+                    final Optional<PropertyAction> pay = actions.stream().filter(p -> "payRent".equals(p.getName())).findAny();
                     if (buy.isPresent()) {
                         buy.get().executePropertyAction(board, bank);
                     } else if (pay.isPresent()) {
@@ -333,12 +333,12 @@ public final class BaseCommandFactoryImpl implements BaseCommandFactory {
     @Override
     public List<BaseCommand> allCommand(final Bank bank, final Board board, final TurnationManager turnM) {
         return List.of(
-            this.deposit(bank,board,turnM),
-            this.move(board,turnM),
-            this.moveIn(board,turnM),
-            this.withdraw(bank,board,turnM), 
-            this.depositFrom(bank,board,turnM),
-            this.buyIfNotOwned(bank, board,turnM)
+            this.deposit(bank, board, turnM),
+            this.move(board, turnM),
+            this.moveIn(board, turnM),
+            this.withdraw(bank, board, turnM), 
+            this.depositFrom(bank, board, turnM),
+            this.buyIfNotOwned(bank, board, turnM)
         );
     }
 

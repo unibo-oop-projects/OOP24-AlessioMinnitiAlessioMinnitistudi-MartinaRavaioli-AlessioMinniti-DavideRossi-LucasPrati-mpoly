@@ -30,7 +30,7 @@ public final class ComplexCommand implements Command {
     }
 
     @Override
-    public void execute(final Player player, String args) {
+    public void execute(final Player player, final String args) {
         for (final Pair<BaseCommand, String> command : commands) {
             command.getX().execute(player, command.gety());
         }
@@ -41,7 +41,7 @@ public final class ComplexCommand implements Command {
         final String str = "";
         final StringBuilder s = new StringBuilder(str);
         for (final Pair<BaseCommand, String> commandP : commands) {
-            Command command = commandP.getX();
+            final Command command = commandP.getX();
             if (commands.indexOf(commandP) == commands.size() - 1) {
                 s.append(command.getDesc());
             } else {
