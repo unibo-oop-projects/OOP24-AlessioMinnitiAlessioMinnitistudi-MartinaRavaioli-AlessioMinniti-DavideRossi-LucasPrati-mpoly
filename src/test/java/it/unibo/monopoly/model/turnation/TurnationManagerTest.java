@@ -38,9 +38,9 @@ class TurnationManagerTest {
 
     @Test
     void testGetNextPlayerCycles() {
-        assertEquals(players.get(1), turnManager.getNextPlayer(), "Next should be p2");
-        assertEquals(players.get(2), turnManager.getNextPlayer(), "Next should be p3");
-        assertEquals(players.get(0), turnManager.getNextPlayer(), "Cycle back to p1");
+        assertEquals(players.get(1).getID(), turnManager.getNextPlayer().getID(), "Next should be p2");
+        assertEquals(players.get(2).getID(), turnManager.getNextPlayer().getID(), "Next should be p3");
+        assertEquals(players.get(0).getID(), turnManager.getNextPlayer().getID(), "Cycle back to p1");
     }
 
     @Test
