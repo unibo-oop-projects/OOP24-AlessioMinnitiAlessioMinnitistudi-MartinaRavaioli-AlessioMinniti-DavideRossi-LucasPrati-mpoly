@@ -37,7 +37,7 @@ public final class ParserOnComma implements Parser {
 
     @Override
     public boolean hasNesxt() {
-        return index < toParseString.length();
+        return index <= toParseString.length();
     }
 
 }
