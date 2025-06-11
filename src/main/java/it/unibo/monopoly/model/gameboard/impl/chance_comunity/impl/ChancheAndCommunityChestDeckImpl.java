@@ -29,7 +29,7 @@ public final class ChancheAndCommunityChestDeckImpl implements ChancheAndCommuni
             System.out.println(index);
             index=index+1;
             System.out.println(cardsLis.get(index).getDescription());
-            return cardsLis.get(index);
+            return cardsLis.get(index%4);
         } else {
             final BaseCommandFactoryImpl fact = new BaseCommandFactoryImpl();
             return new ChanceAndCommunityChestCard(new ComplexCommand(List.of(new Pair<>(fact.still(), "")), ""));
