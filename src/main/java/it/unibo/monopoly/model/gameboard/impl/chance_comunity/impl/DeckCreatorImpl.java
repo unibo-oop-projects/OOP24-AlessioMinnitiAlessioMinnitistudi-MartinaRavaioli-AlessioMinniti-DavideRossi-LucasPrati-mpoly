@@ -25,7 +25,7 @@ public final class DeckCreatorImpl implements DeckCreator {
         final String fileAsString = fi.loadTextResource(file);
         final ParserOnHyphen paars = new ParserOnHyphen(fileAsString);
         final List<ChanceAndCommunityChestCard> cards = new LinkedList<>();
-        final ComplexInterpreter compInt = new ComplexInterpreter(board, bank);
+        final ComplexInterpreter compInt = new ComplexInterpreter(board, bank, turnM);
         while (paars.hasNesxt()) {
             final String toInterpret = paars.next();
             final Command com = compInt.interpret(toInterpret, board, turnM);

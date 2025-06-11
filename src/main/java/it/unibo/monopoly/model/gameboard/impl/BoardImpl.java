@@ -14,6 +14,7 @@ import it.unibo.monopoly.model.gameboard.api.Special;
 import it.unibo.monopoly.model.gameboard.api.Tile;
 import it.unibo.monopoly.model.gameboard.impl.chance_comunity.api.ChancheAndCommunityChestDeck;
 import it.unibo.monopoly.model.gameboard.impl.chance_comunity.impl.ChanceAndCommunityChestCard;
+import it.unibo.monopoly.model.gameboard.impl.chance_comunity.impl.ChancheAndCommunityChestDeckImpl;
 import it.unibo.monopoly.model.turnation.api.Position;
 import it.unibo.monopoly.model.turnation.impl.PositionImpl;
 
@@ -44,7 +45,7 @@ public class BoardImpl implements Board {
     public BoardImpl(final List<Tile> tiles, final List<Pawn> pawns) {
         this.tiles = new ArrayList<>(tiles);
         this.pawns = new ArrayList<>(pawns);
-        this.deck = null;
+        this.deck = new ChancheAndCommunityChestDeckImpl(List.of());;
     }
     /**
      * constructor.
@@ -52,7 +53,7 @@ public class BoardImpl implements Board {
     public BoardImpl() {
         this.tiles = new ArrayList<>();
         this.pawns = new ArrayList<>();
-        this.deck = null;
+        this.deck = new ChancheAndCommunityChestDeckImpl(List.of());
     }
 
     @Override

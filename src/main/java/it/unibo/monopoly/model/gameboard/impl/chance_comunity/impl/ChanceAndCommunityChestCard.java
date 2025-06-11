@@ -22,7 +22,7 @@ public final class ChanceAndCommunityChestCard implements ChanceAndCommunityChes
 
     @Override
     public void execute(final Player player) {
-        this.command.execute(player);
+        this.command.execute(player, this.command.getKeyWord());
     }
 
     @Override

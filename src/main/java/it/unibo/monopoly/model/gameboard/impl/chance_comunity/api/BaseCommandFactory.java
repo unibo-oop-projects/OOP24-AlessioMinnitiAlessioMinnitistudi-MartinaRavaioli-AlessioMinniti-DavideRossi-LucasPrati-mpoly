@@ -4,6 +4,7 @@ import java.util.List;
 
 import it.unibo.monopoly.model.gameboard.api.Board;
 import it.unibo.monopoly.model.transactions.api.Bank;
+import it.unibo.monopoly.model.turnation.api.TurnationManager;
 
 /**
  * a factory for base command supported by the game.
@@ -22,6 +23,6 @@ public interface BaseCommandFactory {
      * @param viewcontroller to show graphical reference of some commands 
      * @param board to execute some command
      */
-    List<BaseCommand> allCommand(Bank bank, Board board);
+    List<BaseCommand> allCommand(Bank bank, Board board, TurnationManager turnM);
 
 }

@@ -26,6 +26,7 @@ import it.unibo.monopoly.model.gameboard.impl.chance_comunity.api.BaseCommandFac
 import it.unibo.monopoly.model.gameboard.impl.chance_comunity.api.Command;
 import it.unibo.monopoly.model.gameboard.impl.chance_comunity.impl.BaseCommandFactoryImpl;
 import it.unibo.monopoly.model.gameboard.impl.chance_comunity.impl.ComplexCommand;
+import it.unibo.monopoly.model.gameboard.impl.chance_comunity.impl.Pair;
 import it.unibo.monopoly.model.transactions.api.BankAccount;
 import it.unibo.monopoly.model.transactions.api.BankAccountFactory;
 import it.unibo.monopoly.model.transactions.api.TitleDeed;
@@ -126,30 +127,28 @@ class BaseAndComplexCommandFactoryTest {
         tiles.stream().forEach(board::addTile);
         titleDeeds.stream().forEach(bank::addTitleDeed);
 
-        commands = bcf.allCommand(bank, board);
+        commands = bcf.allCommand(bank, board, turnM);
     }
 
     @Test
     void test0() {
-        final int ammount = 50;
+        final String ammount = "50";
         final int indice = 0;
         final BaseCommand c = commands.get(indice);
-        c.addIntArg(ammount);
-        c.execute(p1);
+        c.execute(p1, ammount);
         final int finalAmmount = 1050;
         assertEquals("deposit " + ammount, c.getDesc());
         assertEquals(finalAmmount, bank.getBankAccount(p1.getID()).getBalance());
     }
     @Test
     void test1() {
-        final int ammount = 2;
+        final String ammount = "2";
         final int indice = 1;
         final BaseCommand c = commands.get(indice);
         final int prevPos = board.getPawn(p1.getID()).getPosition().getPos();
-        c.addIntArg(ammount);
-        c.execute(p1);
+        c.execute(p1, ammount);
         assertEquals("move of " + ammount + " steps", c.getDesc());
-        assertEquals(ammount, board.getPawn(p1.getID()).getPosition().getPos() - prevPos);
+        assertEquals(Integer.valueOf(ammount), board.getPawn(p1.getID()).getPosition().getPos() - prevPos);
     }
 
     @Test
@@ -157,8 +156,7 @@ class BaseAndComplexCommandFactoryTest {
         final String s = "Jail / Just Visiting";
         final int indice = 2;
         final BaseCommand c = commands.get(indice);
-        c.addTileArg(s);
-        c.execute(p1);
+        c.execute(p1, s);
         assertEquals("move in " + s, c.getDesc());
         assertEquals(board.getTile(s).getPosition().getPos(), 
                         board.getPawn(p1.getID()).getPosition().getPos());
@@ -166,11 +164,10 @@ class BaseAndComplexCommandFactoryTest {
     }
     @Test
     void test3() {
-        final int ammount = 50;
+        final String ammount = "50";
         final int indice = 3;
         final BaseCommand c = commands.get(indice);
-        c.addIntArg(ammount);
-        c.execute(p1);
+        c.execute(p1, ammount);
         final int finalAmmount = 950;
         assertEquals("withdraw " + ammount, c.getDesc());
         assertEquals(finalAmmount, bank.getBankAccount(p1.getID()).getBalance());
@@ -178,12 +175,11 @@ class BaseAndComplexCommandFactoryTest {
 
     @Test
     void test4() {
-        final int ammount = 50;
+        final String ammount = "50";
         final int indice = 4;
         final BaseCommand c = commands.get(indice);
         c.addPlayersArg(List.of(p2, p3));
-        c.addIntArg(ammount);
-        c.execute(p1);
+        c.execute(p1, ammount);
         final int finalAmmount1 = 1100;
         final int finalAmmount2 = 950;
         assertEquals("deposit " + ammount + " from all players", c.getDesc());
@@ -199,13 +195,11 @@ class BaseAndComplexCommandFactoryTest {
         final int indice = 5;
         final int prevBal = bank.getBankAccount(p2.getID()).getBalance();
         final BaseCommand c = commands.get(indice);
-        c.addTileArg(s1);
-        c.execute(p1);
+        c.execute(p1, s1);
         assertEquals("buy " + s1 + " if not owned otherwise pay it's rent", c.getDesc());
         assertEquals(p1.getID(), bank.getTitleDeed(s1).getOwnerId());
         bank.buyTitleDeed(s2, p1.getID());
-        c.addTileArg(s2);
-        c.execute(p2);
+        c.execute(p2, s2);
         assertEquals(p1.getID(), bank.getTitleDeed(s2).getOwnerId());
         assertEquals(prevBal - bank.getBankAccount(p2.getID()).getBalance(), bank.getTitleDeed(s2).getRent(Set.of(), 1));
     }
@@ -221,9 +215,9 @@ class BaseAndComplexCommandFactoryTest {
         final int indice2 = 2;
         final BaseCommand c2 = commands.get(indice2);
         c2.addTileArg(s2);
-        final List<Command> li = List.of(c1, c2);
+        final List<Pair<BaseCommand,String>> li = List.of(new Pair<>(c1, s1), new Pair<>(c2, s2));
         final Command c = new ComplexCommand(li, s2);
-        c.execute(p1);
+        c.execute(p1, c.getKeyWord());
         assertEquals("buy " + s1 + " if not owned otherwise pay it's rent" + " then\n" + "move in " + s2, c.getDesc());
         assertEquals(p1.getID(), bank.getTitleDeed(s1).getOwnerId());
         assertEquals(board.getTile(s2).getPosition().getPos(), board.getPawn(p1.getID()).getPosition().getPos());

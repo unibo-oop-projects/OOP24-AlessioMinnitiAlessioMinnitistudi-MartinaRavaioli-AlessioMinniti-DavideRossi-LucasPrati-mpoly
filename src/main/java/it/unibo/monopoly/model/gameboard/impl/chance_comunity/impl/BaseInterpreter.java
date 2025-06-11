@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Optional;
 
 import it.unibo.monopoly.model.gameboard.api.Board;
-import it.unibo.monopoly.model.gameboard.impl.chance_comunity.api.ArgsInterpreter;
 import it.unibo.monopoly.model.gameboard.impl.chance_comunity.api.BaseCommand;
 import it.unibo.monopoly.model.gameboard.impl.chance_comunity.api.BaseCommandFactory;
 import it.unibo.monopoly.model.gameboard.impl.chance_comunity.api.BaseInterpreterInt;
@@ -16,7 +15,6 @@ import it.unibo.monopoly.model.turnation.api.TurnationManager;
 public final class BaseInterpreter implements BaseInterpreterInt {
 
     private final List<BaseCommand> baseCommands;
-    private final ArgsInterpreter argsInterpreter = new ArgsInterpreterImpl(); 
     private final BaseCommandFactory factory = new BaseCommandFactoryImpl();
 
     /**
@@ -34,11 +32,7 @@ public final class BaseInterpreter implements BaseInterpreterInt {
         final String comString = pars.next();
         final Optional<BaseCommand> com = baseCommands.stream().filter(p -> p.getKeyWord().equals(comString)).findAny();
         if (com.isPresent()) {
-            final BaseCommand base = com.get(); 
-            if (pars.hasNesxt()) {
-                argsInterpreter.interpret(pars.next(), base, board, turnM);
-            }
-            comm = base;
+            comm = com.get();
         }
         return comm;
     }

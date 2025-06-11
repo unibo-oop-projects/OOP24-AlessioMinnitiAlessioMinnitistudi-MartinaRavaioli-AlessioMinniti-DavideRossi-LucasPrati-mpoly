@@ -140,15 +140,19 @@ class DeckTest {
     @Test
     void testDeck() {
         try {
-            creator.createDeck("debug//cards//DeckCardTest.txt", board, bank, turnM);
-            final ChanceAndCommunityChestCard c1 = board.draw();
-            final ChanceAndCommunityChestCard c2 = board.draw();
-            final ChanceAndCommunityChestCard c3 = board.draw();
             final List<String> descs = List.of("deposit 50", 
                                                     "move in Jail / Just Visiting" 
                                                     + " then\n" 
                                                     + "buy Jail / Just Visiting if not owned otherwise pay it's rent",
                                                     "withdraw 50");
+            creator.createDeck("debug//cards//DeckCardTest.txt", board, bank, turnM);
+            final ChanceAndCommunityChestCard c1 = board.draw();
+            c1.execute(p);
+            final ChanceAndCommunityChestCard c2 = board.draw();
+            c2.execute(p);
+            final ChanceAndCommunityChestCard c3 = board.draw();
+            c3.execute(p);
+            
             assertTrue(isThere(c1.getDescription(), descs));
             assertTrue(descs.contains(c2.getDescription()));
             assertTrue(descs.contains(c3.getDescription()));

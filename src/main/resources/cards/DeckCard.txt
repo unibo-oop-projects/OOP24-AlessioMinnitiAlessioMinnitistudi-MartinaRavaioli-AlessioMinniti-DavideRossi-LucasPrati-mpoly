@@ -47,7 +47,7 @@ deposit: 50
 -
 deposit: 60
 -
-deposit from: all
+deposit from: all, 50
 -
-deposit from: all
+deposit from: all, 30
 

@@ -11,7 +11,7 @@ public interface Command {
      * execute the action expressed in the command.
      * @param player on wich the command is executed
      */
-    void execute(Player player);
+    void execute(Player player, String args);
 
     /**
      * get the unic keyword of the command.

@@ -135,8 +135,8 @@ class BaseAndComplexInterpreterTest {
         tiles.stream().forEach(board::addTile);
         titleDeeds.stream().forEach(bank::addTitleDeed);
 
-        complexInt = new ComplexInterpreter(board, bank);
-        baseInt = new BaseInterpreter(bcf.allCommand(bank, board));
+        complexInt = new ComplexInterpreter(board, bank, turnM);
+        baseInt = new BaseInterpreter(bcf.allCommand(bank, board, turnM));
         argsInt = new ArgsInterpreterImpl();
     }
 
@@ -213,6 +213,7 @@ class BaseAndComplexInterpreterTest {
         final String s2 = "Mediterranean Avenue";
         final String s = "buy if not owned: " + s1 + "\n" + "move in tile: " + s2;
         final Command c = complexInt.interpret(s, board, turnM);
+        c.execute(p, c.getKeyWord());
         assertEquals("buy " + s1 + " if not owned otherwise pay it's rent" + " then\n" + "move in " + s2, c.getDesc());
     }
 }

@@ -8,18 +8,22 @@ import java.util.Set;
 import it.unibo.monopoly.model.gameboard.api.Board;
 import it.unibo.monopoly.model.gameboard.api.Property;
 import it.unibo.monopoly.model.gameboard.api.Tile;
+import it.unibo.monopoly.model.gameboard.impl.chance_comunity.api.ArgsInterpreter;
 import it.unibo.monopoly.model.gameboard.impl.chance_comunity.api.BaseCommand;
 import it.unibo.monopoly.model.gameboard.impl.chance_comunity.api.BaseCommandFactory;
 import it.unibo.monopoly.model.transactions.api.Bank;
 import it.unibo.monopoly.model.transactions.api.PropertyAction;
 import it.unibo.monopoly.model.turnation.api.Player;
+import it.unibo.monopoly.model.turnation.api.TurnationManager;
 
 /**
  * implementation of base command factory.
  */
 public final class BaseCommandFactoryImpl implements BaseCommandFactory {
 
-    private BaseCommand move(final Board board) {
+    private final ArgsInterpreter argsInt = new ArgsInterpreterImpl(); 
+
+    private BaseCommand move(final Board board, final TurnationManager turnM) {
         return new BaseCommand() {
 
             private static final String KEY = "move of steps";
@@ -46,7 +50,11 @@ public final class BaseCommandFactoryImpl implements BaseCommandFactory {
             }
 
             @Override
-            public void execute(final Player player) {
+            public void execute(final Player player, final String args) {
+                final ParserOnComma p = new ParserOnComma(args);
+                while (p.hasNesxt()) {
+                    argsInt.interpret(p.next(), this, board, turnM);
+                }
                 board.movePawn(player.getID(), Set.of(num));
             }
 
@@ -57,7 +65,7 @@ public final class BaseCommandFactoryImpl implements BaseCommandFactory {
         };
     }
 
-    private BaseCommand moveIn(final Board board) {
+    private BaseCommand moveIn(final Board board, final TurnationManager turnM) {
         return new BaseCommand() {
 
             private static final String KEY = "move in tile";
@@ -69,7 +77,11 @@ public final class BaseCommandFactoryImpl implements BaseCommandFactory {
             }
 
             @Override
-            public void execute(final Player player) {
+            public void execute(final Player player, final String args) {
+                final ParserOnComma p = new ParserOnComma(args);
+                while (p.hasNesxt()) {
+                    argsInt.interpret(p.next(), this, board, turnM);
+                }
                 board.movePawnInTile(player.getID(), this.tile);
             }
 
@@ -95,7 +107,7 @@ public final class BaseCommandFactoryImpl implements BaseCommandFactory {
         };
     }
 
-    private BaseCommand withdraw(final Bank bank) {
+    private BaseCommand withdraw(final Bank bank,final Board board, final TurnationManager turnM) {
         return new BaseCommand() {
 
             private static final String KEY = "withdraw";
@@ -107,7 +119,11 @@ public final class BaseCommandFactoryImpl implements BaseCommandFactory {
             }
 
             @Override
-            public void execute(final Player player) {
+            public void execute(final Player player, final String args) {
+                final ParserOnComma p = new ParserOnComma(args);
+                while (p.hasNesxt()) {
+                    argsInt.interpret(p.next(), this, board, turnM);
+                }
                 bank.withdrawFrom(player.getID(), num);
             }
 
@@ -134,7 +150,7 @@ public final class BaseCommandFactoryImpl implements BaseCommandFactory {
         };
     }
 
-    private BaseCommand deposit(final Bank bank) {
+    private BaseCommand deposit(final Bank bank, final Board board,final TurnationManager turnM) {
         return new BaseCommand() {
 
             private static final String KEY = "deposit";
@@ -146,7 +162,11 @@ public final class BaseCommandFactoryImpl implements BaseCommandFactory {
             }
 
             @Override
-            public void execute(final Player player) {
+            public void execute(final Player player, final String args) {
+                final ParserOnComma p = new ParserOnComma(args);
+                while (p.hasNesxt()) {
+                    argsInt.interpret(p.next(), this, board, turnM);
+                }
                 bank.depositTo(player.getID(), num);
             }
 
@@ -172,7 +192,7 @@ public final class BaseCommandFactoryImpl implements BaseCommandFactory {
         };
     }
 
-    private BaseCommand depositFrom(final Bank bank) {
+    private BaseCommand depositFrom(final Bank bank, final Board board,final TurnationManager turnM) {
         return new BaseCommand() {
 
             private static final String KEY = "deposit from";
@@ -185,7 +205,11 @@ public final class BaseCommandFactoryImpl implements BaseCommandFactory {
             }
 
             @Override
-            public void execute(final Player player) {
+            public void execute(final Player player, final String args) {
+                final ParserOnComma p = new ParserOnComma(args);
+                while (p.hasNesxt()) {
+                    argsInt.interpret(p.next(), this, board, turnM);
+                }
                 for (final Player player2 : players) {
                     bank.withdrawFrom(player2.getID(), num);
                     bank.depositTo(player.getID(), num);
@@ -218,7 +242,7 @@ public final class BaseCommandFactoryImpl implements BaseCommandFactory {
         };
     }
 
-    private BaseCommand buyIfNotOwned(final Bank bank, final Board board) {
+    private BaseCommand buyIfNotOwned(final Bank bank, final Board board, final TurnationManager turnM) {
         return new BaseCommand() {
 
             private static final String KEY = "buy if not owned";
@@ -230,7 +254,11 @@ public final class BaseCommandFactoryImpl implements BaseCommandFactory {
             }
 
             @Override
-            public void execute(final Player player) {
+            public void execute(final Player player, final String args) {
+                final ParserOnComma pc = new ParserOnComma(args);
+                while (pc.hasNesxt()) {
+                    argsInt.interpret(pc.next(), this, board, turnM);
+                }
                 final Tile t = board.getTile(tile);
                 
                 if (t instanceof Property) {
@@ -279,7 +307,7 @@ public final class BaseCommandFactoryImpl implements BaseCommandFactory {
                 return KEY;
             }
             @Override
-            public void execute(final Player player) {
+            public void execute(final Player player, final String args) {
             }
 
             @Override
@@ -303,14 +331,14 @@ public final class BaseCommandFactoryImpl implements BaseCommandFactory {
     }
 
     @Override
-    public List<BaseCommand> allCommand(final Bank bank, final Board board) {
+    public List<BaseCommand> allCommand(final Bank bank, final Board board, final TurnationManager turnM) {
         return List.of(
-            this.deposit(bank),
-            this.move(board),
-            this.moveIn(board),
-            this.withdraw(bank), 
-            this.depositFrom(bank),
-            this.buyIfNotOwned(bank, board)
+            this.deposit(bank,board,turnM),
+            this.move(board,turnM),
+            this.moveIn(board,turnM),
+            this.withdraw(bank,board,turnM), 
+            this.depositFrom(bank,board,turnM),
+            this.buyIfNotOwned(bank, board,turnM)
         );
     }
 

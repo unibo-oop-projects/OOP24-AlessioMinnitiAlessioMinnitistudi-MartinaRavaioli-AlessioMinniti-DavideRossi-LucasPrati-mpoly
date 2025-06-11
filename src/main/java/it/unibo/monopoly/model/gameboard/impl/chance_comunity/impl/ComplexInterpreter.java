@@ -4,6 +4,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import it.unibo.monopoly.model.gameboard.api.Board;
+import it.unibo.monopoly.model.gameboard.impl.chance_comunity.api.BaseCommand;
 import it.unibo.monopoly.model.gameboard.impl.chance_comunity.api.BaseCommandFactory;
 import it.unibo.monopoly.model.gameboard.impl.chance_comunity.api.Command;
 import it.unibo.monopoly.model.gameboard.impl.chance_comunity.api.Interpreter;
@@ -26,16 +27,23 @@ public final class ComplexInterpreter implements Interpreter {
      * @param bank to execute some commands
      * @param viewcontroller to show graphical reference of some commands 
      */
-    public ComplexInterpreter(final Board board, final Bank bank) {
-        inter = new BaseInterpreter(factory.allCommand(bank, board));
+    public ComplexInterpreter(final Board board, final Bank bank, final TurnationManager turnM) {
+        inter = new BaseInterpreter(factory.allCommand(bank, board, turnM));
     }
 
     @Override
     public Command interpret(final String toInterpretString, final Board board, final TurnationManager turnM) {
-        final List<Command> commands = new LinkedList<>(); 
+        final List<Pair<BaseCommand, String>> commands = new LinkedList<>(); 
         final ParserOnNewLine pars = new ParserOnNewLine(toInterpretString);
         while (pars.hasNesxt()) {
-            commands.add(inter.interpret(pars.next(), board, turnM));
+            final ParserOnColon parOnColon = new ParserOnColon(pars.next());
+            BaseCommand co = inter.interpret(parOnColon.next(), board, turnM);
+            StringBuilder b = new StringBuilder("");
+            while (parOnColon.hasNesxt()) {
+                b = b.append(parOnColon.next());
+            }
+            Pair<BaseCommand, String> com = new Pair<>(co, b.toString());
+            commands.add(com);
         }
         return new ComplexCommand(commands, toInterpretString);
     }
