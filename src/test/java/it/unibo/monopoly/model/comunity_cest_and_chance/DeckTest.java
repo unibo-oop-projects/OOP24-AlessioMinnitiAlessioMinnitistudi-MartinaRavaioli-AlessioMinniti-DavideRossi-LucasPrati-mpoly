@@ -147,7 +147,7 @@ class DeckTest {
             final List<String> descs = List.of("deposit 50", 
                                                     "move in Jail / Just Visiting" 
                                                     + " then\n" 
-                                                    + "buy Jail / Just Visiting if not owned",
+                                                    + "buy Jail / Just Visiting if not owned otherwise pay it's rent",
                                                     "withdraw 50");
             assertTrue(isThere(c1.getDescription(), descs));
             assertTrue(descs.contains(c2.getDescription()));

@@ -13,11 +13,8 @@ SMALL_FONT: 16
 INIT_BALANCE: 2000
 
 RULES_FILE: rules/rules.txt
-<<<<<<< HEAD
+
 CARDS_FILE: cards/final_cards.json
 DECK_FILE: cards/DeckCard.txt
-=======
-CARDS_FILE: cards/cards.json
->>>>>>> development
 
 COLORS: RED, BLUE, ORANGE, GREEN, MAGENTA, CYAN, YELLOW, BLACK, LIGHT_GRAY, PINK, DARK_GRAY, GRAY

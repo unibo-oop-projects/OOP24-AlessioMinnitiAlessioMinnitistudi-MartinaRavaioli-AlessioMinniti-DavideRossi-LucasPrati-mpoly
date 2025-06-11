@@ -2,6 +2,7 @@ package it.unibo.monopoly.model.gameboard.impl.chance_comunity.impl;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 import it.unibo.monopoly.model.gameboard.api.Board;
@@ -10,6 +11,7 @@ import it.unibo.monopoly.model.gameboard.api.Tile;
 import it.unibo.monopoly.model.gameboard.impl.chance_comunity.api.BaseCommand;
 import it.unibo.monopoly.model.gameboard.impl.chance_comunity.api.BaseCommandFactory;
 import it.unibo.monopoly.model.transactions.api.Bank;
+import it.unibo.monopoly.model.transactions.api.PropertyAction;
 import it.unibo.monopoly.model.turnation.api.Player;
 
 /**
@@ -230,10 +232,17 @@ public final class BaseCommandFactoryImpl implements BaseCommandFactory {
             @Override
             public void execute(final Player player) {
                 final Tile t = board.getTile(tile);
-                if (t instanceof Property && !bank.getTitleDeed(tile).isOwned()) {
-                    bank.buyTitleDeed(tile, player.getID());
-                } else if (t instanceof Property && bank.getTitleDeed(tile).isOwned()) {
-                    bank.payRent(t.getName(), player.getID(), 10);
+                
+                if (t instanceof Property) {
+                    bank.getBankStateObject().resetTransactionData();
+                    Set<PropertyAction> actions = bank.getApplicableActionsForTitleDeed(player.getID(), tile, 10);
+                    Optional<PropertyAction> buy = actions.stream().filter(p ->"buy".equals(p.getName())).findAny();
+                    Optional<PropertyAction> pay = actions.stream().filter(p ->"payRent".equals(p.getName())).findAny();
+                    if (buy.isPresent()) {
+                        buy.get().executePropertyAction(board, bank);
+                    } else if (pay.isPresent()) {
+                        pay.get().executePropertyAction(board, bank);
+                    }
                 }
             }
 

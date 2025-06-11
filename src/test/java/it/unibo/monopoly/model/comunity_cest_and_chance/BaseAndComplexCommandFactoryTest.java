@@ -196,18 +196,18 @@ class BaseAndComplexCommandFactoryTest {
     void test5() {
         final String s1 = "Baltic Avenue";
         final String s2 = "Mediterranean Avenue";
-        bank.getBankStateObject().resetTransactionData();
         final int indice = 5;
+        final int prevBal = bank.getBankAccount(p2.getID()).getBalance();
         final BaseCommand c = commands.get(indice);
         c.addTileArg(s1);
         c.execute(p1);
         assertEquals("buy " + s1 + " if not owned otherwise pay it's rent", c.getDesc());
         assertEquals(p1.getID(), bank.getTitleDeed(s1).getOwnerId());
-        bank.getBankStateObject().resetTransactionData();
         bank.buyTitleDeed(s2, p1.getID());
         c.addTileArg(s2);
         c.execute(p2);
         assertEquals(p1.getID(), bank.getTitleDeed(s2).getOwnerId());
+        assertEquals(prevBal - bank.getBankAccount(p2.getID()).getBalance(), bank.getTitleDeed(s2).getRent(Set.of(), 1));
     }
 
     @Test
@@ -224,7 +224,7 @@ class BaseAndComplexCommandFactoryTest {
         final List<Command> li = List.of(c1, c2);
         final Command c = new ComplexCommand(li, s2);
         c.execute(p1);
-        assertEquals("buy " + s1 + " if not owned" + " then\n" + "move in " + s2, c.getDesc());
+        assertEquals("buy " + s1 + " if not owned otherwise pay it's rent" + " then\n" + "move in " + s2, c.getDesc());
         assertEquals(p1.getID(), bank.getTitleDeed(s1).getOwnerId());
         assertEquals(board.getTile(s2).getPosition().getPos(), board.getPawn(p1.getID()).getPosition().getPos());
     }

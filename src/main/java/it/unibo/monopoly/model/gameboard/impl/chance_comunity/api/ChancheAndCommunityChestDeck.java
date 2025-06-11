@@ -13,9 +13,4 @@ public interface ChancheAndCommunityChestDeck {
      */
     ChanceAndCommunityChestCard draw();
 
-    /**
-     * draw a card from the deck in order of creation.
-     * @return the card
-     */
-    ChanceAndCommunityChestCard drawInOrder();
 }

@@ -144,6 +144,7 @@ public final class GameControllerImpl implements GameController {
                     executeEffect(specialTile.getEffect());
                     this.gameView.callChangePositions();
                 }
+                refreshCurrentTileInfo();
             }
             final int delta = board.getPawn(currentPlayerId).getPosition().getPos() 
                                         - board.getPrevPawnPosition(currentPlayerId).getPos();
@@ -152,6 +153,7 @@ public final class GameControllerImpl implements GameController {
                 final Special tile = (Special) board.getTile("Start");
                 executeEffect(tile.getEffect());
             }
+            this.refreshBankPlayerInfo();
         } catch (final IllegalAccessException e) {
             gameView.displayError(e);
         }

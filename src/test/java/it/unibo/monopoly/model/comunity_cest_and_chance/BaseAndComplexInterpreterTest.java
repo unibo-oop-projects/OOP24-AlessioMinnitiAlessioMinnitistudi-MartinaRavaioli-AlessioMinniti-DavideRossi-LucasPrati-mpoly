@@ -204,7 +204,7 @@ class BaseAndComplexInterpreterTest {
         final BaseCommand c = baseInt.interpret(parOnColon.next(), board, turnM);
         parOnColon.hasNesxt();
         argsInt.interpret(parOnColon.next(), c, board, turnM);
-        assertEquals("buy " + s1 + " if not owned", c.getDesc());
+        assertEquals("buy " + s1 + " if not owned otherwise pay it's rent", c.getDesc());
     }
 
     @Test
@@ -213,6 +213,6 @@ class BaseAndComplexInterpreterTest {
         final String s2 = "Mediterranean Avenue";
         final String s = "buy if not owned: " + s1 + "\n" + "move in tile: " + s2;
         final Command c = complexInt.interpret(s, board, turnM);
-        assertEquals("buy " + s1 + " if not owned" + " then\n" + "move in " + s2, c.getDesc());
+        assertEquals("buy " + s1 + " if not owned otherwise pay it's rent" + " then\n" + "move in " + s2, c.getDesc());
     }
 }

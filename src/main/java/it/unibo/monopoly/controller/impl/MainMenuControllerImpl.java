@@ -9,7 +9,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
-import it.unibo.monopoly.controller.api.GameController;
 import it.unibo.monopoly.controller.api.MainMenuController;
 import it.unibo.monopoly.model.gameboard.api.Board;
 import it.unibo.monopoly.model.gameboard.api.CardFactory;
@@ -42,8 +41,6 @@ import it.unibo.monopoly.utils.api.UseFileTxt;
 import it.unibo.monopoly.utils.impl.Configuration;
 import it.unibo.monopoly.utils.impl.UseFileJsonImpl;
 import it.unibo.monopoly.utils.impl.UseFileTxtImpl;
-import it.unibo.monopoly.view.api.MainGameView;
-import it.unibo.monopoly.view.impl.MainViewImpl;
 
 
 /**
@@ -140,25 +137,17 @@ public final class MainMenuControllerImpl implements MainMenuController {
         tiles.stream().forEach(board::addTile);
         titleDeeds.stream().forEach(bank::addTitleDeed);
 
+        DeckCreator creator = new DeckCreatorImpl();
+        creator.createDeck(config.getDeckPath(), board, bank, turnationManager);
+        
         // start the game
-        final GameController controllerGameManager = new GameControllerImpl(
+        final var controllerGameManager = new GameControllerImpl(
             board,
             turnationManager,
             config,
             bank
         );
-        // create the deck for "chance and community chest"
-        final DeckCreator deckCreator = new DeckCreatorImpl();
-        deckCreator.createDeck(
-            config.getDeckPath(),
-            board,
-            bank,
-            turnationManager
-        );
-
-        final MainGameView mainView = new MainViewImpl(controllerGameManager);
-        controllerGameManager.attachView(mainView);
-       controllerGameManager.start();
+        controllerGameManager.start();
     }
 
     /**
