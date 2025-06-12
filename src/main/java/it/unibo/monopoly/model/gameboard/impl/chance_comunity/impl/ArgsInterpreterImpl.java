@@ -34,7 +34,7 @@ public final class ArgsInterpreterImpl implements ArgsInterpreter {
     private int interpretIntArg(final String toInterpretString) {
         try {
             final String auxS = toInterpretString.replace(" ", "");
-            return Integer.valueOf(auxS).intValue();
+            return Integer.parseInt(auxS);
         } catch (final NumberFormatException e) {
             return -1;
         }

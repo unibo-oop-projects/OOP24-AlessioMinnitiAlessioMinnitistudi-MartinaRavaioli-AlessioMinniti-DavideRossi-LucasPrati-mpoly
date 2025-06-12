@@ -55,13 +55,13 @@ class ParserOnSpaceTest {
         assertTrue(p.hasNesxt());
         assertEquals(p.next(), "ciao");
         assertTrue(p.hasNesxt());
-        assertEquals(p.next(), "io sono");
+        assertEquals(p.next(), " io sono");
         assertTrue(p.hasNesxt());
-        assertEquals(p.next(), "world");
+        assertEquals(p.next(), " world");
         assertTrue(p.hasNesxt());
-        assertEquals(p.next(), "-");
+        assertEquals(p.next(), " -");
         assertTrue(p.hasNesxt());
-        assertEquals(p.next(), "come stai");
+        assertEquals(p.next(), " come stai");
     }
 
     @Test
