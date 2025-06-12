@@ -97,6 +97,10 @@ public final class GameControllerImpl implements GameController {
     }
 
 
+    private void attachView(final MainGameView view) {
+        this.gameView = view;
+    }
+
     @Override
     public void endTurn() {
         if (!this.turnationManager.playerDiesIfTurnPassed()) {
@@ -176,10 +180,7 @@ public final class GameControllerImpl implements GameController {
         gameView.displayPlayerStats(this.turnationManager.getCurrPlayer(), this.bank);
     }
 
-    @Override
-    public void attachView(final MainGameView view) {
-        this.gameView = view;
-    }
+
 
     @Override
     public List<Tile> getTiles() {

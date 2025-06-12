@@ -2,6 +2,7 @@ package it.unibo.monopoly.view.impl;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.TextArea;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.List;
@@ -74,16 +75,10 @@ public final class MainViewImpl implements MainGameView {
         mainActionsPanel.renderDefaultUI();
         final JPanel actionPanel = buildActionPanelUI(controller);
         mainGameFrame.getContentPane().add(actionPanel, BorderLayout.EAST);
-        mainGameFrame.getContentPane().add(this.gameBoardPanel.getPanel(), BorderLayout.WEST);
-        final JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, gameBoardPanel.getPanel(), actionPanel);
-        splitPane.setResizeWeight(0.5); 
-        splitPane.setDividerSize(2);    // Spessore del divisore
-        splitPane.setEnabled(false);    // Rendi il divisore fisso, se vuoi
-
-        mainGameFrame.add(splitPane);
+        mainGameFrame.getContentPane().add(this.gameBoardPanel.getPanel(), BorderLayout.CENTER);
         mainGameFrame.setVisible(true);
         mainGameFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-        mainGameFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        mainGameFrame.setSize(GuiUtils.getDimensionWindow(1.0, 1.0));
 
         mainGameFrame.addWindowListener(new WindowAdapter() {
             @Override
