@@ -106,6 +106,9 @@ public final class GameControllerImpl implements GameController {
         if (!this.turnationManager.playerDiesIfTurnPassed()) {
             if (this.turnationManager.canPassTurn()) {
                 this.turnationManager.getNextPlayer();
+                if (this.turnationManager.isCurrentPlayerParked()) {
+                    this.gameView.displayMessage("you can't throw the dices and move, you are parked");
+                }
                 gameView.refreshUIForNewTurn(turnationManager.canThrowDices());
                 refreshPlayerInfo();
             } else {
@@ -179,8 +182,6 @@ public final class GameControllerImpl implements GameController {
     public void loadCurrentPlayerInformation() {
         gameView.displayPlayerStats(this.turnationManager.getCurrPlayer(), this.bank);
     }
-
-
 
     @Override
     public List<Tile> getTiles() {
