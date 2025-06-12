@@ -25,7 +25,7 @@ public final class ParserOnColon implements Parser {
         for (int i = index; i < toParseString.length(); i++) {
             final char c = toParseString.charAt(i);
             if (c == colon) {
-                index = i + 2;
+                index = i + 1;
                 return ret;
             }
             ret = ret.concat(String.valueOf(c));
