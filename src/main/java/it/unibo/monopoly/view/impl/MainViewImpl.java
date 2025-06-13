@@ -2,7 +2,6 @@ package it.unibo.monopoly.view.impl;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.TextArea;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.List;
@@ -40,6 +39,10 @@ import it.unibo.monopoly.view.impl.gamepanels.SwingPanelsFactory;
  */
 public final class MainViewImpl implements MainGameView {
 
+    private static final double INITIAL_WIDTH = 1.0;
+    private static final double INITIAL_HEIGHT = 1.0;
+    private static final double GAMEBOARD_ACTION_WIDTH_RATIO = 0.60;
+
     private final JFrame mainGameFrame = new JFrame();
 
     private final PlayerPanel playerInfoPanel;
@@ -74,12 +77,15 @@ public final class MainViewImpl implements MainGameView {
         mainActionsPanel = fact.standardControlsPanel(controller);
         mainActionsPanel.renderDefaultUI();
         final JPanel actionPanel = buildActionPanelUI(controller);
-        mainGameFrame.getContentPane().add(actionPanel, BorderLayout.EAST);
-        mainGameFrame.getContentPane().add(this.gameBoardPanel.getPanel(), BorderLayout.CENTER);
-        mainGameFrame.setVisible(true);
+        this.gameBoardPanel.getPanel().setPreferredSize(
+            GuiUtils.getDimensionWindow(INITIAL_WIDTH * GAMEBOARD_ACTION_WIDTH_RATIO, INITIAL_HEIGHT)
+        );
+        final JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, gameBoardPanel.getPanel(), actionPanel);
+        splitPane.setResizeWeight(GAMEBOARD_ACTION_WIDTH_RATIO); 
+        splitPane.setDividerSize(2);    // Spessore del divisore
+        mainGameFrame.getContentPane().add(splitPane);
         mainGameFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-        mainGameFrame.setSize(GuiUtils.getDimensionWindow(1.0, 1.0));
-
+        mainGameFrame.setSize(GuiUtils.getDimensionWindow(INITIAL_WIDTH, INITIAL_HEIGHT));
         mainGameFrame.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(final WindowEvent e) {
@@ -87,6 +93,7 @@ public final class MainViewImpl implements MainGameView {
                 mainGameFrame.dispose();
             }
         });
+        mainGameFrame.setVisible(true);
     }
 
     private JPanel buildActionPanelUI(final GameController controller) {
