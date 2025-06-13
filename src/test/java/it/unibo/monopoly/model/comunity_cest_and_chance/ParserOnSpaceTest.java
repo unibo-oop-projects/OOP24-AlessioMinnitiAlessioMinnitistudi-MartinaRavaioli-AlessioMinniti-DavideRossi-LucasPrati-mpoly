@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
-import it.unibo.monopoly.model.gameboard.impl.chance_comunity.api.Parser;
+import it.unibo.monopoly.model.gameboard.api.chancesAndCommunityChest.api.Parser;
 import it.unibo.monopoly.model.gameboard.impl.chance_comunity.impl.ParserOnColon;
 import it.unibo.monopoly.model.gameboard.impl.chance_comunity.impl.ParserOnHyphen;
 import it.unibo.monopoly.model.gameboard.impl.chance_comunity.impl.ParserOnNewLine;

@@ -4,10 +4,10 @@ import java.util.LinkedList;
 import java.util.List;
 
 import it.unibo.monopoly.model.gameboard.api.Board;
-import it.unibo.monopoly.model.gameboard.impl.chance_comunity.api.BaseCommand;
-import it.unibo.monopoly.model.gameboard.impl.chance_comunity.api.BaseCommandFactory;
-import it.unibo.monopoly.model.gameboard.impl.chance_comunity.api.Command;
-import it.unibo.monopoly.model.gameboard.impl.chance_comunity.api.Interpreter;
+import it.unibo.monopoly.model.gameboard.api.chancesAndCommunityChest.api.BaseCommand;
+import it.unibo.monopoly.model.gameboard.api.chancesAndCommunityChest.api.BaseCommandFactory;
+import it.unibo.monopoly.model.gameboard.api.chancesAndCommunityChest.api.Command;
+import it.unibo.monopoly.model.gameboard.api.chancesAndCommunityChest.api.Interpreter;
 import it.unibo.monopoly.model.transactions.api.Bank;
 import it.unibo.monopoly.model.turnation.api.TurnationManager;
 

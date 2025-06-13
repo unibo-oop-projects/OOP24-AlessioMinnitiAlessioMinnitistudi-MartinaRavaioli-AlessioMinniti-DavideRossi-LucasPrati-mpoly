@@ -4,9 +4,9 @@ import java.util.List;
 import java.util.Optional;
 
 import it.unibo.monopoly.model.gameboard.api.Board;
-import it.unibo.monopoly.model.gameboard.impl.chance_comunity.api.BaseCommand;
-import it.unibo.monopoly.model.gameboard.impl.chance_comunity.api.BaseCommandFactory;
-import it.unibo.monopoly.model.gameboard.impl.chance_comunity.api.BaseInterpreterInt;
+import it.unibo.monopoly.model.gameboard.api.chancesAndCommunityChest.api.BaseCommand;
+import it.unibo.monopoly.model.gameboard.api.chancesAndCommunityChest.api.BaseCommandFactory;
+import it.unibo.monopoly.model.gameboard.api.chancesAndCommunityChest.api.BaseInterpreterInt;
 import it.unibo.monopoly.model.turnation.api.TurnationManager;
 
 /**

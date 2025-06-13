@@ -1,4 +1,4 @@
-package it.unibo.monopoly.model.gameboard.impl.chance_comunity.api;
+package it.unibo.monopoly.model.gameboard.api.chancesAndCommunityChest.api;
 
 import java.util.List;
 

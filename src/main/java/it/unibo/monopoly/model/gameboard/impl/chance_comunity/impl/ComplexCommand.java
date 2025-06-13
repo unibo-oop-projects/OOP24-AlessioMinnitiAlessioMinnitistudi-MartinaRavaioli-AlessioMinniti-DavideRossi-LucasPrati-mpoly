@@ -2,8 +2,8 @@ package it.unibo.monopoly.model.gameboard.impl.chance_comunity.impl;
 
 import java.util.List;
 
-import it.unibo.monopoly.model.gameboard.impl.chance_comunity.api.BaseCommand;
-import it.unibo.monopoly.model.gameboard.impl.chance_comunity.api.Command;
+import it.unibo.monopoly.model.gameboard.api.chancesAndCommunityChest.api.BaseCommand;
+import it.unibo.monopoly.model.gameboard.api.chancesAndCommunityChest.api.Command;
 import it.unibo.monopoly.model.turnation.api.Player;
 
 /**
