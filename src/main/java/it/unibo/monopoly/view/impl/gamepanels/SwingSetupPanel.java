@@ -3,7 +3,10 @@ package it.unibo.monopoly.view.impl.gamepanels;
 import it.unibo.monopoly.controller.api.MainMenuController;
 import it.unibo.monopoly.view.api.SetupPanel;
 
-public class SwingSetupPanel extends SwingAbstractMainMenuPanel implements SetupPanel {
+final class SwingSetupPanel extends SwingAbstractMainMenuPanel implements SetupPanel {
+
+    private static final long serialVersionUID = 1L;
+
 
     public SwingSetupPanel(MainMenuController controller) {
         super(controller);
