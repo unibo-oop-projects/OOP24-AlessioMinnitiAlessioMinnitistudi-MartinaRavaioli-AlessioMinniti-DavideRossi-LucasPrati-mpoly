@@ -20,6 +20,8 @@ import it.unibo.monopoly.model.gameboard.impl.ImmutableProperty;
 import it.unibo.monopoly.model.gameboard.impl.NormalPropertyImpl;
 import it.unibo.monopoly.model.transactions.api.Bank;
 import it.unibo.monopoly.model.transactions.api.BankAccount;
+import it.unibo.monopoly.model.transactions.api.PropertyAction;
+import it.unibo.monopoly.model.transactions.api.PropertyActionsEnum;
 import it.unibo.monopoly.model.transactions.api.RentOption;
 import it.unibo.monopoly.model.transactions.api.TitleDeed;
 import it.unibo.monopoly.model.transactions.impl.BankImpl;
@@ -121,6 +123,21 @@ class BankTest {
                     .map(d -> new ImmutableTitleDeedCopy(d))
                     .toList()
                     .getFirst(), deed);
+    }
+
+    @Test
+    void checkGetApplicableActionsForTitleDeedRetrievesCorrectActions() {
+        final Set<PropertyAction> buyAction = bank.getApplicableActionsForTitleDeed(ID_1, TITLE_DEED_NAME1, DICE_THROW);
+        assertTrue(buyAction.stream().allMatch(a -> a.getType() == PropertyActionsEnum.BUY));
+        bank.buyTitleDeed(TITLE_DEED_NAME1, ID_1);
+        final Set<PropertyAction> sellOrImprove = bank.getApplicableActionsForTitleDeed(ID_1, TITLE_DEED_NAME1, DICE_THROW);
+        assertTrue(sellOrImprove.stream().anyMatch(a -> a.getType() == PropertyActionsEnum.SELL));
+        assertTrue(sellOrImprove.stream().anyMatch(a -> a.getType() == PropertyActionsEnum.BUYHOTEL));
+        assertTrue(sellOrImprove.stream().anyMatch(a -> a.getType() == PropertyActionsEnum.BUYHOUSE));
+        assertTrue(sellOrImprove.stream().anyMatch(a -> a.getType() == PropertyActionsEnum.SELLHOTEL));
+        assertTrue(sellOrImprove.stream().anyMatch(a -> a.getType() == PropertyActionsEnum.SELLHOUSE));
+        final Set<PropertyAction> payRent = bank.getApplicableActionsForTitleDeed(ID_2, TITLE_DEED_NAME1, DICE_THROW);
+        assertTrue(payRent.stream().anyMatch(a -> a.getType() == PropertyActionsEnum.PAYRENT));
     }
 
     @Test 

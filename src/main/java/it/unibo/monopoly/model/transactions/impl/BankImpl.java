@@ -271,15 +271,12 @@ public final class BankImpl implements Bank {
             transactionLedger.registerTransaction(PropertyActionsEnum.BUY, 0, 1);
         } else if (selected.getOwnerId() == currentPlayerId) {
             returnSet.add(propertyActionFactory.createSell(titleDeedName));
-            transactionLedger.registerTransaction(PropertyActionsEnum.SELL, 0);
             returnSet.add(propertyActionFactory.createBuyHouse(titleDeedName));
             transactionLedger.registerTransaction(PropertyActionsEnum.BUYHOUSE, 0);
             returnSet.add(propertyActionFactory.createBuyHotel(titleDeedName));
             transactionLedger.registerTransaction(PropertyActionsEnum.BUYHOTEL, 0);
             returnSet.add(propertyActionFactory.createSellHouse(titleDeedName));
-            transactionLedger.registerTransaction(PropertyActionsEnum.SELLHOUSE, 0);
             returnSet.add(propertyActionFactory.createSellHotel(titleDeedName));
-            transactionLedger.registerTransaction(PropertyActionsEnum.SELLHOTEL, 0);
         } else {
             returnSet.add(propertyActionFactory.createPayRent(titleDeedName, currentPlayerId, diceThrow));
             transactionLedger.registerTransaction(PropertyActionsEnum.PAYRENT, 1, 1);
