@@ -1,7 +1,6 @@
 package it.unibo.monopoly.view.api;
 
 import it.unibo.monopoly.controller.api.MainMenuController;
-import it.unibo.monopoly.model.turnation.api.Player;
 
 /**
  * Abstract factory to create UI components 
