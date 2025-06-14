@@ -123,10 +123,11 @@ public final class GameControllerImpl implements GameController {
     public void throwDices() {
         try {
             final Collection<Integer> result = this.turnationManager.moveByDices();
-
             final int currentPlayerId = this.turnationManager.getIdCurrPlayer();
+            int delta = 0;
+
             if (!this.turnationManager.isCurrentPlayerInPrison() || this.turnationManager.tryExitPrison(result)) {
-                this.board.movePawn(currentPlayerId, result);
+                delta = this.board.movePawn(currentPlayerId, result);
             } else {
                 this.gameView.displayMessage("you can't move, you have " 
                                 + turnationManager.currentPlayerTurnsLeftInPrison() 
@@ -153,8 +154,7 @@ public final class GameControllerImpl implements GameController {
                 }
                 refreshCurrentTileInfo();
             }
-            final int delta = board.getPawn(currentPlayerId).getPosition().getPos() 
-                                        - board.getPrevPawnPosition(currentPlayerId).getPos();
+
             if (delta < 0 && !"GoToJail".equals(currentlySittingTile.getName()) 
                 && !"Jail / Just Visiting".equals(currentlySittingTile.getName())) {
                 final Special tile = (Special) board.getTile("Start");
