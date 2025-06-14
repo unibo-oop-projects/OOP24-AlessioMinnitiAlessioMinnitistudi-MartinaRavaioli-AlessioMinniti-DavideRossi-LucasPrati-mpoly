@@ -171,11 +171,17 @@ public class TurnationManagerImpl implements TurnationManager {
     }
 
     @Override
-    public final Collection<Integer> moveByDices() throws IllegalAccessException { 
+    public final Pair<Collection<Integer>, String> moveByDices() throws IllegalAccessException { 
         if (!hasCurrPlayerThrownDices()) {
             if (canThrowDices()) {
                 this.diceThrown = true;
-                return this.dice.throwDices();
+                final Collection<Integer> res = this.dice.throwDices();
+
+                if (this.currPlayer.isInPrison()) {
+                    return Pair.of(res, tryExitPrison(res));
+                }
+
+                return Pair.of(res,null);
             } else {
                 throw new IllegalAccessException("the player can't throw dices because is parked");
             }
@@ -208,11 +214,7 @@ public class TurnationManagerImpl implements TurnationManager {
     @Override
     public final boolean canPassTurn() {
         if (this.bankState.allMandatoryTransactionsCompleted()) {
-            if (hasCurrPlayerThrownDices()) {
-                return true;
-            } else if (this.currPlayer.isParked()) {
-                return true;
-            }
+            return hasCurrPlayerThrownDices();
         }
         return false;
     }
@@ -310,12 +312,12 @@ public class TurnationManagerImpl implements TurnationManager {
         return !this.currPlayer.isParked();
     }
     @Override
-    public final boolean tryExitPrison(final Collection<Integer> result) {
+    public final String tryExitPrison(final Collection<Integer> result) {
         if (this.currPlayer.canExitPrison(result)) {
-            return true;
+            return "you escaped the prison";
         } else {
             this.currPlayer.decreaseTurnsInPrison();
-            return false;
+            return "you are still in prison, you have " + currentPlayerTurnsLeftInPrison() + " turns left in prison and the dices weren't kind with you.";
         }
     }
 
