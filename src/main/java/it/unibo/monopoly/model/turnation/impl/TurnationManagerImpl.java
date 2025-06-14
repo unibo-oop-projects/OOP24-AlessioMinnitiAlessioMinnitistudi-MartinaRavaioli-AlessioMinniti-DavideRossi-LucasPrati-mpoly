@@ -93,12 +93,15 @@ public class TurnationManagerImpl implements TurnationManager {
 
     @Override
     public final Player getNextPlayer() { 
-        this.currPlayer = players.giveNextNode(this.currPlayer);
-        this.diceThrown = false;
-        if (isCurrentPlayerParked()) {
-            passedParkTurn();
+        if (canPassTurn()) {
+            this.currPlayer = players.giveNextNode(this.currPlayer);
+            this.diceThrown = false;
+            if (isCurrentPlayerParked()) {
+                passedParkTurn();
+            }
+            return createCurrPlayerCopy();
         }
-        return createCurrPlayerCopy();
+        throw new IllegalArgumentException("the player can't pass the turn");
     }
     /**
      * method that create a copy of the current player.
@@ -183,7 +186,7 @@ public class TurnationManagerImpl implements TurnationManager {
 
                 return Pair.of(res,null);
             } else {
-                throw new IllegalAccessException("the player can't throw dices because is parked");
+                return Pair.of(null, "the player can't throw dices because is parked");
             }
 
         } else {
@@ -214,7 +217,12 @@ public class TurnationManagerImpl implements TurnationManager {
     @Override
     public final boolean canPassTurn() {
         if (this.bankState.allMandatoryTransactionsCompleted()) {
-            return hasCurrPlayerThrownDices();
+            if (!isCurrentPlayerParked()) {
+                return hasCurrPlayerThrownDices();
+            }
+            else {
+                return true;
+            }
         }
         return false;
     }

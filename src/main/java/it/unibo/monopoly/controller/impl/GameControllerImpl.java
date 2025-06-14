@@ -103,19 +103,21 @@ public final class GameControllerImpl implements GameController {
 
     @Override
     public void endTurn() {
-        if (!this.turnationManager.playerDiesIfTurnPassed()) {
-            if (this.turnationManager.canPassTurn()) {
+        try {
+            if (!this.turnationManager.playerDiesIfTurnPassed()) {
                 this.turnationManager.getNextPlayer();
+
                 if (this.turnationManager.isCurrentPlayerParked()) {
                     this.gameView.displayMessage("you can't throw the dices and move, you are parked");
                 }
+
                 gameView.refreshUIForNewTurn(turnationManager.canThrowDices());
                 refreshPlayerInfo();
             } else {
-                this.gameView.displayMessage("The player has some actions to do before passing the turn");
+                this.gameView.displayOptionMessage("The player will die if he passes the turn");
             }
-        } else {
-            this.gameView.displayOptionMessage("The player will die if he passes the turn");
+        } catch (IllegalArgumentException e) {
+            this.gameView.displayError(e);
         }
     }
 
