@@ -116,7 +116,7 @@ public final class GameControllerImpl implements GameController {
             } else {
                 this.gameView.displayOptionMessage("The player will die if he passes the turn");
             }
-        } catch (IllegalArgumentException e) {
+        } catch (final IllegalArgumentException e) {
             this.gameView.displayError(e);
         }
     }

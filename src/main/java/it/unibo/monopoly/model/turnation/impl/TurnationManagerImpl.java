@@ -184,7 +184,7 @@ public class TurnationManagerImpl implements TurnationManager {
                     return Pair.of(res, tryExitPrison(res));
                 }
 
-                return Pair.of(res,null);
+                return Pair.of(res, null);
             } else {
                 return Pair.of(null, "the player can't throw dices because is parked");
             }
@@ -219,8 +219,7 @@ public class TurnationManagerImpl implements TurnationManager {
         if (this.bankState.allMandatoryTransactionsCompleted()) {
             if (!isCurrentPlayerParked()) {
                 return hasCurrPlayerThrownDices();
-            }
-            else {
+            } else {
                 return true;
             }
         }
@@ -325,7 +324,9 @@ public class TurnationManagerImpl implements TurnationManager {
             return "you escaped the prison";
         } else {
             this.currPlayer.decreaseTurnsInPrison();
-            return "you are still in prison, you have " + currentPlayerTurnsLeftInPrison() + " turns left in prison and the dices weren't kind with you.";
+            return "you are still in prison, you have " 
+                    + currentPlayerTurnsLeftInPrison() + 
+                    " turns left in prison and the dices weren't kind with you.";
         }
     }
 
