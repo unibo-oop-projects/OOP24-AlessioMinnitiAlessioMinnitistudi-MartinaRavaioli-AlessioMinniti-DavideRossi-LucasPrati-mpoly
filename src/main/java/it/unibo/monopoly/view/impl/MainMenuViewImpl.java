@@ -25,6 +25,10 @@ import it.unibo.monopoly.utils.impl.GuiUtils;
 import it.unibo.monopoly.view.api.GamePanelsFactory;
 import it.unibo.monopoly.view.api.MainMenuPanelsFactory;
 import it.unibo.monopoly.view.api.MainMenuView;
+import it.unibo.monopoly.view.api.MenuPanel;
+import it.unibo.monopoly.view.api.SettingsPanel;
+import it.unibo.monopoly.view.api.SetupPanel;
+import it.unibo.monopoly.view.api.SettingsPanel;
 import it.unibo.monopoly.view.impl.gamepanels.SwingPanelsFactory;
 
 public final class MainMenuViewImpl implements MainMenuView{
@@ -108,14 +112,14 @@ public final class MainMenuViewImpl implements MainMenuView{
     @Override
     public void displayMainMenu() {
         mainPanel.removeAll();
-        mainPanel.add(menuPanel);
+        mainPanel.add(menuPanel.getPanel());
         GuiUtils.refresh(mainFrame);
     }
 
     @Override
     public void displaySettingsMenu() {
         mainPanel.removeAll();
-        mainPanel.add(settingsPanel);
+        mainPanel.add(settingsPanel.getPanel());
         GuiUtils.refresh(mainFrame);
     }
 
@@ -123,7 +127,7 @@ public final class MainMenuViewImpl implements MainMenuView{
     public void displaySetupMenu() {
         mainPanel.removeAll();
         setupPanel = fact.setupPanel(controller);
-        mainPanel.add(setupPanel);
+        mainPanel.add(setupPanel.getPanel());
         GuiUtils.refresh(mainFrame);
     }
 
