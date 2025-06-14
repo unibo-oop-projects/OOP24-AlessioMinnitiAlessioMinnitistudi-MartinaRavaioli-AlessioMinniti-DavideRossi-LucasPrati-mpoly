@@ -24,3 +24,6 @@ report/*.aux
 report/*.out
 report/*.log
 report/*.toc
+report/*.fdb_latexmk
+report/*.synctex.gz
+report/*.fls
