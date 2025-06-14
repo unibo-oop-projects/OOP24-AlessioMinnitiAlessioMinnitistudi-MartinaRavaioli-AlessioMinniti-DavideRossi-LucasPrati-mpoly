@@ -22,13 +22,11 @@ import javax.swing.SwingConstants;
 import it.unibo.monopoly.controller.api.MainMenuController;
 import it.unibo.monopoly.model.transactions.api.BankAccountType;
 import it.unibo.monopoly.utils.impl.GuiUtils;
-import it.unibo.monopoly.view.api.GamePanelsFactory;
 import it.unibo.monopoly.view.api.MainMenuPanelsFactory;
 import it.unibo.monopoly.view.api.MainMenuView;
 import it.unibo.monopoly.view.api.MenuPanel;
 import it.unibo.monopoly.view.api.SettingsPanel;
 import it.unibo.monopoly.view.api.SetupPanel;
-import it.unibo.monopoly.view.api.SettingsPanel;
 import it.unibo.monopoly.view.impl.gamepanels.SwingPanelsFactory;
 
 public final class MainMenuViewImpl implements MainMenuView{
