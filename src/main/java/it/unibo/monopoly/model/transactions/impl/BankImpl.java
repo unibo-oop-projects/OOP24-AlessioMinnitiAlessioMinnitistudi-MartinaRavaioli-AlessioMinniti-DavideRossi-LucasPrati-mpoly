@@ -126,7 +126,6 @@ public final class BankImpl implements Bank {
 
         buyer.withdraw(td.getSalePrice());
         td.setOwner(playerId);
-        transactionLedger.markExecution(PropertyActionsEnum.BUY);
     }
 
     @Override
@@ -179,7 +178,6 @@ public final class BankImpl implements Bank {
         final BankAccount seller = findAccount(deed.getOwnerId());
         seller.deposit(deed.getMortgagePrice());
         deed.removeOwner();
-        transactionLedger.markExecution(PropertyActionsEnum.SELL);
     }
 
     @Override
@@ -227,7 +225,6 @@ public final class BankImpl implements Bank {
                             + titleDeedName);
         }
         player.withdraw(td.getHousePrice());
-        transactionLedger.markExecution(PropertyActionsEnum.BUYHOUSE);
     }
 
     @Override
@@ -248,7 +245,6 @@ public final class BankImpl implements Bank {
                     + titleDeedName);
         }
         player.withdraw(td.getHotelPrice());
-        transactionLedger.markExecution(PropertyActionsEnum.BUYHOTEL);
     }
 
     @Override
@@ -262,21 +258,19 @@ public final class BankImpl implements Bank {
         final Set<PropertyAction> returnSet = new HashSet<>();
         final TitleDeed selected = findTitleDeed(titleDeedName);
         transactionLedger.removeIfPresent(PropertyActionsEnum.PAYRENT);
-        transactionLedger.removeIfPresent(PropertyActionsEnum.BUY);
-        transactionLedger.removeIfPresent(PropertyActionsEnum.BUYHOUSE);
-        transactionLedger.removeIfPresent(PropertyActionsEnum.BUYHOTEL);
 
         if (!selected.isOwned()) {
             returnSet.add(propertyActionFactory.createBuy(currentPlayerId, titleDeedName));
-            transactionLedger.registerTransaction(PropertyActionsEnum.BUY, 0, 1);
         } else if (selected.getOwnerId() == currentPlayerId) {
             returnSet.add(propertyActionFactory.createSell(titleDeedName));
-            returnSet.add(propertyActionFactory.createBuyHouse(titleDeedName));
-            transactionLedger.registerTransaction(PropertyActionsEnum.BUYHOUSE, 0);
-            returnSet.add(propertyActionFactory.createBuyHotel(titleDeedName));
-            transactionLedger.registerTransaction(PropertyActionsEnum.BUYHOTEL, 0);
-            returnSet.add(propertyActionFactory.createSellHouse(titleDeedName));
-            returnSet.add(propertyActionFactory.createSellHotel(titleDeedName));
+            if (titleDeedsByGroup(selected.getGroup())
+                .stream()
+                .allMatch(d -> d.isOwned() && d.getOwnerId() == currentPlayerId)) {
+                returnSet.add(propertyActionFactory.createBuyHouse(titleDeedName));
+                returnSet.add(propertyActionFactory.createBuyHotel(titleDeedName));
+                returnSet.add(propertyActionFactory.createSellHouse(titleDeedName));
+                returnSet.add(propertyActionFactory.createSellHotel(titleDeedName));
+            }
         } else {
             returnSet.add(propertyActionFactory.createPayRent(titleDeedName, currentPlayerId, diceThrow));
             transactionLedger.registerTransaction(PropertyActionsEnum.PAYRENT, 1, 1);
@@ -299,7 +293,6 @@ public final class BankImpl implements Bank {
         }
         final BankAccount seller = findAccount(deed.getOwnerId());
         seller.deposit(deed.getHousePrice());
-        transactionLedger.markExecution(PropertyActionsEnum.SELLHOUSE);
     }
 
     @Override
@@ -311,7 +304,6 @@ public final class BankImpl implements Bank {
         }
         final BankAccount seller = findAccount(deed.getOwnerId());
         seller.deposit(deed.getHotelPrice());
-        transactionLedger.markExecution(PropertyActionsEnum.SELLHOTEL);
     }
 
     private final class BankStateAdapter implements BankState {
@@ -343,12 +335,6 @@ public final class BankImpl implements Bank {
         @Override
         public void resetTransactionData() {
             transactionLedger.reset();
-            /*In this version of the game, the player always has permission
-            for all sell operations, in any given moment of its turn, on any title deed
-            */
-            transactionLedger.registerTransaction(PropertyActionsEnum.SELL, 0);
-            transactionLedger.registerTransaction(PropertyActionsEnum.SELLHOUSE, 0);
-            transactionLedger.registerTransaction(PropertyActionsEnum.SELLHOTEL, 0);
         }
 
         @Override

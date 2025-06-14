@@ -130,14 +130,19 @@ class BankTest {
         final Set<PropertyAction> buyAction = bank.getApplicableActionsForTitleDeed(ID_1, TITLE_DEED_NAME1, DICE_THROW);
         assertTrue(buyAction.stream().allMatch(a -> a.getType() == PropertyActionsEnum.BUY));
         bank.buyTitleDeed(TITLE_DEED_NAME1, ID_1);
-        final Set<PropertyAction> sellOrImprove = bank.getApplicableActionsForTitleDeed(ID_1, TITLE_DEED_NAME1, DICE_THROW);
-        assertTrue(sellOrImprove.stream().anyMatch(a -> a.getType() == PropertyActionsEnum.SELL));
-        assertTrue(sellOrImprove.stream().anyMatch(a -> a.getType() == PropertyActionsEnum.BUYHOTEL));
-        assertTrue(sellOrImprove.stream().anyMatch(a -> a.getType() == PropertyActionsEnum.BUYHOUSE));
-        assertTrue(sellOrImprove.stream().anyMatch(a -> a.getType() == PropertyActionsEnum.SELLHOTEL));
-        assertTrue(sellOrImprove.stream().anyMatch(a -> a.getType() == PropertyActionsEnum.SELLHOUSE));
+        final Set<PropertyAction> sell = bank.getApplicableActionsForTitleDeed(ID_1, TITLE_DEED_NAME1, DICE_THROW);
+        assertTrue(sell.stream().allMatch(a -> a.getType() == PropertyActionsEnum.SELL));
+        bank.buyTitleDeed(TITLE_DEED_NAME2, ID_1);
+        bank.buyTitleDeed(TITLE_DEED_NAME3, ID_1);
+        final Set<PropertyAction> housesActions = bank.getApplicableActionsForTitleDeed(ID_1, TITLE_DEED_NAME1, DICE_THROW);
+        assertTrue(housesActions.stream().anyMatch(a -> a.getType() == PropertyActionsEnum.BUYHOTEL));
+        assertTrue(housesActions.stream().anyMatch(a -> a.getType() == PropertyActionsEnum.BUYHOUSE));
+        assertTrue(housesActions.stream().anyMatch(a -> a.getType() == PropertyActionsEnum.SELLHOTEL));
+        assertTrue(housesActions.stream().anyMatch(a -> a.getType() == PropertyActionsEnum.SELLHOUSE));
+        assertTrue(housesActions.stream().anyMatch(a -> a.getType() == PropertyActionsEnum.SELL));
+        bank.getBankStateObject().resetTransactionData();
         final Set<PropertyAction> payRent = bank.getApplicableActionsForTitleDeed(ID_2, TITLE_DEED_NAME1, DICE_THROW);
-        assertTrue(payRent.stream().anyMatch(a -> a.getType() == PropertyActionsEnum.PAYRENT));
+        assertTrue(payRent.stream().allMatch(a -> a.getType() == PropertyActionsEnum.PAYRENT));
     }
 
     @Test 
