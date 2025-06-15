@@ -1,13 +1,14 @@
 package it.unibo.monopoly.view.impl.gamepanels;
 
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.GridLayout;
+
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.GridLayout;
 
 import it.unibo.monopoly.controller.api.MainMenuController;
 import it.unibo.monopoly.view.api.MenuPanel;
@@ -15,7 +16,7 @@ import it.unibo.monopoly.view.api.MenuPanel;
 final class SwingMenuPanel extends SwingAbstractJPanel implements MenuPanel {
 
     private static final long serialVersionUID = 1L;
-    
+
     // Main menu 
     private static final String TITLE_TEXT_MAIN = "Monopoly";
     private static final String PLAYERS_TEXT = "Players:";
@@ -40,7 +41,7 @@ final class SwingMenuPanel extends SwingAbstractJPanel implements MenuPanel {
     private final JButton increaseButton;
 
 
-    public SwingMenuPanel(MainMenuController controller) {
+    public SwingMenuPanel(final MainMenuController controller) {
         this.setLayout(new BorderLayout());
         final JLabel title = new JLabel(TITLE_TEXT_MAIN, SwingConstants.CENTER);
         title.setForeground(Color.RED);
@@ -87,11 +88,10 @@ final class SwingMenuPanel extends SwingAbstractJPanel implements MenuPanel {
     public void renderDefaultUI() {
         increaseButton.setEnabled(true);
         decreaseButton.setEnabled(false);
-        
     }
 
     @Override
-    public void refreshNumPlayers(int num, boolean reachMinPlayers, boolean reachMaxPlayers) {
+    public void refreshNumPlayers(final int num, final boolean reachMinPlayers, final boolean reachMaxPlayers) {
         numPlayersLabel.setText(String.valueOf(num));
         decreaseButton.setEnabled(!reachMinPlayers);
         increaseButton.setEnabled(!reachMaxPlayers);
