@@ -15,21 +15,21 @@ public interface MainMenuPanelsFactory {
 
     /**
      * Returns a panel that shows the main menu.
-     * @param controller the controller to attach to the action listener of this panel
+     * @param controller the {@link MainMenuController} that is currently handling the ongoing main menu
      * @return an object that implements the {@link MenuPanel} interface
      */
     MenuPanel menuPanel(MainMenuController controller);
 
     /**
      * Returns a panel that shows the setup menu.
-     * @param controller the controller to attach to the action listener of this panel
+     * @param controller the {@link MainMenuController} that is currently handling the ongoing main menu
      * @return an object that implements the {@link SetupPanel} interface
      */
     SetupPanel setupPanel(MainMenuController controller);
 
     /**
      * Returns a panel that shows the setup menu.
-     * @param controller the controller to attach to the action listener of this panel
+     * @param controller the {@link MainMenuController} that is currently handling the ongoing main menu
      * @return an object that implements the {@link SettingsPanel} interface
      */
     SettingsPanel settingsPanel(MainMenuController controller);
