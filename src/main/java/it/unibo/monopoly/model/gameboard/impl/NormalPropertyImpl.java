@@ -37,14 +37,12 @@ public class NormalPropertyImpl extends TileImpl implements Property {
 
     @Override
     public final int getNHouses() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getNHouses'");
+        return 0;
     }
 
     @Override
     public final boolean hasHotel() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'hasHotel'");
+        return false;
     }
 
     @Override

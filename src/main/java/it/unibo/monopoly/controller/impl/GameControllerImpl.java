@@ -146,10 +146,9 @@ public final class GameControllerImpl implements GameController {
             if (currentlySittingTile instanceof Property) {
                 this.turnActions.clear();
                 this.turnActions.putAll(Maps.uniqueIndex(this.bank.getApplicableActionsForTitleDeed(currentPlayerId, 
-                                        currentlySittingTile.getName(),
-                                        result.getLeft().stream().mapToInt(d -> d).sum())
-                                        .stream()
-                                        .collect(Collectors.toMap(PropertyAction::getName, d -> d));
+                                        currentlySittingTile.getName(), 
+                                        result.getLeft().stream().mapToInt(d -> d).sum()),
+                                        PropertyAction::getType));
                 this.gameView.displayPlayerActions(turnActions.keySet());
             } else if (currentlySittingTile instanceof Special) {
                 final Special specialTile = (Special) currentlySittingTile;
@@ -225,7 +224,7 @@ public final class GameControllerImpl implements GameController {
             final Property currentlySittingProperty = (Property) this.board.getTileForPawn(
                                                         this.turnationManager.getIdCurrPlayer());
             switch (actionName) {
-                case BUY -> gameView.callBuyProperty(currentlySittingProperty.getName(), currentlySittingProperty.getGroup().getColor());
+                case BUY -> gameView.callBuyProperty(currentlySittingProperty.getName(), this.turnationManager.getCurrPlayer().getColor());
                 case SELL -> gameView.callClearPanel(currentlySittingProperty.getName());
                 case BUYHOUSE -> gameView.callBuyHouse(currentlySittingProperty);
                 case BUYHOTEL -> gameView.callBuyHotel(currentlySittingProperty);

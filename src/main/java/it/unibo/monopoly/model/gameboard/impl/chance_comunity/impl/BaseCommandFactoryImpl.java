@@ -278,8 +278,8 @@ public final class BaseCommandFactoryImpl implements BaseCommandFactory {
                 if (t instanceof Property) {
                     bank.getBankStateObject().resetTransactionData();
                     final Set<PropertyAction> actions = bank.getApplicableActionsForTitleDeed(player.getID(), tile, 10);
-                    final Optional<PropertyAction> buy = actions.stream().filter(p -> "buy".equals(p.getName())).findAny();
-                    final Optional<PropertyAction> pay = actions.stream().filter(p -> "payRent".equals(p.getName())).findAny();
+                    final Optional<PropertyAction> buy = actions.stream().filter(p -> "buy".equals(p.getType())).findAny();
+                    final Optional<PropertyAction> pay = actions.stream().filter(p -> "payRent".equals(p.getType())).findAny();
                     if (buy.isPresent()) {
                         buy.get().executePropertyAction(board, bank);
                     } else if (pay.isPresent()) {

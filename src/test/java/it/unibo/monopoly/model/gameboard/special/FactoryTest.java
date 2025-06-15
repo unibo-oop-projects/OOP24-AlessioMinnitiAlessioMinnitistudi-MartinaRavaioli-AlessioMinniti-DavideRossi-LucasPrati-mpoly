@@ -104,17 +104,10 @@ class FactoryTest {
         bank = new BankImpl(accounts, deeds);
         turnM = new TurnationManagerImpl(List.of(p1), new DiceImpl(dices));
         final List<Tile> tiles = List.of(
-<<<<<<< HEAD
         new NormalPropertyImpl("a", pos0, Group.RED),
         new NormalPropertyImpl("b", pos1, Group.BLUE),
         new NormalPropertyImpl("c", pos2, Group.YELLOW),
-        factory.parking(pos5),
-=======
-        new PropertyImpl("a", pos0, Group.RED),
-        new PropertyImpl("b", pos1, Group.BLUE),
-        new PropertyImpl("c", pos2, Group.YELLOW),
         factory.parking(pos5, turnM),
->>>>>>> development
         factory.prison(pos4),
         factory.start(bank),
         factory.taxes(pos6, bank)
