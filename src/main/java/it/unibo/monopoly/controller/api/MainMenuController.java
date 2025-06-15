@@ -81,8 +81,13 @@ public interface MainMenuController {
     Configuration getConfiguration();
 
     /**
-     * start the UI.
+     * Start the UI.
      */
     void start();
+
+    /**
+     * Close the UI.
+     */
+    void disposeMainMenu();
 
 }

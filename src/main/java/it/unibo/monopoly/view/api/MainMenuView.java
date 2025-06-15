@@ -1,5 +1,6 @@
 package it.unibo.monopoly.view.api;
 
+import it.unibo.monopoly.model.transactions.api.BankAccountType;
 import it.unibo.monopoly.view.impl.MainMenuViewImpl;
 
 /**
@@ -35,13 +36,22 @@ public interface MainMenuView {
     void displayErrorAndExit(String title, String message);
 
     /**
-     * Ask the {@code view} to update the current game mode set.
+     * Ask the {@code view} to display the current game mode set.
+     * @param type the {@link BankAccountType} selected
      */
-    void refreshSettingsData();
+    void refreshSettingsData(BankAccountType type);
 
     /**
      * Ask the {@code view} to update the current number of players set.
+     * @param num the number of player to display
+     * @param reachMinPlayers whether the number of players is equal to the minimum allowed
+     * @param reachMaxPlayers whether the number of players is equal to the maximum allowed
      */
-    void refreshNumPlayers();
+    void refreshNumPlayers(final int num, final boolean reachMinPlayers, final boolean reachMaxPlayers);
+
+    /**
+     * Close the main menu, the game begin.
+     */
+    void disposeMainMenu();
 
 }

@@ -91,7 +91,128 @@ public final class MainMenuControllerImpl implements MainMenuController {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int getNumPlayers() {
+        return numPlayers;
+    }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public BankAccountType getBankAccountType() {
+        return bankAccountType;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setBankAccountType(final BankAccountType bankAccountType) {
+        this.bankAccountType = bankAccountType;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void onClickIncrease() {
+        increaseNumPlayer();
+        view.refreshNumPlayers(numPlayers, alreadyMinPlayers(), alreadyMaxPlayers());
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void onClickDecrease() {
+        decreaseNumPlayer();
+        view.refreshNumPlayers(numPlayers, alreadyMinPlayers(), alreadyMaxPlayers());
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void onClickRules() {
+        view.displayRules(getRules());
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void onClickSettings() {
+        view.displaySettingsMenu();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void onClickContinue() {
+        view.displaySetupMenu();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void onClickClassicMode() {
+        setBankAccountType(BankAccountType.CLASSIC);
+        view.refreshSettingsData(getBankAccountType());
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void onClickInfinityMode() {
+        setBankAccountType(BankAccountType.INFINITY);
+        view.refreshSettingsData(getBankAccountType());
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void onClickDone() {
+        view.displayMainMenu();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Configuration getConfiguration() {
+        return config;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void start() {
+        view = new MainMenuViewImpl(this);
+    }
+
+    @Override
+    public void disposeMainMenu() {
+        view.disposeMainMenu();
+    }
+
+
+
+    /**
+     * Initialize all the game.
+     * @param playersSetup the players'data, create players according to this
+     * @throws IOException if the loading from {@code JSON} failed
+     * @throws UncheckedIOException if the parsing from {@code JSON} failed
+     * @throws NullPointerException if {@code id}, {@code name} or {@code color} are {@code null}
+     */
     private void initGame(final Map<Color, String> playersSetup) throws IOException {
         final List<Player> players = new ArrayList<>();
         final List<Pawn> pawns = new ArrayList<>();
@@ -148,135 +269,14 @@ public final class MainMenuControllerImpl implements MainMenuController {
         controllerGameManager.start();
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public int getNumPlayers() {
-        return numPlayers;
-    }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public boolean alreadyMinPlayers() {
+    private boolean alreadyMinPlayers() {
         return numPlayers == minPlayers;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public boolean alreadyMaxPlayers() {
+
+    private boolean alreadyMaxPlayers() {
         return numPlayers == maxPlayers;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public BankAccountType getBankAccountType() {
-        return bankAccountType;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void setBankAccountType(final BankAccountType bankAccountType) {
-        this.bankAccountType = bankAccountType;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void onClickIncrease() {
-        increaseNumPlayer();
-        view.refreshNumPlayers();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void onClickDecrease() {
-        decreaseNumPlayer();
-        view.refreshNumPlayers();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void onClickRules() {
-        view.displayRules(getRules());
-    }
-
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void onClickSettings() {
-        view.displaySettingsMenu();
-    }
-
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void onClickContinue() {
-        view.displaySetupMenu();
-    }
-
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void onClickClassicMode() {
-        setBankAccountType(BankAccountType.CLASSIC);
-        view.refreshSettingsData();
-    }
-
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void onClickInfinityMode() {
-        setBankAccountType(BankAccountType.INFINITY);
-        view.refreshSettingsData();
-    }
-
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void onClickDone() {
-        view.displayMainMenu();
-    }
-
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Configuration getConfiguration() {
-        return config;
-    }
-
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void start() {
-        this.view = new MainMenuViewImpl(this);
     }
 
 
@@ -302,7 +302,6 @@ public final class MainMenuControllerImpl implements MainMenuController {
         final UseFileTxt importRules = new UseFileTxtImpl();
         return importRules.loadTextResource(config.getRulesPath());
     }
-
 
     /**
      * Use {@link BankAccountFactory} to create a new {@link BankAccount} istances according to the {@code bankAccountType}.
