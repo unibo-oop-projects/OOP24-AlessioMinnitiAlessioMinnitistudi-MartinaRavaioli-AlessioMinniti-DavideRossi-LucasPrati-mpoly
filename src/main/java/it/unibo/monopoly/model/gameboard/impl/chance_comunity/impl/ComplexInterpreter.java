@@ -5,7 +5,6 @@ import java.util.List;
 
 import it.unibo.monopoly.model.gameboard.api.Board;
 import it.unibo.monopoly.model.gameboard.api.chancesAndCommunityChest.api.BaseCommand;
-import it.unibo.monopoly.model.gameboard.api.chancesAndCommunityChest.api.BaseCommandFactory;
 import it.unibo.monopoly.model.gameboard.api.chancesAndCommunityChest.api.Command;
 import it.unibo.monopoly.model.gameboard.api.chancesAndCommunityChest.api.Interpreter;
 import it.unibo.monopoly.model.transactions.api.Bank;
@@ -15,8 +14,6 @@ import it.unibo.monopoly.model.turnation.api.TurnationManager;
  * implementation of interpreter for complex command that are composed of multiple base commands.
  */
 public final class ComplexInterpreter implements Interpreter {
-
-    private final BaseCommandFactory factory = new BaseCommandFactoryImpl();
 
     private final BaseInterpreter inter;
 
@@ -28,7 +25,7 @@ public final class ComplexInterpreter implements Interpreter {
      * @param turnM to execute some commands 
      */
     public ComplexInterpreter(final Board board, final Bank bank, final TurnationManager turnM) {
-        inter = new BaseInterpreter(factory.allCommand(bank, board, turnM));
+        inter = new BaseInterpreter(board, bank, turnM);
     }
 
     @Override

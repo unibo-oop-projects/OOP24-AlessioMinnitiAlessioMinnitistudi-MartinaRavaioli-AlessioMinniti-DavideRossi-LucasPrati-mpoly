@@ -19,7 +19,6 @@ import it.unibo.monopoly.model.gameboard.api.PawnFactory;
 import it.unibo.monopoly.model.gameboard.api.Tile;
 import it.unibo.monopoly.model.gameboard.api.chancesAndCommunityChest.api.ArgsInterpreter;
 import it.unibo.monopoly.model.gameboard.api.chancesAndCommunityChest.api.BaseCommand;
-import it.unibo.monopoly.model.gameboard.api.chancesAndCommunityChest.api.BaseCommandFactory;
 import it.unibo.monopoly.model.gameboard.api.chancesAndCommunityChest.api.BaseInterpreterInt;
 import it.unibo.monopoly.model.gameboard.api.chancesAndCommunityChest.api.Command;
 import it.unibo.monopoly.model.gameboard.api.chancesAndCommunityChest.api.Interpreter;
@@ -29,7 +28,6 @@ import it.unibo.monopoly.model.gameboard.impl.CardDTO;
 import it.unibo.monopoly.model.gameboard.impl.CardFactoryImpl;
 import it.unibo.monopoly.model.gameboard.impl.PawnFactoryImpl;
 import it.unibo.monopoly.model.gameboard.impl.chance_comunity.impl.ArgsInterpreterImpl;
-import it.unibo.monopoly.model.gameboard.impl.chance_comunity.impl.BaseCommandFactoryImpl;
 import it.unibo.monopoly.model.gameboard.impl.chance_comunity.impl.BaseInterpreter;
 import it.unibo.monopoly.model.gameboard.impl.chance_comunity.impl.ComplexInterpreter;
 import it.unibo.monopoly.model.gameboard.impl.chance_comunity.impl.ParserOnColon;
@@ -68,8 +66,6 @@ class BaseAndComplexInterpreterTest {
     private BaseInterpreterInt baseInt;
     private Interpreter complexInt;
     private ArgsInterpreter argsInt;
-
-    private final BaseCommandFactory bcf = new BaseCommandFactoryImpl();
 
     private TurnationManager turnM;
     private Board board;
@@ -136,7 +132,7 @@ class BaseAndComplexInterpreterTest {
         titleDeeds.stream().forEach(bank::addTitleDeed);
 
         complexInt = new ComplexInterpreter(board, bank, turnM);
-        baseInt = new BaseInterpreter(bcf.allCommand(bank, board, turnM));
+        baseInt = new BaseInterpreter(board, bank, turnM);
         argsInt = new ArgsInterpreterImpl();
     }
 
