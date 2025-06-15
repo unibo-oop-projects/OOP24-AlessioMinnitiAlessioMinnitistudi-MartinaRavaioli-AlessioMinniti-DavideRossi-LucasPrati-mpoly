@@ -13,6 +13,7 @@ import javax.swing.SwingConstants;
 import it.unibo.monopoly.controller.api.MainMenuController;
 import it.unibo.monopoly.view.api.MenuPanel;
 
+
 final class SwingMenuPanel extends SwingAbstractJPanel implements MenuPanel {
 
     private static final long serialVersionUID = 1L;
