@@ -63,6 +63,14 @@ public final class GameboardViewImpl extends JPanel implements GameboardView {
         for (final Map.Entry<JPanel, Position> entry : this.tilePositions.entrySet()) {
             if (entry.getValue().equals(prop.getPosition())) {
                 final JPanel panel = entry.getKey();
+                for (final Component c : panel.getComponents()) {
+                    if (HOUSE.equals(c.getName())) {
+                        panel.remove(c);
+                        panel.revalidate();
+                        panel.repaint();
+                    }
+                }
+                
                 final JLabel label = new JLabel("HOUSES: " + numHouses);
                 label.setName(HOUSE);
                 label.setForeground(prop.getGroup().getColor());
@@ -249,13 +257,11 @@ public final class GameboardViewImpl extends JPanel implements GameboardView {
                         p.remove(c);
                         p.revalidate();
                         p.repaint();
-                        break;
                     }
                     if ((HOUSE.equals(c.getName()) || HOTEL.equals(c.getName())) && c instanceof JLabel) {
                         p.remove(c);
                         p.revalidate();
                         p.repaint();
-                        break;
                     }
                 }
             }

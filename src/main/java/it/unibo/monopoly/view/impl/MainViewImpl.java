@@ -210,4 +210,24 @@ public final class MainViewImpl implements MainGameView {
             this.controller.endTurnPlayerDies();
         }
     }
+
+    @Override
+    public void callBuyHouse(Property prop) {
+        this.gameBoardPanel.addHouse(prop, prop.getNHouses());
+    }
+
+    @Override
+    public void callBuyHotel(Property prop) {
+        this.gameBoardPanel.addHotel(prop);
+    }
+
+    @Override
+    public void callSellHouse(Property prop) {
+        this.gameBoardPanel.removeHouse(prop, prop.getNHouses());
+    }
+
+    @Override
+    public void callSellHotel(Property prop) {
+       this.gameBoardPanel.removeHotel(prop);
+    }
 }

@@ -120,4 +120,24 @@ public interface MainGameView {
      * @param message The message to display
      */
     void displayOptionMessageEndTurn(String message);
+    /**
+     * call the gameboard view method to buy an house for the property.
+     * @param prop
+     */
+    void callBuyHouse(Property prop);
+    /**
+     * call the gameboard view method to buy the hotel for the property.
+     * @param prop
+     */
+    void callBuyHotel(Property prop);
+    /**
+     * call the gameboard view method to sell an house for the property.
+     * @param prop
+     */
+    void callSellHouse(Property prop);
+    /**
+     * call the gameboard view method to sell the hotel for the property.
+     * @param prop
+     */
+    void callSellHotel(Property prop);
 }

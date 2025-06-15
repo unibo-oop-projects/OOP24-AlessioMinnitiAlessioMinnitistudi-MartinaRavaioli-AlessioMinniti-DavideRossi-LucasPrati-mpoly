@@ -20,13 +20,13 @@ import it.unibo.monopoly.model.gameboard.api.Special;
 import it.unibo.monopoly.model.gameboard.api.Tile;
 import it.unibo.monopoly.model.transactions.api.Bank;
 import it.unibo.monopoly.model.transactions.api.PropertyAction;
+import it.unibo.monopoly.model.transactions.api.PropertyActionsEnum;
 import it.unibo.monopoly.model.turnation.api.Player;
 import it.unibo.monopoly.model.turnation.api.TurnationManager;
 import it.unibo.monopoly.utils.api.UseFileTxt;
 import it.unibo.monopoly.utils.impl.Configuration;
 import it.unibo.monopoly.utils.impl.UseFileTxtImpl;
 import it.unibo.monopoly.view.api.MainGameView;
-import it.unibo.monopoly.model.transactions.api.PropertyActionsEnum;
 
 
 /**
@@ -209,10 +209,15 @@ public final class GameControllerImpl implements GameController {
             gameView.displayMessage(action.getDescription() + " eseguita con successo");
             final Property currentlySittingProperty = (Property) this.board.getTileForPawn(
                                                         this.turnationManager.getIdCurrPlayer());
-            if (actionName == PropertyActionsEnum.BUY) {
-                gameView.callBuyProperty(currentlySittingProperty);
-            } else if (actionName == PropertyActionsEnum.SELL) {
-                gameView.callClearPanel(currentlySittingProperty.getName());
+            switch (actionName) {
+                case BUY -> gameView.callBuyProperty(currentlySittingProperty);
+                case SELL -> gameView.callClearPanel(currentlySittingProperty.getName());
+                case BUYHOUSE -> gameView.callBuyHouse(currentlySittingProperty);
+                case BUYHOTEL -> gameView.callBuyHotel(currentlySittingProperty);
+                case SELLHOUSE -> gameView.callSellHouse(currentlySittingProperty);
+                case SELLHOTEL -> gameView.callSellHotel(currentlySittingProperty);
+                default -> {
+                }
             }
             refreshPlayerInfo();
             refreshCurrentTileInfo();
