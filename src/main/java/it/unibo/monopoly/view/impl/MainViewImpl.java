@@ -215,24 +215,25 @@ public final class MainViewImpl implements MainGameView {
     }
 
     @Override
-    public void callBuyHouse(Property prop) {
+    public void callBuyHouse(final Property prop) {
         this.gameBoardPanel.addHouse(prop.getName(), controller.getCurrPlayer().getColor(), prop.getNHouses());
     }
 
     @Override
-    public void callBuyHotel(Property prop) {
+    public void callBuyHotel(final Property prop) {
         this.gameBoardPanel.addHotel(prop.getName(), controller.getCurrPlayer().getColor());
     }
 
     @Override
-    public void callSellHouse(Property prop) {
+    public void callSellHouse(final Property prop) {
         this.gameBoardPanel.removeHouse(prop, prop.getNHouses());
     }
 
     @Override
-    public void callSellHotel(Property prop) {
+    public void callSellHotel(final Property prop) {
        this.gameBoardPanel.removeHotel(prop);
     }
+    @Override
     public void callDeletePlayer(final Color color, final int id) {
         this.gameBoardPanel.deletePlayer(color, id);
     }

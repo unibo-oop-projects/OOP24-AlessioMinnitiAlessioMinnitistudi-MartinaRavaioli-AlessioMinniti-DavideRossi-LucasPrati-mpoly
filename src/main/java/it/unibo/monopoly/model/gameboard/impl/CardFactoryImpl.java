@@ -128,6 +128,14 @@ public class CardFactoryImpl implements CardFactory {
                 "Missing 'group' for PROPERTY card at position: " + position.getPos()));
 
         final Property property = new NormalPropertyImpl(name, position, group);
+        
+        if (group == Group.SOCIETY || group == Group.STATION) {
+            tiles.add(property);
+        } else {
+            BuildablePropertyImpl buildableProperty = new BuildablePropertyImpl(property);
+            tiles.add(buildableProperty);
+        }
+        
         final TitleDeed deed;
 
         if (isSpecialProperty(group)) {
@@ -151,7 +159,7 @@ public class CardFactoryImpl implements CardFactory {
                 List.of(rentOptionFactory.allDeedsOfGroupWithSameOwner(baseRent))
             );
             
-            final var buildableProperty = new BuildablePropertyImpl(property);
+            final BuildablePropertyImpl buildableProperty = new BuildablePropertyImpl(property);
             final TitleDeed deedWithHouses = new TitleDeedWithHouses(
                 deed,
                 List.of(),
@@ -172,7 +180,6 @@ public class CardFactoryImpl implements CardFactory {
             // );
 
         }
-        tiles.add(property);
     }
 
 

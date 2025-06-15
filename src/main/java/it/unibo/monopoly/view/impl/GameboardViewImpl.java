@@ -69,7 +69,7 @@ public final class GameboardViewImpl extends JPanel implements GameboardView {
                         panel.repaint();
                     }
                 }
-                
+
                 final JLabel label = new JLabel("HOUSES: " + numHouses);
                 label.setName(HOUSE);
                 label.setForeground(color);
@@ -310,6 +310,7 @@ public final class GameboardViewImpl extends JPanel implements GameboardView {
             }
         }
     }
+    @Override
     public void deletePlayer(final Color color, final int id) {
         for (final Map.Entry<JPanel, Position> entry : this.tilePositions.entrySet()) {
             final JPanel p = entry.getKey();

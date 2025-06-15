@@ -325,8 +325,8 @@ public class TurnationManagerImpl implements TurnationManager {
         } else {
             this.currPlayer.decreaseTurnsInPrison();
             return "you are still in prison, you have " 
-                    + currentPlayerTurnsLeftInPrison() + 
-                    " turns left in prison and the dices weren't kind with you.";
+                    + currentPlayerTurnsLeftInPrison() 
+                    + " turns left in prison and the dices weren't kind with you.";
         }
     }
 

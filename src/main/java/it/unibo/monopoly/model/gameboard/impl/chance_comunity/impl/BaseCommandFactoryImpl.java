@@ -14,6 +14,7 @@ import it.unibo.monopoly.model.gameboard.api.chancesAndCommunityChest.api.BaseCo
 import it.unibo.monopoly.model.gameboard.api.chancesAndCommunityChest.api.BaseCommandFactory;
 import it.unibo.monopoly.model.transactions.api.Bank;
 import it.unibo.monopoly.model.transactions.api.PropertyAction;
+import it.unibo.monopoly.model.transactions.api.PropertyActionsEnum;
 import it.unibo.monopoly.model.turnation.api.Player;
 import it.unibo.monopoly.model.turnation.api.TurnationManager;
 
@@ -278,8 +279,8 @@ public final class BaseCommandFactoryImpl implements BaseCommandFactory {
                 if (t instanceof Property) {
                     bank.getBankStateObject().resetTransactionData();
                     final Set<PropertyAction> actions = bank.getApplicableActionsForTitleDeed(player.getID(), tile, 10);
-                    final Optional<PropertyAction> buy = actions.stream().filter(p -> "buy".equals(p.getType())).findAny();
-                    final Optional<PropertyAction> pay = actions.stream().filter(p -> "payRent".equals(p.getType())).findAny();
+                    final Optional<PropertyAction> buy = actions.stream().filter(p -> PropertyActionsEnum.BUY.equals(p.getType())).findAny();
+                    final Optional<PropertyAction> pay = actions.stream().filter(p -> PropertyActionsEnum.PAYRENT.equals(p.getType())).findAny();
                     if (buy.isPresent()) {
                         buy.get().executePropertyAction(board, bank);
                     } else if (pay.isPresent()) {

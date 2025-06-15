@@ -224,7 +224,8 @@ public final class GameControllerImpl implements GameController {
             final Property currentlySittingProperty = (Property) this.board.getTileForPawn(
                                                         this.turnationManager.getIdCurrPlayer());
             switch (actionName) {
-                case BUY -> gameView.callBuyProperty(currentlySittingProperty.getName(), this.turnationManager.getCurrPlayer().getColor());
+                case BUY -> gameView.callBuyProperty(currentlySittingProperty.getName(), 
+                                                    this.turnationManager.getCurrPlayer().getColor());
                 case SELL -> gameView.callClearPanel(currentlySittingProperty.getName());
                 case BUYHOUSE -> gameView.callBuyHouse(currentlySittingProperty);
                 case BUYHOTEL -> gameView.callBuyHotel(currentlySittingProperty);
