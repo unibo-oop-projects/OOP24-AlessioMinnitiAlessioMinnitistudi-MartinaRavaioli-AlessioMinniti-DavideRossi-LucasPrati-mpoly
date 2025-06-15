@@ -121,7 +121,7 @@ public interface MainGameView {
      * if the player chooses 'no' then he won't pass the turn so he can sell something to not die. 
      * @param message The message to display
      */
-    void displayOptionMessageEndTurn(String message);
+    void displayOptionMessage(String message);
     /**
      * call the delete player method in gameboard view.
      * @param color color of the player

@@ -31,8 +31,9 @@ public interface Board {
      * move the pawn.
      * @param id id of the pawn who has to move 
      * @param value value
+     * @return the difference between the old and the new position
     */
-    void movePawn(int id, Collection<Integer> value);
+    int movePawn(int id, Collection<Integer> value);
 
     /**
      * get the pawn with the given id.

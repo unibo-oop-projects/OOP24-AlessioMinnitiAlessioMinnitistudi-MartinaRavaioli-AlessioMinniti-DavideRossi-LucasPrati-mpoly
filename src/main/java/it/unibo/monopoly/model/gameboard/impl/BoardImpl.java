@@ -101,7 +101,7 @@ public class BoardImpl implements Board {
     }
 
     @Override
-    public final void movePawn(final int id, final Collection<Integer> value) {
+    public final int movePawn(final int id, final Collection<Integer> value) {
         Pawn pawn = null;
         for (final Pawn p : this.pawns) {
             if (((PawnImpl) p).getID().equals(id)) {
@@ -113,6 +113,7 @@ public class BoardImpl implements Board {
 
         final int steps = value.stream().mapToInt(Integer::intValue).sum();
         pawn.move(steps);
+        return pawn.getPosition().getPos() - pawn.getPreviousPosition().getPos();
     }
 
     @Override
