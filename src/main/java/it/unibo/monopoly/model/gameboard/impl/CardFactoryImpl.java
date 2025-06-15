@@ -131,7 +131,7 @@ public class CardFactoryImpl implements CardFactory {
         
         if (group == Group.SOCIETY || group == Group.STATION) {
             tiles.add(property);
-        } else {
+        } else if (!isSpecialProperty(group)) {
             BuildablePropertyImpl buildableProperty = new BuildablePropertyImpl(property);
             tiles.add(buildableProperty);
         }
