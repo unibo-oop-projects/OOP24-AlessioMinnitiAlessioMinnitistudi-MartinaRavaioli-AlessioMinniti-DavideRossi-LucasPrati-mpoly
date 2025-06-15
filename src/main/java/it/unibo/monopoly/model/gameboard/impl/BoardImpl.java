@@ -5,12 +5,16 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 import it.unibo.monopoly.model.gameboard.api.Board;
 import it.unibo.monopoly.model.gameboard.api.Pawn;
 import it.unibo.monopoly.model.gameboard.api.Property;
 import it.unibo.monopoly.model.gameboard.api.Special;
 import it.unibo.monopoly.model.gameboard.api.Tile;
+import it.unibo.monopoly.model.gameboard.api.chancesAndCommunityChest.api.ChancheAndCommunityChestDeck;
+import it.unibo.monopoly.model.gameboard.impl.chance_comunity.impl.ChanceAndCommunityChestCard;
+import it.unibo.monopoly.model.gameboard.impl.chance_comunity.impl.ChancheAndCommunityChestDeckImpl;
 import it.unibo.monopoly.model.turnation.api.Position;
 import it.unibo.monopoly.model.turnation.impl.PositionImpl;
 
@@ -20,12 +24,17 @@ import it.unibo.monopoly.model.turnation.impl.PositionImpl;
 public class BoardImpl implements Board {
     private final List<Tile> tiles; /**list of tiles. */
     private final List<Pawn> pawns; /**list of pawns. */
+    private ChancheAndCommunityChestDeck deck;
     /**
      * constructor.
+     * @param tiles list of tiles
+     * @param pawns list of pawns
+     * @param deck deck with chance and community cards
     */
-    public BoardImpl() {
-        this.tiles = new ArrayList<>();
-        this.pawns = new ArrayList<>();
+    public BoardImpl(final List<Tile> tiles, final List<Pawn> pawns, final ChancheAndCommunityChestDeck deck) {
+        this.tiles = new ArrayList<>(tiles);
+        this.pawns = new ArrayList<>(pawns);
+        this.deck = deck;
     }
 
     /**
@@ -36,6 +45,15 @@ public class BoardImpl implements Board {
     public BoardImpl(final List<Tile> tiles, final List<Pawn> pawns) {
         this.tiles = new ArrayList<>(tiles);
         this.pawns = new ArrayList<>(pawns);
+        this.deck = new ChancheAndCommunityChestDeckImpl(List.of());
+    }
+    /**
+     * constructor.
+     */
+    public BoardImpl() {
+        this.tiles = new ArrayList<>();
+        this.pawns = new ArrayList<>();
+        this.deck = new ChancheAndCommunityChestDeckImpl(List.of());
     }
 
     @Override
@@ -50,7 +68,7 @@ public class BoardImpl implements Board {
 
     @Override
     public final void removePawn(final int id) {
-        this.pawns.remove(id - 1);
+        this.pawns.removeIf(p -> ((PawnImpl) p).getID().equals(id));
     }
 
     @Override
@@ -60,8 +78,13 @@ public class BoardImpl implements Board {
 
     @Override
     public final Tile getTileForPawn(final int id) {
-        final Pawn pawn = this.pawns.get(id - 1);
-        return tiles.get(pawn.getPosition().getPos());
+        for (final Pawn p : this.pawns) {
+            if (((PawnImpl) p).getID().equals(id)) {
+                return tiles.get(p.getPosition().getPos());
+            }
+        }
+
+        throw new IllegalArgumentException("id not present");
     }
 
     @Override
@@ -78,10 +101,19 @@ public class BoardImpl implements Board {
     }
 
     @Override
-    public final void movePawn(final int id, final Collection<Integer> value) {
-        final Pawn pawn = this.pawns.get(id - 1);
+    public final int movePawn(final int id, final Collection<Integer> value) {
+        Pawn pawn = null;
+        for (final Pawn p : this.pawns) {
+            if (((PawnImpl) p).getID().equals(id)) {
+                pawn = p;
+            }
+        }
+
+        Objects.requireNonNull(pawn);
+
         final int steps = value.stream().mapToInt(Integer::intValue).sum();
         pawn.move(steps);
+        return pawn.getPosition().getPos() - pawn.getPreviousPosition().getPos();
     }
 
     @Override
@@ -107,7 +139,13 @@ public class BoardImpl implements Board {
 
     @Override
     public final void movePawnInTile(final int id, final String name) {
-        final Pawn pawn = this.pawns.get(id - 1);
+        Pawn pawn = null;
+        for (final Pawn p : this.pawns) {
+            if (((PawnImpl) p).getID() == id) {
+                pawn = p;
+            }
+        }
+        Objects.requireNonNull(pawn);
         final Tile tile = getTile(name);
         pawn.setPosition(tile.getPosition());
     }
@@ -173,6 +211,25 @@ public class BoardImpl implements Board {
     @Override
     public final void deleteHotelInProperty(final Property prop) throws IllegalAccessException {
         prop.deleteHotel();
+    }
+    @Override
+    public final Position getPrevPawnPosition(final int id) {
+        for (final Pawn p : this.pawns) {
+            if (((PawnImpl) p).getID().equals(id)) {
+                return p.getPreviousPosition();
+            }
+        }
+        throw new IllegalArgumentException("id not present");
+    }
+
+    @Override
+    public final ChanceAndCommunityChestCard draw() {
+        return this.deck.draw();
+    }
+
+    @Override
+    public final void addDeck(final ChancheAndCommunityChestDeck deck) {
+        this.deck = deck;
     }
 
 }

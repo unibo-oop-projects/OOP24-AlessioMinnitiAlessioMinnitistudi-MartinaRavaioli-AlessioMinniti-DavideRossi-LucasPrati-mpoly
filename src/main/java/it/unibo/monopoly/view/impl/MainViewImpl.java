@@ -1,6 +1,7 @@
 package it.unibo.monopoly.view.impl;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.List;
@@ -40,6 +41,10 @@ import it.unibo.monopoly.view.impl.gamepanels.SwingPanelsFactory;
  */
 public final class MainViewImpl implements MainGameView {
 
+    private static final double INITIAL_WIDTH = 1.0;
+    private static final double INITIAL_HEIGHT = 1.0;
+    private static final double GAMEBOARD_ACTION_WIDTH_RATIO = 0.60;
+
     private final JFrame mainGameFrame = new JFrame();
 
     private final PlayerPanel playerInfoPanel;
@@ -74,26 +79,23 @@ public final class MainViewImpl implements MainGameView {
         mainActionsPanel = fact.standardControlsPanel(controller);
         mainActionsPanel.renderDefaultUI();
         final JPanel actionPanel = buildActionPanelUI(controller);
-        mainGameFrame.getContentPane().add(actionPanel, BorderLayout.EAST);
-        mainGameFrame.getContentPane().add(this.gameBoardPanel.getPanel(), BorderLayout.WEST);
+        this.gameBoardPanel.getPanel().setPreferredSize(
+            GuiUtils.getDimensionWindow(INITIAL_WIDTH * GAMEBOARD_ACTION_WIDTH_RATIO, INITIAL_HEIGHT)
+        );
         final JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, gameBoardPanel.getPanel(), actionPanel);
-        splitPane.setResizeWeight(0.5); 
+        splitPane.setResizeWeight(GAMEBOARD_ACTION_WIDTH_RATIO); 
         splitPane.setDividerSize(2);    // Spessore del divisore
-        splitPane.setEnabled(false);    // Rendi il divisore fisso, se vuoi
-
-        mainGameFrame.add(splitPane);
-        //mainGameFrame.pack();
-        mainGameFrame.setVisible(true);
+        mainGameFrame.getContentPane().add(splitPane);
         mainGameFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-        mainGameFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
-
+        mainGameFrame.setSize(GuiUtils.getDimensionWindow(INITIAL_WIDTH, INITIAL_HEIGHT));
         mainGameFrame.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(final WindowEvent e) {
-                new GUIRanking(controller.getRanking(), controller.getWinner());
+                new GUIRanking(mainGameFrame, controller.getRanking(), controller.getWinner());
                 mainGameFrame.dispose();
             }
         });
+        mainGameFrame.setVisible(true);
     }
 
     private JPanel buildActionPanelUI(final GameController controller) {
@@ -108,7 +110,7 @@ public final class MainViewImpl implements MainGameView {
         actionPanel.add(contractPanel.getPanel(), BorderLayout.CENTER);
         actionPanel.add(gameActionsPanel.getPanel(), BorderLayout.WEST);
 
-        final JButton handlePropertiesButton = new JButton("Gestione proprietà");
+        final JButton handlePropertiesButton = new JButton("Handle properties");
         handlePropertiesButton.addActionListener(e -> controller.loadCurrentPlayerInformation());
 
         final JPanel southPanel = new JPanel();
@@ -121,24 +123,25 @@ public final class MainViewImpl implements MainGameView {
     }
 
     @Override
-    public void refreshCurrentPlayerInfo(final Player player, final BankAccount account) {
+    public void displayPlayerInfo(final Player player, final BankAccount account) {
         playerInfoPanel.displayPlayer(player);
         accountInfoPanel.displayBankAccount(account);
         mainGameFrame.repaint();
     }
 
     @Override
-    public void clearControlsUI() {
+    public void refreshUIForNewTurn(final boolean canThrowDices) {
         playerInfoPanel.renderDefaultUI();
         accountInfoPanel.renderDefaultUI();
         contractPanel.renderDefaultUI();
         gameActionsPanel.renderDefaultUI();
         mainActionsPanel.renderDefaultUI();
+        mainActionsPanel.setDiceButtonEnabled(canThrowDices);
         mainGameFrame.repaint();
     }
 
     @Override
-    public void displayPropertyContract(final TitleDeed propertyContract) {
+    public void displayPropertyContractInfo(final TitleDeed propertyContract) {
         contractPanel.displayPropertyContract(propertyContract);
         mainGameFrame.repaint();
     }
@@ -150,7 +153,7 @@ public final class MainViewImpl implements MainGameView {
     }
 
     @Override
-    public void showPlayerActions(final Set<PropertyActionsEnum> actions) {
+    public void displayPlayerActions(final Set<PropertyActionsEnum> actions) {
         gameActionsPanel.buildActionButtons(actions, controller);
         mainGameFrame.repaint();
     }
@@ -162,7 +165,7 @@ public final class MainViewImpl implements MainGameView {
     }
 
     @Override
-    public void showRules(final String rules) {
+    public void displayRules(final String rules) {
         new RulesWindowView(this.mainGameFrame, controller.getConfiguration(), rules);
     }
 
@@ -174,6 +177,7 @@ public final class MainViewImpl implements MainGameView {
             this,
             this.mainGameFrame
         );
+        this.displayPlayerInfo(player, bank.getBankAccount(player.getID()));
     }
 
     @Override
@@ -183,8 +187,7 @@ public final class MainViewImpl implements MainGameView {
 
     @Override
     public void displayError(final Exception e) {
-        e.printStackTrace();
-        GuiUtils.showInfoMessage(mainGameFrame, "ERRORE", e.getMessage());
+        GuiUtils.showInfoMessage(mainGameFrame, "ERROR", e.getMessage());
     }
 
     @Override
@@ -198,13 +201,13 @@ public final class MainViewImpl implements MainGameView {
     }
 
     @Override
-    public void callBuyProperty(final Property prop) {
-        this.gameBoardPanel.buyProperty(prop, this.controller.getCurrPlayer().getID());
+    public void callBuyProperty(final String name, final Color color) {
+        this.gameBoardPanel.buyProperty(name, color);
     }
 
     @Override
-    public void displayOptionMessageEndTurn(final String message) {
-        final int result = JOptionPane.showConfirmDialog(null, message, "Continuare?", JOptionPane.YES_NO_OPTION);
+    public void displayOptionMessage(final String message) {
+        final int result = JOptionPane.showConfirmDialog(null, message, "Continue?", JOptionPane.YES_NO_OPTION);
 
         if (result == JOptionPane.YES_OPTION) {
             this.controller.endTurnPlayerDies();
@@ -213,12 +216,12 @@ public final class MainViewImpl implements MainGameView {
 
     @Override
     public void callBuyHouse(Property prop) {
-        this.gameBoardPanel.addHouse(prop, prop.getNHouses());
+        this.gameBoardPanel.addHouse(prop.getName(), prop.getGroup().getColor(), prop.getNHouses());
     }
 
     @Override
     public void callBuyHotel(Property prop) {
-        this.gameBoardPanel.addHotel(prop);
+        this.gameBoardPanel.addHotel(prop.getName(), prop.getGroup().getColor());
     }
 
     @Override
@@ -229,5 +232,19 @@ public final class MainViewImpl implements MainGameView {
     @Override
     public void callSellHotel(Property prop) {
        this.gameBoardPanel.removeHotel(prop);
+    }
+    public void callDeletePlayer(final Color color, final int id) {
+        this.gameBoardPanel.deletePlayer(color, id);
+    }
+
+    @Override
+    public void showRanking() {
+        new GUIRanking(mainGameFrame, controller.getRanking(), controller.getWinner());
+        mainGameFrame.dispose();
+    }
+
+    @Override
+    public void callClearAll() {
+        this.gameBoardPanel.clearAll();
     }
 }

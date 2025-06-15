@@ -1,0 +1,53 @@
+move in tile: Mediterranean Avenue
+buy if not owned: Mediterranean Avenue
+-
+move in tile: Electric Company
+buy if not owned: Electric Company
+-
+move in tile: Reading Railroad
+buy if not owned: Reading Railroad
+-
+move in tile: Pennsylvania Railroad
+buy if not owned: Pennsylvania Railroad
+-
+move in tile: B. & O. Railroad
+buy if not owned: B. & O. Railroad
+-
+move in tile: Short Line
+buy if not owned: Short Line
+-
+move in tile: St. James Place
+buy if not owned: St. James Place
+-
+move in tile: Indiana Avenue
+-
+move in tile: B. & O. Railroad
+-
+move in tile: States Avenue
+-
+move of steps: 3
+-
+move of steps: 9
+-
+move of steps: 1
+-
+move of steps: 13
+-
+withdraw: 99
+-
+withdraw: 50
+-
+withdraw: 40
+-
+withdraw: 33
+-
+deposit: 99
+-
+deposit: 50
+-
+deposit: 60
+-
+deposit from: all, 50
+-
+deposit from: all, 30
+

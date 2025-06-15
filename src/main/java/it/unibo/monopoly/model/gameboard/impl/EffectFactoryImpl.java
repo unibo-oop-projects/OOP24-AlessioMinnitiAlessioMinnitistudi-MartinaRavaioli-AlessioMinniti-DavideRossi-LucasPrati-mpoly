@@ -4,8 +4,10 @@ package it.unibo.monopoly.model.gameboard.impl;
 import it.unibo.monopoly.model.gameboard.api.Board;
 import it.unibo.monopoly.model.gameboard.api.Effect;
 import it.unibo.monopoly.model.gameboard.api.EffectFactory;
+import it.unibo.monopoly.model.gameboard.impl.chance_comunity.impl.ChanceAndCommunityChestCard;
 import it.unibo.monopoly.model.transactions.api.Bank;
 import it.unibo.monopoly.model.turnation.api.Player;
+import it.unibo.monopoly.model.turnation.api.TurnationManager;
 
 /**
  * implementation for EffectFactory.
@@ -54,7 +56,7 @@ public final class EffectFactoryImpl implements EffectFactory {
     }
 
     @Override
-    public Effect putInPrison(final Board board) {
+    public Effect putInPrison(final Board board, final TurnationManager turnM) {
 
 
         return new Effect() {
@@ -64,7 +66,7 @@ public final class EffectFactoryImpl implements EffectFactory {
                                             + "\nunless you get at least 2 matching numbers at the dices";
             @Override
             public void activate(final Player player) {
-                player.putInPrison();
+                turnM.putCurrentPlayerInPrison();
                 board.movePawnInTile(player.getID(), "Jail / Just Visiting");
             }
 
@@ -76,7 +78,7 @@ public final class EffectFactoryImpl implements EffectFactory {
     }
 
     @Override
-    public Effect park() {
+    public Effect park(final TurnationManager turnM) {
 
         return new Effect() {
 
@@ -84,7 +86,7 @@ public final class EffectFactoryImpl implements EffectFactory {
 
             @Override
             public void activate(final Player player) {
-                player.park();
+                turnM.parkCurrentPlayer();
             }
 
             @Override
@@ -93,6 +95,29 @@ public final class EffectFactoryImpl implements EffectFactory {
             }
         };
     }
+
+
+    @Override
+    public Effect drawChanceAndCommunityChest(final Board board) {
+        return new Effect() {
+
+            private static final String DESC = "draw a card from chances and community chest deck \nthen activate its effect :\n";
+            private String commDesc;
+
+            @Override
+            public void activate(final Player player) {
+                final ChanceAndCommunityChestCard c = board.draw();
+                c.execute(player);
+                commDesc = c.getDescription();
+            }
+
+            @Override
+            public String getDescription() {
+                return DESC + "\n" + this.commDesc;
+            }
+        };
+    }
+
 
     @Override
     public Effect still() {

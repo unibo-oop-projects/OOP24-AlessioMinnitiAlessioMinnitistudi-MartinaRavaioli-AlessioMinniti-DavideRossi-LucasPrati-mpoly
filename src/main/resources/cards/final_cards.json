@@ -15,7 +15,7 @@
   {
     "position": 2,
     "type": "SPECIAL",
-    "effect": "CHEST"
+    "effect": "CHANCE / CHEST"
   },
   {
     "name": "Baltic Avenue",
@@ -47,7 +47,7 @@
   {
     "position": 7,
     "type": "SPECIAL",
-    "effect": "CHANCE"
+    "effect": "CHANCE / CHEST"
   },
   {
     "name": "Vermont Avenue",
@@ -119,7 +119,7 @@
   {
     "position": 17,
     "type": "SPECIAL",
-    "effect": "CHEST"
+    "effect": "CHANCE / CHEST"
   },
   {
     "name": "Tennessee Avenue",
@@ -153,7 +153,7 @@
   {
     "position": 22,
     "type": "SPECIAL",
-    "effect": "CHANCE"
+    "effect": "CHANCE / CHEST"
   },
   {
     "name": "Indiana Avenue",
@@ -233,7 +233,7 @@
   {
   "position": 33,
   "type": "SPECIAL",
-  "effect": "CHEST"
+  "effect": "CHANCE / CHEST"
 },
 {
   "name": "Pennsylvania Avenue",
@@ -252,7 +252,7 @@
 {
   "position": 36,
   "type": "SPECIAL",
-  "effect": "CHANCE"
+  "effect": "CHANCE / CHEST"
 },
 {
   "name": "Park Place",

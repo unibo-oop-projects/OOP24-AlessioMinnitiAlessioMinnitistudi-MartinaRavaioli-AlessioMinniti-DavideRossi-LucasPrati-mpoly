@@ -6,7 +6,7 @@ MAX_PLAYERS: 5
 NUM_DICE: 1
 SIDES_PER_DIE: 6
 
-FONT_NAME: ARIAL
+FONT_NAME: SansSerif
 BIG_FONT: 32
 SMALL_FONT: 20
 
@@ -14,6 +14,6 @@ INIT_BALANCE: 1000
 
 RULES_FILE: debug/rules/debug_rules.txt
 CARDS_FILE: debug/cards/debug_cards.json
-
+DECK_FILE: debug/cards/DeckCardTest.txt
 
 COLORS: RED, BLUE, ORANGE, GREEN, MAGENTA

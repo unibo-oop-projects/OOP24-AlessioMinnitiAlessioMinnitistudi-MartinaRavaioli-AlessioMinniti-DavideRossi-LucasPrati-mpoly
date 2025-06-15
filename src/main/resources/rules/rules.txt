@@ -47,8 +47,8 @@ If a player owns all properties in a color group, they may charge double rent fo
 Rent increases significantly when houses are built.
 
 
-"CHANCE" and "COMMUNITY CHEST":
-When you land on these spaces, draw a card from the corresponding deck and follow its instructions immediately.
+"CHANCE / CHEST":
+When you land on these spaces, draw a card from the deck and follow its instructions immediately.
 
 
 "INCOME TAX":
@@ -60,10 +60,9 @@ You go to Jail if:
     - You land on the “Go to Jail” space.
     - You draw a “Go to Jail” card.
 Rules while in Jail:
-    - Move your token directly to Jail—you do not collect $200 for passing "Start".
-    - Your turn ends immediately.
+    - Your token will move directly to Jail without collect the $200 for passing "Start".
     - Jail time lasts for 3 turn, unless you get at least 2 matching numbers at the dices.
-    - You can still collect rent from other players.
+    - You can still collect rent from other players and manage your properties during your turn.
 
 
 "FREE PARKING":
@@ -73,14 +72,15 @@ Landing on Free Parking puts you in stall for the next turn.
 Houses:
 If you own all properties in a color group, you may buy houses from the Bank and build them on those properties.
 The cost per house is listed on the property’s Title Deed card.
-Each property has a limit to how many houses it can hold.
+Each property has a limit to how many houses it can hold. After you reach the limit of houses, you can sell them to buy an hotel.
 Even without houses, complete ownership of a color group allows double rent.
+Houses and hotels can only be purchased homogeneously, one for each properties in the same color group. 
 
 
 Selling:
 Unimproved properties, railroads, and utilities may be sold back to the Bank.
 Properties cannot be sold if there are houses on any properties in that color group.
-Houses may be sold back to the Bank for half their purchase price.
+Houses and hotels may be sold back to the Bank homogeneously (like when purchased), for half their purchase price.
 
 
 Bankruptcy:
@@ -90,5 +90,5 @@ When you go bankrupt, all your properties are automatically returned to the Bank
 
 
 Other Rules:
-Only the Bank may loan money to players.
+Every payment have to go through the bank.
 Players may not loan or borrow money from each other.

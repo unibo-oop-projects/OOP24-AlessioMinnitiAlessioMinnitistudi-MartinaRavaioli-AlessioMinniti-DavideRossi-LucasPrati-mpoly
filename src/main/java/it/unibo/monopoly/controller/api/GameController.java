@@ -4,12 +4,12 @@ import java.util.List;
 
 import org.apache.commons.lang3.tuple.Pair;
 
+import it.unibo.monopoly.model.gameboard.api.Board;
 import it.unibo.monopoly.model.gameboard.api.Pawn;
 import it.unibo.monopoly.model.gameboard.api.Tile;
-import it.unibo.monopoly.model.gameboard.api.Board;
+import it.unibo.monopoly.model.transactions.api.Bank;
 import it.unibo.monopoly.model.transactions.api.PropertyAction;
 import it.unibo.monopoly.model.transactions.api.PropertyActionsEnum;
-import it.unibo.monopoly.model.transactions.api.Bank;
 import it.unibo.monopoly.model.turnation.api.Player;
 import it.unibo.monopoly.utils.impl.Configuration;
 import it.unibo.monopoly.view.api.MainGameView;
@@ -50,12 +50,6 @@ public interface GameController {
      * its information.
      */
     void loadCurrentPlayerInformation();
-
-    /**
-     * Allow to attach {@link MainGameView}s to the controller.
-     * @param view the view we want to attach to this controller
-     */
-    void attachView(MainGameView view);
 
     /**
      * get the tiles.
@@ -105,4 +99,8 @@ public interface GameController {
      * end the turn even if the player dies.
     */
     void endTurnPlayerDies();
+    /**
+     * refresh the properties of the players.
+     */
+    void refreshBankPlayerInfo();
 }

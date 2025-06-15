@@ -1,4 +1,5 @@
 package it.unibo.monopoly.model.turnation.impl;
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -18,7 +19,6 @@ import it.unibo.monopoly.utils.impl.CircularLinkedList;
 */
 public class TurnationManagerImpl implements TurnationManager {
     private CircularLinkedList<Player> players; /**list of players. */
-    private boolean isOver; /**is Over bool. */
     private Player currPlayer; /**current player. */
     private Dice dice; /**dice. */
     private BankState bankState; /**bankState to communicate with the bank. */
@@ -85,28 +85,110 @@ public class TurnationManagerImpl implements TurnationManager {
         this.players.addNode(p);
     }
 
-    @Override
-    public final void setOver() {
-        this.isOver = true;
-    }
 
     @Override
     public final boolean isOver() { 
-        return this.isOver;
+        return this.players.toList().size() < 2;
     }
 
     @Override
     public final Player getNextPlayer() { 
-        this.currPlayer = players.giveNextNode(this.currPlayer);
-        this.diceThrown = false;
-        return PlayerImpl.of(this.currPlayer.getID(), this.currPlayer.getName(), this.currPlayer.getColor());
+        if (canPassTurn()) {
+            this.currPlayer = players.giveNextNode(this.currPlayer);
+            this.diceThrown = false;
+            if (isCurrentPlayerParked()) {
+                passedParkTurn();
+            }
+            return createCurrPlayerCopy();
+        }
+        throw new IllegalArgumentException("the player can't pass the turn");
+    }
+    /**
+     * method that create a copy of the current player.
+     * @return Player
+     */
+    private Player createCurrPlayerCopy() {
+        return new Player() {
+
+            @Override
+            public Integer getID() {
+               return currPlayer.getID();
+            }
+
+            @Override
+            public String getName() {
+                return currPlayer.getName();
+            }
+
+            @Override
+            public Color getColor() {
+                return currPlayer.getColor();
+            }
+
+            @Override
+            public boolean isAlive() {
+                return currPlayer.isAlive();
+            }
+
+            @Override
+            public boolean isParked() {
+                return currPlayer.isParked();
+            }
+
+            @Override
+            public void park() {
+                currPlayer.park();
+            }
+
+            @Override
+            public boolean isInPrison() {
+                return currPlayer.isInPrison();
+            }
+
+            @Override
+            public void putInPrison() {
+                currPlayer.putInPrison();
+            }
+
+            @Override
+            public boolean canExitPrison(final Collection<Integer> dice) {
+               return currPlayer.canExitPrison(dice);
+            }
+
+            @Override
+            public int turnLeftInPrison() {
+                return currPlayer.turnLeftInPrison();
+            }
+
+            @Override
+            public void decreaseTurnsInPrison() {
+                currPlayer.decreaseTurnsInPrison();
+            }
+
+            @Override
+            public void passTurn() {
+                currPlayer.passTurn();
+            }
+
+        };
     }
 
     @Override
-    public final Collection<Integer> moveByDices() throws IllegalAccessException { 
+    public final Pair<Collection<Integer>, String> moveByDices() throws IllegalAccessException { 
         if (!hasCurrPlayerThrownDices()) {
-            this.diceThrown = true;
-            return this.dice.throwDices();
+            if (canThrowDices()) {
+                this.diceThrown = true;
+                final Collection<Integer> res = this.dice.throwDices();
+
+                if (this.currPlayer.isInPrison()) {
+                    return Pair.of(res, tryExitPrison(res));
+                }
+
+                return Pair.of(res, null);
+            } else {
+                return Pair.of(null, "the player can't throw dices because is parked");
+            }
+
         } else {
             throw new IllegalAccessException("the current player has already thrown the dices");
         }
@@ -119,7 +201,7 @@ public class TurnationManagerImpl implements TurnationManager {
 
     @Override
     public final Player getCurrPlayer() {
-        return PlayerImpl.of(this.currPlayer.getID(), this.currPlayer.getName(), this.currPlayer.getColor());
+        return createCurrPlayerCopy();
     }
 
     @Override
@@ -134,7 +216,14 @@ public class TurnationManagerImpl implements TurnationManager {
 
     @Override
     public final boolean canPassTurn() {
-        return this.bankState.allMandatoryTransactionsCompleted() && hasCurrPlayerThrownDices();
+        if (this.bankState.allMandatoryTransactionsCompleted()) {
+            if (!isCurrentPlayerParked()) {
+                return hasCurrPlayerThrownDices();
+            } else {
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override
@@ -144,16 +233,23 @@ public class TurnationManagerImpl implements TurnationManager {
 
     @Override
     public final Pair<String, Integer> getWinner() {
-        final Pair<Integer, Integer> winner = this.bankState.rankPlayers().get(0);
+        Pair<Integer, Integer> winner = Pair.of(this.bankState.rankPlayers().get(0).getLeft(), 
+                                                this.bankState.rankPlayers().get(0).getRight());
         final Pair<String, Integer> winnerName;
+        Player player = this.players.getHead();
 
         for (final Pair<Integer, Integer> p : this.bankState.rankPlayers()) {
             if (p.getRight() > winner.getRight()) {
-                winner.setValue(p.getRight());
+                winner = Pair.of(p.getLeft(), p.getRight());
             }
         }
 
-        winnerName = Pair.of(this.players.toList().get(winner.getLeft() - 1).getName(), winner.getRight());
+        for (final Player pl : this.players.toList()) {
+            if (pl.getID().equals(winner.getLeft())) {
+                player = pl;
+            }
+        }
+        winnerName = Pair.of(player.getName(), winner.getRight());
         return winnerName;
     }
 
@@ -161,7 +257,12 @@ public class TurnationManagerImpl implements TurnationManager {
     public final List<Pair<String, Integer>> getRanking() {
         final List<Pair<String, Integer>> list = new ArrayList<>();
         for (final Pair<Integer, Integer> p : this.bankState.rankPlayers()) {
-            list.add(Pair.of(/*p.getLeft().toString()*/this.players.toList().get(p.getLeft() - 1).getName(), p.getRight()));
+
+            for (final Player pl : this.players.toList()) {
+                if (pl.getID().equals(p.getLeft())) {
+                    list.add(Pair.of(pl.getName(), p.getRight()));
+                }
+            }
         }
 
         return list;
@@ -169,8 +270,18 @@ public class TurnationManagerImpl implements TurnationManager {
 
     @Override
     public final void deletePlayer(final Player player) {
-        this.players.deleteNode(player);
+        final List<Player> list = this.players.toList();
+
+        list.removeIf(p -> p.getID().equals(player.getID()));
+        getNextPlayer();
+        this.players.clear();
+
+        for (final Player p : list) {
+            this.players.addNode(p);
+        }
+        this.bankState.deletePlayer(player);
     }
+
     @Override
     public final void resetBankState() {
         this.bankState.resetTransactionData();
@@ -178,6 +289,45 @@ public class TurnationManagerImpl implements TurnationManager {
     @Override
     public final boolean hasCurrPlayerThrownDices() {
         return this.diceThrown;
+    }
+    @Override
+    public final boolean isCurrentPlayerParked() {
+        return this.currPlayer.isParked();
+    }
+    @Override
+    public final int currentPlayerTurnsLeftInPrison() {
+        return this.currPlayer.turnLeftInPrison();
+    }
+    @Override
+    public final void decreaseTurnsInPrison() {
+        this.currPlayer.decreaseTurnsInPrison();
+    }
+    @Override
+    public final void passedParkTurn() {
+        this.currPlayer.passTurn();
+    }
+    @Override
+    public final void putCurrentPlayerInPrison() {
+        this.currPlayer.putInPrison();
+    }
+    @Override
+    public final void parkCurrentPlayer() {
+        this.currPlayer.park();
+    }
+    @Override
+    public final boolean canThrowDices() {
+        return !this.currPlayer.isParked();
+    }
+    @Override
+    public final String tryExitPrison(final Collection<Integer> result) {
+        if (this.currPlayer.canExitPrison(result)) {
+            return "you escaped the prison";
+        } else {
+            this.currPlayer.decreaseTurnsInPrison();
+            return "you are still in prison, you have " 
+                    + currentPlayerTurnsLeftInPrison() + 
+                    " turns left in prison and the dices weren't kind with you.";
+        }
     }
 
 }

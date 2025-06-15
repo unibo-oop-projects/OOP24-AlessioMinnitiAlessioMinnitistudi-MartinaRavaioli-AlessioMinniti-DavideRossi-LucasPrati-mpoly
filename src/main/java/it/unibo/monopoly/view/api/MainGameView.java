@@ -1,5 +1,6 @@
 package it.unibo.monopoly.view.api;
 
+import java.awt.Color;
 import java.util.List;
 import java.util.Set;
 
@@ -23,9 +24,10 @@ public interface MainGameView {
 
     /**
      * Clears all panels displaying information about the 
-     * current player. Does not clear the ui of the {@link GamePanel}.
+     * current player and resets them, to be ready for the turn of a new player to begin.
+     * @param canThrowDices tells whether to enable or not the button to throw the dices
      */
-    void clearControlsUI();
+    void refreshUIForNewTurn(boolean canThrowDices);
 
     /**
      * Ask the {@code view} to refresh the information related
@@ -35,7 +37,7 @@ public interface MainGameView {
      * @param player an object containing generic information of a player
      * @param account an object containing all information related to the {@code balance} of a specific player
      */
-    void refreshCurrentPlayerInfo(Player player, BankAccount account);
+    void displayPlayerInfo(Player player, BankAccount account);
 
     /**
      * Display information of the {@link TitleDeed}
@@ -43,7 +45,7 @@ public interface MainGameView {
      * is currently on.
      * @param propertyContract the title deed to display
      */
-    void displayPropertyContract(TitleDeed propertyContract);
+    void displayPropertyContractInfo(TitleDeed propertyContract);
 
     /**
      * Display information of the {@link Special}
@@ -60,7 +62,7 @@ public interface MainGameView {
      * that was previously attached to this view to execute the action.
      * This is done by calling the method {@link GameController#executeAction(String)}
      */
-    void showPlayerActions(Set<PropertyActionsEnum> actions);
+    void displayPlayerActions(Set<PropertyActionsEnum> actions);
 
     /**
      * Display the result of the call on {@link GameController#throwDices()}.
@@ -74,7 +76,7 @@ public interface MainGameView {
      * to play the game.
      * @param rules the text of the game rules
      */
-    void showRules(String rules);
+    void displayRules(String rules);
 
 
     /**
@@ -110,16 +112,15 @@ public interface MainGameView {
     void callClearPanel(String name);
     /**
      * call the buy property method in the gameboard view.
-     * @param prop the property to buy
+     * @param name name of the property to buy
+     * @param color color of the player who buy the property
      */
-    void callBuyProperty(Property prop);
+    void callBuyProperty(String name, Color color);
     /**
-     * Displays a generic yes/no option message sent to the user when he'll die if he passes the turn.
-     * if the player chooses 'yes' then the he'll pass the turn and die.
-     * if the player chooses 'no' then he won't pass the turn so he can sell something to not die. 
+     * Displays a generic yes/no option message sent to the user.
      * @param message The message to display
      */
-    void displayOptionMessageEndTurn(String message);
+    void displayOptionMessage(String message);
     /**
      * call the gameboard view method to buy an house for the property.
      * @param prop
@@ -140,4 +141,19 @@ public interface MainGameView {
      * @param prop
      */
     void callSellHotel(Property prop);
+
+    /**
+     * call the delete player method in gameboard view.
+     * @param color color of the player
+     * @param id of the player
+    */
+    void callDeletePlayer(Color color, int id);
+    /**
+     * call the frame that shows the final ranking.
+     */
+    void showRanking();
+    /**
+     * calls the clear all method in the gameboard view.
+     */
+    void callClearAll();
 }

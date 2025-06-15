@@ -22,13 +22,13 @@ public interface CardFactory {
 
     /**
      * Get all the {@link Tile}s parsed.
-     * @return the {@link List} of {@link Tile}s pased from the file Json
+     * @return a defensive-copy of the {@link List} of {@link Tile}s pased from the file Json
      */
     List<Tile> getTiles();
 
     /**
      * Get all the {@link TitleDeed}s parsed.
-     * @return the {@link List} of {@link TitleDeed}s pased from the file Json
+     * @return a defensive-copy of the {@link List} of {@link TitleDeed}s pased from the file Json
      */
     Set<TitleDeed> getDeeds();
 }

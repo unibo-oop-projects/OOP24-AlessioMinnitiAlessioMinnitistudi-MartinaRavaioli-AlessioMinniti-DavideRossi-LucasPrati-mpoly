@@ -14,8 +14,8 @@ import it.unibo.monopoly.view.api.StandardControlsPanel;
 
 final class SwingMainCommandsPanel extends SwingAbstractJPanel implements StandardControlsPanel {
 
-    private static final String DICES_RESULTS_PH = "Risultato dadi:";
-    private static final String DICES_TOTAL_PH = "TOTALE TIRO:";
+    private static final String DICES_RESULTS_PH = "Dices result:";
+    private static final String DICES_TOTAL_PH = "Total:";
     private static final long serialVersionUID = 1L;
 
 
@@ -31,13 +31,13 @@ final class SwingMainCommandsPanel extends SwingAbstractJPanel implements Standa
         final GridBagLayout dicesPanelLayout = new GridBagLayout();
         dicesJPanel.setLayout(dicesPanelLayout);
 
-        throwDicesButton = new JButton("Lancia i dadi");
+        throwDicesButton = new JButton("Throw dices");
         throwDicesButton.addActionListener(e -> {
             controller.throwDices();
             throwDicesButton.setEnabled(false);
         });
-        dicesResultsJLabel = new JLabel("Risultato dadi:");
-        dicesTotalJLabel = new JLabel("TOTALE:");
+        dicesResultsJLabel = new JLabel("Dices result:");
+        dicesTotalJLabel = new JLabel("Total:");
         dicesJPanel.add(throwDicesButton);
         dicesJPanel.add(dicesResultsJLabel);
         dicesJPanel.add(dicesTotalJLabel);
@@ -63,7 +63,7 @@ final class SwingMainCommandsPanel extends SwingAbstractJPanel implements Standa
         turnJPanel.setLayout(turnPanelLayout);
 
         final JButton rulesButton = new JButton("?");
-        final JButton endTurnButton = new JButton("Termina turno");
+        final JButton endTurnButton = new JButton("End turn");
         endTurnButton.addActionListener(e -> controller.endTurn());
         rulesButton.addActionListener(e -> controller.loadRules());
 
@@ -101,5 +101,10 @@ final class SwingMainCommandsPanel extends SwingAbstractJPanel implements Standa
         stringBuilder.deleteCharAt(stringBuilder.length() - 1);
         dicesResultsJLabel.setText(DICES_RESULTS_PH + stringBuilder.toString());
         dicesTotalJLabel.setText(DICES_TOTAL_PH + Integer.toString(results.stream().mapToInt(i -> i).sum()));
+    }
+
+    @Override
+    public void setDiceButtonEnabled(final boolean isEnabled) {
+        throwDicesButton.setEnabled(isEnabled);
     }
 }

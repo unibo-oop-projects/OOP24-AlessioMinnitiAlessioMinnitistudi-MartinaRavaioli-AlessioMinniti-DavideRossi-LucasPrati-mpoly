@@ -2,6 +2,7 @@ package it.unibo.monopoly.model.gameboard.api;
 
 import it.unibo.monopoly.model.transactions.api.Bank;
 import it.unibo.monopoly.model.turnation.api.Position;
+import it.unibo.monopoly.model.turnation.api.TurnationManager;
 
 /**
  * this is SpecialFactory interface, defines which special tiles you can create. 
@@ -19,9 +20,10 @@ public interface SpecialFactory {
      * create the go to prison tiles that moves the player on the tile prison.
      * @param pos position of the tile
      * @param board used to move the player pawn
+     * @param turnM used to put the player in prison
      * @return the special tile goToPrison
      */
-    Special goToPrison(Position pos, Board board);
+    Special goToPrison(Position pos, Board board, TurnationManager turnM);
 
     /**
      * creates the tile prison that keeps the player in stasis for 3 turns unless he gets the same number on two dices.
@@ -32,10 +34,11 @@ public interface SpecialFactory {
 
     /**
      * ccreates the tile parking that keeps the player in stasis for 1 turn.
+     * @param turnM used to park the player
      * @param pos of the tile 
      * @return the special tile parking
      */
-    Special parking(Position pos);
+    Special parking(Position pos, TurnationManager turnM);
 
     /**
      * creates the tile taxes that witdraws a definite ammount from the palyer that triggered it's effect.
@@ -45,5 +48,12 @@ public interface SpecialFactory {
      */
     Special taxes(Position pos, Bank bank);
 
+    /**
+     * creates a special tile that makes you draw a card then activates its effect.
+     * @param pos of the tile
+     * @param board to draw the card
+     * @return the special tile
+     */
+    Special chancesAndCommunityChest(Position pos, Board board);
 
 }

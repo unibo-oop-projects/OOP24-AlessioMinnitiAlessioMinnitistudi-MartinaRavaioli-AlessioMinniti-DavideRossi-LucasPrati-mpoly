@@ -1,4 +1,4 @@
-package it.unibo.monopoly.model.turnation;
+package it.unibo.monopoly.model.gameboard;
 
 import java.awt.Color;
 import java.util.Arrays;

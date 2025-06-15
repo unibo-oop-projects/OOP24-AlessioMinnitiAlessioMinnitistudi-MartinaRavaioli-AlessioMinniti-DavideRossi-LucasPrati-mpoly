@@ -11,8 +11,6 @@ import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.tuple.Pair;
 
-import com.google.common.collect.Maps;
-
 import it.unibo.monopoly.model.gameboard.impl.Group;
 import it.unibo.monopoly.model.transactions.api.Bank;
 import it.unibo.monopoly.model.transactions.api.BankAccount;
@@ -63,7 +61,7 @@ public final class BankImpl implements Bank {
         if (accounts.isEmpty()) {
             throw new IllegalArgumentException("accounts' list cannot be empty");
         }
-        this.accounts = Maps.uniqueIndex(accounts, BankAccount::getID);
+        this.accounts = accounts.stream().collect(Collectors.toMap(BankAccount::getID, d -> d));
         this.titleDeeds = titleDeeds.stream().collect(Collectors.toMap(TitleDeed::getName, d -> d));
         this.rankingBiFunction = rankingBiFunction;
     }

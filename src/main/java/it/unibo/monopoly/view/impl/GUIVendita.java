@@ -4,7 +4,6 @@ package it.unibo.monopoly.view.impl;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.Frame;
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
@@ -104,9 +103,6 @@ public final class GUIVendita extends JDialog {
 
 // create the Component for the listPane
         final JLabel selectProperty = new JLabel("Select the property you want to manage");
-        final int fontSize = 20;
-        final Font f = new Font("gigi", Font.TYPE1_FONT, fontSize);
-        selectProperty.setFont(f);
         final JList<Object> propertiesList = new JList<>(logic.getProperties(player, bank)
                                                                         .stream()
                                                                         .map(TitleDeed::getName)
@@ -124,23 +120,25 @@ public final class GUIVendita extends JDialog {
 
         //selection of property
         final ListSelectionListener propertySelectionListener = e -> {
-            final TitleDeed selectedProperty = logic.getProperty(logic.getProperties(player, bank), 
-                                                                propertiesList.getSelectedValue());
-            mortageValue.setText(Integer.toString(selectedProperty.getMortgagePrice()));
-            final int auxintrent = selectedProperty.getRent(
-                logic.getProperties(player, bank)
-                    .stream()
-                    .filter(p -> selectedProperty.getGroup().equals(p.getGroup()))
-                    .collect(Collectors.toSet()), 1
-            );
-            String auxrent = String.valueOf(auxintrent);
-            if (selectedProperty.getGroup().equals(Group.SOCIETY)) {
+            if (!propertiesList.isSelectionEmpty()) {
+                final TitleDeed selectedProperty = logic.getProperty(logic.getProperties(player, bank), 
+                                                                    propertiesList.getSelectedValue());
+                mortageValue.setText(Integer.toString(selectedProperty.getMortgagePrice()));
+                final int auxintrent = selectedProperty.getRent(
+                    logic.getProperties(player, bank)
+                        .stream()
+                        .filter(p -> selectedProperty.getGroup().equals(p.getGroup()))
+                        .collect(Collectors.toSet()), 1
+                );
+                String auxrent = String.valueOf(auxintrent);
+                if (selectedProperty.getGroup().equals(Group.SOCIETY)) {
 
-                auxrent = auxintrent + " times dice result";
+                    auxrent = auxintrent + " times dice result";
+                }
+                rentValue.setText(auxrent);
+                colorValue.setColor(logic.getPropertyColor(selectedProperty));
+                sellProperty.setEnabled(true);
             }
-            rentValue.setText(auxrent);
-            colorValue.setColor(logic.getPropertyColor(selectedProperty));
-            sellProperty.setEnabled(true);
         };
     //sell property
         final ActionListener sellPropertyListener = e -> {

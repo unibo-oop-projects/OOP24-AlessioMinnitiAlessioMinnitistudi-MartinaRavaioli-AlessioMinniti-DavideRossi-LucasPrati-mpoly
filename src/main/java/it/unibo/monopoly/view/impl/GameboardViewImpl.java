@@ -6,7 +6,6 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
-import java.awt.Toolkit;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -59,9 +58,9 @@ public final class GameboardViewImpl extends JPanel implements GameboardView {
     }
 
     @Override
-    public void addHouse(final Property prop, final int numHouses) {
+    public void addHouse(final String propName, final Color color, final int numHouses) {
         for (final Map.Entry<JPanel, Position> entry : this.tilePositions.entrySet()) {
-            if (entry.getValue().equals(prop.getPosition())) {
+            if (entry.getKey().getName().equals(propName)) {
                 final JPanel panel = entry.getKey();
                 for (final Component c : panel.getComponents()) {
                     if (HOUSE.equals(c.getName())) {
@@ -73,7 +72,7 @@ public final class GameboardViewImpl extends JPanel implements GameboardView {
                 
                 final JLabel label = new JLabel("HOUSES: " + numHouses);
                 label.setName(HOUSE);
-                label.setForeground(prop.getGroup().getColor());
+                label.setForeground(color);
                 panel.add(label);
                 panel.revalidate();
                 panel.repaint();
@@ -83,13 +82,13 @@ public final class GameboardViewImpl extends JPanel implements GameboardView {
     }
 
     @Override
-    public void addHotel(final Property prop) {
+    public void addHotel(final String propName, final Color color) {
         for (final Map.Entry<JPanel, Position> entry : this.tilePositions.entrySet()) {
-            if (entry.getValue().equals(prop.getPosition())) {
+            if (entry.getKey().getName().equals(propName)) {
                 final JPanel panel = entry.getKey();
                 final JLabel label = new JLabel("HOTEL: ✔");
                 label.setName(HOTEL);
-                label.setForeground(prop.getGroup().getColor());
+                label.setForeground(color);
                 panel.add(label);
                 panel.revalidate();
                 panel.repaint();
@@ -133,11 +132,11 @@ public final class GameboardViewImpl extends JPanel implements GameboardView {
     }
 
     @Override
-    public void buyProperty(final Property prop, final int currPlayer) {
+    public void buyProperty(final String propName, final Color playerColor) {
         for (final Map.Entry<JPanel, Position> entry : this.tilePositions.entrySet()) {
-            if (entry.getValue().equals(prop.getPosition())) {
+            if (entry.getKey().getName().equals(propName)) {
                 final JPanel p = entry.getKey();
-                final PawnSquare propertyGUI = new PawnSquare(controller.getCurrPlayer().getColor());
+                final PawnSquare propertyGUI = new PawnSquare(playerColor);
                 p.add(propertyGUI);
                 p.revalidate();
                 p.repaint();
@@ -149,7 +148,7 @@ public final class GameboardViewImpl extends JPanel implements GameboardView {
     @Override
     public void renderDefaultUI() {
         this.setLayout(new BorderLayout());
-        this.setSize(Toolkit.getDefaultToolkit().getScreenSize());
+        //this.setSize(Toolkit.getDefaultToolkit().getScreenSize());
         final JPanel board = new JPanel(new GridLayout(this.size, this.size));
         this.add(board);
         final JPanel[][] grid = new JPanel[this.size][this.size];
@@ -238,7 +237,10 @@ public final class GameboardViewImpl extends JPanel implements GameboardView {
     public Component getPanel() {
         return this;
     }
-
+    /**
+     * create the view for the tile of the board.
+     * @return JPanel
+     */
     private JPanel createTile() {
         final JPanel tile = new JPanel(new BorderLayout());
         tile.setBorder(BorderFactory.createLineBorder(Color.BLACK));
@@ -305,7 +307,37 @@ public final class GameboardViewImpl extends JPanel implements GameboardView {
                         break;
                     }
                 }
+            }
+        }
+    }
+    public void deletePlayer(final Color color, final int id) {
+        for (final Map.Entry<JPanel, Position> entry : this.tilePositions.entrySet()) {
+            final JPanel p = entry.getKey();
+            for (final Component c : p.getComponents()) {
+                    if (c instanceof PawnCircle pawnCircle && pawnCircle.getColor().equals(color)) {
+                        p.remove(c);
+                        p.revalidate();
+                        p.repaint();
+                    } else if (c instanceof PawnSquare pawnSquare && pawnSquare.getColor().equals(color)) {
+                        p.remove(c);
+                        p.revalidate();
+                        p.repaint();
+                    }
+                }
+        }
+        this.pawnPositions.remove(id - 1);
+    }
 
+    @Override
+    public void clearAll() {
+        for (final Map.Entry<JPanel, Position> entry : this.tilePositions.entrySet()) {
+            final JPanel p = entry.getKey();
+            for (final Component c : p.getComponents()) {
+                if (c instanceof PawnSquare) {
+                    p.remove(c);
+                    p.revalidate();
+                    p.repaint();
+                }
             }
         }
     }

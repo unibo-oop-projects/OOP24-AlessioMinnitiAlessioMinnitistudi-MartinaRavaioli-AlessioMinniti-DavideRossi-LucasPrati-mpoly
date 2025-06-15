@@ -40,8 +40,8 @@ public final class RentOptionFactoryImpl implements RentOptionFactory {
 
     @Override
     public RentOption allDeedsOfGroupWithSameOwner(final int startRent) {
-        return new RentOptionImpl("Tutti i terreni", 
-        "Se un giocatore possiede tutti i terreni di un determinato gruppo la rendita viene raddoppiata",
+        return new RentOptionImpl("All properties owned", 
+        "If a player owns all the properties of a specific group rent is doubled",
         startRent * 2,
         (deeds, o) -> deeds
                         .stream()
@@ -52,7 +52,7 @@ public final class RentOptionFactoryImpl implements RentOptionFactory {
     public List<RentOption> progressivelyIncreasingPrice(final int startRent, final int multiplyFactor, final int nStations) {
         return Stream.iterate(Pair.of(1, startRent), r -> Pair.of(r.getLeft() + 1, r.getRight() * multiplyFactor))
                     .limit(nStations)
-                    .map(p -> new RentOptionImpl("Si possiede " + p.getLeft() + " proprietà dello stesso gruppo", 
+                    .map(p -> new RentOptionImpl("Own " + p.getLeft() + " properties of the same group", 
                     "",
                     p.getRight(),
                     (deeds, owner) -> deeds.stream()
@@ -63,7 +63,7 @@ public final class RentOptionFactoryImpl implements RentOptionFactory {
 
     @Override
     public RentOption baseRentOption(final int baseRent) {
-        return new RentOptionImpl("Affitto base", "", baseRent, (deeds, ownerId) -> true);
+        return new RentOptionImpl("Base rent", "", baseRent, (deeds, ownerId) -> true);
     }
 
     @Override
