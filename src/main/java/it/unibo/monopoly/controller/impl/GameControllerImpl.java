@@ -151,7 +151,7 @@ public final class GameControllerImpl implements GameController {
                 this.gameView.displayPlayerActions(turnActions.keySet());
             } else if (currentlySittingTile instanceof Special) {
                 final Special specialTile = (Special) currentlySittingTile;
-                if (!"Start".equals(currentlySittingTile.getName())) {
+                if (!"Start".equals(currentlySittingTile.getName()) && delta != 0) {
                     executeEffect(specialTile.getEffect());
                     this.gameView.callChangePositions();
                 }

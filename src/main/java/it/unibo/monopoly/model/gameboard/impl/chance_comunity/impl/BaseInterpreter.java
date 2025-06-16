@@ -7,6 +7,7 @@ import it.unibo.monopoly.model.gameboard.api.Board;
 import it.unibo.monopoly.model.gameboard.api.chancesAndCommunityChest.api.BaseCommand;
 import it.unibo.monopoly.model.gameboard.api.chancesAndCommunityChest.api.BaseCommandFactory;
 import it.unibo.monopoly.model.gameboard.api.chancesAndCommunityChest.api.BaseInterpreterInt;
+import it.unibo.monopoly.model.transactions.api.Bank;
 import it.unibo.monopoly.model.turnation.api.TurnationManager;
 
 /**
@@ -21,8 +22,8 @@ public final class BaseInterpreter implements BaseInterpreterInt {
      * constructor.
      * @param baseCommands the list o the base command supportetd by the game
      */
-    public BaseInterpreter(final List<BaseCommand> baseCommands) {
-        this.baseCommands = List.copyOf(baseCommands);
+    public BaseInterpreter(final Board board, final Bank bank, final TurnationManager turnM) {
+        this.baseCommands = factory.allCommand(bank, board, turnM);
     }
 
     @Override
