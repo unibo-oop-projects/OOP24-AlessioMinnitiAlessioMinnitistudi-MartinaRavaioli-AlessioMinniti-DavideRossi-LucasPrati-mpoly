@@ -46,10 +46,9 @@ final class SwingSetupPanel extends SwingAbstractJPanel implements SetupPanel {
 
 
 
-    public SwingSetupPanel(final MainMenuController controller) {
+    SwingSetupPanel(final MainMenuController controller) {
         this.controller = controller;
         this.setLayout(new BorderLayout());
-        
 
         final JLabel title = new JLabel(TITLE_TEXT_PLAYER_SETUP, SwingConstants.CENTER);
 

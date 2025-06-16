@@ -12,7 +12,7 @@ public class PawnSquare extends JPanel {
     private static final long serialVersionUID = 1L; /**serial version. */
     private static final int SIZE = 20; /**default size. */
     private final Color color; /**color. */
-    
+
     /**
      * Create an element with custom color and size.
      * @param color the custom color to apply
@@ -31,10 +31,11 @@ public class PawnSquare extends JPanel {
     public PawnSquare(final Color color) {
         this(color, SIZE);
     }
-    
+
     /**
-    * set size.
-    */
+     * Set size.
+     * @param size the size to set
+     */
     private void setShapeSize(final int size) {
         super.setPreferredSize(new Dimension(size, size));
     }

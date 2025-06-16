@@ -19,7 +19,7 @@ import it.unibo.monopoly.view.api.GameActionsPanel;
  * Implementation of the {@link GamePanelsFactory}
  * that creates {@link JPanel} components.
  */
-public final class SwingPanelsFactory implements GamePanelsFactory, MainMenuPanelsFactory{
+public final class SwingPanelsFactory implements GamePanelsFactory, MainMenuPanelsFactory {
 
     /**
      * Creates a new {@link SwingPanelsFactory}.
@@ -27,7 +27,7 @@ public final class SwingPanelsFactory implements GamePanelsFactory, MainMenuPane
     public SwingPanelsFactory() {
         //intentional empty constructor
     }
-    
+
     @Override
     public PlayerPanel userInfoPanel() {
         return new SwingPlayerPanel();

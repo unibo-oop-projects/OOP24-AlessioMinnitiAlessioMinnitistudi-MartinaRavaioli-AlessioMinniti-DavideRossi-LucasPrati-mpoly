@@ -31,6 +31,7 @@ public interface MainMenuView {
 
     /**
      * Displays an error message right before close the UI.
+     * @param title the title to display
      * @param message the message to display
      */
     void displayErrorAndExit(String title, String message);
@@ -47,7 +48,7 @@ public interface MainMenuView {
      * @param reachMinPlayers whether the number of players is equal to the minimum allowed
      * @param reachMaxPlayers whether the number of players is equal to the maximum allowed
      */
-    void refreshNumPlayers(final int num, final boolean reachMinPlayers, final boolean reachMaxPlayers);
+    void refreshNumPlayers(int num, boolean reachMinPlayers, boolean reachMaxPlayers);
 
     /**
      * Close the main menu, the game begin.

@@ -17,7 +17,7 @@ import it.unibo.monopoly.view.api.SettingsPanel;
 
 
 final class SwingSettingsPanel extends SwingAbstractJPanel implements SettingsPanel {
-    
+
     private static final long serialVersionUID = 1L;
 
     // Settings Menu
@@ -35,7 +35,7 @@ final class SwingSettingsPanel extends SwingAbstractJPanel implements SettingsPa
     private final JButton infinityModeButton;
 
 
-    public SwingSettingsPanel(final MainMenuController controller) {
+    SwingSettingsPanel(final MainMenuController controller) {
         this.setLayout(new BorderLayout());
         final JLabel title = new JLabel(TITLE_TEXT_SETTINGS, SwingConstants.CENTER);
         title.setForeground(Color.RED);

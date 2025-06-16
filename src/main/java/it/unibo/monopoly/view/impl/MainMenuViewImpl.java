@@ -16,8 +16,11 @@ import it.unibo.monopoly.view.api.SettingsPanel;
 import it.unibo.monopoly.view.api.SetupPanel;
 import it.unibo.monopoly.view.impl.gamepanels.SwingPanelsFactory;
 
-public final class MainMenuViewImpl implements MainMenuView{
-    
+/**
+ * Implementation of the {@link MainMenuView} interface.
+ */
+public final class MainMenuViewImpl implements MainMenuView {
+
     private static final String TITLE_WINDOW = "Monopoly - Main Menu";
 
     // Size of boxes and empty borders
@@ -32,7 +35,7 @@ public final class MainMenuViewImpl implements MainMenuView{
     private final SettingsPanel settingsPanel;
     private final SetupPanel setupPanel;
 
-    final MainMenuPanelsFactory fact = new SwingPanelsFactory();
+    private final MainMenuPanelsFactory fact = new SwingPanelsFactory();
 
 
     /**

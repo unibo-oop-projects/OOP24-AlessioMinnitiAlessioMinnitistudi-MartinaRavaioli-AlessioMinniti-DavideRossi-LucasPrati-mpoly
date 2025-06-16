@@ -29,6 +29,10 @@ import it.unibo.monopoly.view.api.GameboardView;
     * board view implementation.
 */
 public final class GameboardViewImpl extends JPanel implements GameboardView {
+    private static final String FONT_NAME = "Dialog";
+    private static final int FONT_SIZE = 12;
+    private static final double HEIGHT_PERC = 1.0;
+    private static final double WIDTH_PERC = 0.8;
     private static final long serialVersionUID = 1L; /**serial version UID.*/
     private static final int PAWN_SIZE = 5; /**size of the pawns.*/
     private static final int STRIPE_WIDTH = 150; /**width of the stripes of the tiles.*/
@@ -129,9 +133,9 @@ public final class GameboardViewImpl extends JPanel implements GameboardView {
 
     @Override
     public void renderDefaultUI() {
-        GuiUtils.applyGlobalFont(GuiUtils.createFont("Dialog", 12));
+        GuiUtils.applyGlobalFont(GuiUtils.createFont(FONT_NAME, FONT_SIZE));
         this.setLayout(new BorderLayout());
-        this.setSize(GuiUtils.getDimensionWindow(0.8, 1.0));
+        this.setSize(GuiUtils.getDimensionWindow(WIDTH_PERC, HEIGHT_PERC));
         final JPanel board = new JPanel(new GridLayout(this.size, this.size));
         this.add(board);
         final JPanel[][] grid = new JPanel[this.size][this.size];

@@ -36,13 +36,13 @@ final class SwingMenuPanel extends SwingAbstractJPanel implements MenuPanel {
 
     // Size of boxes and empty borders
     private static final int TOP_BORDER = 10;
-    
+
     private final JLabel numPlayersLabel;
     private final JButton decreaseButton;
     private final JButton increaseButton;
 
 
-    public SwingMenuPanel(final MainMenuController controller) {
+    SwingMenuPanel(final MainMenuController controller) {
         this.setLayout(new BorderLayout());
         final JLabel title = new JLabel(TITLE_TEXT_MAIN, SwingConstants.CENTER);
         title.setForeground(Color.RED);
@@ -82,7 +82,7 @@ final class SwingMenuPanel extends SwingAbstractJPanel implements MenuPanel {
 
         this.add(title, BorderLayout.NORTH);
         this.add(midPanel, BorderLayout.CENTER);
-        this.add(continuePanel, BorderLayout.SOUTH);  
+        this.add(continuePanel, BorderLayout.SOUTH);
     }
 
     @Override

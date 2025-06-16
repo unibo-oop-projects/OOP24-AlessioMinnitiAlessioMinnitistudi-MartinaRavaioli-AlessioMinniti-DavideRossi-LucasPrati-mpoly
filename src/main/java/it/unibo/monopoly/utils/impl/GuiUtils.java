@@ -20,7 +20,7 @@ import javax.swing.WindowConstants;
 /**
  * Utility class for common GUI operations.
  */
-public final class GuiUtils extends FontUtils {
+public final class GuiUtils {
 
     private static final double MAX_PERC = 1.0;
     private static final double MIN_PERC = 0.0;
@@ -174,7 +174,7 @@ public final class GuiUtils extends FontUtils {
      */
     public static Font getSmallFontFromConfiguration(final Configuration config) {
         Objects.requireNonNull(config, "The configuration must not be null");
-        return FontUtils.createFont(config.getFontName(), config.getSmallFont());
+        return createFont(config.getFontName(), config.getSmallFont());
     }
 
     /**
@@ -185,8 +185,27 @@ public final class GuiUtils extends FontUtils {
      */
     public static Font getBigFontFromConfiguration(final Configuration config) {
         Objects.requireNonNull(config, "The configuration must not be null");
-        return FontUtils.createFont(config.getFontName(), config.getBigFont());
+        return createFont(config.getFontName(), config.getBigFont());
     }
+
+    /**
+     * Public wrapper for creating a new Font.
+     * @param name the name of the font
+     * @param size the size of the font
+     * @return a new {@link Font}
+     */
+    public static Font createFont(final String name, final int size) {
+        return FontUtils.createFont(name, size);
+    }
+
+    /**
+     * Public wrapper for applying a font globally.
+     * @param font the {@link Font} to apply
+     */
+    public static void applyGlobalFont(final Font font) {
+        FontUtils.applyGlobalFont(font);
+    }
+
 
 
     /**
@@ -211,7 +230,7 @@ public final class GuiUtils extends FontUtils {
     private static void showMessageDialog(final Window parent,
                                           final String title,
                                           final String message,
-                                          final int type) {        
+                                          final int type) {
         JOptionPane.showMessageDialog(parent, message, title, type);
     }
 
