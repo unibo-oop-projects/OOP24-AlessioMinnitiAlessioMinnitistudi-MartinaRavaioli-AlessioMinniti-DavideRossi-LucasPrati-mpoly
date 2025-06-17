@@ -37,7 +37,9 @@ public final class BaseCommandFactoryImpl implements BaseCommandFactory {
 
             @Override
             public String getDesc() {
-                return "move of " + num + " steps then ignore the effect of the tile, \nyou won't have to pay rent but you can neither buy the property. \nif you pass the start point in doing so, the 200$ will be added";
+                return "move of " + num + " steps then ignore the effect of the tile," + 
+                    "\nyou won't have to pay rent but you can neither buy the property." +
+                    "\nif you pass the start point in doing so, the 200$ will be added";
             }
 
             @Override
@@ -74,7 +76,7 @@ public final class BaseCommandFactoryImpl implements BaseCommandFactory {
     private BaseCommand moveIn(final Board board, final TurnationManager turnM) {
         return new BaseCommand() {
 
-            private static final String KEY = "move in tile.\nif you pass the start point in doing so, the 200$ will be added";
+            private static final String KEY = "move in tile";
             private String tile;
 
             @Override
@@ -101,7 +103,8 @@ public final class BaseCommandFactoryImpl implements BaseCommandFactory {
 
             @Override
             public String getDesc() {
-                return "move in " + tile;
+                return "move in " + tile + 
+                    ".\nif you pass the start point in doing so, the 200$ will be added";
             }
 
             @Override
