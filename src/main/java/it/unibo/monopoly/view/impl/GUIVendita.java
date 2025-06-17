@@ -192,7 +192,7 @@ public final class GUIVendita extends JDialog {
 
             final boolean statePayment;
             final Property selectedBuildableProberty = logic.getBuildableProperty(selectedDeed, board);
-            if (logic.sellHouse(selectedBuildableProberty, bank)) {
+            if (logic.sellHouse(selectedBuildableProberty, bank, board)) {
                 statePayment = true;
 
                 this.setValues(selectedDeed, player, bank, board);
@@ -225,7 +225,7 @@ public final class GUIVendita extends JDialog {
 
             final boolean statePayment;
             final Property selectedBuildableProberty = logic.getBuildableProperty(selectedDeed, board);
-            if (logic.sellHotel(selectedBuildableProberty, bank)) {
+            if (logic.sellHotel(selectedBuildableProberty, bank, board)) {
                 statePayment = true;
 
                 this.setValues(selectedDeed, player, bank, board);

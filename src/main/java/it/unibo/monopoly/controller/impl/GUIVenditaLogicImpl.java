@@ -79,10 +79,10 @@ public final class GUIVenditaLogicImpl implements  GUIVenditaLogic, Serializable
             bank.sellHouse(selectedBuildableProberty.getName());
             board.deleteHouseInProperty(selectedBuildableProberty);
             return true;
-        } catch (IllegalAccessException e) {
+        } catch (final IllegalAccessException e) {
             return false;
         }
-        
+
     }
 
     @Override
@@ -91,7 +91,7 @@ public final class GUIVenditaLogicImpl implements  GUIVenditaLogic, Serializable
             bank.sellHotel(selectedBuildableProberty.getName());
             board.deleteHotelInProperty(selectedBuildableProberty);
             return true;
-        } catch (IllegalAccessException e) {
+        } catch (final IllegalAccessException e) {
             return false;
         }
     }
