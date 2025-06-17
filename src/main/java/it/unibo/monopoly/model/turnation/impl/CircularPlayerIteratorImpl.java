@@ -1,6 +1,9 @@
 package it.unibo.monopoly.model.turnation.impl;
 
+import java.awt.Color;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import it.unibo.monopoly.model.turnation.api.Player;
@@ -11,39 +14,127 @@ import it.unibo.monopoly.model.turnation.api.PlayerIterator;
 public class CircularPlayerIteratorImpl implements PlayerIterator {
     private Player currPlayer;
     private int currPosition;
-    private List<Player> elems = new ArrayList<>();
-
+    private final List<Player> elems;
+    /**
+     * constructor.
+     * @param list
+     */
     public CircularPlayerIteratorImpl(final List<Player> list) {
-        this.elems = list;
+        this.elems = new ArrayList<>(list);
         this.currPosition = 0;
         this.currPlayer = this.elems.get(0);
     }
 
     @Override
-    public Player getNext() {
+    public final Player getNext() {
         if (hasMore()) {
-            Player result = this.currPlayer;
-            this.currPosition = this.currPosition++ % this.elems.size();
+            this.currPosition = (this.currPosition + 1) % this.elems.size();
             this.currPlayer = this.elems.get(this.currPosition);
-            return result;
+            return createCurrPlayerCopy();
         }
         return null;
     }
+    /**
+     * create a copy of the player.
+     * @return
+     */
+    private Player createCurrPlayerCopy() {
+        return new Player() {
 
-    @Override
-    public boolean hasMore() {
-        return !this.elems.isEmpty();
+            @Override
+            public Integer getID() {
+               return currPlayer.getID();
+            }
+
+            @Override
+            public String getName() {
+                return currPlayer.getName();
+            }
+
+            @Override
+            public Color getColor() {
+                return currPlayer.getColor();
+            }
+
+            @Override
+            public boolean isAlive() {
+                return currPlayer.isAlive();
+            }
+
+            @Override
+            public boolean isParked() {
+                return currPlayer.isParked();
+            }
+
+            @Override
+            public void park() {
+                currPlayer.park();
+            }
+
+            @Override
+            public boolean isInPrison() {
+                return currPlayer.isInPrison();
+            }
+
+            @Override
+            public void putInPrison() {
+                currPlayer.putInPrison();
+            }
+
+            @Override
+            public boolean canExitPrison(final Collection<Integer> dice) {
+               return currPlayer.canExitPrison(dice);
+            }
+
+            @Override
+            public int turnLeftInPrison() {
+                return currPlayer.turnLeftInPrison();
+            }
+
+            @Override
+            public void decreaseTurnsInPrison() {
+                currPlayer.decreaseTurnsInPrison();
+            }
+
+            @Override
+            public void passTurn() {
+                currPlayer.passTurn();
+            }
+
+        };
     }
 
+    @Override
+    public final boolean hasMore() {
+        return !this.elems.isEmpty();
+    }
+    /**
+     * add the player.     
+     * @param p player
+     */
     public void add(final Player p) {
         this.elems.add(p);
     }
-
+    /**
+    * remove the player.
+    * @param p player
+    */
     public void remove(final Player p) {
         this.elems.remove(p);
     }
-
+    /**
+     * return true if the list contains the player, false if not.
+     * @param p player
+     * @return bool
+     */
     public boolean contains(final Player p) {
         return this.elems.contains(p);
+    }
+    /**
+     * convert the circular iterator into a list.
+     * @return List of Players
+     */
+    public List<Player> toList() {
+        return Collections.unmodifiableList(this.elems);
     }
 }

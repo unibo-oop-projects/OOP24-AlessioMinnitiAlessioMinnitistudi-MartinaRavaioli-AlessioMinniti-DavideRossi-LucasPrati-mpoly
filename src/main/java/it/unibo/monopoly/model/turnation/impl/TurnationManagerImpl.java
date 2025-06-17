@@ -11,16 +11,14 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.monopoly.model.transactions.api.BankState;
 import it.unibo.monopoly.model.turnation.api.Dice;
 import it.unibo.monopoly.model.turnation.api.Player;
-import it.unibo.monopoly.model.turnation.api.PlayerIterator;
 import it.unibo.monopoly.model.turnation.api.TurnationManager;
-import it.unibo.monopoly.utils.impl.CircularLinkedList;
 
 /**
  * turnation manager implementation.
 */
 public class TurnationManagerImpl implements TurnationManager {
     //private CircularLinkedList<Player> players; /**list of players. */
-    private PlayerIterator players;
+    private CircularPlayerIteratorImpl players;
     private Player currPlayer; /**current player. */
     private Dice dice; /**dice. */
     private BankState bankState; /**bankState to communicate with the bank. */
@@ -35,9 +33,10 @@ public class TurnationManagerImpl implements TurnationManager {
         // for (final Player p : plList) {
         //     this.players.addNode(p);
         // }
-        // this.dice = dice;
-        // this.currPlayer = plList.get(0);
-        // this.diceThrown = false;
+        this.players = new CircularPlayerIteratorImpl(plList);
+        this.dice = dice;
+        this.currPlayer = plList.get(0);
+        this.diceThrown = false;
     }
     /**
      * constructor.
@@ -50,21 +49,23 @@ public class TurnationManagerImpl implements TurnationManager {
         justification = "Injection of shared mutable dependencies is intentional and controlled in this architecture."
     )
     public TurnationManagerImpl(final List<Player> plList, final Dice dice, final BankState bankState) {
+        this(plList, dice);
         this.bankState = bankState;
-        this.players = new CircularLinkedList<>();
-        for (final Player p : plList) {
-            this.players.addNode(p);
-        }
-        this.dice = dice;
-        this.currPlayer = plList.get(0);
+        // this.players = new CircularLinkedList<>();
+        // for (final Player p : plList) {
+        //     this.players.addNode(p);
+        // }
+        // this.dice = dice;
+        // this.currPlayer = plList.get(0);
     }
 
     @Override
     public final void setList(final List<Player> plList) {
-        this.players = new CircularLinkedList<>();
-        for (final Player p : plList) {
-            this.players.addNode(p);
-        }
+        this.players = new CircularPlayerIteratorImpl(plList);
+        // this.players = new CircularLinkedList<>();
+        // for (final Player p : plList) {
+        //     this.players.addNode(p);
+        // }
     }
 
     @Override
@@ -84,7 +85,7 @@ public class TurnationManagerImpl implements TurnationManager {
 
     @Override
     public final void addPlayer(final Player p) {
-        this.players.addNode(p);
+        this.players.add(p);
     }
 
 
@@ -96,7 +97,7 @@ public class TurnationManagerImpl implements TurnationManager {
     @Override
     public final Player getNextPlayer() { 
         if (canPassTurn()) {
-            this.currPlayer = players.giveNextNode(this.currPlayer);
+            this.currPlayer = players.getNext();
             this.diceThrown = false;
             if (isCurrentPlayerParked()) {
                 passedParkTurn();
@@ -238,7 +239,7 @@ public class TurnationManagerImpl implements TurnationManager {
         Pair<Integer, Integer> winner = Pair.of(this.bankState.rankPlayers().get(0).getLeft(), 
                                                 this.bankState.rankPlayers().get(0).getRight());
         final Pair<String, Integer> winnerName;
-        Player player = this.players.getHead();
+        Player player = this.players.toList().get(0);
 
         for (final Pair<Integer, Integer> p : this.bankState.rankPlayers()) {
             if (p.getRight() > winner.getRight()) {
@@ -272,15 +273,21 @@ public class TurnationManagerImpl implements TurnationManager {
 
     @Override
     public final void deletePlayer(final Player player) {
-        final List<Player> list = this.players.toList();
+        // final List<Player> list = this.players.toList();
 
-        list.removeIf(p -> p.getID().equals(player.getID()));
-        getNextPlayer();
-        this.players.clear();
+        // list.removeIf(p -> p.getID().equals(player.getID()));
+        // getNextPlayer();
+        // this.players.clear();
 
-        for (final Player p : list) {
-            this.players.addNode(p);
+        // for (final Player p : list) {
+        //     this.players.add(p);
+        // }
+        for (final Player p : this.players.toList()) {
+            if (p.getID().equals(player.getID())) {
+                this.players.remove(p);
+            }
         }
+        getNextPlayer();
         this.bankState.deletePlayer(player);
     }
 
