@@ -113,22 +113,22 @@ public interface Board {
      * build house in the property.
      * @param prop property to change
     */
-    void buildHouseInProperty(Property prop);
+    boolean buildHouseInProperty(Property prop);
     /**
      * build hotel in the property.
      * @param prop property to change
     */
-    void buildHotelInProperty(Property prop);
+    boolean buildHotelInProperty(Property prop);
     /**
      * delete an house in the property.
      * @param prop
      */
-    void deleteHouseInProperty(Property prop) throws IllegalAccessException;
+    boolean deleteHouseInProperty(Property prop) throws IllegalAccessException;
     /**
      * delete the hotel in the property.
      * @param prop
      */
-    void deleteHotelInProperty(Property prop) throws IllegalAccessException;
+    boolean deleteHotelInProperty(Property prop) throws IllegalAccessException;
     /**
      * get the previous position of the pawn associated with the id. 
      * @param id id of the pawn

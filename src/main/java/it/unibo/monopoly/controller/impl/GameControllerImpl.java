@@ -234,16 +234,19 @@ public final class GameControllerImpl implements GameController {
                     gameView.callBuyHouse(currentlySittingProperty);
                 }
                 case BUYHOTEL -> {
-                    this.board.buildHotelInProperty(currentlySittingProperty);
-                    gameView.callBuyHotel(currentlySittingProperty);
+                    if (this.board.buildHotelInProperty(currentlySittingProperty)) {
+                        gameView.callBuyHotel(currentlySittingProperty);
+                    }
                 }
                 case SELLHOUSE -> {
-                    this.board.deleteHouseInProperty(currentlySittingProperty);
-                    gameView.callSellHouse(currentlySittingProperty);
+                    if (this.board.deleteHouseInProperty(currentlySittingProperty)) {
+                        gameView.callSellHouse(currentlySittingProperty);
+                    }
                 }
                 case SELLHOTEL -> {
-                    this.board.deleteHotelInProperty(currentlySittingProperty);
-                    gameView.callSellHotel(currentlySittingProperty); 
+                    if (this.board.deleteHotelInProperty(currentlySittingProperty)) {
+                        gameView.callSellHotel(currentlySittingProperty); 
+                    }
                 }
                 default -> throw new IllegalArgumentException("Unexpected value: " + actionName);
             }

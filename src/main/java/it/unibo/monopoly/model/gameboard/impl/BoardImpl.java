@@ -188,29 +188,33 @@ public class BoardImpl implements Board {
     }
 
     @Override
-    public final void buildHouseInProperty(final Property prop) {
+    public final boolean buildHouseInProperty(final Property prop) {
         if (!canBuildHouseInProperty(prop)) {
-            throw new IllegalArgumentException("this property is not buildable");
+            throw new IllegalArgumentException("this property can't build the house");
         }
         prop.buildHouse();
+        return true;
     }
 
     @Override
-    public final void buildHotelInProperty(final Property prop) {
+    public final boolean buildHotelInProperty(final Property prop) {
         if (!canBuildHotelInProperty(prop)) {
-            throw new IllegalArgumentException("this property isn't buildable");
+            throw new IllegalArgumentException("this property can't build the hotel");
         }
         prop.buildHotel();
+        return true;
     }
 
     @Override
-    public final void deleteHouseInProperty(final Property prop) throws IllegalAccessException {
+    public final boolean deleteHouseInProperty(final Property prop) throws IllegalAccessException {
         prop.deleteHouse();
+        return true;
     }
 
     @Override
-    public final void deleteHotelInProperty(final Property prop) throws IllegalAccessException {
+    public final boolean deleteHotelInProperty(final Property prop) throws IllegalAccessException {
         prop.deleteHotel();
+        return true;
     }
     @Override
     public final Position getPrevPawnPosition(final int id) {
