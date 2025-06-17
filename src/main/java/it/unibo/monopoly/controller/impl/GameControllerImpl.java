@@ -18,6 +18,7 @@ import it.unibo.monopoly.model.gameboard.api.Pawn;
 import it.unibo.monopoly.model.gameboard.api.Property;
 import it.unibo.monopoly.model.gameboard.api.Special;
 import it.unibo.monopoly.model.gameboard.api.Tile;
+import it.unibo.monopoly.model.gameboard.impl.BuildablePropertyImpl;
 import it.unibo.monopoly.model.transactions.api.Bank;
 import it.unibo.monopoly.model.transactions.api.PropertyAction;
 import it.unibo.monopoly.model.transactions.api.PropertyActionsEnum;
@@ -223,20 +224,33 @@ public final class GameControllerImpl implements GameController {
             gameView.displayMessage(action.getDescription() + " eseguita con successo");
             final Property currentlySittingProperty = (Property) this.board.getTileForPawn(
                                                         this.turnationManager.getIdCurrPlayer());
+            gameView.displayMessage("" + (currentlySittingProperty instanceof BuildablePropertyImpl));
             switch (actionName) {
                 case BUY -> gameView.callBuyProperty(currentlySittingProperty.getName(), 
                                                     this.turnationManager.getCurrPlayer().getColor());
                 case SELL -> gameView.callClearPanel(currentlySittingProperty.getName());
-                case BUYHOUSE -> gameView.callBuyHouse(currentlySittingProperty);
-                case BUYHOTEL -> gameView.callBuyHotel(currentlySittingProperty);
-                case SELLHOUSE -> gameView.callSellHouse(currentlySittingProperty);
-                case SELLHOTEL -> gameView.callSellHotel(currentlySittingProperty);
-                default -> {
+                case BUYHOUSE -> {
+                    this.board.buildHouseInProperty(currentlySittingProperty);
+                    gameView.callBuyHouse(currentlySittingProperty);
                 }
+                case BUYHOTEL -> {
+                    this.board.buildHotelInProperty(currentlySittingProperty);
+                    gameView.callBuyHotel(currentlySittingProperty);
+                }
+                case SELLHOUSE -> {
+                    this.board.deleteHouseInProperty(currentlySittingProperty);
+                    gameView.callSellHouse(currentlySittingProperty);
+                }
+                case SELLHOTEL -> {
+                    this.board.deleteHotelInProperty(currentlySittingProperty);
+                    gameView.callSellHotel(currentlySittingProperty); 
+                }
+                default -> throw new IllegalArgumentException("Unexpected value: " + actionName);
             }
+            refreshBankPlayerInfo();
             refreshPlayerInfo();
             refreshCurrentTileInfo();
-        } catch (final IllegalStateException | IllegalArgumentException e) {
+        } catch (final IllegalStateException | IllegalArgumentException | IllegalAccessException e) {
             gameView.displayError(e);
         }
     }
