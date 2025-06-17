@@ -130,7 +130,7 @@ public final class GameControllerImpl implements GameController {
             final int currentPlayerId = this.turnationManager.getIdCurrPlayer();
             int delta = 0;
 
-            if (!this.turnationManager.isCurrentPlayerInPrison()) {
+            if (result.getRight() == null) {
                 delta = this.board.movePawn(currentPlayerId, result.getLeft());
                 if (result.getRight() != null) {
                     this.gameView.displayMessage(result.getRight());
