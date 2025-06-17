@@ -40,7 +40,6 @@ class HousesTitleDeedTest {
     private static final Function<Integer, Integer> HOUSE_PRICE = d -> HOUSE_PRICE_INT;
     private static final Function<Integer, Integer> HOTEL_PRICE = d -> HOTEL_PRICE_INT;
     private BuildablePropertyImpl referencedProperty;
-    private ImmutableProperty property;
     private TitleDeed deed;
     private TitleDeed decorated;
     private List<RentOption> housesOptions;
@@ -49,7 +48,7 @@ class HousesTitleDeedTest {
     void setUp() {
         referencedProperty = new BuildablePropertyImpl(
         new NormalPropertyImpl(TITLE_DEED_NAME, new PositionImpl(POSITION), GROUP_NAME));
-        property = new ImmutableProperty(referencedProperty);
+        final ImmutableProperty property = new ImmutableProperty(referencedProperty);
         housesOptions = new RentOptionFactoryImpl().housesAndHotelsOptions(BASE_RENT_PRICE, NHOUSES, true);
         decorated = new BaseTitleDeed(GROUP_NAME, TITLE_DEED_NAME, SALE_PRICE, MORTGAGE_PRICE_FUNCTION, BASE_RENT_PRICE);
         deed = new TitleDeedWithHouses(decorated,

@@ -58,8 +58,13 @@ class BankTest {
     private final BuildablePropertyImpl referencedProperty = new BuildablePropertyImpl(
         new NormalPropertyImpl(TITLE_DEED_NAME3, new PositionImpl(4), Group.GREEN));
     private final ImmutableProperty property = new ImmutableProperty(referencedProperty);
-    private final TitleDeed decorated = new BaseTitleDeed(Group.GREEN, TITLE_DEED_NAME3, PROPERTY_SALE_PRICE2, s -> s / 2, BASE_RENT);
-    private final List<RentOption> housesOptions = new RentOptionFactoryImpl().housesAndHotelsOptions(BASE_RENT_PRICE, NHOUSES, true);
+    private final TitleDeed decorated = new BaseTitleDeed(Group.GREEN, 
+                                                            TITLE_DEED_NAME3, PROPERTY_SALE_PRICE2, 
+                                                            s -> s / 2, BASE_RENT);
+    private final List<RentOption> housesOptions = new RentOptionFactoryImpl()
+                                                        .housesAndHotelsOptions(BASE_RENT_PRICE, 
+                                                                                NHOUSES, 
+                                                                                true);
 
 
     private final Set<BankAccount> accounts = Set.of(

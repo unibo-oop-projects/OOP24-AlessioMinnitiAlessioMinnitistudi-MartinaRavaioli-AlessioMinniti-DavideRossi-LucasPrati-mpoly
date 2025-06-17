@@ -53,8 +53,8 @@ class TurnationManagerTest {
 
     @BeforeEach
     void setUp() {
-        Bank bank = new BankImpl(accounts, deeds);
-        Dice dice = new DiceImpl(NDICES);
+        final Bank bank = new BankImpl(accounts, deeds);
+        final Dice dice = new DiceImpl(NDICES);
         turnManager = new TurnationManagerImpl(players, dice, bank.getBankStateObject());
     }
 
@@ -73,8 +73,7 @@ class TurnationManagerTest {
             turnManager.moveByDices();
             assertEquals(players.get(0).getID(), turnManager.getNextPlayer().getID(), "Cycle back to p1");
         } catch (final IllegalAccessException e) {
-            // TODO Auto-generated catch block
-            //e.getMessage();
+            e.printStackTrace();
         }
     }
 
@@ -86,8 +85,7 @@ class TurnationManagerTest {
             turnManager.getNextPlayer();
             assertEquals(2, turnManager.getIdCurrPlayer(), "Next player ID should be 2");
         } catch (final IllegalAccessException e) {
-            // TODO Auto-generated catch block
-            //e.getMessage();
+            e.printStackTrace();
         }
     }
 
