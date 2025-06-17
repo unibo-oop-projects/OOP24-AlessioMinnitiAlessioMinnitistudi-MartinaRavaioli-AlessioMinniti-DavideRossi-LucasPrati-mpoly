@@ -1,7 +1,7 @@
 package it.unibo.monopoly.model.gameboard.impl.chance_comunity.impl;
 
-import it.unibo.monopoly.model.gameboard.api.chancesAndCommunityChest.api.ChanceAndCommunityChest;
-import it.unibo.monopoly.model.gameboard.api.chancesAndCommunityChest.api.Command;
+import it.unibo.monopoly.model.gameboard.api.chances_communiy.api.ChanceAndCommunityChest;
+import it.unibo.monopoly.model.gameboard.api.chances_communiy.api.Command;
 import it.unibo.monopoly.model.turnation.api.Player;
 
 /**

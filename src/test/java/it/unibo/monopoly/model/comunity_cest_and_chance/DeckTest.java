@@ -20,8 +20,8 @@ import it.unibo.monopoly.model.gameboard.api.CardFactory;
 import it.unibo.monopoly.model.gameboard.api.Pawn;
 import it.unibo.monopoly.model.gameboard.api.PawnFactory;
 import it.unibo.monopoly.model.gameboard.api.Tile;
-import it.unibo.monopoly.model.gameboard.api.chancesAndCommunityChest.api.ChancheAndCommunityChestDeck;
-import it.unibo.monopoly.model.gameboard.api.chancesAndCommunityChest.api.DeckCreator;
+import it.unibo.monopoly.model.gameboard.api.chances_communiy.api.ChancheAndCommunityChestDeck;
+import it.unibo.monopoly.model.gameboard.api.chances_communiy.api.DeckCreator;
 import it.unibo.monopoly.model.gameboard.impl.BoardImpl;
 import it.unibo.monopoly.model.gameboard.impl.CardDTO;
 import it.unibo.monopoly.model.gameboard.impl.CardFactoryImpl;
@@ -141,7 +141,7 @@ class DeckTest {
     void testDeck() {
         try {
             final List<String> descs = List.of("deposit 50", 
-                                                    "move in Jail / Just Visiting" 
+                                                    "move in Jail / Just Visiting.\nif you pass the start point in doing so, the 200$ will be added" 
                                                     + " then\n" 
                                                     + "buy Jail / Just Visiting if not owned otherwise pay it's rent",
                                                     "withdraw 50");

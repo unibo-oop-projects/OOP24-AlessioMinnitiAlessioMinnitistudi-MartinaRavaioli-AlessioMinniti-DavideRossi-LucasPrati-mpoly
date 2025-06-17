@@ -4,9 +4,9 @@ import java.util.List;
 import java.util.Optional;
 
 import it.unibo.monopoly.model.gameboard.api.Board;
-import it.unibo.monopoly.model.gameboard.api.chancesAndCommunityChest.api.BaseCommand;
-import it.unibo.monopoly.model.gameboard.api.chancesAndCommunityChest.api.BaseCommandFactory;
-import it.unibo.monopoly.model.gameboard.api.chancesAndCommunityChest.api.BaseInterpreterInt;
+import it.unibo.monopoly.model.gameboard.api.chances_communiy.api.BaseCommand;
+import it.unibo.monopoly.model.gameboard.api.chances_communiy.api.BaseCommandFactory;
+import it.unibo.monopoly.model.gameboard.api.chances_communiy.api.BaseInterpreterInt;
 import it.unibo.monopoly.model.transactions.api.Bank;
 import it.unibo.monopoly.model.turnation.api.TurnationManager;
 
@@ -20,7 +20,9 @@ public final class BaseInterpreter implements BaseInterpreterInt {
 
     /**
      * constructor.
-     * @param baseCommands the list o the base command supportetd by the game
+     * @param bank to get the list of possible base commands
+     * @param board to get the list of possible base commands
+     * @param turnM to get the list of possible base commands
      */
     public BaseInterpreter(final Board board, final Bank bank, final TurnationManager turnM) {
         this.baseCommands = factory.allCommand(bank, board, turnM);

@@ -1,6 +1,6 @@
 package it.unibo.monopoly.model.gameboard.impl.chance_comunity.impl;
 
-import it.unibo.monopoly.model.gameboard.api.chancesAndCommunityChest.api.Parser;
+import it.unibo.monopoly.model.gameboard.api.chances_communiy.api.Parser;
 
 /**
  * implementation of a parser on hypen, returns the strings before every hypen.
