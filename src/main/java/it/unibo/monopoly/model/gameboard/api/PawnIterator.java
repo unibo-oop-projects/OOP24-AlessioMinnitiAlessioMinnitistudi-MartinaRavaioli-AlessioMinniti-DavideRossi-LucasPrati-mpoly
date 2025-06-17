@@ -1,6 +1,5 @@
-package it.unibo.monopoly.utils.api;
+package it.unibo.monopoly.model.gameboard.api;
 
-import it.unibo.monopoly.model.gameboard.api.Pawn;
 /**
  * iterator of pawn.
  * it gives you the pawn with getNext.
