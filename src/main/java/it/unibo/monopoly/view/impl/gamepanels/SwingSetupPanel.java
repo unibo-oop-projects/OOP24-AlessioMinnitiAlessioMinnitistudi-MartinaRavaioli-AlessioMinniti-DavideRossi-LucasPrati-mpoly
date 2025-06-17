@@ -82,6 +82,7 @@ final class SwingSetupPanel extends SwingAbstractJPanel implements SetupPanel {
         this.add(title, BorderLayout.NORTH);
         this.add(scrollPane, BorderLayout.CENTER);
         this.add(startPanel, BorderLayout.SOUTH);
+        this.setVisible(true);
     }
 
     @Override
@@ -106,5 +107,7 @@ final class SwingSetupPanel extends SwingAbstractJPanel implements SetupPanel {
             playersPanel.add(row);
             playersPanel.add(Box.createVerticalStrut(GAP));
         }
+        playersPanel.revalidate();
+        playersPanel.repaint();
     }
 }

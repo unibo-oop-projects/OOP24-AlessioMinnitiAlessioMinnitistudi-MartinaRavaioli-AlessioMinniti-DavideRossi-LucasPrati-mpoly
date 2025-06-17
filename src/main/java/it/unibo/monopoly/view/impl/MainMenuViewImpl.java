@@ -84,7 +84,7 @@ public final class MainMenuViewImpl implements MainMenuView {
         mainPanel.removeAll();
         setupPanel.renderDefaultUI();
         mainPanel.add(setupPanel.getPanel());
-        mainFrame.repaint();
+        GuiUtils.refresh(mainFrame);
     }
 
     @Override
@@ -106,12 +106,10 @@ public final class MainMenuViewImpl implements MainMenuView {
     @Override
     public void refreshSettingsData(final BankAccountType type) {
         settingsPanel.refreshSettingsData(type);
-        mainFrame.repaint();
     }
 
     @Override
     public void refreshNumPlayers(final int num, final boolean minPlayers, final boolean maxPlayers) {
         menuPanel.refreshNumPlayers(num, minPlayers, maxPlayers);
-        mainFrame.repaint();
     }
 }
