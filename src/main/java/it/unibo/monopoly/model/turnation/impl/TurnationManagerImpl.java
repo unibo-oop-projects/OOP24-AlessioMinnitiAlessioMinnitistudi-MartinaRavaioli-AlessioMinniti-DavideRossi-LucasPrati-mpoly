@@ -11,6 +11,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.monopoly.model.transactions.api.BankState;
 import it.unibo.monopoly.model.turnation.api.Dice;
 import it.unibo.monopoly.model.turnation.api.Player;
+import it.unibo.monopoly.model.turnation.api.PlayerIterator;
 import it.unibo.monopoly.model.turnation.api.TurnationManager;
 import it.unibo.monopoly.utils.impl.CircularLinkedList;
 
@@ -18,7 +19,8 @@ import it.unibo.monopoly.utils.impl.CircularLinkedList;
  * turnation manager implementation.
 */
 public class TurnationManagerImpl implements TurnationManager {
-    private CircularLinkedList<Player> players; /**list of players. */
+    //private CircularLinkedList<Player> players; /**list of players. */
+    private PlayerIterator players;
     private Player currPlayer; /**current player. */
     private Dice dice; /**dice. */
     private BankState bankState; /**bankState to communicate with the bank. */
@@ -29,13 +31,13 @@ public class TurnationManagerImpl implements TurnationManager {
      * @param dice dice
     */
     public TurnationManagerImpl(final List<Player> plList, final Dice dice) {
-        this.players = new CircularLinkedList<>();
-        for (final Player p : plList) {
-            this.players.addNode(p);
-        }
-        this.dice = dice;
-        this.currPlayer = plList.get(0);
-        this.diceThrown = false;
+        // this.players = new CircularLinkedList<>();
+        // for (final Player p : plList) {
+        //     this.players.addNode(p);
+        // }
+        // this.dice = dice;
+        // this.currPlayer = plList.get(0);
+        // this.diceThrown = false;
     }
     /**
      * constructor.
