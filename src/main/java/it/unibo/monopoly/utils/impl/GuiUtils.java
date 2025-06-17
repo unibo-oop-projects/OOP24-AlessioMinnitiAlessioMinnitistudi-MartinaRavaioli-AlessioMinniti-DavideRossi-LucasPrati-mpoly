@@ -6,8 +6,9 @@ import java.awt.Component;
 import java.awt.Dialog;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.GraphicsEnvironment;
 import java.awt.LayoutManager;
-import java.awt.Toolkit;
+import java.awt.Rectangle;
 import java.awt.Window;
 import java.util.Objects;
 
@@ -162,8 +163,14 @@ public final class GuiUtils {
                 + ") does not follow this rule: 0% < val <= 100%"
             );
         }
-        final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        return new Dimension((int) (screenSize.getWidth() * widthPerc), (int) (screenSize.getHeight() * heightPerc));
+        final Rectangle available = GraphicsEnvironment
+                                        .getLocalGraphicsEnvironment()
+                                        .getMaximumWindowBounds();
+
+        return new Dimension(
+                    (int) (available.width  * widthPerc),
+                    (int) (available.height * heightPerc)
+        );
     }
 
     /**
@@ -195,8 +202,6 @@ public final class GuiUtils {
         FontUtils.applyGlobalFont(font);
     }
 
-
-
     /**
      * Checks whether the provided parameters represent a valid and consistent configuration for a Swing window setup.
      * @param window the window to configure (must be a {@link JFrame} or {@link JDialog})
@@ -215,6 +220,8 @@ public final class GuiUtils {
                 && width > 0
                 && height > 0;
     }
+
+
 
     private static void showMessageDialog(final Window parent,
                                           final String title,
