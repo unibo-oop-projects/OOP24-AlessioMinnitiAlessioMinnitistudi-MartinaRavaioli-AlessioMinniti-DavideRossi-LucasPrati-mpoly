@@ -16,8 +16,7 @@ public final class Configuration {
     private final int numDice;
     private final int sidesPerDie;
     private final String fontName;
-    private final int bigFont;
-    private final int smallFont;
+    private final int fontSize;
     private final int initBalance;
     private final String rulesPath;
     private final String cardsPath;
@@ -26,7 +25,7 @@ public final class Configuration {
 
 
     private Configuration(final int minPlayer, final int maxPlayer, final int numDice, final int sidesPerDie,
-                            final String fontName, final int bigFont, final int smallFont, final int initBalance,
+                            final String fontName, final int fontSize, final int initBalance,
                             final String rulesPath, final String cardsPath,
                             final List<Color> playerColors) {
         this.minPlayer = minPlayer;
@@ -34,8 +33,7 @@ public final class Configuration {
         this.numDice = numDice;
         this.sidesPerDie = sidesPerDie;
         this.fontName = fontName;
-        this.bigFont = bigFont;
-        this.smallFont = smallFont;
+        this.fontSize = fontSize;
         this.initBalance = initBalance;
         this.rulesPath = rulesPath;
         this.cardsPath = cardsPath;
@@ -80,17 +78,10 @@ public final class Configuration {
     }
 
     /**
-     * @return the maximum size of the font
+     * @return the size of the font
      */
-    public int getBigFont() {
-        return bigFont;
-    }
-
-    /**
-     * @return the minimum size of the font
-     */
-    public int getSmallFont() {
-        return smallFont;
+    public int getFontSize() {
+        return fontSize;
     }
 
     /**
@@ -131,7 +122,7 @@ public final class Configuration {
                 && numDice > 0
                 && sidesPerDie > 0
                 && FontUtils.isValidFontName(fontName)
-                && smallFont < bigFont
+                && fontSize > 0
                 && initBalance >= 0
                 && FileChecker.checkPath(rulesPath)
                 && FileChecker.checkPath(cardsPath);
@@ -140,7 +131,6 @@ public final class Configuration {
 
     /**
      * Set some values of the application according to the file for the configuration.
-     * 
      * @param configFile the path of the configuration file
      * @return a {@link Configuration} according to {@code configFile} if consistent. Otherwise a default {@link Configuration}
      */
@@ -171,8 +161,7 @@ public final class Configuration {
         private static final int NUM_DICE = 2;
         private static final int SIDES_PER_DIE = 6;
         private static final String FONT_NAME = "SansSerif";
-        private static final int BIG_FONT = 24;
-        private static final int SMALL_FONT = 16;
+        private static final int FONT_SIZE = 16;
         private static final int INIT_BALANCE = 2000;
         private static final String RULES_PATH = "rules/rules.txt";
         private static final String CARDS_PATH = "cards/cards.json";
@@ -198,8 +187,7 @@ public final class Configuration {
         private int numDice = NUM_DICE;
         private int sidesPerDie = SIDES_PER_DIE;
         private String fontName = FONT_NAME;
-        private int bigFont = BIG_FONT;
-        private int smallFont = SMALL_FONT;
+        private int fontSize = FONT_SIZE;
         private int initBalance = INIT_BALANCE;
         private String rulesPath = RULES_PATH;
         private String cardspath = CARDS_PATH;
@@ -253,20 +241,11 @@ public final class Configuration {
         }
 
         /**
-         * @param bigFont the maximum size of the font
+         * @param fontSize the size of the font
          * @return this builder, for method chaining
          */
-        public Builder withBigFont(final int bigFont) {
-            this.bigFont = bigFont;
-            return this;
-        }
-
-        /**
-         * @param smallFont the minimum size of the font
-         * @return this builder, for method chaining
-         */
-        public Builder withSmallFont(final int smallFont) {
-            this.smallFont = smallFont;
+        public Builder withFontSize(final int fontSize) {
+            this.fontSize = fontSize;
             return this;
         }
 
@@ -326,7 +305,7 @@ public final class Configuration {
             }
             consumed = true;
             return new Configuration(minPlayer, maxPlayer, numDice, sidesPerDie,
-                                    fontName, bigFont, smallFont, initBalance,
+                                    fontName, fontSize, initBalance,
                                     rulesPath, cardspath, playerColors);
         }
 
@@ -343,8 +322,7 @@ public final class Configuration {
                 && NUM_DICE      ==  config.getNumDice()
                 && SIDES_PER_DIE ==  config.getSidesPerDie()
                 && FONT_NAME.equals(config.getFontName())
-                && BIG_FONT      ==  config.getBigFont()
-                && SMALL_FONT    ==  config.getSmallFont()
+                && FONT_SIZE    ==  config.getFontSize()
                 && INIT_BALANCE  ==  config.getInitBalance()
                 && RULES_PATH.equals(config.getRulesPath())
                 && CARDS_PATH.equals(config.getCardsPath())

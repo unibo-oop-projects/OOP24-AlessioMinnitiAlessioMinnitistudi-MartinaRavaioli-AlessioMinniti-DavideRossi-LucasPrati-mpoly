@@ -167,25 +167,14 @@ public final class GuiUtils {
     }
 
     /**
-     * Get a new {@link Font} with a small size, according to the {@link Configuration}.
-     * @param config a consistent {@link Configuration} for upload {@code size} and {@code name} parameters
+     * Get a new {@link Font} according to the {@link Configuration}.
+     * @param config a consistent {@link Configuration} for settings
      * @return a new {@link Font} according to the {@link Configuration} parameters
      * @throws NullPointerException if the {@link Configuration} is {@code null}
      */
-    public static Font getSmallFontFromConfiguration(final Configuration config) {
+    public static Font getFontFromConfiguration(final Configuration config) {
         Objects.requireNonNull(config, "The configuration must not be null");
-        return createFont(config.getFontName(), config.getSmallFont());
-    }
-
-    /**
-     * Get a new {@link Font} with a big size, according to the {@link Configuration}.
-     * @param config a consistent {@link Configuration} for upload {@code size} and {@code name} parameters
-     * @return a new {@link Font} according to the {@link Configuration} parameters
-     * @throws NullPointerException if the {@link Configuration} is {@code null}
-     */
-    public static Font getBigFontFromConfiguration(final Configuration config) {
-        Objects.requireNonNull(config, "The configuration must not be null");
-        return createFont(config.getFontName(), config.getBigFont());
+        return createFont(config.getFontName(), config.getFontSize());
     }
 
     /**

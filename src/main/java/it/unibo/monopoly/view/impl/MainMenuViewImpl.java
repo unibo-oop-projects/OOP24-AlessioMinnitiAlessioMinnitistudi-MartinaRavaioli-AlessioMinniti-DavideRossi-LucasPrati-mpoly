@@ -104,6 +104,11 @@ public final class MainMenuViewImpl implements MainMenuView {
     }
 
     @Override
+    public void showInfoMessage(String title, String message) {
+        GuiUtils.showInfoMessage(mainFrame, title, message);
+    }
+
+    @Override
     public void refreshSettingsData(final BankAccountType type) {
         settingsPanel.refreshSettingsData(type);
     }

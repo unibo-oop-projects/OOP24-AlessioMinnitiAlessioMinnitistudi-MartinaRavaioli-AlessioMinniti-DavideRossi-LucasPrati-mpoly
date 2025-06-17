@@ -37,6 +37,13 @@ public interface MainMenuView {
     void displayErrorAndExit(String title, String message);
 
     /**
+     * Displays a message.
+     * @param title the title to display
+     * @param message the message to display
+     */
+    void showInfoMessage(String title, String message);
+
+    /**
      * Ask the {@code view} to display the current game mode set.
      * @param type the {@link BankAccountType} selected
      */

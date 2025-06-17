@@ -197,6 +197,12 @@ public final class MainMenuControllerImpl implements MainMenuController {
     @Override
     public void start() {
         view = new MainMenuViewImpl(this);
+        if (Configuration.Builder.isDefault(config)) {
+            view.showInfoMessage(
+                "Default configuration",
+                "Error loading configuration file, default configuration will be used"
+            );
+        }
     }
 
     @Override

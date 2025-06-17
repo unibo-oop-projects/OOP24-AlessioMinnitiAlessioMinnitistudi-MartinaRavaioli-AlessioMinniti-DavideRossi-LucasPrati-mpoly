@@ -26,7 +26,7 @@ public final class LaunchApp {
     public static void main(final String[] args) throws FileNotFoundException {
 
         final Configuration config = Configuration.configureFromFile(CONFIG_FILE);
-        GuiUtils.applyGlobalFont(GuiUtils.getSmallFontFromConfiguration(config));
+        GuiUtils.applyGlobalFont(GuiUtils.getFontFromConfiguration(config));
 
         SwingUtilities.invokeLater(() -> {
             new MainMenuControllerImpl(config).start();

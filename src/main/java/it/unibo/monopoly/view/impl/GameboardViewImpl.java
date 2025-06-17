@@ -218,7 +218,7 @@ public final class GameboardViewImpl extends JPanel implements GameboardView {
         }
 
         this.setVisible(true);
-        GuiUtils.applyGlobalFont(GuiUtils.getSmallFontFromConfiguration(controller.getConfiguration()));
+        GuiUtils.applyGlobalFont(GuiUtils.getFontFromConfiguration(controller.getConfiguration()));
     }
 
     @Override
