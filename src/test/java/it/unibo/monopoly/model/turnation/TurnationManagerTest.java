@@ -76,7 +76,7 @@ class TurnationManagerTest {
             turnManager.moveByDices();
             assertEquals(players.get(0).getID(), turnManager.getNextPlayer().getID(), "Cycle back to p1");
         } catch (final IllegalAccessException e) {
-            LOGGER.error("Errore ", e.getMessage(), e);
+            LOGGER.error("Errore ", e);
         }
     }
 
@@ -88,7 +88,7 @@ class TurnationManagerTest {
             turnManager.getNextPlayer();
             assertEquals(2, turnManager.getIdCurrPlayer(), "Next player ID should be 2");
         } catch (final IllegalAccessException e) {
-            LOGGER.error("Errore ", e.getMessage(), e);
+            LOGGER.error("Errore ", e);
         }
     }
 

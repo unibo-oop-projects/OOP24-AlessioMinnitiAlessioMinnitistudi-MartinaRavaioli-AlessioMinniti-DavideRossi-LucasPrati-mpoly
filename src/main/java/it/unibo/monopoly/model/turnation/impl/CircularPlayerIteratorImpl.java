@@ -137,4 +137,9 @@ public class CircularPlayerIteratorImpl implements PlayerIterator {
     public List<Player> toList() {
         return Collections.unmodifiableList(this.elems);
     }
+
+    @Override
+    public Player getCurrent() {
+        return createCurrPlayerCopy();
+    }
 }
