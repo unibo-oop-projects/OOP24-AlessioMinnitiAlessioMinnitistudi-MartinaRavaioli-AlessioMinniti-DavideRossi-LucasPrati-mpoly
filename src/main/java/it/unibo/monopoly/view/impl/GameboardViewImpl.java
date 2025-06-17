@@ -278,14 +278,16 @@ public final class GameboardViewImpl extends JPanel implements GameboardView {
                 for (final Component c : p.getComponents()) {
                     if (HOUSE.equals(c.getName()) && c instanceof JLabel) {
                         p.remove(c);
+                        p.revalidate();
+                        p.repaint();
+
                         if (numHouses > 0) {
                             final JLabel label = new JLabel("HOUSES: " + numHouses);
                             label.setName(HOUSE);
-                            label.setForeground(prop.getGroup().getColor());
+                            label.setForeground(controller.getCurrPlayer().getColor());
                             p.add(label);
                         }
-                        p.revalidate();
-                        p.repaint();
+
                         break;
                     }
                 }

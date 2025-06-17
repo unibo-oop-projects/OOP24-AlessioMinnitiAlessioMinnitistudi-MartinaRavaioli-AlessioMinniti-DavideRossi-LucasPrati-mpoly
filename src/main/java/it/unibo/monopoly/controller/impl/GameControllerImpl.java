@@ -18,7 +18,6 @@ import it.unibo.monopoly.model.gameboard.api.Pawn;
 import it.unibo.monopoly.model.gameboard.api.Property;
 import it.unibo.monopoly.model.gameboard.api.Special;
 import it.unibo.monopoly.model.gameboard.api.Tile;
-import it.unibo.monopoly.model.gameboard.impl.BuildablePropertyImpl;
 import it.unibo.monopoly.model.transactions.api.Bank;
 import it.unibo.monopoly.model.transactions.api.PropertyAction;
 import it.unibo.monopoly.model.transactions.api.PropertyActionsEnum;
@@ -224,7 +223,7 @@ public final class GameControllerImpl implements GameController {
             gameView.displayMessage(action.getDescription() + " eseguita con successo");
             final Property currentlySittingProperty = (Property) this.board.getTileForPawn(
                                                         this.turnationManager.getIdCurrPlayer());
-            gameView.displayMessage("" + (currentlySittingProperty instanceof BuildablePropertyImpl));
+
             switch (actionName) {
                 case BUY -> gameView.callBuyProperty(currentlySittingProperty.getName(), 
                                                     this.turnationManager.getCurrPlayer().getColor());

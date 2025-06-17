@@ -61,7 +61,7 @@ public class BuildablePropertyImpl implements Property {
 
     @Override
     public final boolean canBuildHouse() {
-        return getNHouses() <= MAX_HOUSES;
+        return getNHouses() < MAX_HOUSES;
     }
 
     @Override
@@ -97,8 +97,9 @@ public class BuildablePropertyImpl implements Property {
             }
 
             this.nHouses--;
+        } else {
+            throw new IllegalAccessException("can't delete house");
         }
-        throw new IllegalAccessException("can't delete house");
     }
 
     @Override
