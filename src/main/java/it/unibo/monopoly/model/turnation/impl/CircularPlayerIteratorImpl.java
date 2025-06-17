@@ -142,4 +142,8 @@ public class CircularPlayerIteratorImpl implements PlayerIterator {
     public Player getCurrent() {
         return createCurrPlayerCopy();
     }
+
+    public void clear() {
+        this.elems.clear();
+    }
 }

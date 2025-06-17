@@ -282,11 +282,15 @@ public class TurnationManagerImpl implements TurnationManager {
         // for (final Player p : list) {
         //     this.players.add(p);
         // }
-        for (final Player p : this.players.toList()) {
-            if (p.getID().equals(player.getID())) {
-                this.players.remove(p);
-            }
+        List<Player> filtered = this.players.toList().stream()
+                                            .filter(p -> !p.getID().equals(player.getID()))
+                                            .toList(); // Java 16+ preferibile, altrimenti collect(Collectors.toList())
+        this.players.clear();
+
+        for (final Player p : filtered) {
+            this.players.add(p);
         }
+
         getNextPlayer();
         this.bankState.deletePlayer(player);
     }
