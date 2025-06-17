@@ -104,7 +104,7 @@ public final class MainMenuViewImpl implements MainMenuView {
     }
 
     @Override
-    public void showInfoMessage(String title, String message) {
+    public void showInfoMessage(final String title, final String message) {
         GuiUtils.showInfoMessage(mainFrame, title, message);
     }
 
