@@ -3,7 +3,7 @@ package it.unibo.monopoly.model.gameboard.impl.chance_comunity.impl;
 import java.util.List;
 import java.util.Random;
 
-import it.unibo.monopoly.model.gameboard.api.chancesAndCommunityChest.api.ChancheAndCommunityChestDeck;
+import it.unibo.monopoly.model.gameboard.api.chances_communiy.api.ChancheAndCommunityChestDeck;
 
 /**
  * implementation of ChancheAndCommunityChestDeck.
