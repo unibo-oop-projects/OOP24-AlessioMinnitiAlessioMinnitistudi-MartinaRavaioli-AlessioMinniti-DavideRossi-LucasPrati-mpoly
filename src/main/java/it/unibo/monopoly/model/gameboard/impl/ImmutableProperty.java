@@ -97,4 +97,10 @@ public final class ImmutableProperty implements Property {
         throw new IllegalAccessException("operation not permitted");
     }
 
+    @Override
+    public boolean canDeleteHouse() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'canDeleteHouse'");
+    }
+
 }

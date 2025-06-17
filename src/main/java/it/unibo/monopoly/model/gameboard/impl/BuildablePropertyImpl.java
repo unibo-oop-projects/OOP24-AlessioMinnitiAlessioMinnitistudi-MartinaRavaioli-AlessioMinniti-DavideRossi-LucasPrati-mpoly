@@ -91,11 +91,14 @@ public class BuildablePropertyImpl implements Property {
 
     @Override
     public final void deleteHouse() throws IllegalAccessException {
-        if (getNHouses() < 1) {
-            throw new IllegalAccessException("the property doesn't have any houses");
-        }
+        if (canDeleteHouse()) {
+            if (getNHouses() < 1) {
+                throw new IllegalAccessException("the property doesn't have any houses");
+            }
 
-        this.nHouses--;
+            this.nHouses--;
+        }
+        throw new IllegalAccessException("can't delete house");
     }
 
     @Override
@@ -105,5 +108,10 @@ public class BuildablePropertyImpl implements Property {
         }
 
         this.hotel = false;
+    }
+
+    @Override
+    public boolean canDeleteHouse() {
+        return !hasHotel();
     }
 }

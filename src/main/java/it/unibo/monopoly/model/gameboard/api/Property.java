@@ -51,4 +51,10 @@ public interface Property extends Tile {
      * delete the hotel in the property.
      */
     void deleteHotel() throws IllegalAccessException;
+    /**
+     * tells if the property can delete the house.
+     * a property can delete the house only if it hasn't the hotel.
+     * @return bool
+     */
+    boolean canDeleteHouse();
 }
