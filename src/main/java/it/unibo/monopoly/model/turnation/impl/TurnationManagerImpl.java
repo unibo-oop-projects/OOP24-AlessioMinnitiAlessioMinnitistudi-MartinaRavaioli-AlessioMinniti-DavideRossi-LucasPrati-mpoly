@@ -96,9 +96,6 @@ public class TurnationManagerImpl implements TurnationManager {
         if (canPassTurn()) {
             this.currPlayer = players.giveNextNode(this.currPlayer);
             this.diceThrown = false;
-            if (isCurrentPlayerParked()) {
-                passedParkTurn();
-            }
             return createCurrPlayerCopy();
         }
         throw new IllegalArgumentException("the player can't pass the turn");
@@ -220,6 +217,7 @@ public class TurnationManagerImpl implements TurnationManager {
             if (!isCurrentPlayerParked()) {
                 return hasCurrPlayerThrownDices();
             } else {
+                passedParkTurn();
                 return true;
             }
         }
