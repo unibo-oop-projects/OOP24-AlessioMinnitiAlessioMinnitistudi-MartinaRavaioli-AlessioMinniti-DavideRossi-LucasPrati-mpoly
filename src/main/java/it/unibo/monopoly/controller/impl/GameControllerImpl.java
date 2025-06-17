@@ -230,21 +230,21 @@ public final class GameControllerImpl implements GameController {
                 case SELL -> gameView.callClearPanel(currentlySittingProperty.getName());
                 case BUYHOUSE -> {
                     this.board.buildHouseInProperty(currentlySittingProperty);
-                    gameView.callBuyHouse(currentlySittingProperty);
+                    gameView.callBuyHouse(currentlySittingProperty.getName(), getCurrPawn().getColor(), currentlySittingProperty.getNHouses());
                 }
                 case BUYHOTEL -> {
                     if (this.board.buildHotelInProperty(currentlySittingProperty)) {
-                        gameView.callBuyHotel(currentlySittingProperty);
+                        gameView.callBuyHotel(currentlySittingProperty.getName(), getCurrPawn().getColor());
                     }
                 }
                 case SELLHOUSE -> {
                     if (this.board.deleteHouseInProperty(currentlySittingProperty)) {
-                        gameView.callSellHouse(currentlySittingProperty);
+                        gameView.callSellHouse(currentlySittingProperty.getName(), currentlySittingProperty.getNHouses(), getCurrPawn().getColor());
                     }
                 }
                 case SELLHOTEL -> {
                     if (this.board.deleteHotelInProperty(currentlySittingProperty)) {
-                        gameView.callSellHotel(currentlySittingProperty); 
+                        gameView.callSellHotel(currentlySittingProperty.getName(), getCurrPawn().getColor()); 
                     }
                 }
                 default -> throw new IllegalArgumentException("Unexpected value: " + actionName);

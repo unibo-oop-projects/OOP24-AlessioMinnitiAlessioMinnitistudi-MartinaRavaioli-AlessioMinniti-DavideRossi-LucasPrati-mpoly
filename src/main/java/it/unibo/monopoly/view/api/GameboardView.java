@@ -2,7 +2,6 @@ package it.unibo.monopoly.view.api;
 
 import java.awt.Color;
 
-import it.unibo.monopoly.model.gameboard.api.Property;
 import it.unibo.monopoly.model.turnation.api.Position;
 
 /**
@@ -44,12 +43,12 @@ public interface GameboardView extends GamePanel {
      * @param prop property
      * @param numHouses new number of houses
      */
-    void removeHouse(Property prop, int numHouses);
+    void removeHouse(String propName, int numHouses, Color color);
     /**
      * remove hotel from the property.
      * @param prop property
      */
-    void removeHotel(Property prop);
+    void removeHotel(String propName, Color color);
     /**
      * delete the player.
      * @param color color of the player

@@ -123,24 +123,30 @@ public interface MainGameView {
     void displayOptionMessage(String message);
     /**
      * call the gameboard view method to buy an house for the property.
-     * @param prop
+     * @param propName property name
+     * @param color color
+     * @param nHouses current number of houses
      */
-    void callBuyHouse(Property prop);
+    void callBuyHouse(String propName, Color color, int nHouses);
     /**
      * call the gameboard view method to buy the hotel for the property.
-     * @param prop
+     * @param propName property name
+     * @param color color
      */
-    void callBuyHotel(Property prop);
+    void callBuyHotel(String propName, Color color);
     /**
      * call the gameboard view method to sell an house for the property.
-     * @param prop
+     * @param propName property name
+     * @param nHouses current number of houses 
+     * @param color player color
      */
-    void callSellHouse(Property prop);
+    void callSellHouse(String propName, int nHouses, Color color);
     /**
      * call the gameboard view method to sell the hotel for the property.
-     * @param prop
+     * @param propName property name
+     * @param color color
      */
-    void callSellHotel(Property prop);
+    void callSellHotel(String propName, Color color);
 
     /**
      * call the delete player method in gameboard view.

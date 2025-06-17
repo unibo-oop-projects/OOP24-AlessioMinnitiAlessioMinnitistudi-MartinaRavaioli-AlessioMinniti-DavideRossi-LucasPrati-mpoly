@@ -20,7 +20,6 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.monopoly.controller.api.GameController;
 import it.unibo.monopoly.controller.api.GameboardLogic;
 import it.unibo.monopoly.controller.impl.GameboardLogicImpl;
-import it.unibo.monopoly.model.gameboard.api.Property;
 import it.unibo.monopoly.model.turnation.api.Position;
 import it.unibo.monopoly.model.turnation.impl.PositionImpl;
 import it.unibo.monopoly.view.api.GameboardView;
@@ -271,9 +270,9 @@ public final class GameboardViewImpl extends JPanel implements GameboardView {
     }
 
     @Override
-    public void removeHouse(final Property prop, final int numHouses) {
+    public void removeHouse(final String propName, final int numHouses, final Color color) {
         for (final Map.Entry<JPanel, Position> entry : this.tilePositions.entrySet()) {
-            if (entry.getValue().equals(prop.getPosition())) {
+            if (entry.getKey().getName().equals(propName)) {
                 final JPanel p = entry.getKey();
                 for (final Component c : p.getComponents()) {
                     if (HOUSE.equals(c.getName()) && c instanceof JLabel) {
@@ -284,7 +283,7 @@ public final class GameboardViewImpl extends JPanel implements GameboardView {
                         if (numHouses > 0) {
                             final JLabel label = new JLabel("HOUSES: " + numHouses);
                             label.setName(HOUSE);
-                            label.setForeground(controller.getCurrPlayer().getColor());
+                            label.setForeground(color);
                             p.add(label);
                         }
 
@@ -297,9 +296,9 @@ public final class GameboardViewImpl extends JPanel implements GameboardView {
     }
 
     @Override
-    public void removeHotel(final Property prop) {
+    public void removeHotel(final String propName, final Color color) {
         for (final Map.Entry<JPanel, Position> entry : this.tilePositions.entrySet()) {
-            if (entry.getValue().equals(prop.getPosition())) {
+            if (entry.getKey().getName().equals(propName)) {
                 final JPanel p = entry.getKey();
                 for (final Component c : p.getComponents()) {
                     if (HOTEL.equals(c.getName()) && c instanceof JLabel) {
