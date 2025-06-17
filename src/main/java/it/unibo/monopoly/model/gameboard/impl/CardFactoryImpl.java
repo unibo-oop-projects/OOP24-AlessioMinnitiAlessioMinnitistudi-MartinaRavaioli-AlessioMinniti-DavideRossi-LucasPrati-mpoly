@@ -128,21 +128,17 @@ public class CardFactoryImpl implements CardFactory {
                 "Missing 'group' for PROPERTY card at position: " + position.getPos()));
 
         final Property property = new NormalPropertyImpl(name, position, group);
-        
-        if (group == Group.SOCIETY || group == Group.STATION) {
-            tiles.add(property);
-        } else if (!isSpecialProperty(group)) {
-            BuildablePropertyImpl buildableProperty = new BuildablePropertyImpl(property);
-            tiles.add(buildableProperty);
-        }
-        
         final TitleDeed deed;
 
         if (isSpecialProperty(group)) {
+            tiles.add(property);
             deed = handleSpecialPropertyTitleDeed(name, group);
             deeds.add(deed);
 
         } else {
+            BuildablePropertyImpl buildableProperty = new BuildablePropertyImpl(property);
+            tiles.add(buildableProperty);
+
             final int cost = dto.getCost()
                 .orElseThrow(() -> new IllegalArgumentException(
                     "Missing 'cost' for PROPERTY card at position: " + position.getPos()));
@@ -159,7 +155,6 @@ public class CardFactoryImpl implements CardFactory {
                 List.of(rentOptionFactory.allDeedsOfGroupWithSameOwner(baseRent))
             );
             
-            final BuildablePropertyImpl buildableProperty = new BuildablePropertyImpl(property);
             final TitleDeed deedWithHouses = new TitleDeedWithHouses(
                 deed,
                 List.of(),
@@ -168,17 +163,6 @@ public class CardFactoryImpl implements CardFactory {
                 hotelCost
             );
             deeds.add(deedWithHouses);
-
-            // deed = new TitleDeedWithHouses(
-            //     group,
-            //     name,
-            //     cost,
-            //     p -> p / 2,
-            //     baseRent,
-
-            //     property
-            // );
-
         }
     }
 
