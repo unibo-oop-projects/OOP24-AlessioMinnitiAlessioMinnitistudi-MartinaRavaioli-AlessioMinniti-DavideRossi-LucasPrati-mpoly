@@ -112,7 +112,7 @@ public class BuildablePropertyImpl implements Property {
     }
 
     @Override
-    public boolean canDeleteHouse() {
+    public final boolean canDeleteHouse() {
         return !hasHotel();
     }
 }

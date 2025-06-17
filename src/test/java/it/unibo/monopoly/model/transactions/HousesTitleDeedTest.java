@@ -20,21 +20,25 @@ import it.unibo.monopoly.model.transactions.impl.titledeed.BaseTitleDeed;
 import it.unibo.monopoly.model.transactions.impl.titledeed.TitleDeedWithHouses;
 import it.unibo.monopoly.model.turnation.impl.PositionImpl;
 /**
- * test house title deeds
+ * test house title deeds.
  */
-public class HousesTitleDeedTest {
-        private static final Group GROUP_NAME = Group.GREEN;
+class HousesTitleDeedTest {
+    private static final Group GROUP_NAME = Group.GREEN;
     private static final String TITLE_DEED_NAME = "vicolo corto";
     private static final int SALE_PRICE = 50;
     private static final int DICE_THROW = 1;
+    private static final int NHOUSES = 4;
+    private static final int POSITION = 4;
     private static final Function<Integer, Integer> MORTGAGE_PRICE_FUNCTION = salePrice -> {
         return salePrice / 10;
     };
     private static final String FOUR_HOUSES_OPTION = "4 case";
     private static final String THREE_HOUSES_OPTION = "3 case";
     private static final int BASE_RENT_PRICE = 2;
-    private static final Function<Integer, Integer> HOUSE_PRICE = d -> 50;
-    private static final Function<Integer, Integer> HOTEL_PRICE = d -> 100;
+    private static final int HOUSE_PRICE_INT = 50;
+    private static final int HOTEL_PRICE_INT = 100;
+    private static final Function<Integer, Integer> HOUSE_PRICE = d -> HOUSE_PRICE_INT;
+    private static final Function<Integer, Integer> HOTEL_PRICE = d -> HOTEL_PRICE_INT;
     private BuildablePropertyImpl referencedProperty;
     private ImmutableProperty property;
     private TitleDeed deed;
@@ -44,9 +48,9 @@ public class HousesTitleDeedTest {
     @BeforeEach
     void setUp() {
         referencedProperty = new BuildablePropertyImpl(
-        new NormalPropertyImpl(TITLE_DEED_NAME, new PositionImpl(4), GROUP_NAME));
+        new NormalPropertyImpl(TITLE_DEED_NAME, new PositionImpl(POSITION), GROUP_NAME));
         property = new ImmutableProperty(referencedProperty);
-        housesOptions = new RentOptionFactoryImpl().housesAndHotelsOptions(BASE_RENT_PRICE, 4, true);
+        housesOptions = new RentOptionFactoryImpl().housesAndHotelsOptions(BASE_RENT_PRICE, NHOUSES, true);
         decorated = new BaseTitleDeed(GROUP_NAME, TITLE_DEED_NAME, SALE_PRICE, MORTGAGE_PRICE_FUNCTION, BASE_RENT_PRICE);
         deed = new TitleDeedWithHouses(decorated,
         housesOptions,
@@ -113,7 +117,8 @@ public class HousesTitleDeedTest {
         referencedProperty.buildHotel();
         referencedProperty.deleteHotel();
         final int rent = deed.getRent(Set.of(), DICE_THROW);
-        final RentOption fourHouses = housesOptions.stream().filter(r -> FOUR_HOUSES_OPTION.equals(r.getTitle())).findFirst().get();
+        final RentOption fourHouses = housesOptions.stream()
+                                     .filter(r -> FOUR_HOUSES_OPTION.equals(r.getTitle())).findFirst().get();
         assertEquals(fourHouses.getPrice(), rent);
     }
 
@@ -126,7 +131,8 @@ public class HousesTitleDeedTest {
         referencedProperty.buildHouse();
         referencedProperty.deleteHouse();
         final int rent = deed.getRent(Set.of(), DICE_THROW);
-        final RentOption threeHouses = housesOptions.stream().filter(r -> THREE_HOUSES_OPTION.equals(r.getTitle())).findFirst().get();
+        final RentOption threeHouses = housesOptions.stream()
+                                        .filter(r -> THREE_HOUSES_OPTION.equals(r.getTitle())).findFirst().get();
         assertEquals(threeHouses.getPrice(), rent);
     }
 }

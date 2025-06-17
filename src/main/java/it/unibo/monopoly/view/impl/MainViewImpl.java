@@ -16,7 +16,6 @@ import javax.swing.JSplitPane;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.monopoly.controller.api.GameController;
 import it.unibo.monopoly.controller.impl.GUIVenditaLogicImpl;
-import it.unibo.monopoly.model.gameboard.api.Property;
 import it.unibo.monopoly.model.gameboard.api.Special;
 import it.unibo.monopoly.model.transactions.api.Bank;
 import it.unibo.monopoly.model.transactions.api.BankAccount;
@@ -225,7 +224,7 @@ public final class MainViewImpl implements MainGameView {
     }
 
     @Override
-    public void callSellHouse(final String propName, final int nHouses,final Color color) {
+    public void callSellHouse(final String propName, final int nHouses, final Color color) {
         this.gameBoardPanel.removeHouse(propName, nHouses, color);
     }
 

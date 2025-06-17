@@ -48,14 +48,18 @@ class BankTest {
     private static final String TITLE_DEED_NAME3 = "CITTA3";
     private static final int PROPERTY_SALE_PRICE1 = 50;
     private static final int PROPERTY_SALE_PRICE2 = 60;
-    private static final Function<Integer, Integer> HOUSE_PRICE = d -> 20;
-    private static final Function<Integer, Integer> HOTEL_PRICE = d -> 30;
+    private static final int BASE_RENT = 10;
+    private static final int NHOUSES = 4;
+    private static final int HOUSE_PRICE_INT = 20;
+    private static final int HOTEL_PRICE_INT = 20;
+    private static final Function<Integer, Integer> HOUSE_PRICE = d -> HOUSE_PRICE_INT;
+    private static final Function<Integer, Integer> HOTEL_PRICE = d -> HOTEL_PRICE_INT;
     private static final int BASE_RENT_PRICE = 2;
-    private BuildablePropertyImpl referencedProperty = new BuildablePropertyImpl(
+    private final BuildablePropertyImpl referencedProperty = new BuildablePropertyImpl(
         new NormalPropertyImpl(TITLE_DEED_NAME3, new PositionImpl(4), Group.GREEN));
-    private ImmutableProperty property = new ImmutableProperty(referencedProperty);
-    private TitleDeed decorated = new BaseTitleDeed(Group.GREEN, TITLE_DEED_NAME3, PROPERTY_SALE_PRICE2, s -> s / 2, 10);
-    private List<RentOption> housesOptions = new RentOptionFactoryImpl().housesAndHotelsOptions(BASE_RENT_PRICE, 4, true);
+    private final ImmutableProperty property = new ImmutableProperty(referencedProperty);
+    private final TitleDeed decorated = new BaseTitleDeed(Group.GREEN, TITLE_DEED_NAME3, PROPERTY_SALE_PRICE2, s -> s / 2, BASE_RENT);
+    private final List<RentOption> housesOptions = new RentOptionFactoryImpl().housesAndHotelsOptions(BASE_RENT_PRICE, NHOUSES, true);
 
 
     private final Set<BankAccount> accounts = Set.of(
@@ -63,8 +67,8 @@ class BankTest {
         new SimpleBankAccountImpl(ID_2, AMOUNT, e -> true)
     );
     private final Set<TitleDeed> deeds = Set.of(
-        new BaseTitleDeed(Group.GREEN, TITLE_DEED_NAME1, PROPERTY_SALE_PRICE1, s -> s / 2, 10),
-        new BaseTitleDeed(Group.GREEN, TITLE_DEED_NAME2, PROPERTY_SALE_PRICE2, s -> s / 2, 10),
+        new BaseTitleDeed(Group.GREEN, TITLE_DEED_NAME1, PROPERTY_SALE_PRICE1, s -> s / 2, BASE_RENT),
+        new BaseTitleDeed(Group.GREEN, TITLE_DEED_NAME2, PROPERTY_SALE_PRICE2, s -> s / 2, BASE_RENT),
 
         new TitleDeedWithHouses(decorated, housesOptions, property, HOUSE_PRICE, HOTEL_PRICE)
     );

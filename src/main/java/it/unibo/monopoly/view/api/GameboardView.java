@@ -40,13 +40,15 @@ public interface GameboardView extends GamePanel {
     void clearPanel(String name);
     /**
      * remove house from the property.
-     * @param prop property
+     * @param propName property name
      * @param numHouses new number of houses
+     * @param color curr player color
      */
     void removeHouse(String propName, int numHouses, Color color);
     /**
      * remove hotel from the property.
-     * @param prop property
+     * @param propName property name
+     * @param color curr player color
      */
     void removeHotel(String propName, Color color);
     /**

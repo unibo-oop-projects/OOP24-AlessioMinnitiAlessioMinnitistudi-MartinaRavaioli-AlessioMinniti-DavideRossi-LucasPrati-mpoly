@@ -112,21 +112,25 @@ public interface Board {
     /**
      * build house in the property.
      * @param prop property to change
+     * @return bool
     */
     boolean buildHouseInProperty(Property prop);
     /**
      * build hotel in the property.
      * @param prop property to change
+     * @return bool
     */
     boolean buildHotelInProperty(Property prop);
     /**
      * delete an house in the property.
      * @param prop
+     * @return bool
      */
     boolean deleteHouseInProperty(Property prop) throws IllegalAccessException;
     /**
      * delete the hotel in the property.
      * @param prop
+     * @return bool
      */
     boolean deleteHotelInProperty(Property prop) throws IllegalAccessException;
     /**

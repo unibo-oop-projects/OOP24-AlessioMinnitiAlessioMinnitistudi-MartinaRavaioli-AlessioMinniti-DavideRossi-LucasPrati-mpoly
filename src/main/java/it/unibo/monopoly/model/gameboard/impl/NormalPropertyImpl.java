@@ -70,7 +70,7 @@ public class NormalPropertyImpl extends TileImpl implements Property {
     }
 
     @Override
-    public boolean canDeleteHouse() {
+    public final boolean canDeleteHouse() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'canDeleteHouse'");
     }

@@ -226,25 +226,31 @@ public final class GameControllerImpl implements GameController {
 
             switch (actionName) {
                 case BUY -> gameView.callBuyProperty(currentlySittingProperty.getName(), 
-                                                    this.turnationManager.getCurrPlayer().getColor());
+                                                    getCurrPawn().getColor());
                 case SELL -> gameView.callClearPanel(currentlySittingProperty.getName());
                 case BUYHOUSE -> {
                     this.board.buildHouseInProperty(currentlySittingProperty);
-                    gameView.callBuyHouse(currentlySittingProperty.getName(), getCurrPawn().getColor(), currentlySittingProperty.getNHouses());
+                    gameView.callBuyHouse(currentlySittingProperty.getName(), 
+                                            getCurrPawn().getColor(), 
+                                            currentlySittingProperty.getNHouses());
                 }
                 case BUYHOTEL -> {
                     if (this.board.buildHotelInProperty(currentlySittingProperty)) {
-                        gameView.callBuyHotel(currentlySittingProperty.getName(), getCurrPawn().getColor());
+                        gameView.callBuyHotel(currentlySittingProperty.getName(), 
+                                                getCurrPawn().getColor());
                     }
                 }
                 case SELLHOUSE -> {
                     if (this.board.deleteHouseInProperty(currentlySittingProperty)) {
-                        gameView.callSellHouse(currentlySittingProperty.getName(), currentlySittingProperty.getNHouses(), getCurrPawn().getColor());
+                        gameView.callSellHouse(currentlySittingProperty.getName(), 
+                                                currentlySittingProperty.getNHouses(), 
+                                                getCurrPawn().getColor());
                     }
                 }
                 case SELLHOTEL -> {
                     if (this.board.deleteHotelInProperty(currentlySittingProperty)) {
-                        gameView.callSellHotel(currentlySittingProperty.getName(), getCurrPawn().getColor()); 
+                        gameView.callSellHotel(currentlySittingProperty.getName(), 
+                                                getCurrPawn().getColor()); 
                     }
                 }
                 default -> throw new IllegalArgumentException("Unexpected value: " + actionName);
