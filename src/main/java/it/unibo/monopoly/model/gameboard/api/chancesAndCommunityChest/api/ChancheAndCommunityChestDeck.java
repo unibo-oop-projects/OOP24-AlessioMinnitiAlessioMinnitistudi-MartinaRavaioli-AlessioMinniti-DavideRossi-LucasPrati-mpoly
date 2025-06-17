@@ -1,4 +1,4 @@
-package it.unibo.monopoly.model.gameboard.impl.chance_comunity.api;
+package it.unibo.monopoly.model.gameboard.api.chancesAndCommunityChest.api;
 
 import it.unibo.monopoly.model.gameboard.impl.chance_comunity.impl.ChanceAndCommunityChestCard;
 
@@ -13,15 +13,4 @@ public interface ChancheAndCommunityChestDeck {
      */
     ChanceAndCommunityChestCard draw();
 
-    /**
-     * gets the type of deck, chances or community chest.
-     * @return the type
-     */
-    String getType();
-
-    /**
-     * draw a card from the deck in order of creation.
-     * @return the card
-     */
-    ChanceAndCommunityChestCard drawInOrder();
 }

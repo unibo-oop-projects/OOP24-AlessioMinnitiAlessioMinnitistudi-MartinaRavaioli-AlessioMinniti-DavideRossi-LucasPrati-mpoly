@@ -3,6 +3,7 @@ package it.unibo.monopoly.model.gameboard.api;
 import java.util.Collection;
 import java.util.List;
 
+import it.unibo.monopoly.model.gameboard.api.chancesAndCommunityChest.api.ChancheAndCommunityChestDeck;
 import it.unibo.monopoly.model.gameboard.impl.chance_comunity.impl.ChanceAndCommunityChestCard;
 import it.unibo.monopoly.model.turnation.api.Position;
 
@@ -30,8 +31,9 @@ public interface Board {
      * move the pawn.
      * @param id id of the pawn who has to move 
      * @param value value
+     * @return the difference between the old and the new position
     */
-    void movePawn(int id, Collection<Integer> value);
+    int movePawn(int id, Collection<Integer> value);
 
     /**
      * get the pawn with the given id.
@@ -107,4 +109,10 @@ public interface Board {
      * @return Chance or Community card
      */
     ChanceAndCommunityChestCard draw();
+
+    /**
+     * add the chance and community chest deck to the board.
+     * @param deck the deck
+     */
+    void addDeck(ChancheAndCommunityChestDeck deck);
 }

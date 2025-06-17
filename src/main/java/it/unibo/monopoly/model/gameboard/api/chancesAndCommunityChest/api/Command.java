@@ -1,4 +1,4 @@
-package it.unibo.monopoly.model.gameboard.impl.chance_comunity.api;
+package it.unibo.monopoly.model.gameboard.api.chancesAndCommunityChest.api;
 
 import it.unibo.monopoly.model.turnation.api.Player;
 
@@ -10,8 +10,9 @@ public interface Command {
     /**
      * execute the action expressed in the command.
      * @param player on wich the command is executed
+     * @param args used to execute the command
      */
-    void execute(Player player);
+    void execute(Player player, String args);
 
     /**
      * get the unic keyword of the command.

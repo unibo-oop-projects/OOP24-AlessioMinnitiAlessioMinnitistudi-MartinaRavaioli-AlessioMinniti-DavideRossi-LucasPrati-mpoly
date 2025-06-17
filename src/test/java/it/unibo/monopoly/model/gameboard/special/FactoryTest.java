@@ -161,6 +161,7 @@ class FactoryTest {
     void testPark() {
         final Special s = (Special) board.getTile("FreeParking");
         s.activateEffect(p1);
+        p1.passTurn();
         assertTrue(p1.isParked());
         p1.passTurn();
         assertFalse(p1.isParked());

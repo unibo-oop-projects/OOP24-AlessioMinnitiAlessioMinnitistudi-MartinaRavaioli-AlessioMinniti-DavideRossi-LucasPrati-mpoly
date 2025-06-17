@@ -12,25 +12,22 @@ import java.util.Set;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import it.unibo.monopoly.controller.impl.GameControllerImpl;
 import it.unibo.monopoly.model.gameboard.api.Board;
 import it.unibo.monopoly.model.gameboard.api.CardFactory;
 import it.unibo.monopoly.model.gameboard.api.Pawn;
 import it.unibo.monopoly.model.gameboard.api.PawnFactory;
 import it.unibo.monopoly.model.gameboard.api.Tile;
+import it.unibo.monopoly.model.gameboard.api.chancesAndCommunityChest.api.ArgsInterpreter;
+import it.unibo.monopoly.model.gameboard.api.chancesAndCommunityChest.api.BaseCommand;
+import it.unibo.monopoly.model.gameboard.api.chancesAndCommunityChest.api.BaseInterpreterInt;
+import it.unibo.monopoly.model.gameboard.api.chancesAndCommunityChest.api.Command;
+import it.unibo.monopoly.model.gameboard.api.chancesAndCommunityChest.api.Interpreter;
+import it.unibo.monopoly.model.gameboard.api.chancesAndCommunityChest.api.Parser;
 import it.unibo.monopoly.model.gameboard.impl.BoardImpl;
 import it.unibo.monopoly.model.gameboard.impl.CardDTO;
 import it.unibo.monopoly.model.gameboard.impl.CardFactoryImpl;
 import it.unibo.monopoly.model.gameboard.impl.PawnFactoryImpl;
-import it.unibo.monopoly.model.gameboard.impl.chance_comunity.api.ArgsInterpreter;
-import it.unibo.monopoly.model.gameboard.impl.chance_comunity.api.BaseCommand;
-import it.unibo.monopoly.model.gameboard.impl.chance_comunity.api.BaseCommandFactory;
-import it.unibo.monopoly.model.gameboard.impl.chance_comunity.api.BaseInterpreterInt;
-import it.unibo.monopoly.model.gameboard.impl.chance_comunity.api.Command;
-import it.unibo.monopoly.model.gameboard.impl.chance_comunity.api.Interpreter;
-import it.unibo.monopoly.model.gameboard.impl.chance_comunity.api.Parser;
 import it.unibo.monopoly.model.gameboard.impl.chance_comunity.impl.ArgsInterpreterImpl;
-import it.unibo.monopoly.model.gameboard.impl.chance_comunity.impl.BaseCommandFactoryImpl;
 import it.unibo.monopoly.model.gameboard.impl.chance_comunity.impl.BaseInterpreter;
 import it.unibo.monopoly.model.gameboard.impl.chance_comunity.impl.ComplexInterpreter;
 import it.unibo.monopoly.model.gameboard.impl.chance_comunity.impl.ParserOnColon;
@@ -69,8 +66,6 @@ class BaseAndComplexInterpreterTest {
     private BaseInterpreterInt baseInt;
     private Interpreter complexInt;
     private ArgsInterpreter argsInt;
-
-    private final BaseCommandFactory bcf = new BaseCommandFactoryImpl();
 
     private TurnationManager turnM;
     private Board board;
@@ -136,16 +131,8 @@ class BaseAndComplexInterpreterTest {
         tiles.stream().forEach(board::addTile);
         titleDeeds.stream().forEach(bank::addTitleDeed);
 
-        // start the game
-        final var controllerGameManager = new GameControllerImpl(
-            board,
-            turnM,
-            config,
-            bank
-        );
-
-        complexInt = new ComplexInterpreter(board, bank, controllerGameManager);
-        baseInt = new BaseInterpreter(bcf.allCommand(bank, board, controllerGameManager));
+        complexInt = new ComplexInterpreter(board, bank, turnM);
+        baseInt = new BaseInterpreter(board, bank, turnM);
         argsInt = new ArgsInterpreterImpl();
     }
 
@@ -213,7 +200,7 @@ class BaseAndComplexInterpreterTest {
         final BaseCommand c = baseInt.interpret(parOnColon.next(), board, turnM);
         parOnColon.hasNesxt();
         argsInt.interpret(parOnColon.next(), c, board, turnM);
-        assertEquals("buy " + s1 + " if not owned", c.getDesc());
+        assertEquals("buy " + s1 + " if not owned otherwise pay it's rent", c.getDesc());
     }
 
     @Test
@@ -222,6 +209,7 @@ class BaseAndComplexInterpreterTest {
         final String s2 = "Mediterranean Avenue";
         final String s = "buy if not owned: " + s1 + "\n" + "move in tile: " + s2;
         final Command c = complexInt.interpret(s, board, turnM);
-        assertEquals("buy " + s1 + " if not owned" + " then\n" + "move in " + s2, c.getDesc());
+        c.execute(p, c.getKeyWord());
+        assertEquals("buy " + s1 + " if not owned otherwise pay it's rent" + " then\n" + "move in " + s2, c.getDesc());
     }
 }

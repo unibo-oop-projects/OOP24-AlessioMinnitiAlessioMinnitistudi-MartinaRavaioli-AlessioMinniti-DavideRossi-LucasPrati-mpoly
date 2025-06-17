@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
-import it.unibo.monopoly.model.gameboard.impl.chance_comunity.api.Parser;
+import it.unibo.monopoly.model.gameboard.api.chancesAndCommunityChest.api.Parser;
 import it.unibo.monopoly.model.gameboard.impl.chance_comunity.impl.ParserOnColon;
 import it.unibo.monopoly.model.gameboard.impl.chance_comunity.impl.ParserOnHyphen;
 import it.unibo.monopoly.model.gameboard.impl.chance_comunity.impl.ParserOnNewLine;
@@ -20,7 +20,7 @@ import it.unibo.monopoly.utils.impl.UseFileTxtImpl;
 class ParserOnSpaceTest {
 
         private final UseFileTxt f = new UseFileTxtImpl();
-        private final String fi = f.loadTextResource("cards//commandTest.txt");
+        private final String fi = f.loadTextResource("debug//cards//commandTest.txt");
 
     @Test
     void parserOnHyphenTest() {
@@ -55,13 +55,13 @@ class ParserOnSpaceTest {
         assertTrue(p.hasNesxt());
         assertEquals(p.next(), "ciao");
         assertTrue(p.hasNesxt());
-        assertEquals(p.next(), "io sono");
+        assertEquals(p.next(), " io sono");
         assertTrue(p.hasNesxt());
-        assertEquals(p.next(), "world");
+        assertEquals(p.next(), " world");
         assertTrue(p.hasNesxt());
-        assertEquals(p.next(), "-");
+        assertEquals(p.next(), " -");
         assertTrue(p.hasNesxt());
-        assertEquals(p.next(), "come stai");
+        assertEquals(p.next(), " come stai");
     }
 
     @Test

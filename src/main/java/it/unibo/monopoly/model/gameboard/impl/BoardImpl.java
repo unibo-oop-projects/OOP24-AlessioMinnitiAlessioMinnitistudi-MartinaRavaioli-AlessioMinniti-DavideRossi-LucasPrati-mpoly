@@ -12,8 +12,9 @@ import it.unibo.monopoly.model.gameboard.api.Pawn;
 import it.unibo.monopoly.model.gameboard.api.Property;
 import it.unibo.monopoly.model.gameboard.api.Special;
 import it.unibo.monopoly.model.gameboard.api.Tile;
-import it.unibo.monopoly.model.gameboard.impl.chance_comunity.api.ChancheAndCommunityChestDeck;
+import it.unibo.monopoly.model.gameboard.api.chancesAndCommunityChest.api.ChancheAndCommunityChestDeck;
 import it.unibo.monopoly.model.gameboard.impl.chance_comunity.impl.ChanceAndCommunityChestCard;
+import it.unibo.monopoly.model.gameboard.impl.chance_comunity.impl.ChancheAndCommunityChestDeckImpl;
 import it.unibo.monopoly.model.turnation.api.Position;
 import it.unibo.monopoly.model.turnation.impl.PositionImpl;
 
@@ -23,7 +24,7 @@ import it.unibo.monopoly.model.turnation.impl.PositionImpl;
 public class BoardImpl implements Board {
     private final List<Tile> tiles; /**list of tiles. */
     private final List<Pawn> pawns; /**list of pawns. */
-    private final ChancheAndCommunityChestDeck deck;
+    private ChancheAndCommunityChestDeck deck;
     /**
      * constructor.
      * @param tiles list of tiles
@@ -44,7 +45,7 @@ public class BoardImpl implements Board {
     public BoardImpl(final List<Tile> tiles, final List<Pawn> pawns) {
         this.tiles = new ArrayList<>(tiles);
         this.pawns = new ArrayList<>(pawns);
-        this.deck = null;
+        this.deck = new ChancheAndCommunityChestDeckImpl(List.of());
     }
     /**
      * constructor.
@@ -52,7 +53,7 @@ public class BoardImpl implements Board {
     public BoardImpl() {
         this.tiles = new ArrayList<>();
         this.pawns = new ArrayList<>();
-        this.deck = null;
+        this.deck = new ChancheAndCommunityChestDeckImpl(List.of());
     }
 
     @Override
@@ -100,7 +101,7 @@ public class BoardImpl implements Board {
     }
 
     @Override
-    public final void movePawn(final int id, final Collection<Integer> value) {
+    public final int movePawn(final int id, final Collection<Integer> value) {
         Pawn pawn = null;
         for (final Pawn p : this.pawns) {
             if (((PawnImpl) p).getID().equals(id)) {
@@ -112,6 +113,7 @@ public class BoardImpl implements Board {
 
         final int steps = value.stream().mapToInt(Integer::intValue).sum();
         pawn.move(steps);
+        return pawn.getPosition().getPos() - pawn.getPreviousPosition().getPos();
     }
 
     @Override
@@ -182,6 +184,11 @@ public class BoardImpl implements Board {
     @Override
     public final ChanceAndCommunityChestCard draw() {
         return this.deck.draw();
+    }
+
+    @Override
+    public final void addDeck(final ChancheAndCommunityChestDeck deck) {
+        this.deck = deck;
     }
 
 }

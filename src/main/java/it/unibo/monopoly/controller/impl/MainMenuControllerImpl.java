@@ -16,10 +16,12 @@ import it.unibo.monopoly.model.gameboard.api.CardFactory;
 import it.unibo.monopoly.model.gameboard.api.Pawn;
 import it.unibo.monopoly.model.gameboard.api.PawnFactory;
 import it.unibo.monopoly.model.gameboard.api.Tile;
+import it.unibo.monopoly.model.gameboard.api.chancesAndCommunityChest.api.DeckCreator;
 import it.unibo.monopoly.model.gameboard.impl.BoardImpl;
 import it.unibo.monopoly.model.gameboard.impl.CardDTO;
 import it.unibo.monopoly.model.gameboard.impl.CardFactoryImpl;
 import it.unibo.monopoly.model.gameboard.impl.PawnFactoryImpl;
+import it.unibo.monopoly.model.gameboard.impl.chance_comunity.impl.DeckCreatorImpl;
 import it.unibo.monopoly.model.transactions.api.BankAccount;
 import it.unibo.monopoly.model.transactions.api.BankAccountFactory;
 import it.unibo.monopoly.model.transactions.api.BankAccountType;
@@ -264,6 +266,9 @@ public final class MainMenuControllerImpl implements MainMenuController {
         // Add tiles to the board and titleDeeds to the Bank
         tiles.stream().forEach(board::addTile);
         titleDeeds.stream().forEach(bank::addTitleDeed);
+
+        final DeckCreator creator = new DeckCreatorImpl();
+        creator.createDeck(config.getDeckPath(), board, bank, turnationManager);
 
         // start the game
         final var controllerGameManager = new GameControllerImpl(

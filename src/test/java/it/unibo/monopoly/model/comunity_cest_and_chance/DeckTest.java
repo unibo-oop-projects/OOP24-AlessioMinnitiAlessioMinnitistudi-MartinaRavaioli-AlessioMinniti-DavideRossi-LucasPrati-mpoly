@@ -2,6 +2,7 @@ package it.unibo.monopoly.model.comunity_cest_and_chance;
 
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.awt.Color;
 import java.io.FileNotFoundException;
@@ -14,19 +15,17 @@ import java.util.Set;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import it.unibo.monopoly.controller.api.GameController;
-import it.unibo.monopoly.controller.impl.GameControllerImpl;
 import it.unibo.monopoly.model.gameboard.api.Board;
 import it.unibo.monopoly.model.gameboard.api.CardFactory;
 import it.unibo.monopoly.model.gameboard.api.Pawn;
 import it.unibo.monopoly.model.gameboard.api.PawnFactory;
 import it.unibo.monopoly.model.gameboard.api.Tile;
+import it.unibo.monopoly.model.gameboard.api.chancesAndCommunityChest.api.ChancheAndCommunityChestDeck;
+import it.unibo.monopoly.model.gameboard.api.chancesAndCommunityChest.api.DeckCreator;
 import it.unibo.monopoly.model.gameboard.impl.BoardImpl;
 import it.unibo.monopoly.model.gameboard.impl.CardDTO;
 import it.unibo.monopoly.model.gameboard.impl.CardFactoryImpl;
 import it.unibo.monopoly.model.gameboard.impl.PawnFactoryImpl;
-import it.unibo.monopoly.model.gameboard.impl.chance_comunity.api.ChancheAndCommunityChestDeck;
-import it.unibo.monopoly.model.gameboard.impl.chance_comunity.api.DeckCreator;
 import it.unibo.monopoly.model.gameboard.impl.chance_comunity.impl.ChanceAndCommunityChestCard;
 import it.unibo.monopoly.model.gameboard.impl.chance_comunity.impl.ChancheAndCommunityChestDeckImpl;
 import it.unibo.monopoly.model.gameboard.impl.chance_comunity.impl.DeckCreatorImpl;
@@ -63,13 +62,10 @@ class DeckTest {
     private static final Color VALID_COLOR2 = Color.PINK;
     private static final Color VALID_COLOR3 = Color.BLACK;
 
-    private static final String VALID_TYPE = "chances";
-
     private BankImpl bank;
     private Board board;
     private TurnationManager turnM;
     private final DeckCreator creator = new DeckCreatorImpl();
-    private GameController controllerGameManager;
 
     private final Player p = new ParkablePlayer(PlayerImpl.of(VALID_ID1, PLAYER1_NAME, VALID_COLOR1));
     private final Player p1 = new PrisonablePlayer(p);
@@ -130,32 +126,38 @@ class DeckTest {
         // Add tiles to the board and titleDeeds to the Bank
         tiles.stream().forEach(board::addTile);
         titleDeeds.stream().forEach(bank::addTitleDeed);
-
-        // start the game
-        controllerGameManager = new GameControllerImpl(
-            board,
-            turnM,
-            config,
-            bank
-        );
     }
 
+    boolean isThere(final String desc, final List<String> descs) {
+        boolean isthere = false;
+        for (final String string : descs) {
+            if (desc.equals(string)) {
+                isthere = true;
+            }
+        }
+        return isthere;
+    }
     @Test
     void testDeck() {
         try {
-            final ChancheAndCommunityChestDeck deck = creator
-                                .createDeck("cards//DeckCardTest.txt", VALID_TYPE, board, bank, turnM, controllerGameManager);
-            final ChanceAndCommunityChestCard c1 = deck.drawInOrder();
-            final ChanceAndCommunityChestCard c2 = deck.drawInOrder();
-            final ChanceAndCommunityChestCard c3 = deck.drawInOrder();
+            final List<String> descs = List.of("deposit 50", 
+                                                    "move in Jail / Just Visiting" 
+                                                    + " then\n" 
+                                                    + "buy Jail / Just Visiting if not owned otherwise pay it's rent",
+                                                    "withdraw 50");
+            creator.createDeck("debug//cards//DeckCardTest.txt", board, bank, turnM);
+            final ChanceAndCommunityChestCard c1 = board.draw();
+            c1.execute(p);
+            final ChanceAndCommunityChestCard c2 = board.draw();
+            c2.execute(p);
+            final ChanceAndCommunityChestCard c3 = board.draw();
+            c3.execute(p);
 
-            assertEquals("deposit 50", c1.getDescription());
-            assertEquals("move in Jail / Just Visiting" 
-                            + " then\n" 
-                            + "buy Jail / Just Visiting if not owned", c2.getDescription());
-            assertEquals("withdraw 50", c3.getDescription());
+            assertTrue(isThere(c1.getDescription(), descs));
+            assertTrue(descs.contains(c2.getDescription()));
+            assertTrue(descs.contains(c3.getDescription()));
         } catch (final FileNotFoundException e) { 
-            final ChancheAndCommunityChestDeck deck = new ChancheAndCommunityChestDeckImpl(List.of(), VALID_TYPE);
+            final ChancheAndCommunityChestDeck deck = new ChancheAndCommunityChestDeckImpl(List.of());
             assertEquals("", deck.draw().getDescription());
         }
 

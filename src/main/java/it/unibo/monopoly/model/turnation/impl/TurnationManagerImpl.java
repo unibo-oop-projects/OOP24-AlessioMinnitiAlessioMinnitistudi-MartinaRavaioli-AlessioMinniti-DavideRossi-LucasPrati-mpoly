@@ -1,4 +1,5 @@
 package it.unibo.monopoly.model.turnation.impl;
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -92,21 +93,100 @@ public class TurnationManagerImpl implements TurnationManager {
 
     @Override
     public final Player getNextPlayer() { 
-        this.currPlayer = players.giveNextNode(this.currPlayer);
-        this.diceThrown = false;
-        return new ParkablePlayer(new PrisonablePlayer(
-            PlayerImpl.of(this.currPlayer.getID(), this.currPlayer.getName(), this.currPlayer.getColor())));
+        if (canPassTurn()) {
+            this.currPlayer = players.giveNextNode(this.currPlayer);
+            this.diceThrown = false;
+            if (isCurrentPlayerParked()) {
+                passedParkTurn();
+            }
+            return createCurrPlayerCopy();
+        }
+        throw new IllegalArgumentException("the player can't pass the turn");
+    }
+    /**
+     * method that create a copy of the current player.
+     * @return Player
+     */
+    private Player createCurrPlayerCopy() {
+        return new Player() {
+
+            @Override
+            public Integer getID() {
+               return currPlayer.getID();
+            }
+
+            @Override
+            public String getName() {
+                return currPlayer.getName();
+            }
+
+            @Override
+            public Color getColor() {
+                return currPlayer.getColor();
+            }
+
+            @Override
+            public boolean isAlive() {
+                return currPlayer.isAlive();
+            }
+
+            @Override
+            public boolean isParked() {
+                return currPlayer.isParked();
+            }
+
+            @Override
+            public void park() {
+                currPlayer.park();
+            }
+
+            @Override
+            public boolean isInPrison() {
+                return currPlayer.isInPrison();
+            }
+
+            @Override
+            public void putInPrison() {
+                currPlayer.putInPrison();
+            }
+
+            @Override
+            public boolean canExitPrison(final Collection<Integer> dice) {
+               return currPlayer.canExitPrison(dice);
+            }
+
+            @Override
+            public int turnLeftInPrison() {
+                return currPlayer.turnLeftInPrison();
+            }
+
+            @Override
+            public void decreaseTurnsInPrison() {
+                currPlayer.decreaseTurnsInPrison();
+            }
+
+            @Override
+            public void passTurn() {
+                currPlayer.passTurn();
+            }
+
+        };
     }
 
     @Override
-    public final Collection<Integer> moveByDices() throws IllegalAccessException { 
+    public final Pair<Collection<Integer>, String> moveByDices() throws IllegalAccessException { 
         if (!hasCurrPlayerThrownDices()) {
             if (canThrowDices()) {
                 this.diceThrown = true;
-                return this.dice.throwDices();
+                final Collection<Integer> res = this.dice.throwDices();
+
+                if (this.currPlayer.isInPrison()) {
+                    return Pair.of(res, tryExitPrison(res));
+                }
+
+                return Pair.of(res, null);
             } else {
-                passedParkTurn();
-                throw new IllegalAccessException("the player can't throw dices because is parked");
+                return Pair.of(null, "the player can't throw dices because is parked");
             }
 
         } else {
@@ -121,8 +201,7 @@ public class TurnationManagerImpl implements TurnationManager {
 
     @Override
     public final Player getCurrPlayer() {
-        return new ParkablePlayer(new PrisonablePlayer(
-            PlayerImpl.of(this.currPlayer.getID(), this.currPlayer.getName(), this.currPlayer.getColor())));
+        return createCurrPlayerCopy();
     }
 
     @Override
@@ -138,9 +217,9 @@ public class TurnationManagerImpl implements TurnationManager {
     @Override
     public final boolean canPassTurn() {
         if (this.bankState.allMandatoryTransactionsCompleted()) {
-            if (hasCurrPlayerThrownDices()) {
-                return true;
-            } else if (this.currPlayer.isParked()) {
+            if (!isCurrentPlayerParked()) {
+                return hasCurrPlayerThrownDices();
+            } else {
                 return true;
             }
         }
@@ -240,12 +319,14 @@ public class TurnationManagerImpl implements TurnationManager {
         return !this.currPlayer.isParked();
     }
     @Override
-    public final boolean tryExitPrison(final Collection<Integer> result) {
+    public final String tryExitPrison(final Collection<Integer> result) {
         if (this.currPlayer.canExitPrison(result)) {
-            return true;
+            return "you escaped the prison";
         } else {
             this.currPlayer.decreaseTurnsInPrison();
-            return false;
+            return "you are still in prison, you have " 
+                    + currentPlayerTurnsLeftInPrison() + 
+                    " turns left in prison and the dices weren't kind with you.";
         }
     }
 

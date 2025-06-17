@@ -13,15 +13,16 @@ import it.unibo.monopoly.model.turnation.api.Dice;
 import it.unibo.monopoly.model.turnation.api.Player;
 import it.unibo.monopoly.model.turnation.api.TurnationManager;
 import it.unibo.monopoly.model.turnation.impl.DiceImpl;
+import it.unibo.monopoly.model.turnation.impl.ParkablePlayer;
 import it.unibo.monopoly.model.turnation.impl.PlayerImpl;
 import it.unibo.monopoly.model.turnation.impl.TurnationManagerImpl;
 
 class TurnationManagerTest {
     private TurnationManager turnManager;
     private final List<Player> players = List.of(
-        PlayerImpl.of(1, "a", Color.RED),
-        PlayerImpl.of(2, "b", Color.GREEN),
-        PlayerImpl.of(3, "c", Color.BLUE)
+        new ParkablePlayer(PlayerImpl.of(1, "a", Color.RED)),
+        new ParkablePlayer(PlayerImpl.of(2, "b", Color.GREEN)),
+        new ParkablePlayer(PlayerImpl.of(3, "c", Color.BLUE))
     );
 
     @BeforeEach
@@ -32,14 +33,14 @@ class TurnationManagerTest {
 
     @Test
     void testInitialCurrentPlayer() {
-        assertEquals(players.get(0), turnManager.getCurrPlayer(), "Initial player should be the first one");
+        assertEquals(players.get(0).getID(), turnManager.getCurrPlayer().getID());
     }
 
     @Test
     void testGetNextPlayerCycles() {
-        assertEquals(players.get(1), turnManager.getNextPlayer(), "Next should be p2");
-        assertEquals(players.get(2), turnManager.getNextPlayer(), "Next should be p3");
-        assertEquals(players.get(0), turnManager.getNextPlayer(), "Cycle back to p1");
+        assertEquals(players.get(1).getID(), turnManager.getNextPlayer().getID(), "Next should be p2");
+        assertEquals(players.get(2).getID(), turnManager.getNextPlayer().getID(), "Next should be p3");
+        assertEquals(players.get(0).getID(), turnManager.getNextPlayer().getID(), "Cycle back to p1");
     }
 
     @Test

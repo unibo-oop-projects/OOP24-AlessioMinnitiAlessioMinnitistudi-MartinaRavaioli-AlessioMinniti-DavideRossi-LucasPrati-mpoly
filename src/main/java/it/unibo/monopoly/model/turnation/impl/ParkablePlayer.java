@@ -12,7 +12,8 @@ import it.unibo.monopoly.model.turnation.api.Player;
  */
 public final class ParkablePlayer implements Parkable, Player {
 
-    private boolean in;
+    private static final int PARK_TURNS = 2;
+    private int in;
     private final Player pl;
 
     /**
@@ -27,12 +28,12 @@ public final class ParkablePlayer implements Parkable, Player {
 
     @Override
     public boolean isParked() {
-        return in;
+        return in > 0;
     }
 
     @Override
     public void park() {
-        in = true;
+        in = PARK_TURNS;
     }
 
     @Override
@@ -82,6 +83,6 @@ public final class ParkablePlayer implements Parkable, Player {
 
     @Override
     public void passTurn() {
-        this.in = false;
+        this.in = in - 1;
     }
 }

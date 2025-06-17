@@ -1,7 +1,7 @@
 package it.unibo.monopoly.model.gameboard.impl.chance_comunity.impl;
 
-import it.unibo.monopoly.model.gameboard.impl.chance_comunity.api.ChanceAndCommunityChest;
-import it.unibo.monopoly.model.gameboard.impl.chance_comunity.api.Command;
+import it.unibo.monopoly.model.gameboard.api.chancesAndCommunityChest.api.ChanceAndCommunityChest;
+import it.unibo.monopoly.model.gameboard.api.chancesAndCommunityChest.api.Command;
 import it.unibo.monopoly.model.turnation.api.Player;
 
 /**
@@ -22,7 +22,7 @@ public final class ChanceAndCommunityChestCard implements ChanceAndCommunityChes
 
     @Override
     public void execute(final Player player) {
-        this.command.execute(player);
+        this.command.execute(player, this.command.getKeyWord());
     }
 
     @Override

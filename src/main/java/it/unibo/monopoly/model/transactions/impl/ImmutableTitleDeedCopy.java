@@ -24,12 +24,12 @@ public final class ImmutableTitleDeedCopy implements TitleDeed {
      */
     public ImmutableTitleDeedCopy(final TitleDeed deed) {
         final List<RentOption> rentOptionCopy = new ArrayList<>(deed.getRentOptions());
-        rentOptionCopy.removeFirst();
+        rentOptionCopy.remove(0);
         this.deed = new BaseTitleDeed(deed.getGroup(), 
                                     deed.getName(),
                                     deed.getSalePrice(), 
                                     d -> deed.getMortgagePrice(), 
-                                    deed.getRentOptions().getFirst().getPrice(),
+                                    deed.getRentOptions().get(0).getPrice(),
                                     rentOptionCopy);
         if (deed.isOwned()) {
             this.deed.setOwner(deed.getOwnerId());

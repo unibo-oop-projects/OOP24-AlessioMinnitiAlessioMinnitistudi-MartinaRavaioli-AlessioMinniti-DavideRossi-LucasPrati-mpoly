@@ -5,9 +5,9 @@ import java.util.Optional;
 
 import it.unibo.monopoly.model.gameboard.api.Board;
 import it.unibo.monopoly.model.gameboard.api.Tile;
-import it.unibo.monopoly.model.gameboard.impl.chance_comunity.api.ArgsInterpreter;
-import it.unibo.monopoly.model.gameboard.impl.chance_comunity.api.BaseCommand;
-import it.unibo.monopoly.model.gameboard.impl.chance_comunity.api.Parser;
+import it.unibo.monopoly.model.gameboard.api.chancesAndCommunityChest.api.ArgsInterpreter;
+import it.unibo.monopoly.model.gameboard.api.chancesAndCommunityChest.api.BaseCommand;
+import it.unibo.monopoly.model.gameboard.api.chancesAndCommunityChest.api.Parser;
 import it.unibo.monopoly.model.turnation.api.Player;
 import it.unibo.monopoly.model.turnation.api.TurnationManager;
 
@@ -17,9 +17,10 @@ import it.unibo.monopoly.model.turnation.api.TurnationManager;
 public final class ArgsInterpreterImpl implements ArgsInterpreter {
 
     private String interpretTileArg(final String toInterpretString, final Board board) {
+        final String auxS = toInterpretString.replaceFirst(" ", "");
         final Optional<String> t = board.getTiles()
                                         .stream()
-                                        .filter(p -> p.getName().equals(toInterpretString))
+                                        .filter(p -> p.getName().equals(auxS))
                                         .map(Tile::getName)
                                         .findAny();
 
@@ -32,16 +33,17 @@ public final class ArgsInterpreterImpl implements ArgsInterpreter {
 
     private int interpretIntArg(final String toInterpretString) {
         try {
-            return Integer.parseInt(toInterpretString);
+            final String auxS = toInterpretString.replace(" ", "");
+            return Integer.parseInt(auxS);
         } catch (final NumberFormatException e) {
             return -1;
         }
     }
 
     private List<Player> interpretPlayerArg(final String toInterpretString, final TurnationManager turnM) {
-
+        final String auxS = toInterpretString.replaceFirst(" ", "");
         List<Player> l = null;
-        if ("all".equalsIgnoreCase(toInterpretString)) {
+        if ("all".equalsIgnoreCase(auxS)) {
             l = turnM.getPlayerList();
         }
         return l;

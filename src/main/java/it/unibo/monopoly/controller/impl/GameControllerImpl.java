@@ -97,60 +97,73 @@ public final class GameControllerImpl implements GameController {
     }
 
 
+    private void attachView(final MainGameView view) {
+        this.gameView = view;
+    }
+
     @Override
     public void endTurn() {
-        if (!this.turnationManager.playerDiesIfTurnPassed()) {
-            if (this.turnationManager.canPassTurn()) {
+        try {
+            if (!this.turnationManager.playerDiesIfTurnPassed()) {
                 this.turnationManager.getNextPlayer();
+
+                if (this.turnationManager.isCurrentPlayerParked()) {
+                    this.gameView.displayMessage("you can't throw the dices and move, you are parked");
+                }
+
                 gameView.refreshUIForNewTurn(turnationManager.canThrowDices());
                 refreshPlayerInfo();
             } else {
-                this.gameView.displayMessage("The player has some actions to do before passing the turn");
+                this.gameView.displayOptionMessage("The player will die if he passes the turn");
             }
-        } else {
-            this.gameView.displayOptionMessageEndTurn("The player will die if he passes the turn");
+        } catch (final IllegalArgumentException e) {
+            this.gameView.displayError(e);
         }
     }
 
     @Override
     public void throwDices() {
         try {
-            final Collection<Integer> result = this.turnationManager.moveByDices();
-
+            final Pair<Collection<Integer>, String> result = this.turnationManager.moveByDices();
             final int currentPlayerId = this.turnationManager.getIdCurrPlayer();
-            if (!this.turnationManager.isCurrentPlayerInPrison() || this.turnationManager.tryExitPrison(result)) {
-                this.board.movePawn(currentPlayerId, result);
+            int delta = 0;
+
+            if (!this.turnationManager.isCurrentPlayerInPrison()) {
+                delta = this.board.movePawn(currentPlayerId, result.getLeft());
+                if (result.getRight() != null) {
+                    this.gameView.displayMessage(result.getRight());
+                }
             } else {
-                this.gameView.displayMessage("you can't move, you have " 
-                                + turnationManager.currentPlayerTurnsLeftInPrison() 
-                                + " turns left in prison and the dices weren't kind with you.");
+                this.gameView.displayMessage(result.getRight());
             }
 
             this.gameView.callChangePositions();
-            this.gameView.displayDiceResult(result.stream().toList());
+            this.gameView.displayDiceResult(result.getLeft().stream().toList());
             final Tile currentlySittingTile = this.board.getTileForPawn(currentPlayerId);
             refreshCurrentTileInfo();
             if (currentlySittingTile instanceof Property) {
                 this.turnActions.clear();
                 this.turnActions = this.bank.getApplicableActionsForTitleDeed(currentPlayerId, 
                                         currentlySittingTile.getName(), 
-                                        result.stream().mapToInt(d -> d).sum())
+                                        result.getLeft().stream().mapToInt(d -> d).sum())
                                         .stream()
                                         .collect(Collectors.toMap(PropertyAction::getName, d -> d));
                 this.gameView.displayPlayerActions(turnActions.keySet());
             } else if (currentlySittingTile instanceof Special) {
                 final Special specialTile = (Special) currentlySittingTile;
-                if (!"Start".equals(currentlySittingTile.getName())) {
+                if (!"Start".equals(currentlySittingTile.getName()) && delta != 0) {
                     executeEffect(specialTile.getEffect());
                     this.gameView.callChangePositions();
                 }
+                refreshCurrentTileInfo();
             }
-            final int delta = board.getPawn(currentPlayerId).getPosition().getPos() 
-                                        - board.getPrevPawnPosition(currentPlayerId).getPos();
-            if (delta < 0 && !"GoToJail".equals(currentlySittingTile.getName())) {
+
+            if (delta < 0 && !"GoToJail".equals(currentlySittingTile.getName()) 
+                && !"Jail / Just Visiting".equals(currentlySittingTile.getName())) {
                 final Special tile = (Special) board.getTile("Start");
                 executeEffect(tile.getEffect());
             }
+            this.refreshBankPlayerInfo();
         } catch (final IllegalAccessException e) {
             gameView.displayError(e);
         }
@@ -174,11 +187,6 @@ public final class GameControllerImpl implements GameController {
     }
 
     @Override
-    public void attachView(final MainGameView view) {
-        this.gameView = view;
-    }
-
-    @Override
     public List<Tile> getTiles() {
         return Collections.unmodifiableList(this.board.getTiles());
     }
@@ -192,7 +200,6 @@ public final class GameControllerImpl implements GameController {
     public Player getCurrPlayer() {
         return this.turnationManager.getCurrPlayer();
     }
-
 
     @Override
     public Pawn getCurrPawn() {
@@ -269,6 +276,7 @@ public final class GameControllerImpl implements GameController {
         gameView.refreshUIForNewTurn(turnationManager.canThrowDices());
         refreshPlayerInfo();
     }
+
     @Override
     public void refreshBankPlayerInfo() {
         if (null != this.gameView) {
