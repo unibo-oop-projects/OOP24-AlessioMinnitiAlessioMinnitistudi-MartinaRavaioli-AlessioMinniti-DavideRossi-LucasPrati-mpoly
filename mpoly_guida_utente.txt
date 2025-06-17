@@ -34,11 +34,11 @@ MAX_PLAYERS: 6
 NUM_DICE: 2
 SIDES_PER_DIE: 6
 FONT_NAME: SansSerif
-BIG_FONT: 32
-SMALL_FONT: 20
+FONT_SIZE: 20
 INIT_BALANCE: 2000
 RULES_FILE: rules/rules.txt
 CARDS_FILE: cards/final_cards.json
+DECK_FILE: cards/DeckCard.txt
 COLORS: RED, BLUE, ORANGE, GREEN, MAGENTA, CYAN, YELLOW, BLACK, LIGHT_GRAY, PINK, DARK_GRAY, GRAY
 
 Modalità di gioco:
@@ -58,7 +58,7 @@ Pannello giocatore:
 - Mostra nome, identificativo numerico e saldo attuale del giocatore attivo.
 
 Pannelli centrali:
-1. Azioni contestuali: mostra i pulsanti per eseguire azioni (compra proprietà, compra casa, compra hotel, paga affitto, vendi).
+1. Azioni contestuali: mostra i pulsanti per eseguire azioni (compra proprietà, compra casa, compra hotel, paga affitto).
 2. Dettaglio carta: visualizza la carta ingrandita della casella con info su affitti, proprietario, valore.
 
 Comandi principali:
@@ -80,7 +80,7 @@ Ogni turno si compone di:
 
 5. PROPRIETÀ E MIGLIORAMENTI
 Acquisto:
-- Si possono comprare proprietà libere.
+- Si possono comprare proprietà non possedute da altri giocatori.
 
 Affitti:
 - Si pagano tramite la banca.
@@ -89,16 +89,13 @@ Affitti:
 
 Miglioramenti con case e hotel:
 - Per poter costruire, è necessario possedere tutte le proprietà dello stesso gruppo colore.
-- Quando acquisti case (o hotel), devi piazzarne esattamente una per ciascuna proprietà del gruppo, nello stesso turno.
-- Non è consentito aggiungere case in modo disomogeneo: se il gruppo è composto da tre terreni, comprerai contemporaneamente una casa su ciascuno dei tre.
-- Per costruire l’hotel, devi prima avere 4 case su ciascuna proprietà del gruppo; quindi vendi 4 case a testa e acquisti 1 hotel per ciascuna proprietà, in un unico blocco.
+- Per poter acquistare case (o hotel), devi essere sopra la proprietà che vuoi migliorare.
+- Per costruire l’hotel, devi prima avere 4 case sulla proprietà.
 
 Vendite:
 - Case e Hotel: restituiscono il 50% del valore di acquisto.
-- Analogamente all'acquisto, se decidi di vendere case (o hotel), devi rimuoverne una per ciascuna proprietà del gruppo, sempre tutte insieme.
-- Per demolire un hotel, vendi simultaneamente 1 hotel su ciascuna proprietà del gruppo e, se desideri, puoi ricomprare fino a 4 case per proprietà (sempre in blocco).
-- Proprietà: singolarmente, solo se prive di case/hotel. Restituiscono il 50% del valore di acquisto.
-- Stazioni: vendibili singolarmente, restituiscono il 75% del valore di acquisto.
+- Proprietà: vendibili solo se prive di case/hotel, restituiscono il 50% del valore di acquisto.
+- Stazioni: restituiscono il 75% del valore di acquisto.
 
 
 6. PRIGIONE, TASSE, SOCIETA' ED EVENTI SPECIALI
@@ -141,7 +138,7 @@ Pulsanti principali:
 - "?": visualizza regolamento
 
 Azioni contestuali (casella attuale):
-- Buy Property, Buy House, Buy Hotel, Pay Rent, Sell
+- Buy Property, Buy House, Buy Hotel, Pay Rent, Sell House, Sell Hotel, Sell Property
 
 Regolamento:
 - Sempre accessibile tramite "?" in qualsiasi momento.
