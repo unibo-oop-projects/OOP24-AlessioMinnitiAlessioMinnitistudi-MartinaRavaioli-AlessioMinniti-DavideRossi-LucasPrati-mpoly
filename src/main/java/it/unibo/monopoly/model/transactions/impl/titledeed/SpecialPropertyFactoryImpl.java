@@ -1,4 +1,4 @@
-package it.unibo.monopoly.model.transactions.impl;
+package it.unibo.monopoly.model.transactions.impl.titledeed;
 
 import java.util.List;
 import java.util.Set;
@@ -8,6 +8,7 @@ import it.unibo.monopoly.model.transactions.api.RentOption;
 import it.unibo.monopoly.model.transactions.api.RentOptionFactory;
 import it.unibo.monopoly.model.transactions.api.SpecialPropertyFactory;
 import it.unibo.monopoly.model.transactions.api.TitleDeed;
+import it.unibo.monopoly.model.transactions.impl.rentoption.RentOptionFactoryImpl;
 
 /**
  * implementation of the special property factory interface.

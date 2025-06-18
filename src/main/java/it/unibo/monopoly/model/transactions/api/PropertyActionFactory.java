@@ -39,5 +39,28 @@ public interface PropertyActionFactory {
      * @return a {@link PropertyAction} command that encapsulates the descripted action.
      */
     PropertyAction createPayRent(String titleDeedName, int currentPlayerId, int diceThrow);
-
+    /**
+     * create an action that buys an house in the requested titleDeed for the requested player.
+     * @param titleDeedName the name of the titleDeed to buy the house
+     * @return the PropertyAction command that encapsulates the descripted action
+     */
+    PropertyAction createBuyHouse(String titleDeedName);
+    /**
+     * create an action that buys the hotel in the requested titleDeed for the requested player.
+     * @param titleDeedName the name of the titleDeed to buy the hotel
+     * @return the PropertyAction command that encapsulates the descripted action
+     */
+    PropertyAction createBuyHotel(String titleDeedName);
+    /**
+     * create an action that sells an house in the requested titleDeed for the requested player.
+     * @param titleDeedName the name of the titleDeed to sell the house
+     * @return the PropertyAction command that encapsulates the descripted action
+     */
+    PropertyAction createSellHouse(String titleDeedName);
+    /**
+     * create an action that sells the hotel in the requested titleDeed for the requested player.
+     * @param titleDeedName the name of the titleDeed to sell the hotel
+     * @return the PropertyAction command that encapsulates the descripted action
+     */
+    PropertyAction createSellHotel(String titleDeedName);
 }

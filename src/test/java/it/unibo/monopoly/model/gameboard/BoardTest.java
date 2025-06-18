@@ -17,7 +17,7 @@ import it.unibo.monopoly.model.gameboard.api.Tile;
 import it.unibo.monopoly.model.gameboard.impl.BoardImpl;
 import it.unibo.monopoly.model.gameboard.impl.Group;
 import it.unibo.monopoly.model.gameboard.impl.PawnImpl;
-import it.unibo.monopoly.model.gameboard.impl.PropertyImpl;
+import it.unibo.monopoly.model.gameboard.impl.NormalPropertyImpl;
 import it.unibo.monopoly.model.gameboard.impl.TileImpl;
 import it.unibo.monopoly.model.turnation.impl.PositionImpl;
 
@@ -29,9 +29,9 @@ class BoardTest {
 
     @BeforeEach
     void setUp() {
-        final Tile tile1 = new PropertyImpl("a", new PositionImpl(0), Group.RED);
-        final Tile tile2 = new PropertyImpl("b", new PositionImpl(1), Group.BLUE);
-        final Tile tile3 = new PropertyImpl("c", new PositionImpl(2), Group.YELLOW);
+        final Tile tile1 = new NormalPropertyImpl("a", new PositionImpl(0), Group.RED);
+        final Tile tile2 = new NormalPropertyImpl("b", new PositionImpl(1), Group.BLUE);
+        final Tile tile3 = new NormalPropertyImpl("c", new PositionImpl(2), Group.YELLOW);
         final List<Tile> tiles = List.of(tile1, tile2, tile3);
 
         pawn1 = new PawnImpl(1, new PositionImpl(0), Color.RED);
@@ -90,16 +90,16 @@ class BoardTest {
 
     @Test
     void testGetPawnInEmptyTile() {
-        final Tile emptyTile = new PropertyImpl("d", new PositionImpl(5), Group.BLACK);
+        final Tile emptyTile = new NormalPropertyImpl("d", new PositionImpl(5), Group.BLACK);
         final List<Pawn> pawns = board.getPawninTile(emptyTile);
         assertTrue(pawns.isEmpty());
     }
 
     @Test
     void testSortTiles() {
-        final TileImpl t1 = new PropertyImpl("t1", new PositionImpl(12), Group.BLACK);
-        final TileImpl t2 = new PropertyImpl("t2", new PositionImpl(4), Group.BLUE);
-        final TileImpl t3 = new PropertyImpl("t3", new PositionImpl(7), Group.CYAN);
+        final TileImpl t1 = new NormalPropertyImpl("t1", new PositionImpl(12), Group.BLACK);
+        final TileImpl t2 = new NormalPropertyImpl("t2", new PositionImpl(4), Group.BLUE);
+        final TileImpl t3 = new NormalPropertyImpl("t3", new PositionImpl(7), Group.CYAN);
         final BoardImpl unsortedBoard = new BoardImpl(Arrays.asList(t1, t2, t3), Collections.emptyList());
 
         unsortedBoard.sortTiles();

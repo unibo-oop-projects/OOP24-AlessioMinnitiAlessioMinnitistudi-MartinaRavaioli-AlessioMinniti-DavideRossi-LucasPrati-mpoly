@@ -17,6 +17,7 @@ import it.unibo.monopoly.model.transactions.api.BankAccount;
 import it.unibo.monopoly.model.transactions.api.BankState;
 import it.unibo.monopoly.model.transactions.api.PropertyAction;
 import it.unibo.monopoly.model.transactions.api.PropertyActionFactory;
+import it.unibo.monopoly.model.transactions.api.PropertyActionsEnum;
 import it.unibo.monopoly.model.transactions.api.TitleDeed;
 import it.unibo.monopoly.model.transactions.api.TransactionLedger;
 import it.unibo.monopoly.model.transactions.impl.bankaccount.ImmutableBankAccountCopy;
@@ -30,11 +31,10 @@ import it.unibo.monopoly.model.turnation.api.Player;
  */
 public final class BankImpl implements Bank {
 
-    private static final String PAY_TRANSACTION = "pay";
     private final Map<Integer, BankAccount> accounts;
     private final Map<String, TitleDeed> titleDeeds;
     private final BiFunction<BankAccount, Set<TitleDeed>, Integer> rankingBiFunction; 
-    private final PropertyActionFactory bankActionFactory = new PropertyActionFactoryImpl();
+    private final PropertyActionFactory propertyActionFactory = new PropertyActionFactoryImpl();
     private final TransactionLedger transactionLedger = new TransactionLedgerImpl();
 
     /**
@@ -124,7 +124,6 @@ public final class BankImpl implements Bank {
 
         buyer.withdraw(td.getSalePrice());
         td.setOwner(playerId);
-        transactionLedger.markExecution("buy");
     }
 
     @Override
@@ -156,13 +155,13 @@ public final class BankImpl implements Bank {
             titleDeedsByGroup(deed.getGroup()), diceThrow
         );
 
-        transactionLedger.markExecution(PAY_TRANSACTION);
+        transactionLedger.markExecution(PropertyActionsEnum.PAYRENT);
         receiver.deposit(rentAmount);
         try {
             payer.withdraw(rentAmount);
         } catch (final IllegalStateException e) {
             receiver.withdraw(rentAmount);
-            transactionLedger.unmarkExecution(PAY_TRANSACTION);
+            transactionLedger.unmarkExecution(PropertyActionsEnum.PAYRENT);
             throw e;
         }
     }
@@ -177,7 +176,6 @@ public final class BankImpl implements Bank {
         final BankAccount seller = findAccount(deed.getOwnerId());
         seller.deposit(deed.getMortgagePrice());
         deed.removeOwner();
-        transactionLedger.markExecution("sell");
     }
 
     @Override
@@ -207,7 +205,46 @@ public final class BankImpl implements Bank {
         account.withdraw(amount);
     }
 
-    //TODO check if exceptions should be in javadoc
+    @Override
+    public void buyHouse(final String titleDeedName) {
+        Objects.requireNonNull(titleDeedName);
+        final TitleDeed td = findTitleDeed(titleDeedName);
+        if (!td.isOwned()) {
+            throw new IllegalStateException("Cannot place a house on a property with no owner");
+        } 
+        final int playerId = td.getOwnerId();
+        final BankAccount player = findAccount(playerId);
+        if (!titleDeedsByGroup(td.getGroup())
+                        .stream()
+                        .allMatch(d -> d.isOwned() && d.getOwnerId() == playerId)) {
+                            throw new IllegalStateException("You need to buy all title deeds of the group" 
+                            + td.getGroup() 
+                            + " before asking to buy houses for the title deed " 
+                            + titleDeedName);
+        }
+        player.withdraw(td.getHousePrice());
+    }
+
+    @Override
+    public void buyHotel(final String titleDeedName) {
+        Objects.requireNonNull(titleDeedName);
+        final TitleDeed td = findTitleDeed(titleDeedName);
+        if (!td.isOwned()) {
+            throw new IllegalStateException("Cannot place a house on a property with no owner");
+        } 
+        final int playerId = td.getOwnerId();
+        final BankAccount player = findAccount(playerId);
+        if (!titleDeedsByGroup(td.getGroup())
+                .stream()
+                .allMatch(d -> d.isOwned() && d.getOwnerId() == playerId)) {
+                    throw new IllegalStateException("You need to buy all title deeds of the group" 
+                    + td.getGroup() 
+                    + " before asking to buy a hotel for the title deed " 
+                    + titleDeedName);
+        }
+        player.withdraw(td.getHotelPrice());
+    }
+
     @Override
     public Set<PropertyAction> getApplicableActionsForTitleDeed(
         final int currentPlayerId, 
@@ -218,16 +255,23 @@ public final class BankImpl implements Bank {
         }
         final Set<PropertyAction> returnSet = new HashSet<>();
         final TitleDeed selected = findTitleDeed(titleDeedName);
-        transactionLedger.removeIfPresent(PAY_TRANSACTION);
+        transactionLedger.removeIfPresent(PropertyActionsEnum.PAYRENT);
 
         if (!selected.isOwned()) {
-            returnSet.add(bankActionFactory.createBuy(currentPlayerId, titleDeedName));
+            returnSet.add(propertyActionFactory.createBuy(currentPlayerId, titleDeedName));
         } else if (selected.getOwnerId() == currentPlayerId) {
-            returnSet.add(bankActionFactory.createSell(titleDeedName));
-            //TODO build houses
+            returnSet.add(propertyActionFactory.createSell(titleDeedName));
+            if (titleDeedsByGroup(selected.getGroup())
+                .stream()
+                .allMatch(d -> d.isOwned() && d.getOwnerId() == currentPlayerId)) {
+                returnSet.add(propertyActionFactory.createBuyHouse(titleDeedName));
+                returnSet.add(propertyActionFactory.createBuyHotel(titleDeedName));
+                returnSet.add(propertyActionFactory.createSellHouse(titleDeedName));
+                returnSet.add(propertyActionFactory.createSellHotel(titleDeedName));
+            }
         } else {
-            returnSet.add(bankActionFactory.createPayRent(titleDeedName, currentPlayerId, diceThrow));
-            transactionLedger.registerTransaction(PAY_TRANSACTION, 1, 1);
+            returnSet.add(propertyActionFactory.createPayRent(titleDeedName, currentPlayerId, diceThrow));
+            transactionLedger.registerTransaction(PropertyActionsEnum.PAYRENT, 1, 1);
         }
 
         return returnSet;
@@ -236,6 +280,28 @@ public final class BankImpl implements Bank {
     @Override
     public BankState getBankStateObject() {
         return this.new BankStateAdapter();
+    }
+
+    @Override
+    public void sellHouse(final String titleDeedName) {
+        Objects.requireNonNull(titleDeedName);
+        final TitleDeed deed = findTitleDeed(titleDeedName);
+        if (!deed.isOwned()) {
+            throw new IllegalStateException("Cannot sell an house of a title deed with no owner");
+        }
+        final BankAccount seller = findAccount(deed.getOwnerId());
+        seller.deposit(deed.getHousePrice());
+    }
+
+    @Override
+    public void sellHotel(final String titleDeedName) {
+        Objects.requireNonNull(titleDeedName);
+        final TitleDeed deed = findTitleDeed(titleDeedName);
+        if (!deed.isOwned()) {
+            throw new IllegalStateException("Cannot sell the hotel of a title deed with no owner");
+        }
+        final BankAccount seller = findAccount(deed.getOwnerId());
+        seller.deposit(deed.getHotelPrice());
     }
 
     private final class BankStateAdapter implements BankState {
@@ -267,16 +333,18 @@ public final class BankImpl implements Bank {
         @Override
         public void resetTransactionData() {
             transactionLedger.reset();
-            transactionLedger.registerTransaction("buy", 0);
-            transactionLedger.registerTransaction("sell", 0);
         }
 
         @Override
         public void deletePlayer(final Player pl) {
-            getTitleDeedsByOwner(pl.getID())
-            .stream()
-            .forEach(TitleDeed::removeOwner);
+            titleDeeds.values()
+            .forEach(deed -> {
+                if (deed.isOwned() && deed.getOwnerId() == pl.getID()) {
+                    deed.removeOwner();
+                }
+            });
             accounts.remove(pl.getID());
         }
     }
+
 }

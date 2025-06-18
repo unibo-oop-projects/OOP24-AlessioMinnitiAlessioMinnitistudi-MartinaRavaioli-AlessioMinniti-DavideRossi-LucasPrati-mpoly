@@ -4,7 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
@@ -26,8 +25,8 @@ import javax.swing.SwingConstants;
 import it.unibo.monopoly.model.gameboard.api.Special;
 import it.unibo.monopoly.model.transactions.api.RentOption;
 import it.unibo.monopoly.model.transactions.api.TitleDeed;
-import it.unibo.monopoly.utils.impl.GuiUtils;
 import it.unibo.monopoly.view.api.ContractPanel;
+import it.unibo.monopoly.view.impl.PawnSquare;
 
 /**
  * A panel to visualise all information related to a {@link TitleDeed}.
@@ -35,7 +34,6 @@ import it.unibo.monopoly.view.api.ContractPanel;
 final class SwingContractPanel extends SwingAbstractJPanel implements ContractPanel {
 
     private static final long serialVersionUID = 43L;
-    private static final int BIG_FONT_SIZE = 15;
     private static final int N_ROWS = 5;
     private static final int INFO_PANEL_PROPORTION = 5;
     private static final int CONTRACT_PH_WIDTH = 200;
@@ -70,14 +68,13 @@ final class SwingContractPanel extends SwingAbstractJPanel implements ContractPa
 
         //name label
         final JLabel name = new JLabel(deed.getName(), SwingConstants.CENTER);
-        name.setFont(new Font(getFont().getName(), Font.BOLD, BIG_FONT_SIZE));
 
         //group information
         final JPanel groupPanel = new JPanel();
         groupPanel.setLayout(new BorderLayout());
         final JLabel group = new JLabel(deed.getGroup().toString(), SwingConstants.RIGHT);
 
-        final JLabel colorBox = GuiUtils.colorBoxFactory(deed.getGroup().getColor(), 30);
+        final var colorBox = new PawnSquare(deed.getGroup().getColor(), 30);
         groupPanel.add(colorBox, BorderLayout.WEST);
         groupPanel.add(group, BorderLayout.CENTER);
 
@@ -87,6 +84,7 @@ final class SwingContractPanel extends SwingAbstractJPanel implements ContractPa
         final JLabel ownerDesc = new JLabel("Owner: ");
         final JLabel ownerInfo = new JLabel(deed.isOwned() ? Integer.toString(deed.getOwnerId()) : "NO OWNER", 
                                             SwingConstants.RIGHT);
+
         ownerPanel.add(ownerDesc, BorderLayout.WEST);
         ownerPanel.add(ownerInfo, BorderLayout.CENTER);
 
@@ -122,14 +120,13 @@ final class SwingContractPanel extends SwingAbstractJPanel implements ContractPa
 
         //name label
         final JLabel name = new JLabel(tile.getName(), SwingConstants.CENTER);
-        name.setFont(new Font(getFont().getName(), Font.BOLD, BIG_FONT_SIZE));
 
         //group information
         final JPanel groupPanel = new JPanel();
         groupPanel.setLayout(new BorderLayout());
         final JLabel group = new JLabel(tile.getGroup().toString(), SwingConstants.RIGHT);
 
-        final JLabel colorBox = GuiUtils.colorBoxFactory(tile.getGroup().getColor(), 30);
+        final var colorBox = new PawnSquare(tile.getGroup().getColor(), 30);
         groupPanel.add(colorBox, BorderLayout.WEST);
         groupPanel.add(group, BorderLayout.CENTER);
 
