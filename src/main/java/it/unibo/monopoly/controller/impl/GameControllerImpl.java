@@ -250,8 +250,11 @@ public final class GameControllerImpl implements GameController {
                                                 getCurrPawn().getColor()); 
                     }
                 }
+                default -> {
+                    break;
+                }
             }
-            refreshBankPlayerInfo();
+
             refreshPlayerInfo();
             refreshCurrentTileInfo();
         } catch (final IllegalStateException | IllegalArgumentException | IllegalAccessException e) {
