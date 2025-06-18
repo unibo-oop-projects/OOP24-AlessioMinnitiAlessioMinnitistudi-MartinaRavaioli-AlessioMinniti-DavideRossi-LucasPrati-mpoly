@@ -77,7 +77,7 @@ public final class GUIVenditaLogicImpl implements  GUIVenditaLogic, Serializable
     public boolean sellHouse(final Property selectedBuildableProberty, final Bank bank, final Board board) {
         try {
             bank.sellHouse(selectedBuildableProberty.getName());
-            board.deleteHouseInProperty(selectedBuildableProberty);
+            board.deleteHouseInProperty(selectedBuildableProberty.getName());
             return true;
         } catch (final IllegalAccessException e) {
             return false;
@@ -89,7 +89,7 @@ public final class GUIVenditaLogicImpl implements  GUIVenditaLogic, Serializable
     public boolean sellHotel(final Property selectedBuildableProberty, final Bank bank, final Board board) {
          try {
             bank.sellHotel(selectedBuildableProberty.getName());
-            board.deleteHotelInProperty(selectedBuildableProberty);
+            board.deleteHotelInProperty(selectedBuildableProberty.getName());
             return true;
         } catch (final IllegalAccessException e) {
             return false;

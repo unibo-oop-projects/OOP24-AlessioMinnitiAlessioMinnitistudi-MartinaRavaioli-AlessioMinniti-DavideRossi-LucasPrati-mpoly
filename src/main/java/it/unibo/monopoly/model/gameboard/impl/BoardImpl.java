@@ -65,7 +65,20 @@ public class BoardImpl implements Board {
 
     @Override
     public final Tile getTile(final Position pos) { 
-        return tiles.get(pos.getPos());
+        final Tile tile = tiles.get(pos.getPos());
+                if (tile instanceof Property) {
+                    final Property prop = new NormalPropertyImpl(tile.getName(), tile.getPosition(), tile.getGroup());
+                    if (tile instanceof BuildablePropertyImpl b) {
+                        BuildablePropertyImpl buildableProperty = new BuildablePropertyImpl(prop);
+                        buildableProperty.setNHouses(b.getNHouses());
+                        buildableProperty.setHasHotel(b.hasHotel());
+                        return buildableProperty;
+                    }
+                    return prop;
+                } else {
+                    return new SpecialImpl(tile.getName(), tile.getPosition(), Group.SPECIAL, 
+                                                                ((Special) tile).getEffect());
+                }
     }
 
     @Override
@@ -112,7 +125,7 @@ public class BoardImpl implements Board {
             }
         }
 
-        return pawnsInTile;
+        return Collections.unmodifiableList(pawnsInTile);
     }
 
     @Override
