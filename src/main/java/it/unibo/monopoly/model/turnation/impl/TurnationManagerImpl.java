@@ -278,7 +278,7 @@ public class TurnationManagerImpl implements TurnationManager {
 
         for (final Player p : list) {
             this.players.addNode(p);
-        }        
+        }
     }
 
     @Override
