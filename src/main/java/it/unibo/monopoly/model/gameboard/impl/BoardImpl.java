@@ -68,7 +68,7 @@ public class BoardImpl implements Board {
         final Tile tile = tiles.get(pos.getPos());
                 if (tile instanceof Property) {
                     final Property prop = new NormalPropertyImpl(tile.getName(), tile.getPosition(), tile.getGroup());
-                    if (tile instanceof BuildablePropertyImpl b) {
+                    if (tile instanceof final BuildablePropertyImpl b) {
                         final BuildablePropertyImpl buildableProperty = new BuildablePropertyImpl(prop);
                         buildableProperty.setNHouses(b.getNHouses());
                         buildableProperty.setHasHotel(b.hasHotel());
@@ -98,8 +98,8 @@ public class BoardImpl implements Board {
                 final Tile tile = tiles.get(p.getPosition().getPos());
                 if (tile instanceof Property) {
                     final Property prop = new NormalPropertyImpl(tile.getName(), tile.getPosition(), tile.getGroup());
-                    if (tile instanceof BuildablePropertyImpl b) {
-                        BuildablePropertyImpl buildableProperty = new BuildablePropertyImpl(prop);
+                    if (tile instanceof final BuildablePropertyImpl b) {
+                        final BuildablePropertyImpl buildableProperty = new BuildablePropertyImpl(prop);
                         buildableProperty.setNHouses(b.getNHouses());
                         buildableProperty.setHasHotel(b.hasHotel());
                         return buildableProperty;
@@ -184,7 +184,7 @@ public class BoardImpl implements Board {
             if (t.getName().equals(name)) {
                 if (t instanceof Property) {
                     final Property prop = new NormalPropertyImpl(t.getName(), t.getPosition(), t.getGroup());
-                    if (t instanceof BuildablePropertyImpl b) {
+                    if (t instanceof final BuildablePropertyImpl b) {
                         final BuildablePropertyImpl buildableProperty = new BuildablePropertyImpl(prop);
                         buildableProperty.setNHouses(b.getNHouses());
                         buildableProperty.setHasHotel(b.hasHotel());

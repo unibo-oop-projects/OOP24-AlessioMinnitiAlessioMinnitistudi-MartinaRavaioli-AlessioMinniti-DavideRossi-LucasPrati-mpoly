@@ -87,6 +87,7 @@ public interface MainGameView {
      * The view will then make subsequent calls to controller methods to retrieve
      * all information related to that player.
      * @param bank
+     * @param board 
      */
     void displayPlayerStats(Player player, Bank bank, Board board);
 
