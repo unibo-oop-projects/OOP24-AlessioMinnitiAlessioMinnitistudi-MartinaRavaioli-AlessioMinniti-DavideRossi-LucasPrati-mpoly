@@ -9,6 +9,7 @@ import java.util.Objects;
 
 import it.unibo.monopoly.model.gameboard.api.Board;
 import it.unibo.monopoly.model.gameboard.api.Pawn;
+import it.unibo.monopoly.model.gameboard.api.PawnFactory;
 import it.unibo.monopoly.model.gameboard.api.Property;
 import it.unibo.monopoly.model.gameboard.api.Special;
 import it.unibo.monopoly.model.gameboard.api.Tile;
@@ -25,6 +26,7 @@ public class BoardImpl implements Board {
     private final List<Tile> tiles; /**list of tiles. */
     private final List<Pawn> pawns; /**list of pawns. */
     private ChancheAndCommunityChestDeck deck;
+    private final PawnFactory factory = new PawnFactoryImpl();
     /**
      * constructor.
      * @param tiles list of tiles
@@ -148,7 +150,8 @@ public class BoardImpl implements Board {
     public final Pawn getPawn(final int id) { //it's used to return the pawn outside of the board, it's because it returns a copy 
         for (final Pawn p : this.pawns) {
             if (((PawnImpl) p).getID() == id) {
-                return new PawnImpl(((PawnImpl) p).getID(), p.getPosition(), p.getColor());
+                return factory.createBasic(((PawnImpl) p).getID(), p.getPosition(), p.getColor());
+                //return new PawnImpl(((PawnImpl) p).getID(), p.getPosition(), p.getColor());
             }
         }
 
