@@ -282,7 +282,7 @@ public class TurnationManagerImpl implements TurnationManager {
         // for (final Player p : list) {
         //     this.players.add(p);
         // }
-        List<Player> filtered = this.players.toList().stream()
+        final List<Player> filtered = this.players.toList().stream()
                                             .filter(p -> !p.getID().equals(player.getID()))
                                             .toList(); // Java 16+ preferibile, altrimenti collect(Collectors.toList())
         this.players.clear();
@@ -338,8 +338,8 @@ public class TurnationManagerImpl implements TurnationManager {
         } else {
             this.currPlayer.decreaseTurnsInPrison();
             return "you are still in prison, you have " 
-                    + currentPlayerTurnsLeftInPrison() + 
-                    " turns left in prison and the dices weren't kind with you.";
+                    + currentPlayerTurnsLeftInPrison()
+                    + " turns left in prison and the dices weren't kind with you.";
         }
     }
 

@@ -36,7 +36,7 @@ public class CircularPlayerIteratorImpl implements PlayerIterator {
     }
     /**
      * create a copy of the player.
-     * @return
+     * @return Player
      */
     private Player createCurrPlayerCopy() {
         return new Player() {
@@ -109,7 +109,7 @@ public class CircularPlayerIteratorImpl implements PlayerIterator {
         return !this.elems.isEmpty();
     }
     /**
-     * add the player.     
+     * add the player.
      * @param p player
      */
     public void add(final Player p) {
@@ -139,10 +139,12 @@ public class CircularPlayerIteratorImpl implements PlayerIterator {
     }
 
     @Override
-    public Player getCurrent() {
+    public final Player getCurrent() {
         return createCurrPlayerCopy();
     }
-
+    /**
+     * clear the iterator.
+     */
     public void clear() {
         this.elems.clear();
     }

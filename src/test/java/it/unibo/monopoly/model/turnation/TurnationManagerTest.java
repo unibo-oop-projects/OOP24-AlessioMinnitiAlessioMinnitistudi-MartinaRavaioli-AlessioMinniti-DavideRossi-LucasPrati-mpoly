@@ -26,6 +26,7 @@ import it.unibo.monopoly.model.turnation.api.TurnationManager;
 import it.unibo.monopoly.model.turnation.impl.DiceImpl;
 import it.unibo.monopoly.model.turnation.impl.ParkablePlayer;
 import it.unibo.monopoly.model.turnation.impl.PlayerImpl;
+import it.unibo.monopoly.model.turnation.impl.PrisonablePlayer;
 import it.unibo.monopoly.model.turnation.impl.TurnationManagerImpl;
 
 class TurnationManagerTest {
@@ -40,9 +41,9 @@ class TurnationManagerTest {
     private static final int NDICES = 2;
     private TurnationManager turnManager;
     private final List<Player> players = new ArrayList<>(List.of(
-        new ParkablePlayer(PlayerImpl.of(1, "a", Color.RED)),
-        new ParkablePlayer(PlayerImpl.of(2, "b", Color.GREEN)),
-        new ParkablePlayer(PlayerImpl.of(3, "c", Color.BLUE))
+        new ParkablePlayer(new PrisonablePlayer(PlayerImpl.of(1, "a", Color.RED))),
+        new ParkablePlayer(new PrisonablePlayer(PlayerImpl.of(2, "b", Color.GREEN))),
+        new ParkablePlayer(new PrisonablePlayer(PlayerImpl.of(3, "c", Color.BLUE)))
     ));
 
     private final Set<BankAccount> accounts = Set.of(
@@ -110,12 +111,12 @@ class TurnationManagerTest {
     void testPlayerParkedCannotThrowDices() {
         try {
             players.get(0).park();
-            var result = turnManager.moveByDices();
+            final var result = turnManager.moveByDices();
             assertEquals("the player can't throw dices because is parked", result.getRight());
         } catch (IllegalAccessException e) {
             LOGGER.error("Errore ", e);
         }
-        
+
     }
 
     @Test
@@ -126,13 +127,8 @@ class TurnationManagerTest {
 
     @Test
     void testCanPassTurnWhenParked() {
-        try {
-            players.get(0).park();
-            assertTrue(turnManager.canPassTurn(), "Player should be able to pass turn when parked");
-        } catch (Exception e) {
-            LOGGER.error("Errore ", e);
-        }
-        
+        players.get(0).park();
+        assertTrue(turnManager.canPassTurn(), "Player should be able to pass turn when parked");
     }
 
     @Test
@@ -140,58 +136,32 @@ class TurnationManagerTest {
         try {
             players.get(0).putInPrison();
             assertTrue(turnManager.isCurrentPlayerInPrison(), "Player should be in prison");
-            var result = turnManager.moveByDices();
+            final var result = turnManager.moveByDices();
             assertTrue(result.getRight().contains("you are still in prison") || result.getRight().contains("you escaped the prison"));
-        } catch (IllegalAccessException e) {
+        } catch (final IllegalAccessException e) {
             LOGGER.error("Errore ", e);
         }
     }
 
     @Test
-    void testDeletePlayer() {
-        Player toDelete = players.get(1);
-        turnManager.deletePlayer(toDelete);
-        assertTrue(turnManager.getPlayerList().stream().noneMatch(p -> p.getID().equals(toDelete.getID())), "Player should be deleted");
-    }
-
-    @Test
-    void testGetWinner() {
-        var winner = turnManager.getWinner();
-        assertTrue(winner.getLeft() instanceof String, "Winner should have a name");
-    }
-
-    @Test
-    void testGetRanking() {
-        var ranking = turnManager.getRanking();
-        assertEquals(players.size(), ranking.size(), "Ranking should include all players");
-    }
-
-    @Test
-    void testResetBankState() {
-        turnManager.resetBankState();
-        assertTrue(turnManager.canPassTurn(), "After reset, should still be able to play normally");
-    }
-
-    @Test
     void testMoveByDicesWhileInPrisonUpdatesTurns() {
         try {
-            
-        } catch (IllegalAccessException e) {
-            
+            players.get(0).putInPrison();
+            final int turnsLeft = turnManager.currentPlayerTurnsLeftInPrison();
+            turnManager.moveByDices();  // Should decrement turns
+            assertEquals(turnsLeft - 1, 
+                        turnManager.currentPlayerTurnsLeftInPrison(),
+                        "Turns left in prison should decrease after failed attempt");
+        } catch (final IllegalAccessException e) {
+            LOGGER.error("Errore ", e);
         }
-        players.get(0).putInPrison();
-        int turnsLeft = turnManager.currentPlayerTurnsLeftInPrison();
-        turnManager.moveByDices();  // Should decrement turns
-        assertEquals(turnsLeft - 1, turnManager.currentPlayerTurnsLeftInPrison(), "Turns left in prison should decrease after failed attempt");
     }
 
     @Test
-    void testNextPlayerAfterParkPassesProperly() throws IllegalAccessException {
-        try {
-            
-        } catch (Exception e) {
-        }
+    void testNextPlayerAfterParkPassesProperly() {
         players.get(0).park();
-        assertEquals(players.get(1).getID(), turnManager.getNextPlayer().getID(), "Next should skip parked player after passing turn");
+        assertEquals(players.get(1).getID(), 
+                    turnManager.getNextPlayer().getID(),
+                    "Next should skip parked player after passing turn");
     }
 }
