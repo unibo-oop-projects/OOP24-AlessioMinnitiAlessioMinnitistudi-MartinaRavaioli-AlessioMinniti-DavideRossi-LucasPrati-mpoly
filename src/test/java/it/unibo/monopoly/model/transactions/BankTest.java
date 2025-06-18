@@ -112,7 +112,7 @@ class BankTest {
                     .filter(a -> ID_1 == a.getID())
                     .map(a -> new ImmutableBankAccountCopy(a))
                     .toList()
-                    .getFirst(), account);
+                    .get(0), account);
     }
 
     @Test
@@ -131,7 +131,7 @@ class BankTest {
                     .filter(d -> TITLE_DEED_NAME1.equals(d.getName()))
                     .map(d -> new ImmutableTitleDeedCopy(d))
                     .toList()
-                    .getFirst(), deed);
+                    .get(0), deed);
     }
 
     @Test

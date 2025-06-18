@@ -15,7 +15,6 @@ import it.unibo.monopoly.model.gameboard.impl.Group;
 import it.unibo.monopoly.model.transactions.api.Bank;
 import it.unibo.monopoly.model.transactions.api.BankAccount;
 import it.unibo.monopoly.model.transactions.api.BankState;
-import it.unibo.monopoly.model.transactions.api.PropertyAction;
 import it.unibo.monopoly.model.transactions.api.TitleDeed;
 import it.unibo.monopoly.model.transactions.impl.BankImpl;
 import it.unibo.monopoly.model.transactions.impl.bankaccount.SimpleBankAccountImpl;
@@ -23,7 +22,7 @@ import it.unibo.monopoly.model.transactions.impl.titledeed.BaseTitleDeed;
 import it.unibo.monopoly.model.turnation.api.Player;
 import it.unibo.monopoly.model.turnation.impl.PlayerImpl;
 
-public class BankStateTest {
+class BankStateTest {
 
     private static final int AMOUNT = 100;
     private static final int ID_1 = 21;
@@ -34,8 +33,6 @@ public class BankStateTest {
 
     private final Player player1 = PlayerImpl.of(
         ID_1, "a", Color.BLACK);
-    private final Player player2 = PlayerImpl.of(
-        ID_2, "b", Color.BLACK);
     private final Set<BankAccount> accounts = Set.of(
         new SimpleBankAccountImpl(ID_1, AMOUNT, e -> e.getBalance() > 0),
         new SimpleBankAccountImpl(ID_2, AMOUNT, e -> e.getBalance() > 0)
@@ -58,7 +55,7 @@ public class BankStateTest {
     void playerHasToDoSomeTransactionsBeforePassingTurn() {
         bank.buyTitleDeed(TITLE_DEED_NAME1, ID_1);
         //set that player with ID_2 has to pay rent
-        final Set<PropertyAction> availableActions = bank.getApplicableActionsForTitleDeed(ID_2, TITLE_DEED_NAME1, DICE_THROW);
+        bank.getApplicableActionsForTitleDeed(ID_2, TITLE_DEED_NAME1, DICE_THROW);
         assertFalse(bankState.allMandatoryTransactionsCompleted());
         bank.payRent(TITLE_DEED_NAME1, ID_2, DICE_THROW);
         assertTrue(bankState.allMandatoryTransactionsCompleted());
@@ -79,12 +76,12 @@ public class BankStateTest {
     void  testResetTransactionData() {
         bank.buyTitleDeed(TITLE_DEED_NAME1, ID_1);
         //set that player with ID_2 has to pay rent
-        final Set<PropertyAction> availableActionsFirstTurn = bank.getApplicableActionsForTitleDeed(ID_2, TITLE_DEED_NAME1, DICE_THROW);
+        bank.getApplicableActionsForTitleDeed(ID_2, TITLE_DEED_NAME1, DICE_THROW);
         assertFalse(bankState.allMandatoryTransactionsCompleted());
         //simulate player ends its turn by wiping all data of the executed transactions
         bankState.resetTransactionData();
         assertTrue(bankState.allMandatoryTransactionsCompleted());
-        final Set<PropertyAction> availableActionsSecondTurn = bank.getApplicableActionsForTitleDeed(ID_2, TITLE_DEED_NAME1, DICE_THROW);
+        bank.getApplicableActionsForTitleDeed(ID_2, TITLE_DEED_NAME1, DICE_THROW);
         assertFalse(bankState.allMandatoryTransactionsCompleted());
     }
 

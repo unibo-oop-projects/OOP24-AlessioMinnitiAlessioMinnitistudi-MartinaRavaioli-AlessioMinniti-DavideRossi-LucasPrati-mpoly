@@ -84,7 +84,7 @@ class HousesTitleDeedTest {
         deed.setOwner(1);
         referencedProperty.buildHouse();
         final int rent = deed.getRent(Set.of(), DICE_THROW);
-        assertEquals(housesOptions.getFirst().getPrice(), rent);
+        assertEquals(housesOptions.get(0).getPrice(), rent);
     }
 
     @Test 
@@ -96,7 +96,7 @@ class HousesTitleDeedTest {
         referencedProperty.buildHouse();
         referencedProperty.buildHotel();
         final int rent = deed.getRent(Set.of(), DICE_THROW);
-        assertEquals(housesOptions.getLast().getPrice(), rent);
+        assertEquals(housesOptions.get(housesOptions.size() - 1).getPrice(), rent);
     }
 
     @Test 
