@@ -220,7 +220,6 @@ public final class GameControllerImpl implements GameController {
         try {
             final PropertyAction action = turnActions.get(actionName);
             action.executePropertyAction(board, bank);
-            gameView.displayMessage(action.getDescription() + " eseguita con successo");
             final Property currentlySittingProperty = (Property) this.board.getTileForPawn(
                                                         this.turnationManager.getIdCurrPlayer());
 
@@ -255,6 +254,7 @@ public final class GameControllerImpl implements GameController {
                 }
             }
 
+            gameView.displayMessage(action.getDescription() + " eseguita con successo");
             refreshPlayerInfo();
             refreshCurrentTileInfo();
         } catch (final IllegalStateException | IllegalArgumentException | IllegalAccessException e) {
