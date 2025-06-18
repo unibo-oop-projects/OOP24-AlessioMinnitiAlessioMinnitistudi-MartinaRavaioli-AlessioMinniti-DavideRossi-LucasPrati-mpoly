@@ -42,12 +42,10 @@ controller o sul model in alcun caso rendendo dunque totalmente
 indipendente e modificabile l'implementazione.
 In aggiunta, si potrebbe prevedere l'esistenza di uno specifico componente che implementi il pattern observer con il GameController
 e che chiami i metodi di quest'ultimo permettendo altre modalità di interazione (cattura evento pressione dei tasti del mouse, della tastiera\dots)
-\todo{riscrivere menu}
 Il software prevede anche un menù iniziale di configurazione della partita. 
 Questo menù è a sua volta costituito da una sua architettura MVC più ridotta, 
-modellata tenendo in mente gli stessi principi descritti sovrastante. 
-L’entità GameBuilder è colei che si occupa di instanziare poi le classi dell’MVC principale del software e avviare effettivamente il gioco,
-costruendo tutti gli oggetti.
+seguendo lo stesso pattern Observer. 
+L’entità MainController è colei che crea poi le classi del model e l' MVC principale avviando effettivamente il gioco.
 
 \begin{figure}[H]
     \centering
