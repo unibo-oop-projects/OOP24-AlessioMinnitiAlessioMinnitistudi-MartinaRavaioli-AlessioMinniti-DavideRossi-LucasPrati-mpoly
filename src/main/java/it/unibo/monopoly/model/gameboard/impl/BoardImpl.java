@@ -184,8 +184,11 @@ public class BoardImpl implements Board {
             if (t.getName().equals(name)) {
                 if (t instanceof Property) {
                     final Property prop = new NormalPropertyImpl(t.getName(), t.getPosition(), t.getGroup());
-                    if (t instanceof BuildablePropertyImpl) {
-                        return new BuildablePropertyImpl(prop);
+                    if (t instanceof BuildablePropertyImpl b) {
+                        final BuildablePropertyImpl buildableProperty = new BuildablePropertyImpl(prop);
+                        buildableProperty.setNHouses(b.getNHouses());
+                        buildableProperty.setHasHotel(b.hasHotel());
+                        return buildableProperty;
                     }
                     return prop;
                 } else {
