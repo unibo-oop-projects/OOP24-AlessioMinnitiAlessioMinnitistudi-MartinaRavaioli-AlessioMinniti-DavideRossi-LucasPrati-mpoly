@@ -82,11 +82,14 @@ public class BoardImpl implements Board {
     public final Tile getTileForPawn(final int id) {
         for (final Pawn p : this.pawns) {
             if (((PawnImpl) p).getID().equals(id)) {
-                Tile tile = tiles.get(p.getPosition().getPos());
+                final Tile tile = tiles.get(p.getPosition().getPos());
                 if (tile instanceof Property) {
                     final Property prop = new NormalPropertyImpl(tile.getName(), tile.getPosition(), tile.getGroup());
-                    if (tile instanceof BuildablePropertyImpl) {
-                        return new BuildablePropertyImpl(prop);
+                    if (tile instanceof BuildablePropertyImpl b) {
+                        BuildablePropertyImpl buildableProperty = new BuildablePropertyImpl(prop);
+                        buildableProperty.setNHouses(b.getNHouses());
+                        buildableProperty.setHasHotel(b.hasHotel());
+                        return buildableProperty;
                     }
                     return prop;
                 } else {
@@ -204,33 +207,66 @@ public class BoardImpl implements Board {
     }
 
     @Override
-    public final boolean buildHouseInProperty(final Property prop) {
+    public final int buildHouseInProperty(final String name) {
+        Property prop = null;
+        for (Tile t : this.tiles) {
+            if (t instanceof Property && t.getName().equals(name)) {
+                prop = (Property) t;
+                break;
+            }
+        }
+        Objects.requireNonNull(prop);
         if (!canBuildHouseInProperty(prop)) {
             throw new IllegalArgumentException("this property can't build the house");
         }
+
         prop.buildHouse();
-        return true;
+        return prop.getNHouses();
     }
 
     @Override
-    public final boolean buildHotelInProperty(final Property prop) {
+    public final boolean buildHotelInProperty(final String name) {
+        Property prop = null;
+        for (Tile t : this.tiles) {
+            if (t instanceof Property && t.getName().equals(name)) {
+                prop = (Property) t;
+                break;
+            }
+        }
+        Objects.requireNonNull(prop);
         if (!canBuildHotelInProperty(prop)) {
             throw new IllegalArgumentException("this property can't build the hotel");
         }
         prop.buildHotel();
-        return true;
+        return prop.hasHotel();
     }
 
     @Override
-    public final boolean deleteHouseInProperty(final Property prop) throws IllegalAccessException {
+    public final int deleteHouseInProperty(final String name) throws IllegalAccessException {
+        Property prop = null;
+        for (Tile t : this.tiles) {
+            if (t instanceof Property && t.getName().equals(name)) {
+                prop = (Property) t;
+                break;
+            }
+        }
+        Objects.requireNonNull(prop);
         prop.deleteHouse();
-        return true;
+        return prop.getNHouses();
     }
 
     @Override
-    public final boolean deleteHotelInProperty(final Property prop) throws IllegalAccessException {
+    public final boolean deleteHotelInProperty(final String name) throws IllegalAccessException {
+        Property prop = null;
+        for (Tile t : this.tiles) {
+            if (t instanceof Property && t.getName().equals(name)) {
+                prop = (Property) t;
+                break;
+            }
+        }
+        Objects.requireNonNull(prop);
         prop.deleteHotel();
-        return true;
+        return prop.hasHotel();
     }
     @Override
     public final Position getPrevPawnPosition(final int id) {

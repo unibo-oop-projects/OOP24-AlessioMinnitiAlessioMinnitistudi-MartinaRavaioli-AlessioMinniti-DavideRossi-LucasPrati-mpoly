@@ -115,4 +115,12 @@ public class BuildablePropertyImpl implements Property {
     public final boolean canDeleteHouse() {
         return !hasHotel();
     }
+
+    public void setNHouses(int nHouses) {
+        this.nHouses = nHouses;
+    }
+
+    public void setHasHotel(boolean hotel) {
+        this.hotel = hotel;
+    }
 }

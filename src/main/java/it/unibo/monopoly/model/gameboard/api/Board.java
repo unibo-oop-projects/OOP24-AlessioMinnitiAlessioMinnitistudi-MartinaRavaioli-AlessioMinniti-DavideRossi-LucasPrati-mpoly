@@ -111,28 +111,28 @@ public interface Board {
     boolean canBuildHotelInProperty(Property prop);
     /**
      * build house in the property.
-     * @param prop property to change
-     * @return bool
+     * @param name name of the property to change
+     * @return int
     */
-    boolean buildHouseInProperty(Property prop);
+    int buildHouseInProperty(String name);
     /**
      * build hotel in the property.
      * @param prop property to change
      * @return bool
     */
-    boolean buildHotelInProperty(Property prop);
+    boolean buildHotelInProperty(String name);
     /**
      * delete an house in the property.
-     * @param prop
+     * @param name name of the property
      * @return bool
      */
-    boolean deleteHouseInProperty(Property prop) throws IllegalAccessException;
+    int deleteHouseInProperty(String name) throws IllegalAccessException;
     /**
      * delete the hotel in the property.
-     * @param prop
+     * @param name name of the property
      * @return bool
      */
-    boolean deleteHotelInProperty(Property prop) throws IllegalAccessException;
+    boolean deleteHotelInProperty(String name) throws IllegalAccessException;
     /**
      * get the previous position of the pawn associated with the id. 
      * @param id id of the pawn

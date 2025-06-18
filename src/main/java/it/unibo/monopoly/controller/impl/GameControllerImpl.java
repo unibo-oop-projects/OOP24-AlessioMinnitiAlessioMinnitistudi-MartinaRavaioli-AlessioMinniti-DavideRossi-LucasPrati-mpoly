@@ -229,31 +229,27 @@ public final class GameControllerImpl implements GameController {
                                                     getCurrPawn().getColor());
                 case SELL -> gameView.callClearPanel(currentlySittingProperty.getName());
                 case BUYHOUSE -> {
-                    this.board.buildHouseInProperty(currentlySittingProperty);
                     gameView.callBuyHouse(currentlySittingProperty.getName(), 
                                             getCurrPawn().getColor(), 
-                                            currentlySittingProperty.getNHouses());
+                                            this.board.buildHouseInProperty(currentlySittingProperty.getName()));
                 }
                 case BUYHOTEL -> {
-                    if (this.board.buildHotelInProperty(currentlySittingProperty)) {
+                    if (this.board.buildHotelInProperty(currentlySittingProperty.getName())) {
                         gameView.callBuyHotel(currentlySittingProperty.getName(), 
                                                 getCurrPawn().getColor());
                     }
                 }
                 case SELLHOUSE -> {
-                    if (this.board.deleteHouseInProperty(currentlySittingProperty)) {
                         gameView.callSellHouse(currentlySittingProperty.getName(), 
-                                                currentlySittingProperty.getNHouses(), 
+                                                this.board.deleteHouseInProperty(currentlySittingProperty.getName()), 
                                                 getCurrPawn().getColor());
-                    }
                 }
                 case SELLHOTEL -> {
-                    if (this.board.deleteHotelInProperty(currentlySittingProperty)) {
+                    if (!this.board.deleteHotelInProperty(currentlySittingProperty.getName())) {
                         gameView.callSellHotel(currentlySittingProperty.getName(), 
                                                 getCurrPawn().getColor()); 
                     }
                 }
-                default -> throw new IllegalArgumentException("Unexpected value: " + actionName);
             }
             refreshBankPlayerInfo();
             refreshPlayerInfo();
