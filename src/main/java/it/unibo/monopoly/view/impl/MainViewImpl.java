@@ -16,9 +16,11 @@ import javax.swing.JSplitPane;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.monopoly.controller.api.GameController;
 import it.unibo.monopoly.controller.impl.GUIVenditaLogicImpl;
+import it.unibo.monopoly.model.gameboard.api.Board;
 import it.unibo.monopoly.model.gameboard.api.Special;
 import it.unibo.monopoly.model.transactions.api.Bank;
 import it.unibo.monopoly.model.transactions.api.BankAccount;
+import it.unibo.monopoly.model.transactions.api.PropertyActionsEnum;
 import it.unibo.monopoly.model.transactions.api.TitleDeed;
 import it.unibo.monopoly.model.turnation.api.Player;
 import it.unibo.monopoly.utils.impl.GuiUtils;
@@ -151,7 +153,7 @@ public final class MainViewImpl implements MainGameView {
     }
 
     @Override
-    public void displayPlayerActions(final Set<String> actions) {
+    public void displayPlayerActions(final Set<PropertyActionsEnum> actions) {
         gameActionsPanel.buildActionButtons(actions, controller);
         mainGameFrame.repaint();
     }
@@ -168,14 +170,15 @@ public final class MainViewImpl implements MainGameView {
     }
 
     @Override
-    public void displayPlayerStats(final Player player, final Bank bank) {
+    public void displayPlayerStats(final Player player, final Bank bank, final Board board) {
         new GUIVendita(player,
             new GUIVenditaLogicImpl(), 
             bank,
+            board,
             this,
             this.mainGameFrame
         );
-        this.displayPlayerInfo(player, bank.getBankAccount(player.getID()));
+        //this.displayPlayerInfo(player, bank.getBankAccount(player.getID()));
     }
 
     @Override
@@ -212,6 +215,25 @@ public final class MainViewImpl implements MainGameView {
         }
     }
 
+    @Override
+    public void callBuyHouse(final String propName, final Color color, final int nHouses) {
+        this.gameBoardPanel.addHouse(propName, color, nHouses);
+    }
+
+    @Override
+    public void callBuyHotel(final String propName, final Color color) {
+        this.gameBoardPanel.addHotel(propName, color);
+    }
+
+    @Override
+    public void callSellHouse(final String propName, final int nHouses, final Color color) {
+        this.gameBoardPanel.removeHouse(propName, nHouses, color);
+    }
+
+    @Override
+    public void callSellHotel(final String propName, final Color color) {
+       this.gameBoardPanel.removeHotel(propName, color);
+    }
     @Override
     public void callDeletePlayer(final Color color, final int id) {
         this.gameBoardPanel.deletePlayer(color, id);

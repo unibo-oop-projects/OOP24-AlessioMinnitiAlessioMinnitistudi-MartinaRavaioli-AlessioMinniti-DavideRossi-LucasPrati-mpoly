@@ -94,6 +94,31 @@ public interface Bank {
     void depositTo(int ownerId, int amount);
 
     /**
+     * purchase an house to the given property.
+     * only if is owned by the player who has done the call
+     * @param titleDeedName name of the titleDeed of the house to buy
+     */
+    void buyHouse(String titleDeedName);
+    /**
+     * purchase the hotel to the given property.
+     * only if is owned by the player who has done the call
+     * @param titleDeedName name of the titleDeed of the house to buy
+     */
+    void buyHotel(String titleDeedName);
+    /**
+     * sell an house of the given property.
+     * only if is owned by the player who has done the call
+     * @param titleDeedName name of the titleDeed of the house to buy
+     */
+    void sellHouse(String titleDeedName);
+    /**
+     * sell the hotel of the given property.
+     * only if is owned by the player who has done the call
+     * @param titleDeedName name of the titleDeed of the house to buy
+     */
+    void sellHotel(String titleDeedName);
+
+    /**
      * make a withdraw from a player's {@link BankAccount}.
      * @param ownerId the player that has to pay the bank
      * @param amount the amount of money to withdraw

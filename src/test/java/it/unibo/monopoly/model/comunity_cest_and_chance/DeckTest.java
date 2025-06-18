@@ -141,10 +141,11 @@ class DeckTest {
     void testDeck() {
         try {
             final List<String> descs = List.of("deposit 50", 
-                                                    "move in Jail / Just Visiting.\nif you pass the start point in doing so, the 200$ will be added" 
-                                                    + " then\n" 
-                                                    + "buy Jail / Just Visiting if not owned otherwise pay it's rent",
-                                                    "withdraw 50");
+                                    "move in Jail / Just Visiting." 
+                                    + "\nif you pass the start point in doing so, the 200$ will be added"
+                                    + " then\n" 
+                                    + "buy Jail / Just Visiting if not owned otherwise pay it's rent",
+                                    "withdraw 50");
             creator.createDeck("debug//cards//DeckCardTest.txt", board, bank, turnM);
             final ChanceAndCommunityChestCard c1 = board.draw();
             c1.execute(p);
