@@ -9,6 +9,7 @@ import it.unibo.monopoly.controller.api.GUIVenditaLogic;
 import it.unibo.monopoly.model.gameboard.api.Board;
 import it.unibo.monopoly.model.gameboard.api.Property;
 import it.unibo.monopoly.model.gameboard.api.Tile;
+import it.unibo.monopoly.model.gameboard.impl.BuildablePropertyImpl;
 import it.unibo.monopoly.model.transactions.api.Bank;
 import it.unibo.monopoly.model.transactions.api.BankAccount;
 import it.unibo.monopoly.model.transactions.api.TitleDeed;
@@ -64,10 +65,10 @@ public final class GUIVenditaLogicImpl implements  GUIVenditaLogic, Serializable
     }
 
     @Override
-    public Property getBuildableProperty(final TitleDeed selectedProperty, final Board board) {
+    public BuildablePropertyImpl getBuildableProperty(final TitleDeed selectedProperty, final Board board) {
         final Tile tile = board.getTile(selectedProperty.getName());
-        if (tile instanceof Property) {
-            return (Property) tile;
+        if (tile instanceof BuildablePropertyImpl) {
+            return (BuildablePropertyImpl) board.getTile(selectedProperty.getName());
         } else {
             return null;
         }

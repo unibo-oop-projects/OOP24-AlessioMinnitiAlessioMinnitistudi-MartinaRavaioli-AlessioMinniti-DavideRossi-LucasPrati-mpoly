@@ -22,6 +22,7 @@ import javax.swing.event.ListSelectionListener;
 import it.unibo.monopoly.controller.api.GUIVenditaLogic;
 import it.unibo.monopoly.model.gameboard.api.Board;
 import it.unibo.monopoly.model.gameboard.api.Property;
+import it.unibo.monopoly.model.gameboard.impl.BuildablePropertyImpl;
 import it.unibo.monopoly.model.gameboard.impl.Group;
 import it.unibo.monopoly.model.transactions.api.Bank;
 import it.unibo.monopoly.model.transactions.api.TitleDeed;
@@ -156,7 +157,8 @@ public final class GUIVendita extends JDialog {
             if (logic.sellProperty(selectedDeed, bank)) {
                 statePayment = true;
 
-                parentView.callClearAll();
+                parentView.callClearPanel(selectedDeed.getName());
+                parentView.displayPlayerInfo(player, bank.getBankAccount(player.getID()));
                 this.setNullValues(player, bank);
                 sellProperty.setEnabled(false);
 
@@ -196,6 +198,7 @@ public final class GUIVendita extends JDialog {
                 statePayment = true;
 
                 this.setValues(selectedDeed, player, bank, board);
+                parentView.displayPlayerInfo(player, bank.getBankAccount(player.getID()));
 
                 if (selectedBuildableProberty.getNHouses() == 0) {
                     sellHouse.setEnabled(false);
@@ -229,6 +232,7 @@ public final class GUIVendita extends JDialog {
                 statePayment = true;
 
                 this.setValues(selectedDeed, player, bank, board);
+                parentView.displayPlayerInfo(player, bank.getBankAccount(player.getID()));
 
                 if (selectedBuildableProberty.hasHotel()) {
                     sellHotel.setEnabled(false);
@@ -323,7 +327,7 @@ public final class GUIVendita extends JDialog {
         colorValue.setColor(logic.getPropertyColor(selectedDeed));
         hotelCostValue.setText(String.valueOf(selectedDeed.getHotelPrice()));
         houseCostValue.setText(String.valueOf(selectedDeed.getHousePrice()));
-        final Property selectedBuildableProberty = logic.getBuildableProperty(selectedDeed, board);
+        final BuildablePropertyImpl selectedBuildableProberty = logic.getBuildableProperty(selectedDeed, board);
         houseNumValue.setText(String.valueOf(selectedBuildableProberty.getNHouses()));
         final String hotelsString;
         if (selectedBuildableProberty.hasHotel()) {
