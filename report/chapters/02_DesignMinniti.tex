@@ -14,6 +14,10 @@ Inoltre bankState viene utilizzato dal Turnation Manager anche per determinare i
 PROBLEMA:
 Il Turnation Manager per gestire i turni dei player ha bisogno di una struttura dati che passa sempre il prossimo player in modo ciclico, 
 quindi una volta che arriva all'ultimo player deve ricominciare ad assegnare i turni dal primo player, tuttavia di base non c'è una lista circolare 
+e le librerie esterne non ne forninvano una adeguata
 
 SOLUZIONE:
-Per risolvere questo problema ho utilizzato il pattern \textbf{iterator}, andando a creare un' interfaccia \textbf{PlayerIterator} che definisce le azioni cardine dell'iterator e poi ho creato l'implementazione \textbf{Circular Player Iterator} che wrappa la lista di player e itera la lista ritornando sempre il prossimo player che deve svolgere il turno in maniera ciclica, quindi quando vede che è arrivato all'ultimo player ricomincia ad iterare la lista dall'inizio
+Per risolvere questo problema ho utilizzato il pattern \textbf{iterator}, andando a creare un' interfaccia \textbf{PlayerIterator} che estende iterator 
+e serve a definire le azioni cardine del circular player iterator che oltre ad avere i metodi di un iterator normale possiede anche funzioni aggiuntive per gestire la lista di player,
+l'implementazione del player iterator \textbf{Circular Player Iterator} wrappa la lista di player e itera la lista ritornando sempre il prossimo player 
+che deve svolgere il turno in maniera ciclica, quindi quando vede che è arrivato all'ultimo player ricomincia ad iterare la lista dall'inizio
