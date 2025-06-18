@@ -10,12 +10,10 @@ Limitando la creazione alla factory si evita di violare il principio DRY(Don’t
 
 \begin{figure}[h]
     \centering
-    \includegraphics[width=0.75\linewidth]{img\martina\specialsUML.png}
+    \includegraphics[width=0.75\linewidth]{ArchitectureDiagram-Pagina-4.drawio.png}
     \caption{Schema UML del pattern factory. SpecialFactory nasconde dentro ogni metdo la creazione delle relative carte che a loro volta delegano la creazione degli effetti al relativo metodo in Effect Factory}
-    \label{img:specialsUML}
+    \label{img:ArchitectureDiagram-Pagina-4}
 \end{figure}
-
-\newline
 
 \textbf{Problema}\newline
 Nel gioco ci sono le società, delle proprietà che quando ci arrivi sopra l’affitto da pagare è il tiro del dado moltiplicato per un certo fattore dato da quante società si possiedono. 
@@ -26,12 +24,10 @@ in questa soluzione mi sono ricondotta al pattern decorator, per composizione un
 Così facendo non ci sarà duplicazione del codice implementativo delle proprietà normali con la sola variazione dell'affitto.
 \begin{figure}[h]
     \centering
-    \includegraphics[width=0.75\linewidth]{img\martina\specialPropertyUML.png}
+    \includegraphics[width=0.75\linewidth]{ArchitectureDiagram-Pagina-3.drawio.png}
     \caption{Gli SpecialTitleDeed fanno override del metodo getRentOptions}
-    \label{img:specialPropertyUML}
+    \label{img:ArchitectureDiagram-Pagina-3}
 \end{figure}
-
-\newline
 
 \subsubsection{Player}
 
@@ -48,9 +44,9 @@ In questo modo si mantengono in classi separate le implementazioni dei metodi pe
 
 \begin{figure}[h]
     \centering
-    \includegraphics[width=0.75\linewidth]{img\martina\parkableAndPrisonableUML.png}
+    \includegraphics[width=0.75\linewidth]{ArchitectureDiagram-Pagina-2.drawio.png}
     \caption{Prisonable e parkable fanno entrambi override dei metodi nelle rispettive interfacce}
-    \label{img:parkableAndPrisonableUML}
+    \label{img:ArchitectureDiagram-Pagina-2}
 \end{figure}
 
 \subsubsection{Imprevisti e Probabilità}
@@ -66,9 +62,9 @@ L’interfaccia \texttt{command} ha solo il metodo execute che prende in ingress
 Le carte imprevisto o probabilità si salveranno un comando complesso che verrà attivato quando viene pescata la carta.
 \begin{figure}[h]
     \centering
-    \includegraphics[width=0.75\linewidth]{img/martina/commandsUML.png}
+    \includegraphics[width=0.75\linewidth]{ArchitectureDiagram-Pagina-1.drawio.png}
     \caption{schema UML della gestione dei comandi delle carte imprevisto e probabilità}
-    \label{img:commandsUML}
+    \label{img:ArchitectureDiagram-Pagina-1}
 \end{figure}
 \newline\newline
 \textbf{Problema}\newline
@@ -86,7 +82,7 @@ Per ogni tipo di comando base viene creato un solo oggetto contenente le istruzi
 Questo è fatto per evitare di creare una moltitudine di oggetti di tipo base command, tutti uguali tra loro tranne che per gli argomenti con cui vengono eseguiti.
 \begin{figure}[h]
     \centering
-    \includegraphics[width=1\linewidth]{img/martina/interpretersUML.png}
+    \includegraphics[width=1\linewidth]{ArchitectureDiagram-Pagina-5.drawio.png}
     \caption{Schema UML degli interpreti a cascata per la creazione dei comanndi}
-    \label{img:interpretersUML}
+    \label{img:ArchitectureDiagram-Pagina-5}
 \end{figure}
