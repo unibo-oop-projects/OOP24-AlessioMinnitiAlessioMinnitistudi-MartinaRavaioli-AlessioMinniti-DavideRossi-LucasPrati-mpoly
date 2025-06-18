@@ -41,13 +41,13 @@ class PropertyTest {
 
     @Test
     void testUnsupportedOperations() {
-        assertThrows(UnsupportedOperationException.class, () -> normal.buildHouse());
-        assertThrows(UnsupportedOperationException.class, () -> normal.buildHotel());
-        assertThrows(UnsupportedOperationException.class, () -> normal.canBuildHouse());
-        assertThrows(UnsupportedOperationException.class, () -> normal.canBuildHotel());
-        assertThrows(UnsupportedOperationException.class, () -> normal.deleteHouse());
-        assertThrows(UnsupportedOperationException.class, () -> normal.deleteHotel());
-        assertThrows(UnsupportedOperationException.class, () -> normal.canDeleteHouse());
+        assertThrows(UnsupportedOperationException.class, normal :: buildHouse);
+        assertThrows(UnsupportedOperationException.class, normal :: buildHotel);
+        assertThrows(UnsupportedOperationException.class, normal :: canBuildHouse);
+        assertThrows(UnsupportedOperationException.class, normal :: canBuildHotel);
+        assertThrows(UnsupportedOperationException.class, normal :: deleteHouse);
+        assertThrows(UnsupportedOperationException.class, normal :: deleteHotel);
+        assertThrows(UnsupportedOperationException.class, normal :: canDeleteHouse);
     }
 
     @Test
@@ -67,7 +67,7 @@ class PropertyTest {
             assertEquals(i, buildable.getNHouses());
         }
         assertFalse(buildable.canBuildHouse());
-        assertThrows(IllegalArgumentException.class, () -> buildable.buildHouse());
+        assertThrows(IllegalArgumentException.class, buildable :: buildHouse);
     }
 
     @Test
@@ -77,7 +77,7 @@ class PropertyTest {
         buildable.buildHotel();
         assertTrue(buildable.hasHotel());
         assertFalse(buildable.canBuildHotel());
-        assertThrows(IllegalArgumentException.class, () -> buildable.buildHotel());
+        assertThrows(IllegalArgumentException.class, buildable :: buildHotel);
     }
 
     @Test
@@ -93,7 +93,7 @@ class PropertyTest {
         buildable.setNHouses(4);
         buildable.setHasHotel(true);
         assertFalse(buildable.canDeleteHouse());
-        assertThrows(IllegalAccessException.class, () -> buildable.deleteHouse());
+        assertThrows(IllegalAccessException.class, buildable :: deleteHouse);
     }
 
     @Test
@@ -105,6 +105,6 @@ class PropertyTest {
 
     @Test
     void testBuildableDeleteNonExistingHotelThrows() {
-        assertThrows(IllegalAccessException.class, () -> buildable.deleteHotel());
+        assertThrows(IllegalAccessException.class, buildable :: deleteHotel);
     }
 }

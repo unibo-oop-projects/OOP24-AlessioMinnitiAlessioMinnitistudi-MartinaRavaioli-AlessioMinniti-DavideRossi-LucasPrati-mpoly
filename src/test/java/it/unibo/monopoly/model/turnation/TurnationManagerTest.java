@@ -29,6 +29,7 @@ import it.unibo.monopoly.model.turnation.impl.TurnationManagerImpl;
 
 class TurnationManagerTest {
     private static final Logger LOGGER = LoggerFactory.getLogger(TurnationManagerTest.class);
+    private static final String ERROR = "ERROR";
     private static final int AMOUNT = 1000;
     private static final int ID_1 = 21;
     private static final int ID_2 = 42;
@@ -75,7 +76,7 @@ class TurnationManagerTest {
             turnManager.moveByDices();
             assertEquals(players.get(0).getID(), turnManager.getNextPlayer().getID(), "Cycle back to p1");
         } catch (final IllegalAccessException e) {
-            LOGGER.error("Errore ", e.getMessage(), e);
+            LOGGER.error(ERROR, e);
         }
     }
 
@@ -87,7 +88,7 @@ class TurnationManagerTest {
             turnManager.getNextPlayer();
             assertEquals(2, turnManager.getIdCurrPlayer(), "Next player ID should be 2");
         } catch (final IllegalAccessException e) {
-            LOGGER.error("Errore ", e.getMessage(), e);
+            LOGGER.error(ERROR, e);
         }
     }
 
