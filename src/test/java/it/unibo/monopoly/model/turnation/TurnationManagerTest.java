@@ -106,8 +106,92 @@ class TurnationManagerTest {
         assertTrue(turnManager.getPlayerList().contains(p4), "New player should be in the list");
     }
 
-    public List<Player> getPlayers() {
-        return players;
+    @Test
+    void testPlayerParkedCannotThrowDices() {
+        try {
+            players.get(0).park();
+            var result = turnManager.moveByDices();
+            assertEquals("the player can't throw dices because is parked", result.getRight());
+        } catch (IllegalAccessException e) {
+            LOGGER.error("Errore ", e);
+        }
+        
     }
 
+    @Test
+    void testThrowDicesTwiceThrowsException() throws IllegalAccessException {
+        turnManager.moveByDices(); // primo lancio OK
+        assertThrows(IllegalAccessException.class, () -> turnManager.moveByDices());
+    }
+
+    @Test
+    void testCanPassTurnWhenParked() {
+        try {
+            players.get(0).park();
+            assertTrue(turnManager.canPassTurn(), "Player should be able to pass turn when parked");
+        } catch (Exception e) {
+            LOGGER.error("Errore ", e);
+        }
+        
+    }
+
+    @Test
+    void testPlayerPutInPrisonAndExit() {
+        try {
+            players.get(0).putInPrison();
+            assertTrue(turnManager.isCurrentPlayerInPrison(), "Player should be in prison");
+            var result = turnManager.moveByDices();
+            assertTrue(result.getRight().contains("you are still in prison") || result.getRight().contains("you escaped the prison"));
+        } catch (IllegalAccessException e) {
+            LOGGER.error("Errore ", e);
+        }
+    }
+
+    @Test
+    void testDeletePlayer() {
+        Player toDelete = players.get(1);
+        turnManager.deletePlayer(toDelete);
+        assertTrue(turnManager.getPlayerList().stream().noneMatch(p -> p.getID().equals(toDelete.getID())), "Player should be deleted");
+    }
+
+    @Test
+    void testGetWinner() {
+        var winner = turnManager.getWinner();
+        assertTrue(winner.getLeft() instanceof String, "Winner should have a name");
+    }
+
+    @Test
+    void testGetRanking() {
+        var ranking = turnManager.getRanking();
+        assertEquals(players.size(), ranking.size(), "Ranking should include all players");
+    }
+
+    @Test
+    void testResetBankState() {
+        turnManager.resetBankState();
+        assertTrue(turnManager.canPassTurn(), "After reset, should still be able to play normally");
+    }
+
+    @Test
+    void testMoveByDicesWhileInPrisonUpdatesTurns() {
+        try {
+            
+        } catch (IllegalAccessException e) {
+            
+        }
+        players.get(0).putInPrison();
+        int turnsLeft = turnManager.currentPlayerTurnsLeftInPrison();
+        turnManager.moveByDices();  // Should decrement turns
+        assertEquals(turnsLeft - 1, turnManager.currentPlayerTurnsLeftInPrison(), "Turns left in prison should decrease after failed attempt");
+    }
+
+    @Test
+    void testNextPlayerAfterParkPassesProperly() throws IllegalAccessException {
+        try {
+            
+        } catch (Exception e) {
+        }
+        players.get(0).park();
+        assertEquals(players.get(1).getID(), turnManager.getNextPlayer().getID(), "Next should skip parked player after passing turn");
+    }
 }
