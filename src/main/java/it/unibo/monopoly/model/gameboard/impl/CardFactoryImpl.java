@@ -31,7 +31,7 @@ import it.unibo.monopoly.model.turnation.api.TurnationManager;
  */
 public class CardFactoryImpl implements CardFactory {
 
-    private static final double HOTEL_COST_PERC = 1.5;
+    private static final double HOTEL_PERC = 1.5;
     private final SpecialFactory specialFactory = new SpecialFactoryImpl();
     private final SpecialPropertyFactory specialPropertyFactory = new SpecialPropertyFactoryImpl();
     private final RentOptionFactory rentOptionFactory = new RentOptionFactoryImpl();
@@ -45,7 +45,7 @@ public class CardFactoryImpl implements CardFactory {
         final int cost = propertyPrice / 3;
         return Math.max(min, Math.min(max, cost));
     };
-    private final Function<Integer, Integer> hotelCost = propertyPrice -> (int) (houseCost.apply(propertyPrice) * HOTEL_COST_PERC);
+    private final Function<Integer, Integer> hotelCost = propertyPrice -> (int) (houseCost.apply(propertyPrice) * HOTEL_PERC);
 
     private final List<Tile> tiles = new ArrayList<>();
     private final Set<TitleDeed> deeds = new HashSet<>();
