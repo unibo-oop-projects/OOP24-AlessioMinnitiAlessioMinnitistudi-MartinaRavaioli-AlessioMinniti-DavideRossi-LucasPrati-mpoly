@@ -5,12 +5,14 @@ import java.util.List;
 import java.util.Set;
 
 import it.unibo.monopoly.controller.api.GameController;
+import it.unibo.monopoly.model.gameboard.api.Board;
 import it.unibo.monopoly.model.gameboard.api.Pawn;
 import it.unibo.monopoly.model.gameboard.api.Property;
 import it.unibo.monopoly.model.gameboard.api.Special;
 import it.unibo.monopoly.model.gameboard.api.Tile;
 import it.unibo.monopoly.model.transactions.api.Bank;
 import it.unibo.monopoly.model.transactions.api.BankAccount;
+import it.unibo.monopoly.model.transactions.api.PropertyActionsEnum;
 import it.unibo.monopoly.model.transactions.api.TitleDeed;
 import it.unibo.monopoly.model.turnation.api.Player;
 
@@ -61,7 +63,7 @@ public interface MainGameView {
      * that was previously attached to this view to execute the action.
      * This is done by calling the method {@link GameController#executeAction(String)}
      */
-    void displayPlayerActions(Set<String> actions);
+    void displayPlayerActions(Set<PropertyActionsEnum> actions);
 
     /**
      * Display the result of the call on {@link GameController#throwDices()}.
@@ -85,8 +87,9 @@ public interface MainGameView {
      * The view will then make subsequent calls to controller methods to retrieve
      * all information related to that player.
      * @param bank
+     * @param board 
      */
-    void displayPlayerStats(Player player, Bank bank);
+    void displayPlayerStats(Player player, Bank bank, Board board);
 
     /**
      * Displays an error on the UI.
@@ -116,12 +119,37 @@ public interface MainGameView {
      */
     void callBuyProperty(String name, Color color);
     /**
-     * Displays a generic yes/no option message sent to the user when he'll die if he passes the turn.
-     * if the player chooses 'yes' then the he'll pass the turn and die.
-     * if the player chooses 'no' then he won't pass the turn so he can sell something to not die. 
+     * Displays a generic yes/no option message sent to the user.
      * @param message The message to display
      */
     void displayOptionMessage(String message);
+    /**
+     * call the gameboard view method to buy an house for the property.
+     * @param propName property name
+     * @param color color
+     * @param nHouses current number of houses
+     */
+    void callBuyHouse(String propName, Color color, int nHouses);
+    /**
+     * call the gameboard view method to buy the hotel for the property.
+     * @param propName property name
+     * @param color color
+     */
+    void callBuyHotel(String propName, Color color);
+    /**
+     * call the gameboard view method to sell an house for the property.
+     * @param propName property name
+     * @param nHouses current number of houses 
+     * @param color player color
+     */
+    void callSellHouse(String propName, int nHouses, Color color);
+    /**
+     * call the gameboard view method to sell the hotel for the property.
+     * @param propName property name
+     * @param color color
+     */
+    void callSellHotel(String propName, Color color);
+
     /**
      * call the delete player method in gameboard view.
      * @param color color of the player

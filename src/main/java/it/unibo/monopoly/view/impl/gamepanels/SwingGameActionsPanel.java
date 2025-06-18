@@ -10,6 +10,7 @@ import javax.swing.JButton;
 import javax.swing.JTextArea;
 
 import it.unibo.monopoly.controller.api.GameController;
+import it.unibo.monopoly.model.transactions.api.PropertyActionsEnum;
 import it.unibo.monopoly.view.api.GameActionsPanel;
 
 final class SwingGameActionsPanel extends SwingAbstractJPanel implements GameActionsPanel {
@@ -40,11 +41,11 @@ final class SwingGameActionsPanel extends SwingAbstractJPanel implements GameAct
     }
 
     @Override
-    public void buildActionButtons(final Set<String> actionNames, final GameController controller) {
+    public void buildActionButtons(final Set<PropertyActionsEnum> actionNames, final GameController controller) {
         this.removeAll();
         this.setLayout(new GridLayout(actionNames.size(), 1));
         actionNames.stream().forEach(action -> {
-            final JButton actionButton = new JButton(action);
+            final JButton actionButton = new JButton(action.getActionName());
             actionButton.addActionListener(l -> controller.executeAction(action));
             this.add(actionButton);
         });

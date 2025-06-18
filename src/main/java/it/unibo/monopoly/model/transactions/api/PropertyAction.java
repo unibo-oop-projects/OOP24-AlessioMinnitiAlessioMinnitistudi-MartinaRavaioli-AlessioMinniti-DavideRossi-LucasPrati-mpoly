@@ -16,10 +16,10 @@ import it.unibo.monopoly.model.gameboard.api.Property;
 public interface PropertyAction {
 
     /**
-     * Get the name of the property action.
-     * @return a {@code String} that describes the functionality of the action.
+     * @return a {@code String} that describes the category type of this action,
+     * therefore giving a hint abount its functionality.
      */
-    String getName();
+    PropertyActionsEnum getType();
 
     /**
      * Get a brief description of the property action.

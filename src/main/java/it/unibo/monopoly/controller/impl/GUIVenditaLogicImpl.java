@@ -6,10 +6,14 @@ import java.util.List;
 import java.util.Optional;
 
 import it.unibo.monopoly.controller.api.GUIVenditaLogic;
+import it.unibo.monopoly.model.gameboard.api.Board;
+import it.unibo.monopoly.model.gameboard.api.Property;
+import it.unibo.monopoly.model.gameboard.api.Tile;
+import it.unibo.monopoly.model.gameboard.impl.BuildablePropertyImpl;
 import it.unibo.monopoly.model.transactions.api.Bank;
 import it.unibo.monopoly.model.transactions.api.BankAccount;
 import it.unibo.monopoly.model.transactions.api.TitleDeed;
-import it.unibo.monopoly.model.transactions.impl.BaseTitleDeed;
+import it.unibo.monopoly.model.transactions.impl.titledeed.BaseTitleDeed;
 import it.unibo.monopoly.model.turnation.api.Player;
 
 /**
@@ -58,6 +62,39 @@ public final class GUIVenditaLogicImpl implements  GUIVenditaLogic, Serializable
             selectedProperty = selectedPropertyO.get();
         }
         return selectedProperty;
+    }
+
+    @Override
+    public BuildablePropertyImpl getBuildableProperty(final TitleDeed selectedProperty, final Board board) {
+        final Tile tile = board.getTile(selectedProperty.getName());
+        if (tile instanceof BuildablePropertyImpl) {
+            return (BuildablePropertyImpl) board.getTile(selectedProperty.getName());
+        } else {
+            return null;
+        }
+    }
+
+    @Override
+    public boolean sellHouse(final Property selectedBuildableProberty, final Bank bank, final Board board) {
+        try {
+            bank.sellHouse(selectedBuildableProberty.getName());
+            board.deleteHouseInProperty(selectedBuildableProberty.getName());
+            return true;
+        } catch (final IllegalAccessException e) {
+            return false;
+        }
+
+    }
+
+    @Override
+    public boolean sellHotel(final Property selectedBuildableProberty, final Bank bank, final Board board) {
+         try {
+            bank.sellHotel(selectedBuildableProberty.getName());
+            board.deleteHotelInProperty(selectedBuildableProberty.getName());
+            return true;
+        } catch (final IllegalAccessException e) {
+            return false;
+        }
     }
 
 }

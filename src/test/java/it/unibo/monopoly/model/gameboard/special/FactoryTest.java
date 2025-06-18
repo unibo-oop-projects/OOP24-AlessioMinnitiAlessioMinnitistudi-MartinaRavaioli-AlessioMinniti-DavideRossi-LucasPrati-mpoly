@@ -21,14 +21,14 @@ import it.unibo.monopoly.model.gameboard.api.Tile;
 import it.unibo.monopoly.model.gameboard.impl.BoardImpl;
 import it.unibo.monopoly.model.gameboard.impl.Group;
 import it.unibo.monopoly.model.gameboard.impl.PawnFactoryImpl;
-import it.unibo.monopoly.model.gameboard.impl.PropertyImpl;
+import it.unibo.monopoly.model.gameboard.impl.NormalPropertyImpl;
 import it.unibo.monopoly.model.gameboard.impl.SpecialFactoryImpl;
 import it.unibo.monopoly.model.transactions.api.Bank;
 import it.unibo.monopoly.model.transactions.api.BankAccount;
 import it.unibo.monopoly.model.transactions.api.TitleDeed;
 import it.unibo.monopoly.model.transactions.impl.BankImpl;
-import it.unibo.monopoly.model.transactions.impl.BaseTitleDeed;
 import it.unibo.monopoly.model.transactions.impl.bankaccount.SimpleBankAccountImpl;
+import it.unibo.monopoly.model.transactions.impl.titledeed.BaseTitleDeed;
 import it.unibo.monopoly.model.turnation.api.Player;
 import it.unibo.monopoly.model.turnation.api.Position;
 import it.unibo.monopoly.model.turnation.api.TurnationManager;
@@ -104,9 +104,9 @@ class FactoryTest {
         bank = new BankImpl(accounts, deeds);
         turnM = new TurnationManagerImpl(List.of(p1), new DiceImpl(dices));
         final List<Tile> tiles = List.of(
-        new PropertyImpl("a", pos0, Group.RED),
-        new PropertyImpl("b", pos1, Group.BLUE),
-        new PropertyImpl("c", pos2, Group.YELLOW),
+        new NormalPropertyImpl("a", pos0, Group.RED),
+        new NormalPropertyImpl("b", pos1, Group.BLUE),
+        new NormalPropertyImpl("c", pos2, Group.YELLOW),
         factory.parking(pos5, turnM),
         factory.prison(pos4),
         factory.start(bank),

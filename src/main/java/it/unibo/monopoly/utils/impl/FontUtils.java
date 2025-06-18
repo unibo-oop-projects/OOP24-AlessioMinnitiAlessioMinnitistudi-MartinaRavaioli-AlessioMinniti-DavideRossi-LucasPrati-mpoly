@@ -1,13 +1,10 @@
 package it.unibo.monopoly.utils.impl;
 
-
 import java.awt.Font;
 import java.awt.GraphicsEnvironment;
-
 import java.util.Arrays;
 
 import javax.swing.UIManager;
-
 
 /**
  * Utility class for common operation with {@link Font}.
@@ -15,12 +12,12 @@ import javax.swing.UIManager;
 final class FontUtils {
 
     private static final int FONT_STYLE = Font.BOLD;
-    private static final String[] keys = {
+    private static final String[] KEYS = {
             "Label.font", "Button.font", "ToggleButton.font", "RadioButton.font", "CheckBox.font",
             "ComboBox.font", "List.font", "Table.font", "TableHeader.font", "TextField.font",
             "TextArea.font", "PasswordField.font", "EditorPane.font", "FormattedTextField.font",
             "TitledBorder.font", "Menu.font", "MenuItem.font", "CheckBoxMenuItem.font",
-            "RadioButtonMenuItem.font", "ToolTip.font", "Tree.font", "TabbedPane.font", "Spinner.font"
+            "RadioButtonMenuItem.font", "ToolTip.font", "Tree.font", "TabbedPane.font", "Spinner.font",
     };
 
 
@@ -43,16 +40,16 @@ final class FontUtils {
 
 
     /**
-     * Use {@link UIManager} for setup the font of every new textual element
+     * Use {@link UIManager} for setup the font of every new textual element.
      * @param font the font to apply to all the new text
      */
-    public static void configure(Font font) {
-        for (String key : keys) {
+    public static void configure(final Font font) {
+        for (final String key : KEYS) {
             UIManager.put(key, font);
         }
     }
 
-    
+
     /**
      * Checks whether the given font name is available in the local graphics environment.
      * The comparison is case-insensitive.

@@ -18,7 +18,7 @@ import it.unibo.monopoly.utils.impl.GuiUtils;
 /**
  * ranking view of the player after finishing the game.
  */
-public class GUIRanking extends JDialog {
+public final class GUIRanking extends JDialog {
 
     private static final long serialVersionUID = 1L; /**serial version UID.*/
     private static final String TITLE = "FINAL RANKING";

@@ -3,6 +3,7 @@ package it.unibo.monopoly.view.api;
 import java.util.Set;
 
 import it.unibo.monopoly.controller.api.GameController;
+import it.unibo.monopoly.model.transactions.api.PropertyActionsEnum;
 
 /**
  * Display a panel to execute actions 
@@ -18,5 +19,5 @@ public interface GameActionsPanel extends GamePanel {
      * @param actionNames the names of the actions the player can execute.
      * Each action will be associated to a button, which will execute it 
      */
-    void buildActionButtons(Set<String> actionNames, GameController controller);
+    void buildActionButtons(Set<PropertyActionsEnum> actionNames, GameController controller);
 }

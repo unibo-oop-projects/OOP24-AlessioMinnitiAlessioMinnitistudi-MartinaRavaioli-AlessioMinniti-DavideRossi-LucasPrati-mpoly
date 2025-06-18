@@ -9,7 +9,7 @@ import java.util.Set;
 
 import it.unibo.monopoly.model.transactions.api.SpecialPropertyFactory;
 import it.unibo.monopoly.model.transactions.api.TitleDeed;
-import it.unibo.monopoly.model.transactions.impl.SpecialPropertyFactoryImpl;
+import it.unibo.monopoly.model.transactions.impl.titledeed.SpecialPropertyFactoryImpl;
 
 
 
