@@ -69,11 +69,11 @@ class TurnationManagerTest {
     @Test
     void testGetNextPlayerCycles() {
         try {
-            turnManager.moveByDices();
+            turnManager.throwDices();
             assertEquals(players.get(1).getID(), turnManager.getNextPlayer().getID(), "Next should be p2");
-            turnManager.moveByDices();
+            turnManager.throwDices();
             assertEquals(players.get(2).getID(), turnManager.getNextPlayer().getID(), "Next should be p3");
-            turnManager.moveByDices();
+            turnManager.throwDices();
             assertEquals(players.get(0).getID(), turnManager.getNextPlayer().getID(), "Cycle back to p1");
         } catch (final IllegalAccessException e) {
             LOGGER.error(ERROR, e);
@@ -84,7 +84,7 @@ class TurnationManagerTest {
     void testGetIdCurrPlayer() {
         try {
             assertEquals(1, turnManager.getIdCurrPlayer(), "Initial player ID should be 1");
-            turnManager.moveByDices();
+            turnManager.throwDices();
             turnManager.getNextPlayer();
             assertEquals(2, turnManager.getIdCurrPlayer(), "Next player ID should be 2");
         } catch (final IllegalAccessException e) {

@@ -23,7 +23,7 @@ public interface TurnationManager {
      * @return multiple int
      * @throws IllegalAccessException throws exception if the player has already thrown the dices
      */
-    Pair<Collection<Integer>, String> moveByDices() throws IllegalAccessException;
+    Pair<Collection<Integer>, String> throwDices() throws IllegalAccessException;
     /**
      * return the id of the current player.
      * @return int
