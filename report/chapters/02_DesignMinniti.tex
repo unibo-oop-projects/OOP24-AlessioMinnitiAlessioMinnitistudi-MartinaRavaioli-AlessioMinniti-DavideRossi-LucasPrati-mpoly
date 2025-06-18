@@ -62,7 +62,16 @@ e \textbf{createAdvanced} che permette di creare la pawn con la shape in caso in
 Usando quindi una factory evito di dover richiamare sempre il costruttore per ritornare copie immutabili.\newline
 
 \subsubsection{Tiles e Property}
-Le \textbf{Tiles} si suddividono in \textbf{Property} e \textbf{Special}, queste due tipologie di Tile sono state rappresentate creandole come figlie di Tile.\newline
+\begin{figure}[H]
+    \centering
+    \makebox[0.5\textwidth]{\includegraphics[width=0.5\textwidth]{img/minniti/buildable.png}}	
+    \caption{Schema UML che definisce la struttura delle tile e più nello specifico delle property, 
+    le property normali sono quelle che non posso costruire appalti mentre le buildable property sono i decorator che contengono all'interno le proprietà normali e gestiscono
+    la creazione e rimozione di case e alberghi}
+	\label{img:Property}
+\end{figure}
+Le \textbf{Tiles} si suddividono in \textbf{Property} e \textbf{Special}, queste due tipologie di Tile sono state rappresentate creandole come figlie di Tile,
+io mi sono occupato della gestione delle proprietà.\newline
 
 PROBLEMA:
 Le proprietà si dividono in proprietà normali in cui si possono costruire case e hotel e proprietà come stazioni e società che non prevedono tale azione. 
@@ -73,3 +82,22 @@ SOLUZIONE:
 Per risolvere questo problema quindi ho scelto di utilizzare il pattern \textbf{decorator}, in cui si va a creare una proprietà normale (\textbf{NormalPropertyImpl}) 
 che non può avere case e hotel e un decoratore chiamato \textbf{BuildablePropertyImpl} che decora la proprietà con le case e gli alberghi,
 andando quindi a definire le funzionalità in più che non possono svolgere le stazioni e le società.\newline
+
+\begin{figure}[H]
+    \centering
+    \makebox[0.5\textwidth]{\includegraphics[width=0.5\textwidth]{img/minniti/proxy.png}}	
+    \caption{Schema UML che definisce la struttura delle immutable property, 
+    le immutable property incapsulano le proprietà edificabili per far ritornare solo le informazioni necessarie al contratto}
+	\label{img:Proxy}
+\end{figure}
+PROBLEMA:
+Tutte le proprietà hanno il prezzo dell'affitto che bisogna pagare quando ci passa sopra un giocatore che non è owner, 
+tuttavia per le proprietà che possono avere degli appalti tale prezzo cambia in base a quante case sono presenti e se è presente l'hotel.
+Quindi la banca dovrà possedere tali informazioni relative alla proprietà ma senza entrare in possesso di altri dati non di sua pertinenza.
+Per farlo quindi si potrebbe ricreare sempre un nuovo contratto in cui alla creazione si specifica il nuovo numero di case e la presenza di hotel, 
+ma tale soluzione risulterebbe molto poco efficiente.\newline
+
+SOLUZIONE:
+Per risolvere questo problema invece ho utilizzato il pattern \textbf{proxy}, 
+andando a creare una copia immutabile della proprietà definita come \textbf{ImmutableProperty}, 
+che incapsula la proprietà e restituisce solo le informazioni necessarie per il title deed, mentre le altre sono inaccessibili.\newline
