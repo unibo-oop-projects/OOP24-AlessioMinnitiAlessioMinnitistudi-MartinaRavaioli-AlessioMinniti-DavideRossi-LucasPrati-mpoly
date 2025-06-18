@@ -42,8 +42,7 @@ final class SwingSetupPanel extends SwingAbstractJPanel implements SetupPanel {
 
     private final Map<Color, JTextField> playersInfo = new LinkedHashMap<>();
     private final JPanel playersPanel;
-    private final MainMenuController controller;
-
+    private final transient MainMenuController controller;
 
 
     SwingSetupPanel(final MainMenuController controller) {
@@ -61,15 +60,7 @@ final class SwingSetupPanel extends SwingAbstractJPanel implements SetupPanel {
 
         final JButton startGameButton = new JButton(START_TEXT);
         startGameButton.addActionListener(e -> {
-            controller.onClickStart(
-                playersInfo.entrySet().stream()
-                    .collect(Collectors.toMap(
-                        Map.Entry::getKey,                      // chiave: Color
-                        k -> k.getValue().getText().trim(),     // valore: testo dal JTextField pulito da spazi extra
-                        (a, b) -> b,                            // risolve eventuali duplicati Colore mantenendo l'ultimo valore
-                        LinkedHashMap::new                      // preservo l'ordine di inserimento
-                ))
-            );
+            controller.onClickStart(extractNicknames());
             controller.disposeMainMenu();
         });
 
@@ -109,5 +100,16 @@ final class SwingSetupPanel extends SwingAbstractJPanel implements SetupPanel {
         }
         playersPanel.revalidate();
         playersPanel.repaint();
+    }
+
+
+    private Map<Color, String> extractNicknames() {
+        return playersInfo.entrySet().stream()
+                .collect(Collectors.toMap(
+                    Map.Entry::getKey,                      // chiave: Color
+                    k -> k.getValue().getText().trim(),     // valore: testo dal JTextField pulito da spazi extra
+                    (a, b) -> b,                            // risolve eventuali duplicati Colore mantenendo l'ultimo valore
+                    LinkedHashMap::new                      // preservo l'ordine di inserimento
+        ));
     }
 }
