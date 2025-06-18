@@ -31,6 +31,7 @@ import it.unibo.monopoly.model.turnation.impl.TurnationManagerImpl;
 
 class TurnationManagerTest {
     private static final Logger LOGGER = LoggerFactory.getLogger(TurnationManagerTest.class);
+    private static final String ERROR = "ERROR";
     private static final int AMOUNT = 1000;
     private static final int ID_1 = 21;
     private static final int ID_2 = 42;
@@ -77,7 +78,7 @@ class TurnationManagerTest {
             turnManager.moveByDices();
             assertEquals(players.get(0).getID(), turnManager.getNextPlayer().getID(), "Cycle back to p1");
         } catch (final IllegalAccessException e) {
-            LOGGER.error("Errore ", e);
+            LOGGER.error(ERROR, e);
         }
     }
 
@@ -89,7 +90,7 @@ class TurnationManagerTest {
             turnManager.getNextPlayer();
             assertEquals(2, turnManager.getIdCurrPlayer(), "Next player ID should be 2");
         } catch (final IllegalAccessException e) {
-            LOGGER.error("Errore ", e);
+            LOGGER.error(ERROR, e);
         }
     }
 
@@ -113,8 +114,8 @@ class TurnationManagerTest {
             players.get(0).park();
             final var result = turnManager.moveByDices();
             assertEquals("the player can't throw dices because is parked", result.getRight());
-        } catch (IllegalAccessException e) {
-            LOGGER.error("Errore ", e);
+        } catch (final IllegalAccessException e) {
+            LOGGER.error(ERROR, e);
         }
 
     }
@@ -122,7 +123,7 @@ class TurnationManagerTest {
     @Test
     void testThrowDicesTwiceThrowsException() throws IllegalAccessException {
         turnManager.moveByDices(); // primo lancio OK
-        assertThrows(IllegalAccessException.class, () -> turnManager.moveByDices());
+        assertThrows(IllegalAccessException.class, turnManager :: moveByDices);
     }
 
     @Test
@@ -137,9 +138,10 @@ class TurnationManagerTest {
             players.get(0).putInPrison();
             assertTrue(turnManager.isCurrentPlayerInPrison(), "Player should be in prison");
             final var result = turnManager.moveByDices();
-            assertTrue(result.getRight().contains("you are still in prison") || result.getRight().contains("you escaped the prison"));
+            assertTrue(result.getRight().contains("you are still in prison") 
+                        || result.getRight().contains("you escaped the prison"));
         } catch (final IllegalAccessException e) {
-            LOGGER.error("Errore ", e);
+            LOGGER.error(ERROR, e);
         }
     }
 
@@ -153,7 +155,7 @@ class TurnationManagerTest {
                         turnManager.currentPlayerTurnsLeftInPrison(),
                         "Turns left in prison should decrease after failed attempt");
         } catch (final IllegalAccessException e) {
-            LOGGER.error("Errore ", e);
+            LOGGER.error(ERROR, e);
         }
     }
 

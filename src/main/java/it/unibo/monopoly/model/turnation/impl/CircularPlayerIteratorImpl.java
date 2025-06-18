@@ -17,7 +17,7 @@ public class CircularPlayerIteratorImpl implements PlayerIterator {
     private final List<Player> elems;
     /**
      * constructor.
-     * @param list
+     * @param list list of players
      */
     public CircularPlayerIteratorImpl(final List<Player> list) {
         this.elems = new ArrayList<>(list);

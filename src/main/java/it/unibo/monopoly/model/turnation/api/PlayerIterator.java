@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * iterator of players.
  */
-public interface PlayerIterator extends Iterator<Player>{
+public interface PlayerIterator extends Iterator<Player> {
     /**
      * get the current player.
      * @return Player
@@ -34,7 +34,7 @@ public interface PlayerIterator extends Iterator<Player>{
     /**
      * check if the iterator contains a player.
      * @param p player
-     * @return
+     * @return bool
      */
     boolean contains(Player p);
 }

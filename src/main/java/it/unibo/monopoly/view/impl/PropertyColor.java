@@ -36,7 +36,7 @@ public final class PropertyColor extends JComponent {
 
     /**
      * changes the color og the graphic.
-     * @param nColor
+     * @param nColor color
      */
     public void setColor(final Color nColor) {
         this.color = nColor; 
