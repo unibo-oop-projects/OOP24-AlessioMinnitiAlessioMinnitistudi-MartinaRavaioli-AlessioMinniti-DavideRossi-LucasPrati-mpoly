@@ -65,10 +65,10 @@ public final class GUIVenditaLogicImpl implements  GUIVenditaLogic, Serializable
     }
 
     @Override
-    public Property getBuildableProperty(final TitleDeed selectedProperty, final Board board) {
+    public BuildablePropertyImpl getBuildableProperty(final TitleDeed selectedProperty, final Board board) {
         final Tile tile = board.getTile(selectedProperty.getName());
         if (tile instanceof BuildablePropertyImpl) {
-            return (BuildablePropertyImpl) tile;
+            return (BuildablePropertyImpl) board.getTile(selectedProperty.getName());
         } else {
             return null;
         }

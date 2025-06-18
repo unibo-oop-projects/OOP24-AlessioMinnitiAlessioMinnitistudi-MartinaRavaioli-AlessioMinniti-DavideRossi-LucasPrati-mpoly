@@ -22,6 +22,7 @@ import javax.swing.event.ListSelectionListener;
 import it.unibo.monopoly.controller.api.GUIVenditaLogic;
 import it.unibo.monopoly.model.gameboard.api.Board;
 import it.unibo.monopoly.model.gameboard.api.Property;
+import it.unibo.monopoly.model.gameboard.impl.BuildablePropertyImpl;
 import it.unibo.monopoly.model.gameboard.impl.Group;
 import it.unibo.monopoly.model.transactions.api.Bank;
 import it.unibo.monopoly.model.transactions.api.TitleDeed;
@@ -326,7 +327,7 @@ public final class GUIVendita extends JDialog {
         colorValue.setColor(logic.getPropertyColor(selectedDeed));
         hotelCostValue.setText(String.valueOf(selectedDeed.getHotelPrice()));
         houseCostValue.setText(String.valueOf(selectedDeed.getHousePrice()));
-        final Property selectedBuildableProberty = logic.getBuildableProperty(selectedDeed, board);
+        final BuildablePropertyImpl selectedBuildableProberty = logic.getBuildableProperty(selectedDeed, board);
         houseNumValue.setText(String.valueOf(selectedBuildableProberty.getNHouses()));
         final String hotelsString;
         if (selectedBuildableProberty.hasHotel()) {

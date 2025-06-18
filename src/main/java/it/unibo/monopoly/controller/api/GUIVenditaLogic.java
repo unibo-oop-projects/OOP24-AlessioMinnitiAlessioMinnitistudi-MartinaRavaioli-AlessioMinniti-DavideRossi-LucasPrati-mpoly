@@ -5,6 +5,7 @@ import java.util.List;
 
 import it.unibo.monopoly.model.gameboard.api.Board;
 import it.unibo.monopoly.model.gameboard.api.Property;
+import it.unibo.monopoly.model.gameboard.impl.BuildablePropertyImpl;
 import it.unibo.monopoly.model.transactions.api.Bank;
 import it.unibo.monopoly.model.transactions.api.BankAccount;
 import it.unibo.monopoly.model.transactions.api.TitleDeed;
@@ -62,7 +63,7 @@ public interface GUIVenditaLogic {
      * @param board to get the property
      * @return the property
      */
-    Property getBuildableProperty(TitleDeed selectedProperty, Board board);
+    BuildablePropertyImpl getBuildableProperty(TitleDeed selectedProperty, Board board);
 
     /**
      * this method removes a house from the property. 
