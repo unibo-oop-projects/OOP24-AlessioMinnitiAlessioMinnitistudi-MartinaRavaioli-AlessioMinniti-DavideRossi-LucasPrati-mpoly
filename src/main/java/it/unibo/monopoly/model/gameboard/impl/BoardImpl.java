@@ -35,6 +35,7 @@ public class BoardImpl implements Board {
         this.tiles = new ArrayList<>(tiles);
         this.pawns = new ArrayList<>(pawns);
         this.deck = deck;
+        sortTiles();
     }
 
     /**
@@ -46,6 +47,7 @@ public class BoardImpl implements Board {
         this.tiles = new ArrayList<>(tiles);
         this.pawns = new ArrayList<>(pawns);
         this.deck = new ChancheAndCommunityChestDeckImpl(List.of());
+        sortTiles();
     }
     /**
      * constructor.
@@ -80,7 +82,17 @@ public class BoardImpl implements Board {
     public final Tile getTileForPawn(final int id) {
         for (final Pawn p : this.pawns) {
             if (((PawnImpl) p).getID().equals(id)) {
-                return tiles.get(p.getPosition().getPos());
+                Tile tile = tiles.get(p.getPosition().getPos());
+                if (tile instanceof Property) {
+                    final Property prop = new NormalPropertyImpl(tile.getName(), tile.getPosition(), tile.getGroup());
+                    if (tile instanceof BuildablePropertyImpl) {
+                        return new BuildablePropertyImpl(prop);
+                    }
+                    return prop;
+                } else {
+                    return new SpecialImpl(tile.getName(), tile.getPosition(), Group.SPECIAL, 
+                                                                ((Special) tile).getEffect());
+                }
             }
         }
 
@@ -155,7 +167,11 @@ public class BoardImpl implements Board {
         for (final Tile t : this.tiles) {
             if (t.getName().equals(name)) {
                 if (t instanceof Property) {
-                    return new NormalPropertyImpl(t.getName(), t.getPosition(), t.getGroup());
+                    final Property prop = new NormalPropertyImpl(t.getName(), t.getPosition(), t.getGroup());
+                    if (t instanceof BuildablePropertyImpl) {
+                        return new BuildablePropertyImpl(prop);
+                    }
+                    return prop;
                 } else {
                     return new SpecialImpl(t.getName(), t.getPosition(), Group.SPECIAL, 
                                                                 ((Special) t).getEffect());
