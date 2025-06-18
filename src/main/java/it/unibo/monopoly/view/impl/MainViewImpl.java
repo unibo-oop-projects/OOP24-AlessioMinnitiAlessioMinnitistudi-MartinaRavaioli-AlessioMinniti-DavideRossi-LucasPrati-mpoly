@@ -2,6 +2,8 @@ package it.unibo.monopoly.view.impl;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentAdapter;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.List;
@@ -95,6 +97,12 @@ public final class MainViewImpl implements MainGameView {
                 mainGameFrame.dispose();
             }
         });
+        mainGameFrame.addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentResized(final ComponentEvent e) {
+                splitPane.setDividerLocation(GAMEBOARD_ACTION_WIDTH_RATIO);
+            }
+        });
         mainGameFrame.setVisible(true);
     }
 
@@ -166,7 +174,7 @@ public final class MainViewImpl implements MainGameView {
 
     @Override
     public void displayRules(final String rules) {
-        new RulesWindowView(this.mainGameFrame, controller.getConfiguration(), rules);
+        new RulesWindowView(this.mainGameFrame, rules);
     }
 
     @Override

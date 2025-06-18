@@ -22,12 +22,17 @@ import it.unibo.monopoly.controller.api.GameboardLogic;
 import it.unibo.monopoly.controller.impl.GameboardLogicImpl;
 import it.unibo.monopoly.model.turnation.api.Position;
 import it.unibo.monopoly.model.turnation.impl.PositionImpl;
+import it.unibo.monopoly.utils.impl.GuiUtils;
 import it.unibo.monopoly.view.api.GameboardView;
 
 /**
     * board view implementation.
 */
 public final class GameboardViewImpl extends JPanel implements GameboardView {
+    private static final String FONT_NAME = "Dialog";
+    private static final int FONT_SIZE = 12;
+    private static final double HEIGHT_PERC = 1.0;
+    private static final double WIDTH_PERC = 0.8;
     private static final long serialVersionUID = 1L; /**serial version UID.*/
     private static final String HOUSE = "house";
     private static final String HOTEL = "hotel";
@@ -146,8 +151,9 @@ public final class GameboardViewImpl extends JPanel implements GameboardView {
 
     @Override
     public void renderDefaultUI() {
+        GuiUtils.applyGlobalFont(GuiUtils.createFont(FONT_NAME, FONT_SIZE));
         this.setLayout(new BorderLayout());
-        //this.setSize(Toolkit.getDefaultToolkit().getScreenSize());
+        this.setSize(GuiUtils.getDimensionWindow(WIDTH_PERC, HEIGHT_PERC));
         final JPanel board = new JPanel(new GridLayout(this.size, this.size));
         this.add(board);
         final JPanel[][] grid = new JPanel[this.size][this.size];
@@ -230,6 +236,7 @@ public final class GameboardViewImpl extends JPanel implements GameboardView {
         }
 
         this.setVisible(true);
+        GuiUtils.applyGlobalFont(GuiUtils.getFontFromConfiguration(controller.getConfiguration()));
     }
 
     @Override

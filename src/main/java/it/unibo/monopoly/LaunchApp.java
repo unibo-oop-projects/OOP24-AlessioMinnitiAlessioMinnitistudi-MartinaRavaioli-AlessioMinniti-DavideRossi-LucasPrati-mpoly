@@ -4,9 +4,9 @@ import java.io.FileNotFoundException;
 
 import javax.swing.SwingUtilities;
 
+import it.unibo.monopoly.controller.impl.MainMenuControllerImpl;
 import it.unibo.monopoly.utils.impl.Configuration;
 import it.unibo.monopoly.utils.impl.GuiUtils;
-import it.unibo.monopoly.view.impl.MainMenuView;
 
 /**
  * App entry class.
@@ -26,10 +26,10 @@ public final class LaunchApp {
     public static void main(final String[] args) throws FileNotFoundException {
 
         final Configuration config = Configuration.configureFromFile(CONFIG_FILE);
-        GuiUtils.applyGlobalFont(config);
+        GuiUtils.applyGlobalFont(GuiUtils.getFontFromConfiguration(config));
 
         SwingUtilities.invokeLater(() -> {
-            new MainMenuView(config);
+            new MainMenuControllerImpl(config).start();
         });
     }
 }

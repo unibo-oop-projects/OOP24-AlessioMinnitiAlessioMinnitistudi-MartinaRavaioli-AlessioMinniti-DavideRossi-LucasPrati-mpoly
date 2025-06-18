@@ -96,8 +96,7 @@ public final class UseConfigurationFileImpl extends AbstractUseFileImpl implemen
             case "NUM_DICE" -> configurationBuilder.withNumDice(Integer.parseInt(value));
             case "SIDES_PER_DIE" -> configurationBuilder.withSidesPerDie(Integer.parseInt(value));
             case "FONT_NAME" -> configurationBuilder.withFontName(value);
-            case "BIG_FONT" -> configurationBuilder.withBigFont(Integer.parseInt(value));
-            case "SMALL_FONT" -> configurationBuilder.withSmallFont(Integer.parseInt(value));
+            case "FONT_SIZE" -> configurationBuilder.withFontSize(Integer.parseInt(value));
             case "INIT_BALANCE" -> configurationBuilder.withInitBalance(Integer.parseInt(value));
             case "RULES_FILE" -> configurationBuilder.withRulesPath(value);
             case "CARDS_FILE" -> configurationBuilder.withCardsPath(value);

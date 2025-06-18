@@ -20,9 +20,7 @@ final class FontUtils {
             "RadioButtonMenuItem.font", "ToolTip.font", "Tree.font", "TabbedPane.font", "Spinner.font",
     };
 
-
     private FontUtils() { /* Prevent instantiation */ }
-
 
     /**
      * Create a new {@link Font} according to the provided data.
@@ -31,7 +29,7 @@ final class FontUtils {
      * @return a new {@link Font} according to the provided data
      * @throws IllegalArgumentException if the name of the font is not available
      */
-    public static Font createFont(final String name, final int size) {
+    static Font createFont(final String name, final int size) {
         if (!isValidFontName(name)) {
             throw new IllegalArgumentException("The given font name is not available in the local graphics environment");
         }
@@ -41,11 +39,14 @@ final class FontUtils {
 
     /**
      * Use {@link UIManager} for setup the font of every new textual element.
+     * Note: only if the font is available on the system.
      * @param font the font to apply to all the new text
      */
-    public static void configure(final Font font) {
-        for (final String key : KEYS) {
-            UIManager.put(key, font);
+    static void applyGlobalFont(final Font font) {
+        if (isValidFontName(font.getName())) {
+            for (final String key : KEYS) {
+                UIManager.put(key, font);
+            }
         }
     }
 
@@ -56,9 +57,9 @@ final class FontUtils {
      * @param fontName the name of the font to check
      * @return {@code true} if the font is available; {@code false} otherwise
      */
-    public static boolean isValidFontName(final String fontName) {
+    static boolean isValidFontName(final String fontName) {
         return  fontName != null
-        && Arrays.stream(GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames())
-        .anyMatch(name -> name.equalsIgnoreCase(fontName));
+            && Arrays.stream(GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames())
+            .anyMatch(name -> name.equalsIgnoreCase(fontName));
     }
 }
