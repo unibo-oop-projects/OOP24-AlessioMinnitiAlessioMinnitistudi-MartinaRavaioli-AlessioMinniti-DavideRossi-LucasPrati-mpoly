@@ -6,12 +6,15 @@ Per quanto riguarda la parte monetaria e di transazioni del gioco sono stati eff
     \item \textbf{TitleDeedTest}: sono stati realizzati dei test per entrambe le versioni di title deed presenti nel gioco, con o senza case. Sono state testate le funzioni per i vari costi in particolare \texttt{getRent}, verificando che restituisse l'affitto corretto in base alla situazione, e il funzionamento dei metodi per assegnare o revocare il possesso di un contratto per un giocatore
     \item \textbf{RentOptionFactoryTest}: sono stati testati i metodi della factory verificando che le \texttt{RentOption} create avessero il prezzo giusto e controllando che i criteri di applicabilità fossero corretti.
     \item \textbf{SimpleBankAccountTest}: si è verificato il funzionamento dei metodi per il prelievo e il deposito di denaro e per verificare se il \texttt{BankAccount} è ancora in uno stato valido per la continuazione del gioco.  
+\end{itemize}
+Per quanto riguarda la parte di caselle speciali e imprevisti sono stati effettuati i seguienti test:\newline
+\begin{itemize}
     \item \textbf{BaseAndComplexCommandFactoryTest}: si è verificato il corretto funzionamento dei vari comandi base creati e dei comandi complessi composti da questi ultimi.
     \item \textbf{BaseAndComplexInterpreterTest}: si è verificato il corretto funzionamento della creazione tramite interpreti dei comandi testati precedentemente.
     \item \textbf{DeckTest}: si è verificato il corretto funzionamento della creazione del deck di carte dato un file dove sono scritti, secondo le regole stabilite dagli interpreti, gli effetti delle varie carte
     \item \textbf{ParserOnSpaceTest}: si è verificato il corretto funzionamento dei vari parser usati per separare le varie parti del file da interpretare
     \item \textbf{FactoryTest}: si è verificato il corretto funzionamento della factory di caselle speciali e dei loro effetti. 
     \item \textbf{SpecialPropertyTest}: si è verificato il corretto funzionamento delle proprietà speciali e la corretta modifica dell' affito.
-
 \end{itemize}
+
 \section{Note di sviluppo}
