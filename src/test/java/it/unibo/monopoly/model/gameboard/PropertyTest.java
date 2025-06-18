@@ -60,7 +60,7 @@ class PropertyTest {
     }
 
     @Test
-    void testBuildHouseUpToMax() {
+    void testBuildableBuildHouseUpToMax() {
         for (int i = 1; i <= 4; i++) {
             assertTrue(buildable.canBuildHouse());
             buildable.buildHouse();
@@ -71,12 +71,40 @@ class PropertyTest {
     }
 
     @Test
-    void testBuildHotel() {
+    void testBuildableBuildHotel() {
         buildable.setNHouses(4);
         assertTrue(buildable.canBuildHotel());
         buildable.buildHotel();
         assertTrue(buildable.hasHotel());
         assertFalse(buildable.canBuildHotel());
         assertThrows(IllegalArgumentException.class, () -> buildable.buildHotel());
+    }
+
+    @Test
+    void testBuildableDeleteHouse() throws IllegalAccessException {
+        buildable.setNHouses(2);
+        assertTrue(buildable.canDeleteHouse());
+        buildable.deleteHouse();
+        assertEquals(1, buildable.getNHouses());
+    }
+
+    @Test
+    void testBuildableDeleteHouseWithHotelThrows() {
+        buildable.setNHouses(4);
+        buildable.setHasHotel(true);
+        assertFalse(buildable.canDeleteHouse());
+        assertThrows(IllegalAccessException.class, () -> buildable.deleteHouse());
+    }
+
+    @Test
+    void testBuildableDeleteHotel() throws IllegalAccessException {
+        buildable.setHasHotel(true);
+        buildable.deleteHotel();
+        assertFalse(buildable.hasHotel());
+    }
+
+    @Test
+    void testBuildableDeleteNonExistingHotelThrows() {
+        assertThrows(IllegalAccessException.class, () -> buildable.deleteHotel());
     }
 }

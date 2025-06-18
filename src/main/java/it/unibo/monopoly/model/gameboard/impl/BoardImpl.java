@@ -69,7 +69,7 @@ public class BoardImpl implements Board {
                 if (tile instanceof Property) {
                     final Property prop = new NormalPropertyImpl(tile.getName(), tile.getPosition(), tile.getGroup());
                     if (tile instanceof BuildablePropertyImpl b) {
-                        BuildablePropertyImpl buildableProperty = new BuildablePropertyImpl(prop);
+                        final BuildablePropertyImpl buildableProperty = new BuildablePropertyImpl(prop);
                         buildableProperty.setNHouses(b.getNHouses());
                         buildableProperty.setHasHotel(b.hasHotel());
                         return buildableProperty;
@@ -222,7 +222,7 @@ public class BoardImpl implements Board {
     @Override
     public final int buildHouseInProperty(final String name) {
         Property prop = null;
-        for (Tile t : this.tiles) {
+        for (final Tile t : this.tiles) {
             if (t instanceof Property && t.getName().equals(name)) {
                 prop = (Property) t;
                 break;
@@ -240,7 +240,7 @@ public class BoardImpl implements Board {
     @Override
     public final boolean buildHotelInProperty(final String name) {
         Property prop = null;
-        for (Tile t : this.tiles) {
+        for (final Tile t : this.tiles) {
             if (t instanceof Property && t.getName().equals(name)) {
                 prop = (Property) t;
                 break;
@@ -257,7 +257,7 @@ public class BoardImpl implements Board {
     @Override
     public final int deleteHouseInProperty(final String name) throws IllegalAccessException {
         Property prop = null;
-        for (Tile t : this.tiles) {
+        for (final Tile t : this.tiles) {
             if (t instanceof Property && t.getName().equals(name)) {
                 prop = (Property) t;
                 break;
@@ -271,7 +271,7 @@ public class BoardImpl implements Board {
     @Override
     public final boolean deleteHotelInProperty(final String name) throws IllegalAccessException {
         Property prop = null;
-        for (Tile t : this.tiles) {
+        for (final Tile t : this.tiles) {
             if (t instanceof Property && t.getName().equals(name)) {
                 prop = (Property) t;
                 break;

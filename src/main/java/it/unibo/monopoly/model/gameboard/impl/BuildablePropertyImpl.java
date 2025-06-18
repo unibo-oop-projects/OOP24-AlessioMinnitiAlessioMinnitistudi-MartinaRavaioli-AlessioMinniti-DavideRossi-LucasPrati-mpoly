@@ -115,12 +115,18 @@ public class BuildablePropertyImpl implements Property {
     public final boolean canDeleteHouse() {
         return !hasHotel();
     }
-
-    public void setNHouses(int nHouses) {
+    /**
+     * set the initial number of houses.
+     * @param nHouses
+     */
+    public void setNHouses(final int nHouses) {
         this.nHouses = nHouses;
     }
-
-    public void setHasHotel(boolean hotel) {
+    /**
+     * set the initial status of the hotel.
+     * @param hotel
+     */
+    public void setHasHotel(final boolean hotel) {
         this.hotel = hotel;
     }
 }

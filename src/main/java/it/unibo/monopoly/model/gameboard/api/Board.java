@@ -117,7 +117,7 @@ public interface Board {
     int buildHouseInProperty(String name);
     /**
      * build hotel in the property.
-     * @param prop property to change
+     * @param name property to change
      * @return bool
     */
     boolean buildHotelInProperty(String name);
