@@ -17,12 +17,12 @@ import it.unibo.monopoly.model.gameboard.api.CardFactory;
 import it.unibo.monopoly.model.gameboard.api.Pawn;
 import it.unibo.monopoly.model.gameboard.api.PawnFactory;
 import it.unibo.monopoly.model.gameboard.api.Tile;
-import it.unibo.monopoly.model.gameboard.api.chancesAndCommunityChest.api.ArgsInterpreter;
-import it.unibo.monopoly.model.gameboard.api.chancesAndCommunityChest.api.BaseCommand;
-import it.unibo.monopoly.model.gameboard.api.chancesAndCommunityChest.api.BaseInterpreterInt;
-import it.unibo.monopoly.model.gameboard.api.chancesAndCommunityChest.api.Command;
-import it.unibo.monopoly.model.gameboard.api.chancesAndCommunityChest.api.Interpreter;
-import it.unibo.monopoly.model.gameboard.api.chancesAndCommunityChest.api.Parser;
+import it.unibo.monopoly.model.gameboard.api.chances_communiy.api.ArgsInterpreter;
+import it.unibo.monopoly.model.gameboard.api.chances_communiy.api.BaseCommand;
+import it.unibo.monopoly.model.gameboard.api.chances_communiy.api.BaseInterpreterInt;
+import it.unibo.monopoly.model.gameboard.api.chances_communiy.api.Command;
+import it.unibo.monopoly.model.gameboard.api.chances_communiy.api.Interpreter;
+import it.unibo.monopoly.model.gameboard.api.chances_communiy.api.Parser;
 import it.unibo.monopoly.model.gameboard.impl.BoardImpl;
 import it.unibo.monopoly.model.gameboard.impl.CardDTO;
 import it.unibo.monopoly.model.gameboard.impl.CardFactoryImpl;
@@ -155,7 +155,9 @@ class BaseAndComplexInterpreterTest {
         final BaseCommand c = baseInt.interpret(parOnColon.next(), board, turnM);
         parOnColon.hasNesxt();
         argsInt.interpret(parOnColon.next(), c, board, turnM);
-        assertEquals("move of " + num + " steps", c.getDesc());
+        assertEquals("move of " + num + " steps then ignore the effect of the tile,\n"
+                        + "you won't have to pay rent but you can neither buy the property.\n"
+                        + "if you pass the start point in doing so, the 200$ will be added", c.getDesc());
     }
 
     @Test
@@ -166,7 +168,7 @@ class BaseAndComplexInterpreterTest {
         final BaseCommand c = baseInt.interpret(parOnColon.next(), board, turnM);
         parOnColon.hasNesxt();
         argsInt.interpret(parOnColon.next(), c, board, turnM);
-        assertEquals("move in " + s, c.getDesc());
+        assertEquals("move in " + s + ".\nif you pass the start point in doing so, the 200$ will be added", c.getDesc());
 
     }
 
@@ -210,6 +212,7 @@ class BaseAndComplexInterpreterTest {
         final String s = "buy if not owned: " + s1 + "\n" + "move in tile: " + s2;
         final Command c = complexInt.interpret(s, board, turnM);
         c.execute(p, c.getKeyWord());
-        assertEquals("buy " + s1 + " if not owned otherwise pay it's rent" + " then\n" + "move in " + s2, c.getDesc());
+        assertEquals("buy " + s1 + " if not owned otherwise pay it's rent" + " then\n" + "move in " + s2 
+                                + ".\nif you pass the start point in doing so, the 200$ will be added", c.getDesc());
     }
 }

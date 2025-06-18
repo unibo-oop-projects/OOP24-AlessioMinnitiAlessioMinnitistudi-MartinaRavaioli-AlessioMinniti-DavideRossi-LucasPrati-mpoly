@@ -4,8 +4,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 import it.unibo.monopoly.model.gameboard.api.Board;
-import it.unibo.monopoly.model.gameboard.api.chancesAndCommunityChest.api.Command;
-import it.unibo.monopoly.model.gameboard.api.chancesAndCommunityChest.api.DeckCreator;
+import it.unibo.monopoly.model.gameboard.api.chances_communiy.api.Command;
+import it.unibo.monopoly.model.gameboard.api.chances_communiy.api.DeckCreator;
 import it.unibo.monopoly.model.transactions.api.Bank;
 import it.unibo.monopoly.model.turnation.api.TurnationManager;
 import it.unibo.monopoly.utils.api.UseFileTxt;
