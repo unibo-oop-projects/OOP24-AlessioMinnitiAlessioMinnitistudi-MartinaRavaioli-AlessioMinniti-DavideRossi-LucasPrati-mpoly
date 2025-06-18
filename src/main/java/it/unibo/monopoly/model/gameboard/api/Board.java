@@ -3,7 +3,7 @@ package it.unibo.monopoly.model.gameboard.api;
 import java.util.Collection;
 import java.util.List;
 
-import it.unibo.monopoly.model.gameboard.api.chancesAndCommunityChest.api.ChancheAndCommunityChestDeck;
+import it.unibo.monopoly.model.gameboard.api.chances_communiy.api.ChancheAndCommunityChestDeck;
 import it.unibo.monopoly.model.gameboard.impl.chance_comunity.impl.ChanceAndCommunityChestCard;
 import it.unibo.monopoly.model.turnation.api.Position;
 
@@ -97,7 +97,42 @@ public interface Board {
      * @param tile tile to add
     */
     void addTile(Tile tile);
-
+    /**
+     * check if an house can be built in the property.
+     * @param prop house's property
+     * @return bool
+    */
+    boolean canBuildHouseInProperty(Property prop);
+    /**
+     * check if an hotel can be built in the property.
+     * @param prop hotel's property
+     * @return bool
+    */
+    boolean canBuildHotelInProperty(Property prop);
+    /**
+     * build house in the property.
+     * @param name name of the property to change
+     * @return int
+    */
+    int buildHouseInProperty(String name);
+    /**
+     * build hotel in the property.
+     * @param name property to change
+     * @return bool
+    */
+    boolean buildHotelInProperty(String name);
+    /**
+     * delete an house in the property.
+     * @param name name of the property
+     * @return bool
+     */
+    int deleteHouseInProperty(String name) throws IllegalAccessException;
+    /**
+     * delete the hotel in the property.
+     * @param name name of the property
+     * @return bool
+     */
+    boolean deleteHotelInProperty(String name) throws IllegalAccessException;
     /**
      * get the previous position of the pawn associated with the id. 
      * @param id id of the pawn

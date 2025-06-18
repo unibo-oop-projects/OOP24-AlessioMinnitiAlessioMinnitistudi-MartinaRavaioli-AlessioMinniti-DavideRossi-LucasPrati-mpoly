@@ -34,6 +34,8 @@ public final class GameboardViewImpl extends JPanel implements GameboardView {
     private static final double HEIGHT_PERC = 1.0;
     private static final double WIDTH_PERC = 0.8;
     private static final long serialVersionUID = 1L; /**serial version UID.*/
+    private static final String HOUSE = "house";
+    private static final String HOTEL = "hotel";
     private static final int PAWN_SIZE = 5; /**size of the pawns.*/
     private static final int STRIPE_WIDTH = 150; /**width of the stripes of the tiles.*/
     private static final int STRIPE_HEIGHT = 10; /**height of the stripes of the tiles.*/
@@ -64,9 +66,21 @@ public final class GameboardViewImpl extends JPanel implements GameboardView {
         for (final Map.Entry<JPanel, Position> entry : this.tilePositions.entrySet()) {
             if (entry.getKey().getName().equals(propName)) {
                 final JPanel panel = entry.getKey();
+                for (final Component c : panel.getComponents()) {
+                    if (HOUSE.equals(c.getName())) {
+                        panel.remove(c);
+                        panel.revalidate();
+                        panel.repaint();
+                    }
+                }
+
                 final JLabel label = new JLabel("HOUSES: " + numHouses);
+                label.setName(HOUSE);
                 label.setForeground(color);
                 panel.add(label);
+                panel.revalidate();
+                panel.repaint();
+                break;
             }
         }
     }
@@ -77,8 +91,12 @@ public final class GameboardViewImpl extends JPanel implements GameboardView {
             if (entry.getKey().getName().equals(propName)) {
                 final JPanel panel = entry.getKey();
                 final JLabel label = new JLabel("HOTEL: ✔");
+                label.setName(HOTEL);
                 label.setForeground(color);
                 panel.add(label);
+                panel.revalidate();
+                panel.repaint();
+                break;
             }
         }
     }
@@ -247,13 +265,59 @@ public final class GameboardViewImpl extends JPanel implements GameboardView {
                         p.remove(c);
                         p.revalidate();
                         p.repaint();
-                        break;
+                    }
+                    if ((HOUSE.equals(c.getName()) || HOTEL.equals(c.getName())) && c instanceof JLabel) {
+                        p.remove(c);
+                        p.revalidate();
+                        p.repaint();
                     }
                 }
             }
         }
     }
 
+    @Override
+    public void removeHouse(final String propName, final int numHouses, final Color color) {
+        for (final Map.Entry<JPanel, Position> entry : this.tilePositions.entrySet()) {
+            if (entry.getKey().getName().equals(propName)) {
+                final JPanel p = entry.getKey();
+                for (final Component c : p.getComponents()) {
+                    if (HOUSE.equals(c.getName()) && c instanceof JLabel) {
+                        p.remove(c);
+                        p.revalidate();
+                        p.repaint();
+
+                        if (numHouses > 0) {
+                            final JLabel label = new JLabel("HOUSES: " + numHouses);
+                            label.setName(HOUSE);
+                            label.setForeground(color);
+                            p.add(label);
+                        }
+
+                        break;
+                    }
+                }
+
+            }
+        }
+    }
+
+    @Override
+    public void removeHotel(final String propName, final Color color) {
+        for (final Map.Entry<JPanel, Position> entry : this.tilePositions.entrySet()) {
+            if (entry.getKey().getName().equals(propName)) {
+                final JPanel p = entry.getKey();
+                for (final Component c : p.getComponents()) {
+                    if (HOTEL.equals(c.getName()) && c instanceof JLabel) {
+                        p.remove(c);
+                        p.revalidate();
+                        p.repaint();
+                        break;
+                    }
+                }
+            }
+        }
+    }
     @Override
     public void deletePlayer(final Color color, final int id) {
         for (final Map.Entry<JPanel, Position> entry : this.tilePositions.entrySet()) {

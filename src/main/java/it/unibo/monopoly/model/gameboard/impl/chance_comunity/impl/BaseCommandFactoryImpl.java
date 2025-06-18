@@ -9,11 +9,12 @@ import it.unibo.monopoly.model.gameboard.api.Board;
 import it.unibo.monopoly.model.gameboard.api.Property;
 import it.unibo.monopoly.model.gameboard.api.Special;
 import it.unibo.monopoly.model.gameboard.api.Tile;
-import it.unibo.monopoly.model.gameboard.api.chancesAndCommunityChest.api.ArgsInterpreter;
-import it.unibo.monopoly.model.gameboard.api.chancesAndCommunityChest.api.BaseCommand;
-import it.unibo.monopoly.model.gameboard.api.chancesAndCommunityChest.api.BaseCommandFactory;
+import it.unibo.monopoly.model.gameboard.api.chances_communiy.api.ArgsInterpreter;
+import it.unibo.monopoly.model.gameboard.api.chances_communiy.api.BaseCommand;
+import it.unibo.monopoly.model.gameboard.api.chances_communiy.api.BaseCommandFactory;
 import it.unibo.monopoly.model.transactions.api.Bank;
 import it.unibo.monopoly.model.transactions.api.PropertyAction;
+import it.unibo.monopoly.model.transactions.api.PropertyActionsEnum;
 import it.unibo.monopoly.model.turnation.api.Player;
 import it.unibo.monopoly.model.turnation.api.TurnationManager;
 
@@ -37,9 +38,9 @@ public final class BaseCommandFactoryImpl implements BaseCommandFactory {
 
             @Override
             public String getDesc() {
-                return "move of " + num + " steps then ignore the effect of the tile," + 
-                    "\nyou won't have to pay rent but you can neither buy the property." +
-                    "\nif you pass the start point in doing so, the 200$ will be added";
+                return "move of " + num + " steps then ignore the effect of the tile," 
+                    + "\nyou won't have to pay rent but you can neither buy the property." 
+                    + "\nif you pass the start point in doing so, the 200$ will be added";
             }
 
             @Override
@@ -58,10 +59,10 @@ public final class BaseCommandFactoryImpl implements BaseCommandFactory {
                 while (p.hasNesxt()) {
                     argsInt.interpret(p.next(), this, board, turnM);
                 }
-                
+
                 final int delta = board.movePawn(player.getID(), Set.of(num));
                 if (delta < 0) {
-                    final Special start = (Special)board.getTile("Start");
+                    final Special start = (Special) board.getTile("Start");
                     start.activateEffect(player);
                 }
             }
@@ -91,20 +92,19 @@ public final class BaseCommandFactoryImpl implements BaseCommandFactory {
                     argsInt.interpret(p.next(), this, board, turnM);
                 }
 
-                
                 int delta = board.getPawn(player.getID()).getPosition().getPos();
                 board.movePawnInTile(player.getID(), this.tile);
                 delta = delta - board.getPawn(player.getID()).getPosition().getPos();
                 if (delta > 0) {
-                    final Special start = (Special)board.getTile("Start");
+                    final Special start = (Special) board.getTile("Start");
                     start.activateEffect(player);
                 }
             }
 
             @Override
             public String getDesc() {
-                return "move in " + tile + 
-                    ".\nif you pass the start point in doing so, the 200$ will be added";
+                return "move in " + tile 
+                    + ".\nif you pass the start point in doing so, the 200$ will be added";
             }
 
             @Override
@@ -281,8 +281,10 @@ public final class BaseCommandFactoryImpl implements BaseCommandFactory {
                 if (t instanceof Property) {
                     bank.getBankStateObject().resetTransactionData();
                     final Set<PropertyAction> actions = bank.getApplicableActionsForTitleDeed(player.getID(), tile, 10);
-                    final Optional<PropertyAction> buy = actions.stream().filter(p -> "buy".equals(p.getName())).findAny();
-                    final Optional<PropertyAction> pay = actions.stream().filter(p -> "payRent".equals(p.getName())).findAny();
+                    final Optional<PropertyAction> buy = actions.stream()
+                                .filter(p -> PropertyActionsEnum.BUY.equals(p.getType())).findAny();
+                    final Optional<PropertyAction> pay = actions.stream()
+                                .filter(p -> PropertyActionsEnum.PAYRENT.equals(p.getType())).findAny();
                     if (buy.isPresent()) {
                         buy.get().executePropertyAction(board, bank);
                     } else if (pay.isPresent()) {

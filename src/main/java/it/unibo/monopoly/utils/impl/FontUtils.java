@@ -1,13 +1,10 @@
 package it.unibo.monopoly.utils.impl;
 
-
 import java.awt.Font;
 import java.awt.GraphicsEnvironment;
-
 import java.util.Arrays;
 
 import javax.swing.UIManager;
-
 
 /**
  * Utility class for common operation with {@link Font}.

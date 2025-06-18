@@ -96,9 +96,6 @@ public class TurnationManagerImpl implements TurnationManager {
         if (canPassTurn()) {
             this.currPlayer = players.giveNextNode(this.currPlayer);
             this.diceThrown = false;
-            if (isCurrentPlayerParked()) {
-                passedParkTurn();
-            }
             return createCurrPlayerCopy();
         }
         throw new IllegalArgumentException("the player can't pass the turn");
@@ -220,6 +217,7 @@ public class TurnationManagerImpl implements TurnationManager {
             if (!isCurrentPlayerParked()) {
                 return hasCurrPlayerThrownDices();
             } else {
+                passedParkTurn();
                 return true;
             }
         }
@@ -272,14 +270,15 @@ public class TurnationManagerImpl implements TurnationManager {
     public final void deletePlayer(final Player player) {
         final List<Player> list = this.players.toList();
 
+
         list.removeIf(p -> p.getID().equals(player.getID()));
+        this.bankState.deletePlayer(player);
         getNextPlayer();
         this.players.clear();
 
         for (final Player p : list) {
             this.players.addNode(p);
         }
-        this.bankState.deletePlayer(player);
     }
 
     @Override
@@ -325,8 +324,8 @@ public class TurnationManagerImpl implements TurnationManager {
         } else {
             this.currPlayer.decreaseTurnsInPrison();
             return "you are still in prison, you have " 
-                    + currentPlayerTurnsLeftInPrison() + 
-                    " turns left in prison and the dices weren't kind with you.";
+                    + currentPlayerTurnsLeftInPrison() 
+                    + " turns left in prison and the dices weren't kind with you.";
         }
     }
 
