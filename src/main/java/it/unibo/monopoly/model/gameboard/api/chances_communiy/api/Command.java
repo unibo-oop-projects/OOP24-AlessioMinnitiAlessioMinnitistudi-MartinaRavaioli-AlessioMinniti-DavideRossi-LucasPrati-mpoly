@@ -1,4 +1,4 @@
-package it.unibo.monopoly.model.gameboard.api.chancesAndCommunityChest.api;
+package it.unibo.monopoly.model.gameboard.api.chances_communiy.api;
 
 import it.unibo.monopoly.model.turnation.api.Player;
 

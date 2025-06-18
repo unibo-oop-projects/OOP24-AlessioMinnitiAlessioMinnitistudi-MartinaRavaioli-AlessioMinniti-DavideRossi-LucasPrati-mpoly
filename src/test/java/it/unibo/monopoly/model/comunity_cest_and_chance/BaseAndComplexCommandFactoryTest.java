@@ -17,9 +17,9 @@ import it.unibo.monopoly.model.gameboard.api.CardFactory;
 import it.unibo.monopoly.model.gameboard.api.Pawn;
 import it.unibo.monopoly.model.gameboard.api.PawnFactory;
 import it.unibo.monopoly.model.gameboard.api.Tile;
-import it.unibo.monopoly.model.gameboard.api.chancesAndCommunityChest.api.BaseCommand;
-import it.unibo.monopoly.model.gameboard.api.chancesAndCommunityChest.api.BaseCommandFactory;
-import it.unibo.monopoly.model.gameboard.api.chancesAndCommunityChest.api.Command;
+import it.unibo.monopoly.model.gameboard.api.chances_communiy.api.BaseCommand;
+import it.unibo.monopoly.model.gameboard.api.chances_communiy.api.BaseCommandFactory;
+import it.unibo.monopoly.model.gameboard.api.chances_communiy.api.Command;
 import it.unibo.monopoly.model.gameboard.impl.BoardImpl;
 import it.unibo.monopoly.model.gameboard.impl.CardDTO;
 import it.unibo.monopoly.model.gameboard.impl.CardFactoryImpl;
@@ -147,7 +147,9 @@ class BaseAndComplexCommandFactoryTest {
         final BaseCommand c = commands.get(indice);
         final int prevPos = board.getPawn(p1.getID()).getPosition().getPos();
         c.execute(p1, ammount);
-        assertEquals("move of " + ammount + " steps", c.getDesc());
+        assertEquals("move of " + ammount + " steps then ignore the effect of the tile,\n"
+                                + "you won't have to pay rent but you can neither buy the property.\n" 
+                                + "if you pass the start point in doing so, the 200$ will be added", c.getDesc());
         assertEquals(Integer.valueOf(ammount), board.getPawn(p1.getID()).getPosition().getPos() - prevPos);
     }
 
@@ -158,7 +160,7 @@ class BaseAndComplexCommandFactoryTest {
         final BaseCommand c = commands.get(indice);
         c.execute(p1, s);
         s = "Jail / Just Visiting";
-        assertEquals("move in " + s, c.getDesc());
+        assertEquals("move in " + s + ".\nif you pass the start point in doing so, the 200$ will be added", c.getDesc());
         assertEquals(board.getTile(s).getPosition().getPos(), 
                         board.getPawn(p1.getID()).getPosition().getPos());
 
@@ -222,7 +224,8 @@ class BaseAndComplexCommandFactoryTest {
         final List<Pair<BaseCommand, String>> li = List.of(new Pair<>(c1, s1), new Pair<>(c2, s2));
         final Command c = new ComplexCommand(li, s2);
         c.execute(p1, c.getKeyWord());
-        assertEquals("buy " + s1 + " if not owned otherwise pay it's rent" + " then\n" + "move in " + s2, c.getDesc());
+        assertEquals("buy " + s1 + " if not owned otherwise pay it's rent" + " then\n" + "move in " + s2 
+                                + ".\nif you pass the start point in doing so, the 200$ will be added", c.getDesc());
         assertEquals(p1.getID(), bank.getTitleDeed(s1).getOwnerId());
         assertEquals(board.getTile(s2).getPosition().getPos(), board.getPawn(p1.getID()).getPosition().getPos());
     }
