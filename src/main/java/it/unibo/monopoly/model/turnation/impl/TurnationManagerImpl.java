@@ -171,7 +171,7 @@ public class TurnationManagerImpl implements TurnationManager {
     }
 
     @Override
-    public final Pair<Collection<Integer>, String> moveByDices() throws IllegalAccessException { 
+    public final Pair<Collection<Integer>, String> throwDices() throws IllegalAccessException { 
         if (!hasCurrPlayerThrownDices()) {
             if (canThrowDices()) {
                 this.diceThrown = true;

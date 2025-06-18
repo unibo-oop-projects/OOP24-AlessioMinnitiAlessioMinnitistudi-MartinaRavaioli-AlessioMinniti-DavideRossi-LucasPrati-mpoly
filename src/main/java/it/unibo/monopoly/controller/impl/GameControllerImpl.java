@@ -126,7 +126,7 @@ public final class GameControllerImpl implements GameController {
     @Override
     public void throwDices() {
         try {
-            final Pair<Collection<Integer>, String> result = this.turnationManager.moveByDices();
+            final Pair<Collection<Integer>, String> result = this.turnationManager.throwDices();
             final int currentPlayerId = this.turnationManager.getIdCurrPlayer();
             int delta = 0;
 
