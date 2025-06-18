@@ -33,6 +33,7 @@ import it.unibo.monopoly.model.gameboard.impl.chance_comunity.impl.ComplexInterp
 import it.unibo.monopoly.model.gameboard.impl.chance_comunity.impl.ParserOnColon;
 import it.unibo.monopoly.model.transactions.api.BankAccount;
 import it.unibo.monopoly.model.transactions.api.BankAccountFactory;
+import it.unibo.monopoly.model.transactions.api.BankAccountType;
 import it.unibo.monopoly.model.transactions.api.TitleDeed;
 import it.unibo.monopoly.model.transactions.impl.BankImpl;
 import it.unibo.monopoly.model.transactions.impl.bankaccount.BankAccountFactoryImpl;
@@ -101,8 +102,7 @@ class BaseAndComplexInterpreterTest {
             final String name = p.getValue();
             final Color color = p.getKey();
             players.add(new ParkablePlayer(new PrisonablePlayer(PlayerImpl.of(id, name, color))));
-            accounts.add(bankAccountFactory.createWithCheck(id,
-                                                                  account -> account.getBalance() > 0));
+            accounts.add(bankAccountFactory.createBankAccountByType(id, BankAccountType.CLASSIC));
             pawns.add(pawnFactory.createBasic(id, new PositionImpl(0), color));
             id++;
         }
