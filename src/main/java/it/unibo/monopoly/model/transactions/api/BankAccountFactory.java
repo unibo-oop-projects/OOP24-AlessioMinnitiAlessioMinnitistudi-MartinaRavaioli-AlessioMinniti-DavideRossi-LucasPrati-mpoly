@@ -13,6 +13,6 @@ public interface BankAccountFactory {
      * @param type the type to create, according to {@link BankAccountType}
      * @return a new istance of {@link BankAccount} according to the {@code bankAccountType}
      */
-    BankAccount createBankAccountByType(final int id, final BankAccountType type);
+    BankAccount createBankAccountByType(int id, BankAccountType type);
 
 }
