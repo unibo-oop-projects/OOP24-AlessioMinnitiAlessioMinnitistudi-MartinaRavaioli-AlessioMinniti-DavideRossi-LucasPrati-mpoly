@@ -28,6 +28,9 @@ Multiple tokens can share the same space.
 Depending on where you land, you may:
     - Buy properties
     - Pay rent or taxes
+    - Buy houses or an hotel for your properties
+    - Sell houses or the hotel
+    - Sell your properties
     - Draw a Chance or Community Chest card
     - Be sent to Jail
 
@@ -44,7 +47,7 @@ As proof of ownership, the tile will'show a badge with the same token color of i
 Paying Rent:
 If you land on property owned by another player, you must pay them rent as listed on the Title Deed.
 If a player owns all properties in a color group, they may charge double rent for those without houses.
-Rent increases significantly when houses are built.
+Rent increases significantly when houses or hotels are built.
 
 
 "CHANCE / CHEST":
@@ -69,18 +72,18 @@ Rules while in Jail:
 Landing on Free Parking puts you in stall for the next turn.
 
 
-Houses:
-If you own all properties in a color group, you may buy houses from the Bank and build them on those properties.
-The cost per house is listed on the property’s Title Deed card.
-Each property has a limit to how many houses it can hold. After you reach the limit of houses, you can sell them to buy an hotel.
+Houses / Hotel:
+If you own all properties in a color group, you may buy houses or hotels from the Bank and build them on those properties.
+The cost per house and hotels is listed on the property’s Title Deed card.
+Each property has a limit to how many houses it can hold. After you reach the limit of houses, you can buy an hotel.
 Even without houses, complete ownership of a color group allows double rent.
-Houses and hotels can only be purchased homogeneously, one for each properties in the same color group. 
+Houses and hotels can only be bought for a property when you are on it. 
 
 
 Selling:
 Unimproved properties, railroads, and utilities may be sold back to the Bank.
-Properties cannot be sold if there are houses on any properties in that color group.
-Houses and hotels may be sold back to the Bank homogeneously (like when purchased), for half their purchase price.
+Properties cannot be sold if there are houses or hotels on it.
+Houses and hotels may be sold back to the Bank, for half their purchase price.
 
 
 Bankruptcy:

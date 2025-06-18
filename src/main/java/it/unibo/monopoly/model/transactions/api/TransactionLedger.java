@@ -29,7 +29,7 @@ public interface TransactionLedger {
      * the method {@link #checkAllMandatoryTransactionsCompleted()} will return {@code false}
      * @param maximumExecutions number of maximum times the transaction type can be executed
      */
-    void registerTransaction(String name, int minimumExecutions, int maximumExecutions);
+    void registerTransaction(PropertyActionsEnum name, int minimumExecutions, int maximumExecutions);
 
 
     /**
@@ -42,26 +42,26 @@ public interface TransactionLedger {
      * As long as a mandatory transaction hasn't been executed {@code minimumExecutions} times 
      * the method {@link #checkAllMandatoryTransactionsCompleted()} will return {@code false}
      */
-    void registerTransaction(String name, int minimumExecutions);
+    void registerTransaction(PropertyActionsEnum name, int minimumExecutions);
 
     /**
      * Removes tracking information regarding a specific transaction if present in the ledger.
      * Otherwise it does nothing. 
      * @param name the name of the transaction to wipe data of
      */
-    void removeIfPresent(String name);
+    void removeIfPresent(PropertyActionsEnum name);
 
     /**
      * Register the execution of a transaction in the ledger.
      * @param name the name of the transaction to mark the execution of
      */
-    void markExecution(String name);
+    void markExecution(PropertyActionsEnum name);
 
     /**
      * Deleted a previously registered execution of a transaction in the ledger.
      * @param name the name of the transaction to unmark the execution of
      */
-    void unmarkExecution(String name);
+    void unmarkExecution(PropertyActionsEnum name);
 
     /**
      * Check if all the transactions that are marked as mandatory have been

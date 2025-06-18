@@ -152,5 +152,17 @@ public class CircularPlayerIteratorImpl implements PlayerIterator {
     @Override
     public void clear() {
         this.elems.clear();
+        this.currPlayer = null;
+        this.currPosition = 0;
+    }
+
+    @Override
+    public void initializeCurrPlayer(int id) {
+        for (Player p : this.elems) {
+            if (p.getID() == id) {
+                this.currPlayer = p;
+                this.currPosition = this.elems.indexOf(this.currPlayer);
+            }
+        }
     }
 }

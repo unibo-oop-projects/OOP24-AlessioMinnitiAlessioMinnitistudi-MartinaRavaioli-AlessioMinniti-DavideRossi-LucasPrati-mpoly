@@ -7,13 +7,11 @@ NUM_DICE: 2
 SIDES_PER_DIE: 6
 
 FONT_NAME: SansSerif
-BIG_FONT: 30
-SMALL_FONT: 16
+FONT_SIZE: 16
 
 INIT_BALANCE: 100
 
 RULES_FILE: rules/rules.txt
-
 CARDS_FILE: cards/final_cards.json
 DECK_FILE: cards/DeckCard.txt
 

@@ -1,0 +1,10 @@
+\section{Testing automatizzato}
+Per quanto riguarda la parte monetaria e di transazioni del gioco sono stati effettuati i seguenti test:\newline
+\begin{itemize}
+    \item \textbf{BankTest}: test delle principali funzioni dell'interfaccia Bank verificandone il corretto comportamento e risposta agli errori anche in diverse situazioni
+    \item \textbf{BankStateTest}: test dell'interfaccia BankState avvenuto congiuntamente con il corrispettivo oggetto Bank, controllando il funzionamento dei metodi per il controllo e l'alterazione dello stato della banca 
+    \item \textbf{TitleDeedTest}: sono stati realizzati dei test per entrambe le versioni di title deed presenti nel gioco, con o senza case. Sono state testate le funzioni per i vari costi in particolare \texttt{getRent}, verificando che restituisse l'affitto corretto in base alla situazione, e il funzionamento dei metodi per assegnare o revocare il possesso di un contratto per un giocatore
+    \item \textbf{RentOptionFactoryTest}: sono stati testati i metodi della factory verificando che le \texttt{RentOption} create avessero il prezzo giusto e controllando che i criteri di applicabilità fossero corretti.
+    \item \textbf{SimpleBankAccountTest}: si è verificato il funzionamento dei metodi per il prelievo e il deposito di denaro e per verificare se il \texttt{BankAccount} è ancora in uno stato valido per la continuazione del gioco.  
+\end{itemize}
+\section{Note di sviluppo}

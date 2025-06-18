@@ -2,12 +2,13 @@ package it.unibo.monopoly.controller.impl;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashMap;
+import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.tuple.Pair;
+
+import com.google.common.collect.Maps;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.monopoly.controller.api.GameController;
@@ -19,6 +20,7 @@ import it.unibo.monopoly.model.gameboard.api.Special;
 import it.unibo.monopoly.model.gameboard.api.Tile;
 import it.unibo.monopoly.model.transactions.api.Bank;
 import it.unibo.monopoly.model.transactions.api.PropertyAction;
+import it.unibo.monopoly.model.transactions.api.PropertyActionsEnum;
 import it.unibo.monopoly.model.transactions.api.TitleDeed;
 import it.unibo.monopoly.model.turnation.api.Player;
 import it.unibo.monopoly.model.turnation.api.TurnationManager;
@@ -35,9 +37,9 @@ import it.unibo.monopoly.view.impl.MainViewImpl;
 public final class GameControllerImpl implements GameController {
     private final TurnationManager turnationManager; /**turnation manager. */
     private final Board board; /**board. */
-    private final Configuration config; /**config. */
     private final Bank bank; /**bank. */
-    private Map<String, PropertyAction> turnActions = new HashMap<>();
+    private final Configuration config; /**config. */
+    private final Map<PropertyActionsEnum, PropertyAction> turnActions = new EnumMap<>(PropertyActionsEnum.class);
     private MainGameView gameView; /**game view. */
 
     /**
@@ -124,11 +126,11 @@ public final class GameControllerImpl implements GameController {
     @Override
     public void throwDices() {
         try {
-            final Pair<Collection<Integer>, String> result = this.turnationManager.moveByDices();
+            final Pair<Collection<Integer>, String> result = this.turnationManager.throwDices();
             final int currentPlayerId = this.turnationManager.getIdCurrPlayer();
             int delta = 0;
 
-            if (!this.turnationManager.isCurrentPlayerInPrison()) {
+            if (result.getRight() == null) {
                 delta = this.board.movePawn(currentPlayerId, result.getLeft());
                 if (result.getRight() != null) {
                     this.gameView.displayMessage(result.getRight());
@@ -143,11 +145,10 @@ public final class GameControllerImpl implements GameController {
             refreshCurrentTileInfo();
             if (currentlySittingTile instanceof Property) {
                 this.turnActions.clear();
-                this.turnActions = this.bank.getApplicableActionsForTitleDeed(currentPlayerId, 
+                this.turnActions.putAll(Maps.uniqueIndex(this.bank.getApplicableActionsForTitleDeed(currentPlayerId, 
                                         currentlySittingTile.getName(), 
-                                        result.getLeft().stream().mapToInt(d -> d).sum())
-                                        .stream()
-                                        .collect(Collectors.toMap(PropertyAction::getName, d -> d));
+                                        result.getLeft().stream().mapToInt(d -> d).sum()),
+                                        PropertyAction::getType));
                 this.gameView.displayPlayerActions(turnActions.keySet());
             } else if (currentlySittingTile instanceof Special) {
                 final Special specialTile = (Special) currentlySittingTile;
@@ -183,7 +184,7 @@ public final class GameControllerImpl implements GameController {
 
     @Override
     public void loadCurrentPlayerInformation() {
-        gameView.displayPlayerStats(this.turnationManager.getCurrPlayer(), this.bank);
+        gameView.displayPlayerStats(this.turnationManager.getCurrPlayer(), this.bank, this.board);
     }
 
     @Override
@@ -207,7 +208,7 @@ public final class GameControllerImpl implements GameController {
     }
 
     @Override
-    public void executeAction(final String actionName) {
+    public void executeAction(final PropertyActionsEnum actionName) {
 
         if (!turnActions.containsKey(actionName)) {
                 gameView.displayError(new IllegalArgumentException("No action with this name was registered. " 
@@ -219,17 +220,44 @@ public final class GameControllerImpl implements GameController {
         try {
             final PropertyAction action = turnActions.get(actionName);
             action.executePropertyAction(board, bank);
-            gameView.displayMessage(action.getDescription() + " eseguita con successo");
             final Property currentlySittingProperty = (Property) this.board.getTileForPawn(
                                                         this.turnationManager.getIdCurrPlayer());
-            if ("buy".equals(actionName)) {
-                gameView.callBuyProperty(currentlySittingProperty.getName(), this.turnationManager.getCurrPlayer().getColor());
-            } //else if ("sell".equals(actionName)) {
-            //     //gameView.callClearPanel();
-            // }
+
+            switch (actionName) {
+                case BUY -> gameView.callBuyProperty(currentlySittingProperty.getName(), 
+                                                    getCurrPawn().getColor());
+                case SELL -> gameView.callClearPanel(currentlySittingProperty.getName());
+                case BUYHOUSE -> {
+                    gameView.callBuyHouse(currentlySittingProperty.getName(), 
+                                            getCurrPawn().getColor(), 
+                                            this.board.buildHouseInProperty(currentlySittingProperty.getName()));
+                }
+                case BUYHOTEL -> {
+                    if (this.board.buildHotelInProperty(currentlySittingProperty.getName())) {
+                        gameView.callBuyHotel(currentlySittingProperty.getName(), 
+                                                getCurrPawn().getColor());
+                    }
+                }
+                case SELLHOUSE -> {
+                        gameView.callSellHouse(currentlySittingProperty.getName(), 
+                                                this.board.deleteHouseInProperty(currentlySittingProperty.getName()), 
+                                                getCurrPawn().getColor());
+                }
+                case SELLHOTEL -> {
+                    if (!this.board.deleteHotelInProperty(currentlySittingProperty.getName())) {
+                        gameView.callSellHotel(currentlySittingProperty.getName(), 
+                                                getCurrPawn().getColor()); 
+                    }
+                }
+                default -> {
+                    break;
+                }
+            }
+
+            gameView.displayMessage(action.getDescription() + " eseguita con successo");
             refreshPlayerInfo();
             refreshCurrentTileInfo();
-        } catch (final IllegalStateException | IllegalArgumentException e) {
+        } catch (final IllegalStateException | IllegalArgumentException | IllegalAccessException e) {
             gameView.displayError(e);
         }
     }
@@ -264,7 +292,6 @@ public final class GameControllerImpl implements GameController {
             final String deadPlayer = this.turnationManager.getCurrPlayer().getName();
             this.gameView.callDeletePlayer(this.turnationManager.getCurrPlayer().getColor(), 
                                             this.turnationManager.getIdCurrPlayer());
-
             this.board.removePawn(this.turnationManager.getIdCurrPlayer());
             this.turnationManager.deletePlayer(this.turnationManager.getCurrPlayer());
             this.gameView.displayMessage("Player " + deadPlayer + " is dead");

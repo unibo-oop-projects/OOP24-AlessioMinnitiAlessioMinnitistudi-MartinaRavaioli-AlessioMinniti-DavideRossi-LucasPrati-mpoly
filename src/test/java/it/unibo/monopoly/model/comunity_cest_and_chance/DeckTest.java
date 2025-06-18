@@ -31,6 +31,7 @@ import it.unibo.monopoly.model.gameboard.impl.chance_comunity.impl.ChancheAndCom
 import it.unibo.monopoly.model.gameboard.impl.chance_comunity.impl.DeckCreatorImpl;
 import it.unibo.monopoly.model.transactions.api.BankAccount;
 import it.unibo.monopoly.model.transactions.api.BankAccountFactory;
+import it.unibo.monopoly.model.transactions.api.BankAccountType;
 import it.unibo.monopoly.model.transactions.api.TitleDeed;
 import it.unibo.monopoly.model.transactions.impl.BankImpl;
 import it.unibo.monopoly.model.transactions.impl.bankaccount.BankAccountFactoryImpl;
@@ -97,8 +98,7 @@ class DeckTest {
             final String name = p.getValue();
             final Color color = p.getKey();
             players.add(new ParkablePlayer(new PrisonablePlayer(PlayerImpl.of(id, name, color))));
-            accounts.add(bankAccountFactory.createWithCheck(id,
-                                                                  account -> account.getBalance() > 0));
+            accounts.add(bankAccountFactory.createBankAccountByType(id, BankAccountType.CLASSIC));
             pawns.add(pawnFactory.createBasic(id, new PositionImpl(0), color));
             id++;
         }
@@ -141,10 +141,11 @@ class DeckTest {
     void testDeck() {
         try {
             final List<String> descs = List.of("deposit 50", 
-                                                    "move in Jail / Just Visiting.\nif you pass the start point in doing so, the 200$ will be added" 
-                                                    + " then\n" 
-                                                    + "buy Jail / Just Visiting if not owned otherwise pay it's rent",
-                                                    "withdraw 50");
+                                    "move in Jail / Just Visiting." 
+                                    + "\nif you pass the start point in doing so, the 200$ will be added"
+                                    + " then\n" 
+                                    + "buy Jail / Just Visiting if not owned otherwise pay it's rent",
+                                    "withdraw 50");
             creator.createDeck("debug//cards//DeckCardTest.txt", board, bank, turnM);
             final ChanceAndCommunityChestCard c1 = board.draw();
             c1.execute(p);

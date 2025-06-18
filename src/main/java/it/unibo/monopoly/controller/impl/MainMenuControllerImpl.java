@@ -2,11 +2,11 @@ package it.unibo.monopoly.controller.impl;
 
 import java.awt.Color;
 import java.io.IOException;
+import java.io.UncheckedIOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import it.unibo.monopoly.controller.api.MainMenuController;
@@ -35,12 +35,13 @@ import it.unibo.monopoly.model.turnation.impl.PlayerImpl;
 import it.unibo.monopoly.model.turnation.impl.PositionImpl;
 import it.unibo.monopoly.model.turnation.impl.PrisonablePlayer;
 import it.unibo.monopoly.model.turnation.impl.TurnationManagerImpl;
-import it.unibo.monopoly.utils.api.Identifiable;
 import it.unibo.monopoly.utils.api.UseFileJson;
 import it.unibo.monopoly.utils.api.UseFileTxt;
 import it.unibo.monopoly.utils.impl.Configuration;
 import it.unibo.monopoly.utils.impl.UseFileJsonImpl;
 import it.unibo.monopoly.utils.impl.UseFileTxtImpl;
+import it.unibo.monopoly.view.api.MainMenuView;
+import it.unibo.monopoly.view.impl.MainMenuViewImpl;
 
 
 /**
@@ -50,10 +51,11 @@ public final class MainMenuControllerImpl implements MainMenuController {
 
     private final Configuration config;
     private final BankAccountFactory bankAccountFactory;
-    private BankAccountType bankAccountType = BankAccountType.CLASSIC;
-    private int numPlayers;
     private final int minPlayers;
     private final int maxPlayers;
+    private int numPlayers;
+    private BankAccountType bankAccountType = BankAccountType.CLASSIC;
+    private MainMenuView view;
 
     /**
      * Creates a new {@link MainMenuController}. Based on the given {@link Configuration}
@@ -71,9 +73,21 @@ public final class MainMenuControllerImpl implements MainMenuController {
      * {@inheritDoc}
      */
     @Override
-    public void decreaseNumPlayer() {
-        if (numPlayers > minPlayers) {
-            numPlayers--;
+    public void onClickStart(final Map<Color, String> playersSetup) {
+        try {
+            initGame(playersSetup);
+
+        } catch (final IOException e) {
+            view.displayErrorAndExit(
+                e.getMessage(),
+                "Error loading Json"
+            );
+
+        } catch (final UncheckedIOException e) {
+            view.displayErrorAndExit(
+                e.getMessage(),
+                "Error parsing Json"
+            );
         }
     }
 
@@ -81,17 +95,131 @@ public final class MainMenuControllerImpl implements MainMenuController {
      * {@inheritDoc}
      */
     @Override
-    public void increaseNumPlayer() {
-        if (numPlayers < maxPlayers) {
-            numPlayers++;
-        }
+    public int getNumPlayers() {
+        return numPlayers;
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void onClickStart(final Map<Color, String> playersSetup) throws IOException {
+    public BankAccountType getBankAccountType() {
+        return bankAccountType;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setBankAccountType(final BankAccountType bankAccountType) {
+        this.bankAccountType = bankAccountType;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void onClickIncrease() {
+        increaseNumPlayer();
+        view.refreshNumPlayers(numPlayers, alreadyMinPlayers(), alreadyMaxPlayers());
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void onClickDecrease() {
+        decreaseNumPlayer();
+        view.refreshNumPlayers(numPlayers, alreadyMinPlayers(), alreadyMaxPlayers());
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void onClickRules() {
+        view.displayRules(getRules());
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void onClickSettings() {
+        view.displaySettingsMenu();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void onClickContinue() {
+        view.displaySetupMenu();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void onClickClassicMode() {
+        setBankAccountType(BankAccountType.CLASSIC);
+        view.refreshSettingsData(getBankAccountType());
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void onClickInfinityMode() {
+        setBankAccountType(BankAccountType.INFINITY);
+        view.refreshSettingsData(getBankAccountType());
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void onClickDone() {
+        view.displayMainMenu();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Configuration getConfiguration() {
+        return config;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void start() {
+        view = new MainMenuViewImpl(this);
+        if (Configuration.Builder.isDefault(config)) {
+            view.showInfoMessage(
+                "Default configuration",
+                "Error loading configuration file, default configuration will be used"
+            );
+        }
+    }
+
+    @Override
+    public void disposeMainMenu() {
+        view.disposeMainMenu();
+    }
+
+
+
+    /**
+     * Initialize all the game.
+     * @param playersSetup the players'data, create players according to this
+     * @throws IOException if the loading from {@code JSON} failed
+     * @throws UncheckedIOException if the parsing from {@code JSON} failed
+     * @throws NullPointerException if {@code id}, {@code name} or {@code color} are {@code null}
+     */
+    private void initGame(final Map<Color, String> playersSetup) throws IOException {
         final List<Player> players = new ArrayList<>();
         final List<Pawn> pawns = new ArrayList<>();
         final List<Tile> tiles = new ArrayList<>();
@@ -108,7 +236,7 @@ public final class MainMenuControllerImpl implements MainMenuController {
             final String name = p.getValue();
             final Color color = p.getKey();
             players.add(new ParkablePlayer(new PrisonablePlayer(PlayerImpl.of(id, name, color))));
-            accounts.add(createBankAccountByType(id, name));
+            accounts.add(bankAccountFactory.createBankAccountByType(id, bankAccountType));
             pawns.add(pawnFactory.createBasic(id, new PositionImpl(0), color));
             id++;
         }
@@ -150,70 +278,37 @@ public final class MainMenuControllerImpl implements MainMenuController {
         controllerGameManager.start();
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public int getNumPlayers() {
-        return numPlayers;
-    }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public boolean alreadyMinPlayers() {
+    private boolean alreadyMinPlayers() {
         return numPlayers == minPlayers;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public boolean alreadyMaxPlayers() {
+
+    private boolean alreadyMaxPlayers() {
         return numPlayers == maxPlayers;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public BankAccountType getBankAccountType() {
-        return bankAccountType;
+
+    private void decreaseNumPlayer() {
+        if (numPlayers > minPlayers) {
+            numPlayers--;
+        }
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void setBankAccountType(final BankAccountType bankAccountType) {
-        this.bankAccountType = bankAccountType;
+
+    private void increaseNumPlayer() {
+        if (numPlayers < maxPlayers) {
+            numPlayers++;
+        }
     }
 
+
     /**
-     * {@inheritDoc}
+     * Use a {@link UseFileTxt} for getting a {@link String} with all the rules of the game.
+     * @return a {@link String} with all the rules of the game
      */
-    @Override
-    public String getRules() {
+    private String getRules() {
         final UseFileTxt importRules = new UseFileTxtImpl();
         return importRules.loadTextResource(config.getRulesPath());
-    }
-
-
-    /**
-     * Use {@link BankAccountFactory} to create a new {@link BankAccount} istances according to the {@code bankAccountType}.
-     * @param id the {@link Identifiable} representing the {@link BankAccount}
-     * @param owner the name of the {@link Player} that owns the {@link BankAccount} 
-     * @return a new istance of {@link BankAccount} according to the {@code bankAccountType}
-     * @throws NullPointerException if {@code owner} is {@code null}
-     */
-    private BankAccount createBankAccountByType(final int id,
-                                                final String owner) {
-        Objects.requireNonNull(owner);
-        return switch (bankAccountType) {
-            case CLASSIC    -> bankAccountFactory.createWithCheck(id,
-                                                                  account -> account.getBalance() >= 0);
-            case INFINITY   -> bankAccountFactory.createSimple(id);
-        };
     }
 }

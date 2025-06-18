@@ -10,23 +10,36 @@ import javax.swing.JPanel;
 */
 public class PawnSquare extends JPanel {
     private static final long serialVersionUID = 1L; /**serial version. */
-    private static final int SIZE = 20; /**size. */
+    private static final int SIZE = 20; /**default size. */
     private final Color color; /**color. */
+
     /**
-    * constructor.
-    * @param color color
-    */
-    public PawnSquare(final Color color) {
+     * Create an element with custom color and size.
+     * @param color the custom color to apply
+     * @param size the custom size to apply
+     */
+    public PawnSquare(final Color color, final int size) {
         this.color = color;
-        setShapeSize();
+        setShapeSize(size);
         initOpaque(); // rende lo sfondo trasparente
     }
+
     /**
-    * set size.
+    * Create an element with custom color and default size.
+    * @param color the custom color to apply
     */
-    private void setShapeSize() {
-        super.setPreferredSize(new Dimension(SIZE, SIZE));
+    public PawnSquare(final Color color) {
+        this(color, SIZE);
     }
+
+    /**
+     * Set size.
+     * @param size the size to set
+     */
+    private void setShapeSize(final int size) {
+        super.setPreferredSize(new Dimension(size, size));
+    }
+
     /**
     * set opaque.
     */
@@ -41,6 +54,7 @@ public class PawnSquare extends JPanel {
         // Disegna un quadrato pieno che riempie tutto il pannello
         g.fillRect(0, 0, getWidth(), getHeight());
     }
+
     /**
     * get the color.
     * @return Color

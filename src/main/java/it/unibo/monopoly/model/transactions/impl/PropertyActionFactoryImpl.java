@@ -4,6 +4,7 @@ import it.unibo.monopoly.model.gameboard.api.Board;
 import it.unibo.monopoly.model.transactions.api.Bank;
 import it.unibo.monopoly.model.transactions.api.PropertyAction;
 import it.unibo.monopoly.model.transactions.api.PropertyActionFactory;
+import it.unibo.monopoly.model.transactions.api.PropertyActionsEnum;
 
 /**
  * Implementation of interface {@link PropertyActionFactory} that creates 
@@ -17,8 +18,8 @@ final class PropertyActionFactoryImpl implements PropertyActionFactory {
         return new PropertyAction() {
 
             @Override
-            public String getName() {
-                return "buy";
+            public PropertyActionsEnum getType() {
+                return PropertyActionsEnum.BUY;
             }
 
             @Override
@@ -38,8 +39,8 @@ final class PropertyActionFactoryImpl implements PropertyActionFactory {
         return new PropertyAction() {
 
             @Override
-            public String getName() {
-                return "sell";
+            public PropertyActionsEnum getType() {
+                return PropertyActionsEnum.SELL;
             }
 
             @Override
@@ -62,8 +63,8 @@ final class PropertyActionFactoryImpl implements PropertyActionFactory {
         return new PropertyAction() {
 
             @Override
-            public String getName() {
-                return "payRent";
+            public PropertyActionsEnum getType() {
+                return PropertyActionsEnum.PAYRENT;
             }
 
             @Override
@@ -74,6 +75,90 @@ final class PropertyActionFactoryImpl implements PropertyActionFactory {
             @Override
             public void executePropertyAction(final Board board, final Bank bank) {
                 bank.payRent(titleDeedName, currentPlayerId, diceThrow);
+            }
+        };
+    }
+
+    @Override
+    public PropertyAction createBuyHouse(final String titleDeedName) {
+        return new PropertyAction() {
+
+            @Override
+            public PropertyActionsEnum getType() {
+                return PropertyActionsEnum.BUYHOUSE;
+            }
+
+            @Override
+            public String getDescription() {
+                return "buy house for " + titleDeedName;
+            }
+
+            @Override
+            public void executePropertyAction(final Board board, final Bank bank) {
+                bank.buyHouse(titleDeedName);
+            }
+        };
+    }
+
+    @Override
+    public PropertyAction createBuyHotel(final String titleDeedName) {
+        return new PropertyAction() {
+
+            @Override
+            public PropertyActionsEnum getType() {
+                return PropertyActionsEnum.BUYHOTEL;
+            }
+
+            @Override
+            public String getDescription() {
+                return "buy hotel for " + titleDeedName;
+            }
+
+            @Override
+            public void executePropertyAction(final Board board, final Bank bank) {
+                bank.buyHotel(titleDeedName);
+            }
+        };
+    }
+
+    @Override
+    public PropertyAction createSellHouse(final String titleDeedName) {
+        return new PropertyAction() {
+
+            @Override
+            public PropertyActionsEnum getType() {
+                return PropertyActionsEnum.SELLHOUSE;
+            }
+
+            @Override
+            public String getDescription() {
+                return "sell house of " + titleDeedName;
+            }
+
+            @Override
+            public void executePropertyAction(final Board board, final Bank bank) {
+                bank.sellHouse(titleDeedName);
+            }
+        };
+    }
+
+    @Override
+    public PropertyAction createSellHotel(final String titleDeedName) {
+        return new PropertyAction() {
+
+            @Override
+            public PropertyActionsEnum getType() {
+                return PropertyActionsEnum.SELLHOTEL;
+            }
+
+            @Override
+            public String getDescription() {
+                return "sell hotel of " + titleDeedName;
+            }
+
+            @Override
+            public void executePropertyAction(final Board board, final Bank bank) {
+                bank.sellHotel(titleDeedName);
             }
         };
     }

@@ -1,5 +1,6 @@
 package it.unibo.monopoly.model.transactions.impl.bankaccount;
 
+import java.util.Objects;
 import java.util.function.Predicate;
 
 import it.unibo.monopoly.model.transactions.api.BankAccount;
@@ -28,7 +29,7 @@ public final class SimpleBankAccountImpl implements BankAccount {
         if (initialBalance < 0) {
             throw new IllegalArgumentException("The initial balance of the account cannot be negative");
         }
-
+        Objects.requireNonNull(canContinue);
         this.balance += initialBalance;
         this.id = id;
         this.canContinue = canContinue;

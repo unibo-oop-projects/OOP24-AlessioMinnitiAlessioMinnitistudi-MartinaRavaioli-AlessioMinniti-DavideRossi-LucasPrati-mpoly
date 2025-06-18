@@ -20,6 +20,7 @@ import it.unibo.monopoly.model.transactions.api.TitleDeed;
 import it.unibo.monopoly.model.transactions.impl.BankImpl;
 import it.unibo.monopoly.model.transactions.impl.BaseTitleDeed;
 import it.unibo.monopoly.model.transactions.impl.bankaccount.SimpleBankAccountImpl;
+import it.unibo.monopoly.model.transactions.impl.bankaccount.SimpleBankAccountImpl;
 import it.unibo.monopoly.model.turnation.api.Dice;
 import it.unibo.monopoly.model.turnation.api.Player;
 import it.unibo.monopoly.model.turnation.api.TurnationManager;
@@ -56,6 +57,15 @@ class TurnationManagerTest {
         new BaseTitleDeed(Group.GREEN, TITLE_DEED_NAME2, PROPERTY_SALE_PRICE, s -> s / 2, BASE_RENT)
     );
 
+    private final Set<BankAccount> accounts = Set.of(
+        new SimpleBankAccountImpl(ID_1, AMOUNT, e -> true),
+        new SimpleBankAccountImpl(ID_2, AMOUNT, e -> true)
+    );
+    private final Set<TitleDeed> deeds = Set.of(
+        new BaseTitleDeed(Group.GREEN, TITLE_DEED_NAME1, PROPERTY_SALE_PRICE, s -> s / 2, BASE_RENT),
+        new BaseTitleDeed(Group.GREEN, TITLE_DEED_NAME2, PROPERTY_SALE_PRICE, s -> s / 2, BASE_RENT)
+    );
+
     @BeforeEach
     void setUp() {
         final Bank bank = new BankImpl(accounts, deeds);
@@ -71,11 +81,11 @@ class TurnationManagerTest {
     @Test
     void testGetNextPlayerCycles() {
         try {
-            turnManager.moveByDices();
+            turnManager.throwDices();
             assertEquals(players.get(1).getID(), turnManager.getNextPlayer().getID(), "Next should be p2");
-            turnManager.moveByDices();
+            turnManager.throwDices();
             assertEquals(players.get(2).getID(), turnManager.getNextPlayer().getID(), "Next should be p3");
-            turnManager.moveByDices();
+            turnManager.throwDices();
             assertEquals(players.get(0).getID(), turnManager.getNextPlayer().getID(), "Cycle back to p1");
         } catch (final IllegalAccessException e) {
             LOGGER.error(ERROR, e);
@@ -86,7 +96,7 @@ class TurnationManagerTest {
     void testGetIdCurrPlayer() {
         try {
             assertEquals(1, turnManager.getIdCurrPlayer(), "Initial player ID should be 1");
-            turnManager.moveByDices();
+            turnManager.throwDices();
             turnManager.getNextPlayer();
             assertEquals(2, turnManager.getIdCurrPlayer(), "Next player ID should be 2");
         } catch (final IllegalAccessException e) {
@@ -112,7 +122,7 @@ class TurnationManagerTest {
     void testPlayerParkedCannotThrowDices() {
         try {
             players.get(0).park();
-            final var result = turnManager.moveByDices();
+            final var result = turnManager.throwDices();
             assertEquals("the player can't throw dices because is parked", result.getRight());
         } catch (final IllegalAccessException e) {
             LOGGER.error(ERROR, e);
@@ -122,8 +132,8 @@ class TurnationManagerTest {
 
     @Test
     void testThrowDicesTwiceThrowsException() throws IllegalAccessException {
-        turnManager.moveByDices(); // primo lancio OK
-        assertThrows(IllegalAccessException.class, turnManager :: moveByDices);
+        turnManager.throwDices(); // primo lancio OK
+        assertThrows(IllegalAccessException.class, turnManager :: throwDices);
     }
 
     @Test
@@ -137,7 +147,7 @@ class TurnationManagerTest {
         try {
             players.get(0).putInPrison();
             assertTrue(turnManager.isCurrentPlayerInPrison(), "Player should be in prison");
-            final var result = turnManager.moveByDices();
+            final var result = turnManager.throwDices();
             assertTrue(result.getRight().contains("you are still in prison") 
                         || result.getRight().contains("you escaped the prison"));
         } catch (final IllegalAccessException e) {
@@ -150,7 +160,7 @@ class TurnationManagerTest {
         try {
             players.get(0).putInPrison();
             final int turnsLeft = turnManager.currentPlayerTurnsLeftInPrison();
-            turnManager.moveByDices();  // Should decrement turns
+            turnManager.throwDices();  // Should decrement turns
             assertEquals(turnsLeft - 1, 
                         turnManager.currentPlayerTurnsLeftInPrison(),
                         "Turns left in prison should decrease after failed attempt");

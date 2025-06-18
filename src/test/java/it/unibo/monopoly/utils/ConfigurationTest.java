@@ -25,8 +25,7 @@ class ConfigurationTest {
     private static final int VALID_NUM_DICE = 2;
     private static final int VALID_SIDES_PER_DIE = 6;
     private static final String VALID_FONT = "SansSerif";
-    private static final int VALID_BIG_FONT = 30;
-    private static final int VALID_SMALL_FONT = 18;
+    private static final int VALID_FONT_SIZE = 18;
     private static final int VALID_STARTER_BALANCE = 1500;
     private static final String VALID_RULES_PATH = "debug/rules/debug_rules.txt";
     private static final String VALID_CARDS_PATH = "debug/cards/debug_cards.json";
@@ -58,8 +57,7 @@ class ConfigurationTest {
                 .withNumDice(VALID_NUM_DICE)
                 .withSidesPerDie(VALID_SIDES_PER_DIE)
                 .withFontName(VALID_FONT)
-                .withBigFont(VALID_BIG_FONT)
-                .withSmallFont(VALID_SMALL_FONT)
+                .withFontSize(VALID_FONT_SIZE)
                 .withInitBalance(VALID_STARTER_BALANCE)
                 .withRulesPath(VALID_RULES_PATH)
                 .withCardsPath(VALID_CARDS_PATH)
@@ -77,8 +75,7 @@ class ConfigurationTest {
         assertEquals(VALID_NUM_DICE, config.getNumDice());
         assertEquals(VALID_SIDES_PER_DIE, config.getSidesPerDie());
         assertEquals(VALID_FONT, config.getFontName());
-        assertEquals(VALID_BIG_FONT, config.getBigFont());
-        assertEquals(VALID_SMALL_FONT, config.getSmallFont());
+        assertEquals(VALID_FONT_SIZE, config.getFontSize());
         assertEquals(VALID_STARTER_BALANCE, config.getInitBalance());
         assertEquals(VALID_RULES_PATH, config.getRulesPath());
         assertEquals(VALID_CARDS_PATH, config.getCardsPath());
@@ -141,10 +138,10 @@ class ConfigurationTest {
     }
 
     @Test
-    void configurationInconsistentIfSmallFontBiggerThanBigFont() {
-        final Configuration config = builder.withSmallFont(VALID_BIG_FONT + 1).withBigFont(VALID_BIG_FONT).build();
+    void configurationInconsistentIfNegativeFontSize() {
+        final Configuration config = builder.withFontSize(-VALID_FONT_SIZE).build();
         assertFalse(config.isConsistent(),
-                    MESSAGE_INVALID_CONFIG + "smallFont > bigFont");
+                    MESSAGE_INVALID_CONFIG + "smallFont <= 0");
     }
 
     @Test
@@ -162,7 +159,7 @@ class ConfigurationTest {
     }
 
     @Test
-    void configurationInconsistentIfTCardsFileIsNull() {
+    void configurationInconsistentIfCardsFileIsNull() {
         final Configuration config = builder.withCardsPath(null).build();
         assertFalse(config.isConsistent(),
                     MESSAGE_INVALID_CONFIG + "cardsPath cannot be null");

@@ -13,7 +13,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
 
-import it.unibo.monopoly.utils.impl.Configuration;
 import it.unibo.monopoly.utils.impl.GuiUtils;
 
 
@@ -26,7 +25,7 @@ public final class RulesWindowView extends JDialog {
 
     private static final String TITLE_WINDOW = "Monopoly - Rules";
     private static final String TITLE_TEXT = "Rules";
-    private static final String EXIT_TEXT = "Exit";
+    private static final String DONE_TEXT = "Done";
 
     private static final int TOP_BORDER = 10;
     private static final int BOTTOM_BORDER = 10;
@@ -35,15 +34,10 @@ public final class RulesWindowView extends JDialog {
 
     /**
      * Creates a view that displays the game rules, importing them from a file.
-     * <p>
-     * The behavior of the view adapts to the provided {@link Configuration},
-     * which defines font size and type
-     *
      * @param parent the parent frame that owns this dialog and will be blocked while the dialog is visible
-     * @param config the configuration object containing the base settings for the game
      * @param rules a {@link String} with the rules of the game, to show
      */
-    public RulesWindowView(final Frame parent, final Configuration config, final String rules) {
+    public RulesWindowView(final Frame parent, final String rules) {
         final var size = GuiUtils.getDimensionWindow();
         GuiUtils.configureWindow(this,
                                  (int) size.getWidth(),
@@ -56,7 +50,6 @@ public final class RulesWindowView extends JDialog {
         add(mainPanel);
 
         final JLabel titleLabel = new JLabel(TITLE_TEXT, SwingConstants.CENTER);
-        titleLabel.setFont(GuiUtils.getBigFontFromConfiguration(config));
         titleLabel.setForeground(Color.RED);
 
         // Create a text area for display all the rules
@@ -72,12 +65,12 @@ public final class RulesWindowView extends JDialog {
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 
         // Create an exit button for the window
-        final JButton exitButton = new JButton(EXIT_TEXT);
-        exitButton.addActionListener(e -> dispose());
+        final JButton doneButton = new JButton(DONE_TEXT);
+        doneButton.addActionListener(e -> dispose());
 
         mainPanel.add(titleLabel, BorderLayout.NORTH);
         mainPanel.add(scrollPane, BorderLayout.CENTER);
-        mainPanel.add(exitButton, BorderLayout.SOUTH);
+        mainPanel.add(doneButton, BorderLayout.SOUTH);
 
         GuiUtils.refresh(this);
     }

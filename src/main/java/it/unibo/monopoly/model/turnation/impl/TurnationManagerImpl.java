@@ -100,9 +100,6 @@ public class TurnationManagerImpl implements TurnationManager {
         if (canPassTurn()) {
             this.currPlayer = players.next();
             this.diceThrown = false;
-            if (isCurrentPlayerParked()) {
-                passedParkTurn();
-            }
             return createCurrPlayerCopy();
         }
         throw new IllegalArgumentException("the player can't pass the turn");
@@ -178,7 +175,7 @@ public class TurnationManagerImpl implements TurnationManager {
     }
 
     @Override
-    public final Pair<Collection<Integer>, String> moveByDices() throws IllegalAccessException { 
+    public final Pair<Collection<Integer>, String> throwDices() throws IllegalAccessException { 
         if (!hasCurrPlayerThrownDices()) {
             if (canThrowDices()) {
                 this.diceThrown = true;
@@ -224,6 +221,7 @@ public class TurnationManagerImpl implements TurnationManager {
             if (!isCurrentPlayerParked()) {
                 return hasCurrPlayerThrownDices();
             } else {
+                passedParkTurn();
                 return true;
             }
         }
@@ -275,7 +273,6 @@ public class TurnationManagerImpl implements TurnationManager {
     @Override
     public final void deletePlayer(final Player player) {
         // final List<Player> list = this.players.toList();
-
         // list.removeIf(p -> p.getID().equals(player.getID()));
         // getNextPlayer();
         // this.players.clear();
@@ -285,14 +282,14 @@ public class TurnationManagerImpl implements TurnationManager {
         // }
         final List<Player> filtered = this.players.toList().stream()
                                             .filter(p -> !p.getID().equals(player.getID()))
-                                            .toList(); // Java 16+ preferibile, altrimenti collect(Collectors.toList())
+                                            .toList();
+        getNextPlayer();
         this.players.clear();
-
+        
         for (final Player p : filtered) {
             this.players.add(p);
         }
-
-        getNextPlayer();
+        this.players.initializeCurrPlayer(this.currPlayer.getID());
         this.bankState.deletePlayer(player);
     }
 
@@ -338,7 +335,7 @@ public class TurnationManagerImpl implements TurnationManager {
             return "you escaped the prison";
         } else {
             this.currPlayer.decreaseTurnsInPrison();
-            return "you are still in prison, you have " 
+            return "you are still in prison, you have "
                     + currentPlayerTurnsLeftInPrison()
                     + " turns left in prison and the dices weren't kind with you.";
         }

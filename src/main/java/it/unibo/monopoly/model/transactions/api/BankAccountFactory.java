@@ -1,8 +1,5 @@
 package it.unibo.monopoly.model.transactions.api;
 
-import java.util.function.Predicate;
-
-import it.unibo.monopoly.model.turnation.api.Player;
 import it.unibo.monopoly.utils.api.Identifiable;
 
 /**
@@ -11,21 +8,11 @@ import it.unibo.monopoly.utils.api.Identifiable;
 public interface BankAccountFactory {
 
     /**
-     * Creates a {@link BankAccount} with an {@code initialBalance} and an {@code "always true"} check.
-     * 
-     * @param id the {@link Identifiable} representing the {@link Player} that owns the {@link BankAccount} 
-     * @return a new {@link BankAccount} with an {@code initialBalance}
+     * Creates a {@link BankAccount} istances according to the {@link BankAccountType}.
+     * @param id the {@link Identifiable} representing the {@link BankAccount}
+     * @param type the type to create, according to {@link BankAccountType}
+     * @return a new istance of {@link BankAccount} according to the {@code bankAccountType}
      */
-    BankAccount createSimple(int id);
-
-    /**
-     * Creates a {@link BankAccount} with a provided {@code initialBalance} and a provided {@code check}.
-     * 
-     * @param id the {@link Identifiable} representing the {@link Player} that owns the {@link BankAccount}
-     * @param check strategy to determine if the {@link BankAccount} can still be used to play based on its state
-     * @return a new {@link BankAccount} with an {@code initialBalance} and a provided {@code check}
-     */
-    BankAccount createWithCheck(int id, Predicate<BankAccount> check);
-
+    BankAccount createBankAccountByType(int id, BankAccountType type);
 
 }

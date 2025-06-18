@@ -37,4 +37,9 @@ public interface PlayerIterator extends Iterator<Player> {
      * @return bool
      */
     boolean contains(Player p);
+    /**
+     * set the current player.
+     * @param p
+     */
+    void initializeCurrPlayer(int id);
 }
