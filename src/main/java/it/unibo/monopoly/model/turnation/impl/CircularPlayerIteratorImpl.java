@@ -26,8 +26,8 @@ public class CircularPlayerIteratorImpl implements PlayerIterator {
     }
 
     @Override
-    public final Player getNext() {
-        if (hasMore()) {
+    public final Player next() {
+        if (hasNext()) {
             this.currPosition = (this.currPosition + 1) % this.elems.size();
             this.currPlayer = this.elems.get(this.currPosition);
             return createCurrPlayerCopy();
@@ -105,13 +105,14 @@ public class CircularPlayerIteratorImpl implements PlayerIterator {
     }
 
     @Override
-    public final boolean hasMore() {
+    public final boolean hasNext() {
         return !this.elems.isEmpty();
     }
     /**
      * add the player.
      * @param p player
      */
+    @Override
     public void add(final Player p) {
         this.elems.add(p);
     }
@@ -119,6 +120,7 @@ public class CircularPlayerIteratorImpl implements PlayerIterator {
     * remove the player.
     * @param p player
     */
+    @Override
     public void remove(final Player p) {
         this.elems.remove(p);
     }
@@ -127,6 +129,7 @@ public class CircularPlayerIteratorImpl implements PlayerIterator {
      * @param p player
      * @return bool
      */
+    @Override
     public boolean contains(final Player p) {
         return this.elems.contains(p);
     }
@@ -134,6 +137,7 @@ public class CircularPlayerIteratorImpl implements PlayerIterator {
      * convert the circular iterator into a list.
      * @return List of Players
      */
+    @Override
     public List<Player> toList() {
         return Collections.unmodifiableList(this.elems);
     }
@@ -145,6 +149,7 @@ public class CircularPlayerIteratorImpl implements PlayerIterator {
     /**
      * clear the iterator.
      */
+    @Override
     public void clear() {
         this.elems.clear();
     }

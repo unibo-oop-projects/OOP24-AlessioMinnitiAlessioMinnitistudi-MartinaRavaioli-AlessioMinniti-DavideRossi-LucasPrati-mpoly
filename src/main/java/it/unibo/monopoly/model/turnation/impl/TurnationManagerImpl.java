@@ -11,6 +11,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.monopoly.model.transactions.api.BankState;
 import it.unibo.monopoly.model.turnation.api.Dice;
 import it.unibo.monopoly.model.turnation.api.Player;
+import it.unibo.monopoly.model.turnation.api.PlayerIterator;
 import it.unibo.monopoly.model.turnation.api.TurnationManager;
 
 /**
@@ -18,7 +19,7 @@ import it.unibo.monopoly.model.turnation.api.TurnationManager;
 */
 public class TurnationManagerImpl implements TurnationManager {
     //private CircularLinkedList<Player> players; /**list of players. */
-    private CircularPlayerIteratorImpl players;
+    private PlayerIterator players;
     private Player currPlayer; /**current player. */
     private Dice dice; /**dice. */
     private BankState bankState; /**bankState to communicate with the bank. */
@@ -97,7 +98,7 @@ public class TurnationManagerImpl implements TurnationManager {
     @Override
     public final Player getNextPlayer() { 
         if (canPassTurn()) {
-            this.currPlayer = players.getNext();
+            this.currPlayer = players.next();
             this.diceThrown = false;
             if (isCurrentPlayerParked()) {
                 passedParkTurn();
