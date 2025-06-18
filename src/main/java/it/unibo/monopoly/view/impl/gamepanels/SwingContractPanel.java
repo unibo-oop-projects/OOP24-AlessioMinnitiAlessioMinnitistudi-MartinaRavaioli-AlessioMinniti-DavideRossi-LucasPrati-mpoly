@@ -4,7 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
@@ -35,7 +34,6 @@ import it.unibo.monopoly.view.impl.PawnSquare;
 final class SwingContractPanel extends SwingAbstractJPanel implements ContractPanel {
 
     private static final long serialVersionUID = 43L;
-    private static final int BIG_FONT_SIZE = 15;
     private static final int N_ROWS = 5;
     private static final int INFO_PANEL_PROPORTION = 5;
     private static final int CONTRACT_PH_WIDTH = 200;
@@ -70,7 +68,6 @@ final class SwingContractPanel extends SwingAbstractJPanel implements ContractPa
 
         //name label
         final JLabel name = new JLabel(deed.getName(), SwingConstants.CENTER);
-        name.setFont(new Font(getFont().getName(), Font.BOLD, BIG_FONT_SIZE));
 
         //group information
         final JPanel groupPanel = new JPanel();
@@ -87,6 +84,7 @@ final class SwingContractPanel extends SwingAbstractJPanel implements ContractPa
         final JLabel ownerDesc = new JLabel("Owner: ");
         final JLabel ownerInfo = new JLabel(deed.isOwned() ? Integer.toString(deed.getOwnerId()) : "NO OWNER", 
                                             SwingConstants.RIGHT);
+                                            
         ownerPanel.add(ownerDesc, BorderLayout.WEST);
         ownerPanel.add(ownerInfo, BorderLayout.CENTER);
 
@@ -122,7 +120,6 @@ final class SwingContractPanel extends SwingAbstractJPanel implements ContractPa
 
         //name label
         final JLabel name = new JLabel(tile.getName(), SwingConstants.CENTER);
-        name.setFont(new Font(getFont().getName(), Font.BOLD, BIG_FONT_SIZE));
 
         //group information
         final JPanel groupPanel = new JPanel();

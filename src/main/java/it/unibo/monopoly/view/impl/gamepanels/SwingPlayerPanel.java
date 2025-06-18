@@ -52,7 +52,9 @@ final class SwingPlayerPanel extends SwingAbstractJPanel implements PlayerPanel 
         final var nameLabel = new JLabel(pl.getName());
         nameLabel.setForeground(pl.getColor());
         this.add(createRow(userNameJLabel, nameLabel));
-        this.add(createRow(orderJLabel, new JLabel(Integer.toString(pl.getID()))));
+        final var idLabel = new JLabel(Integer.toString(pl.getID()));
+        idLabel.setForeground(pl.getColor());
+        this.add(createRow(orderJLabel, idLabel));
         this.add(createRow(prisonStateJLabel, new JLabel(pl.isInPrison() ? "Yes" : "No")));
         this.add(createRow(prisonTurnsJLabel, new JLabel(Integer.toString(pl.turnLeftInPrison()))));
         this.add(createRow(parkingStateJLabel, new JLabel(pl.isParked() ? "Yes" : "No")));
