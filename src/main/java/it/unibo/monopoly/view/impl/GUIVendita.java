@@ -156,7 +156,8 @@ public final class GUIVendita extends JDialog {
             if (logic.sellProperty(selectedDeed, bank)) {
                 statePayment = true;
 
-                parentView.callClearAll();
+                parentView.callClearPanel(selectedDeed.getName());
+                parentView.displayPlayerInfo(player, bank.getBankAccount(player.getID()));
                 this.setNullValues(player, bank);
                 sellProperty.setEnabled(false);
 
@@ -196,6 +197,7 @@ public final class GUIVendita extends JDialog {
                 statePayment = true;
 
                 this.setValues(selectedDeed, player, bank, board);
+                parentView.displayPlayerInfo(player, bank.getBankAccount(player.getID()));
 
                 if (selectedBuildableProberty.getNHouses() == 0) {
                     sellHouse.setEnabled(false);
@@ -229,6 +231,7 @@ public final class GUIVendita extends JDialog {
                 statePayment = true;
 
                 this.setValues(selectedDeed, player, bank, board);
+                parentView.displayPlayerInfo(player, bank.getBankAccount(player.getID()));
 
                 if (selectedBuildableProberty.hasHotel()) {
                     sellHotel.setEnabled(false);

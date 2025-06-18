@@ -178,7 +178,7 @@ public final class MainViewImpl implements MainGameView {
             this,
             this.mainGameFrame
         );
-        this.displayPlayerInfo(player, bank.getBankAccount(player.getID()));
+        //this.displayPlayerInfo(player, bank.getBankAccount(player.getID()));
     }
 
     @Override
