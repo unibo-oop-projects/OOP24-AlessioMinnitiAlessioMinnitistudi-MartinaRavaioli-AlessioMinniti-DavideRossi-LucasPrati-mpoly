@@ -14,14 +14,14 @@ import java.util.Optional;
  */
 public final class CardDTO {
 
-    private final Optional<String> name;
+    private final String name;
     private final int position;
     private final String type;
 
-    private final Optional<String> effect;
-    private final Optional<Group> group;
-    private final Optional<Integer> cost;
-    private final Optional<Integer> baseRent;
+    private final String effect;
+    private final Group group;
+    private final Integer cost;
+    private final Integer baseRent;
 
     /**
      * Create a Data Transfert Object for deserialize the file JSON.
@@ -43,13 +43,13 @@ public final class CardDTO {
         @JsonProperty("cost") final Optional<Integer> cost,
         @JsonProperty("baseRent") final Optional<Integer> baseRent
     ) {
-        this.name = name;
+        this.name = name.orElse(null);
         this.position = position;
         this.type = type;
-        this.effect = effect;
-        this.group = group;
-        this.cost = cost;
-        this.baseRent = baseRent;
+        this.effect = effect.orElse(null);
+        this.group = group.orElse(null);
+        this.cost = cost.orElse(null);
+        this.baseRent = baseRent.orElse(null);
     }
 
     /**
@@ -57,7 +57,7 @@ public final class CardDTO {
      * @return the an {@link Optional} <{@link String}> with represents the name of the card
      */
     public Optional<String> getName() {
-        return name;
+        return Optional.ofNullable(name);
     }
 
     /**
@@ -81,7 +81,7 @@ public final class CardDTO {
      * @return an {@link Optional} <{@link String}> with the card's effect
      */
     public Optional<String> getEffect() {
-        return effect;
+        return Optional.ofNullable(effect);
     }
 
     /**
@@ -89,7 +89,7 @@ public final class CardDTO {
      * @return an {@link Optional} value of the card's {@link Group}
      */
     public Optional<Group> getGroup() {
-        return group;
+        return Optional.ofNullable(group);
     }
 
     /**
@@ -97,7 +97,7 @@ public final class CardDTO {
      * @return an {@link Optional} <{@link Integer}> with represents the card's price
      */
     public Optional<Integer> getCost() {
-        return cost;
+        return Optional.ofNullable(cost);
     }
 
     /**
@@ -105,6 +105,6 @@ public final class CardDTO {
      * @return an {@link Optional} <{@link Integer}> which represents the card's initial amount of rent
      */
     public Optional<Integer> getBaseRent() {
-        return baseRent;
+        return Optional.ofNullable(baseRent);
     }
 }
