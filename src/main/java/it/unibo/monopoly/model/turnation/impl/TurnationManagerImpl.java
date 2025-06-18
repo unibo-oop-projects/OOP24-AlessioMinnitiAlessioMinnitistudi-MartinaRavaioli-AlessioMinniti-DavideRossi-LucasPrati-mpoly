@@ -270,14 +270,15 @@ public class TurnationManagerImpl implements TurnationManager {
     public final void deletePlayer(final Player player) {
         final List<Player> list = this.players.toList();
 
+
         list.removeIf(p -> p.getID().equals(player.getID()));
+        this.bankState.deletePlayer(player);
         getNextPlayer();
         this.players.clear();
 
         for (final Player p : list) {
             this.players.addNode(p);
-        }
-        this.bankState.deletePlayer(player);
+        }        
     }
 
     @Override

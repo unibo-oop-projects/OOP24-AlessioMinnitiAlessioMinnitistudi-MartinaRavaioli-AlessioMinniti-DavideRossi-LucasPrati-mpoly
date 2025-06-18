@@ -1,0 +1,23 @@
+\subsection{Alessio Minniti}
+\subsection{Turnation Manager}
+Il \textbf{Turnation Manager} ha il compito di gestire lo stato dei \textbf{player} e i loro turni, 
+infatti permette e controlla il lancio dei dadi, la terminazione del turno, gli stati di prison e park del player e lo stato del ranking dei players.
+
+
+Per farlo il Turnation Manager usa una \textbf{lista circolare di player} usata per ricavarne il \textbf{current player} per capire chi deve eseguire il turno e
+quando la lista arriva all'ultimo player ricomincia dall'inizio senza però contenere più i player che sono morti nel turno precedente.
+Inoltre ha un oggetto \textbf{Dice} che all'interno possiede una serie di random in modo che si possano lanciare 
+un numero a piacere di dadi da un numero di facce a piacere che viene definito alla creazione. 
+Infine utilizza il \textbf{BankState} per controllare che un player abbia fatto tutte le azioni di compravendita obbligatorie prima di terminare il turno.
+Inoltre bankState viene utilizzato dal Turnation Manager anche per determinare il ranking finale e il vincitore alla fine del gioco.
+
+PROBLEMA:
+Il Turnation Manager per gestire i turni dei player ha bisogno di una struttura dati che passa sempre il prossimo player in modo ciclico, 
+quindi una volta che arriva all'ultimo player deve ricominciare ad assegnare i turni dal primo player, tuttavia di base non c'è una lista circolare 
+e le librerie esterne non ne forninvano una adeguata
+
+SOLUZIONE:
+Per risolvere questo problema ho utilizzato il pattern \textbf{iterator}, andando a creare un' interfaccia \textbf{PlayerIterator} che estende iterator 
+e serve a definire le azioni cardine del circular player iterator che oltre ad avere i metodi di un iterator normale possiede anche funzioni aggiuntive per gestire la lista di player,
+l'implementazione del player iterator \textbf{Circular Player Iterator} wrappa la lista di player e itera la lista ritornando sempre il prossimo player 
+che deve svolgere il turno in maniera ciclica, quindi quando vede che è arrivato all'ultimo player ricomincia ad iterare la lista dall'inizio

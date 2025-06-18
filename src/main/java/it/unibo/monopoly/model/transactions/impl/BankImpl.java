@@ -337,9 +337,12 @@ public final class BankImpl implements Bank {
 
         @Override
         public void deletePlayer(final Player pl) {
-            getTitleDeedsByOwner(pl.getID())
-            .stream()
-            .forEach(TitleDeed::removeOwner);
+            titleDeeds.values()
+            .forEach(deed -> {
+                if (deed.isOwned() && deed.getOwnerId() == pl.getID()) {
+                    deed.removeOwner();
+                }
+            });
             accounts.remove(pl.getID());
         }
     }
