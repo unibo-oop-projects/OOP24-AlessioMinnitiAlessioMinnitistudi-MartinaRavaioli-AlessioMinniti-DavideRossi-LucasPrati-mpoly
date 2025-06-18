@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import it.unibo.monopoly.controller.api.MainMenuController;
@@ -36,7 +35,6 @@ import it.unibo.monopoly.model.turnation.impl.PlayerImpl;
 import it.unibo.monopoly.model.turnation.impl.PositionImpl;
 import it.unibo.monopoly.model.turnation.impl.PrisonablePlayer;
 import it.unibo.monopoly.model.turnation.impl.TurnationManagerImpl;
-import it.unibo.monopoly.utils.api.Identifiable;
 import it.unibo.monopoly.utils.api.UseFileJson;
 import it.unibo.monopoly.utils.api.UseFileTxt;
 import it.unibo.monopoly.utils.impl.Configuration;
@@ -238,7 +236,7 @@ public final class MainMenuControllerImpl implements MainMenuController {
             final String name = p.getValue();
             final Color color = p.getKey();
             players.add(new ParkablePlayer(new PrisonablePlayer(PlayerImpl.of(id, name, color))));
-            accounts.add(createBankAccountByType(id, name));
+            accounts.add(bankAccountFactory.createBankAccountByType(id, bankAccountType));
             pawns.add(pawnFactory.createBasic(id, new PositionImpl(0), color));
             id++;
         }
@@ -312,24 +310,5 @@ public final class MainMenuControllerImpl implements MainMenuController {
     private String getRules() {
         final UseFileTxt importRules = new UseFileTxtImpl();
         return importRules.loadTextResource(config.getRulesPath());
-    }
-
-    /**
-     * Use {@link BankAccountFactory} to create a new {@link BankAccount} istances according to the {@code bankAccountType}.
-     * @param id the {@link Identifiable} representing the {@link BankAccount}
-     * @param owner the name of the {@link Player} that owns the {@link BankAccount} 
-     * @return a new istance of {@link BankAccount} according to the {@code bankAccountType}
-     * @throws NullPointerException if {@code owner} is {@code null}
-     */
-    private BankAccount createBankAccountByType(final int id,
-                                                final String owner) {
-        Objects.requireNonNull(owner);
-        return switch (bankAccountType) {
-            case CLASSIC    -> bankAccountFactory.createWithCheck(
-                                    id,
-                                    account -> account.getBalance() >= 0
-                                );
-            case INFINITY   -> bankAccountFactory.createSimple(id);
-        };
     }
 }
