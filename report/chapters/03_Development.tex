@@ -18,8 +18,23 @@ Per quanto riguarda la parte di Board con le caselle per le proprietà, le casel
     \item \textbf{SpecialPropertyTest}: si è verificato il corretto funzionamento delle proprietà speciali e la corretta modifica dell' affito.
     \item \textbf{BoardTest}: Test per il corretto funzionamento della board. Viene controllata la gestione delle pawns e delle tiles sia property che special, inoltre viene testato anche la gestione per l'aggiunta delle case e degli alberghi nelle proprietà.
     \item \textbf{PropertyTest}: Test per controllare il funzionamento delle proprietà. Controlla che solo le proprietà giuste possano costruire case e hotel e che possano farlo solo sottostando a determinate condizioni.
+    \item \textbf{PlayerImplTest}: si è verificata la corretta creazione dei giocatori, la gestione delle eccezioni runtime, tra le quali l'utilizzo di uno username di default in caso di username vuoto al momento della creazione della partita.
 \end{itemize}
 Per quanto riguarda la parte di gestione dei turni e dei player sono stati effettuati i seguenti test:\newline
 \begin{itemize}
     \item \textbf{TurnationManagerTest}: Test per il corretto funzionamento della gestione del turnation manager, viene testato il corretto funzionamento dei turni verificando la successione dei player e del controllo dei loro stati (park, prison)
 \end{itemize}
+Per quanto riguarda la parte di caricamento delle risorse, sono stati effettuati i seguenti test:\newline
+\begin{itemize}
+    \item \textbf{UseFileTxtImplTest}: si è verificata la corretta ricerca dei file di testo e la corretta gestione delle eccezioni e la segnalazioni di eventuali errori.
+    \item \textbf{UseFileJsonImplTest}: si è verificata la corretta ricerca del file delle tessere di gioco e la corretta deserializzazione in un DTO temporaneo.
+    \item \textbf{UseConfigurationFileImplTest}: è stato verificato il corretto caricamento di una risorsa di configurazione attendibile e priva di errori. Si è verificato anche il fall-back alla configurazione di default in caso di errori durante il caricamento della risorsa.
+    \item \textbf{ConfigurationTest}: sono stati verificati tutti i parametri della configurazione e i relativi casi limite. Sono state anche verificate configurazioni inconsistenti e la corretta validazione di una configurazione valida.
+\end{itemize}
+Per quanto riguarda la creazione dei conti correnti e la creazione di tessere e contratti di proprietà e l'utilizzo di un DTO per la deserializzazione sono stati effettuati i seguenti test:\newline
+\begin{itemize}
+    \item \textbf{BankAccountFactoryImplTest}: è stato verificato il corretto funzionamento della factory per la creazione dei conti correnti in base alla modalità di gioco selezionata
+    \item \textbf{CardFactoryImplTest}: è stato verificato il corretto caricamento del file Json dopo la deserializzazione, verificando le tessere e i contratti di proprietà attesi e quelli generati.
+    \item \textbf{CardDTOTest}: sono stati verificati i comportamenti della libreria jackson per la deserializzazione. sono stati utilizzati elementi json di esempio ed è stato verificata la corretta segnalazione di eventuali valori mancanti.
+\end{itemize}
+
