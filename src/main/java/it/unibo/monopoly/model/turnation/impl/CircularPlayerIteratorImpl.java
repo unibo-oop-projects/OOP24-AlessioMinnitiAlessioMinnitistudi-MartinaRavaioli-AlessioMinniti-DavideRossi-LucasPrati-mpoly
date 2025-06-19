@@ -122,7 +122,7 @@ public class CircularPlayerIteratorImpl implements PlayerIterator {
     */
     @Override
     public void remove(final Player p) {
-        int id = p.getID();
+        final int id = p.getID();
         if (this.currPlayer.getID().equals(id)) {
             next();
         }
@@ -161,8 +161,8 @@ public class CircularPlayerIteratorImpl implements PlayerIterator {
     }
 
     @Override
-    public void initializeCurrPlayer(int id) {
-        for (Player p : this.elems) {
+    public final void initializeCurrPlayer(final int id) {
+        for (final Player p : this.elems) {
             if (p.getID() == id) {
                 this.currPlayer = p;
                 this.currPosition = this.elems.indexOf(this.currPlayer);

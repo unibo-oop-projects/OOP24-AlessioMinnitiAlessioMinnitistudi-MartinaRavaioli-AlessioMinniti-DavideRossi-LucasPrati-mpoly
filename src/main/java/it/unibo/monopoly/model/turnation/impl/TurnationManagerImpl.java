@@ -289,12 +289,11 @@ public class TurnationManagerImpl implements TurnationManager {
         //getNextPlayer();
         //this.players.initializeCurrPlayer(this.currPlayer.getID());
         // this.players.clear();
-        
+
         // for (final Player p : filtered) {
         //     this.players.add(p);
         // }
-        
-        
+
     }
 
     @Override

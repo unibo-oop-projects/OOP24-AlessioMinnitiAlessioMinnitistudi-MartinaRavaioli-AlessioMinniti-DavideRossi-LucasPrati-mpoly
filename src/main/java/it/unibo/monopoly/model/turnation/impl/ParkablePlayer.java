@@ -2,7 +2,6 @@ package it.unibo.monopoly.model.turnation.impl;
 
 import java.awt.Color;
 import java.util.Collection;
-import java.util.Objects;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.monopoly.model.turnation.api.Parkable;
@@ -87,29 +86,4 @@ public final class ParkablePlayer implements Parkable, Player {
         this.in = in - 1;
     }
 
-    @Override
-    public int hashCode() {
-        int hash = 3;
-        hash = 73 * hash + this.in;
-        hash = 73 * hash + Objects.hashCode(this.pl);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final ParkablePlayer other = (ParkablePlayer) obj;
-        if (this.in != other.in) {
-            return false;
-        }
-        return Objects.equals(this.pl, other.pl);
-    }
 }

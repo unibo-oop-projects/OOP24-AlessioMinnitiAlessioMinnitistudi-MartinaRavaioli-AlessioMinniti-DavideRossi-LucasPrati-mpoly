@@ -18,9 +18,8 @@ import it.unibo.monopoly.model.transactions.api.Bank;
 import it.unibo.monopoly.model.transactions.api.BankAccount;
 import it.unibo.monopoly.model.transactions.api.TitleDeed;
 import it.unibo.monopoly.model.transactions.impl.BankImpl;
-import it.unibo.monopoly.model.transactions.impl.BaseTitleDeed;
 import it.unibo.monopoly.model.transactions.impl.bankaccount.SimpleBankAccountImpl;
-import it.unibo.monopoly.model.transactions.impl.bankaccount.SimpleBankAccountImpl;
+import it.unibo.monopoly.model.transactions.impl.titledeed.BaseTitleDeed;
 import it.unibo.monopoly.model.turnation.api.Dice;
 import it.unibo.monopoly.model.turnation.api.Player;
 import it.unibo.monopoly.model.turnation.api.TurnationManager;
@@ -47,15 +46,6 @@ class TurnationManagerTest {
         new ParkablePlayer(new PrisonablePlayer(PlayerImpl.of(2, "b", Color.GREEN))),
         new ParkablePlayer(new PrisonablePlayer(PlayerImpl.of(3, "c", Color.BLUE)))
     ));
-
-    private final Set<BankAccount> accounts = Set.of(
-        new SimpleBankAccountImpl(ID_1, AMOUNT, e -> true),
-        new SimpleBankAccountImpl(ID_2, AMOUNT, e -> true)
-    );
-    private final Set<TitleDeed> deeds = Set.of(
-        new BaseTitleDeed(Group.GREEN, TITLE_DEED_NAME1, PROPERTY_SALE_PRICE, s -> s / 2, BASE_RENT),
-        new BaseTitleDeed(Group.GREEN, TITLE_DEED_NAME2, PROPERTY_SALE_PRICE, s -> s / 2, BASE_RENT)
-    );
 
     private final Set<BankAccount> accounts = Set.of(
         new SimpleBankAccountImpl(ID_1, AMOUNT, e -> true),
