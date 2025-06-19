@@ -1,6 +1,158 @@
 \appendix
 \chapter{Guida utente}
-
+\section{MONOPOLY \- GUIDA UTENTE}
+\subsection{INTRODUZIONE E OBIETTIVO DEL GIOCO}
+Benvenuto nel tuo Monopoly!\newline
+L’obiettivo è semplice: diventare il giocatore più ricco accumulando proprietà, incassando affitti e gestendo con attenzione il proprio patrimonio.
+Per farlo, i giocatori si alternano in turni scanditi dal lancio dei dadi, muovendosi sul tabellone, acquistando terreni, costruendo case e interagendo con eventi casuali.\newline
+La partita può essere affrontata in due modalità:\newline
+\begin{itemize}
+    \item Classic Mode: attenta gestione finanziaria, rischio bancarotta.
+    \item Infinity Mode: gioco libero, senza eliminazioni per bancarotta.  
+\end{itemize}
+Il gioco supporta più giocatori, ognuno dei quali sceglie un nome e seleziona un colore tra quelli disponibili.
+Il regolamento completo è sempre consultabile tramite l’apposito pulsante "?", disponibile sia nel menu iniziale che durante la partita.
+\subsection{AVVIO DEL GIOCO}
+All’avvio, il gioco presenta un menu iniziale da cui è possibile:\newline
+\begin{itemize}
+    \item Avviare una nuova partita
+    \item Consultare le regole
+    \item Modificare il numero di giocatori
+    \item Accedere alle impostazioni (Settings) per selezionare la modalità di gioco
+\end{itemize}
+\textbf{Scelta dei giocatori}\newline
+Ogni partecipante inserisce il proprio nome in corrispondenza di uno dei colori disponibili. Ogni colore rappresenta un token unico sul tabellone e identifica visivamente le proprietà acquistate.\newline
+\textbf{File di configurazione\texttt{(config.yml)}:}\newline
+Il gioco carica all’avvio il file \texttt{config.yml}, che definisce alcuni parametri fondamentali per la partita. Se il file non viene trovato o contiene errori di formattazione, viene caricata automaticamente una configurazione standard valida.\newline
+Esempio di contenuto:\newline
+\begin{verbatim}
+MIN_PLAYERS: 2
+MAX_PLAYERS: 6
+NUM_DICE: 2
+SIDES_PER_DIE: 6
+FONT_NAME: SansSerif
+FONT_SIZE: 20
+INIT_BALANCE: 2000
+RULES_FILE: rules/rules.txt
+CARDS_FILE: cards/final_cards.json
+DECK_FILE: cards/DeckCard.txt
+COLORS: RED, BLUE, ORANGE, GREEN, MAGENTA, CYAN, 
+YELLOW, BLACK, LIGHT_GRAY, PINK, DARK_GRAY, GRAY
+\end{verbatim}
+Modalità di gioco:\newline
+\begin{itemize}
+    \item Classic Mode: il giocatore viene eliminato se al termine del turno ha saldo negativo.
+    \item Infinity Mode: non esistono eliminazioni; anche con saldo negativo il gioco prosegue.
+\end{itemize}
+\subsection{INTERFACCIA GRAFICA E SCHERMATE PRINCIPALI}
+L’interfaccia grafica è suddivisa in aree funzionali:\newline
+Tabellone:\newline
+\begin{itemize}
+    \item Visualizza tutte le caselle, token, proprietà e miglioramenti.
+    \item Proprietà acquistate mostrate con badge colorato del proprietario.
+    \item Case e alberghi visibili direttamente sulle caselle.
+\end{itemize}
+Pannello giocatore:\newline
+\begin{itemize}
+    \item Mostra nome, identificativo numerico e saldo attuale del giocatore attivo.
+\end{itemize}
+Pannelli centrali:\newline
+\begin{itemize}
+    \item Azioni contestuali: mostra i pulsanti per eseguire azioni (compra proprietà, compra casa, compra hotel, paga affitto).
+    \item Dettaglio carta: visualizza la carta ingrandita della casella con info su affitti, proprietario, valore.
+\end{itemize}
+Comandi principali:\newline
+\begin{itemize}
+    \item Tira dadi: tira i dadi e avvia il movimento
+    \item Gestione Proprietà: consente la gestione e vendita dei beni posseduti
+    \item Termina turno: termina il turno se tutte le azioni obbligatorie sono concluse (pagamento affitti, tiro dei dadi, eventuali effetti speciali)
+    \item "?": visualizza il regolamento
+\end{itemize}
+\subsection{SVOLGIMENTO DEL TURNO}
+Ogni turno si compone di:
+\begin{enumerate}
+    \item Fase pre-tiro (facoltativa): vendita di beni tramite "Gestione Proprietà".
+    \item Tiro dei dadi: clic su "Tira dadi", movimento sul tabellone.
+    \item Interazione con la casella: acquisto, pagamento affitto, carte evento, tasse, acquisti di case/hotel se applicabili.
+    \item Consultazione dettagli: tramite pannello carta ingrandita.
+    \item Fine turno: clic su "Termina turno"; in Classic Mode è obbligatorio avere saldo positivo per non perdere.
+\end{enumerate}
+\subsection{PROPRIETÀ E MIGLIORAMENTI}
+Acquisto:\newline
+\begin{itemize}
+    \item Si possono comprare proprietà non possedute da altri giocatori.
+\end{itemize}
+Affitti:\newline
+\begin{itemize}
+    \item Si pagano tramite la banca.
+    \item Raddoppiati se il proprietario ha l’intero gruppo colore.
+    \item Aumentano con case e alberghi.
+\end{itemize}
+Miglioramenti con case e hotel:\newline
+\begin{itemize}
+    \item Per poter costruire, è necessario possedere tutte le proprietà dello stesso gruppo colore.
+    \item Per poter acquistare case (o hotel), devi essere sopra la proprietà che vuoi migliorare.
+    \item Per costruire l’hotel, devi prima avere 4 case sulla proprietà.
+\end{itemize}
+Vendite:\newline
+\begin{itemize}
+    \item Case e Hotel: restituiscono il 50\% del valore di acquisto.
+    \item Proprietà: vendibili solo se prive di case/hotel, restituiscono il 50\% del valore di acquisto.
+    \item Stazioni: restituiscono il 75\% del valore di acquisto.
+\end{itemize}
+\subsection{PRIGIONE, TASSE, SOCIETA' ED EVENTI SPECIALI}
+Prigione:\newline
+\begin{itemize}
+    \item Inviato se: si finisce sulla casella "Go to Jail" o si pesca la relativa carta imprevisti/probabilità.
+    \item Si rimane max 3 turni, si può uscire prime se si ottiene un numero doppio ai dadi durnate il proprio turno.
+    \item Durante il proprio turno rimane possibile la gestione delle proprie proprietà tramite l'apposito menù.
+\end{itemize}
+Tasse:\newline
+\begin{itemize}
+    \item Tax e carte evento possono richiedere pagamenti alla banca.
+\end{itemize}
+Imprevisti/Probabilità:\newline
+\begin{itemize}
+    \item 20 carte con effetti variabili (bonus e malus).
+    \item Vengono estratte random e reinserite nel mazzo.
+\end{itemize}
+Free Parking:\newline
+\begin{itemize}
+    \item Nessun effetto economico.
+    \item Si salta il turno successivo.
+\end{itemize}
+SOCIETÀ:
+\begin{itemize}
+    \item Hanno un costo di affitto pari al valore dei dadi moltiplicato per l'affitto base
+\end{itemize}
+\subsection{FINE DEL GIOCO E CONDIZIONI DI VITTORIA}
+Classic Mode:\newline
+\begin{itemize}
+    \item Eliminazione se saldo negativo a fine turno.
+    \item Vince l’ultimo giocatore rimasto.
+\end{itemize}
+Infinity Mode:\newline
+\begin{itemize}
+    \item Nessuna eliminazione, anche con saldo negativo.
+\end{itemize}
+I giocatori possono sempre terminare la partita utilizzando la "X" della finestra di gioco, in quel caso vince il giocatore con il saldo più alto.
+\subsection{RIEPILOGO COMANDI E STRUTTURA TECNICA}
+Pulsanti principali:
+\begin{itemize}
+    \item Tira dadi: tira i dadi
+    \item Gestione Proprietà: gestisci beni posseduti
+    \item Termina turno: termina turno
+    \item "?": visualizza regolamento
+\end{itemize}
+Azioni contestuali (casella attuale):\newline
+Buy Property, Buy House, Buy Hotel, Pay Rent, Sell House, Sell Hotel, Sell Property\newline
+Regolamento:\newline
+\begin{itemize}
+    \item Sempre accessibile tramite "?" in qualsiasi momento.
+    \item Caricato dal percorso indicato nel campo RULES\_FILE.
+\end{itemize}
+File config.yml:\newline
+Parametri personalizzabili: numero giocatori, dadi, saldo iniziale, font, percorsi ai file, colori dei token dei giocatori
 \chapter{Esercitazioni di laboratorio}
 \section{davide.rossi47@studio.unibo.it}
 \begin{itemize}

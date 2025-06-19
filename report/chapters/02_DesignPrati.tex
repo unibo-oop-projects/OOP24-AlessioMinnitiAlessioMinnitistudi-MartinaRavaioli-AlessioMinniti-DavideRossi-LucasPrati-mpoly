@@ -84,14 +84,13 @@ All'avvio della partita, per ogni giocatore occorre creare un \texttt{BankAccoun
 Serve un punto unico di creazione per evitare duplicazioni e rispettare il Principio Open/Closed (OCP).
 \dots\newline
 \textbf{Soluzione}\newline
-Ho applicato il Factory Pattern, definendo l'interfaccia \texttt{BankAccountFactory] e una sua implementazione che, accettando al costruttore il saldo da impostare nei conti correnti 
+Ho applicato il Factory Pattern, definendo l'interfaccia \texttt{BankAccountFactory} e una sua implementazione che, accettando al costruttore il saldo da impostare nei conti correnti 
 e accettando un id e un valore di \texttt{BankAccountType} durante l'invocazione della creazione, restituisce il conto corretto.\newline
 Durante il setup, il controller chiama semplicemente\newline
 	\texttt{factory = new BankAccountFactoryImpl(int);}\newline
 	\texttt{factory.createBankAccountByType(id, bankAccountType);}\newline
 senza mai conoscere i dettagli interni.\newline
 In futuro, per aggiungere nuove modalità, basterà estendere l'enum BankAccountType e aggiornare la casistica nella factory, lasciando intatto il resto dell'applicazione.\newline
-
 \newline
 \begin{figure}[H]
     \centering
