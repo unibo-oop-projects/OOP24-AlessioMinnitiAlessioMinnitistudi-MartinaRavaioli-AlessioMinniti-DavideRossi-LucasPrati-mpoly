@@ -9,7 +9,7 @@ SIDES_PER_DIE: 6
 FONT_NAME: SansSerif
 FONT_SIZE: 16
 
-INIT_BALANCE: 100
+INIT_BALANCE: 1000
 
 RULES_FILE: rules/rules.txt
 CARDS_FILE: cards/final_cards.json
