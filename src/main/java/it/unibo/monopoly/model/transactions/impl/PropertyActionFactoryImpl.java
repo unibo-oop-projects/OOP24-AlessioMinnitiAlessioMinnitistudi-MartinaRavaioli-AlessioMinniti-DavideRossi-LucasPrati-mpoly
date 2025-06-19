@@ -56,7 +56,7 @@ final class PropertyActionFactoryImpl implements PropertyActionFactory {
     }
 
     @Override
-    public PropertyAction createPayRent(final String titleDeedName, final int currentPlayerId, final int diceThrow) {
+    public PropertyAction createPayRent(final String titleDeedName, final int payerId, final int diceThrow) {
         if (diceThrow <= 0) {
             throw new IllegalArgumentException("The dice throw cannot be lower than 1");
         }
@@ -74,7 +74,7 @@ final class PropertyActionFactoryImpl implements PropertyActionFactory {
 
             @Override
             public void executePropertyAction(final Board board, final Bank bank) {
-                bank.payRent(titleDeedName, currentPlayerId, diceThrow);
+                bank.payRent(titleDeedName, payerId, diceThrow);
             }
         };
     }

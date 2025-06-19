@@ -15,8 +15,6 @@ public final class PrisonablePlayer implements Prisonable, Player {
 
     private static final int PRISON_TURNS = 3;
     private int turns;
-    //TODO decidi se tenere il metodo con il for (io voto per il no poi vedi te me del futuro)
-    //private boolean validThrow;
     private final Player player;
 
     /**
