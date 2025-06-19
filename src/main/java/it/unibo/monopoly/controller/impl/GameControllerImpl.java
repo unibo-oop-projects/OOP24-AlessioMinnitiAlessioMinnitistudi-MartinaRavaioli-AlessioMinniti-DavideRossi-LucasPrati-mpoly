@@ -295,7 +295,6 @@ public final class GameControllerImpl implements GameController {
             this.board.removePawn(this.turnationManager.getIdCurrPlayer());
             this.turnationManager.deletePlayer(this.turnationManager.getCurrPlayer());
             this.gameView.displayMessage("Player " + deadPlayer + " is dead");
-
             if (this.turnationManager.isOver()) {
                 this.gameView.showRanking();
             }

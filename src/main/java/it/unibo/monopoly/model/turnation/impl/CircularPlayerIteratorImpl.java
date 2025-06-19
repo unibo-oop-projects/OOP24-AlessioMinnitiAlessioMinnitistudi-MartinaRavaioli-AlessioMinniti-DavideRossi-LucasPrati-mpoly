@@ -122,7 +122,11 @@ public class CircularPlayerIteratorImpl implements PlayerIterator {
     */
     @Override
     public void remove(final Player p) {
-        this.elems.remove(p);
+        int id = p.getID();
+        if (this.currPlayer.getID().equals(id)) {
+            next();
+        }
+        this.elems.removeIf(player -> player.getID().equals(id));
     }
     /**
      * return true if the list contains the player, false if not.
