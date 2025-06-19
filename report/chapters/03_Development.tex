@@ -16,5 +16,12 @@ Per quanto riguarda la parte di caselle speciali e imprevisti sono stati effettu
     \item \textbf{FactoryTest}: si è verificato il corretto funzionamento della factory di caselle speciali e dei loro effetti. 
     \item \textbf{SpecialPropertyTest}: si è verificato il corretto funzionamento delle proprietà speciali e la corretta modifica dell' affito.
 \end{itemize}
-
+Per quanto riguarda la parte di caricamento delle risorse, sono stati effettuati i seguenti test:\newline
+\begin{itemize}
+    \item \textbf{UseFileTxtImplTest}: si è verificata la corretta ricerca dei file di testo e la corretta gestione delle eccezioni e la segnalazioni di eventuali errori.
+    \item \textbf{UseFileJsonImplTest}: si è verificata la corretta ricerca del file delle tessere di gioco e la corretta deserializzazione in un DTO temporaneo.
+    \item \textbf{UseConfigurationFileImplTest}: è stato verificato il corretto caricamento di una risorsa di configurazione attendibile e priva di errori. Si è verificato anche il fall-back alla configurazione di default in caso di errori durante il caricamento della risorsa.
+    \item \textbf{ConfigurationTest}: sono stati verificati tutti i parametri della configurazione e i relativi casi limite. Sono state anche verificate configurazioni inconsistenti e la corretta validazione di una configurazione valida.
+\end{itemize}
+Per quanto riguarda i giocatori, la creazione dei conti correnti e la creazione di tessere e contratti di proprietà
 \section{Note di sviluppo}
