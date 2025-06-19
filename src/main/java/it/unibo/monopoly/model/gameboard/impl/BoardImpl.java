@@ -307,4 +307,17 @@ public class BoardImpl implements Board {
         this.deck = deck;
     }
 
+    @Override
+    public final boolean checkPassedStart(final int delta, final int currentPlayerID) {
+        final Tile currentlySittingTile = this.getTileForPawn(currentPlayerID);
+        return delta < 0 && !"GoToJail".equals(currentlySittingTile.getName()) 
+                && !"Jail / Just Visiting".equals(currentlySittingTile.getName());
+    }
+
+    @Override
+    public final boolean canActivateEffect(final int delta, final int currentPlayerID) {
+        final Tile currentlySittingTile = this.getTileForPawn(currentPlayerID);
+        return !"Start".equals(currentlySittingTile.getName()) && delta != 0;
+    }
+
 }

@@ -150,4 +150,21 @@ public interface Board {
      * @param deck the deck
      */
     void addDeck(ChancheAndCommunityChestDeck deck);
+
+    /**
+     * the method check if the effect of the tile start can be activated.
+     * @param delta the difference in position between the current position and the previous position
+     * @param currentPlayer of this turn
+     * @return whether or not the effect can be activated
+     */
+    boolean checkPassedStart(int delta, int currentPlayer);
+
+    /**
+     * the method check if the special tile the player is sitting on can activate its effect.
+     * the check is based on whether there has been a movement and if it's the start tile
+     * @param delta the difference between the previous and current position
+     * @param currentPlayer of this turn
+     * @return whether or not the effect can be activated
+     */
+    boolean canActivateEffect(int delta, int currentPlayer);
 }
