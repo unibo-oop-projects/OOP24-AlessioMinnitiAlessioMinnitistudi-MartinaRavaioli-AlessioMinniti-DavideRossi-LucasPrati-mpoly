@@ -75,5 +75,5 @@ tasks.javadoc {
 }
 
 tasks.build {
-    dependsOn(tasks.shadowJar, tasks.javadoc)
+    dependsOn(tasks.shadowJar)
 }
