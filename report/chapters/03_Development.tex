@@ -1,4 +1,5 @@
 \section{Testing automatizzato}
+Per il testing automatico dell'architettura del progetto abbiamo utilizzato la libreria di JUnit che ci ha consentito di testare le parti critiche del progetto in maniera ottimale.
 Per quanto riguarda la parte monetaria e di transazioni del gioco sono stati effettuati i seguenti test:\newline
 \begin{itemize}
     \item \textbf{BankTest}: test delle principali funzioni dell'interfaccia Bank verificandone il corretto comportamento e risposta agli errori anche in diverse situazioni
@@ -7,7 +8,7 @@ Per quanto riguarda la parte monetaria e di transazioni del gioco sono stati eff
     \item \textbf{RentOptionFactoryTest}: sono stati testati i metodi della factory verificando che le \texttt{RentOption} create avessero il prezzo giusto e controllando che i criteri di applicabilità fossero corretti.
     \item \textbf{SimpleBankAccountTest}: si è verificato il funzionamento dei metodi per il prelievo e il deposito di denaro e per verificare se il \texttt{BankAccount} è ancora in uno stato valido per la continuazione del gioco.  
 \end{itemize}
-Per quanto riguarda la parte di caselle speciali e imprevisti sono stati effettuati i seguienti test:\newline
+Per quanto riguarda la parte di Board con le caselle per le proprietà, le caselle speciali e imprevisti sono stati effettuati i seguienti test:\newline
 \begin{itemize}
     \item \textbf{BaseAndComplexCommandFactoryTest}: si è verificato il corretto funzionamento dei vari comandi base creati e dei comandi complessi composti da questi ultimi.
     \item \textbf{BaseAndComplexInterpreterTest}: si è verificato il corretto funzionamento della creazione tramite interpreti dei comandi testati precedentemente.
@@ -15,6 +16,12 @@ Per quanto riguarda la parte di caselle speciali e imprevisti sono stati effettu
     \item \textbf{ParserOnSpaceTest}: si è verificato il corretto funzionamento dei vari parser usati per separare le varie parti del file da interpretare
     \item \textbf{FactoryTest}: si è verificato il corretto funzionamento della factory di caselle speciali e dei loro effetti. 
     \item \textbf{SpecialPropertyTest}: si è verificato il corretto funzionamento delle proprietà speciali e la corretta modifica dell' affito.
+    \item \textbf{BoardTest}: Test per il corretto funzionamento della board. Viene controllata la gestione delle pawns e delle tiles sia property che special, inoltre viene testato anche la gestione per l'aggiunta delle case e degli alberghi nelle proprietà.
+    \item \textbf{PropertyTest}: Test per controllare il funzionamento delle proprietà. Controlla che solo le proprietà giuste possano costruire case e hotel e che possano farlo solo sottostando a determinate condizioni.
+\end{itemize}
+Per quanto riguarda la parte di gestione dei turni e dei player sono stati effettuati i seguenti test:\newline
+\begin{itemize}
+    \item \textbf{TurnationManagerTest}: Test per il corretto funzionamento della gestione del turnation manager, viene testato il corretto funzionamento dei turni verificando la successione dei player e del controllo dei loro stati (park, prison)
 \end{itemize}
 
 \section{Note di sviluppo}
