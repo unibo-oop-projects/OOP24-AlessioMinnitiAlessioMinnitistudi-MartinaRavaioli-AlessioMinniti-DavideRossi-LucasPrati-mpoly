@@ -14,11 +14,6 @@ import it.unibo.monopoly.model.turnation.api.TurnationManager;
  */
 public final class EffectFactoryImpl implements EffectFactory {
 
-    /**
-     * constructor.
-     */
-    // public EffectFactoryImpl() { }
-
     @Override
     public Effect depositMoney(final int amount, final Bank bank) {
         return new Effect() {

@@ -7,13 +7,13 @@ public interface Parser {
 
     /**
      * this method tells if the string has come to its end.
-     * @return wether or not it continues
+     * @return wether or not the string has reached the end
      */
     boolean hasNesxt();
 
     /**
      * this method get the next substring based on the type of parser.
-     * @return the string
+     * @return the substring
      */
     String next();
 

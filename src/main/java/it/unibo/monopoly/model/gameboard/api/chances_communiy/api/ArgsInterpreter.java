@@ -9,7 +9,7 @@ import it.unibo.monopoly.model.turnation.api.TurnationManager;
 public interface ArgsInterpreter {
 
     /**
-     * sets all the argument needed for the command.
+     * sets all the argument needed for the Basecommand.
      * @param toInterpretString a string containing 
      * all the arguments in a pseudo natural language
      * @param command the command where the arguments will be added

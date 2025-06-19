@@ -10,7 +10,7 @@ public interface Effect {
 
     /**
      * this method activates the effect.
-     * @param player the player tha triggered the effect
+     * @param player the player that triggered the effect
      */
     void activate(Player player);
 

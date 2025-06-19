@@ -8,7 +8,7 @@ import it.unibo.monopoly.model.gameboard.impl.chance_comunity.impl.ChanceAndComm
 public interface ChancheAndCommunityChestDeck {
 
     /**
-     * draw a radom card from the deck.
+     * draw a radom card from the deck whitout deleting it.
      * @return the card
      */
     ChanceAndCommunityChestCard draw();

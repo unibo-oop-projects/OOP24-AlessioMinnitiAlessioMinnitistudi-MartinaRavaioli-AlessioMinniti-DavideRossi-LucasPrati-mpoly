@@ -23,11 +23,6 @@ public final class GUIVenditaLogicImpl implements  GUIVenditaLogic, Serializable
     static final int NUM = 0;
     private static final long serialVersionUID = -6218820567019985015L;
 
-    /**
-     * constructor.
-     */
-    // public GUIVenditaLogicImpl() { }
-
     @Override
     public List<TitleDeed> getProperties(final Player player, final Bank bank) {
         if (bank.getTitleDeedsByOwner(player.getID()).isEmpty()) {
