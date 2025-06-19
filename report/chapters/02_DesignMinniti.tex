@@ -28,12 +28,12 @@ Inoltre bankState viene utilizzato dal Turnation Manager anche per determinare i
 	\label{img:Iterator}
 \end{figure}
 
-PROBLEMA:
+\textbf{PROBLEMA}\newline
 Il Turnation Manager per gestire i turni dei player ha bisogno di una struttura dati che passa sempre il prossimo player in modo ciclico, 
 quindi una volta che arriva all'ultimo player deve ricominciare ad assegnare i turni dal primo player, tuttavia di base non c'è una lista circolare 
 e cercando tra le librerie esterne non ne ho trovata una che ne forniva una adeguata.\newline
 
-SOLUZIONE:
+\textbf{SOLUZIONE}\newline
 Per risolvere questo problema quindi ho utilizzato il pattern \textbf{iterator}, andando a creare un' interfaccia \textbf{PlayerIterator} che estende iterator 
 e serve a definire le azioni cardine del circular player iterator che oltre ad avere i metodi di un iteratore normale possiede anche funzioni aggiuntive per gestire la lista di player,
 l'implementazione del player iterator \textbf{Circular Player Iterator} wrappa la lista di player e itera la lista ritornando sempre il prossimo player 
@@ -55,12 +55,12 @@ tiene traccia di tutte le posizioni delle caselle ed inoltre gestisce anche la c
     \caption{Schema UML che definisce la struttura della factory di pawn utilizzata dalla board}
 	\label{img:Pawns}
 \end{figure}
-PROBLEMA:
+\textbf{PROBLEMA}\newline
 Quando la board deve restituire le pawns, essendo che non deve permettere il loro cambio di posizione al di fuori della board, 
 essa deve restituire oggetti immutabili per prevenire eventuali modifiche. 
 Per risolverlo si potrebbe richiamare sempre il costruttore delle pawn ma non mi sembrava il metodo più efficiente \newline
 
-SOLUZIONE:
+\textbf{SOLUZIONE}\newline
 Quindi Per facilitare tale operazione ho usato il pattern \textbf{factory method}, andando a creare l'interfaccia \textbf{PawnFactory} 
 che con la sua relativa implementazione possiede i metodi \textbf{createBasic} che permette di creare la pawn normale senza shape
 e \textbf{createAdvanced} che permette di creare la pawn con la shape in caso in cui in future versioni del gioco si voglia far scegliere la forma della propria pedina al giocatore. 
@@ -78,12 +78,12 @@ Usando quindi una factory evito di dover richiamare sempre il costruttore per ri
 Le \textbf{Tiles} si suddividono in \textbf{Property} e \textbf{Special}, queste due tipologie di Tile sono state rappresentate creandole come figlie di Tile,
 io mi sono occupato della gestione delle proprietà.\newline
 
-PROBLEMA:
+\textbf{PROBLEMA}\newline
 Le proprietà si dividono in proprietà normali in cui si possono costruire case e hotel e proprietà come stazioni e società che non prevedono tale azione. 
 Tuttavia tutte le altre azioni si possono svolgere in entrambe di esse e quindi risulta che la proprietà con le case e alberghi diventa una proprietà normale con più opzioni, 
 perciò differenziarle in due classi distinte non risultava la scelta ottimale.\newline
 
-SOLUZIONE:
+\textbf{SOLUZIONE}\newline
 Per risolvere questo problema quindi ho scelto di utilizzare il pattern \textbf{decorator}, in cui si va a creare una proprietà normale (\textbf{NormalPropertyImpl}) 
 che non può avere case e hotel e un decoratore chiamato \textbf{BuildablePropertyImpl} che decora la proprietà con le case e gli alberghi,
 andando quindi a definire le funzionalità in più che non possono svolgere le stazioni e le società.\newline
@@ -95,14 +95,14 @@ andando quindi a definire le funzionalità in più che non possono svolgere le s
     le immutable property incapsulano le proprietà edificabili per far ritornare solo le informazioni necessarie al contratto}
 	\label{img:Proxy}
 \end{figure}
-PROBLEMA:
+\textbf{PROBLEMA}\newline
 Tutte le proprietà hanno il prezzo dell'affitto che bisogna pagare quando ci passa sopra un giocatore che non è owner, 
 tuttavia per le proprietà che possono avere degli appalti tale prezzo cambia in base a quante case sono presenti e se è presente l'hotel.
 Quindi la banca dovrà possedere tali informazioni relative alla proprietà ma senza entrare in possesso di altri dati non di sua pertinenza.
 Per farlo quindi si potrebbe ricreare sempre un nuovo contratto in cui alla creazione si specifica il nuovo numero di case e la presenza di hotel, 
 ma tale soluzione risulterebbe molto poco efficiente.\newline
 
-SOLUZIONE:
+\textbf{SOLUZIONE}\newline
 Per risolvere questo problema invece ho utilizzato il pattern \textbf{proxy}, 
 andando a creare una copia immutabile della proprietà definita come \textbf{ImmutableProperty}, 
 che incapsula la proprietà e restituisce solo le informazioni necessarie per il title deed, mentre le altre sono inaccessibili.\newline
