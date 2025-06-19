@@ -1,0 +1,15 @@
+\subsection{Lucas Prati}
+
+Nonostante avessi già collaborato a piccoli progetti di squadra, affrontare un sistema complesso come Monopoly è stata per me una bella sfida.
+Mi sono occupato del menu di configurazione e della procedura di inizializzazione del gioco, dalla lettura dei file di risorse fino all'inizializzazione dei giocatori e dei componenti di partita. \newline
+
+In particolare ho progettato il \texttt{Configuration Menu} utilizzando il \texttt{Strategy Pattern} per separare il parsing da file e il \texttt{Builder Pattern} per generare un oggetto \texttt{Configuration} immutabile e completamente validato.
+Ho poi orchestrato le factory necessarie (conti bancari, pedine, carte) in un flusso di setup chiaro e testabile, applicando i principi SOLID per mantenere controller e view privi di logica di creazione. \newline
+
+Il mio contributo più significativo è stato definire il flusso di caricamento e validazione iniziale, garantendo che il gioco partisse sempre con dati coerenti.
+Questo lavoro mi ha permesso di consolidare competenze di architettura software, gestione delle dipendenze e separazione delle responsabilità.
+Tra le sfide incontrate, ricordo la complessità nel coordinare le diverse factory e strategie in un'unica sequenza fluida: abbiamo superato questo ostacolo grazie a revisioni di design e code review di squadra. \newline
+
+Per il futuro, sto valutando di ridurre ulteriormente il numero di classi spostando la creazione dei conti bancari direttamente nell'enum \texttt{BankAccountType}, sfruttando il polimorfismo delle constant-specific methods e semplificando così l'architettura. \newline
+
+Nel complesso sono molto soddisfatto del risultato ottenuto, delle competenze acquisite e del valore aggiunto che il mio lavoro ha portato al progetto.
