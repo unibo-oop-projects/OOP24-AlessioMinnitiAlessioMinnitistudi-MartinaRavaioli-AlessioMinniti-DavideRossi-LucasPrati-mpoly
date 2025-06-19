@@ -103,8 +103,6 @@ public final class GameboardViewImpl extends JPanel implements GameboardView {
 
     @Override
     public void changePos(final int currPlayer, final Position newPos) {
-        //JOptionPane.showMessageDialog(null, "Operazione completata con successo! "+newPos.getPos(), 
-                                        //"Info", JOptionPane.INFORMATION_MESSAGE);
         for (final Map.Entry<JPanel, Position> entry : this.tilePositions.entrySet()) {
             if (entry.getValue().equals(pawnPositions.get(currPlayer - 1))) {
                 final JPanel p = entry.getKey();
@@ -112,7 +110,7 @@ public final class GameboardViewImpl extends JPanel implements GameboardView {
                     if (c instanceof PawnCircle pawnCircle 
                     && pawnCircle.getColor().equals(controller.getCurrPlayer().getColor())) {
                         p.remove(c);
-                        p.revalidate();  // AGGIUNTO
+                        p.revalidate();
                         p.repaint();
                         break;
                     }
