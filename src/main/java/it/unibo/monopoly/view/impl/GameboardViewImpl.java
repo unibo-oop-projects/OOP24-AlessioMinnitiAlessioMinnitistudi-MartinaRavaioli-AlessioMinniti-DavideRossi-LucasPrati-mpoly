@@ -14,7 +14,7 @@ import java.util.Map;
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.SwingConstants;
+import javax.swing.JTextArea;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.monopoly.controller.api.GameController;
@@ -188,12 +188,20 @@ public final class GameboardViewImpl extends JPanel implements GameboardView {
 
                         if (logic.tileCard(i, j, this.size) == 0) {
                             panel.setBackground(Color.RED);
-                            final JLabel label = new JLabel("COMMUNITY CHEST");
-                            panel.add(label, BorderLayout.CENTER);
+                            final JTextArea text = new JTextArea("COMMUNITY CHEST");
+                            text.setLineWrap(true);
+                            text.setWrapStyleWord(true);
+                            text.setEditable(false);
+                            text.setBackground(Color.RED);
+                            panel.add(text, BorderLayout.CENTER);
                         } else {
                             panel.setBackground(Color.YELLOW);
-                            final JLabel label = new JLabel("CHANCE");
-                            panel.add(label, BorderLayout.CENTER);
+                            final JTextArea text = new JTextArea("CHANCE");
+                            text.setLineWrap(true);
+                            text.setWrapStyleWord(true);
+                            text.setEditable(false);
+                            text.setBackground(Color.YELLOW);
+                            panel.add(text, BorderLayout.CENTER);
                         }
                     } else {
                         panel.setBackground(Color.LIGHT_GRAY);
@@ -217,9 +225,11 @@ public final class GameboardViewImpl extends JPanel implements GameboardView {
             stripe.setPreferredSize(new Dimension(STRIPE_WIDTH, STRIPE_HEIGHT));
             stripe.setBackground(controller.getTiles().get(i).getGroup().getColor());
             panel.add(stripe, BorderLayout.NORTH);
-            final JLabel label = new JLabel(controller.getTiles().get(i).getName());
-            label.setHorizontalAlignment(SwingConstants.CENTER);
-            panel.add(label, BorderLayout.CENTER);
+            final JTextArea text = new JTextArea(controller.getTiles().get(i).getName());
+            text.setLineWrap(true);
+            text.setWrapStyleWord(true);
+            text.setEditable(false);
+            panel.add(text, BorderLayout.CENTER);
             panel.setName(controller.getTiles().get(i).getName());
         }
 
