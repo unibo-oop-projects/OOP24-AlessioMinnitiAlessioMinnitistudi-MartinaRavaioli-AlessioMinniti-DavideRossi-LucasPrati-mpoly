@@ -152,15 +152,14 @@ public final class GameControllerImpl implements GameController {
                 this.gameView.displayPlayerActions(turnActions.keySet());
             } else if (currentlySittingTile instanceof Special) {
                 final Special specialTile = (Special) currentlySittingTile;
-                if (!"Start".equals(currentlySittingTile.getName()) && delta != 0) {
+                if (board.canActivateEffect(delta, currentPlayerId)) {
                     executeEffect(specialTile.getEffect());
                     this.gameView.callChangePositions();
                 }
                 refreshCurrentTileInfo();
             }
 
-            if (delta < 0 && !"GoToJail".equals(currentlySittingTile.getName()) 
-                && !"Jail / Just Visiting".equals(currentlySittingTile.getName())) {
+            if (board.checkPassedStart(delta, currentPlayerId)) {
                 final Special tile = (Special) board.getTile("Start");
                 executeEffect(tile.getEffect());
             }
