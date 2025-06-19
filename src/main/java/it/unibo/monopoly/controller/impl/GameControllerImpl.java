@@ -145,7 +145,7 @@ public final class GameControllerImpl implements GameController {
             refreshCurrentTileInfo();
             if (currentlySittingTile instanceof Property) {
                 this.turnActions.clear();
-                this.turnActions.putAll(Maps.uniqueIndex(this.bank.getApplicableActionsForTitleDeed(currentPlayerId, 
+                this.turnActions.putAll(Maps.uniqueIndex(this.bank.getActionsForTitleDeed(currentPlayerId, 
                                         currentlySittingTile.getName(), 
                                         result.getLeft().stream().mapToInt(d -> d).sum()),
                                         PropertyAction::getType));

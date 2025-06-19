@@ -282,7 +282,7 @@ public class TurnationManagerImpl implements TurnationManager {
         // final List<Player> filtered = this.players.toList().stream()
         //                                     .filter(p -> !p.getID().equals(player.getID()))
         //                                     .toList();
-        this.bankState.deletePlayer(player);
+        this.bankState.releasePlayerDeeds(player);
         this.players.remove(player);
         this.currPlayer = this.players.getCurrent();
         this.diceThrown = false;

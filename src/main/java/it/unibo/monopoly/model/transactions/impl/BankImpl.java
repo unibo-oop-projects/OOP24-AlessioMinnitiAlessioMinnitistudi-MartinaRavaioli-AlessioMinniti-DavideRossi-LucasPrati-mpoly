@@ -246,7 +246,7 @@ public final class BankImpl implements Bank {
     }
 
     @Override
-    public Set<PropertyAction> getApplicableActionsForTitleDeed(
+    public Set<PropertyAction> getActionsForTitleDeed(
         final int currentPlayerId, 
         final String titleDeedName, 
         final int diceThrow) {
@@ -336,7 +336,7 @@ public final class BankImpl implements Bank {
         }
 
         @Override
-        public void deletePlayer(final Player pl) {
+        public void releasePlayerDeeds(final Player pl) {
             titleDeeds.values()
             .forEach(deed -> {
                 if (deed.isOwned() && deed.getOwnerId() == pl.getID()) {

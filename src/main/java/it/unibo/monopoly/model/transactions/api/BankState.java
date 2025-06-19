@@ -92,5 +92,5 @@ public interface BankState {
      * @param pl The player to eliminate, the {@code id} parameter {@link Player#getID()} will be retrieved and used
      * to perform all cancellation operations.
      */
-    void deletePlayer(Player pl);
+    void releasePlayerDeeds(Player pl);
 }

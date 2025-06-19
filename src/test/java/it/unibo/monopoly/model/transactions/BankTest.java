@@ -136,21 +136,21 @@ class BankTest {
 
     @Test
     void checkGetApplicableActionsForTitleDeedRetrievesCorrectActions() {
-        final Set<PropertyAction> buyAction = bank.getApplicableActionsForTitleDeed(ID_1, TITLE_DEED_NAME1, DICE_THROW);
+        final Set<PropertyAction> buyAction = bank.getActionsForTitleDeed(ID_1, TITLE_DEED_NAME1, DICE_THROW);
         assertTrue(buyAction.stream().allMatch(a -> a.getType() == PropertyActionsEnum.BUY));
         bank.buyTitleDeed(TITLE_DEED_NAME1, ID_1);
-        final Set<PropertyAction> sell = bank.getApplicableActionsForTitleDeed(ID_1, TITLE_DEED_NAME1, DICE_THROW);
+        final Set<PropertyAction> sell = bank.getActionsForTitleDeed(ID_1, TITLE_DEED_NAME1, DICE_THROW);
         assertTrue(sell.stream().allMatch(a -> a.getType() == PropertyActionsEnum.SELL));
         bank.buyTitleDeed(TITLE_DEED_NAME2, ID_1);
         bank.buyTitleDeed(TITLE_DEED_NAME3, ID_1);
-        final Set<PropertyAction> housesActions = bank.getApplicableActionsForTitleDeed(ID_1, TITLE_DEED_NAME1, DICE_THROW);
+        final Set<PropertyAction> housesActions = bank.getActionsForTitleDeed(ID_1, TITLE_DEED_NAME1, DICE_THROW);
         assertTrue(housesActions.stream().anyMatch(a -> a.getType() == PropertyActionsEnum.BUYHOTEL));
         assertTrue(housesActions.stream().anyMatch(a -> a.getType() == PropertyActionsEnum.BUYHOUSE));
         assertTrue(housesActions.stream().anyMatch(a -> a.getType() == PropertyActionsEnum.SELLHOTEL));
         assertTrue(housesActions.stream().anyMatch(a -> a.getType() == PropertyActionsEnum.SELLHOUSE));
         assertTrue(housesActions.stream().anyMatch(a -> a.getType() == PropertyActionsEnum.SELL));
         bank.getBankStateObject().resetTransactionData();
-        final Set<PropertyAction> payRent = bank.getApplicableActionsForTitleDeed(ID_2, TITLE_DEED_NAME1, DICE_THROW);
+        final Set<PropertyAction> payRent = bank.getActionsForTitleDeed(ID_2, TITLE_DEED_NAME1, DICE_THROW);
         assertTrue(payRent.stream().allMatch(a -> a.getType() == PropertyActionsEnum.PAYRENT));
     }
 
@@ -183,7 +183,7 @@ class BankTest {
 
     @Test
     void payRentForPropertyPossessedByThePayer() {
-        bank.getApplicableActionsForTitleDeed(ID_1, TITLE_DEED_NAME1, DICE_THROW);
+        bank.getActionsForTitleDeed(ID_1, TITLE_DEED_NAME1, DICE_THROW);
         bank.buyTitleDeed(TITLE_DEED_NAME1, ID_1);
         assertTrue(bank.getTitleDeed(TITLE_DEED_NAME1).isOwned());
         assertEquals(ID_1, bank.getTitleDeed(TITLE_DEED_NAME1).getOwnerId());
@@ -196,7 +196,7 @@ class BankTest {
 
     @Test
     void payRentSuccessful() {
-        bank.getApplicableActionsForTitleDeed(ID_1, TITLE_DEED_NAME1, DICE_THROW);
+        bank.getActionsForTitleDeed(ID_1, TITLE_DEED_NAME1, DICE_THROW);
         bank.buyTitleDeed(TITLE_DEED_NAME1, ID_2);
         final int rent = bank.getTitleDeed(TITLE_DEED_NAME1)
                                                 .getRent(Sets.filter(Sets.newHashSet(deeds), 
@@ -206,7 +206,7 @@ class BankTest {
         final int initialBalancePl1 = bank.getBankAccount(ID_1).getBalance();
         final int initialBalancePl2 = bank.getBankAccount(ID_2).getBalance();
         bank.getBankStateObject().resetTransactionData();
-        bank.getApplicableActionsForTitleDeed(ID_1, TITLE_DEED_NAME1, DICE_THROW);
+        bank.getActionsForTitleDeed(ID_1, TITLE_DEED_NAME1, DICE_THROW);
         bank.payRent(TITLE_DEED_NAME1, ID_1, DICE_THROW);
         assertEquals(initialBalancePl1 - rent, bank.getBankAccount(ID_1).getBalance());
         assertEquals(initialBalancePl2 + rent, bank.getBankAccount(ID_2).getBalance());
@@ -232,7 +232,7 @@ class BankTest {
 
     @Test
     void buyAlreadyBoughtProperty() {
-        bank.getApplicableActionsForTitleDeed(ID_1, TITLE_DEED_NAME1, DICE_THROW);
+        bank.getActionsForTitleDeed(ID_1, TITLE_DEED_NAME1, DICE_THROW);
         bank.buyTitleDeed(TITLE_DEED_NAME1, ID_1);
         assertTrue(bank.getTitleDeed(TITLE_DEED_NAME1).isOwned());
         assertEquals(ID_1, bank.getTitleDeed(TITLE_DEED_NAME1).getOwnerId());
@@ -247,7 +247,7 @@ class BankTest {
     @Test 
     void buyingPropertySuccessful() {
         final int previousBalance = bank.getBankAccount(ID_1).getBalance();
-        bank.getApplicableActionsForTitleDeed(ID_1, TITLE_DEED_NAME1, DICE_THROW);
+        bank.getActionsForTitleDeed(ID_1, TITLE_DEED_NAME1, DICE_THROW);
         bank.buyTitleDeed(TITLE_DEED_NAME1, ID_1);
         assertTrue(bank.getTitleDeed(TITLE_DEED_NAME1).isOwned());
         assertEquals(ID_1, bank.getTitleDeed(TITLE_DEED_NAME1).getOwnerId());
@@ -275,7 +275,7 @@ class BankTest {
     @Test
     void sellPropertySuccessful() {
         final int previousBalance = bank.getBankAccount(ID_1).getBalance();
-        bank.getApplicableActionsForTitleDeed(ID_1, TITLE_DEED_NAME1, DICE_THROW);
+        bank.getActionsForTitleDeed(ID_1, TITLE_DEED_NAME1, DICE_THROW);
         bank.buyTitleDeed(TITLE_DEED_NAME1, ID_1);
         assertTrue(bank.getTitleDeed(TITLE_DEED_NAME1).isOwned());
         assertEquals(ID_1, bank.getTitleDeed(TITLE_DEED_NAME1).getOwnerId());
@@ -291,7 +291,7 @@ class BankTest {
 
     @Test
     void testGetTitleDeedsByOwner() {
-        bank.getApplicableActionsForTitleDeed(ID_1, TITLE_DEED_NAME1, DICE_THROW);
+        bank.getActionsForTitleDeed(ID_1, TITLE_DEED_NAME1, DICE_THROW);
         bank.buyTitleDeed(TITLE_DEED_NAME1, ID_1);
         final Set<TitleDeed> deeds = bank.getTitleDeedsByOwner(ID_1);
         assertFalse(deeds.isEmpty());
@@ -305,15 +305,15 @@ class BankTest {
 
     @Test
     void testBuyHouse() {
-        bank.getApplicableActionsForTitleDeed(ID_1, TITLE_DEED_NAME2, DICE_THROW);
+        bank.getActionsForTitleDeed(ID_1, TITLE_DEED_NAME2, DICE_THROW);
         bank.buyTitleDeed(TITLE_DEED_NAME2, ID_1);
-        bank.getApplicableActionsForTitleDeed(ID_1, TITLE_DEED_NAME1, DICE_THROW);
+        bank.getActionsForTitleDeed(ID_1, TITLE_DEED_NAME1, DICE_THROW);
         bank.buyTitleDeed(TITLE_DEED_NAME1, ID_1);
 
         final int amount = bank.getBankAccount(ID_1).getBalance();
-        bank.getApplicableActionsForTitleDeed(ID_1, TITLE_DEED_NAME3, DICE_THROW);
+        bank.getActionsForTitleDeed(ID_1, TITLE_DEED_NAME3, DICE_THROW);
         bank.buyTitleDeed(TITLE_DEED_NAME3, ID_1);
-        bank.getApplicableActionsForTitleDeed(ID_1, TITLE_DEED_NAME3, DICE_THROW);
+        bank.getActionsForTitleDeed(ID_1, TITLE_DEED_NAME3, DICE_THROW);
         bank.buyHouse(TITLE_DEED_NAME3);
 
         assertEquals(amount - PROPERTY_SALE_PRICE2 - HOUSE_PRICE.apply(ID_1), bank.getBankAccount(ID_1).getBalance());
@@ -321,15 +321,15 @@ class BankTest {
 
     @Test
     void testBuyHotel() {
-        bank.getApplicableActionsForTitleDeed(ID_1, TITLE_DEED_NAME2, DICE_THROW);
+        bank.getActionsForTitleDeed(ID_1, TITLE_DEED_NAME2, DICE_THROW);
         bank.buyTitleDeed(TITLE_DEED_NAME2, ID_1);
-        bank.getApplicableActionsForTitleDeed(ID_1, TITLE_DEED_NAME1, DICE_THROW);
+        bank.getActionsForTitleDeed(ID_1, TITLE_DEED_NAME1, DICE_THROW);
         bank.buyTitleDeed(TITLE_DEED_NAME1, ID_1);
 
         final int amount = bank.getBankAccount(ID_1).getBalance();
-        bank.getApplicableActionsForTitleDeed(ID_1, TITLE_DEED_NAME3, DICE_THROW);
+        bank.getActionsForTitleDeed(ID_1, TITLE_DEED_NAME3, DICE_THROW);
         bank.buyTitleDeed(TITLE_DEED_NAME3, ID_1);
-        bank.getApplicableActionsForTitleDeed(ID_1, TITLE_DEED_NAME3, DICE_THROW);
+        bank.getActionsForTitleDeed(ID_1, TITLE_DEED_NAME3, DICE_THROW);
         bank.buyHotel(TITLE_DEED_NAME3);
 
         assertEquals(amount - PROPERTY_SALE_PRICE2 - HOTEL_PRICE.apply(ID_1), bank.getBankAccount(ID_1).getBalance());

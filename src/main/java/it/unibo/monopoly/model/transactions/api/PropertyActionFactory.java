@@ -32,13 +32,13 @@ public interface PropertyActionFactory {
      * money from the payer {@link BankAccount} to the {@link BankAccount} of the
      * user who owns the {@link TitleDeed}. Calls {@link Bank#payRent(int, int, int)}.
      * @param titleDeedName the name of the {@link TitleDeed} to pay the rent for
-     * @param currentPlayerId the id of the player who has to pay the rent
+     * @param payerId the id of the player who has to pay the rent
      * @param diceThrow the result of the dice throw that brought the player's {@link Pawn} on the
      * {@link Property} this {@link TitleDeed} is associated to. This parameter is necessary as some {@link TitleDeed}
      * vary the {@code rent amount} based on this parameter.
      * @return a {@link PropertyAction} command that encapsulates the descripted action.
      */
-    PropertyAction createPayRent(String titleDeedName, int currentPlayerId, int diceThrow);
+    PropertyAction createPayRent(String titleDeedName, int payerId, int diceThrow);
     /**
      * create an action that buys an house in the requested titleDeed for the requested player.
      * @param titleDeedName the name of the titleDeed to buy the house

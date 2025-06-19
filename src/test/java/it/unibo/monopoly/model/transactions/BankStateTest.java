@@ -55,7 +55,7 @@ class BankStateTest {
     void playerHasToDoSomeTransactionsBeforePassingTurn() {
         bank.buyTitleDeed(TITLE_DEED_NAME1, ID_1);
         //set that player with ID_2 has to pay rent
-        bank.getApplicableActionsForTitleDeed(ID_2, TITLE_DEED_NAME1, DICE_THROW);
+        bank.getActionsForTitleDeed(ID_2, TITLE_DEED_NAME1, DICE_THROW);
         assertFalse(bankState.allMandatoryTransactionsCompleted());
         bank.payRent(TITLE_DEED_NAME1, ID_2, DICE_THROW);
         assertTrue(bankState.allMandatoryTransactionsCompleted());
@@ -76,19 +76,19 @@ class BankStateTest {
     void  testResetTransactionData() {
         bank.buyTitleDeed(TITLE_DEED_NAME1, ID_1);
         //set that player with ID_2 has to pay rent
-        bank.getApplicableActionsForTitleDeed(ID_2, TITLE_DEED_NAME1, DICE_THROW);
+        bank.getActionsForTitleDeed(ID_2, TITLE_DEED_NAME1, DICE_THROW);
         assertFalse(bankState.allMandatoryTransactionsCompleted());
         //simulate player ends its turn by wiping all data of the executed transactions
         bankState.resetTransactionData();
         assertTrue(bankState.allMandatoryTransactionsCompleted());
-        bank.getApplicableActionsForTitleDeed(ID_2, TITLE_DEED_NAME1, DICE_THROW);
+        bank.getActionsForTitleDeed(ID_2, TITLE_DEED_NAME1, DICE_THROW);
         assertFalse(bankState.allMandatoryTransactionsCompleted());
     }
 
     @Test
     void releaseDeedsOwnedByPlayer() {
         bank.buyTitleDeed(TITLE_DEED_NAME1, ID_1);
-        bankState.deletePlayer(player1);
+        bankState.releasePlayerDeeds(player1);
         assertFalse(bank.getTitleDeed(TITLE_DEED_NAME1).isOwned());
         assertThrows(IllegalArgumentException.class, 
             () -> bank.getBankAccount(ID_1)
