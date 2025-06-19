@@ -23,6 +23,7 @@ import javax.swing.ListCellRenderer;
 import javax.swing.SwingConstants;
 
 import it.unibo.monopoly.model.gameboard.api.Special;
+import it.unibo.monopoly.model.gameboard.impl.Group;
 import it.unibo.monopoly.model.transactions.api.RentOption;
 import it.unibo.monopoly.model.transactions.api.TitleDeed;
 import it.unibo.monopoly.view.api.ContractPanel;
@@ -103,6 +104,10 @@ final class SwingContractPanel extends SwingAbstractJPanel implements ContractPa
         final JLabel mortgagePrice = new JLabel(Integer.toString(deed.getMortgagePrice()), SwingConstants.RIGHT);
         mortgagePanel.add(mortgageDesc, BorderLayout.WEST);
         mortgagePanel.add(mortgagePrice, BorderLayout.CENTER);
+        if (deed.getGroup() == Group.SOCIETY) {
+            final JLabel societyDisclaimer = new JLabel("For society title deeds the rent price is multiplied by the dice throw");
+            mortgagePanel.add(societyDisclaimer, BorderLayout.SOUTH);
+        }
         northPanel.add(name);
         northPanel.add(groupPanel);
         northPanel.add(ownerPanel);

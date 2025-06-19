@@ -158,7 +158,7 @@ public class CardFactoryImpl implements CardFactory {
 
             final TitleDeed deedWithHouses = new TitleDeedWithHouses(
                 deed,
-                List.of(),
+                rentOptionFactory.housesAndHotelsOptions(baseRent, 4, true),
                 new ImmutableProperty(buildableProperty),
                 houseCost,
                 hotelCost
