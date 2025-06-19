@@ -1,8 +1,7 @@
 \chapter{Analisi}
 
 \section{Descrizione e requisiti}
-\todo{Mettere ref a link Monopoly}
-Il software mira alla costruzione di una versione virtuale del famoso gioco da tavolo “Monopoly”. 
+Il software mira alla costruzione di una versione virtuale del famoso gioco da tavolo \href{https://it.wikipedia.org/wiki/Monopoly}{Monopoly}. 
 Quest’ultimo è un gioco di società nel quale più giocatori a turno lanciano i dadi e muovono le proprie pedine su un tabellone 
 composto da caselle di cui la maggior parte sono proprietà, ovvero dei terreni acquistabili dai giocatori.
 Lo scopo del gioco è di creare un monopolio aumentando i beni o il denaro posseduto. 
@@ -13,8 +12,8 @@ a pagargli una somma di denaro per poter transitare su un terreno non suo, in qu
 paga l'affitto per la proprietà.\newline
 Sul tabellone saranno presenti anche delle caselle speciali: le più importanti sono il parcheggio e la prigione che
 impediscono al giocatore di muoversi per un determinato numero di turni e le caselle imprevisti e probabilità che 
-richiedono al giocatore di pescare una carta o dal mazzo degli imprevisti o da quello delle probabilità e seguire le 
-istruzioni dell'effetto scritto sulla carta.\newline
+richiedono al giocatore di pescare una carta dal mazzo degli imprevisti e delle probabilità e seguire le 
+istruzioni scritte sulla carta.\newline
 L’obiettivo è mandare gli altri giocatori in bancarotta, e dunque condurli alla sconfitta, cercando di fargli spendere
 più denaro possibile. Le pedine dei giocatori sconfitti vengono rimosse dal tabellone e i loro 
 beni revocati, si vince rimanendo l'ultimo giocatore sul tabellone.\newline
@@ -43,7 +42,7 @@ stesso terminale.
     elementi del gioco (tabellone, pedine, proprietà, denaro posseduto\dots). L'effetto eseguito è specifico della carta,
     al giocatore verrà mostrata una descrizione testuale dell'effetto e poi il sistema ne farà partire l'esecuzione.
     \item La pedina del giocatore potrà finire su altre caselle speciali con un effetto specifico che si attiverà o al 
-    passaggio (casella Start) o se ci finisco esattamente sopra (casella tasse e altre)
+    passaggio (casella Start) o se ci finisce esattamente sopra (casella tasse e altre)
     \item Nel corso della partita un giocatore, quando capita sulle sue proprietà, le potrà migliorare spendendo
     del denaro per posizionare delle case che elevano il costo dell’affitto o un albergo, che è come una casa 
     ma ha un costo di affitto e di acquisto maggiore.
@@ -71,12 +70,11 @@ stesso terminale.
 
 \section{Modello del dominio}
 Nella versione da tavolo del gioco, ai giocatori viene periodicamente concesso il proprio turno d'azione 
-sulla base di una rotazione ciclica ed è durante il proprio turno che ai giocatori viene concesso di \say{giocare} e dunque
+sulla base di una rotazione ciclica ed è durante il proprio turno che gli viene concesso di \say{giocare} e dunque
 controllare i propri beni e la propria pedina.
-Sempre nella versione da tavolo, solitamente sono i giocatori a coordinarsi tra di loro
+I giocatori si coordinano tra di loro
 per gestire la rotazione dei turni e arbitrare la partita verificando che ognuno rispetti le 
-regole principali del gioco (controllare se un compagno ha perso 
-ed è eliminato, verificare che un giocatore possa terminare il suo turno, tenere conto di casistiche particolari
+regole principali del gioco (controllare se un compagno ha perso, verificare che un giocatore possa terminare il suo turno, controllare casistiche particolari
 in cui il giocatore deve saltare dei turni o non può muovere la propria pedina perchè magari è sulla casella prigione
 o parcheggio e mantenere il conteggio dei turni da trascorrere su queste caselle\dots).\newline
 Per modellare questo aspetto è stata inserita un'entità esterna che chiameremo arbitro \texttt{referee} a cui sono delegate
@@ -92,46 +90,43 @@ Queste operazioni sono:
     se il saldo del portafoglio del giocatore è in negativo perde la partita e tutti i suoi contratti di proprietà
     ritornano alla banca, disponibili per l’acquisto. 
     \item
-    Decretare se il gioco è finito e determinare il vincitore.
+    Decretare se il gioco è finito.
     \item Tenere il conto dei turni che un giocatore deve trascorrere bloccato nel parcheggio o nella prigione e valutare se 
     eventualmente il giocatore potrebbe liberarsi prima
 \end{itemize}
-Come è stato detto, a ogni giocatore (Player) viene concesso periodicamente dall'arbitro il proprio turno d’azione sulla base di una rotazione ciclica.
-Durante il suo turno il giocatore muove sul tabellone (Board) la propria pedina (Pawn) tirando dei dadi (Dices).
-Il tabellone è composto da una serie di caselle (Tile) disposte su un percorso chiuso. Il giocatore muove la propria pedina spostandola di 
-un numero di caselle corrispondenti alla somma dei dadi tirati, atterrando così su una nuova casella. 
-Questa casella può essere una proprietà (Property) oppure una casella speciale (Special), 
+Come è stato detto, a ogni giocatore \texttt{Player} viene concesso periodicamente dall'arbitro il proprio turno d’azione.
+Durante il suo turno il giocatore muove sul tabellone \texttt{Board} la propria pedina \texttt{Pawn} tirando dei dadi \texttt{Dices}.
+Il tabellone è composto da una serie di caselle  \texttt{Tile} disposte su un percorso chiuso. Il giocatore muove la propria pedina spostandola di 
+un numero di caselle corrispondenti al tiro del dado, atterrando così su una nuova casella. 
+Questa casella può essere una proprietà \texttt{Property} oppure una casella speciale \texttt{Special}, 
 e sulla base di ciò cambia radicalmente l’interazione con l’utente.\newline
-Le proprietà sono caselle alle quali è associato un contratto di proprietà (Title deed). 
-Quando un giocatore capita su una casella di tipo proprietà non ancora in possesso di nessun altro, può richiedere alla banca (Bank) di acquistare
-il contratto (Title deed) associato alla suddetta proprietà.
+Le proprietà sono caselle alle quali è associato un contratto di proprietà \texttt{Title deed}. 
+Quando un giocatore capita su una casella di tipo proprietà non ancora in possesso di nessun altro, può richiedere alla banca \texttt{Bank} di acquistare
+il contratto associato alla suddetta proprietà.
 Dopo aver pagato una somma alla banca il contratto viene consegnato al giocatore che da quel momento in poi possiederà la proprietà.
-Il contratto di proprietà è un documento che descrive tutte le informazioni monetarie relative alla proprietà come il prezzo d'acquisto,
-prezzo di vendita e le varie opzioni di affitto, ovvero possibili prezzi di affitto che il proprietario
-può far pagare per passare sulla proprietà associata.
+Il contratto di proprietà è un documento che descrive tutte le informazioni monetarie della proprietà.
 La banca possiede tutti i contratti non acquistati.\newline
 Se la proprietà su cui è capitato il giocatore era già stata comprata in precedenza da un altro allora si 
-deve pagare l'affitto al proprietario. I giocatori consultano il contratto di proprietà e scelgono una delle varie opzioni di affitto
-disponibili sul contratto come prezzo concordato per il pagamento. Il giocatore di passaggio procede poi a pagare il giocatore proprietario.
+deve pagare l'affitto al proprietario. I giocatori consultano il contratto di proprietà e concordano il prezzo dell'affitto.
+Il giocatore di passaggio procede poi a pagare il giocatore proprietario.\newline
 Se in un turno successivo all'acquisto il giocatore capita novamente su una casella di sua proprietà può decidere se migliorarla aggiungendo case 
 o alberghi acquistandoli dalla banca.
-Infine ogni giocatore può rivendere alla banca un contratto di proprietà e ricevere del denaro in cambio.
-Ogni giocatore ha associato un portafoglio (wallet) contente del denaro. Attraverso il suo portafoglio
+Infine ogni giocatore può rivendere alla banca un contratto e ricevere del denaro in cambio.
+Ogni giocatore ha associato un conto bancario  \texttt{BankAccount} contente del denaro. Attraverso il suo conto
 il giocatore compie tutte le operazioni di compravendita che comportano un addebito o prelievo di denaro (comprare/vendere contratti, pagare affitti\dots)\newline
-Se il giocatore invece capita su una casella speciale (special) si attiverà un effetto caratteristico della casella (Effect)
-che avrà ripercussioni sullo svolgimento del gioco 
+Se il giocatore invece capita su una casella speciale si attiverà un effetto caratteristico della casella \texttt{Effect}
+che avrà ripercussioni sul gioco 
 (guadagno/perdita denaro, saltare un determinato numero di turni\dots). 
-In particolare se si capita su una casella Imprevisti (Unexpected) o Probabilità (Probability) l'effetto non 
-è specifico della casella stessa, ma viene letto da uno dei due mazzi di carte effetto corrispettivi(Unexpected deck o Probability deck). 
-Il giocatore pesca una carta (Card) da uno dei due mazzi, legge l'effetto della carta e lo attiva. \newline
+In particolare se si capita su una casella Imprevisti o Probabilità \texttt{Unexpected Probability} l'effetto non 
+è specifico della casella stessa, ma viene letto da un mazzo di carte effetto \texttt{Deck}. 
+Il giocatore pesca una carta \texttt{Card} dal mazzo, legge l'effetto e lo attiva.\smallskip\newline
 Parte della difficoltà consisterà nel riadattare un dominio che non nasce intrinsecamente per un progetto software.
-Monopoly infatti nasce come gioco da tavolo e questo si riflette in molte interazioni e funzionalità, che non sono pensate 
+Monopoly infatti è un gioco da tavolo e questo si riflette in molte interazioni e funzionalità, che non sono pensate 
 nell'ottica di un'architettura software (un esempio è quello dato all'inizio della sezione sulla coordinazione fra i giocatori e 
-l'entità arbitro). Molte azioni nel gioco spesso comportano la comunicazione di più entità (l'arbitro decreta il vincitore sia sulla base dei 
-contratti che possiede sia sul suo portafoglio, migliorare una
-proprietà ha come conseguenza un cambiamento sulla casella ma per attuarlo il giocatore deve interagire con la banca facendo riferimento
+l'entità arbitro). Molte azioni nel gioco spesso comportano la comunicazione di più entità (migliorare una
+proprietà ha come conseguenza un cambiamento sulla casella ma per attuarlo il giocatore deve pagare la banca facendo riferimento
 al contratto di proprietà, un giocatore può passare il turno solo se ha fatto determinate azioni che dipendono non solo dalla casella in cui
-si trova ma anche dal suo contratto\dots). 
+si trova ma anche da chi la possiede\dots). 
 Sarà quindi difficile progettare un'architettura software che permetta di rappresentare il dominio del gioco
 in maniera efficace e riadattabile. 
 
