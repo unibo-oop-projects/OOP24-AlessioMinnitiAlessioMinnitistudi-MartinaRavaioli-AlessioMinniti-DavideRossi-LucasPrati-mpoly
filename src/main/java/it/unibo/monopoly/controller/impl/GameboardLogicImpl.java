@@ -10,6 +10,8 @@ import it.unibo.monopoly.controller.api.GameboardLogic;
 */
 public class GameboardLogicImpl implements GameboardLogic {
 
+    public GameboardLogicImpl() { }
+
     @Override
     public final boolean isBoardTile(final int i, final int j, final int size) {
         final Predicate<Integer> isBorder = x -> x == 0 || x == size - 1;

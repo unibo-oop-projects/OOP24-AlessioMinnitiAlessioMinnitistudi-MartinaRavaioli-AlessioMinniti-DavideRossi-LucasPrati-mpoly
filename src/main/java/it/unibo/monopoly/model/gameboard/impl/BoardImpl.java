@@ -147,11 +147,10 @@ public class BoardImpl implements Board {
     }
 
     @Override
-    public final Pawn getPawn(final int id) { //it's used to return the pawn outside of the board, it's because it returns a copy 
+    public final Pawn getPawn(final int id) {
         for (final Pawn p : this.pawns) {
             if (((PawnImpl) p).getID() == id) {
                 return factory.createBasic(((PawnImpl) p).getID(), p.getPosition(), p.getColor());
-                //return new PawnImpl(((PawnImpl) p).getID(), p.getPosition(), p.getColor());
             }
         }
 

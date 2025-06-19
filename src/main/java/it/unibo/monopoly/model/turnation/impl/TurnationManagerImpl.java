@@ -18,7 +18,6 @@ import it.unibo.monopoly.model.turnation.api.TurnationManager;
  * turnation manager implementation.
 */
 public class TurnationManagerImpl implements TurnationManager {
-    //private CircularLinkedList<Player> players; /**list of players. */
     private PlayerIterator players;
     private Player currPlayer; /**current player. */
     private Dice dice; /**dice. */
@@ -30,10 +29,6 @@ public class TurnationManagerImpl implements TurnationManager {
      * @param dice dice
     */
     public TurnationManagerImpl(final List<Player> plList, final Dice dice) {
-        // this.players = new CircularLinkedList<>();
-        // for (final Player p : plList) {
-        //     this.players.addNode(p);
-        // }
         this.players = new CircularPlayerIteratorImpl(plList);
         this.dice = dice;
         this.currPlayer = plList.get(0);
@@ -52,21 +47,11 @@ public class TurnationManagerImpl implements TurnationManager {
     public TurnationManagerImpl(final List<Player> plList, final Dice dice, final BankState bankState) {
         this(plList, dice);
         this.bankState = bankState;
-        // this.players = new CircularLinkedList<>();
-        // for (final Player p : plList) {
-        //     this.players.addNode(p);
-        // }
-        // this.dice = dice;
-        // this.currPlayer = plList.get(0);
     }
 
     @Override
     public final void setList(final List<Player> plList) {
         this.players = new CircularPlayerIteratorImpl(plList);
-        // this.players = new CircularLinkedList<>();
-        // for (final Player p : plList) {
-        //     this.players.addNode(p);
-        // }
     }
 
     @Override
