@@ -85,4 +85,5 @@ public final class ParkablePlayer implements Parkable, Player {
     public void passTurn() {
         this.in = in - 1;
     }
+
 }

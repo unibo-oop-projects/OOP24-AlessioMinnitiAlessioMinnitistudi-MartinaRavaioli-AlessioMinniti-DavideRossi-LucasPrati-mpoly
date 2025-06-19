@@ -1,6 +1,7 @@
 package it.unibo.monopoly.model.turnation;
 
 import java.awt.Color;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -25,6 +26,7 @@ import it.unibo.monopoly.model.turnation.api.TurnationManager;
 import it.unibo.monopoly.model.turnation.impl.DiceImpl;
 import it.unibo.monopoly.model.turnation.impl.ParkablePlayer;
 import it.unibo.monopoly.model.turnation.impl.PlayerImpl;
+import it.unibo.monopoly.model.turnation.impl.PrisonablePlayer;
 import it.unibo.monopoly.model.turnation.impl.TurnationManagerImpl;
 
 class TurnationManagerTest {
@@ -39,11 +41,11 @@ class TurnationManagerTest {
     private static final int BASE_RENT = 10;
     private static final int NDICES = 2;
     private TurnationManager turnManager;
-    private final List<Player> players = List.of(
-        new ParkablePlayer(PlayerImpl.of(1, "a", Color.RED)),
-        new ParkablePlayer(PlayerImpl.of(2, "b", Color.GREEN)),
-        new ParkablePlayer(PlayerImpl.of(3, "c", Color.BLUE))
-    );
+    private final List<Player> players = new ArrayList<>(List.of(
+        new ParkablePlayer(new PrisonablePlayer(PlayerImpl.of(1, "a", Color.RED))),
+        new ParkablePlayer(new PrisonablePlayer(PlayerImpl.of(2, "b", Color.GREEN))),
+        new ParkablePlayer(new PrisonablePlayer(PlayerImpl.of(3, "c", Color.BLUE)))
+    ));
 
     private final Set<BankAccount> accounts = Set.of(
         new SimpleBankAccountImpl(ID_1, AMOUNT, e -> true),
@@ -106,8 +108,62 @@ class TurnationManagerTest {
         assertTrue(turnManager.getPlayerList().contains(p4), "New player should be in the list");
     }
 
-    public List<Player> getPlayers() {
-        return players;
+    @Test
+    void testPlayerParkedCannotThrowDices() {
+        try {
+            players.get(0).park();
+            final var result = turnManager.throwDices();
+            assertEquals("the player can't throw dices because is parked", result.getRight());
+        } catch (final IllegalAccessException e) {
+            LOGGER.error(ERROR, e);
+        }
+
     }
 
+    @Test
+    void testThrowDicesTwiceThrowsException() throws IllegalAccessException {
+        turnManager.throwDices(); // primo lancio OK
+        assertThrows(IllegalAccessException.class, turnManager :: throwDices);
+    }
+
+    @Test
+    void testCanPassTurnWhenParked() {
+        players.get(0).park();
+        assertTrue(turnManager.canPassTurn(), "Player should be able to pass turn when parked");
+    }
+
+    @Test
+    void testPlayerPutInPrisonAndExit() {
+        try {
+            players.get(0).putInPrison();
+            assertTrue(turnManager.isCurrentPlayerInPrison(), "Player should be in prison");
+            final var result = turnManager.throwDices();
+            assertTrue(result.getRight().contains("you are still in prison") 
+                        || result.getRight().contains("you escaped the prison"));
+        } catch (final IllegalAccessException e) {
+            LOGGER.error(ERROR, e);
+        }
+    }
+
+    @Test
+    void testMoveByDicesWhileInPrisonUpdatesTurns() {
+        try {
+            players.get(0).putInPrison();
+            final int turnsLeft = turnManager.currentPlayerTurnsLeftInPrison();
+            turnManager.throwDices();  // Should decrement turns
+            assertEquals(turnsLeft - 1, 
+                        turnManager.currentPlayerTurnsLeftInPrison(),
+                        "Turns left in prison should decrease after failed attempt");
+        } catch (final IllegalAccessException e) {
+            LOGGER.error(ERROR, e);
+        }
+    }
+
+    @Test
+    void testNextPlayerAfterParkPassesProperly() {
+        players.get(0).park();
+        assertEquals(players.get(1).getID(), 
+                    turnManager.getNextPlayer().getID(),
+                    "Next should skip parked player after passing turn");
+    }
 }
