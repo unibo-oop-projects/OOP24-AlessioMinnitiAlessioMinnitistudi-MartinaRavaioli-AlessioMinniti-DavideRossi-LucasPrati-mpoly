@@ -325,33 +325,46 @@ public final class GUIVendita extends JDialog {
         }
         rentValue.setText(auxrent);
         colorValue.setColor(logic.getPropertyColor(selectedDeed));
-        hotelCostValue.setText(String.valueOf(selectedDeed.getHotelPrice()));
-        houseCostValue.setText(String.valueOf(selectedDeed.getHousePrice()));
-        final BuildablePropertyImpl selectedBuildableProberty = logic.getBuildableProperty(selectedDeed, board);
-        houseNumValue.setText(String.valueOf(selectedBuildableProberty.getNHouses()));
-        final String hotelsString;
-        if (selectedBuildableProberty.hasHotel()) {
-            hotelsString = "yes";
-        } else {
-            hotelsString = "no";
-        }
-        hotelNumValue.setText(hotelsString);
-
         balanceValue.setText(String.valueOf(bank.getBankAccount(player.getID()).getBalance()));
 
-        if (selectedBuildableProberty.hasHotel()) {
-            sellHotel.setEnabled(true);
-            sellHouse.setEnabled(false);
-            sellProperty.setEnabled(false);
-        } else if (selectedBuildableProberty.getNHouses() > 0) {
-            sellHotel.setEnabled(false);
-            sellHouse.setEnabled(true);
-            sellProperty.setEnabled(false);
+        if (selectedDeed instanceof BuildablePropertyImpl) {
+            hotelCostValue.setText(String.valueOf(selectedDeed.getHotelPrice()));
+            houseCostValue.setText(String.valueOf(selectedDeed.getHousePrice()));
+            final BuildablePropertyImpl selectedBuildableProberty = logic.getBuildableProperty(selectedDeed, board);
+            houseNumValue.setText(String.valueOf(selectedBuildableProberty.getNHouses()));
+            final String hotelsString;
+            if (selectedBuildableProberty.hasHotel()) {
+                hotelsString = "yes";
+            } else {
+                hotelsString = "no";
+            }
+            hotelNumValue.setText(hotelsString);
+
+
+            if (selectedBuildableProberty.hasHotel()) {
+                sellHotel.setEnabled(true);
+                sellHouse.setEnabled(false);
+                sellProperty.setEnabled(false);
+            } else if (selectedBuildableProberty.getNHouses() > 0) {
+                sellHotel.setEnabled(false);
+                sellHouse.setEnabled(true);
+                sellProperty.setEnabled(false);
+            } else {
+                sellHotel.setEnabled(false);
+                sellHouse.setEnabled(false);
+                sellProperty.setEnabled(true);
+            }
         } else {
+            hotelCostValue.setText("0");
+            houseCostValue.setText("0");
+            houseNumValue.setText("0");
+            hotelNumValue.setText("no");
+
             sellHotel.setEnabled(false);
             sellHouse.setEnabled(false);
             sellProperty.setEnabled(true);
         }
+
     }
 
     private void setNullValues(final Player player, final Bank bank) {
