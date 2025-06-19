@@ -20,7 +20,7 @@ specifiche per i suoi due utilizzatori: il controller usa \texttt{Bank} come uni
 un oggetto \texttt{BankState} per controllare la situazione bancaria dei giocatori e orchestrare il ciclo di vita della partita senza dipendere dal controller.
 Infatti, parte delle operazioni di logica del dominio svolte dal controller precedentemente sono state rilocate in \texttt{Turnation Manager} come di diritto, in favore di un migliore incapsulamento e dunque
 facilità di utilizzo. 
-Allo stesso tempo il fatto che ogni client lavori con un'interfaccia scritta su misura per se limita le operazioni che ognuno può eseguire garantendo maggiore sicurezza e separazione degli interessi.\newline
+Allo stesso tempo il fatto che ogni client (Turnation Manager e controller) lavori con un'interfaccia scritta su misura per se limita le operazioni che ognuno può eseguire garantendo maggiore sicurezza e separazione degli interessi.\newline
 \begin{figure}[H]
     \centering
     \makebox[1.0\textwidth]{\includegraphics[width=1.3\textwidth]{img/rossi/bankStateAdapter.png}}	
@@ -30,16 +30,15 @@ Allo stesso tempo il fatto che ogni client lavori con un'interfaccia scritta su 
 \end{figure}
 \subsubsection{Modellazione dei contratti di proprietà}
 \textbf{Problema}\newline
-Rappresentare in un unico oggetto tutte le informazioni di un contratto di proprietà, in particolare le opzioni di affitto, l'ipoteca e i costi di costruzione.
-I giocatori potranno acquistare i contratti e la banca li utilizzerà per reperire i costi delle operazioni del gioco, e addebitare o prelevare denaro dagli account dei giocatori\newline
+Rappresentare in un unico oggetto tutte le informazioni di un contratto di proprietà come il prezzo d'acquisto, l'ipoteca e i costi di costruzione.
+I giocatori potranno acquistare i contratti e la banca li utilizzerà per determinare i costi delle operazioni del gioco.\newline
 \textbf{Soluzione}\newline
 Analizzando le regole del gioco si è notato che i metodi \say{costo} (\texttt{getHousePrice, getHotelPrice, getMortagePrice}\dots) 
 calcolano i prezzi basandosi sul prezzo di vendita (\texttt{getSalePrice}) del contratto. Per implementare questi metodi in maniera flessibile 
 si è deciso di usare il pattern \say{strategy}:
 i vari metodi \say{costo} usano delle \texttt{Function} che prendono in input il prezzo di vendita. Questi algoritmi 
-vengono passati alla creazione dell'oggetto lasciando all'utilizzatore la libertà di personalizzare il contratto.\newline
-Si è deciso di adottare il pattern \say{decorator} per rendere il supporto alle case e alberghi una funzionalità componibile in
-maniera flessibile.
+vengono passati alla creazione dell'oggetto lasciando all'entità che crea i contratti la libertà di personalizzare come questo calcola i vari importi.\newline
+Si è deciso di adottare il pattern \say{decorator} per rendere il supporto alle case e alberghi una funzionalità componibile.
 \texttt{TitleDeedDecorator} (decoratore) è una classe abstract che incapsula un oggetto di tipo \texttt{Title deed} (decorated) e aderisce alla suddetta interfaccia. 
 \texttt{TitleDeedWithHouses} estende questa classe e modifica i metodi riportati nello schema UML, aggiungendo il supporto per il calcolo del costo di costruzione delle case e dell'albergo, 
 e per il calcolo dell'affitto (\texttt{getRent}) considerando anche i miglioramenti
@@ -81,7 +80,7 @@ offrendo un certo grado di personalizzazione.\newline
 Quando il giocatore finisce su una casella \say{Property}
 esso può/deve svolgere determinate azioni nel suo turno. 
 La banca, controllando il \texttt{TitleDeed} corrispondente alla casella Property,  
-deve notificare all' utente quali azioni può/ deve compiere\newline
+deve notificare all' utente quali azioni può/deve compiere\newline
 \textbf{Soluzione}\newline
 Si è deciso di applicare il pattern \say{command}.\newline
 Chiamando \texttt{getActionsForTitleDeed} \texttt{Bank} 

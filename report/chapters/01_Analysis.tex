@@ -5,17 +5,17 @@ Il software mira alla costruzione di una versione virtuale del famoso gioco da t
 Quest’ultimo è un gioco di società nel quale più giocatori a turno lanciano i dadi e muovono le proprie pedine su un tabellone 
 composto da caselle di cui la maggior parte sono proprietà, ovvero dei terreni acquistabili dai giocatori.
 Lo scopo del gioco è di creare un monopolio aumentando i beni o il denaro posseduto. 
-Per fare ciò durante la partita i giocatori possono acquistare le proprietà sulle quali capita la propria pedina pagando una somma alla banca, 
+Per fare ciò durante la partita i giocatori possono acquistare le proprietà sulle quali capita la propria pedina pagando una somma alla banca: 
 una volta acquistate il giocatore può anche decidere se eventualmente migliorarle.
 Se la pedina di un giocatore finisce su una proprietà in possesso di un suo avversario allora sarà costretto
-a pagargli una somma di denaro per poter transitare su un terreno non suo, in questo caso si dice che il giocatore
+a pagargli una somma di denaro per poter transitare su un terreno non suo: in questo caso si dice che il giocatore
 paga l'affitto per la proprietà.\newline
 Sul tabellone saranno presenti anche delle caselle speciali: le più importanti sono il parcheggio e la prigione che
 impediscono al giocatore di muoversi per un determinato numero di turni e le caselle imprevisti e probabilità che 
 richiedono al giocatore di pescare una carta dal mazzo degli imprevisti e delle probabilità e seguire le 
 istruzioni scritte sulla carta.\newline
 L’obiettivo è mandare gli altri giocatori in bancarotta, e dunque condurli alla sconfitta, cercando di fargli spendere
-più denaro possibile. Le pedine dei giocatori sconfitti vengono rimosse dal tabellone e i loro 
+più denaro possibile. Ogni giocatore comincia la partita con del denaro a disposizione. Le pedine dei giocatori sconfitti vengono rimosse dal tabellone e i loro 
 beni revocati, si vince rimanendo l'ultimo giocatore sul tabellone.\newline
 Il software permetterà di creare e giocare un partita con un determinato numero di giocatori dallo 
 stesso terminale.
@@ -33,18 +33,18 @@ stesso terminale.
     Se la proprietà è già posseduta da qualcun altro il giocatore che vi capita sopra dovrà pagare l’affitto al proprietario 
     per poter continuare a giocare.
     \item Se il giocatore finisce sopra la casella speciale parcheggio la sua pedina
-    dovrà rimanere ferma per un turno.
+    dovrà rimanere ferma per 1 turno.
     \item Se il giocatore viene messo in prigione, perchè è capitato sulla casella \say{Vai in prigione},
-    dovrà rimanere fermo sulla casella \say{Prigione} per 3 turni. Ogni turno gli verrà concessa la possibilità di liberarsi lanciando i dadi
+    dovrà rimanere fermo sulla casella \say{Prigione} per 3 turni. Ad ogni turno gli verrà concessa la possibilità di liberarsi lanciando i dadi
     e provando a fare un doppio come risultato.
     \item Se il giocatore finisce sopra una casella imprevisti o probabilità allora verrà pescata una carta effetto
-    o dal mazzo imprevisti o dal mazzo probabilità. La carta appunto descrive un effetto che va ad agire e modificare gli
-    elementi del gioco (tabellone, pedine, proprietà, denaro posseduto\dots). L'effetto eseguito è specifico della carta,
+    dal mazzo imprevisti o probabilità. La carta appunto descrive un effetto che va ad agire e modificare gli
+    elementi del gioco (muovere le pedine, stato delle proprietà, denaro posseduto\dots). L'effetto eseguito è specifico della carta,
     al giocatore verrà mostrata una descrizione testuale dell'effetto e poi il sistema ne farà partire l'esecuzione.
     \item La pedina del giocatore potrà finire su altre caselle speciali con un effetto specifico che si attiverà o al 
     passaggio (casella Start) o se ci finisce esattamente sopra (casella tasse e altre)
     \item Nel corso della partita un giocatore, quando capita sulle sue proprietà, le potrà migliorare spendendo
-    del denaro per posizionare delle case che elevano il costo dell’affitto o un albergo, che è come una casa 
+    del denaro per posizionare delle case che aumentano il costo dell’affitto o un albergo, che è come una casa 
     ma ha un costo di affitto e di acquisto maggiore.
     \item Durante il proprio turno, se lo desidera, il giocatore potrà vendere alla banca 
     proprietà ed eventuali case precedentemente costruite per riguardagnare denaro qualora fosse a rischio
@@ -70,15 +70,15 @@ stesso terminale.
 
 \section{Modello del dominio}
 Nella versione da tavolo del gioco, ai giocatori viene periodicamente concesso il proprio turno d'azione 
-sulla base di una rotazione ciclica ed è durante il proprio turno che gli viene concesso di \say{giocare} e dunque
+sulla base di una rotazione ciclica ed è durante il proprio turno che possono
 controllare i propri beni e la propria pedina.
 I giocatori si coordinano tra di loro
 per gestire la rotazione dei turni e arbitrare la partita verificando che ognuno rispetti le 
 regole principali del gioco (controllare se un compagno ha perso, verificare che un giocatore possa terminare il suo turno, controllare casistiche particolari
-in cui il giocatore deve saltare dei turni o non può muovere la propria pedina perchè magari è sulla casella prigione
+in cui il giocatore deve saltare dei turni o non può muovere la propria pedina perchè è sulla casella prigione
 o parcheggio e mantenere il conteggio dei turni da trascorrere su queste caselle\dots).\newline
 Per modellare questo aspetto è stata inserita un'entità esterna che chiameremo arbitro \texttt{referee} a cui sono delegate
-tutte le operazioni di coordinazione del gioco e dei suoi partecipanti. 
+tutte le operazioni di gestione del gioco e dei suoi partecipanti. 
 Queste operazioni sono:
 \begin{itemize}
     \item

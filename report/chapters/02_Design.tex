@@ -10,8 +10,7 @@ Il controller cattura questo evento ed esegue una serie di operazioni
 specifiche per la sua gestione interagendo con la parte model dell'app, e susseguentemente aggiorna la view 
 mostrando all’utente che cosa è successo.\newline   
 In riferimento allo schema dell'architettura, è stato predisposto un controller principale denominato GameManager 
-che ha un riferimento a un oggetto che implementa l'interfaccia MainView,
-sul quale chiamerà l'aggiornamento della view.\newline
+che ha un riferimento a un oggetto che implementa l'interfaccia MainView.\newline
 In questa versione dell'applicazione la modalità di interazione utente avviene tramite pressione di bottoni della view.
 Per questo si è deciso di implementare il pattern "Observer": MainViewImpl ha un riferimento al GameController ed è questa classe 
 che notifica il Controller dell' inizio di un evento.
