@@ -45,8 +45,6 @@ public final class MainMenuViewImpl implements MainMenuView {
      * happening on this view, implementing the observer pattern. 
      * User events will be captured and handled by the {@code controller} provided to this constructor.
      */
-    // @SuppressFBWarnings(value = "EI_EXPOSE_REP",
-    //             justification = "Must return reference to the object instead of a copy")
     public MainMenuViewImpl(final MainMenuController controller) {
         GuiUtils.configureWindow(mainFrame,
                                  (int) GuiUtils.getDimensionWindow().getWidth(),
